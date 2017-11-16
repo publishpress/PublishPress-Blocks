@@ -1,0 +1,15 @@
+{
+  "slug": "guttenberg-advanced",
+  "name": "Guttenberd Advanced",
+  "uri": "https://www.joomunited.com/wordpress-products/guttenberg-advanced",
+  "version": "1.0.0",
+  "wp_version": "4.8.3",
+  "changelog": {
+    "1.0.0": [
+      {
+        "type": "feature",
+        "title": "Initial version"
+      }
+    ]
+  }
+}
