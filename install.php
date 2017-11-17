@@ -18,6 +18,29 @@ function gbadv_plugin_activated()
         exit;
     }
 
+    // Get all GB-ADV active profiles
+    $args     = array(
+        'post_type' => 'gbadv_profiles',
+        'publish'   => true
+    );
+    $profiles = new WP_Query($args);
+
+    // Add default profiles if no profiles exist
+    if (!$profiles->have_posts()) {
+        $post_data = array(
+            'post_title'  => 'Default',
+            'post_type'   => 'gbadv_profiles',
+            'post_status' => 'publish',
+            'meta_input'  => array(
+                'active_blocks' => GutenbergAdvancedMain::$default_active_blocks,
+                'roles_access'  => GutenbergAdvancedMain::$default_roles_access,
+                'users_access'  => array(),
+            )
+        );
+        wp_insert_post($post_data, true);
+    }
+}
+
 // Register menu
 function register_gbadv_menu()
 {
@@ -81,6 +104,7 @@ function add_gbadv_cap()
     $wp_roles->add_cap('contributor', 'read_private_gbadv_profiles');
 }
 
+// Change post's update messages
 function gbadv_post_msg($msg)
 {
     $msg['gbadv_profiles'] = array(
@@ -91,7 +115,7 @@ function gbadv_post_msg($msg)
     return $msg;
 }
 
-/** Save profiles settings */
+// Save profiles settings
 function save_gbadv_profile($postID)
 {
     // Check nonce field
