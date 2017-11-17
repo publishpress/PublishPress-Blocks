@@ -6,6 +6,7 @@ if (is_admin()) {
     add_action('init', 'register_gbadv_menu');
     add_action('admin_init', 'add_gbadv_cap');
     add_filter('post_updated_messages', 'gbadv_post_msg');
+    add_action('save_post_gbadv_profiles', 'save_gbadv_profile');
 }
 
 // Init plugin
@@ -88,4 +89,44 @@ function gbadv_post_msg($msg)
     );
 
     return $msg;
+}
+
+/** Save profiles settings */
+function save_gbadv_profile($postID)
+{
+    // Check nonce field
+    if (!isset($_POST['gbadv_nonce_field'])) {
+        return $postID;
+    }
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['gbadv_nonce_field'], 'gbadv_nonce')) {
+        return $postID;
+    }
+
+    // Save settings
+    if ($_POST['post_type'] == 'gbadv_profiles'
+        && current_user_can('edit_post', $postID)
+    ) {
+        // Save list of active blocks
+        $active_blocks = array();
+        if (isset($_POST['active_blocks'])) {
+            $active_blocks = $_POST['active_blocks'];
+        }
+        update_post_meta($postID, 'active_blocks', $active_blocks);
+
+        // Save users permission
+        $users_access = array();
+        $roles_access = array();
+        if (isset($_POST['gbadv-users-access-list'])) {
+            $users_access = trim($_POST['gbadv-users-access-list']);
+            $users_access = explode(' ', $users_access);
+        }
+        if (isset($_POST['gbadv-roles'])) {
+            $roles_access = $_POST['gbadv-roles'];
+        }
+        update_post_meta($postID, 'users_access', $users_access);
+        update_post_meta($postID, 'roles_access', $roles_access);
+    }
+
+    return $postID;
 }
