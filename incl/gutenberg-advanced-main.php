@@ -14,8 +14,24 @@ class GutenbergAdvancedMain
         if (is_admin()) {
             add_action('admin_menu', array($this, 'register_meta_box'));
             // Ajax
+            add_action('wp_ajax_gbadv_update_blocks_list', array($this, 'gbadv_update_blocks_list'));
             add_action('wp_ajax_gbadv_get_users', array($this, 'gbadv_get_users'));
         }
+    }
+
+    // Ajax to update blocks list
+    public function gbadv_update_blocks_list()
+    {
+        $blocksList     = $_POST['blocksList'];
+        $categoriesList = $_POST['categoriesList'];
+
+        update_option('gbadv_blocks_list', $blocksList);
+        update_option('gbadv_categories_list', $categoriesList);
+
+        wp_send_json(array(
+            'blocks_list' => $blocksList,
+            'categories_list' => $categoriesList
+        ), 200);
     }
 
     // Ajax to get users list

@@ -4,6 +4,15 @@ jQuery(document).ready(function ($) {
         $('#publish').click();
     });
 
+    $('#update-list-btn').unbind('click').click(function () {
+        var willUpdate = confirm('Make sure everthing is saved before updating. Continue?');
+        if (willUpdate) {
+            $(this).find('i').addClass('rotating');
+            $(this).find('span').text('Updating...');
+            window.location.href += '&update_blocks_list=true';
+        }
+    });
+
     // Ajax for displaying users list
     $('#user-search-input').bind('searchUsers', function () {
         var searchKey = $(this).val();

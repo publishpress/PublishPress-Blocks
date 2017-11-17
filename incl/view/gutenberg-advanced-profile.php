@@ -15,6 +15,13 @@ if ($roles_access_saved == '') {
 
 $users_access_saved = get_post_meta($postid, 'users_access', true);
 $users_access_saved = $users_access_saved ? $users_access_saved : array();
+
+$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] == true);
+if ($updating) {
+    wp_enqueue_script('update_list');
+    wp_localize_script('update_list', 'gbadvUpdate', array('onProfile' => true));
+}
+
 wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
 ?>
 
