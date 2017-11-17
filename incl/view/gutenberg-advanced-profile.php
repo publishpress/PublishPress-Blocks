@@ -46,7 +46,7 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
             <button type="button" id="update-list-btn"
                     class="cyan white-text material-btn"
                     <?php if ($updating) echo 'disabled' ?>
-                    title="<?php _e('Update the blocks list! Page may reload for several times!', 'gutenberg-advanced') ?>">
+                    title="<?php _e('Update the blocks list', 'gutenberg-advanced') ?>">
                 <i class="dashicons dashicons-update <?php if ($updating) echo 'rotating' ?>"></i>
                 <span>
                     <?php if ($updating) {
@@ -56,6 +56,9 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                     } ?>
                 </span>
             </button>
+            <span id="block-update-notice">
+                <?php _e('Blocks list updated successfully.', 'gutenberg-advanced') ?>
+            </span>
         </div>
         <div class="blocks-section">
             <?php foreach ($all_categories_list as $category) : ?>

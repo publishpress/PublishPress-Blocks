@@ -112,7 +112,13 @@ ul.blocks-list li.block-item {
 }
 
 .block-item.new-block {
-    background-color: #ff5000;
+    background-color: #FF8855;
+}
+
+#block-update-notice {
+    color: green;
+    padding: 10px;
+    display: none;
 }
 
 .dashicons.dashicons-block-default:before {

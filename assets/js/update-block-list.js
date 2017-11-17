@@ -72,7 +72,7 @@ window.onload = function () {
                             theBlock.find('.block-title').text(block.title);
                         } else {
                             var blockHTML = '';
-                            blockHTML +=  '<li class="block-item new-block" data-type="'+ block.name +'">';
+                            blockHTML += '<li class="block-item new-block" data-type="'+ block.name +'">';
                             blockHTML +=    '<label for="block-code" class="switch-label">';
                             blockHTML +=        '<i class="dashicons dashicons-'+ block.icon +'"></i>';
                             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
@@ -97,6 +97,8 @@ window.onload = function () {
                     $('#update-list-btn').removeAttr('disabled')
                         .find('span').text('Update')
                         .parent().find('i').removeClass('rotating');
+
+                    $('#block-update-notice').fadeIn(500).delay(2000).fadeOut(500);
                 }
             },
             error: function () {
