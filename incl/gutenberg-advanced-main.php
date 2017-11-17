@@ -5,11 +5,13 @@ class GutenbergAdvancedMain
 {
     public static $default_roles_access = array('administrator', 'editor', 'author');
     public static $default_active_blocks = 'all';
+    protected $active_profile = null;
 
     public function __construct()
     {
         add_action('admin_init', array($this, 'init_blocks_list'));
         add_action('admin_enqueue_scripts', array($this, 'register_styles_scripts'));
+        add_action('enqueue_block_editor_assets', array($this, 'init_active_blocks_for_gutenberg'), 99);
 
         if (is_admin()) {
             add_action('admin_menu', array($this, 'register_meta_box'));
@@ -297,5 +299,48 @@ class GutenbergAdvancedMain
         include_once(plugin_dir_path(__FILE__) . 'view/gutenberg-advanced-' . $view . '.php');
     }
 
+    // Set the active blocks for users regard to Gutenberg Advanced profiles
+    public function init_active_blocks_for_gutenberg()
+    {
+        // Get user info
+        $current_user      = wp_get_current_user();
+        $current_user_id   = $current_user->ID;
+        $current_user_role = $current_user->roles[0];
+
+        // Get all GB-ADV active profiles
+        $args     = array(
+            'post_type' => 'gbadv_profiles',
+            'publish'   => true
+        );
+        $profiles = new WP_Query($args);
+
+        while ($profiles->have_posts()) :
+            $profiles->the_post();
+            $postID           = get_the_ID();
+            $user_id_access   = get_post_meta($postID, 'users_access', true);
+            $user_role_access = get_post_meta($postID, 'roles_access', true);
+
+            // Check which profiles that current user has permission to use and take that ID
+            // the ID of the profiles published most recently will be taken
+            if (is_array($user_role_access) && is_array($user_id_access)) {
+                if (in_array($current_user_id, $user_id_access) || in_array($current_user_role, $user_role_access)) {
+                    // Populate the ID
+                    $this->active_profile = $postID;
+                    $active_blocks_saved  = get_post_meta($this->active_profile, 'active_blocks', true);
+                    // Init blocks
+                    wp_enqueue_script('init_list');
+                    wp_localize_script('init_list', 'gbadvBlocks', array(
+                        'activeBlocks' => $active_blocks_saved
+                    ));
+
+                    return;
+                }
+            }
+        endwhile;
+
+        wp_die(__(
+            'Not allow to use Gutenberg! Ask your administrator to provide you the permission!',
+            'gutenberg-advanced'
+        ));
     }
 }
