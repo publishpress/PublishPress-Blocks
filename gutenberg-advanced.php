@@ -68,3 +68,14 @@ if (! defined('GUTENBERG_ADVANCED_PLUGIN')) {
 require_once(plugin_dir_path(__FILE__) . '/install.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/gutenberg-advanced-main.php');
 new GutenbergAdvancedMain();
+
+// Load jutranslation helper
+include_once('jutranslation' . DIRECTORY_SEPARATOR . 'jutranslation.php');
+call_user_func(
+    '\Joomunited\GBADV\Jutranslation\Jutranslation::init',
+    __FILE__,
+    'gutenberg-advanced',
+    'Gutenberg Advanced',
+    'gutenberg-advanced',
+    'languages' . DIRECTORY_SEPARATOR . 'gutenberg-advanced-en_US.mo'
+);
