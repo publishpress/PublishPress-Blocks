@@ -68,16 +68,16 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                         <?php foreach ($all_blocks_list as $block) : ?>
                             <?php if ($block['category'] != $category['slug']) continue; ?>
                             <?php $block_id = strtolower(str_replace(' ', '', $block['title'])) ?>
-                            <li class="block-item" data-type="<?php echo esc_html($block['name']) ?>">
+                            <li class="block-item" data-type="<?php echo esc_attr($block['name']) ?>">
                                 <label for="block-<?php echo $block_id ?>" class="switch-label">
-                                    <i class="dashicons dashicons-<?php echo esc_html($block['icon']) ?>"></i>
+                                    <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
                                     <span class="block-title"><?php echo esc_html($block['title']) ?></span>
                                 </label>
                                 <div class="switch-btn">
                                     <label class="switch">
                                         <input type="checkbox" name="active_blocks[]"
-                                               id="block-<?php echo esc_html($block_id) ?>"
-                                               value="<?php echo esc_html($block['name']) ?>"
+                                               id="block-<?php echo esc_attr($block_id) ?>"
+                                               value="<?php echo esc_attr($block['name']) ?>"
                                                <?php if ($active_blocks_saved == 'all' || in_array($block['name'], $active_blocks_saved)) echo 'checked' ?>/>
                                         <div class="slider round"></div>
                                     </label>
