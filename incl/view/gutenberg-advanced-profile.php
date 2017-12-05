@@ -63,21 +63,21 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
         <div class="blocks-section">
             <?php foreach ($all_categories_list as $category) : ?>
                 <div class="category-block clearfix" data-category="<?php echo $category['slug'] ?>">
-                    <h3 class="category-name"><?php echo $category['title'] ?></h3>
+                    <h3 class="category-name"><?php echo esc_html($category['title']) ?></h3>
                     <ul class="blocks-list">
                         <?php foreach ($all_blocks_list as $block) : ?>
                             <?php if ($block['category'] != $category['slug']) continue; ?>
                             <?php $block_id = strtolower(str_replace(' ', '', $block['title'])) ?>
-                            <li class="block-item" data-type="<?php echo $block['name'] ?>">
+                            <li class="block-item" data-type="<?php echo esc_html($block['name']) ?>">
                                 <label for="block-<?php echo $block_id ?>" class="switch-label">
-                                    <i class="dashicons dashicons-<?php echo $block['icon'] ?>"></i>
-                                    <span class="block-title"><?php echo $block['title'] ?></span>
+                                    <i class="dashicons dashicons-<?php echo esc_html($block['icon']) ?>"></i>
+                                    <span class="block-title"><?php echo esc_html($block['title']) ?></span>
                                 </label>
                                 <div class="switch-btn">
                                     <label class="switch">
                                         <input type="checkbox" name="active_blocks[]"
-                                               id="block-<?php echo $block_id ?>"
-                                               value="<?php echo $block['name']; ?>"
+                                               id="block-<?php echo esc_html($block_id) ?>"
+                                               value="<?php echo esc_html($block['name']) ?>"
                                                <?php if ($active_blocks_saved == 'all' || in_array($block['name'], $active_blocks_saved)) echo 'checked' ?>/>
                                         <div class="slider round"></div>
                                     </label>
@@ -158,15 +158,15 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                     foreach ($wp_user_search as $userid => $user_object) {
                         echo '<tr>';
                         echo '<td class="select-box">';
-                        echo '<input type="checkbox" name="gbadv-users[]" value="' . $userid . '" >';
+                        echo '<input type="checkbox" name="gbadv-users[]" value="' . esc_html($userid) . '" >';
                         echo '</td>';
                         echo '<td class="name column-name">';
-                        echo '<span style="color: #0073aa">' . $user_object->display_name . '</span>';
+                        echo '<span style="color: #0073aa">' . esc_html($user_object->display_name) . '</span>';
                         echo '</td>';
                         echo '<td class="username column-username">';
-                        echo '<strong>' . $user_object->user_login . '</strong>';
+                        echo '<strong>' . esc_html($user_object->user_login) . '</strong>';
                         echo '</td>';
-                        echo '<td class="email column-email">' . $user_object->user_email . '</td>';
+                        echo '<td class="email column-email">' . esc_html($user_object->user_email) . '</td>';
 
                         $role_list = array();
                         global $wp_roles;
@@ -195,7 +195,7 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                 <input type="hidden"
                        name="gbadv-users-access-list"
                        id="gbadv-users-access-list"
-                       value="<?php echo $list_users_access ?>"/>
+                       value="<?php echo esc_html($list_users_access) ?>"/>
             </table>
             <p id="pagination">
                 <?php $doneLeft = $doneRight = $skipLeft = $skipRight = false;
