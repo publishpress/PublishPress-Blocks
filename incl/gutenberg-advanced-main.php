@@ -9,20 +9,20 @@ class GutenbergAdvancedMain
 
     public function __construct()
     {
-        add_action('admin_init', array($this, 'init_blocks_list'));
         add_action('admin_enqueue_scripts', array($this, 'register_styles_scripts'));
-        add_action('enqueue_block_editor_assets', array($this, 'init_active_blocks_for_gutenberg'), 99);
 
         if (is_admin()) {
+            add_action('admin_init', array($this, 'init_blocks_list'));
             add_action('admin_menu', array($this, 'register_meta_box'));
+            add_action('enqueue_block_editor_assets', array($this, 'init_active_blocks_for_gutenberg'), 99);
             // Ajax
-            add_action('wp_ajax_gbadv_update_blocks_list', array($this, 'gbadv_update_blocks_list'));
-            add_action('wp_ajax_gbadv_get_users', array($this, 'gbadv_get_users'));
+            add_action('wp_ajax_gbadv_update_blocks_list', array($this, 'update_blocks_list'));
+            add_action('wp_ajax_gbadv_get_users', array($this, 'get_users'));
         }
     }
 
     // Ajax to update blocks list
-    public function gbadv_update_blocks_list()
+    public function update_blocks_list()
     {
         $blocksList     = $_POST['blocksList'];
         $categoriesList = $_POST['categoriesList'];
@@ -37,7 +37,7 @@ class GutenbergAdvancedMain
     }
 
     // Ajax to get users list
-    public function gbadv_get_users()
+    public function get_users()
     {
         // Check users permissions
         if (! current_user_can('create_gbadv_profiles')) {
@@ -261,14 +261,13 @@ class GutenbergAdvancedMain
 
             return $columns;
         }
-
         add_filter('screen_layout_columns', 'gbadv_set_screen_layout_columns');
 
+        // Make profile only have one column layout
         function gbadv_set_screen_layout()
         {
             return 1;
         }
-
         add_filter('get_user_option_screen_layout_gbadv_profiles', 'gbadv_set_screen_layout');
 
         add_meta_box(
@@ -281,6 +280,7 @@ class GutenbergAdvancedMain
         );
     }
 
+    // Load profile view
     public function gdabv_profiles()
     {
         wp_enqueue_style('tabs_style');
@@ -294,6 +294,7 @@ class GutenbergAdvancedMain
         $this->load_view('profile');
     }
 
+    // Function to get and load the view
     public function load_view($view)
     {
         include_once(plugin_dir_path(__FILE__) . 'view/gutenberg-advanced-' . $view . '.php');
@@ -338,6 +339,7 @@ class GutenbergAdvancedMain
             }
         endwhile;
 
+        // If users have no permission, throw a warning
         wp_die(__(
             'Not allow to use Gutenberg! Ask your administrator to provide you the permission!',
             'gutenberg-advanced'

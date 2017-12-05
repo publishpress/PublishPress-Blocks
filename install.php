@@ -1,17 +1,14 @@
 <?php
 defined('ABSPATH') or die;
 
-register_activation_hook(GUTENBERG_ADVANCED_PLUGIN, 'gbadv_plugin_activated');
 if (is_admin()) {
     add_action('init', 'register_gbadv_menu');
-    add_action('admin_init', 'add_gbadv_cap');
     add_filter('post_updated_messages', 'gbadv_post_msg');
     add_action('save_post_gbadv_profiles', 'save_gbadv_profile');
 }
 
-// Init plugin
-function gbadv_plugin_activated()
-{
+// Run when activate plugin
+register_activation_hook(GUTENBERG_ADVANCED_PLUGIN, function () {
     // Check if Gutenberg is activated
     if (!function_exists('register_block_type')) {
         wp_die('Gutenberg not activated!');
@@ -39,7 +36,30 @@ function gbadv_plugin_activated()
         );
         wp_insert_post($post_data, true);
     }
-}
+
+    // Add cap to users
+    global $wp_roles;
+
+    $wp_roles->add_cap('administrator', 'edit_gbadv_profiles');
+    $wp_roles->add_cap('administrator', 'edit_others_gbadv_profiles');
+    $wp_roles->add_cap('administrator', 'create_gbadv_profiles');
+    $wp_roles->add_cap('administrator', 'publish_gbadv_profiles');
+    $wp_roles->add_cap('administrator', 'delete_gbadv_profiles');
+    $wp_roles->add_cap('administrator', 'delete_others_gbadv_profiles');
+    $wp_roles->add_cap('administrator', 'read_gbadv_profile');
+    $wp_roles->add_cap('administrator', 'read_private_gbadv_profiles');
+
+    $wp_roles->add_cap('editor', 'read_gbadv_profile');
+    $wp_roles->add_cap('editor', 'read_private_gbadv_profiles');
+    $wp_roles->add_cap('editor', 'edit_gbadv_profiles');
+
+    $wp_roles->add_cap('author', 'edit_gbadv_profiles');
+    $wp_roles->add_cap('author', 'read_gbadv_profile');
+    $wp_roles->add_cap('author', 'read_private_gbadv_profiles');
+
+    $wp_roles->add_cap('contributor', 'read_gbadv_profile');
+    $wp_roles->add_cap('contributor', 'read_private_gbadv_profiles');
+});
 
 // Register menu
 function register_gbadv_menu()
@@ -76,32 +96,6 @@ function register_gbadv_menu()
         ),
         'map_meta_cap' => true
     ));
-}
-
-// Add meta cap
-function add_gbadv_cap()
-{
-    global $wp_roles;
-
-    $wp_roles->add_cap('administrator', 'edit_gbadv_profiles');
-    $wp_roles->add_cap('administrator', 'edit_others_gbadv_profiles');
-    $wp_roles->add_cap('administrator', 'create_gbadv_profiles');
-    $wp_roles->add_cap('administrator', 'publish_gbadv_profiles');
-    $wp_roles->add_cap('administrator', 'delete_gbadv_profiles');
-    $wp_roles->add_cap('administrator', 'delete_others_gbadv_profiles');
-    $wp_roles->add_cap('administrator', 'read_gbadv_profile');
-    $wp_roles->add_cap('administrator', 'read_private_gbadv_profiles');
-
-    $wp_roles->add_cap('editor', 'read_gbadv_profile');
-    $wp_roles->add_cap('editor', 'read_private_gbadv_profiles');
-    $wp_roles->add_cap('editor', 'edit_gbadv_profiles');
-
-    $wp_roles->add_cap('author', 'edit_gbadv_profiles');
-    $wp_roles->add_cap('author', 'read_gbadv_profile');
-    $wp_roles->add_cap('author', 'read_private_gbadv_profiles');
-
-    $wp_roles->add_cap('contributor', 'read_gbadv_profile');
-    $wp_roles->add_cap('contributor', 'read_private_gbadv_profiles');
 }
 
 // Change post's update messages
