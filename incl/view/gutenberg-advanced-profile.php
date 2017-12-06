@@ -79,7 +79,7 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                                                id="block-<?php echo esc_attr($block_id) ?>"
                                                value="<?php echo esc_attr($block['name']) ?>"
                                                <?php if ($active_blocks_saved == 'all' || in_array($block['name'], $active_blocks_saved)) echo 'checked' ?>/>
-                                        <div class="slider round"></div>
+                                        <span class="slider round"></span>
                                     </label>
                                 </div>
                             </li>
