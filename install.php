@@ -37,6 +37,16 @@ register_activation_hook(GUTENBERG_ADVANCED_PLUGIN, function () {
         wp_insert_post($post_data, true);
     }
 
+    // Add default settings for first time install
+    $saved_settings = get_option('gbadv_settings');
+
+    if ($saved_settings === false) {
+        update_option('gbadv_settings', array(
+            'gallery_lightbox' => 1,
+            'gallery_lightbox_title' => 1
+        ));
+    }
+
     // Add cap to users
     global $wp_roles;
 
