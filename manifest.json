@@ -3,7 +3,7 @@
   "name": "Guttenberg Advanced",
   "uri": "https://www.joomunited.com/wordpress-products/guttenberg-advanced",
   "version": "1.0.0",
-  "wp_version": "4.8.3",
+  "wp_version": "4.9.1",
   "changelog": {
     "1.0.0": [
       {
