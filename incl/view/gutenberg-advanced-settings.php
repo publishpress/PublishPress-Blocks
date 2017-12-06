@@ -24,7 +24,13 @@ defined('ABSPATH') or die;
             <ul class="settings-list">
                 <li class="settings-option">
                     <div class="settings-option-wrapper">
-                        <label for="gallery_lightbox" class="switch-label">
+                        <label for="gallery_lightbox"
+                               class="switch-label gbadv_qtip"
+                               alt="<?php _e(
+                                   'Open galleries images in a popup lightbox.',
+                                   'gutenberg-advanced'
+                               ) ?>"
+                        >
                             <?php _e('Open galleries in lightbox', 'gutenberg-advanced') ?>
                         </label>
                         <div class="switch-btn">
@@ -36,10 +42,16 @@ defined('ABSPATH') or die;
                             </label>
                         </div>
                     </div>
-                    <ul class="settings-list item-hidden" id="gallery_lightbox_title_wrapper">
+                    <ul class="settings-list hidden-item" id="gallery_lightbox_title_wrapper">
                         <li class="settings-option">
                             <div class="settings-option-wrapper">
-                                <label for="gallery_lightbox_title" class="switch-label">
+                                <label for="gallery_lightbox_title"
+                                       class="switch-label gbadv_qtip"
+                                       alt="<?php _e(
+                                           'Load images title as caption for lightbox images.',
+                                           'gutenberg-advanced'
+                                       ) ?>"
+                                >
                                     <?php _e('Image title', 'gutenberg-advanced') ?>
                                 </label>
                                 <div class="switch-btn">

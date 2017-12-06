@@ -217,16 +217,20 @@ class GutenbergAdvancedMain
             plugins_url('assets/css/style.css', dirname(__FILE__))
         );
         wp_register_style(
-            'tabs_style',
-            plugins_url('assets/css/tabs.css', dirname(__FILE__))
-        );
-        wp_register_style(
             'settings_style',
             plugins_url('assets/css/settings.css', dirname(__FILE__))
         );
         wp_register_style(
+            'tabs_style',
+            plugins_url('assets/css/tabs.css', dirname(__FILE__))
+        );
+        wp_register_style(
             'button_switch_style',
             plugins_url('assets/css/switch-button.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'qtip_style',
+            plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
         );
 
         // Register JS
@@ -245,6 +249,10 @@ class GutenbergAdvancedMain
             plugins_url('assets/js/profile.js', dirname(__FILE__))
         );
         wp_register_script(
+            'settings_js',
+            plugins_url('assets/js/settings.js', dirname(__FILE__))
+        );
+        wp_register_script(
             'velocity_js',
             plugins_url('assets/js/velocity.min.js', dirname(__FILE__))
         );
@@ -257,8 +265,8 @@ class GutenbergAdvancedMain
             plugins_url('assets/js/tabs.js', dirname(__FILE__))
         );
         wp_register_script(
-            'settings_js',
-            plugins_url('assets/js/settings.js', dirname(__FILE__))
+            'qtip_js',
+            plugins_url('assets/js/jquery.qtip.min.js', dirname(__FILE__))
         );
     }
 
@@ -327,11 +335,13 @@ class GutenbergAdvancedMain
     {
         wp_enqueue_style('tabs_style');
         wp_enqueue_style('button_switch_style');
+        wp_enqueue_style('qtip_style');
         wp_enqueue_style('settings_style');
 
         wp_enqueue_script('waves_js');
         wp_enqueue_script('velocity_js');
         wp_enqueue_script('tabs_js');
+        wp_enqueue_script('qtip_js');
         wp_enqueue_script('settings_js');
 
         $this->load_view('settings');
