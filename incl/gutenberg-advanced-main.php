@@ -435,23 +435,31 @@ class GutenbergAdvancedMain
         include_once(plugin_dir_path(__FILE__) . 'view/gutenberg-advanced-' . $view . '.php');
     }
 
-    // Function to load the lightbox for galleries
+    // Function to load the lightbox for galleries in front-end
     public function add_gallery_lightbox($content)
     {
         if (strpos($content, 'wp-block-gallery') !== false) {
-            wp_enqueue_style(
-                'colorbox_style',
-                plugins_url('assets/css/colorbox.css', dirname(__FILE__))
-            );
+            $saved_settings = get_option('gbadv_settings');
 
-            wp_enqueue_script(
-                'colorbox_js',
-                plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__))
-            );
-            wp_enqueue_script(
-                'gallery_lightbox_js',
-                plugins_url('assets/js/gallery.colorbox.init.js', dirname(__FILE__))
-            );
+            if ($saved_settings['gallery_lightbox']) {
+                wp_enqueue_style(
+                    'colorbox_style',
+                    plugins_url('assets/css/colorbox.css', dirname(__FILE__))
+                );
+
+                wp_enqueue_script(
+                    'colorbox_js',
+                    plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__))
+                );
+                wp_enqueue_script(
+                    'gallery_lightbox_js',
+                    plugins_url('assets/js/gallery.colorbox.init.js', dirname(__FILE__))
+                );
+
+                wp_localize_script('gallery_lightbox_js', 'gbadv', array(
+                    'imageCaption' => $saved_settings['gallery_lightbox_caption']
+                ));
+            }
         }
 
         return $content;
