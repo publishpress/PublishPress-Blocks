@@ -61,11 +61,11 @@ $gallery_lightbox_title_checked = $saved_settings['gallery_lightbox_title'] ? 'c
                                 <label for="gallery_lightbox_title"
                                        class="switch-label gbadv_qtip"
                                        alt="<?php _e(
-                                           'Load images title as caption for lightbox images.',
+                                           'Load images (alt) attribute as caption for lightbox images.',
                                            'gutenberg-advanced'
                                        ) ?>"
                                 >
-                                    <?php _e('Image title', 'gutenberg-advanced') ?>
+                                    <?php _e('Image caption', 'gutenberg-advanced') ?>
                                 </label>
                                 <div class="switch-btn">
                                     <label class="switch">
