@@ -1,15 +1,10 @@
 jQuery(document).ready(function ($) {
     $('.wp-block-gallery').each(function () {
-        var imageBlock = $(this).find('.blocks-gallery-image img');
-
-        if ($(this).find('.blocks-gallery-image a').length > 0) {
-            imageBlock = $(this).find('.blocks-gallery-image a');
-        }
-
-        imageBlock.colorbox({
+        // Add lightbox for images
+        $(this).find('.blocks-gallery-image img').colorbox({
             title: function () {
                 if (parseInt(gbadv.imageCaption)) {
-                    return $(this).closest('.blocks-gallery-image').find('img').attr('alt');
+                    return $(this).attr('alt');
                 }
 
                 return null;
@@ -20,13 +15,12 @@ jQuery(document).ready(function ($) {
             className: 'gbadv_lightbox',
             rel: 'gallery',
             href: function () {
-                return $(this).closest('.blocks-gallery-image').find('img').attr('src');
+                return $(this).attr('src');
             },
             onComplete: function () {
-                var currentImg = $(this).closest('.blocks-gallery-image').find('img');
                 $('.cboxPhoto')
-                    .attr('alt', currentImg.attr('alt'))
-                    .attr('title', currentImg.attr('title'));
+                    .attr('alt', $(this).attr('alt'))
+                    .attr('title', $(this).attr('title'));
             }
         })
     })
