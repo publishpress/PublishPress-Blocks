@@ -21,6 +21,9 @@ class GutenbergAdvancedMain
             // Ajax
             add_action('wp_ajax_gbadv_update_blocks_list', array($this, 'update_blocks_list'));
             add_action('wp_ajax_gbadv_get_users', array($this, 'get_users'));
+        } else {
+            // Front-end
+            add_filter('the_content', array($this, 'add_gallery_lightbox'));
         }
     }
 
@@ -209,7 +212,7 @@ class GutenbergAdvancedMain
         }
     }
 
-    // Register styles and script for later use
+    // Register back-end styles and script for later use
     public function register_styles_scripts()
     {
         // Register CSS
@@ -430,5 +433,27 @@ class GutenbergAdvancedMain
     public function load_view($view)
     {
         include_once(plugin_dir_path(__FILE__) . 'view/gutenberg-advanced-' . $view . '.php');
+    }
+
+    // Function to load the lightbox for galleries
+    public function add_gallery_lightbox($content)
+    {
+        if (strpos($content, 'wp-block-gallery') !== false) {
+            wp_enqueue_style(
+                'colorbox_style',
+                plugins_url('assets/css/colorbox.css', dirname(__FILE__))
+            );
+
+            wp_enqueue_script(
+                'colorbox_js',
+                plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__))
+            );
+            wp_enqueue_script(
+                'gallery_lightbox_js',
+                plugins_url('assets/js/gallery.colorbox.init.js', dirname(__FILE__))
+            );
+        }
+
+        return $content;
     }
 }
