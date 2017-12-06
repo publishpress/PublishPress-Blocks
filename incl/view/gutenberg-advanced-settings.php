@@ -8,7 +8,14 @@ $gallery_lightbox_title_checked = $saved_settings['gallery_lightbox_title'] ? 'c
 ?>
 <h1><?php _e('Gutenberg Advanced Settings', 'gutenberg-advanced') ?></h1>
 
-<div id="gbadv-settings-container">
+<?php if (isset($_GET['save'])) : ?>
+<div id="gbadv-config-success">
+    <?php _e('Settings saved successfully', 'gutenberg-advanced') ?>
+    <i class="dashicons dashicons-dismiss" id="gbadv-config-close"></i>
+</div>
+<?php endif; ?>
+
+<div id="gbadv-settings-container" style="margin-right: 20px">
     <ul class="tabs cyan z-depth-1">
         <li class="tab">
             <a href="#config-tab" class="link-tab white-text waves-effect waves-light">

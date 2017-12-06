@@ -7,6 +7,10 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('#gbadv-config-close').click(function () {
+        $('#gbadv-config-success').slideUp();
+    });
+
     if ($('#gallery_lightbox').is(':checked')) {
         $('#gallery_lightbox_title_wrapper').removeClass('hidden-item');
     }

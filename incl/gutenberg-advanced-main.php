@@ -369,6 +369,11 @@ class GutenbergAdvancedMain
             }
 
             update_option('gbadv_settings', $save_config);
+
+            if (isset($_REQUEST['_wp_http_referer'])) {
+                wp_redirect($_REQUEST['_wp_http_referer'] . '&save=success');
+                exit;
+            }
         }
 
         return true;
