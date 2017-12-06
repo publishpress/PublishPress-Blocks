@@ -15,6 +15,8 @@ class GutenbergAdvancedMain
             add_action('admin_init', array($this, 'init_blocks_list'));
             add_action('admin_menu', array($this, 'register_meta_box'));
             add_action('enqueue_block_editor_assets', array($this, 'init_active_blocks_for_gutenberg'), 99);
+            add_action('admin_menu', array($this, 'register_settings_menu'), 5);
+
             // Ajax
             add_action('wp_ajax_gbadv_update_blocks_list', array($this, 'update_blocks_list'));
             add_action('wp_ajax_gbadv_get_users', array($this, 'get_users'));
@@ -218,6 +220,14 @@ class GutenbergAdvancedMain
             'tabs_style',
             plugins_url('assets/css/tabs.css', dirname(__FILE__))
         );
+        wp_register_style(
+            'settings_style',
+            plugins_url('assets/css/settings.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'button_switch_style',
+            plugins_url('assets/css/switch-button.css', dirname(__FILE__))
+        );
 
         // Register JS
         wp_register_script(
@@ -246,6 +256,10 @@ class GutenbergAdvancedMain
             'tabs_js',
             plugins_url('assets/js/tabs.js', dirname(__FILE__))
         );
+        wp_register_script(
+            'settings_js',
+            plugins_url('assets/js/settings.js', dirname(__FILE__))
+        );
     }
 
     // Remove and add metabox for create profile screen
@@ -273,7 +287,7 @@ class GutenbergAdvancedMain
         add_meta_box(
             'gbadv_meta_box',
             __('Gutenberg Advanced Profile', 'gutenberg-advanced'),
-            array($this, 'gdabv_profiles'),
+            array($this, 'gdabv_profiles_view'),
             'gbadv_profiles',
             'normal',
             'core'
@@ -281,9 +295,10 @@ class GutenbergAdvancedMain
     }
 
     // Load profile view
-    public function gdabv_profiles()
+    public function gdabv_profiles_view()
     {
         wp_enqueue_style('tabs_style');
+        wp_enqueue_style('button_switch_style');
         wp_enqueue_style('profile_style');
 
         wp_enqueue_script('waves_js');
@@ -294,11 +309,34 @@ class GutenbergAdvancedMain
         $this->load_view('profile');
     }
 
-    // Function to get and load the view
-    public function load_view($view)
+    // Register settings menu
+    public function register_settings_menu()
     {
-        include_once(plugin_dir_path(__FILE__) . 'view/gutenberg-advanced-' . $view . '.php');
+        add_submenu_page(
+            'options-general.php',
+            __('Gutenberg Advanced Settings', 'gutenberg-advanced'),
+            __('Gutenberg Advanced Settings', 'gutenberg-advanced'),
+            'manage_options',
+            'gbadv_settings',
+            array($this, 'gbadv_settings_view')
+        );
     }
+
+    // Load settings view
+    public function gbadv_settings_view()
+    {
+        wp_enqueue_style('tabs_style');
+        wp_enqueue_style('button_switch_style');
+        wp_enqueue_style('settings_style');
+
+        wp_enqueue_script('waves_js');
+        wp_enqueue_script('velocity_js');
+        wp_enqueue_script('tabs_js');
+        wp_enqueue_script('settings_js');
+
+        $this->load_view('settings');
+    }
+
 
     // Set the active blocks for users regard to Gutenberg Advanced profiles
     public function init_active_blocks_for_gutenberg()
@@ -344,5 +382,11 @@ class GutenbergAdvancedMain
             'Not allow to use Gutenberg! Ask your administrator to provide you the permission!',
             'gutenberg-advanced'
         ));
+    }
+
+    // Function to get and load the view
+    public function load_view($view)
+    {
+        include_once(plugin_dir_path(__FILE__) . 'view/gutenberg-advanced-' . $view . '.php');
     }
 }

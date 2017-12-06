@@ -1,0 +1,35 @@
+.tab-content {
+    background: #ffffff;
+    padding: 10px;
+}
+
+.no-display {
+    display: none;
+}
+
+.item-hidden {
+    visibility: hidden;
+}
+
+.settings-list ul {
+    padding-left: 40px;
+}
+
+.settings-option .switch-label {
+    min-width: 200px;
+}
+
+.settings-option-wrapper {
+    padding: 5px 10px;
+}
+
+#gallery_lightbox_title_wrapper .slider {
+    transition: none;
+    -moz-transition: none;
+    -webkit-transition: none;
+}
+
+/*Save setting button*/
+.save-settings-block {
+    margin-top: 20px;
+}
