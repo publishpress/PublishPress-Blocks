@@ -4,7 +4,7 @@ defined('ABSPATH') or die;
 $saved_settings = get_option('gbadv_settings');
 
 $gallery_lightbox_checked = $saved_settings['gallery_lightbox'] ? 'checked' : '';
-$gallery_lightbox_title_checked = $saved_settings['gallery_lightbox_title'] ? 'checked' : '';
+$gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] ? 'checked' : '';
 ?>
 <h1><?php _e('Gutenberg Advanced Settings', 'gutenberg-advanced') ?></h1>
 
@@ -55,10 +55,10 @@ $gallery_lightbox_title_checked = $saved_settings['gallery_lightbox_title'] ? 'c
                             </label>
                         </div>
                     </div>
-                    <ul class="settings-list hidden-item" id="gallery_lightbox_title_wrapper">
+                    <ul class="settings-list hidden-item" id="gallery_lightbox_caption_wrapper">
                         <li class="settings-option">
                             <div class="settings-option-wrapper">
-                                <label for="gallery_lightbox_title"
+                                <label for="gallery_lightbox_caption"
                                        class="switch-label gbadv_qtip"
                                        alt="<?php _e(
                                            'Load images (alt) attribute as caption for lightbox images.',
@@ -69,10 +69,10 @@ $gallery_lightbox_title_checked = $saved_settings['gallery_lightbox_title'] ? 'c
                                 </label>
                                 <div class="switch-btn">
                                     <label class="switch">
-                                        <input type="checkbox" name="gallery_lightbox_title"
-                                               id="gallery_lightbox_title"
+                                        <input type="checkbox" name="gallery_lightbox_caption"
+                                               id="gallery_lightbox_caption"
                                                value="1"
-                                            <?php echo esc_attr($gallery_lightbox_title_checked) ?>
+                                            <?php echo esc_attr($gallery_lightbox_caption_checked) ?>
                                         />
                                         <span class="slider round"></span>
                                     </label>

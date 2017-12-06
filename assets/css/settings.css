@@ -41,7 +41,7 @@
     padding: 5px 10px;
 }
 
-#gallery_lightbox_title_wrapper .slider {
+#gallery_lightbox_caption_wrapper .slider {
     transition: none;
     -moz-transition: none;
     -webkit-transition: none;

@@ -365,10 +365,10 @@ class GutenbergAdvancedMain
                 $save_config['gallery_lightbox'] = 0;
             }
 
-            if (isset($_POST['gallery_lightbox_title'])) {
-                $save_config['gallery_lightbox_title'] = 1;
+            if (isset($_POST['gallery_lightbox_caption'])) {
+                $save_config['gallery_lightbox_caption'] = 1;
             } else {
-                $save_config['gallery_lightbox_title'] = 0;
+                $save_config['gallery_lightbox_caption'] = 0;
             }
 
             update_option('gbadv_settings', $save_config);
