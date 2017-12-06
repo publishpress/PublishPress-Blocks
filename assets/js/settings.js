@@ -5,7 +5,11 @@ jQuery(document).ready(function ($) {
         } else {
             $('#gallery_lightbox_title_wrapper').addClass('hidden-item');
         }
-    })
+    });
+
+    if ($('#gallery_lightbox').is(':checked')) {
+        $('#gallery_lightbox_title_wrapper').removeClass('hidden-item');
+    }
 
     $('.gbadv_qtip').qtip({
         content: {

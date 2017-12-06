@@ -16,6 +16,7 @@ class GutenbergAdvancedMain
             add_action('admin_menu', array($this, 'register_meta_box'));
             add_action('enqueue_block_editor_assets', array($this, 'init_active_blocks_for_gutenberg'), 99);
             add_action('admin_menu', array($this, 'register_settings_menu'), 5);
+            add_action('load-settings_page_gbadv_settings', array($this, 'save_settings'));
 
             // Ajax
             add_action('wp_ajax_gbadv_update_blocks_list', array($this, 'update_blocks_list'));
@@ -345,6 +346,32 @@ class GutenbergAdvancedMain
         wp_enqueue_script('settings_js');
 
         $this->load_view('settings');
+    }
+
+    // Save config settings
+    public function save_settings()
+    {
+        if (isset($_POST['save_settings'])) {
+            if (!wp_verify_nonce($_POST['gbadv_settings_nonce_field'], 'gbadv_settings_nonce')) {
+                return false;
+            }
+
+            if (isset($_POST['gallery_lightbox'])) {
+                $save_config['gallery_lightbox'] = 1;
+            } else {
+                $save_config['gallery_lightbox'] = 0;
+            }
+
+            if (isset($_POST['gallery_lightbox_title'])) {
+                $save_config['gallery_lightbox_title'] = 1;
+            } else {
+                $save_config['gallery_lightbox_title'] = 0;
+            }
+
+            update_option('gbadv_settings', $save_config);
+        }
+
+        return true;
     }
 
 
