@@ -17,9 +17,9 @@ class GutenbergAdvancedMain
             add_filter('post_updated_messages', array($this, 'update_post_msg'));
             add_action('admin_init', array($this, 'init_blocks_list'));
             add_action('admin_menu', array($this, 'register_meta_box'));
-            add_action('enqueue_block_editor_assets', array($this, 'init_active_blocks_for_gutenberg'), 99);
             add_action('admin_menu', array($this, 'register_settings_menu'), 5);
             add_action('load-settings_page_gbadv_settings', array($this, 'save_settings'));
+            add_filter('allowed_block_types', array($this, 'init_active_blocks_for_gutenberg'));
 
             // Ajax
             add_action('wp_ajax_gbadv_update_blocks_list', array($this, 'update_blocks_list'));
@@ -244,11 +244,6 @@ class GutenbergAdvancedMain
         wp_register_script(
             'update_list',
             plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-            array('wp-blocks', 'wp-element')
-        );
-        wp_register_script(
-            'init_list',
-            plugins_url('assets/js/init-blocks-list.js', dirname(__FILE__)),
             array('wp-blocks', 'wp-element')
         );
         wp_register_script(
@@ -502,22 +497,15 @@ class GutenbergAdvancedMain
                     // Populate the ID
                     $this->active_profile = $postID;
                     $active_blocks_saved  = get_post_meta($this->active_profile, 'active_blocks', true);
-                    // Init blocks
-                    wp_enqueue_script('init_list');
-                    wp_localize_script('init_list', 'gbadvBlocks', array(
-                        'activeBlocks' => $active_blocks_saved
-                    ));
 
-                    return;
+                    // Return allowed blocks
+                    return $active_blocks_saved;
                 }
             }
         endwhile;
 
-        // If users have no permission, throw a warning
-        wp_die(__(
-            'Not allow to use Gutenberg! Ask your administrator to provide you the permission!',
-            'gutenberg-advanced'
-        ));
+        // If users have no permission, remove all blocks
+        return false;
     }
 
     // Function to get and load the view
