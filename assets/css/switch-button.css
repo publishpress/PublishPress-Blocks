@@ -48,8 +48,12 @@
 
 .switch-label {
     display: inline-block;
-    min-width: 135px;
+    width: 140px;
     font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 input:checked + .slider {

@@ -34,6 +34,10 @@ ul.blocks-list li.block-item {
     -webkit-transition: background-color .5s ease-out;
 }
 
+.block-title {
+    margin-left: 3px;
+}
+
 .block-item.new-block {
     background-color: #FF8855;
 }

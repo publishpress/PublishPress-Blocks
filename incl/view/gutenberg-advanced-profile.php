@@ -72,7 +72,9 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                             <li class="block-item" data-type="<?php echo esc_attr($block['name']) ?>">
                                 <label for="block-<?php echo $block_id ?>" class="switch-label">
                                     <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
-                                    <span class="block-title"><?php echo esc_html($block['title']) ?></span>
+                                    <span class="block-title" title="<?php echo esc_html($block['title']) ?>">
+                                        <?php echo esc_html($block['title']) ?>
+                                    </span>
                                 </label>
                                 <div class="switch-btn">
                                     <label class="switch">
