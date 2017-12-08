@@ -18,6 +18,7 @@ $users_access_saved = $users_access_saved ? $users_access_saved : array();
 
 $updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] == true);
 if ($updating) {
+    do_action('enqueue_block_editor_assets');
     wp_enqueue_script('update_list');
     wp_localize_script('update_list', 'gbadvUpdate', array('onProfile' => true));
 }
