@@ -56,15 +56,15 @@
     text-overflow: ellipsis;
 }
 
-input:checked + .slider {
+.switch input:checked + .slider {
     background-color: #2196F3;
 }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px 	#00CC00;
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #00CC00;
 }
 
-input:checked + .slider:before {
+.switch input:checked + .slider:before {
     -webkit-transform: translateX(22px);
     -ms-transform: translateX(22px);
     transform: translateX(22px);

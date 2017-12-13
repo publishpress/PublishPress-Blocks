@@ -38,6 +38,14 @@ ul.blocks-list li.block-item {
     margin-left: 3px;
 }
 
+.block-item input[type='checkbox'] {
+    display: none;
+}
+
+.block-item input:not(:checked) + label {
+    color: #999;
+}
+
 .block-item.new-block {
     background-color: #FF8855;
 }
