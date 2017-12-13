@@ -28,7 +28,7 @@ register_activation_hook(GUTENBERG_ADVANCED_PLUGIN, function () {
                 'users_access'  => array(),
             )
         );
-        wp_insert_post($post_data, true);
+        @wp_insert_post($post_data, true);
     }
 
     // Add default settings for first time install

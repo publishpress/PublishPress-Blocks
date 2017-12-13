@@ -281,19 +281,19 @@ class GutenbergAdvancedMain
             'add_new'            => __('New Profile', 'gutenberg-advanced'),                  // New profile menu title
             'add_new_item'       => __('Add New Profile', 'gutenberg-advanced'),              // New profile title
             'edit_item'          => __('Edit Profile', 'gutenberg-advanced'),                 // Edit profile title
-            'all_items'          => __('Gutenberg Advanced', 'gutenberg-advanced'),           // All profiles menu title
+            'all_items'          => __('Profiles', 'gutenberg-advanced'),                     // All profiles menu title
             'view_item'          => __('View Profile', 'gutenberg-advanced'),
             'search_items'       => __('Search Profiles', 'gutenberg-advanced'),              // Search button title
             'not_found'          => __('No profiles found', 'gutenberg-advanced'),
             'not_found_in_trash' => __('No profiles found in trash', 'gutenberg-advanced'),
             'parent_item_colon'  => '',
-            'menu_name'          => __('Gutenberg Advanced', 'gutenberg-advanced')
+            'menu_name'          => __('Profiles', 'gutenberg-advanced')
         );
         register_post_type('gbadv_profiles', array(
             'labels'       => $labels,
             'public'       => false,
             'show_ui'      => true,
-            'show_in_menu' => 'options-general.php',
+            'show_in_menu' => 'gutenberg',
             'supports'     => array('title', 'author'),
             'capabilities' => array(
                 'edit_posts'          => 'edit_gbadv_profiles',
@@ -334,7 +334,7 @@ class GutenbergAdvancedMain
         add_meta_box(
             'gbadv_meta_box',
             __('Gutenberg Advanced Profile', 'gutenberg-advanced'),
-            array($this, 'gdabv_profiles_view'),
+            array($this, 'gbadv_profiles_view'),
             'gbadv_profiles',
             'normal',
             'core'
@@ -342,7 +342,7 @@ class GutenbergAdvancedMain
     }
 
     // Load profile view
-    public function gdabv_profiles_view()
+    public function gbadv_profiles_view()
     {
         wp_enqueue_style('tabs_style');
         wp_enqueue_style('button_switch_style');
