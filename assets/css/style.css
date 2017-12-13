@@ -43,7 +43,7 @@ ul.blocks-list li.block-item {
 }
 
 #block-update-notice {
-    color: green;
+    color: #444;
     padding: 10px;
     display: none;
 }

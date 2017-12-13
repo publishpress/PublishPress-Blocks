@@ -38,7 +38,7 @@ $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] 
                         <label for="gallery_lightbox"
                                class="switch-label gbadv_qtip"
                                alt="<?php _e(
-                                   'Open galleries images in a popup lightbox.',
+                                   'Open gallery images as a lightbox style popup',
                                    'gutenberg-advanced'
                                ) ?>"
                         >

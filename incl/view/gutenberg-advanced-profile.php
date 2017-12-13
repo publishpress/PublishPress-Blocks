@@ -58,7 +58,7 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                 </span>
             </button>
             <span id="block-update-notice">
-                <?php _e('Blocks list updated successfully.', 'gutenberg-advanced') ?>
+                <?php _e('Blocks list updated.', 'gutenberg-advanced') ?>
             </span>
         </div>
         <div class="blocks-section">
