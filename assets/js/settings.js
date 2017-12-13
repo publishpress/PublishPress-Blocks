@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
             tip: {
                 corner: true
             },
-            classes: 'wpsetips_qtip'
+            classes: 'gbadv_qtip'
         },
         show: 'hover',
         hide: {

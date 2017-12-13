@@ -20,10 +20,12 @@
     -moz-box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
     -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
 }
+
 #gbadv-config-close {
     float: right;
     color: #aaaaaa;
 }
+
 #gbadv-config-close:hover {
     color: #c00;
     cursor: pointer;
@@ -35,6 +37,7 @@
 
 .settings-option .switch-label {
     min-width: 200px;
+    overflow: inherit;
 }
 
 .settings-option-wrapper {
@@ -45,6 +48,12 @@
     transition: none;
     -moz-transition: none;
     -webkit-transition: none;
+}
+
+.qtip.gbadv_qtip {
+    background: #000000;
+    color: #ffffff;
+    border: 1px solid #000000;
 }
 
 /*Save setting button*/
