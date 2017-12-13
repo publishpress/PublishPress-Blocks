@@ -3,6 +3,16 @@ window.onload = function () {
         var allBlocks = wp.blocks.getBlockTypes();
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
+
+        // Do not get the reusable blocks
+        allBlocks = allBlocks.filter(function (block) {
+            return block.category !== 'reusable-blocks';
+        });
+
+        allCategories = allCategories.filter(function (category) {
+            return category.slug !== 'reusable-blocks';
+        });
+
         allBlocks.forEach(function (block) {
             var blockItem = {
                 name: block.name,
