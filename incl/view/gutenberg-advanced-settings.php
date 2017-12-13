@@ -55,31 +55,29 @@ $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] 
                             </label>
                         </div>
                     </div>
-                    <ul class="settings-list hidden-item" id="gallery_lightbox_caption_wrapper">
-                        <li class="settings-option">
-                            <div class="settings-option-wrapper">
-                                <label for="gallery_lightbox_caption"
-                                       class="switch-label gbadv_qtip"
-                                       alt="<?php _e(
-                                           'Load images (alt) attribute as caption for lightbox images.',
-                                           'gutenberg-advanced'
-                                       ) ?>"
-                                >
-                                    <?php _e('Image caption', 'gutenberg-advanced') ?>
-                                </label>
-                                <div class="switch-btn">
-                                    <label class="switch">
-                                        <input type="checkbox" name="gallery_lightbox_caption"
-                                               id="gallery_lightbox_caption"
-                                               value="1"
-                                            <?php echo esc_attr($gallery_lightbox_caption_checked) ?>
-                                        />
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                </li>
+                <li class="settings-option" id="gallery_lightbox_caption_wrapper">
+                    <div class="settings-option-wrapper">
+                        <label for="gallery_lightbox_caption"
+                               class="switch-label gbadv_qtip"
+                               alt="<?php _e(
+                                   'Load images (alt) attribute as caption for lightbox images.',
+                                   'gutenberg-advanced'
+                               ) ?>"
+                        >
+                            <?php _e('Image caption', 'gutenberg-advanced') ?>
+                        </label>
+                        <div class="switch-btn">
+                            <label class="switch">
+                                <input type="checkbox" name="gallery_lightbox_caption"
+                                       id="gallery_lightbox_caption"
+                                       value="1"
+                                    <?php echo esc_attr($gallery_lightbox_caption_checked) ?>
+                                />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
                 </li>
             </ul>
 
