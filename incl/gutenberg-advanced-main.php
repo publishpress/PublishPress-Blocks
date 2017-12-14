@@ -362,7 +362,7 @@ class GutenbergAdvancedMain
         add_submenu_page(
             'options-general.php',
             __('Gutenberg Advanced Settings', 'gutenberg-advanced'),
-            __('Gutenberg Advanced Settings', 'gutenberg-advanced'),
+            __('Gutenberg Advanced', 'gutenberg-advanced'),
             'manage_options',
             'gbadv_settings',
             array($this, 'gbadv_settings_view')
