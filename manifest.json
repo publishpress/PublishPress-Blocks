@@ -9,6 +9,14 @@
       {
         "type": "feature",
         "title": "Initial version"
+      },
+      {
+        "type": "feature",
+        "title": "Blocks accessibity: Define which users/roles can use which blocks"
+      },
+      {
+        "type": "feature",
+        "title": "Make gallery blocks images can be opened in a popup lightbox"
       }
     ]
   }
