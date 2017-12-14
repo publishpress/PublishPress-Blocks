@@ -2,6 +2,10 @@
     Colorbox Core Style:
     The following CSS is consistent between example themes and should not be altered.
 */
+.cboxElement {
+    cursor: pointer;
+}
+
 #colorbox.gbadv_lightbox,
 #cboxOverlay.gbadv_lightbox,
 #colorbox.gbadv_lightbox #cboxWrapper {
