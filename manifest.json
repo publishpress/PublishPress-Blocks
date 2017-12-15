@@ -12,11 +12,15 @@
       },
       {
         "type": "feature",
-        "title": "Blocks accessibity: Define which users/roles can use which blocks"
+        "title": "Blocks access: Define which editor blocks Users / User roles can use"
       },
       {
         "type": "feature",
         "title": "Make gallery blocks images can be opened in a popup lightbox"
+      },
+       {
+        "type": "feature",
+        "title": "Option to display alt text as caption when a gallery lightbox is opened"
       }
     ]
   }
