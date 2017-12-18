@@ -1,4 +1,4 @@
-=== Gutenberg Advanced ===
+=== Advanced Gutenberg ===
 Contributors: JoomUnited
 Tags: editor, text editor, page builder
 Requires at least: 4.5
@@ -29,31 +29,31 @@ Before leaving a review >> Feel free to ask questions here in the support sectio
 = To install the plugin automatically: =
 * Require Gutenberg plugin to be installed first
 * Through WordPress admin, use the menu: Plugin > Add new
-* Search for Gutenberg Advanced
+* Search for Advanced Gutenberg
 * Click on install then click activate link
 
 = To install the plugin manually: =
 * Require Gutenberg plugin to be installed first
 * Download and unzip the plugin wp-smart-editor.zip
-* Upload the /gutenberg-advanced directory to /wp-content/plugins/
+* Upload the /advanced-gutenberg directory to /wp-content/plugins/
 * Activate the plugin through the 'Plugins' menu in WordPress
-* Use the left menus: Gutengerg > Profiles AND Settings > Gutenberg Advanced
+* Use the left menus: Gutenberg > Profiles AND Settings > Advanced Gutenberg
 
 == Frequently Asked Questions ==
 
 = Can I get support for the editor use? =
 We reply to every question about the editor on the forum here, just ask :)
 
-= Does Gutenberg Advanced slowing down my website? =
+= Does Advanced Gutenberg slowing down my website? =
 The plugin have almost NO impact on page load, it's only loaded during the edition process.
 
-= Is Gutenberg Advanced free? =
+= Is Advanced Gutenberg free? =
 Yes totally free of charge.
 
-= Can I translate WP Smart Editor plugin? =
-Yes, and that's really easy! JU Translation is a translation tool included in all our WordPress plugins: get, share and manage your extensions translations from a visual and easy to use interface! You'll find it in the Gutenberg Advanced settings menu
+= Can I translate Advanced Gutenberg plugin? =
+Yes, and that's really easy! JU Translation is a translation tool included in all our WordPress plugins: get, share and manage your extensions translations from a visual and easy to use interface! You'll find it in the Advanced Gutenberg settings menu
 
-= I don't see the new buttons or new tools in Gutenberg Advanced =
+= I don't see the new buttons or new tools in Advanced Gutenberg =
 1. Make sure the plugin is activated
 2. Make sure that an edition profile is linked to your account for example if you're in admin user role make sure that an edition profile is setup to be loaded for admins
 
@@ -69,9 +69,9 @@ Yes, and that's really easy! JU Translation is a translation tool included in al
 
 == Upgrade Notice ==
 
-Update through the automatic WordPress updater, all Gutenberg Advanced content and configuration will remain in place.
+Update through the automatic WordPress updater, all Advanced Gutenberg content and configuration will remain in place.
 
 
 == Requirements ==
 
-PHP 5.6+, PHP7 or 7.1 recommended for better performance, WordPress 4.5+
+PHP 5.6+, PHP7 or 7.1 recommended for better performance, WordPress 4.8+

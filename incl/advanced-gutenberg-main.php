@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') or die;
 
-class GutenbergAdvancedMain
+class AdvancedGutenbergMain
 {
     public static $default_roles_access = array('administrator', 'editor', 'author');
     public static $default_active_blocks = 'all';
@@ -12,18 +12,18 @@ class GutenbergAdvancedMain
         add_action('admin_enqueue_scripts', array($this, 'register_styles_scripts'));
 
         if (is_admin()) {
-            add_action('init', array($this, 'register_gbadv_menu'));
-            add_action('save_post_gbadv_profiles', array($this, 'save_gbadv_profile'));
+            add_action('init', array($this, 'register_advgb_menu'));
+            add_action('save_post_advgb_profiles', array($this, 'save_advgb_profile'));
             add_filter('post_updated_messages', array($this, 'update_post_msg'));
             add_action('admin_init', array($this, 'init_blocks_list'));
             add_action('admin_menu', array($this, 'register_meta_box'));
             add_action('admin_menu', array($this, 'register_settings_menu'), 5);
-            add_action('load-settings_page_gbadv_settings', array($this, 'save_settings'));
+            add_action('load-settings_page_advgb_settings', array($this, 'save_settings'));
             add_filter('allowed_block_types', array($this, 'init_active_blocks_for_gutenberg'));
 
             // Ajax
-            add_action('wp_ajax_gbadv_update_blocks_list', array($this, 'update_blocks_list'));
-            add_action('wp_ajax_gbadv_get_users', array($this, 'get_users'));
+            add_action('wp_ajax_advgb_update_blocks_list', array($this, 'update_blocks_list'));
+            add_action('wp_ajax_advgb_get_users', array($this, 'get_users'));
         } else {
             // Front-end
             add_filter('the_content', array($this, 'add_gallery_lightbox'));
@@ -36,8 +36,8 @@ class GutenbergAdvancedMain
         $blocksList     = $_POST['blocksList'];
         $categoriesList = $_POST['categoriesList'];
 
-        update_option('gbadv_blocks_list', $blocksList);
-        update_option('gbadv_categories_list', $categoriesList);
+        update_option('advgb_blocks_list', $blocksList);
+        update_option('advgb_categories_list', $categoriesList);
 
         wp_send_json(array(
             'blocks_list' => $blocksList,
@@ -49,7 +49,7 @@ class GutenbergAdvancedMain
     public function get_users()
     {
         // Check users permissions
-        if (! current_user_can('create_gbadv_profiles')) {
+        if (! current_user_can('create_advgb_profiles')) {
             wp_send_json('No permission!', 403);
 
             return false;
@@ -121,7 +121,7 @@ class GutenbergAdvancedMain
             foreach ($wp_user_search as $userid => $user_object) {
                 $users_list .= '<tr>';
                 $users_list .= '<td class="select-box">';
-                $users_list .= '<input type="checkbox" name="gbadv-users[]" value="' . $userid . '" />';
+                $users_list .= '<input type="checkbox" name="advgb-users[]" value="' . $userid . '" />';
                 $users_list .= '</td>';
                 $users_list .= '<td class="name column-name">';
                 $users_list .= '<span style="color: #0073aa">' . $user_object->display_name . '</span>';
@@ -149,7 +149,7 @@ class GutenbergAdvancedMain
             }
         } else {
             $users_list .= '<tr><td colspan="5"> ';
-            $users_list .= __('No users found.', 'gutenberg-advandced');
+            $users_list .= __('No users found.', 'advanced-gutenberg-gutenberg');
             $users_list .= '</td></tr>';
         }
 
@@ -168,7 +168,7 @@ class GutenbergAdvancedMain
                     if ($pagenum == 1) {
                         $pages_list .= '<i class="dashicons dashicons-controls-skipback" id="first-page"></i>';
                     } else {
-                        $pages_list .= '<a class="dashicons dashicons-controls-skipback" id="first-page" title="' . __('First page', 'gutenberg-advandced') . '"></a>';
+                        $pages_list .= '<a class="dashicons dashicons-controls-skipback" id="first-page" title="' . __('First page', 'advanced-gutenberg-gutenberg') . '"></a>';
                     }
                 }
                 if (! $skipLeft && ! $skipRight) {
@@ -193,7 +193,7 @@ class GutenbergAdvancedMain
                     if ($pagenum == $total_pages) {
                         $pages_list .= '<i class="dashicons dashicons-controls-skipforward" id="last-page"></i>';
                     } else {
-                        $pages_list .= '<a class="dashicons dashicons-controls-skipforward" id="last-page" title="' . __('Last page', 'gutenberg-advandced') . '"></a>';
+                        $pages_list .= '<a class="dashicons dashicons-controls-skipforward" id="last-page" title="' . __('Last page', 'advanced-gutenberg-gutenberg') . '"></a>';
                     }
                 }
             }
@@ -205,7 +205,7 @@ class GutenbergAdvancedMain
     // Get the blocks list
     public function init_blocks_list()
     {
-        if (get_option('gbadv_blocks_list') === false) {
+        if (get_option('advgb_blocks_list') === false) {
             do_action('enqueue_block_editor_assets');
             wp_enqueue_script(
                 'update_list',
@@ -273,37 +273,37 @@ class GutenbergAdvancedMain
     }
 
     // Register profiles menu
-    function register_gbadv_menu()
+    function register_advgb_menu()
     {
         $labels = array(
-            'name'               => __('Gutenberg Advanced Profiles', 'gutenberg-advanced'),  // Profile title
-            'singular_name'      => __('Gutenberg Advanced Profiles', 'gutenberg-advanced'),
-            'add_new'            => __('New Profile', 'gutenberg-advanced'),                  // New profile menu title
-            'add_new_item'       => __('Add New Profile', 'gutenberg-advanced'),              // New profile title
-            'edit_item'          => __('Edit Profile', 'gutenberg-advanced'),                 // Edit profile title
-            'all_items'          => __('Profiles', 'gutenberg-advanced'),                     // All profiles menu title
-            'view_item'          => __('View Profile', 'gutenberg-advanced'),
-            'search_items'       => __('Search Profiles', 'gutenberg-advanced'),              // Search button title
-            'not_found'          => __('No profiles found', 'gutenberg-advanced'),
-            'not_found_in_trash' => __('No profiles found in trash', 'gutenberg-advanced'),
+            'name'               => __('Advanced Gutenberg Profiles', 'advanced-gutenberg'),  // Profile title
+            'singular_name'      => __('Advanced Gutenberg Profiles', 'advanced-gutenberg'),
+            'add_new'            => __('New Profile', 'advanced-gutenberg'),                  // New profile menu title
+            'add_new_item'       => __('Add New Profile', 'advanced-gutenberg'),              // New profile title
+            'edit_item'          => __('Edit Profile', 'advanced-gutenberg'),                 // Edit profile title
+            'all_items'          => __('Profiles', 'advanced-gutenberg'),                     // All profiles menu title
+            'view_item'          => __('View Profile', 'advanced-gutenberg'),
+            'search_items'       => __('Search Profiles', 'advanced-gutenberg'),              // Search button title
+            'not_found'          => __('No profiles found', 'advanced-gutenberg'),
+            'not_found_in_trash' => __('No profiles found in trash', 'advanced-gutenberg'),
             'parent_item_colon'  => '',
-            'menu_name'          => __('Profiles', 'gutenberg-advanced')
+            'menu_name'          => __('Profiles', 'advanced-gutenberg')
         );
-        register_post_type('gbadv_profiles', array(
+        register_post_type('advgb_profiles', array(
             'labels'       => $labels,
             'public'       => false,
             'show_ui'      => true,
             'show_in_menu' => 'gutenberg',
             'supports'     => array('title', 'author'),
             'capabilities' => array(
-                'edit_posts'          => 'edit_gbadv_profiles',
-                'edit_others_posts'   => 'edit_others_gbadv_profiles',
-                'publish_posts'       => 'publish_gbadv_profiles',
-                'read'                => 'read_gbadv_profile',
-                'read_private_posts'  => 'read_private_gbadv_profiles',
-                'delete_posts'        => 'delete_gbadv_profiles',
-                'delete_others_posts' => 'delete_others_gbadv_profiles',
-                'create_posts'        => 'create_gbadv_profiles',
+                'edit_posts'          => 'edit_advgb_profiles',
+                'edit_others_posts'   => 'edit_others_advgb_profiles',
+                'publish_posts'       => 'publish_advgb_profiles',
+                'read'                => 'read_advgb_profile',
+                'read_private_posts'  => 'read_private_advgb_profiles',
+                'delete_posts'        => 'delete_advgb_profiles',
+                'delete_others_posts' => 'delete_others_advgb_profiles',
+                'create_posts'        => 'create_advgb_profiles',
             ),
             'map_meta_cap' => true
         ));
@@ -312,37 +312,37 @@ class GutenbergAdvancedMain
     // Remove and add metabox for create profile screen
     public function register_meta_box()
     {
-        remove_meta_box('authordiv', 'gbadv_profiles', 'core');
-        remove_meta_box('slugdiv', 'gbadv_profiles', 'core');
+        remove_meta_box('authordiv', 'advgb_profiles', 'core');
+        remove_meta_box('slugdiv', 'advgb_profiles', 'core');
 
         // Make profile only have one column layout
-        function gbadv_set_screen_layout_columns($columns)
+        function advgb_set_screen_layout_columns($columns)
         {
-            $columns['gbadv_profiles'] = 1;
+            $columns['advgb_profiles'] = 1;
 
             return $columns;
         }
-        add_filter('screen_layout_columns', 'gbadv_set_screen_layout_columns');
+        add_filter('screen_layout_columns', 'advgb_set_screen_layout_columns');
 
         // Make profile only have one column layout
-        function gbadv_set_screen_layout()
+        function advgb_set_screen_layout()
         {
             return 1;
         }
-        add_filter('get_user_option_screen_layout_gbadv_profiles', 'gbadv_set_screen_layout');
+        add_filter('get_user_option_screen_layout_advgb_profiles', 'advgb_set_screen_layout');
 
         add_meta_box(
-            'gbadv_meta_box',
-            __('Gutenberg Advanced Profile', 'gutenberg-advanced'),
-            array($this, 'gbadv_profiles_view'),
-            'gbadv_profiles',
+            'advgb_meta_box',
+            __('Advanced Gutenberg Profile', 'advanced-gutenberg'),
+            array($this, 'advgb_profiles_view'),
+            'advgb_profiles',
             'normal',
             'core'
         );
     }
 
     // Load profile view
-    public function gbadv_profiles_view()
+    public function advgb_profiles_view()
     {
         wp_enqueue_style('tabs_style');
         wp_enqueue_style('button_switch_style');
@@ -361,16 +361,16 @@ class GutenbergAdvancedMain
     {
         add_submenu_page(
             'options-general.php',
-            __('Gutenberg Advanced Settings', 'gutenberg-advanced'),
-            __('Gutenberg Advanced', 'gutenberg-advanced'),
+            __('Advanced Gutenberg Settings', 'advanced-gutenberg'),
+            __('Advanced Gutenberg', 'advanced-gutenberg'),
             'manage_options',
-            'gbadv_settings',
-            array($this, 'gbadv_settings_view')
+            'advgb_settings',
+            array($this, 'advgb_settings_view')
         );
     }
 
     // Load settings view
-    public function gbadv_settings_view()
+    public function advgb_settings_view()
     {
         wp_enqueue_style('tabs_style');
         wp_enqueue_style('button_switch_style');
@@ -390,7 +390,7 @@ class GutenbergAdvancedMain
     public function save_settings()
     {
         if (isset($_POST['save_settings'])) {
-            if (!wp_verify_nonce($_POST['gbadv_settings_nonce_field'], 'gbadv_settings_nonce')) {
+            if (!wp_verify_nonce($_POST['advgb_settings_nonce_field'], 'advgb_settings_nonce')) {
                 return false;
             }
 
@@ -406,7 +406,7 @@ class GutenbergAdvancedMain
                 $save_config['gallery_lightbox_caption'] = 0;
             }
 
-            update_option('gbadv_settings', $save_config);
+            update_option('advgb_settings', $save_config);
 
             if (isset($_REQUEST['_wp_http_referer'])) {
                 wp_redirect($_REQUEST['_wp_http_referer'] . '&save=success');
@@ -420,28 +420,28 @@ class GutenbergAdvancedMain
     // Change post's update messages
     public function update_post_msg($msg)
     {
-        $msg['gbadv_profiles'] = array(
-            1 => __('Gutenberg Advanced profile updated.', 'gutenberg-advandced'),
-            6 => __('Gutenberg Advanced profile created.', 'gutenberg-advandced')
+        $msg['advgb_profiles'] = array(
+            1 => __('Advanced Gutenberg profile updated.', 'advanced-gutenberg-gutenberg'),
+            6 => __('Advanced Gutenberg profile created.', 'advanced-gutenberg-gutenberg')
         );
 
         return $msg;
     }
 
     // Save profiles settings
-    public function save_gbadv_profile($postID)
+    public function save_advgb_profile($postID)
     {
         // Check nonce field
-        if (!isset($_POST['gbadv_nonce_field'])) {
+        if (!isset($_POST['advgb_nonce_field'])) {
             return $postID;
         }
         // Verify nonce
-        if (!wp_verify_nonce($_POST['gbadv_nonce_field'], 'gbadv_nonce')) {
+        if (!wp_verify_nonce($_POST['advgb_nonce_field'], 'advgb_nonce')) {
             return $postID;
         }
 
         // Save settings
-        if ($_POST['post_type'] == 'gbadv_profiles'
+        if ($_POST['post_type'] == 'advgb_profiles'
             && current_user_can('edit_post', $postID)
         ) {
             // Save list of active blocks
@@ -454,12 +454,12 @@ class GutenbergAdvancedMain
             // Save users permission
             $users_access = array();
             $roles_access = array();
-            if (isset($_POST['gbadv-users-access-list'])) {
-                $users_access = trim($_POST['gbadv-users-access-list']);
+            if (isset($_POST['advgb-users-access-list'])) {
+                $users_access = trim($_POST['advgb-users-access-list']);
                 $users_access = explode(' ', $users_access);
             }
-            if (isset($_POST['gbadv-roles'])) {
-                $roles_access = $_POST['gbadv-roles'];
+            if (isset($_POST['advgb-roles'])) {
+                $roles_access = $_POST['advgb-roles'];
             }
             update_post_meta($postID, 'users_access', $users_access);
             update_post_meta($postID, 'roles_access', $roles_access);
@@ -469,7 +469,7 @@ class GutenbergAdvancedMain
     }
 
 
-    // Set the active blocks for users regard to Gutenberg Advanced profiles
+    // Set the active blocks for users regard to Advanced Gutenberg profiles
     public function init_active_blocks_for_gutenberg()
     {
         // Get user info
@@ -479,7 +479,7 @@ class GutenbergAdvancedMain
 
         // Get all GB-ADV active profiles
         $args     = array(
-            'post_type' => 'gbadv_profiles',
+            'post_type' => 'advgb_profiles',
             'publish'   => true
         );
         $profiles = new WP_Query($args);
@@ -511,14 +511,14 @@ class GutenbergAdvancedMain
     // Function to get and load the view
     public function load_view($view)
     {
-        include_once(plugin_dir_path(__FILE__) . 'view/gutenberg-advanced-' . $view . '.php');
+        include_once(plugin_dir_path(__FILE__) . 'view/advanced-gutenberg-' . $view . '.php');
     }
 
     // Function to load the lightbox for galleries in front-end
     public function add_gallery_lightbox($content)
     {
         if (strpos($content, 'wp-block-gallery') !== false) {
-            $saved_settings = get_option('gbadv_settings');
+            $saved_settings = get_option('advgb_settings');
 
             if ($saved_settings['gallery_lightbox']) {
                 wp_enqueue_style(
@@ -535,7 +535,7 @@ class GutenbergAdvancedMain
                     plugins_url('assets/js/gallery.colorbox.init.js', dirname(__FILE__))
                 );
 
-                wp_localize_script('gallery_lightbox_js', 'gbadv', array(
+                wp_localize_script('gallery_lightbox_js', 'advgb', array(
                     'imageCaption' => $saved_settings['gallery_lightbox_caption']
                 ));
             }

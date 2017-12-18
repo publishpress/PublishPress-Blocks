@@ -1,8 +1,8 @@
 <?php
 defined('ABSPATH') or die;
 
-$all_blocks_list     = get_option('gbadv_blocks_list');
-$all_categories_list = get_option('gbadv_categories_list');
+$all_blocks_list     = get_option('advgb_blocks_list');
+$all_categories_list = get_option('advgb_categories_list');
 
 $postid              = get_the_ID();
 $active_blocks_saved = get_post_meta($postid, 'active_blocks', true);
@@ -20,10 +20,10 @@ $updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] =
 if ($updating) {
     do_action('enqueue_block_editor_assets');
     wp_enqueue_script('update_list');
-    wp_localize_script('update_list', 'gbadvUpdate', array('onProfile' => true));
+    wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
 }
 
-wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
+wp_nonce_field('advgb_nonce', 'advgb_nonce_field')
 ?>
 
 <div id="profiles-container">
@@ -31,12 +31,12 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
     <ul class="tabs cyan z-depth-1">
         <li class="tab">
             <a href="#blocks-list-tab" class="link-tab white-text waves-effect waves-light">
-                <?php _e('Blocks List', 'gutenberg-advanced') ?>
+                <?php _e('Blocks List', 'advanced-gutenberg') ?>
             </a>
         </li>
         <li class="tab">
             <a href="#users-tab" class="link-tab white-text waves-effect waves-light">
-                <?php _e('Profile Attribution', 'gutenberg-advanced') ?>
+                <?php _e('Profile Attribution', 'advanced-gutenberg') ?>
             </a>
         </li>
     </ul>
@@ -47,18 +47,18 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
             <button type="button" id="update-list-btn"
                     class="cyan white-text material-btn"
                     <?php if ($updating) echo 'disabled' ?>
-                    title="<?php _e('Update the blocks list', 'gutenberg-advanced') ?>">
+                    title="<?php _e('Update the blocks list', 'advanced-gutenberg') ?>">
                 <i class="dashicons dashicons-update <?php if ($updating) echo 'rotating' ?>"></i>
                 <span>
                     <?php if ($updating) {
-                        _e('Still updating... Please wait a bit...', 'gutenberg-advanced');
+                        _e('Still updating... Please wait a bit...', 'advanced-gutenberg');
                     } else {
-                        _e('Update list', 'gutenberg-advanced');
+                        _e('Update list', 'advanced-gutenberg');
                     } ?>
                 </span>
             </button>
             <span id="block-update-notice">
-                <?php _e('Blocks list updated.', 'gutenberg-advanced') ?>
+                <?php _e('Blocks list updated.', 'advanced-gutenberg') ?>
             </span>
         </div>
         <div class="blocks-section">
@@ -90,16 +90,16 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
 
     <!--Users access tab-->
     <div id="users-tab" class="tab-content">
-        <h3><?php _e('Active this profile for this user(s)', 'gutenberg-advanced') ?>:</h3>
+        <h3><?php _e('Active this profile for this user(s)', 'advanced-gutenberg') ?>:</h3>
         <div class="users-block">
-            <div class="gbadv-users-search-box">
+            <div class="advgb-users-search-box">
                 <input type="text"
                        id="user-search-input"
                        name="s"
-                       placeholder="<?php _e('Search users', 'gutenberg-advanced') ?>"
+                       placeholder="<?php _e('Search users', 'advanced-gutenberg') ?>"
                        value=""/>
-                <select name="gbadv-roles-filter" id="gbadv-roles-filter">
-                    <option value=""><?php _e('Use role filter', 'gutenberg-advanced') ?></option>
+                <select name="advgb-roles-filter" id="advgb-roles-filter">
+                    <option value=""><?php _e('Use role filter', 'advanced-gutenberg') ?></option>
                     <?php
                     $wp_roles   = wp_roles();
                     $roles_list = $wp_roles->get_names();
@@ -109,33 +109,33 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                     ?>
                 </select>
                 <input type="button"
-                       name="gbadv-clear-btn"
-                       id="gbadv-clear-btn"
+                       name="advgb-clear-btn"
+                       id="advgb-clear-btn"
                        class="button"
-                       value="<?php _e('Clear', 'gutenberg-advanced') ?>"/>
+                       value="<?php _e('Clear', 'advanced-gutenberg') ?>"/>
             </div>
-            <table class="widefat fixed" id="gbadv-users-list">
+            <table class="widefat fixed" id="advgb-users-list">
                 <thead>
                 <tr>
-                    <th scope="col" id="gbadv-users-select-box" class="manage-col">
-                        <input type="hidden" id="gbadv-users-checkall" name="select-user" value="">
+                    <th scope="col" id="advgb-users-select-box" class="manage-col">
+                        <input type="hidden" id="advgb-users-checkall" name="select-user" value="">
                     </th>
-                    <th scope="col" id="gbadv-users-name" class="manage-col">
-                        <span><?php _e('Name', 'gutenberg-advanced') ?></span>
+                    <th scope="col" id="advgb-users-name" class="manage-col">
+                        <span><?php _e('Name', 'advanced-gutenberg') ?></span>
                     </th>
-                    <th scope="col" id="gbadv-users-username" class="manage-col">
-                        <span><?php _e('Username', 'gutenberg-advanced') ?></span>
+                    <th scope="col" id="advgb-users-username" class="manage-col">
+                        <span><?php _e('Username', 'advanced-gutenberg') ?></span>
                     </th>
-                    <th scope="col" id="gbadv-users-email" class="manage-col">
-                        <span><?php _e('Email', 'gutenberg-advanced') ?></span>
+                    <th scope="col" id="advgb-users-email" class="manage-col">
+                        <span><?php _e('Email', 'advanced-gutenberg') ?></span>
                     </th>
-                    <th scope="col" id="gbadv-users-role" class="manage-col">
-                        <span><?php _e('Role', 'gutenberg-advanced') ?></span>
+                    <th scope="col" id="advgb-users-role" class="manage-col">
+                        <span><?php _e('Role', 'advanced-gutenberg') ?></span>
                     </th>
                 </tr>
                 </thead>
 
-                <tbody id="gbadv-users-body">
+                <tbody id="advgb-users-body">
                 <?php
                 $users_per_page = 20;
                 $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1;
@@ -156,7 +156,7 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                     foreach ($wp_user_search as $userid => $user_object) {
                         echo '<tr>';
                         echo '<td class="select-box">';
-                        echo '<input type="checkbox" name="gbadv-users[]" value="' . esc_html($userid) . '" >';
+                        echo '<input type="checkbox" name="advgb-users[]" value="' . esc_html($userid) . '" >';
                         echo '</td>';
                         echo '<td class="name column-name">';
                         echo '<span style="color: #0073aa">' . esc_html($user_object->display_name) . '</span>';
@@ -184,15 +184,15 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                     }
                 } else {
                     echo '<tr><td colspan="5"> ';
-                    echo __('No users found.', 'gutenberg-advanced');
+                    echo __('No users found.', 'advanced-gutenberg');
                     echo '</td></tr>';
                 }
                 ?>
                 </tbody>
                 <?php $list_users_access = implode(' ', $users_access_saved); ?>
                 <input type="hidden"
-                       name="gbadv-users-access-list"
-                       id="gbadv-users-access-list"
+                       name="advgb-users-access-list"
+                       id="advgb-users-access-list"
                        value="<?php echo esc_html($list_users_access) ?>"/>
             </table>
             <p id="pagination">
@@ -235,7 +235,7 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                             if ($pagenum == $total_pages) {
                                 echo '<i class="dashicons dashicons-controls-skipforward" id="last-page"></i>';
                             } else {
-                                echo '<a class="dashicons dashicons-controls-skipforward" id="last-page"  title="' . __('Last page', 'gutenberg-advanced') . '"></a>';
+                                echo '<a class="dashicons dashicons-controls-skipforward" id="last-page"  title="' . __('Last page', 'advanced-gutenberg') . '"></a>';
                             }
                         }
                     }
@@ -243,9 +243,9 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
             </p>
         </div> <!--end Users blocks-->
 
-        <h3><?php _e('Active this profile for this group(s)', 'gutenberg-advanced') ?>:</h3>
-        <div class="gbadv-groups-block">
-            <ul class="gbadv-groups-list">
+        <h3><?php _e('Active this profile for this group(s)', 'advanced-gutenberg') ?>:</h3>
+        <div class="advgb-groups-block">
+            <ul class="advgb-groups-list">
                 <?php
                 $roles_list = $wp_roles->get_names();
                 foreach ($roles_list as $role => $role_name) :?>
@@ -255,7 +255,7 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
                         <div class="switch-btn">
                             <label class="switch">
                                 <input type="checkbox" class="extra-btn"
-                                       name="gbadv-roles[]"
+                                       name="advgb-roles[]"
                                        id="<?php echo $role ?>"
                                        value="<?php echo $role ?>"
                                        <?php if (in_array($role, $roles_access_saved)) echo 'checked'; ?>/>
@@ -270,10 +270,9 @@ wp_nonce_field('gbadv_nonce', 'gbadv_nonce_field')
 
     <!--Save button-->
     <div class="save-settings-block waves-effect waves-light">
-        <input
-                type="button"
-                class="cyan white-text material-btn"
-                id="save-gbadv-profile"
-                value="<?php _e('Save', 'gutenberg-advanced') ?>"/>
+        <input type="button"
+               class="cyan white-text material-btn"
+               id="save-advgb-profile"
+               value="<?php _e('Save', 'advanced-gutenberg') ?>"/>
     </div>
 </div>

@@ -1,7 +1,7 @@
 {
-  "slug": "guttenberg-advanced",
-  "name": "Guttenberg Advanced",
-  "uri": "https://www.joomunited.com/wordpress-products/guttenberg-advanced",
+  "slug": "advanced-gutenberg",
+  "name": "Advanced Gutenberg",
+  "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
   "version": "1.0.0",
   "wp_version": "4.9.1",
   "changelog": {

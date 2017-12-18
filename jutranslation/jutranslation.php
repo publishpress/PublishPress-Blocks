@@ -1,9 +1,9 @@
 <?php
-namespace Joomunited\GBADV\Jutranslation;
+namespace Joomunited\ADVGB\Jutranslation;
 
 /**
  * Class Jutranslation
- * @package Joomunited\GBADV\Jutranslation
+ * @package Joomunited\ADVGB\Jutranslation
  */
 class Jutranslation {
     public static $extension_slug;

@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Gutenberg Advanced
- * Plugin URI: https://www.joomunited.com/wordpress-products/guttenberg-advanced
+ * Plugin Name: Advanced Gutenberg
+ * Plugin URI: https://www.joomunited.com/wordpress-products/advanced-gutenberg
  * Description: Enhanced tools for Gutenberg editor
  * Version: {{version}}
  * Tested up to: {{wp_version}}
  * Author: JoomUnited
  * Author URI: https://www.joomunited.com
  * License: GPL2
- * Text Domain: gutenberg-advanced
+ * Text Domain: advanced-gutenberg
  * Domain Path: /languages
  */
 
@@ -36,8 +36,8 @@ defined('ABSPATH') or die;
 
 //Check plugin requirements
 if (version_compare(PHP_VERSION, '5.3', '<')) {
-    if (! function_exists('gbadv_disable_plugin')) {
-        function gbadv_disable_plugin()
+    if (! function_exists('advgb_disable_plugin')) {
+        function advgb_disable_plugin()
         {
             if (current_user_can('activate_plugins') && is_plugin_active(plugin_basename(__FILE__))) {
                 deactivate_plugins(__FILE__);
@@ -46,36 +46,36 @@ if (version_compare(PHP_VERSION, '5.3', '<')) {
         }
     }
 
-    if (! function_exists('gbadv_show_error')) {
-        function gbadv_show_error()
+    if (! function_exists('advgb_show_error')) {
+        function advgb_show_error()
         {
-            echo '<div class="error"><p><strong>Gutenberg Advanced</strong> need at least PHP 5.3 version, please update php before installing the plugin.</p></div>';
+            echo '<div class="error"><p><strong>Advanced Gutenberg</strong> need at least PHP 5.3 version, please update php before installing the plugin.</p></div>';
         }
     }
 
     //Add actions
-    add_action('admin_init', 'gbadv_disable_plugin');
-    add_action('admin_notices', 'gbadv_show_error');
+    add_action('admin_init', 'advgb_disable_plugin');
+    add_action('admin_notices', 'advgb_show_error');
 
     //Do not load anything more
     return;
 }
 
-if (! defined('GUTENBERG_ADVANCED_PLUGIN')) {
-    define('GUTENBERG_ADVANCED_PLUGIN', __FILE__);
+if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
+    define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
 }
 
 require_once(plugin_dir_path(__FILE__) . '/install.php');
-require_once(plugin_dir_path(__FILE__) . '/incl/gutenberg-advanced-main.php');
-new GutenbergAdvancedMain();
+require_once(plugin_dir_path(__FILE__) . '/incl/advanced-gutenberg-main.php');
+new AdvancedGutenbergMain();
 
 // Load jutranslation helper
 include_once('jutranslation' . DIRECTORY_SEPARATOR . 'jutranslation.php');
 call_user_func(
-    '\Joomunited\GBADV\Jutranslation\Jutranslation::init',
+    '\Joomunited\ADVGB\Jutranslation\Jutranslation::init',
     __FILE__,
-    'gutenberg-advanced',
-    'Gutenberg Advanced',
-    'gutenberg-advanced',
-    'languages' . DIRECTORY_SEPARATOR . 'gutenberg-advanced-en_US.mo'
+    'advanced-gutenberg',
+    'Advanced Gutenberg',
+    'advanced-gutenberg',
+    'languages' . DIRECTORY_SEPARATOR . 'advanced-gutenberg-en_US.mo'
 );
