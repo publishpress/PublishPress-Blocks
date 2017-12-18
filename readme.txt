@@ -1,7 +1,7 @@
 === Advanced Gutenberg ===
 Contributors: JoomUnited
 Tags: editor, text editor, page builder
-Requires at least: 4.5
+Requires at least: 4.8
 Tested up to: {{wp_version}}
 Stable tag: {{version}}
 Requires PHP: 5.6
