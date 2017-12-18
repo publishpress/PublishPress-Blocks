@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
         // Add lightbox for images
         $(this).find('.blocks-gallery-image img').colorbox({
             title: function () {
-                if (parseInt(gbadv.imageCaption)) {
+                if (parseInt(advgb.imageCaption)) {
                     return $(this).attr('alt');
                 }
 
@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
             maxWidth: '90%',
             maxHeight: '85%',
             fixed: true,
-            className: 'gbadv_lightbox',
+            className: 'advgb_lightbox',
             rel: 'gallery',
             href: function () {
                 return $(this).attr('src');

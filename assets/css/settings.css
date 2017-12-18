@@ -11,7 +11,7 @@
     visibility: hidden;
 }
 
-#gbadv-config-success {
+#advgb-config-success {
     padding: 10px;
     margin: 20px 20px 20px 0;
     background-color: #ffffff;
@@ -21,12 +21,12 @@
     -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
 }
 
-#gbadv-config-close {
+#advgb-config-close {
     float: right;
     color: #aaaaaa;
 }
 
-#gbadv-config-close:hover {
+#advgb-config-close:hover {
     color: #c00;
     cursor: pointer;
 }
@@ -50,7 +50,7 @@
     -webkit-transition: none;
 }
 
-.qtip.gbadv_qtip {
+.qtip.advgb_qtip {
     background: #000000;
     color: #ffffff;
     border: 1px solid #000000;

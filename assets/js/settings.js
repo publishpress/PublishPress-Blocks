@@ -7,15 +7,15 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('#gbadv-config-close').click(function () {
-        $('#gbadv-config-success').slideUp();
+    $('#advgb-config-close').click(function () {
+        $('#advgb-config-success').slideUp();
     });
 
     if ($('#gallery_lightbox').is(':checked')) {
         $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
     }
 
-    $('.gbadv_qtip').qtip({
+    $('.advgb_qtip').qtip({
         content: {
             attr: 'alt'
         },
@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
             tip: {
                 corner: true
             },
-            classes: 'gbadv_qtip'
+            classes: 'advgb_qtip'
         },
         show: 'hover',
         hide: {

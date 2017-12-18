@@ -88,15 +88,15 @@ ul.blocks-list li.block-item {
 }
 
 /*Users tab*/
-.gbadv-users-search-box {
+.advgb-users-search-box {
     margin: 10px 0;
 }
 
-#users-tab .gbadv-users-search-box > * {
+#users-tab .advgb-users-search-box > * {
     vertical-align: middle;
 }
 
-.gbadv-groups-block {
+.advgb-groups-block {
     margin: 10px;
 }
 

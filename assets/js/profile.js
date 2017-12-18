@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    $('#save-gbadv-profile').unbind('click').click(function (e) {
+    $('#save-advgb-profile').unbind('click').click(function (e) {
         e.preventDefault();
         $('#publish').click();
     });
@@ -16,17 +16,17 @@ jQuery(document).ready(function ($) {
     // Ajax for displaying users list
     $('#user-search-input').bind('searchUsers', function () {
         var searchKey = $(this).val();
-        var roleKey = $('#gbadv-roles-filter').val();
+        var roleKey = $('#advgb-roles-filter').val();
         $.ajax({
             url: ajaxurl,
             method: 'POST',
             data: {
-                action: 'gbadv_get_users',
+                action: 'advgb_get_users',
                 search: searchKey,
                 role: roleKey
             },
             success: function (res) {
-                $('#gbadv-users-body').html(res.users_list);
+                $('#advgb-users-body').html(res.users_list);
                 $('#pagination').html(res.pages_list);
                 selectedUsers();
                 switchPage();
@@ -41,19 +41,19 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('#gbadv-roles-filter').change(function () {
+    $('#advgb-roles-filter').change(function () {
         var roleKey = $(this).val();
         var searchKey = $('#user-search-input').val();
         $.ajax({
             url: ajaxurl,
             method: 'POST',
             data: {
-                action: 'gbadv_get_users',
+                action: 'advgb_get_users',
                 search: searchKey,
                 role: roleKey
             },
             success: function (res) {
-                $('#gbadv-users-body').html(res.users_list);
+                $('#advgb-users-body').html(res.users_list);
                 $('#pagination').html(res.pages_list);
                 selectedUsers();
                 switchPage();
@@ -61,17 +61,17 @@ jQuery(document).ready(function ($) {
         })
     });
 
-    $('#gbadv-clear-btn').click(function () {
+    $('#advgb-clear-btn').click(function () {
         $('#user-search-input').val('');
-        $('#gbadv-roles-filter').val('');
+        $('#advgb-roles-filter').val('');
         $.ajax({
             url: ajaxurl,
             method: 'POST',
             data: {
-                action: 'gbadv_get_users'
+                action: 'advgb_get_users'
             },
             success: function (res) {
-                $('#gbadv-users-body').html(res.users_list);
+                $('#advgb-users-body').html(res.users_list);
                 $('#pagination').html(res.pages_list);
                 selectedUsers();
                 switchPage();
@@ -80,8 +80,8 @@ jQuery(document).ready(function ($) {
     });
 
     // Check all buttons
-    $('#gbadv-users-checkall').click(function () {
-        $('#gbadv-users-body').find(':checkbox').attr('checked', this.checked);
+    $('#advgb-users-checkall').click(function () {
+        $('#advgb-users-body').find(':checkbox').attr('checked', this.checked);
     });
 
     // Switch page
@@ -105,18 +105,18 @@ jQuery(document).ready(function ($) {
     // Ajax for pagination
     function getPagination(page_num) {
         var searchKey = $('#user-search-input').val();
-        var roleKey = $('#gbadv-roles-filter').val();
+        var roleKey = $('#advgb-roles-filter').val();
         $.ajax({
             url: ajaxurl,
             method: 'POST',
             data: {
-                action: 'gbadv_get_users',
+                action: 'advgb_get_users',
                 search: searchKey,
                 role: roleKey,
                 paged: page_num
             },
             success: function (res) {
-                $('#gbadv-users-body').html(res.users_list);
+                $('#advgb-users-body').html(res.users_list);
                 $('#pagination').html(res.pages_list);
                 selectedUsers();
                 switchPage();
@@ -126,23 +126,23 @@ jQuery(document).ready(function ($) {
 
     // Function for selecting users
     function selectedUsers() {
-        $('#gbadv-users-body :checkbox').change(function () {
+        $('#advgb-users-body :checkbox').change(function () {
             if (this.checked) {
                 // Action when checked
                 var val = $(this).val();
-                $('#gbadv-users-access-list').val($('#gbadv-users-access-list').val() + " " + val);
+                $('#advgb-users-access-list').val($('#advgb-users-access-list').val() + " " + val);
             } else {
                 // Action  when unchecked
                 var vals = $(this).val();
-                var split_val = $('#gbadv-users-access-list').val().split(' ');
+                var split_val = $('#advgb-users-access-list').val().split(' ');
                 split_val.splice($.inArray(vals, split_val),1);
                 var final_val = split_val.join(' ');
-                $('#gbadv-users-access-list').val(final_val);
+                $('#advgb-users-access-list').val(final_val);
             }
         });
 
-        var split_vals = $('#gbadv-users-access-list').val().split(' ');
-        $('#gbadv-users-body :checkbox').each(function (e) {
+        var split_vals = $('#advgb-users-access-list').val().split(' ');
+        $('#advgb-users-body :checkbox').each(function (e) {
             var val = $(this).val();
             var checked = $.inArray(val, split_vals);
             //Check if users is checked

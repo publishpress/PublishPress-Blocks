@@ -28,12 +28,12 @@ window.onload = function () {
             url: ajaxurl,
             method: 'POST',
             data: {
-                action: 'gbadv_update_blocks_list',
+                action: 'advgb_update_blocks_list',
                 blocksList: listBlocks,
                 categoriesList: allCategories
             },
             success: function (res) {
-                if (gbadvUpdate.onProfile) {
+                if (advgbUpdate.onProfile) {
                     var $ = jQuery;
 
                     // Remove non-exist categories
@@ -113,7 +113,7 @@ window.onload = function () {
             },
             error: function () {
                 alert('Error while updating list!');
-                if (gbadvUpdate.onProfile)
+                if (advgbUpdate.onProfile)
                     window.location.href = window.location.href.replace('&update_blocks_list=true', '');
             }
         });

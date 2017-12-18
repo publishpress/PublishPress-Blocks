@@ -6,9 +6,9 @@
     cursor: pointer;
 }
 
-#colorbox.gbadv_lightbox,
-#cboxOverlay.gbadv_lightbox,
-#colorbox.gbadv_lightbox #cboxWrapper {
+#colorbox.advgb_lightbox,
+#cboxOverlay.advgb_lightbox,
+#colorbox.advgb_lightbox #cboxWrapper {
     position: absolute;
     top: 0;
     left: 0;
@@ -16,32 +16,32 @@
     overflow: visible;
 }
 
-#cboxOverlay.gbadv_lightbox {
+#cboxOverlay.advgb_lightbox {
     position: fixed;
     width: 100%;
     height: 100%;
 }
 
-#colorbox.gbadv_lightbox #cboxMiddleLeft,
-#colorbox.gbadv_lightbox #cboxBottomLeft {
+#colorbox.advgb_lightbox #cboxMiddleLeft,
+#colorbox.advgb_lightbox #cboxBottomLeft {
     clear: left;
 }
 
-#colorbox.gbadv_lightbox #cboxContent {
+#colorbox.advgb_lightbox #cboxContent {
     position: relative;
 }
 
-#colorbox.gbadv_lightbox #cboxLoadedContent {
+#colorbox.advgb_lightbox #cboxLoadedContent {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
 }
 
-#colorbox.gbadv_lightbox #cboxTitle {
+#colorbox.advgb_lightbox #cboxTitle {
     margin: 0;
 }
 
-#colorbox.gbadv_lightbox #cboxLoadingOverlay,
-#colorbox.gbadv_lightbox #cboxLoadingGraphic {
+#colorbox.advgb_lightbox #cboxLoadingOverlay,
+#colorbox.advgb_lightbox #cboxLoadingGraphic {
     position: absolute;
     top: 0;
     left: 0;
@@ -49,15 +49,15 @@
     height: 100%;
 }
 
-#colorbox.gbadv_lightbox #cboxPrevious,
-#colorbox.gbadv_lightbox #cboxNext,
-#colorbox.gbadv_lightbox #cboxClose,
-#colorbox.gbadv_lightbox #cboxSlideshow {
+#colorbox.advgb_lightbox #cboxPrevious,
+#colorbox.advgb_lightbox #cboxNext,
+#colorbox.advgb_lightbox #cboxClose,
+#colorbox.advgb_lightbox #cboxSlideshow {
     cursor: pointer;
     outline: none;
 }
 
-#colorbox.gbadv_lightbox .cboxPhoto {
+#colorbox.advgb_lightbox .cboxPhoto {
     float: left;
     margin: auto;
     border: 0;
@@ -66,16 +66,16 @@
     -ms-interpolation-mode: bicubic;
 }
 
-#colorbox.gbadv_lightbox .cboxIframe {
+#colorbox.advgb_lightbox .cboxIframe {
     width: 100%;
     height: 100%;
     display: block;
     border: 0;
 }
 
-#colorbox.gbadv_lightbox,
-#colorbox.gbadv_lightbox #cboxContent,
-#colorbox.gbadv_lightbox #cboxLoadedContent {
+#colorbox.advgb_lightbox,
+#colorbox.advgb_lightbox #cboxContent,
+#colorbox.advgb_lightbox #cboxLoadedContent {
     box-sizing: content-box;
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box;
@@ -86,15 +86,15 @@
     Change the following styles to modify the appearance of Colorbox.  They are
     ordered & tabbed in a way that represents the nesting of the generated HTML.
 */
-#cboxOverlay.gbadv_lightbox {
+#cboxOverlay.advgb_lightbox {
     background: #000;
 }
 
-#colorbox.gbadv_lightbox {
+#colorbox.advgb_lightbox {
     outline: 0;
 }
 
-#colorbox.gbadv_lightbox #cboxContent {
+#colorbox.advgb_lightbox #cboxContent {
     margin-top: 0;
     overflow: visible;
     background: #fff;
@@ -103,16 +103,16 @@
     border-radius: 4px;
 }
 
-#colorbox.gbadv_lightbox .cboxIframe {
+#colorbox.advgb_lightbox .cboxIframe {
     background: #fff;
 }
 
-#colorbox.gbadv_lightbox #cboxError {
+#colorbox.advgb_lightbox #cboxError {
     padding: 50px;
     border: 1px solid #ccc;
 }
 
-#colorbox.gbadv_lightbox #cboxLoadedContent {
+#colorbox.advgb_lightbox #cboxLoadedContent {
     margin: 0;
     border: 8px solid #FFF;
     -webkit-border-radius: 4px;
@@ -122,18 +122,18 @@
     padding: 1px;
 }
 
-#colorbox.gbadv_lightbox #cboxLoadingGraphic {
+#colorbox.advgb_lightbox #cboxLoadingGraphic {
     background: url(../images/loading.gif) no-repeat center center;
 }
 
-#colorbox.gbadv_lightbox #cboxLoadingOverlay {
+#colorbox.advgb_lightbox #cboxLoadingOverlay {
     background: #fff;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
 }
 
-#colorbox.gbadv_lightbox #cboxTitle {
+#colorbox.advgb_lightbox #cboxTitle {
     position: absolute;
     bottom: -42px;
     top: auto;
@@ -149,7 +149,7 @@
     width: 90%;
 }
 
-#colorbox.gbadv_lightbox #cboxCurrent {
+#colorbox.advgb_lightbox #cboxCurrent {
     position: absolute;
     top: -22px;
     text-indent: -9999px;
@@ -163,20 +163,20 @@
 }
 
 /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
-#colorbox.gbadv_lightbox #cboxPrevious,
-#colorbox.gbadv_lightbox #cboxNext,
-#colorbox.gbadv_lightbox #cboxSlideshow,
-#colorbox.gbadv_lightbox #cboxClose {
+#colorbox.advgb_lightbox #cboxPrevious,
+#colorbox.advgb_lightbox #cboxNext,
+#colorbox.advgb_lightbox #cboxSlideshow,
+#colorbox.advgb_lightbox #cboxClose {
     border: 0;
     padding: 0;
     margin: 0;
     overflow: visible;
 }
 
-#colorbox.gbadv_lightbox #cboxCurrent,
-#colorbox.gbadv_lightbox #cboxPrevious,
-#colorbox.gbadv_lightbox #cboxNext,
-#colorbox.gbadv_lightbox #cboxSlideshow {
+#colorbox.advgb_lightbox #cboxCurrent,
+#colorbox.advgb_lightbox #cboxPrevious,
+#colorbox.advgb_lightbox #cboxNext,
+#colorbox.advgb_lightbox #cboxSlideshow {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
@@ -186,14 +186,14 @@
 }
 
 /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
-#colorbox.gbadv_lightbox #cboxPrevious:active,
-#colorbox.gbadv_lightbox #cboxNext:active,
-#colorbox.gbadv_lightbox #cboxSlideshow:active,
-#colorbox.gbadv_lightbox #cboxClose:active {
+#colorbox.advgb_lightbox #cboxPrevious:active,
+#colorbox.advgb_lightbox #cboxNext:active,
+#colorbox.advgb_lightbox #cboxSlideshow:active,
+#colorbox.advgb_lightbox #cboxClose:active {
     outline: 0;
 }
 
-#colorbox.gbadv_lightbox #cboxPrevious {
+#colorbox.advgb_lightbox #cboxPrevious {
     position: absolute;
     top: 0;
     left: 5px;
@@ -206,11 +206,11 @@
     opacity: 0.2;
 }
 
-#colorbox.gbadv_lightbox #cboxPrevious:hover {
+#colorbox.advgb_lightbox #cboxPrevious:hover {
     opacity: 1;
 }
 
-#colorbox.gbadv_lightbox #cboxNext {
+#colorbox.advgb_lightbox #cboxNext {
     position: absolute;
     top: 0;
     right: 5px;
@@ -223,11 +223,11 @@
     opacity: 0.2;
 }
 
-#colorbox.gbadv_lightbox #cboxNext:hover {
+#colorbox.advgb_lightbox #cboxNext:hover {
     opacity: 1;
 }
 
-#colorbox.gbadv_lightbox #cboxClose {
+#colorbox.advgb_lightbox #cboxClose {
     position: absolute;
     bottom: -40px;
     right: 0;
