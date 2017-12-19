@@ -149,7 +149,7 @@ class AdvancedGutenbergMain
             }
         } else {
             $users_list .= '<tr><td colspan="5"> ';
-            $users_list .= __('No users found.', 'advanced-gutenberg-gutenberg');
+            $users_list .= __('No users found.', 'advanced-gutenberg');
             $users_list .= '</td></tr>';
         }
 
@@ -168,7 +168,7 @@ class AdvancedGutenbergMain
                     if ($pagenum == 1) {
                         $pages_list .= '<i class="dashicons dashicons-controls-skipback" id="first-page"></i>';
                     } else {
-                        $pages_list .= '<a class="dashicons dashicons-controls-skipback" id="first-page" title="' . __('First page', 'advanced-gutenberg-gutenberg') . '"></a>';
+                        $pages_list .= '<a class="dashicons dashicons-controls-skipback" id="first-page" title="' . __('First page', 'advanced-gutenberg') . '"></a>';
                     }
                 }
                 if (! $skipLeft && ! $skipRight) {
@@ -193,7 +193,7 @@ class AdvancedGutenbergMain
                     if ($pagenum == $total_pages) {
                         $pages_list .= '<i class="dashicons dashicons-controls-skipforward" id="last-page"></i>';
                     } else {
-                        $pages_list .= '<a class="dashicons dashicons-controls-skipforward" id="last-page" title="' . __('Last page', 'advanced-gutenberg-gutenberg') . '"></a>';
+                        $pages_list .= '<a class="dashicons dashicons-controls-skipforward" id="last-page" title="' . __('Last page', 'advanced-gutenberg') . '"></a>';
                     }
                 }
             }
@@ -421,8 +421,8 @@ class AdvancedGutenbergMain
     public function update_post_msg($msg)
     {
         $msg['advgb_profiles'] = array(
-            1 => __('Advanced Gutenberg profile updated.', 'advanced-gutenberg-gutenberg'),
-            6 => __('Advanced Gutenberg profile created.', 'advanced-gutenberg-gutenberg')
+            1 => __('Advanced Gutenberg profile updated.', 'advanced-gutenberg'),
+            6 => __('Advanced Gutenberg profile created.', 'advanced-gutenberg')
         );
 
         return $msg;
