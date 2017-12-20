@@ -56,7 +56,7 @@ $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] 
                         </div>
                     </div>
                 </li>
-                <li class="settings-option" id="gallery_lightbox_caption_wrapper">
+                <li class="settings-option hidden-item" id="gallery_lightbox_caption_wrapper">
                     <div class="settings-option-wrapper">
                         <label for="gallery_lightbox_caption"
                                class="switch-label advgb_qtip"
