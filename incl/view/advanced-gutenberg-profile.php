@@ -16,8 +16,14 @@ if ($roles_access_saved == '') {
 $users_access_saved = get_post_meta($postid, 'users_access', true);
 $users_access_saved = $users_access_saved ? $users_access_saved : array();
 
+$disabled = $rotating = '';
+$button_text = __('Update list', 'advanced-gutenberg');
 $updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] == true);
 if ($updating) {
+    $disabled = 'disabled';
+    $rotating = 'rotating';
+    $button_text = __('Still updating... Please wait a bit...', 'advanced-gutenberg');
+
     do_action('enqueue_block_editor_assets');
     wp_enqueue_script('update_list');
     wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
@@ -46,15 +52,11 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field')
         <div class="update-block-list">
             <button type="button" id="update-list-btn"
                     class="cyan white-text material-btn"
-                    <?php if ($updating) echo 'disabled' ?>
+                    <?php echo $disabled ?>
                     title="<?php _e('Update the blocks list', 'advanced-gutenberg') ?>">
-                <i class="dashicons dashicons-update <?php if ($updating) echo 'rotating' ?>"></i>
+                <i class="dashicons dashicons-update <?php echo $rotating ?>"></i>
                 <span>
-                    <?php if ($updating) {
-                        _e('Still updating... Please wait a bit...', 'advanced-gutenberg');
-                    } else {
-                        _e('Update list', 'advanced-gutenberg');
-                    } ?>
+                    <?php echo $button_text ?>
                 </span>
             </button>
             <span id="block-update-notice">
@@ -235,7 +237,8 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field')
                             if ($pagenum == $total_pages) {
                                 echo '<i class="dashicons dashicons-controls-skipforward" id="last-page"></i>';
                             } else {
-                                echo '<a class="dashicons dashicons-controls-skipforward" id="last-page"  title="' . __('Last page', 'advanced-gutenberg') . '"></a>';
+                                echo '<a class="dashicons dashicons-controls-skipforward" id="last-page" '
+                                    .'title="' . __('Last page', 'advanced-gutenberg') . '"></a>';
                             }
                         }
                     }
@@ -258,8 +261,8 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field')
                                        name="advgb-roles[]"
                                        id="<?php echo $role ?>"
                                        value="<?php echo $role ?>"
-                                       <?php if (in_array($role, $roles_access_saved)) echo 'checked'; ?>/>
-                                <div class="slider round"></div>
+                                        <?php if (in_array($role, $roles_access_saved)) echo 'checked'; ?>/>
+                                <span class="slider round"></span>
                             </label>
                         </div>
                     </li>

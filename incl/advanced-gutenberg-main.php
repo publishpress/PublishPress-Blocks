@@ -1,6 +1,9 @@
 <?php
 defined('ABSPATH') or die;
 
+/**
+ * Main class of Gutenberg Advanced
+ */
 class AdvancedGutenbergMain
 {
     public static $default_roles_access = array('administrator', 'editor', 'author');
@@ -9,29 +12,31 @@ class AdvancedGutenbergMain
 
     public function __construct()
     {
-        add_action('admin_enqueue_scripts', array($this, 'register_styles_scripts'));
+        add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
 
         if (is_admin()) {
-            add_action('init', array($this, 'register_advgb_menu'));
-            add_action('save_post_advgb_profiles', array($this, 'save_advgb_profile'));
-            add_filter('post_updated_messages', array($this, 'update_post_msg'));
-            add_action('admin_init', array($this, 'init_blocks_list'));
-            add_action('admin_menu', array($this, 'register_meta_box'));
-            add_action('admin_menu', array($this, 'register_settings_menu'), 5);
-            add_action('load-settings_page_advgb_settings', array($this, 'save_settings'));
-            add_filter('allowed_block_types', array($this, 'init_active_blocks_for_gutenberg'));
+            add_action('init', array($this, 'registerAdvgbMenu'));
+            add_action('save_post_advgb_profiles', array($this, 'saveAdvgbProfile'));
+            add_filter('post_updated_messages', array($this, 'updatePostMsg'));
+            add_action('admin_init', array($this, 'initBlocksList'));
+            add_action('admin_menu', array($this, 'registerMetaBox'));
+            add_action('admin_menu', array($this, 'registerSettingsMenu'), 5);
+            add_action('load-settings_page_advgb_settings', array($this, 'saveSettings'));
+            add_filter('allowed_block_types', array($this, 'initActiveBlocksForGutenberg'));
 
             // Ajax
-            add_action('wp_ajax_advgb_update_blocks_list', array($this, 'update_blocks_list'));
-            add_action('wp_ajax_advgb_get_users', array($this, 'get_users'));
+            add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
+            add_action('wp_ajax_advgb_get_users', array($this, 'getUsers'));
         } else {
             // Front-end
-            add_filter('the_content', array($this, 'add_gallery_lightbox'));
+            add_filter('the_content', array($this, 'addGalleryLightbox'));
         }
     }
 
-    // Ajax to update blocks list
-    public function update_blocks_list()
+    /**
+     * Ajax to update blocks list
+     */
+    public function updateBlocksList()
     {
         $blocksList     = $_POST['blocksList'];
         $categoriesList = $_POST['categoriesList'];
@@ -45,13 +50,16 @@ class AdvancedGutenbergMain
         ), 200);
     }
 
-    // Ajax to get users list
-    public function get_users()
+    /**
+     * Ajax to get list of users
+     *
+     * @return bool,json Return false if failure, json on success
+     */
+    public function getUsers()
     {
         // Check users permissions
         if (! current_user_can('create_advgb_profiles')) {
             wp_send_json('No permission!', 403);
-
             return false;
         }
 
@@ -168,7 +176,8 @@ class AdvancedGutenbergMain
                     if ($pagenum == 1) {
                         $pages_list .= '<i class="dashicons dashicons-controls-skipback" id="first-page"></i>';
                     } else {
-                        $pages_list .= '<a class="dashicons dashicons-controls-skipback" id="first-page" title="' . __('First page', 'advanced-gutenberg') . '"></a>';
+                        $pages_list .= '<a class="dashicons dashicons-controls-skipback" id="first-page" ';
+                        $pages_list .= 'title="' . __('First page', 'advanced-gutenberg') . '"></a>';
                     }
                 }
                 if (! $skipLeft && ! $skipRight) {
@@ -193,7 +202,8 @@ class AdvancedGutenbergMain
                     if ($pagenum == $total_pages) {
                         $pages_list .= '<i class="dashicons dashicons-controls-skipforward" id="last-page"></i>';
                     } else {
-                        $pages_list .= '<a class="dashicons dashicons-controls-skipforward" id="last-page" title="' . __('Last page', 'advanced-gutenberg') . '"></a>';
+                        $pages_list .= '<a class="dashicons dashicons-controls-skipforward" id="last-page" ';
+                        $pages_list .= 'title="' . __('Last page', 'advanced-gutenberg') . '"></a>';
                     }
                 }
             }
@@ -202,8 +212,10 @@ class AdvancedGutenbergMain
         wp_send_json($response);
     }
 
-    // Get the blocks list
-    public function init_blocks_list()
+    /**
+     * Get the blocks list
+     */
+    public function initBlocksList()
     {
         if (get_option('advgb_blocks_list') === false) {
             do_action('enqueue_block_editor_assets');
@@ -215,14 +227,17 @@ class AdvancedGutenbergMain
         }
     }
 
-    // Register back-end styles and script for later use
-    public function register_styles_scripts()
+    /**
+     * Register back-end styles and script for later use
+     */
+    public function registerStylesScripts()
     {
         // Register CSS
         wp_register_style(
             'profile_style',
             plugins_url('assets/css/style.css', dirname(__FILE__))
         );
+
         wp_register_style(
             'settings_style',
             plugins_url('assets/css/settings.css', dirname(__FILE__))
@@ -272,8 +287,10 @@ class AdvancedGutenbergMain
         );
     }
 
-    // Register profiles menu
-    function register_advgb_menu()
+    /**
+     * Register profiles menu
+     */
+    public function registerAdvgbMenu()
     {
         $labels = array(
             'name'               => __('Advanced Gutenberg Profiles', 'advanced-gutenberg'),  // Profile title
@@ -309,40 +326,53 @@ class AdvancedGutenbergMain
         ));
     }
 
-    // Remove and add metabox for create profile screen
-    public function register_meta_box()
+    /**
+     * Remove and add metabox for create profile screen
+     */
+    public function registerMetaBox()
     {
         remove_meta_box('authordiv', 'advgb_profiles', 'core');
         remove_meta_box('slugdiv', 'advgb_profiles', 'core');
 
-        // Make profile only have one column layout
-        function advgb_set_screen_layout_columns($columns)
+        /**
+         * Make profile only have one column layout
+         * @param $columns  Number of columns to set
+         *
+         * @return mixed    Columns
+         */
+        function advgbSetScreenLayoutColumns($columns)
         {
             $columns['advgb_profiles'] = 1;
 
             return $columns;
         }
-        add_filter('screen_layout_columns', 'advgb_set_screen_layout_columns');
+        add_filter('screen_layout_columns', 'advgbSetScreenLayoutColumns');
 
-        // Make profile only have one column layout
-        function advgb_set_screen_layout()
+        /**
+         * Make profile only have one column layout
+         *
+         * @return int
+         */
+        function advgbSetScreenLayout()
         {
             return 1;
         }
-        add_filter('get_user_option_screen_layout_advgb_profiles', 'advgb_set_screen_layout');
+        add_filter('get_user_option_screen_layout_advgb_profiles', 'advgbSetScreenLayout');
 
         add_meta_box(
             'advgb_meta_box',
             __('Advanced Gutenberg Profile', 'advanced-gutenberg'),
-            array($this, 'advgb_profiles_view'),
+            array($this, 'advgbProfilesView'),
             'advgb_profiles',
             'normal',
             'core'
         );
     }
 
-    // Load profile view
-    public function advgb_profiles_view()
+    /**
+     * Load profile view
+     */
+    public function advgbProfilesView()
     {
         wp_enqueue_style('tabs_style');
         wp_enqueue_style('button_switch_style');
@@ -353,11 +383,13 @@ class AdvancedGutenbergMain
         wp_enqueue_script('tabs_js');
         wp_enqueue_script('profile_js');
 
-        $this->load_view('profile');
+        $this->loadView('profile');
     }
 
-    // Register settings menu
-    public function register_settings_menu()
+    /**
+     * Register settings menu
+     */
+    public function registerSettingsMenu()
     {
         add_submenu_page(
             'options-general.php',
@@ -365,12 +397,14 @@ class AdvancedGutenbergMain
             __('Advanced Gutenberg', 'advanced-gutenberg'),
             'manage_options',
             'advgb_settings',
-            array($this, 'advgb_settings_view')
+            array($this, 'advgbSettingsView')
         );
     }
 
-    // Load settings view
-    public function advgb_settings_view()
+    /**
+     * Load settings view
+     */
+    public function advgbSettingsView()
     {
         wp_enqueue_style('tabs_style');
         wp_enqueue_style('button_switch_style');
@@ -383,11 +417,15 @@ class AdvancedGutenbergMain
         wp_enqueue_script('qtip_js');
         wp_enqueue_script('settings_js');
 
-        $this->load_view('settings');
+        $this->loadView('settings');
     }
 
-    // Save config settings
-    public function save_settings()
+    /**
+     * Save config settings
+     *
+     * @return bool True on success, False on failure
+     */
+    public function saveSettings()
     {
         if (isset($_POST['save_settings'])) {
             if (!wp_verify_nonce($_POST['advgb_settings_nonce_field'], 'advgb_settings_nonce')) {
@@ -417,8 +455,13 @@ class AdvancedGutenbergMain
         return true;
     }
 
-    // Change post's update messages
-    public function update_post_msg($msg)
+    /**
+     * Change post's update messages
+     * @param $msg
+     *
+     * @return mixed
+     */
+    public function updatePostMsg($msg)
     {
         $msg['advgb_profiles'] = array(
             1 => __('Advanced Gutenberg profile updated.', 'advanced-gutenberg'),
@@ -428,8 +471,13 @@ class AdvancedGutenbergMain
         return $msg;
     }
 
-    // Save profiles settings
-    public function save_advgb_profile($postID)
+    /**
+     * Save profiles settings
+     * @param $postID
+     *
+     * @return mixed
+     */
+    public function saveAdvgbProfile($postID)
     {
         // Check nonce field
         if (!isset($_POST['advgb_nonce_field'])) {
@@ -468,9 +516,12 @@ class AdvancedGutenbergMain
         return $postID;
     }
 
-
-    // Set the active blocks for users regard to Advanced Gutenberg profiles
-    public function init_active_blocks_for_gutenberg()
+    /**
+     * Set the active blocks for users regard to Advanced Gutenberg profiles
+     *
+     * @return bool|mixed
+     */
+    public function initActiveBlocksForGutenberg()
     {
         // Get user info
         $current_user      = wp_get_current_user();
@@ -508,14 +559,23 @@ class AdvancedGutenbergMain
         return false;
     }
 
-    // Function to get and load the view
-    public function load_view($view)
+    /**
+     * Function to get and load the view
+     *
+     * @param $view  string    View to load
+     */
+    public function loadView($view)
     {
         include_once(plugin_dir_path(__FILE__) . 'view/advanced-gutenberg-' . $view . '.php');
     }
 
-    // Function to load the lightbox for galleries in front-end
-    public function add_gallery_lightbox($content)
+    /**
+     * Function to load the lightbox for galleries in front-end
+     * @param $content
+     *
+     * @return mixed
+     */
+    public function addGalleryLightbox($content)
     {
         if (strpos($content, 'wp-block-gallery') !== false) {
             $saved_settings = get_option('advgb_settings');
