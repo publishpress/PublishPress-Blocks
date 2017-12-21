@@ -69,13 +69,19 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field')
                     <h3 class="category-name"><?php echo esc_html($category['title']) ?></h3>
                     <ul class="blocks-list">
                         <?php foreach ($all_blocks_list as $block) : ?>
-                            <?php if ($block['category'] != $category['slug']) continue; ?>
-                            <?php $block_id = strtolower(str_replace(' ', '', $block['title'])) ?>
+                            <?php if ($block['category'] != $category['slug']) :
+                                continue;
+                            endif;
+                            $block_id = strtolower(str_replace(' ', '', $block['title'])) ?>
                             <li class="block-item" data-type="<?php echo esc_attr($block['name']) ?>">
                                 <input type="checkbox" name="active_blocks[]"
                                        id="block-<?php echo esc_attr($block_id) ?>"
                                        value="<?php echo esc_attr($block['name']) ?>"
-                                    <?php if ($active_blocks_saved == 'all' || in_array($block['name'], $active_blocks_saved)) echo 'checked' ?>/>
+                                    <?php if ($active_blocks_saved == 'all'
+                                              || in_array($block['name'], $active_blocks_saved)) :
+                                        echo 'checked';
+                                    endif; ?>
+                                />
                                 <label for="block-<?php echo $block_id ?>" class="switch-label">
                                     <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
                                     <span class="block-title" title="<?php echo esc_html($block['title']) ?>">
@@ -261,7 +267,10 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field')
                                        name="advgb-roles[]"
                                        id="<?php echo $role ?>"
                                        value="<?php echo $role ?>"
-                                        <?php if (in_array($role, $roles_access_saved)) echo 'checked'; ?>/>
+                                        <?php if (in_array($role, $roles_access_saved)) :
+                                                echo 'checked';
+                                        endif; ?>
+                                />
                                 <span class="slider round"></span>
                             </label>
                         </div>
