@@ -1,14 +1,26 @@
 {
-  "slug": "guttenberg-advanced",
-  "name": "Guttenberd Advanced",
-  "uri": "https://www.joomunited.com/wordpress-products/guttenberg-advanced",
+  "slug": "advanced-gutenberg",
+  "name": "Advanced Gutenberg",
+  "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
   "version": "1.0.0",
-  "wp_version": "4.8.3",
+  "wp_version": "4.9.1",
   "changelog": {
     "1.0.0": [
       {
         "type": "feature",
         "title": "Initial version"
+      },
+      {
+        "type": "feature",
+        "title": "Blocks access: Define which editor blocks Users / User roles can use"
+      },
+      {
+        "type": "feature",
+        "title": "Make gallery blocks images can be opened in a popup lightbox"
+      },
+       {
+        "type": "feature",
+        "title": "Option to display alt text as caption when a gallery lightbox is opened"
       }
     ]
   }
