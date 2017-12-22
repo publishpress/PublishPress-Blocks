@@ -20,6 +20,13 @@ Additional features added to Gutenberg plugin:
 - Activate lightbox effect in Gutenberg galleries
 - Display alt information as lightbox caption in galleries
 
+> <strong>Note about Advanced Gutenberg dev.</strong><br>
+> * This plugin is based on official Gutenberg plugin under active developement
+> * Some new features will be implemented soon, the major part of those new features are determined by Gutenberg code evolutions
+> * All suggestions are welcome!
+
+> <a href="https://www.joomunited.com/news/gutenberg-advanced-comes-to-wordpress" rel="friend">Read the plugin presentation on our blog</a>
+
 = Support =
 
 Before leaving a review >> Feel free to ask questions here in the support section, we reply to every question!
