@@ -1,0 +1,106 @@
+#postbox-container-1 {
+    display: none !important;
+}
+
+.tab-content {
+    padding: 10px;
+}
+
+#update-list-btn i.rotating {
+    animation: rotation 2s infinite linear;
+    -moz-animation: rotation 2s infinite linear;
+    -webkit-animation: rotation 2s infinite linear;
+}
+
+button[disabled] {
+    opacity: 0.7;
+}
+
+/* Block list tab style */
+.tab-content h3 {
+    margin: 15px 0;
+}
+
+ul.blocks-list {
+    margin: 10px;
+}
+
+ul.blocks-list li.block-item {
+    float: left;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    transition: background-color .5s ease-out;
+    -moz-transition: background-color .5s ease-out;
+    -webkit-transition: background-color .5s ease-out;
+}
+
+.block-title {
+    margin-left: 3px;
+}
+
+.block-item input[type='checkbox'] {
+    display: none;
+}
+
+.block-item input:not(:checked) + label {
+    color: #999;
+}
+
+.block-item.new-block {
+    background-color: #FF8855;
+}
+
+#block-update-notice {
+    color: #444;
+    padding: 10px;
+    display: none;
+}
+
+.dashicons.dashicons-block-default:before {
+    content: "\f480";
+}
+.dashicons.dashicons-columns:before {
+    content: "\f489";
+}
+.dashicons.dashicons-html:before {
+    content: "\f475";
+}
+.dashicons.dashicons-button:before {
+    content: "\f105";
+}
+.dashicons.dashicons-heading:before {
+    content: "\f324";
+}
+.dashicons.dashicons-embed-generic:before {
+    content: "\f499";
+}
+.dashicons.dashicons-embed-post:before {
+    content: "\f491";
+}
+.dashicons.dashicons-embed-video:before {
+    content: "\f490";
+}
+.dashicons.dashicons-embed-photo:before {
+    content: "\f496";
+}
+.dashicons.dashicons-embed-audio:before {
+    content: "\f500";
+}
+
+/*Users tab*/
+.advgb-users-search-box {
+    margin: 10px 0;
+}
+
+#users-tab .advgb-users-search-box > * {
+    vertical-align: middle;
+}
+
+.advgb-groups-block {
+    margin: 10px;
+}
+
+/*Save setting button*/
+.save-settings-block {
+    margin-top: 20px;
+}
