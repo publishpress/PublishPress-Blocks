@@ -4,7 +4,8 @@ jQuery(document).ready(function ($) {
         $(this).find('.blocks-gallery-item img').colorbox({
             title: function () {
                 if (parseInt(advgb.imageCaption)) {
-                    return $(this).attr('alt');
+                    var imgCap = $(this).closest('.blocks-gallery-item').find('figcaption').text() || $(this).attr('alt');
+                    return imgCap;
                 }
 
                 return null;
