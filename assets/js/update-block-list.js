@@ -1,17 +1,9 @@
 window.onload = function () {
     if (typeof wp.blocks !== 'undefined') {
+        wp.blocks.registerCoreBlocks();
         var allBlocks = wp.blocks.getBlockTypes();
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
-
-        // Do not get the reusable blocks
-        allBlocks = allBlocks.filter(function (block) {
-            return block.category !== 'reusable-blocks';
-        });
-
-        allCategories = allCategories.filter(function (category) {
-            return category.slug !== 'reusable-blocks';
-        });
 
         allBlocks.forEach(function (block) {
             var blockItem = {
@@ -33,7 +25,7 @@ window.onload = function () {
                 categoriesList: allCategories
             },
             success: function (res) {
-                if (advgbUpdate.onProfile) {
+                if (typeof advgbUpdate !== 'undefined' && advgbUpdate.onProfile) {
                     var $ = jQuery;
 
                     // Remove non-exist categories
@@ -83,16 +75,11 @@ window.onload = function () {
                         } else {
                             var blockHTML = '';
                             blockHTML += '<li class="block-item new-block" data-type="'+ block.name +'">';
-                            blockHTML +=    '<label for="block-code" class="switch-label">';
+                            blockHTML +=    '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'">';
+                            blockHTML +=    '<label for="'+ block.name +'" class="switch-label">';
                             blockHTML +=        '<i class="dashicons dashicons-'+ block.icon +'"></i>';
                             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
                             blockHTML +=    '</label>';
-                            blockHTML +=    '<div class="switch-btn">';
-                            blockHTML +=        '<label class="switch">';
-                            blockHTML +=            '<input type="checkbox" name="active_blocks[]" value="'+ block.name +'">';
-                            blockHTML +=            '<div class="slider round"></div>';
-                            blockHTML +=        '</label>';
-                            blockHTML +=    '</div>';
                             blockHTML += '</li>';
 
                             var categoryBlock = $('.category-block[data-category="'+ block.category +'"]');
@@ -113,7 +100,7 @@ window.onload = function () {
             },
             error: function () {
                 alert('Error while updating list!');
-                if (advgbUpdate.onProfile)
+                if (typeof advgbUpdate !== 'undefined' && advgbUpdate.onProfile)
                     window.location.href = window.location.href.replace('&update_blocks_list=true', '');
             }
         });
