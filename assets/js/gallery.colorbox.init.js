@@ -1,10 +1,11 @@
 jQuery(document).ready(function ($) {
     $('.wp-block-gallery').each(function () {
         // Add lightbox for images
-        $(this).find('.blocks-gallery-image img').colorbox({
+        $(this).find('.blocks-gallery-item img').colorbox({
             title: function () {
                 if (parseInt(advgb.imageCaption)) {
-                    return $(this).attr('alt');
+                    var imgCap = $(this).closest('.blocks-gallery-item').find('figcaption').text() || $(this).attr('alt');
+                    return imgCap;
                 }
 
                 return null;
