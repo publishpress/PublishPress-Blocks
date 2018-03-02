@@ -709,11 +709,51 @@ float: left;'
             update_option('advgb_settings', $save_config);
 
             if (isset($_REQUEST['_wp_http_referer'])) {
-                wp_redirect($_REQUEST['_wp_http_referer'] . '&save=success');
+                wp_redirect($_REQUEST['_wp_http_referer'] . '&save=success#config-tab');
                 exit;
             }
         }
 
+        if (isset($_POST['save_custom_styles'])) {
+            if (!wp_verify_nonce($_POST['advgb_cstyles_nonce_field'], 'advgb_cstyles_nonce')) {
+                return false;
+            }
+            // Save Custom Styles to a css file
+            $get_custom_styles = get_option('advgb_custom_styles');
+            if ($get_custom_styles != false) {
+                $this->writeCustomStyles($get_custom_styles);
+            }
+
+            if (!empty($_REQUEST['_wp_http_referer'])) {
+                wp_redirect($_REQUEST['_wp_http_referer'] . '&save=success#customstyles-tab');
+                exit;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Write custom styles to a CSS file
+     * @param $styles_array array Array of styles
+     *
+     * @return boolean true on success, false on failure
+     */
+    public function writeCustomStyles($styles_array)
+    {
+        WP_Filesystem();
+        global $wp_filesystem;
+
+        $css_file = plugin_dir_path(dirname(__FILE__)). 'assets/css/customstyles/custom_styles.css';
+        $content = '';
+        foreach ($styles_array as $styles) {
+            $content .= "." . $styles['name'] . " {\n";
+            $content .= $styles['css'] . "\n} \n";
+        }
+
+        if (!$wp_filesystem->put_contents($css_file, $content)) {
+            return false;
+        }
         return true;
     }
 

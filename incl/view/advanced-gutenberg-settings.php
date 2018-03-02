@@ -153,6 +153,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                             type="submit"
                             id="save_custom_styles"
                             name="save_custom_styles"
+                            value="1"
                     >
                         <?php _e('Save styles', 'advanced-gutenberg') ?>
                     </button>
