@@ -61,7 +61,7 @@ $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] 
                         <label for="gallery_lightbox_caption"
                                class="switch-label advgb_qtip"
                                alt="<?php _e(
-                                   'Load images (alt) attribute as caption for lightbox images.',
+                                   'Show images caption in lightbox.',
                                    'advanced-gutenberg'
                                ) ?>"
                         >
