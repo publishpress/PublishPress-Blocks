@@ -105,6 +105,7 @@ float: left;'
     public function __construct()
     {
         add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
+        add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
 
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbMenu'));
@@ -115,7 +116,7 @@ float: left;'
             add_action('admin_menu', array($this, 'registerSettingsMenu'), 5);
             add_action('load-settings_page_advgb_settings', array($this, 'saveSettings'));
             add_filter('allowed_block_types', array($this, 'initActiveBlocksForGutenberg'));
-            add_action('enqueue_block_editor_assets', array($this, 'customEditor'), 9999);
+            add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
 
             // Ajax
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -127,12 +128,33 @@ float: left;'
         }
     }
 
-    public function customEditor()
+    /**
+     * Enqueue styles and scripts for gutenberg
+     */
+    public function addEditorAssets()
     {
         wp_enqueue_script(
-            'custom-editor',
-            plugins_url('assets/js/custom.js', dirname(__FILE__)),
+            'summary_blocks',
+            plugins_url('assets/blocks/summary/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
+            'custom_styles',
+            plugins_url('assets/js/custom-styles.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
+        );
+        $custom_styles_data = get_option('advgb_custom_styles');
+        wp_localize_script('custom_styles', 'advGb_CS', $custom_styles_data);
+    }
+
+    /**
+     * Enqueue styles for gutenberg editor and front-end
+     */
+    public function addEditorAndFrontendStyles()
+    {
+        wp_enqueue_style(
+            'summary_blocks',
+            plugins_url('assets/blocks/summary/style.css', dirname(__FILE__))
         );
     }
 
@@ -440,7 +462,7 @@ float: left;'
             wp_enqueue_script(
                 'update_list',
                 plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-                array('wp-blocks', 'wp-element')
+                array('wp-blocks', 'wp-element', 'wp-data')
             );
         }
     }
@@ -492,7 +514,7 @@ float: left;'
         wp_register_script(
             'update_list',
             plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-            array('wp-blocks', 'wp-element')
+            array('wp-blocks', 'wp-element', 'wp-data')
         );
         wp_register_script(
             'profile_js',
