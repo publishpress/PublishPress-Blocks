@@ -29,6 +29,7 @@ class SummaryBlock extends Component {
                 thisHead['anchor'] = heading.attributes.anchor;
             } else {
                 thisHead['anchor'] = 'advgb-toc-' + heading.uid;
+                heading.attributes.anchor = thisHead['anchor'];
             }
 
             // We only get heading from h2
@@ -43,7 +44,6 @@ class SummaryBlock extends Component {
         this.props.setAttributes({
             headings: headingDatas
         });
-        console.log(headingDatas);
     }
 
     render() {
