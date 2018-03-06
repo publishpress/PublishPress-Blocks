@@ -9,15 +9,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var __ = wp.i18n.__;
+var Component = wp.element.Component;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
-    BlockControls = _wp$blocks.BlockControls,
-    Toolbar = _wp$blocks.Toolbar;
-var Component = wp.element.Component;
+    BlockControls = _wp$blocks.BlockControls;
 var _wp$components = wp.components,
     IconButton = _wp$components.IconButton,
     Placeholder = _wp$components.Placeholder,
-    Button = _wp$components.Button;
+    Button = _wp$components.Button,
+    Toolbar = _wp$components.Toolbar;
 var select = wp.data.select;
 
 
@@ -85,6 +85,7 @@ var SummaryBlock = function (_Component) {
                 isSelected = _props.isSelected;
             var headings = attributes.headings;
 
+            // No heading blocks
 
             var summaryContent = React.createElement(
                 Placeholder,
@@ -102,7 +103,7 @@ var SummaryBlock = function (_Component) {
                 )
             );
 
-            // No heading blocks
+            // Having heading blocks
             if (headings.length > 0) {
                 summaryContent = React.createElement(
                     'ul',

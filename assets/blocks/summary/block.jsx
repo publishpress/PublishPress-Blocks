@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
-const { registerBlockType, BlockControls, Toolbar } = wp.blocks;
 const { Component } = wp.element;
-const { IconButton, Placeholder, Button } = wp.components;
+const { registerBlockType, BlockControls } = wp.blocks;
+const { IconButton, Placeholder, Button, Toolbar } = wp.components;
 const { select } = wp.data;
 
 const blockIcon = 'list-view';
@@ -54,6 +54,7 @@ class SummaryBlock extends Component {
         const { attributes, isSelected } = this.props;
         const { headings } = attributes;
 
+        // No heading blocks
         let summaryContent = (
             <Placeholder
                 icon={blockIcon}
@@ -68,7 +69,7 @@ class SummaryBlock extends Component {
             </Placeholder>
         );
 
-        // No heading blocks
+        // Having heading blocks
         if (headings.length > 0) {
             summaryContent = (
                 <ul className={'advgb-toc'}>
