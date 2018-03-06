@@ -1,8 +1,11 @@
 const { __ } = wp.i18n;
 const { registerBlockType, BlockControls, Toolbar } = wp.blocks;
 const { Component } = wp.element;
-const { IconButton } = wp.components;
+const { IconButton, Placeholder, Button } = wp.components;
 const { select } = wp.data;
+
+const blockIcon = 'list-view';
+const blockTitle = __('Summary');
 
 class SummaryBlock extends Component {
     constructor() {
@@ -28,6 +31,7 @@ class SummaryBlock extends Component {
             if (heading.attributes.anchor) {
                 thisHead['anchor'] = heading.attributes.anchor;
             } else {
+                // Generate a random anchor for headings without it
                 thisHead['anchor'] = 'advgb-toc-' + heading.uid;
                 heading.attributes.anchor = thisHead['anchor'];
             }
@@ -50,9 +54,22 @@ class SummaryBlock extends Component {
         const { attributes, isSelected } = this.props;
         const { headings } = attributes;
 
-        let summaryContent = null;
+        let summaryContent = (
+            <Placeholder
+                icon={blockIcon}
+                label={blockTitle}
+                instructions={__('Your current post/page has no headings. Try add some headings and update this block later')}
+            >
+                <Button onClick={this.updateSummary}
+                        className={'button'}
+                >
+                    {__('Update')}
+                </Button>
+            </Placeholder>
+        );
+
         // No heading blocks
-        if (headings.length > 1) {
+        if (headings.length > 0) {
             summaryContent = (
                 <ul className={'advgb-toc'}>
                     {headings.map((heading) => {
@@ -69,7 +86,7 @@ class SummaryBlock extends Component {
         }
 
         return [
-            isSelected && (
+            isSelected && !!headings.length && (
                 <BlockControls>
                     <Toolbar>
                         <IconButton className={'components-icon-button components-toolbar__control'}
@@ -86,10 +103,10 @@ class SummaryBlock extends Component {
 }
 
 registerBlockType('advgb/summary', {
-    title: __('Summary'),
+    title: blockTitle,
     description: __('Show the table of content of current post/page.'),
-    icon: 'list-view',
-    category: 'formatting' ,
+    icon: blockIcon,
+    category: 'formatting',
     keywords: [ __('summary', 'table of content', 'content', 'list') ],
     attributes: {
         headings: {

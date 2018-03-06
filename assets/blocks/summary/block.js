@@ -14,8 +14,15 @@ var _wp$blocks = wp.blocks,
     BlockControls = _wp$blocks.BlockControls,
     Toolbar = _wp$blocks.Toolbar;
 var Component = wp.element.Component;
-var IconButton = wp.components.IconButton;
+var _wp$components = wp.components,
+    IconButton = _wp$components.IconButton,
+    Placeholder = _wp$components.Placeholder,
+    Button = _wp$components.Button;
 var select = wp.data.select;
+
+
+var blockIcon = 'list-view';
+var blockTitle = __('Summary');
 
 var SummaryBlock = function (_Component) {
     _inherits(SummaryBlock, _Component);
@@ -52,6 +59,7 @@ var SummaryBlock = function (_Component) {
                 if (heading.attributes.anchor) {
                     thisHead['anchor'] = heading.attributes.anchor;
                 } else {
+                    // Generate a random anchor for headings without it
                     thisHead['anchor'] = 'advgb-toc-' + heading.uid;
                     heading.attributes.anchor = thisHead['anchor'];
                 }
@@ -78,9 +86,24 @@ var SummaryBlock = function (_Component) {
             var headings = attributes.headings;
 
 
-            var summaryContent = null;
+            var summaryContent = React.createElement(
+                Placeholder,
+                {
+                    icon: blockIcon,
+                    label: blockTitle,
+                    instructions: __('Your current post/page has no headings. Try add some headings and update this block later')
+                },
+                React.createElement(
+                    Button,
+                    { onClick: this.updateSummary,
+                        className: 'button'
+                    },
+                    __('Update')
+                )
+            );
+
             // No heading blocks
-            if (headings.length > 1) {
+            if (headings.length > 0) {
                 summaryContent = React.createElement(
                     'ul',
                     { className: 'advgb-toc' },
@@ -100,7 +123,7 @@ var SummaryBlock = function (_Component) {
                 );
             }
 
-            return [isSelected && React.createElement(
+            return [isSelected && !!headings.length && React.createElement(
                 BlockControls,
                 null,
                 React.createElement(
@@ -120,9 +143,9 @@ var SummaryBlock = function (_Component) {
 }(Component);
 
 registerBlockType('advgb/summary', {
-    title: __('Summary'),
+    title: blockTitle,
     description: __('Show the table of content of current post/page.'),
-    icon: 'list-view',
+    icon: blockIcon,
     category: 'formatting',
     keywords: [__('summary', 'table of content', 'content', 'list')],
     attributes: {
