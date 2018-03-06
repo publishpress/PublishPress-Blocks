@@ -115,6 +115,7 @@ registerBlockType('advgb/summary', {
             default: []
         }
     },
+    useOnce: true,
     edit: SummaryBlock,
     save: ( { attributes } ) => {
         const { headings } = attributes;

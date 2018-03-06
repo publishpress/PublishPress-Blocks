@@ -155,6 +155,7 @@ registerBlockType('advgb/summary', {
             default: []
         }
     },
+    useOnce: true,
     edit: SummaryBlock,
     save: function save(_ref) {
         var attributes = _ref.attributes;
