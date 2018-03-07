@@ -34,6 +34,21 @@ const blockTitle = __('Summary');
     });
 })();
 
+// Add notice for user to refresh summary if manually change heading anchor
+addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
+    return ( props ) => {
+        return ( [
+            <BlockEdit key="block-edit-summary" {...props} />,
+            props.isSelected && props.name ==='core/heading' && props.attributes.nodeName !== 'H1' &&
+            <InspectorControls key="advgb-summary-controls-hint" >
+                <p style={{color: 'red'}}>
+                    {__('After manually changing the anchor, remember to refresh summary block to make the links work!')}
+                </p>
+            </InspectorControls>,
+        ] )
+    }
+} );
+
 class SummaryBlock extends Component {
     constructor() {
         super(...arguments);
