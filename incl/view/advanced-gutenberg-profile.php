@@ -29,7 +29,7 @@ if ($updating) {
     wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
 }
 
-wp_nonce_field('advgb_nonce', 'advgb_nonce_field')
+wp_nonce_field('advgb_nonce', 'advgb_nonce_field');
 ?>
 
 <div id="profiles-container">
