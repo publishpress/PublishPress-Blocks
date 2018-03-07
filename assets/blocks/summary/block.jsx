@@ -2,7 +2,7 @@ const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { registerBlockType, BlockControls } = wp.blocks;
 const { IconButton, Placeholder, Button, Toolbar } = wp.components;
-const { select } = wp.data;
+const { select, dispatch } = wp.data;
 
 const blockIcon = 'list-view';
 const blockTitle = __('Summary');
@@ -14,9 +14,7 @@ class SummaryBlock extends Component {
     }
 
     componentWillMount() {
-        if (this.props.attributes.headings.length < 1) {
-            this.updateSummary();
-        }
+        this.updateSummary();
     };
 
     updateSummary() {
@@ -71,6 +69,7 @@ class SummaryBlock extends Component {
 
         // Having heading blocks
         if (headings.length > 0) {
+            const { selectBlock } = dispatch('core/editor');
             summaryContent = (
                 <ul className={'advgb-toc'}>
                     {headings.map((heading) => {
@@ -78,7 +77,11 @@ class SummaryBlock extends Component {
                             <li className={'toc-level-' + heading.level}
                                 style={{marginLeft: heading.level * 20}}
                             >
-                                <a href={'#' + heading.anchor}>{heading.content}</a>
+                                <a href={'#' + heading.anchor}
+                                   onClick={() => selectBlock(heading.uid)}
+                                >
+                                    {heading.content}
+                                </a>
                             </li>
                         )
                     })}
