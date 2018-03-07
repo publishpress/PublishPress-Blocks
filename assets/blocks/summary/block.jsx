@@ -1,11 +1,38 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { registerBlockType, BlockControls } = wp.blocks;
+const { registerBlockType, BlockControls, createBlock, InspectorControls, PlainText } = wp.blocks;
 const { IconButton, Placeholder, Button, Toolbar } = wp.components;
 const { select, dispatch } = wp.data;
+const { addFilter } = wp.hooks;
 
 const blockIcon = 'list-view';
 const blockTitle = __('Summary');
+
+// Add button to insert summary inside table of contents component
+(function () {
+    jQuery(document).ready(function ( $ ) {
+        const { insertBlock } = dispatch( 'core/editor' );
+        const summaryBlock = createBlock( 'advgb/summary' );
+
+        $('.gutenberg #editor').find('.table-of-contents').click(function () {
+            const allBlocks = select('core/editor').getBlocks();
+            const summaryBlockExist = !!allBlocks.filter((block) => (block.name === 'advgb/summary')).length;
+            setTimeout(function () {
+                const summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">Insert Summary</button>');
+
+                $('.gutenberg #editor').find('.table-of-contents__popover').find('.document-outline')
+                    .append(summaryButton);
+                summaryButton.unbind('click').click(function () {
+                    insertBlock(summaryBlock, 0);
+                });
+
+                if (summaryBlockExist) {
+                    summaryButton.prop('disabled', true);
+                }
+            }, 100)
+        })
+    });
+})();
 
 class SummaryBlock extends Component {
     constructor() {

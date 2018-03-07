@@ -12,17 +12,52 @@ var __ = wp.i18n.__;
 var Component = wp.element.Component;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
-    BlockControls = _wp$blocks.BlockControls;
+    BlockControls = _wp$blocks.BlockControls,
+    createBlock = _wp$blocks.createBlock,
+    InspectorControls = _wp$blocks.InspectorControls,
+    PlainText = _wp$blocks.PlainText;
 var _wp$components = wp.components,
     IconButton = _wp$components.IconButton,
     Placeholder = _wp$components.Placeholder,
     Button = _wp$components.Button,
     Toolbar = _wp$components.Toolbar;
-var select = wp.data.select;
+var _wp$data = wp.data,
+    select = _wp$data.select,
+    dispatch = _wp$data.dispatch;
+var addFilter = wp.hooks.addFilter;
 
 
 var blockIcon = 'list-view';
 var blockTitle = __('Summary');
+
+// Add button to insert summary inside table of contents component
+(function () {
+    jQuery(document).ready(function ($) {
+        var _dispatch = dispatch('core/editor'),
+            insertBlock = _dispatch.insertBlock;
+
+        var summaryBlock = createBlock('advgb/summary');
+
+        $('.gutenberg #editor').find('.table-of-contents').click(function () {
+            var allBlocks = select('core/editor').getBlocks();
+            var summaryBlockExist = !!allBlocks.filter(function (block) {
+                return block.name === 'advgb/summary';
+            }).length;
+            setTimeout(function () {
+                var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">Insert Summary</button>');
+
+                $('.gutenberg #editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
+                summaryButton.unbind('click').click(function () {
+                    insertBlock(summaryBlock, 0);
+                });
+
+                if (summaryBlockExist) {
+                    summaryButton.prop('disabled', true);
+                }
+            }, 100);
+        });
+    });
+})();
 
 var SummaryBlock = function (_Component) {
     _inherits(SummaryBlock, _Component);
@@ -104,8 +139,8 @@ var SummaryBlock = function (_Component) {
 
             // Having heading blocks
             if (headings.length > 0) {
-                var _dispatch = dispatch('core/editor'),
-                    selectBlock = _dispatch.selectBlock;
+                var _dispatch2 = dispatch('core/editor'),
+                    selectBlock = _dispatch2.selectBlock;
 
                 summaryContent = React.createElement(
                     'ul',
