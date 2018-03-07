@@ -39,9 +39,7 @@ var SummaryBlock = function (_Component) {
     _createClass(SummaryBlock, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            if (this.props.attributes.headings.length < 1) {
-                this.updateSummary();
-            }
+            this.updateSummary();
         }
     }, {
         key: 'updateSummary',
@@ -54,19 +52,20 @@ var SummaryBlock = function (_Component) {
             headingBlocks.map(function (heading) {
                 var thisHead = {};
                 thisHead['level'] = parseInt(heading.attributes.nodeName.replace(/h/gi, ''));
-                thisHead['content'] = heading.attributes.content.length ? heading.attributes.content[0] : '';
-                thisHead['uid'] = heading.uid;
-                if (heading.attributes.anchor) {
-                    thisHead['anchor'] = heading.attributes.anchor;
-                } else {
-                    // Generate a random anchor for headings without it
-                    thisHead['anchor'] = 'advgb-toc-' + heading.uid;
-                    heading.attributes.anchor = thisHead['anchor'];
-                }
 
                 // We only get heading from h2
                 if (thisHead['level'] > 1) {
                     thisHead['level'] -= 1;
+                    thisHead['content'] = heading.attributes.content.length ? heading.attributes.content[0] : '';
+                    thisHead['uid'] = heading.uid;
+                    if (heading.attributes.anchor) {
+                        thisHead['anchor'] = heading.attributes.anchor;
+                    } else {
+                        // Generate a random anchor for headings without it
+                        thisHead['anchor'] = 'advgb-toc-' + heading.uid;
+                        heading.attributes.anchor = thisHead['anchor'];
+                    }
+
                     headingDatas.push(thisHead);
                 }
 
@@ -105,6 +104,9 @@ var SummaryBlock = function (_Component) {
 
             // Having heading blocks
             if (headings.length > 0) {
+                var _dispatch = dispatch('core/editor'),
+                    selectBlock = _dispatch.selectBlock;
+
                 summaryContent = React.createElement(
                     'ul',
                     { className: 'advgb-toc' },
@@ -116,7 +118,11 @@ var SummaryBlock = function (_Component) {
                             },
                             React.createElement(
                                 'a',
-                                { href: '#' + heading.anchor },
+                                { href: '#' + heading.anchor,
+                                    onClick: function onClick() {
+                                        return selectBlock(heading.uid);
+                                    }
+                                },
                                 heading.content
                             )
                         );

@@ -24,19 +24,20 @@ class SummaryBlock extends Component {
         headingBlocks.map((heading) => {
             let thisHead = {};
             thisHead['level'] = parseInt(heading.attributes.nodeName.replace(/h/gi, ''));
-            thisHead['content'] = heading.attributes.content.length ? heading.attributes.content[0] : '';
-            thisHead['uid'] = heading.uid;
-            if (heading.attributes.anchor) {
-                thisHead['anchor'] = heading.attributes.anchor;
-            } else {
-                // Generate a random anchor for headings without it
-                thisHead['anchor'] = 'advgb-toc-' + heading.uid;
-                heading.attributes.anchor = thisHead['anchor'];
-            }
 
             // We only get heading from h2
             if (thisHead['level'] > 1) {
                 thisHead['level'] -= 1;
+                thisHead['content'] = heading.attributes.content.length ? heading.attributes.content[0] : '';
+                thisHead['uid'] = heading.uid;
+                if (heading.attributes.anchor) {
+                    thisHead['anchor'] = heading.attributes.anchor;
+                } else {
+                    // Generate a random anchor for headings without it
+                    thisHead['anchor'] = 'advgb-toc-' + heading.uid;
+                    heading.attributes.anchor = thisHead['anchor'];
+                }
+
                 headingDatas.push(thisHead);
             }
 
