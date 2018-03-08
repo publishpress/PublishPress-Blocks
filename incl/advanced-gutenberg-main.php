@@ -156,6 +156,10 @@ float: left;'
             'summary_blocks',
             plugins_url('assets/blocks/summary/style.css', dirname(__FILE__))
         );
+        wp_enqueue_style(
+            'custom_styles',
+            plugins_url('assets/css/customstyles/custom_styles.css', dirname(__FILE__))
+        );
     }
 
     /**
