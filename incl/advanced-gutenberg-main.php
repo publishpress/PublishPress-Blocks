@@ -773,7 +773,7 @@ float: left;'
         $css_file = plugin_dir_path(dirname(__FILE__)). 'assets/css/customstyles/custom_styles.css';
         $content = '';
         foreach ($styles_array as $styles) {
-            $content .= "." . $styles['name'] . " {\n";
+            $content .= ".gutenberg #editor ." .$styles['name'] . ", ." . $styles['name'] . " {\n";
             $content .= $styles['css'] . "\n} \n";
         }
 

@@ -46,9 +46,19 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
                         return cstyle;
                     } )}
                     onChange={( cstyle ) => {
+                        const { id, attributes } = props;
+                        const { customStyle: oldStyle } = attributes;
+
                         props.setAttributes( {
-                            customStyle: cstyle
+                            customStyle: cstyle,
+                            backgroundColor: '',
+                            textColor: '',
+                            fontSize: '',
                         } );
+
+                        jQuery( '.gutenberg #editor' )
+                            .find( 'div[data-block="' + id + '"]' ).find( '.blocks-rich-text' )
+                            .find( 'p' ).removeClass( oldStyle ).addClass( cstyle )
                     }}
                 />
             </InspectorControls>

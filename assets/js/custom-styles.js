@@ -50,9 +50,19 @@ addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
                     return cstyle;
                 }),
                 onChange: function onChange(cstyle) {
+                    var id = props.id,
+                        attributes = props.attributes;
+                    var oldStyle = attributes.customStyle;
+
+
                     props.setAttributes({
-                        customStyle: cstyle
+                        customStyle: cstyle,
+                        backgroundColor: '',
+                        textColor: '',
+                        fontSize: ''
                     });
+
+                    jQuery('.gutenberg #editor').find('div[data-block="' + id + '"]').find('.blocks-rich-text').find('p').removeClass(oldStyle).addClass(cstyle);
                 }
             })
         )];
