@@ -43,7 +43,7 @@
                 }
             } else {
                 if (element.nodeName === 'BODY') {
-                    alert(data.confirmText);
+                    alert('Wrong element!');
                     return false;
                 }
                 var wrapper = document.createElement('div');
