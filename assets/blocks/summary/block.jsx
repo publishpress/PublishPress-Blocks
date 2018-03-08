@@ -6,43 +6,49 @@ const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
 
 const blockIcon = 'list-view';
-const blockTitle = __('Summary');
+const blockTitle = __( 'Summary' );
 
 // Add button to insert summary inside table of contents component
-(function () {
-    jQuery(document).ready(function ( $ ) {
+( function () {
+    jQuery( document ).ready( function ( $ ) {
         const { insertBlock } = dispatch( 'core/editor' );
         const summaryBlock = createBlock( 'advgb/summary' );
 
-        $('.gutenberg #editor').find('.table-of-contents').click(function () {
-            const allBlocks = select('core/editor').getBlocks();
-            const summaryBlockExist = !!allBlocks.filter((block) => (block.name === 'advgb/summary')).length;
-            setTimeout(function () {
-                const summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">Insert Summary</button>');
+        $( '.gutenberg #editor' ).find( '.table-of-contents' ).click( function () {
+            const allBlocks = select( 'core/editor' ).getBlocks();
+            const summaryBlockExist = !!allBlocks.filter( ( block ) => ( block.name === 'advgb/summary' ) ).length;
+            setTimeout( function () {
+                const summaryButton = $(
+                    '<button class="button" style="position: absolute; bottom: 10px; right: 15px">'
+                        + __( 'Insert Summary' ) +
+                    '</button>'
+                );
 
-                $('.gutenberg #editor').find('.table-of-contents__popover').find('.document-outline')
-                    .append(summaryButton);
-                summaryButton.unbind('click').click(function () {
-                    insertBlock(summaryBlock, 0);
-                });
+                $( '.gutenberg #editor' ).find( '.table-of-contents__popover' ).find( '.document-outline' )
+                    .append( summaryButton );
+                summaryButton.unbind( 'click' ).click( function () {
+                    insertBlock( summaryBlock, 0 );
+                } );
 
                 if (summaryBlockExist) {
-                    summaryButton.prop('disabled', true);
+                    summaryButton.prop( 'disabled', true );
                 }
-            }, 100)
-        })
-    });
-})();
+            }, 100 )
+        } )
+    } );
+} )();
 
 // Add notice for user to refresh summary if manually change heading anchor
 addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
     return ( props ) => {
+        const { isSelected, name: blockType, attributes } = props;
+
         return ( [
             <BlockEdit key="block-edit-summary" {...props} />,
-            props.isSelected && props.name ==='core/heading' && props.attributes.nodeName !== 'H1' &&
-            <InspectorControls key="advgb-summary-controls-hint" >
-                <p style={{color: 'red'}}>
-                    {__('After manually changing the anchor, remember to refresh summary block to make the links work!')}
+            isSelected && blockType === 'core/heading' && attributes.nodeName !== 'H1' &&
+            <InspectorControls key="advgb-summary-controls-hint">
+                <p style={{ color: 'red', fontStyle: 'italic' }}>
+                    {__( 'After manually changing the anchor, remember to refresh summary block to make the links work!' )}
                 </p>
             </InspectorControls>,
         ] )
@@ -51,8 +57,8 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
 
 class SummaryBlock extends Component {
     constructor() {
-        super(...arguments);
-        this.updateSummary = this.updateSummary.bind(this);
+        super( ...arguments );
+        this.updateSummary = this.updateSummary.bind( this );
     }
 
     componentWillMount() {
@@ -61,34 +67,34 @@ class SummaryBlock extends Component {
 
     updateSummary() {
         let headingDatas = [];
-        const allBlocks = select('core/editor').getBlocks();
-        const headingBlocks = allBlocks.filter((block) => (block.name === 'core/heading'));
-        headingBlocks.map((heading) => {
+        const allBlocks = select( 'core/editor' ).getBlocks();
+        const headingBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' ) );
+        headingBlocks.map( ( heading ) => {
             let thisHead = {};
-            thisHead['level'] = parseInt(heading.attributes.nodeName.replace(/h/gi, ''));
+            thisHead[ 'level' ] = parseInt( heading.attributes.nodeName.replace( /h/gi, '' ) );
 
             // We only get heading from h2
-            if (thisHead['level'] > 1) {
-                thisHead['level'] -= 1;
-                thisHead['content'] = heading.attributes.content.length ? heading.attributes.content[0] : '';
-                thisHead['uid'] = heading.uid;
+            if (thisHead[ 'level' ] > 1) {
+                thisHead[ 'level' ] -= 1;
+                thisHead[ 'content' ] = heading.attributes.content.length ? heading.attributes.content[ 0 ] : '';
+                thisHead[ 'uid' ] = heading.uid;
                 if (heading.attributes.anchor) {
-                    thisHead['anchor'] = heading.attributes.anchor;
+                    thisHead[ 'anchor' ] = heading.attributes.anchor;
                 } else {
                     // Generate a random anchor for headings without it
-                    thisHead['anchor'] = 'advgb-toc-' + heading.uid;
-                    heading.attributes.anchor = thisHead['anchor'];
+                    thisHead[ 'anchor' ] = 'advgb-toc-' + heading.uid;
+                    heading.attributes.anchor = thisHead[ 'anchor' ];
                 }
 
-                headingDatas.push(thisHead);
+                headingDatas.push( thisHead );
             }
 
             return heading;
-        });
+        } );
 
-        this.props.setAttributes({
+        this.props.setAttributes( {
             headings: headingDatas
-        });
+        } );
     }
 
     render() {
@@ -100,34 +106,34 @@ class SummaryBlock extends Component {
             <Placeholder
                 icon={blockIcon}
                 label={blockTitle}
-                instructions={__('Your current post/page has no headings. Try add some headings and update this block later')}
+                instructions={__( 'Your current post/page has no headings. Try add some headings and update this block later' )}
             >
                 <Button onClick={this.updateSummary}
                         className={'button'}
                 >
-                    {__('Update')}
+                    {__( 'Update' )}
                 </Button>
             </Placeholder>
         );
 
         // Having heading blocks
         if (headings.length > 0) {
-            const { selectBlock } = dispatch('core/editor');
+            const { selectBlock } = dispatch( 'core/editor' );
             summaryContent = (
                 <ul className={'advgb-toc'}>
-                    {headings.map((heading) => {
+                    {headings.map( ( heading ) => {
                         return (
                             <li className={'toc-level-' + heading.level}
-                                style={{marginLeft: heading.level * 20}}
+                                style={{ marginLeft: heading.level * 20 }}
                             >
                                 <a href={'#' + heading.anchor}
-                                   onClick={() => selectBlock(heading.uid)}
+                                   onClick={() => selectBlock( heading.uid )}
                                 >
                                     {heading.content}
                                 </a>
                             </li>
                         )
-                    })}
+                    } )}
                 </ul>
             )
         }
@@ -138,7 +144,7 @@ class SummaryBlock extends Component {
                     <Toolbar>
                         <IconButton className={'components-icon-button components-toolbar__control'}
                                     icon={'update'}
-                                    label={__('Update Summary')}
+                                    label={__( 'Update Summary' )}
                                     onClick={this.updateSummary}
                         />
                     </Toolbar>
@@ -149,12 +155,12 @@ class SummaryBlock extends Component {
     }
 }
 
-registerBlockType('advgb/summary', {
+registerBlockType( 'advgb/summary', {
     title: blockTitle,
-    description: __('Show the table of content of current post/page.'),
+    description: __( 'Show the table of content of current post/page.' ),
     icon: blockIcon,
     category: 'formatting',
-    keywords: [ __('summary', 'table of content', 'content', 'list') ],
+    keywords: [ __( 'summary', 'table of content', 'content', 'list' ) ],
     attributes: {
         headings: {
             type: 'array',
@@ -172,16 +178,16 @@ registerBlockType('advgb/summary', {
 
         return (
             <ul className={'advgb-toc'}>
-                {headings.map((heading) => {
+                {headings.map( ( heading ) => {
                     return (
                         <li className={'toc-level-' + heading.level}
-                            style={{marginLeft: heading.level * 20}}
+                            style={{ marginLeft: heading.level * 20 }}
                         >
                             <a href={'#' + heading.anchor}>{heading.content}</a>
                         </li>
                     )
-                })}
+                } )}
             </ul>
         )
     },
-});
+} );

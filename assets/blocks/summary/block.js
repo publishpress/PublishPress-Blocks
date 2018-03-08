@@ -46,7 +46,7 @@ var blockTitle = __('Summary');
                 return block.name === 'advgb/summary';
             }).length;
             setTimeout(function () {
-                var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">Insert Summary</button>');
+                var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Summary') + '</button>');
 
                 $('.gutenberg #editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
                 summaryButton.unbind('click').click(function () {
@@ -64,12 +64,17 @@ var blockTitle = __('Summary');
 // Add notice for user to refresh summary if manually change heading anchor
 addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
     return function (props) {
-        return [React.createElement(BlockEdit, _extends({ key: 'block-edit-summary' }, props)), props.isSelected && props.name === 'core/heading' && props.attributes.nodeName !== 'H1' && React.createElement(
+        var isSelected = props.isSelected,
+            blockType = props.name,
+            attributes = props.attributes;
+
+
+        return [React.createElement(BlockEdit, _extends({ key: 'block-edit-summary' }, props)), isSelected && blockType === 'core/heading' && attributes.nodeName !== 'H1' && React.createElement(
             InspectorControls,
             { key: 'advgb-summary-controls-hint' },
             React.createElement(
                 'p',
-                { style: { color: 'red' } },
+                { style: { color: 'red', fontStyle: 'italic' } },
                 __('After manually changing the anchor, remember to refresh summary block to make the links work!')
             )
         )];
