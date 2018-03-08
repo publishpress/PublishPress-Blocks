@@ -117,6 +117,8 @@ float: left;'
             add_action('load-settings_page_advgb_settings', array($this, 'saveSettings'));
             add_filter('allowed_block_types', array($this, 'initActiveBlocksForGutenberg'));
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
+            add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
+            add_filter('mce_buttons_2', array($this, 'addTinyMceToolbar'));
 
             // Ajax
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -930,5 +932,31 @@ float: left;'
         }
 
         return $content;
+    }
+
+    /**
+     * Function to load external plugins for tinyMCE
+     * @param $plgs
+     *
+     * @return array
+     */
+    public function addTinyMceExternal($plgs)
+    {
+        $plgs['customstyles'] = plugin_dir_url(dirname(__FILE__)) . 'assets/blocks/customstyles/plugin.js';
+
+        return $plgs;
+    }
+
+    /**
+     * Function to add buttons for tinyMCE toolbars
+     * @param $plgs
+     *
+     * @return array
+     */
+    public function addTinyMceToolbar($buttons)
+    {
+        array_push($buttons, 'customstyles');
+
+        return $buttons;
     }
 }
