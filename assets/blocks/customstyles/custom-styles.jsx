@@ -53,7 +53,7 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
                             customStyle: cstyle,
                             backgroundColor: '',
                             textColor: '',
-                            fontSize: '',
+                            fontSize: 0,
                         } );
 
                         jQuery( '.gutenberg #editor' )
