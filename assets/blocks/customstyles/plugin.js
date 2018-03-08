@@ -29,7 +29,7 @@
 
         function addCustomStyle(classes) {
             var element = editor.selection.getNode();
-            var par = editor.dom.getParent(element, 'div.wpsestyles');
+            var par = editor.dom.getParent(element, 'div.advgbstyles');
             if (par) {
                 if (par.className.indexOf(classes) > -1) {
                     var cont = document.createElement('p');
@@ -38,7 +38,7 @@
                     editor.focus();
                     return false;
                 } else {
-                    par.className = 'wpsestyles ' + classes;
+                    par.className = 'advgbstyles ' + classes;
                     return false;
                 }
             } else {
@@ -48,7 +48,7 @@
                 }
                 var wrapper = document.createElement('div');
                 wrapper.id = element.id;
-                wrapper.className = 'wpsestyles ' + classes;
+                wrapper.className = 'advgbstyles ' + classes;
                 editor.dom.replace(wrapper, element, true);
                 editor.focus();
             }
@@ -62,9 +62,9 @@
                     var selected = editor.selection.getStart();
                     var classes = '';
 
-                    if (selected.className && selected.className.indexOf('wpsestyles') > -1) {
+                    if (selected.className && selected.className.indexOf('advgbstyles') > -1) {
                         classes = selected.className;
-                        classes = classes.replace('wpsestyles ', '');
+                        classes = classes.replace('advgbstyles ', '');
                     }
 
                     self.value(classes);
