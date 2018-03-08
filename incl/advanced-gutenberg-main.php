@@ -140,7 +140,7 @@ float: left;'
         );
         wp_enqueue_script(
             'custom_styles',
-            plugins_url('assets/js/custom-styles.js', dirname(__FILE__)),
+            plugins_url('assets/block/custom-styles.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
         );
         $custom_styles_data = get_option('advgb_custom_styles');
