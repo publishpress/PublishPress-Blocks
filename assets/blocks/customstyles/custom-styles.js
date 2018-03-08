@@ -23,6 +23,7 @@ addFilter('blocks.registerBlockType', 'advgb/registerCustomStyleClass', function
 // Add option to return to default style
 if (advGb_CS) {
     advGb_CS.unshift({
+        id: 0,
         label: __('Paragraph'),
         value: ''
     });

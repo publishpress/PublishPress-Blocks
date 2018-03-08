@@ -1,8 +1,8 @@
 (function () {
     if (typeof (advGb_CS) === 'undefined') return;
-    advGb_CS = advGb_CS.filter(function(cstyle) {return cstyle.label !== 'Paragraph'});
+    advGb_CS = advGb_CS.filter(function(cstyle) {return cstyle.id !== 0});
 
-    tinyMCE.PluginManager.add('customstyles', function (editor, url) {
+    tinyMCE.PluginManager.add('customstyles', function (editor) {
         var output = [{
             text: 'Paragraph',
             value: ' '
