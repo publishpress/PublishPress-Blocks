@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { registerBlockType, BlockControls, createBlock, InspectorControls, PlainText } = wp.blocks;
+const { registerBlockType, BlockControls, createBlock, InspectorControls, getBlockContent } = wp.blocks;
 const { IconButton, Placeholder, Button, Toolbar } = wp.components;
 const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
@@ -76,7 +76,9 @@ class SummaryBlock extends Component {
             // We only get heading from h2
             if (thisHead[ 'level' ] > 1) {
                 thisHead[ 'level' ] -= 1;
-                thisHead[ 'content' ] = heading.attributes.content.length ? heading.attributes.content[ 0 ] : '';
+                thisHead[ 'content' ] = heading.attributes.content.length
+                    ? getBlockContent( heading ).replace( /<(?:.|\n)*?>/gm, '' )
+                    : '';
                 thisHead[ 'uid' ] = heading.uid;
                 if (heading.attributes.anchor) {
                     thisHead[ 'anchor' ] = heading.attributes.anchor;

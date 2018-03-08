@@ -17,7 +17,7 @@ var _wp$blocks = wp.blocks,
     BlockControls = _wp$blocks.BlockControls,
     createBlock = _wp$blocks.createBlock,
     InspectorControls = _wp$blocks.InspectorControls,
-    PlainText = _wp$blocks.PlainText;
+    getBlockContent = _wp$blocks.getBlockContent;
 var _wp$components = wp.components,
     IconButton = _wp$components.IconButton,
     Placeholder = _wp$components.Placeholder,
@@ -113,7 +113,7 @@ var SummaryBlock = function (_Component) {
                 // We only get heading from h2
                 if (thisHead['level'] > 1) {
                     thisHead['level'] -= 1;
-                    thisHead['content'] = heading.attributes.content.length ? heading.attributes.content[0] : '';
+                    thisHead['content'] = heading.attributes.content.length ? getBlockContent(heading).replace(/<(?:.|\n)*?>/gm, '') : '';
                     thisHead['uid'] = heading.uid;
                     if (heading.attributes.anchor) {
                         thisHead['anchor'] = heading.attributes.anchor;
