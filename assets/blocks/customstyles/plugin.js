@@ -1,16 +1,16 @@
 (function () {
     if (typeof (advGb_CS) === 'undefined') return;
-    advGb_CS = advGb_CS.filter(function(cstyle) {return cstyle.id !== 0});
+    var advGb_CStyles = advGb_CS.filter(function(cstyle) {return cstyle.id !== 0});
 
     tinyMCE.PluginManager.add('customstyles', function (editor) {
         var output = [{
             text: 'Paragraph',
             value: ' '
         }];
-        for (var i = 0; i < advGb_CS.length; i++) {
+        for (var i = 0; i < advGb_CStyles.length; i++) {
             var style = {};
-            classText = advGb_CS[i]['name'];
-            style['text'] = advGb_CS[i]['title'];
+            classText = advGb_CStyles[i]['name'];
+            style['text'] = advGb_CStyles[i]['title'];
             style['value'] = classText;
             output.push(style);
         }
