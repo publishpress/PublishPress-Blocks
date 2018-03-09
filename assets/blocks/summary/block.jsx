@@ -39,7 +39,7 @@ const blockTitle = __( 'Summary' );
 } )();
 
 // Add notice for user to refresh summary if manually change heading anchor
-addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
+addFilter( 'blocks.BlockEdit', 'advgb/addHeadingNotice', function ( BlockEdit ) {
     return ( props ) => {
         const { isSelected, name: blockType, attributes } = props;
 

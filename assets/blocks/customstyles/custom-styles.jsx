@@ -67,7 +67,7 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
     }
 } );
 
-addFilter( 'blocks.getSaveContent.extraProps', 'core/custom-class-name/save-props', function ( extraProps, blockType, attributes ) {
+addFilter( 'blocks.getSaveContent.extraProps', 'advgb/loadFrontendCustomStyles', function ( extraProps, blockType, attributes ) {
     if (hasBlockSupport( blockType, 'customStyleName', true ) && attributes.customStyle) {
         extraProps.className += ' ' + attributes.customStyle;
     }
