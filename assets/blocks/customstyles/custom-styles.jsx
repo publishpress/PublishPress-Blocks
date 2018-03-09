@@ -52,9 +52,9 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
 
                         props.setAttributes( {
                             customStyle: cstyle,
-                            backgroundColor: '',
-                            textColor: '',
-                            fontSize: 0,
+                            backgroundColor: undefined,
+                            textColor: undefined,
+                            fontSize: undefined,
                         } );
 
                         jQuery( '.gutenberg #editor' )
