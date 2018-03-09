@@ -3,6 +3,7 @@ const { __ } = wp.i18n;
 const { InspectorControls, hasBlockSupport } = wp.blocks;
 const { SelectControl } = wp.components;
 
+// Register custom styles to blocks attributes
 addFilter( 'blocks.registerBlockType', 'advgb/registerCustomStyleClass', function ( settings ) {
     settings.attributes = Object.assign( settings.attributes, {
         customStyle: {
@@ -22,8 +23,10 @@ if (advGb_CS) {
     } );
 }
 
+// Add option to select custom styles for paragraph blocks
 addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
     return ( props ) => {
+        // Apply custom styles on editor init
         if (props.attributes.customStyle) {
             jQuery( document ).ready( function ( $ ) {
                 $( '.gutenberg #editor' )
@@ -57,6 +60,7 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
                             fontSize: undefined,
                         } );
 
+                        // Apply custom style on select
                         jQuery( '.gutenberg #editor' )
                             .find( 'div[data-block="' + id + '"]' ).find( '.blocks-rich-text' )
                             .find( 'p' ).removeClass( oldStyle ).addClass( cstyle )
@@ -67,6 +71,7 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
     }
 } );
 
+// Apply custom styles on front-end
 addFilter( 'blocks.getSaveContent.extraProps', 'advgb/loadFrontendCustomStyles', function ( extraProps, blockType, attributes ) {
     if (hasBlockSupport( blockType, 'customStyleName', true ) && attributes.customStyle) {
         extraProps.className += ' ' + attributes.customStyle;
