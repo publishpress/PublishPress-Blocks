@@ -118,7 +118,7 @@ float: left;'
             add_filter('allowed_block_types', array($this, 'initActiveBlocksForGutenberg'));
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
-            add_filter('mce_buttons_2', array($this, 'addTinyMceToolbar'));
+            add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
 
             // Ajax
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -953,7 +953,7 @@ float: left;'
      *
      * @return array
      */
-    public function addTinyMceToolbar($buttons)
+    public function addTinyMceButtons($buttons)
     {
         array_push($buttons, 'customstyles');
 
