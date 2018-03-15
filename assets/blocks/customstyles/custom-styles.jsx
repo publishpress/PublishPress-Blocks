@@ -74,7 +74,12 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
 // Apply custom styles on front-end
 addFilter( 'blocks.getSaveContent.extraProps', 'advgb/loadFrontendCustomStyles', function ( extraProps, blockType, attributes ) {
     if (hasBlockSupport( blockType, 'customStyleName', true ) && attributes.customStyle) {
-        extraProps.className += ' ' + attributes.customStyle;
+        if (typeof extraProps.className === 'undefined') {
+            extraProps.className = attributes.customStyle;
+        } else {
+            extraProps.className += ' ' + attributes.customStyle;
+            extraProps.className = extraProps.className.trim();
+        }
     }
 
     return extraProps;
