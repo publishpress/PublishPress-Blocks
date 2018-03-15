@@ -459,7 +459,7 @@ float: left;'
     }
 
     /**
-     * Get the blocks list
+     * Update the blocks list for first time install
      */
     public function initBlocksList()
     {

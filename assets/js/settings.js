@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+    // Show/hide the images caption option
     $('#gallery_lightbox').on('change', function () {
         if (this.checked) {
             $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
@@ -7,13 +8,13 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('#advgb-config-close').click(function () {
-        $('#advgb-config-success').slideUp();
-    });
-
     if ($('#gallery_lightbox').is(':checked')) {
         $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
     }
+
+    $('#advgb-config-close').click(function () {
+        $('#advgb-config-success').slideUp();
+    });
 
     $('.advgb_qtip').qtip({
         content: {
@@ -40,6 +41,7 @@ jQuery(document).ready(function ($) {
     initCustomStyleMenu();
 
     function initCustomStyleMenu() {
+        // Add new custom style
         (initCustomStyleNew = function () {
             $('#mybootstrap a.advgb-customstyles-new').unbind('click').click(function (e) {
                 that = this;
@@ -64,6 +66,7 @@ jQuery(document).ready(function ($) {
             })
         })();
 
+        // Delete custom style
         (initCustomStyleDelete = function () {
             $('#mybootstrap .advgb-customstyles-items a.trash').unbind('click').click(function (e) {
                 that = this;
@@ -97,6 +100,7 @@ jQuery(document).ready(function ($) {
             })
         })();
 
+        // Copy custom style
         (initCustomStyleCopy = function () {
             $('#mybootstrap .advgb-customstyles-items a.copy').unbind('click').click(function (e) {
                 that = this;
@@ -123,6 +127,7 @@ jQuery(document).ready(function ($) {
             })
         })();
 
+        // Choose custom style
         (initTableLinks = function () {
             $('#mybootstrap .advgb-customstyles-items a:not(".copy, .edit, .trash, .advgb-customstyles-new"), #mybootstrap .advgb-customstyles-items ul').unbind('click').click(function (e) {
                 id = $(this).parent().data('id-customstyle');
@@ -152,6 +157,7 @@ jQuery(document).ready(function ($) {
         };
     }
 
+    // Add Codemirror
     var myCssArea, myEditor, myCustomCss, myStyleId;
     myCssArea = document.getElementById('advgb-customstyles-css');
     myEditor = CodeMirror.fromTextArea(myCssArea, {
@@ -170,6 +176,7 @@ jQuery(document).ready(function ($) {
 
     });
 
+    // Fix Codemirror not displayed properly
     $('#custom-styles-tab').one('click', function () {
         myEditor.refresh();
         customStylePreview();
@@ -226,6 +233,7 @@ jQuery(document).ready(function ($) {
         return this.split(search).join(replace);
     };
 
+    // Parse custom style text to css for preview
     function parseCustomStyleCss() {
         var previewTarget = $("#advgb-customstyles-preview .advgb-customstyles-target");
         var parser = new (less.Parser);
@@ -257,6 +265,7 @@ jQuery(document).ready(function ($) {
         })
     }
 
+    // Bind event to preview custom style after changed css text
     (initCustomCssObserver = function () {
         var cssChangeWait;
         $('#advgb-customstyles-css').bind('input propertychange', function() {
@@ -278,6 +287,7 @@ jQuery(document).ready(function ($) {
         saveCustomStyleChanges();
     });
 
+    // Save custome style
     function saveCustomStyleChanges() {
         var myTitle =  $('#advgb-customstyles-title').val().trim();
         var myClassname =  $('#advgb-customstyles-classname').val().trim();
