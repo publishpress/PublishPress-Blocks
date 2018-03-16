@@ -38,7 +38,7 @@ addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
             { key: 'advgb-custom-controls' },
             React.createElement(SelectControl, {
                 label: __('Custom styles'),
-                help: __('This option let you add custom style for current paragraph.'),
+                help: __('This option let you add custom style for current paragraph. (Front-end only!)'),
                 value: props.attributes.customStyle,
                 options: advGb_CS.map(function (cstyle, index) {
                     if (cstyle.title) advGb_CS[index].label = cstyle.title;
@@ -61,7 +61,7 @@ addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
 
 // Apply custom styles on front-end
 addFilter('blocks.getSaveContent.extraProps', 'advgb/loadFrontendCustomStyles', function (extraProps, blockType, attributes) {
-    if (hasBlockSupport(blockType, 'customStyleName', true) && attributes.customStyle) {
+    if (hasBlockSupport(blockType, 'customStyle', true) && attributes.customStyle) {
         if (typeof extraProps.className === 'undefined') {
             extraProps.className = attributes.customStyle;
         } else {
