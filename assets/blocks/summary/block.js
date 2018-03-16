@@ -211,7 +211,7 @@ registerBlockType('advgb/summary', {
     description: __('Show the table of content of current post/page.'),
     icon: blockIcon,
     category: 'formatting',
-    keywords: [__('summary', 'table of content', 'content', 'list')],
+    keywords: [__('summary'), __('table of content'), __('list')],
     attributes: {
         headings: {
             type: 'array',
