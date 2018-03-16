@@ -33,13 +33,6 @@ if (advGb_CS) {
 // Add option to select custom styles for paragraph blocks
 addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
     return function (props) {
-        // Apply custom styles on editor init
-        if (props.attributes.customStyle) {
-            jQuery(document).ready(function ($) {
-                $('.gutenberg #editor').find('div[data-block="' + props.id + '"]').find('.blocks-rich-text').find('p').addClass(props.attributes.customStyle);
-            });
-        }
-
         return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && props.name === "core/paragraph" && React.createElement(
             InspectorControls,
             { key: 'advgb-custom-controls' },
@@ -54,20 +47,12 @@ addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
                     return cstyle;
                 }),
                 onChange: function onChange(cstyle) {
-                    var id = props.id,
-                        attributes = props.attributes;
-                    var oldStyle = attributes.customStyle;
-
-
                     props.setAttributes({
                         customStyle: cstyle,
                         backgroundColor: undefined,
                         textColor: undefined,
                         fontSize: undefined
                     });
-
-                    // Apply custom style on select
-                    jQuery('.gutenberg #editor').find('div[data-block="' + id + '"]').find('.blocks-rich-text').find('p').removeClass(oldStyle).addClass(cstyle);
                 }
             })
         )];
