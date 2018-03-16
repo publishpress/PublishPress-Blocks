@@ -51,6 +51,7 @@ var blockTitle = __('Summary');
                 $('.gutenberg #editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
                 summaryButton.unbind('click').click(function () {
                     insertBlock(summaryBlock, 0);
+                    $('.table-of-contents__popover').hide();
                 });
 
                 if (summaryBlockExist) {

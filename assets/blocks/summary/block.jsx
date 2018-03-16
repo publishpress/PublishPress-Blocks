@@ -28,6 +28,7 @@ const blockTitle = __( 'Summary' );
                     .append( summaryButton );
                 summaryButton.unbind( 'click' ).click( function () {
                     insertBlock( summaryBlock, 0 );
+                    $('.table-of-contents__popover').hide();
                 } );
 
                 if (summaryBlockExist) {
