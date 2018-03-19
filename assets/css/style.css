@@ -55,7 +55,9 @@ ul.blocks-list li.block-item {
     padding: 10px;
     display: none;
 }
-
+.dashicons.dashicons-cover-image:before {
+    content: "\f128";
+}
 .dashicons.dashicons-block-default:before {
     content: "\f480";
 }
@@ -70,6 +72,9 @@ ul.blocks-list li.block-item {
 }
 .dashicons.dashicons-heading:before {
     content: "\f324";
+}
+.dashicons.dashicons-shortcode:before {
+    content: "\f475";
 }
 .dashicons.dashicons-embed-generic:before {
     content: "\f499";
