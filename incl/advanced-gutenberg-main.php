@@ -146,6 +146,11 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
+            'advbutton_blocks',
+            plugins_url('assets/blocks/advbutton/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
