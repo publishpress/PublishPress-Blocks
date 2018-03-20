@@ -226,7 +226,20 @@ var AdvList = function (_Component) {
                     return onReplace([]);
                 },
                 isSelected: isSelected
-            })];
+            }), React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'style',
+                    null,
+                    '.' + id + ' li { font-size: ' + fontSize + 'px }'
+                ),
+                icon && React.createElement(
+                    'style',
+                    null,
+                    '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
+                )
+            )];
         }
     }]);
 
@@ -291,8 +304,8 @@ registerBlockType('advgb/list', {
     },
 
     edit: AdvList,
-    save: function save(_ref) {
-        var attributes = _ref.attributes;
+    save: function save(_ref3) {
+        var attributes = _ref3.attributes;
         var id = attributes.id,
             values = attributes.values,
             icon = attributes.icon,
@@ -312,6 +325,16 @@ registerBlockType('advgb/list', {
                 'ul',
                 { className: listClassName },
                 values
+            ),
+            React.createElement(
+                'style',
+                null,
+                '.' + id + ' li { font-size: ' + fontSize + 'px }'
+            ),
+            icon && React.createElement(
+                'style',
+                null,
+                '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
             )
         );
     }

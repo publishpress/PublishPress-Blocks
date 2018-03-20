@@ -199,7 +199,23 @@ class AdvList extends Component {
                 }
                 onRemove={ () => onReplace( [] ) }
                 isSelected={ isSelected }
-            />
+            />,
+            <div>
+                <style>
+                    {`.${id} li { font-size: ${fontSize}px }`}
+                </style>
+                {icon &&
+                    <style>
+                        {`.${id} li:before {
+                            font-size: ${iconSize}px;
+                            color: ${iconColor};
+                            line-height: ${lineHeight}px;
+                            margin: ${margin}px;
+                            padding: ${padding}px;
+                        }`}
+                    </style>
+                }
+            </div>
         ]
     }
 }
@@ -287,6 +303,20 @@ registerBlockType( 'advgb/list', {
             <ul className={listClassName}>
                 {values}
             </ul>
+            <style>
+                {`.${id} li { font-size: ${fontSize}px }`}
+            </style>
+            {icon &&
+                <style>
+                    {`.${id} li:before {
+                            font-size: ${iconSize}px;
+                            color: ${iconColor};
+                            line-height: ${lineHeight}px;
+                            margin: ${margin}px;
+                            padding: ${padding}px;
+                        }`}
+                </style>
+            }
         </div>
     }
 } );
