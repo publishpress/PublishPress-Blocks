@@ -113,21 +113,12 @@ class AdvList extends Component {
                     <PanelBody title={ __( 'Icon Settings' ) }>
                         <SelectControl
                             label={ __( 'List icon' ) }
-                            help={ __( 'Select an icon for style' ) }
+                            help={ __( 'Select an icon for styling' ) }
                             value={ icon }
                             options={ listIcons }
                             onChange={ ( icon ) => setAttributes( { icon: icon } ) }
                         />
                         {icon && ( [
-                            <RangeControl
-                                label={ __( 'Icon size' ) }
-                                value={ iconSize || '' }
-                                onChange={ (size) => setAttributes( { iconSize: size } ) }
-                                min={ 10 }
-                                max={ 100 }
-                                beforeIcon={ icon }
-                                allowReset
-                            />,
                             <PanelColor
                                 title={ __( 'Icon color' ) }
                                 colorValue={ iconColor }
@@ -138,6 +129,15 @@ class AdvList extends Component {
                                     onChange={ ( color ) => setAttributes( { iconColor: color } ) }
                                 />
                             </PanelColor>,
+                            <RangeControl
+                                label={ __( 'Icon size' ) }
+                                value={ iconSize || '' }
+                                onChange={ (size) => setAttributes( { iconSize: size } ) }
+                                min={ 10 }
+                                max={ 100 }
+                                beforeIcon={ icon }
+                                allowReset
+                            />,
                             <RangeControl
                                 label={ __( 'Line height' ) }
                                 value={ lineHeight || '' }

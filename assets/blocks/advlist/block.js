@@ -133,24 +133,14 @@ var AdvList = function (_Component) {
                     { title: __('Icon Settings') },
                     React.createElement(SelectControl, {
                         label: __('List icon'),
-                        help: __('Select an icon for style'),
+                        help: __('Select an icon for styling'),
                         value: icon,
                         options: listIcons,
                         onChange: function onChange(icon) {
                             return setAttributes({ icon: icon });
                         }
                     }),
-                    icon && [React.createElement(RangeControl, {
-                        label: __('Icon size'),
-                        value: iconSize || '',
-                        onChange: function onChange(size) {
-                            return setAttributes({ iconSize: size });
-                        },
-                        min: 10,
-                        max: 100,
-                        beforeIcon: icon,
-                        allowReset: true
-                    }), React.createElement(
+                    icon && [React.createElement(
                         PanelColor,
                         {
                             title: __('Icon color'),
@@ -164,6 +154,16 @@ var AdvList = function (_Component) {
                             }
                         })
                     ), React.createElement(RangeControl, {
+                        label: __('Icon size'),
+                        value: iconSize || '',
+                        onChange: function onChange(size) {
+                            return setAttributes({ iconSize: size });
+                        },
+                        min: 10,
+                        max: 100,
+                        beforeIcon: icon,
+                        allowReset: true
+                    }), React.createElement(RangeControl, {
                         label: __('Line height'),
                         value: lineHeight || '',
                         onChange: function onChange(size) {
