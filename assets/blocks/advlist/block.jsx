@@ -103,7 +103,7 @@ class AdvList extends Component {
                         <RangeControl
                             label={ __( 'Text size' ) }
                             value={ fontSize || '' }
-                            onChange={ (size) => setAttributes( { fontSize: size } ) }
+                            onChange={ ( size ) => setAttributes( { fontSize: size } ) }
                             min={ 10 }
                             max={ 100 }
                             beforeIcon="editor-textcolor"
@@ -132,7 +132,7 @@ class AdvList extends Component {
                             <RangeControl
                                 label={ __( 'Icon size' ) }
                                 value={ iconSize || '' }
-                                onChange={ (size) => setAttributes( { iconSize: size } ) }
+                                onChange={ ( size ) => setAttributes( { iconSize: size } ) }
                                 min={ 10 }
                                 max={ 100 }
                                 beforeIcon={ icon }
@@ -141,7 +141,7 @@ class AdvList extends Component {
                             <RangeControl
                                 label={ __( 'Line height' ) }
                                 value={ lineHeight || '' }
-                                onChange={ (size) => setAttributes( { lineHeight: size } ) }
+                                onChange={ ( size ) => setAttributes( { lineHeight: size } ) }
                                 min={ 0 }
                                 max={ 100 }
                                 allowReset
@@ -149,7 +149,7 @@ class AdvList extends Component {
                             <RangeControl
                                 label={ __( 'Margin' ) }
                                 value={ margin || '' }
-                                onChange={ (size) => setAttributes( { margin: size } ) }
+                                onChange={ ( size ) => setAttributes( { margin: size } ) }
                                 min={ 0 }
                                 max={ 100 }
                                 allowReset
@@ -157,7 +157,7 @@ class AdvList extends Component {
                             <RangeControl
                                 label={ __( 'Padding' ) }
                                 value={ padding || '' }
-                                onChange={ (size) => setAttributes( { padding: size } ) }
+                                onChange={ ( size ) => setAttributes( { padding: size } ) }
                                 min={ 0 }
                                 max={ 100 }
                                 allowReset
