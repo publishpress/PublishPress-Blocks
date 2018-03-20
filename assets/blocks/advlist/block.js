@@ -215,7 +215,8 @@ var AdvList = function (_Component) {
 
                     if (after.length) {
                         blocks.push(createBlock('advgb/list', _extends({}, attributes, {
-                            values: after
+                            values: after,
+                            id: undefined
                         })));
                     }
 

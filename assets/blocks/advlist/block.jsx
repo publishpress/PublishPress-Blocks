@@ -189,6 +189,7 @@ class AdvList extends Component {
                                 blocks.push( createBlock( 'advgb/list', {
                                     ...attributes,
                                     values: after,
+                                    id: undefined,
                                 } ) );
                             }
 
