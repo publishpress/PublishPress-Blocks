@@ -265,6 +265,31 @@ registerBlockType( 'advgb/list', {
             default: [],
         }
     },
+    transforms: {
+        from: [
+            {
+                type: 'block',
+                blocks: [ 'core/list' ],
+                transform: ( { values } ) => {
+                    return createBlock( 'advgb/list', {
+                        values: values
+                    } )
+                }
+            }
+        ],
+        to: [
+            {
+                type: 'block',
+                blocks: [ 'core/list' ],
+                transform: ( { values } ) => {
+                    return createBlock( 'core/list', {
+                        nodeName: 'UL',
+                        values: values,
+                    } )
+                }
+            }
+        ]
+    },
     merge( attributes, attributesToMerge ) {
         const valuesToMerge = attributesToMerge.values || [];
 

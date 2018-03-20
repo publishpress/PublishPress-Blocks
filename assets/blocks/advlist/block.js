@@ -291,6 +291,31 @@ registerBlockType('advgb/list', {
             default: []
         }
     },
+    transforms: {
+        from: [{
+            type: 'block',
+            blocks: ['core/list'],
+            transform: function transform(_ref) {
+                var values = _ref.values;
+
+                return createBlock('advgb/list', {
+                    values: values
+                });
+            }
+        }],
+        to: [{
+            type: 'block',
+            blocks: ['core/list'],
+            transform: function transform(_ref2) {
+                var values = _ref2.values;
+
+                return createBlock('core/list', {
+                    nodeName: 'UL',
+                    values: values
+                });
+            }
+        }]
+    },
     merge: function merge(attributes, attributesToMerge) {
         var valuesToMerge = attributesToMerge.values || [];
 
