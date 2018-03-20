@@ -167,6 +167,10 @@ float: left;'
             'custom_styles',
             plugins_url('assets/css/customstyles/custom_styles.css', dirname(__FILE__))
         );
+        wp_enqueue_style(
+            'advanced_list',
+            plugins_url('assets/blocks/advlist/style.css', dirname(__FILE__))
+        );
     }
 
     /**
