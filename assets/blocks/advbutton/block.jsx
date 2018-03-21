@@ -109,7 +109,6 @@ class AdvButton extends Component {
                             onChange={ ( value ) => setAttributes( { paddingTop: value } ) }
                             min={ 0 }
                             max={ 100 }
-                            allowReset
                         />
                         <RangeControl
                             label={ __( 'Padding right' ) }
@@ -117,7 +116,6 @@ class AdvButton extends Component {
                             onChange={ ( value ) => setAttributes( { paddingRight: value } ) }
                             min={ 0 }
                             max={ 100 }
-                            allowReset
                         />
                         <RangeControl
                             label={ __( 'Padding bottom' ) }
@@ -125,7 +123,6 @@ class AdvButton extends Component {
                             onChange={ ( value ) => setAttributes( { paddingBottom: value } ) }
                             min={ 0 }
                             max={ 100 }
-                            allowReset
                         />
                         <RangeControl
                             label={ __( 'Padding left' ) }
@@ -133,7 +130,6 @@ class AdvButton extends Component {
                             onChange={ ( value ) => setAttributes( { paddingLeft: value } ) }
                             min={ 0 }
                             max={ 100 }
-                            allowReset
                         />
                     </PanelBody>
                     <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
@@ -143,7 +139,6 @@ class AdvButton extends Component {
                             onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
                             min={ 0 }
                             max={ 100 }
-                            allowReset
                         />
                         <RangeControl
                             label={ __( 'Border radius' ) }
@@ -151,7 +146,6 @@ class AdvButton extends Component {
                             onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
                             min={ 0 }
                             max={ 100 }
-                            allowReset
                         />
                         <PanelColor title={ __( 'Border color' ) } colorValue={ borderColor } initialOpen={ false } >
                             <ColorPalette
@@ -186,7 +180,6 @@ class AdvButton extends Component {
                                 onChange={ ( value ) => setAttributes( { hoverShadowH: value } ) }
                                 min={ -50 }
                                 max={ 50 }
-                                allowReset
                             />
                             <RangeControl
                                 label={ __( 'Shadow V offset' ) }
@@ -194,23 +187,20 @@ class AdvButton extends Component {
                                 onChange={ ( value ) => setAttributes( { hoverShadowV: value } ) }
                                 min={ -50 }
                                 max={ 50 }
-                                allowReset
                             />
                             <RangeControl
                                 label={ __( 'Shadow blur' ) }
                                 value={ hoverShadowBlur || '' }
                                 onChange={ ( value ) => setAttributes( { hoverShadowBlur: value } ) }
-                                min={ -50 }
+                                min={ 0 }
                                 max={ 50 }
-                                allowReset
                             />
                             <RangeControl
                                 label={ __( 'Shadow spread' ) }
                                 value={ hoverShadowSpread || '' }
                                 onChange={ ( value ) => setAttributes( { hoverShadowSpread: value } ) }
-                                min={ -50 }
+                                min={ 0 }
                                 max={ 50 }
-                                allowReset
                             />
                         </PanelBody>
                     </PanelBody>

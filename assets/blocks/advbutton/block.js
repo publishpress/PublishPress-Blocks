@@ -160,8 +160,7 @@ var AdvButton = function (_Component) {
                             return setAttributes({ paddingTop: value });
                         },
                         min: 0,
-                        max: 100,
-                        allowReset: true
+                        max: 100
                     }),
                     React.createElement(RangeControl, {
                         label: __('Padding right'),
@@ -170,8 +169,7 @@ var AdvButton = function (_Component) {
                             return setAttributes({ paddingRight: value });
                         },
                         min: 0,
-                        max: 100,
-                        allowReset: true
+                        max: 100
                     }),
                     React.createElement(RangeControl, {
                         label: __('Padding bottom'),
@@ -180,8 +178,7 @@ var AdvButton = function (_Component) {
                             return setAttributes({ paddingBottom: value });
                         },
                         min: 0,
-                        max: 100,
-                        allowReset: true
+                        max: 100
                     }),
                     React.createElement(RangeControl, {
                         label: __('Padding left'),
@@ -190,8 +187,7 @@ var AdvButton = function (_Component) {
                             return setAttributes({ paddingLeft: value });
                         },
                         min: 0,
-                        max: 100,
-                        allowReset: true
+                        max: 100
                     })
                 ),
                 React.createElement(
@@ -204,8 +200,7 @@ var AdvButton = function (_Component) {
                             return setAttributes({ borderWidth: value });
                         },
                         min: 0,
-                        max: 100,
-                        allowReset: true
+                        max: 100
                     }),
                     React.createElement(RangeControl, {
                         label: __('Border radius'),
@@ -214,8 +209,7 @@ var AdvButton = function (_Component) {
                             return setAttributes({ borderRadius: value });
                         },
                         min: 0,
-                        max: 100,
-                        allowReset: true
+                        max: 100
                     }),
                     React.createElement(
                         PanelColor,
@@ -271,8 +265,7 @@ var AdvButton = function (_Component) {
                                 return setAttributes({ hoverShadowH: value });
                             },
                             min: -50,
-                            max: 50,
-                            allowReset: true
+                            max: 50
                         }),
                         React.createElement(RangeControl, {
                             label: __('Shadow V offset'),
@@ -281,8 +274,7 @@ var AdvButton = function (_Component) {
                                 return setAttributes({ hoverShadowV: value });
                             },
                             min: -50,
-                            max: 50,
-                            allowReset: true
+                            max: 50
                         }),
                         React.createElement(RangeControl, {
                             label: __('Shadow blur'),
@@ -290,9 +282,8 @@ var AdvButton = function (_Component) {
                             onChange: function onChange(value) {
                                 return setAttributes({ hoverShadowBlur: value });
                             },
-                            min: -50,
-                            max: 50,
-                            allowReset: true
+                            min: 0,
+                            max: 50
                         }),
                         React.createElement(RangeControl, {
                             label: __('Shadow spread'),
@@ -300,9 +291,8 @@ var AdvButton = function (_Component) {
                             onChange: function onChange(value) {
                                 return setAttributes({ hoverShadowSpread: value });
                             },
-                            min: -50,
-                            max: 50,
-                            allowReset: true
+                            min: 0,
+                            max: 50
                         })
                     )
                 )
