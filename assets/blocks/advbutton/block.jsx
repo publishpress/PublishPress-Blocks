@@ -102,14 +102,6 @@ class AdvButton extends Component {
                     </PanelBody>
                     <PanelBody title={ __( 'Padding' ) } initialOpen={ false } >
                         <RangeControl
-                            label={ __( 'Padding left' ) }
-                            value={ paddingLeft || '' }
-                            onChange={ ( value ) => setAttributes( { paddingLeft: value } ) }
-                            min={ 0 }
-                            max={ 100 }
-                            allowReset
-                        />
-                        <RangeControl
                             label={ __( 'Padding top' ) }
                             value={ paddingTop || '' }
                             onChange={ ( value ) => setAttributes( { paddingTop: value } ) }
@@ -129,6 +121,14 @@ class AdvButton extends Component {
                             label={ __( 'Padding bottom' ) }
                             value={ paddingBottom || '' }
                             onChange={ ( value ) => setAttributes( { paddingBottom: value } ) }
+                            min={ 0 }
+                            max={ 100 }
+                            allowReset
+                        />
+                        <RangeControl
+                            label={ __( 'Padding left' ) }
+                            value={ paddingLeft || '' }
+                            onChange={ ( value ) => setAttributes( { paddingLeft: value } ) }
                             min={ 0 }
                             max={ 100 }
                             allowReset

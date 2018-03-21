@@ -150,16 +150,6 @@ var AdvButton = function (_Component) {
                     PanelBody,
                     { title: __('Padding'), initialOpen: false },
                     React.createElement(RangeControl, {
-                        label: __('Padding left'),
-                        value: paddingLeft || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingLeft: value });
-                        },
-                        min: 0,
-                        max: 100,
-                        allowReset: true
-                    }),
-                    React.createElement(RangeControl, {
                         label: __('Padding top'),
                         value: paddingTop || '',
                         onChange: function onChange(value) {
@@ -184,6 +174,16 @@ var AdvButton = function (_Component) {
                         value: paddingBottom || '',
                         onChange: function onChange(value) {
                             return setAttributes({ paddingBottom: value });
+                        },
+                        min: 0,
+                        max: 100,
+                        allowReset: true
+                    }),
+                    React.createElement(RangeControl, {
+                        label: __('Padding left'),
+                        value: paddingLeft || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ paddingLeft: value });
                         },
                         min: 0,
                         max: 100,
