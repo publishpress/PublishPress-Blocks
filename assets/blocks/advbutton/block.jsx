@@ -60,13 +60,13 @@ class AdvButton extends Component {
                 <InspectorControls key="advgb-button-inspector">
                     <PanelBody title={ __( 'Button link' ) }>
                         <TextControl
-                            label={ __( 'Link URL' ) }
+                            label={ [ __( 'Link URL' ), <a href={ url || '#' } target="_blank" style={ { float: 'right' } }>{ __( 'Preview' ) }</a> ] }
                             value={ url || '' }
                             placeholder={ __( 'Enter URL…' ) }
                             onChange={ ( text ) => setAttributes( { url: text } ) }
                         />
                         <ToggleControl
-                            label={ __( 'Open link in new tab' ) }
+                            label={ __( 'Open in new tab' ) }
                             checked={ !!urlOpenNewTab }
                             onChange={ () => setAttributes( { urlOpenNewTab: !attributes.urlOpenNewTab } ) }
                         />

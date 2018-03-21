@@ -92,7 +92,11 @@ var AdvButton = function (_Component) {
                     PanelBody,
                     { title: __('Button link') },
                     React.createElement(TextControl, {
-                        label: __('Link URL'),
+                        label: [__('Link URL'), React.createElement(
+                            "a",
+                            { href: url || '#', target: "_blank", style: { float: 'right' } },
+                            __('Preview')
+                        )],
                         value: url || '',
                         placeholder: __('Enter URL…'),
                         onChange: function onChange(text) {
@@ -100,7 +104,7 @@ var AdvButton = function (_Component) {
                         }
                     }),
                     React.createElement(ToggleControl, {
-                        label: __('Open link in new tab'),
+                        label: __('Open in new tab'),
                         checked: !!urlOpenNewTab,
                         onChange: function onChange() {
                             return setAttributes({ urlOpenNewTab: !attributes.urlOpenNewTab });
