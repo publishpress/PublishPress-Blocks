@@ -90,6 +90,25 @@ var AdvButton = function (_Component) {
                 { key: "advgb-button-inspector" },
                 React.createElement(
                     PanelBody,
+                    { title: __('Button link') },
+                    React.createElement(TextControl, {
+                        label: __('Link URL'),
+                        value: url || '',
+                        placeholder: __('Enter URL…'),
+                        onChange: function onChange(text) {
+                            return setAttributes({ url: text });
+                        }
+                    }),
+                    React.createElement(ToggleControl, {
+                        label: __('Open link in new tab'),
+                        checked: !!urlOpenNewTab,
+                        onChange: function onChange() {
+                            return setAttributes({ urlOpenNewTab: !attributes.urlOpenNewTab });
+                        }
+                    })
+                ),
+                React.createElement(
+                    PanelBody,
                     { title: __('Text/Color') },
                     React.createElement(RangeControl, {
                         label: __('Text size'),
@@ -129,22 +148,7 @@ var AdvButton = function (_Component) {
                                 return setAttributes({ bgColor: color });
                             }
                         })
-                    ),
-                    React.createElement(TextControl, {
-                        label: __('Link URL'),
-                        value: url || '',
-                        placeholder: __('Enter URL…'),
-                        onChange: function onChange(text) {
-                            return setAttributes({ url: text });
-                        }
-                    }),
-                    React.createElement(ToggleControl, {
-                        label: __('Open link in new tab'),
-                        checked: !!urlOpenNewTab,
-                        onChange: function onChange() {
-                            return setAttributes({ urlOpenNewTab: !attributes.urlOpenNewTab });
-                        }
-                    })
+                    )
                 ),
                 React.createElement(
                     PanelBody,

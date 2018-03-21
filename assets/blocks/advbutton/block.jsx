@@ -58,6 +58,19 @@ class AdvButton extends Component {
             </span>,
             isSelected && (
                 <InspectorControls key="advgb-button-inspector">
+                    <PanelBody title={ __( 'Button link' ) }>
+                        <TextControl
+                            label={ __( 'Link URL' ) }
+                            value={ url || '' }
+                            placeholder={ __( 'Enter URL…' ) }
+                            onChange={ ( text ) => setAttributes( { url: text } ) }
+                        />
+                        <ToggleControl
+                            label={ __( 'Open link in new tab' ) }
+                            checked={ !!urlOpenNewTab }
+                            onChange={ () => setAttributes( { urlOpenNewTab: !attributes.urlOpenNewTab } ) }
+                        />
+                    </PanelBody>
                     <PanelBody title={ __( 'Text/Color' ) }>
                         <RangeControl
                             label={ __( 'Text size' ) }
@@ -88,17 +101,6 @@ class AdvButton extends Component {
                                 onChange={ ( color ) => setAttributes( { bgColor: color } ) }
                             />
                         </PanelColor>
-                        <TextControl
-                            label={ __( 'Link URL' ) }
-                            value={ url || '' }
-                            placeholder={ __( 'Enter URL…' ) }
-                            onChange={ ( text ) => setAttributes( { url: text } ) }
-                        />
-                        <ToggleControl
-                            label={ __( 'Open link in new tab' ) }
-                            checked={ !!urlOpenNewTab }
-                            onChange={ () => setAttributes( { urlOpenNewTab: !attributes.urlOpenNewTab } ) }
-                        />
                     </PanelBody>
                     <PanelBody title={ __( 'Padding' ) } initialOpen={ false } >
                         <RangeControl
