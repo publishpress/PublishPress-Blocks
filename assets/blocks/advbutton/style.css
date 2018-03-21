@@ -1,0 +1,6 @@
+.components-panel__body.is-opened > .components-panel__body {
+    margin-left: -6px;
+}
+.editor-block-list__block[data-type="advgb/button"][data-align=center] {
+    text-align: center;
+}

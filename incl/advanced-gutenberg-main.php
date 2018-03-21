@@ -157,6 +157,11 @@ float: left;'
         );
         $custom_styles_data = get_option('advgb_custom_styles');
         wp_localize_script('custom_styles', 'advGb_CS', $custom_styles_data);
+
+        wp_enqueue_style(
+            'advbutton_blocks',
+            plugins_url('assets/blocks/advbutton/style.css', dirname(__FILE__))
+        );
     }
 
     /**
