@@ -332,6 +332,7 @@ registerBlockType('advgb/button', {
     description: __('New button with more styles.'),
     icon: 'button',
     category: 'layout',
+    keywords: [__('button'), __('link')],
     attributes: {
         id: {
             type: 'string'
