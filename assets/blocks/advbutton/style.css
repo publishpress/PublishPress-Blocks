@@ -4,3 +4,6 @@
 .editor-block-list__block[data-type="advgb/button"][data-align=center] {
     text-align: center;
 }
+span.wp-block-advgb-button[data-is-placeholder-visible=true] {
+    margin-top: -3px;
+}

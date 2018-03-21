@@ -8,6 +8,14 @@ class AdvButton extends Component {
         super( ...arguments );
     }
 
+    componentWillMount() {
+        const { attributes, setAttributes, id } = this.props;
+
+        if ( !attributes.id ) {
+            setAttributes( { id: 'advgbbtn-' + id } );
+        }
+    }
+
     render() {
         const {
             attributes,
@@ -16,6 +24,7 @@ class AdvButton extends Component {
             className,
         } = this.props;
         const {
+            id,
             align,
             url,
             urlOpenNewTab,
@@ -52,10 +61,29 @@ class AdvButton extends Component {
                     placeholder={ __( 'Add text…' ) }
                     value={ text }
                     onChange={ ( value ) => setAttributes( { text: value } ) }
+                    formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
                     isSelected={ isSelected }
+                    className={ className + ` ${id}` }
                     keepPlaceholderOnFocus
                 />
             </span>,
+            <style>
+                {`.${id} {
+                    font-size: ${textSize}px;
+                    color: ${textColor};
+                    background-color: ${bgColor};
+                    padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
+                    border-width: ${borderWidth}px;
+                    border-color: ${borderColor};
+                    border-radius: ${borderRadius}px;
+                    border-style: solid;
+                }
+                .${id}:hover {
+                    color: ${hoverTextColor};
+                    background-color: ${hoverBgColor};
+                    box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
+                }`}
+            </style>,
             isSelected && (
                 <InspectorControls key="advgb-button-inspector">
                     <PanelBody title={ __( 'Button link' ) }>
@@ -216,6 +244,9 @@ registerBlockType( 'advgb/button', {
     icon: 'button',
     category: 'layout',
     attributes: {
+        id: {
+            type: 'string',
+        },
         url: {
             type: 'string',
         },
@@ -241,6 +272,7 @@ registerBlockType( 'advgb/button', {
         },
         textSize: {
             type: 'number',
+            default: 18,
         },
         paddingTop: {
             type: 'number',

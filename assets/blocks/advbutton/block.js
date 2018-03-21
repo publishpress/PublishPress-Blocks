@@ -35,14 +35,28 @@ var AdvButton = function (_Component) {
     }
 
     _createClass(AdvButton, [{
-        key: "render",
-        value: function render() {
+        key: "componentWillMount",
+        value: function componentWillMount() {
             var _props = this.props,
                 attributes = _props.attributes,
                 setAttributes = _props.setAttributes,
-                isSelected = _props.isSelected,
-                className = _props.className;
-            var align = attributes.align,
+                id = _props.id;
+
+
+            if (!attributes.id) {
+                setAttributes({ id: 'advgbbtn-' + id });
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _props2 = this.props,
+                attributes = _props2.attributes,
+                setAttributes = _props2.setAttributes,
+                isSelected = _props2.isSelected,
+                className = _props2.className;
+            var id = attributes.id,
+                align = attributes.align,
                 url = attributes.url,
                 urlOpenNewTab = attributes.urlOpenNewTab,
                 title = attributes.title,
@@ -82,9 +96,15 @@ var AdvButton = function (_Component) {
                     onChange: function onChange(value) {
                         return setAttributes({ text: value });
                     },
+                    formattingControls: ['bold', 'italic', 'strikethrough'],
                     isSelected: isSelected,
+                    className: className + (" " + id),
                     keepPlaceholderOnFocus: true
                 })
+            ), React.createElement(
+                "style",
+                null,
+                "." + id + " {\n                    font-size: " + textSize + "px;\n                    color: " + textColor + ";\n                    background-color: " + bgColor + ";\n                    padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                    border-width: " + borderWidth + "px;\n                    border-color: " + borderColor + ";\n                    border-radius: " + borderRadius + "px;\n                    border-style: solid;\n                }\n                ." + id + ":hover {\n                    color: " + hoverTextColor + ";\n                    background-color: " + hoverBgColor + ";\n                    box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                }"
             ), isSelected && React.createElement(
                 InspectorControls,
                 { key: "advgb-button-inspector" },
@@ -313,6 +333,9 @@ registerBlockType('advgb/button', {
     icon: 'button',
     category: 'layout',
     attributes: {
+        id: {
+            type: 'string'
+        },
         url: {
             type: 'string'
         },
@@ -337,7 +360,8 @@ registerBlockType('advgb/button', {
             default: '#fff'
         },
         textSize: {
-            type: 'number'
+            type: 'number',
+            default: 18
         },
         paddingTop: {
             type: 'number',
