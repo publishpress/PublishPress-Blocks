@@ -112,7 +112,7 @@ var AdvButton = function (_Component) {
                     PanelBody,
                     { title: __('Button link') },
                     React.createElement(TextControl, {
-                        label: [__('Link URL'), React.createElement(
+                        label: [__('Link URL'), url && React.createElement(
                             "a",
                             { href: url || '#', target: "_blank", style: { float: 'right' } },
                             __('Preview')

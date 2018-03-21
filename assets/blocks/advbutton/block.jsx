@@ -88,7 +88,12 @@ class AdvButton extends Component {
                 <InspectorControls key="advgb-button-inspector">
                     <PanelBody title={ __( 'Button link' ) }>
                         <TextControl
-                            label={ [ __( 'Link URL' ), <a href={ url || '#' } target="_blank" style={ { float: 'right' } }>{ __( 'Preview' ) }</a> ] }
+                            label={ [
+                                __( 'Link URL' ),
+                                (url && <a href={ url || '#' } target="_blank" style={ { float: 'right' } }>
+                                    { __( 'Preview' ) }
+                                </a>)
+                            ] }
                             value={ url || '' }
                             placeholder={ __( 'Enter URL…' ) }
                             onChange={ ( text ) => setAttributes( { url: text } ) }
