@@ -98,7 +98,7 @@ var AdvButton = function (_Component) {
                     },
                     formattingControls: ['bold', 'italic', 'strikethrough'],
                     isSelected: isSelected,
-                    className: className + (" " + id),
+                    className: "wp-block-advgb-button_link " + id,
                     keepPlaceholderOnFocus: true
                 })
             ), React.createElement(
@@ -428,8 +428,45 @@ registerBlockType('advgb/button', {
     edit: AdvButton,
     save: function save(_ref) {
         var attributes = _ref.attributes;
+        var id = attributes.id,
+            align = attributes.align,
+            url = attributes.url,
+            urlOpenNewTab = attributes.urlOpenNewTab,
+            title = attributes.title,
+            text = attributes.text,
+            bgColor = attributes.bgColor,
+            textColor = attributes.textColor,
+            textSize = attributes.textSize,
+            paddingTop = attributes.paddingTop,
+            paddingRight = attributes.paddingRight,
+            paddingBottom = attributes.paddingBottom,
+            paddingLeft = attributes.paddingLeft,
+            borderWidth = attributes.borderWidth,
+            borderColor = attributes.borderColor,
+            borderRadius = attributes.borderRadius,
+            hoverTextColor = attributes.hoverTextColor,
+            hoverBgColor = attributes.hoverBgColor,
+            hoverShadowColor = attributes.hoverShadowColor,
+            hoverShadowH = attributes.hoverShadowH,
+            hoverShadowV = attributes.hoverShadowV,
+            hoverShadowBlur = attributes.hoverShadowBlur,
+            hoverShadowSpread = attributes.hoverShadowSpread;
 
-        return null;
+
+        return React.createElement(
+            "div",
+            { className: "align" + align },
+            React.createElement(
+                "a",
+                { className: "wp-block-advgb-button_link " + id, href: url || '#', title: title, target: !urlOpenNewTab ? '_self' : '_blank' },
+                text
+            ),
+            React.createElement(
+                "style",
+                null,
+                "." + id + " {\n                        font-size: " + textSize + "px;\n                        color: " + textColor + ";\n                        background-color: " + bgColor + ";\n                        padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                        border-width: " + borderWidth + "px;\n                        border-color: " + borderColor + ";\n                        border-radius: " + borderRadius + "px;\n                        border-style: solid;\n                    }\n                    ." + id + ":hover {\n                        color: " + hoverTextColor + ";\n                        background-color: " + hoverBgColor + ";\n                        box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                    }"
+            )
+        );
     },
     getEditWrapperProps: function getEditWrapperProps(attributes) {
         var align = attributes.align;

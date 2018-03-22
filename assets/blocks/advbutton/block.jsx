@@ -63,7 +63,7 @@ class AdvButton extends Component {
                     onChange={ ( value ) => setAttributes( { text: value } ) }
                     formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
                     isSelected={ isSelected }
-                    className={ className + ` ${id}` }
+                    className={ `wp-block-advgb-button_link ${id}` }
                     keepPlaceholderOnFocus
                 />
             </span>,
@@ -343,7 +343,56 @@ registerBlockType( 'advgb/button', {
     },
     edit: AdvButton,
     save: function ( { attributes } ) {
-        return null;
+        const {
+            id,
+            align,
+            url,
+            urlOpenNewTab,
+            title,
+            text,
+            bgColor,
+            textColor,
+            textSize,
+            paddingTop,
+            paddingRight,
+            paddingBottom,
+            paddingLeft,
+            borderWidth,
+            borderColor,
+            borderRadius,
+            hoverTextColor,
+            hoverBgColor,
+            hoverShadowColor,
+            hoverShadowH,
+            hoverShadowV,
+            hoverShadowBlur,
+            hoverShadowSpread,
+        } = attributes;
+
+        return (
+            <div className={ `align${align}` }>
+                <a className={ `wp-block-advgb-button_link ${id}` } href={ url || '#' } title={ title } target={ !urlOpenNewTab ? '_self' : '_blank' } >
+                    { text }
+                </a>
+                <style>
+                    {`.${id} {
+                        font-size: ${textSize}px;
+                        color: ${textColor};
+                        background-color: ${bgColor};
+                        padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
+                        border-width: ${borderWidth}px;
+                        border-color: ${borderColor};
+                        border-radius: ${borderRadius}px;
+                        border-style: solid;
+                    }
+                    .${id}:hover {
+                        color: ${hoverTextColor};
+                        background-color: ${hoverBgColor};
+                        box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
+                    }`}
+                </style>
+            </div>
+        );
     },
     getEditWrapperProps( attributes ) {
         const { align } = attributes;
