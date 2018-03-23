@@ -17,6 +17,17 @@ class AdvButton extends Component {
     }
 
     render() {
+        const listBorderStyles = [
+            { label: __( 'None' ), value: 'none' },
+            { label: __( 'Solid' ), value: 'solid' },
+            { label: __( 'Dotted' ), value: 'dotted' },
+            { label: __( 'Dashed' ), value: 'dashed' },
+            { label: __( 'Double' ), value: 'double' },
+            { label: __( 'Groove' ), value: 'groove' },
+            { label: __( 'Ridge' ), value: 'ridge' },
+            { label: __( 'Inset' ), value: 'inset' },
+            { label: __( 'Outset' ), value: 'outset' },
+        ];
         const {
             attributes,
             setAttributes,
@@ -170,17 +181,7 @@ class AdvButton extends Component {
                         <SelectControl
                             label={ __( 'Border style' ) }
                             value={ borderStyle }
-                            options={ [
-                                { label: __( 'None' ), value: 'none' },
-                                { label: __( 'Solid' ), value: 'solid' },
-                                { label: __( 'Dotted' ), value: 'dotted' },
-                                { label: __( 'Dashed' ), value: 'dashed' },
-                                { label: __( 'Double' ), value: 'double' },
-                                { label: __( 'Groove' ), value: 'groove' },
-                                { label: __( 'Ridge' ), value: 'ridge' },
-                                { label: __( 'Inset' ), value: 'inset' },
-                                { label: __( 'Outset' ), value: 'outset' },
-                            ] }
+                            options={ listBorderStyles }
                             onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
                         />
                         {borderStyle !== 'none' &&
