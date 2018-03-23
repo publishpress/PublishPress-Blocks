@@ -275,11 +275,11 @@ registerBlockType('advgb/list', {
         },
         margin: {
             type: 'number',
-            default: 0
+            default: 2
         },
         padding: {
             type: 'number',
-            default: 0
+            default: 2
         },
         values: {
             type: 'array',
@@ -296,7 +296,9 @@ registerBlockType('advgb/list', {
                 var values = _ref.values;
 
                 return createBlock('advgb/list', {
-                    values: values
+                    values: values,
+                    icon: 'controls-play',
+                    iconColor: '#ff0000'
                 });
             }
         }],
