@@ -12,7 +12,6 @@ var __ = wp.i18n.__;
 var Component = wp.element.Component;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
-    createBlock = _wp$blocks.createBlock,
     InspectorControls = _wp$blocks.InspectorControls,
     BlockControls = _wp$blocks.BlockControls,
     BlockAlignmentToolbar = _wp$blocks.BlockAlignmentToolbar,
@@ -23,7 +22,8 @@ var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     PanelColor = _wp$components.PanelColor,
     TextControl = _wp$components.TextControl,
-    ToggleControl = _wp$components.ToggleControl;
+    ToggleControl = _wp$components.ToggleControl,
+    SelectControl = _wp$components.SelectControl;
 
 var AdvButton = function (_Component) {
     _inherits(AdvButton, _Component);
@@ -71,6 +71,7 @@ var AdvButton = function (_Component) {
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
+                borderStyle = attributes.borderStyle,
                 hoverTextColor = attributes.hoverTextColor,
                 hoverBgColor = attributes.hoverBgColor,
                 hoverShadowColor = attributes.hoverShadowColor,
@@ -104,7 +105,7 @@ var AdvButton = function (_Component) {
             ), React.createElement(
                 "style",
                 null,
-                "." + id + " {\n                    font-size: " + textSize + "px;\n                    color: " + textColor + ";\n                    background-color: " + bgColor + ";\n                    padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                    border-width: " + borderWidth + "px;\n                    border-color: " + borderColor + ";\n                    border-radius: " + borderRadius + "px;\n                    border-style: solid;\n                }\n                ." + id + ":hover {\n                    color: " + hoverTextColor + ";\n                    background-color: " + hoverBgColor + ";\n                    box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                }"
+                "." + id + " {\n                    font-size: " + textSize + "px;\n                    color: " + textColor + ";\n                    background-color: " + bgColor + ";\n                    padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                    border-width: " + borderWidth + "px;\n                    border-color: " + borderColor + ";\n                    border-radius: " + borderRadius + "px;\n                    border-style: " + borderStyle + ";\n                }\n                ." + id + ":hover {\n                    color: " + hoverTextColor + ";\n                    background-color: " + hoverBgColor + ";\n                    box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                }"
             ), isSelected && React.createElement(
                 InspectorControls,
                 { key: "advgb-button-inspector" },
@@ -217,25 +218,15 @@ var AdvButton = function (_Component) {
                 React.createElement(
                     PanelBody,
                     { title: __('Border'), initialOpen: false },
-                    React.createElement(RangeControl, {
-                        label: __('Border width'),
-                        value: borderWidth || '',
+                    React.createElement(SelectControl, {
+                        label: __('Border style'),
+                        value: borderStyle,
+                        options: [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }],
                         onChange: function onChange(value) {
-                            return setAttributes({ borderWidth: value });
-                        },
-                        min: 0,
-                        max: 100
+                            return setAttributes({ borderStyle: value });
+                        }
                     }),
-                    React.createElement(RangeControl, {
-                        label: __('Border radius'),
-                        value: borderRadius || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ borderRadius: value });
-                        },
-                        min: 0,
-                        max: 100
-                    }),
-                    React.createElement(
+                    borderStyle !== 'none' && [React.createElement(
                         PanelColor,
                         { title: __('Border color'), colorValue: borderColor, initialOpen: false },
                         React.createElement(ColorPalette, {
@@ -244,7 +235,23 @@ var AdvButton = function (_Component) {
                                 return setAttributes({ borderColor: value });
                             }
                         })
-                    )
+                    ), React.createElement(RangeControl, {
+                        label: __('Border width'),
+                        value: borderWidth || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ borderWidth: value });
+                        },
+                        min: 0,
+                        max: 100
+                    }), React.createElement(RangeControl, {
+                        label: __('Border radius'),
+                        value: borderRadius || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ borderRadius: value });
+                        },
+                        min: 0,
+                        max: 100
+                    })]
                 ),
                 React.createElement(
                     PanelBody,
@@ -388,6 +395,10 @@ registerBlockType('advgb/button', {
             type: 'string',
             default: '#2196f3'
         },
+        borderStyle: {
+            type: 'string',
+            default: 'solid'
+        },
         borderRadius: {
             type: 'number',
             default: 0
@@ -444,6 +455,7 @@ registerBlockType('advgb/button', {
             borderWidth = attributes.borderWidth,
             borderColor = attributes.borderColor,
             borderRadius = attributes.borderRadius,
+            borderStyle = attributes.borderStyle,
             hoverTextColor = attributes.hoverTextColor,
             hoverBgColor = attributes.hoverBgColor,
             hoverShadowColor = attributes.hoverShadowColor,
@@ -458,13 +470,16 @@ registerBlockType('advgb/button', {
             { className: "align" + align },
             React.createElement(
                 "a",
-                { className: "wp-block-advgb-button_link " + id, href: url || '#', title: title, target: !urlOpenNewTab ? '_self' : '_blank' },
+                { className: "wp-block-advgb-button_link " + id,
+                    href: url || '#', title: title,
+                    target: !urlOpenNewTab ? '_self' : '_blank'
+                },
                 text
             ),
             React.createElement(
                 "style",
                 null,
-                "." + id + " {\n                        font-size: " + textSize + "px;\n                        color: " + textColor + ";\n                        background-color: " + bgColor + ";\n                        padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                        border-width: " + borderWidth + "px;\n                        border-color: " + borderColor + ";\n                        border-radius: " + borderRadius + "px;\n                        border-style: solid;\n                    }\n                    ." + id + ":hover {\n                        color: " + hoverTextColor + ";\n                        background-color: " + hoverBgColor + ";\n                        box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                    }"
+                "." + id + " {\n                        font-size: " + textSize + "px;\n                        color: " + textColor + ";\n                        background-color: " + bgColor + ";\n                        padding: " + paddingTop + "px " + paddingRight + "px " + paddingBottom + "px " + paddingLeft + "px;\n                        border-width: " + borderWidth + "px;\n                        border-color: " + borderColor + ";\n                        border-radius: " + borderRadius + "px;\n                        border-style: " + borderStyle + ";\n                    }\n                    ." + id + ":hover {\n                        color: " + hoverTextColor + ";\n                        background-color: " + hoverBgColor + ";\n                        box-shadow: " + hoverShadowH + "px " + hoverShadowV + "px " + hoverShadowBlur + "px " + hoverShadowSpread + "px " + hoverShadowColor + ";\n                    }"
             )
         );
     },

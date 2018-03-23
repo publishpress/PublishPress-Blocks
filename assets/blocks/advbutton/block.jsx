@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { registerBlockType, createBlock, InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wp.blocks;
-const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl } = wp.components;
+const { registerBlockType, InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wp.blocks;
+const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl } = wp.components;
 
 class AdvButton extends Component {
     constructor() {
@@ -40,6 +40,7 @@ class AdvButton extends Component {
             borderWidth,
             borderColor,
             borderRadius,
+            borderStyle,
             hoverTextColor,
             hoverBgColor,
             hoverShadowColor,
@@ -76,7 +77,7 @@ class AdvButton extends Component {
                     border-width: ${borderWidth}px;
                     border-color: ${borderColor};
                     border-radius: ${borderRadius}px;
-                    border-style: solid;
+                    border-style: ${borderStyle};
                 }
                 .${id}:hover {
                     color: ${hoverTextColor};
@@ -166,26 +167,46 @@ class AdvButton extends Component {
                         />
                     </PanelBody>
                     <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
-                        <RangeControl
-                            label={ __( 'Border width' ) }
-                            value={ borderWidth || '' }
-                            onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
-                            min={ 0 }
-                            max={ 100 }
+                        <SelectControl
+                            label={ __( 'Border style' ) }
+                            value={ borderStyle }
+                            options={ [
+                                { label: __( 'None' ), value: 'none' },
+                                { label: __( 'Solid' ), value: 'solid' },
+                                { label: __( 'Dotted' ), value: 'dotted' },
+                                { label: __( 'Dashed' ), value: 'dashed' },
+                                { label: __( 'Double' ), value: 'double' },
+                                { label: __( 'Groove' ), value: 'groove' },
+                                { label: __( 'Ridge' ), value: 'ridge' },
+                                { label: __( 'Inset' ), value: 'inset' },
+                                { label: __( 'Outset' ), value: 'outset' },
+                            ] }
+                            onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
                         />
-                        <RangeControl
-                            label={ __( 'Border radius' ) }
-                            value={ borderRadius || '' }
-                            onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
-                            min={ 0 }
-                            max={ 100 }
-                        />
-                        <PanelColor title={ __( 'Border color' ) } colorValue={ borderColor } initialOpen={ false } >
-                            <ColorPalette
-                                value={ borderColor }
-                                onChange={ ( value ) => setAttributes( { borderColor: value } ) }
-                            />
-                        </PanelColor>
+                        {borderStyle !== 'none' &&
+                            [
+                                <PanelColor title={ __( 'Border color' ) } colorValue={ borderColor } initialOpen={ false } >
+                                    <ColorPalette
+                                        value={ borderColor }
+                                        onChange={ ( value ) => setAttributes( { borderColor: value } ) }
+                                    />
+                                </PanelColor>,
+                                <RangeControl
+                                    label={ __( 'Border width' ) }
+                                    value={ borderWidth || '' }
+                                    onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+                                    min={ 0 }
+                                    max={ 100 }
+                                />,
+                                <RangeControl
+                                    label={ __( 'Border radius' ) }
+                                    value={ borderRadius || '' }
+                                    onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                                    min={ 0 }
+                                    max={ 100 }
+                                />
+                            ]
+                        }
                     </PanelBody>
                     <PanelBody title={ __( 'Hover' ) } initialOpen={ false } >
                         <PanelColor title={ __( 'Text color' ) } colorValue={ hoverTextColor } initialOpen={ false } >
@@ -304,6 +325,10 @@ registerBlockType( 'advgb/button', {
             type: 'string',
             default: '#2196f3'
         },
+        borderStyle: {
+            type: 'string',
+            default: 'solid',
+        },
         borderRadius: {
             type: 'number',
             default: 0
@@ -360,6 +385,7 @@ registerBlockType( 'advgb/button', {
             borderWidth,
             borderColor,
             borderRadius,
+            borderStyle,
             hoverTextColor,
             hoverBgColor,
             hoverShadowColor,
@@ -371,7 +397,10 @@ registerBlockType( 'advgb/button', {
 
         return (
             <div className={ `align${align}` }>
-                <a className={ `wp-block-advgb-button_link ${id}` } href={ url || '#' } title={ title } target={ !urlOpenNewTab ? '_self' : '_blank' } >
+                <a className={ `wp-block-advgb-button_link ${id}` }
+                   href={ url || '#' } title={ title }
+                   target={ !urlOpenNewTab ? '_self' : '_blank' }
+                >
                     { text }
                 </a>
                 <style>
@@ -383,7 +412,7 @@ registerBlockType( 'advgb/button', {
                         border-width: ${borderWidth}px;
                         border-color: ${borderColor};
                         border-radius: ${borderRadius}px;
-                        border-style: solid;
+                        border-style: ${borderStyle};
                     }
                     .${id}:hover {
                         color: ${hoverTextColor};
