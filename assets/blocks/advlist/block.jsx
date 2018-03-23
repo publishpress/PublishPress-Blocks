@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { registerBlockType, createBlock, InspectorControls, RichText, ColorPalette } = wp.blocks;
-const { SelectControl, RangeControl, PanelBody, PanelColor } = wp.components;
+const { SelectControl, RangeControl, PanelBody } = wp.components;
 
 class AdvList extends Component {
     constructor() {
@@ -119,23 +119,24 @@ class AdvList extends Component {
                             onChange={ ( icon ) => setAttributes( { icon: icon } ) }
                         />
                         {icon && ( [
-                            <PanelColor
-                                title={ __( 'Icon color' ) }
-                                colorValue={ iconColor }
+                            <PanelBody
+                                title={ [
+                                    __( 'Icon color' ),
+                                    <span className={ `dashicons dashicons-${icon}` } style={ { color: iconColor, marginLeft: '10px' } } />
+                                ] }
                                 initialOpen={ false }
                             >
                                 <ColorPalette
                                     value={ iconColor }
                                     onChange={ ( color ) => setAttributes( { iconColor: color } ) }
                                 />
-                            </PanelColor>,
+                            </PanelBody>,
                             <RangeControl
                                 label={ __( 'Icon size' ) }
                                 value={ iconSize || '' }
                                 onChange={ ( size ) => setAttributes( { iconSize: size } ) }
                                 min={ 10 }
                                 max={ 100 }
-                                beforeIcon={ icon }
                                 allowReset
                             />,
                             <RangeControl

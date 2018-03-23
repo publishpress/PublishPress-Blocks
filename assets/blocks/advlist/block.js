@@ -23,8 +23,7 @@ var _wp$blocks = wp.blocks,
 var _wp$components = wp.components,
     SelectControl = _wp$components.SelectControl,
     RangeControl = _wp$components.RangeControl,
-    PanelBody = _wp$components.PanelBody,
-    PanelColor = _wp$components.PanelColor;
+    PanelBody = _wp$components.PanelBody;
 
 var AdvList = function (_Component) {
     _inherits(AdvList, _Component);
@@ -141,10 +140,9 @@ var AdvList = function (_Component) {
                         }
                     }),
                     icon && [React.createElement(
-                        PanelColor,
+                        PanelBody,
                         {
-                            title: __('Icon color'),
-                            colorValue: iconColor,
+                            title: [__('Icon color'), React.createElement('span', { className: 'dashicons dashicons-' + icon, style: { color: iconColor, marginLeft: '10px' } })],
                             initialOpen: false
                         },
                         React.createElement(ColorPalette, {
@@ -161,7 +159,6 @@ var AdvList = function (_Component) {
                         },
                         min: 10,
                         max: 100,
-                        beforeIcon: icon,
                         allowReset: true
                     }), React.createElement(RangeControl, {
                         label: __('Line height'),
