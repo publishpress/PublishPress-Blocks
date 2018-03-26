@@ -1,5 +1,7 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12,6 +14,7 @@ var __ = wp.i18n.__;
 var Component = wp.element.Component;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
+    createBlock = _wp$blocks.createBlock,
     InspectorControls = _wp$blocks.InspectorControls,
     BlockControls = _wp$blocks.BlockControls,
     BlockAlignmentToolbar = _wp$blocks.BlockAlignmentToolbar,
@@ -436,6 +439,26 @@ registerBlockType('advgb/button', {
             type: 'string',
             default: 'none'
         }
+    },
+    transforms: {
+        from: [{
+            type: 'block',
+            blocks: ['core/button'],
+            transform: function transform(attributes) {
+                return createBlock('advgb/button', _extends({}, attributes, {
+                    bgColor: attributes.color
+                }));
+            }
+        }],
+        to: [{
+            type: 'block',
+            blocks: ['core/button'],
+            transform: function transform(attributes) {
+                return createBlock('core/button', _extends({}, attributes, {
+                    color: attributes.bgColor
+                }));
+            }
+        }]
     },
     edit: AdvButton,
     save: function save(_ref) {

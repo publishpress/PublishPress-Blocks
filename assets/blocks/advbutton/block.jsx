@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { registerBlockType, InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wp.blocks;
+const { registerBlockType, createBlock, InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wp.blocks;
 const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl } = wp.components;
 
 class AdvButton extends Component {
@@ -366,6 +366,32 @@ registerBlockType( 'advgb/button', {
             type: 'string',
             default: 'none',
         }
+    },
+    transforms: {
+        from: [
+            {
+                type: 'block',
+                blocks: [ 'core/button' ],
+                transform: ( attributes ) => {
+                    return createBlock( 'advgb/button', {
+                        ...attributes,
+                        bgColor: attributes.color,
+                    } )
+                }
+            }
+        ],
+        to: [
+            {
+                type: 'block',
+                blocks: [ 'core/button' ],
+                transform: ( attributes ) => {
+                    return createBlock( 'core/button', {
+                        ...attributes,
+                        color: attributes.bgColor,
+                    } )
+                }
+            }
+        ]
     },
     edit: AdvButton,
     save: function ( { attributes } ) {
