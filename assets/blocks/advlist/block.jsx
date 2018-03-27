@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { registerBlockType, createBlock, InspectorControls, RichText, ColorPalette } = wp.blocks;
-const { SelectControl, RangeControl, PanelBody } = wp.components;
+const { registerBlockType, createBlock, InspectorControls, RichText, ColorPalette, BlockControls } = wp.blocks;
+const { SelectControl, RangeControl, PanelBody, IconButton } = wp.components;
 
 class AdvList extends Component {
     constructor() {
@@ -76,7 +76,8 @@ class AdvList extends Component {
             mergeBlocks,
             setAttributes,
             onReplace,
-            className
+            className,
+            id: blockID,
         } = this.props;
         const {
             id,
@@ -97,7 +98,19 @@ class AdvList extends Component {
         ].filter( Boolean ).join( ' ' );
 
         return [
-            isSelected &&(
+            isSelected && (
+                <BlockControls>
+                    <div className="components-toolbar">
+                        <IconButton
+                            label={ __( 'Refresh this list when it conflict with other lists styles' ) }
+                            icon="update"
+                            className="components-toolbar__control"
+                            onClick={ () => setAttributes( { id: 'advgblist-' + blockID } ) }
+                        />
+                    </div>
+                </BlockControls>
+            ),
+            isSelected && (
                 <InspectorControls key="advgb-list-controls">
                     <PanelBody title={ __( 'Text Settings' ) } initialOpen={false}>
                         <RangeControl

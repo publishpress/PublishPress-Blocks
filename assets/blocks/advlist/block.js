@@ -19,11 +19,13 @@ var _wp$blocks = wp.blocks,
     createBlock = _wp$blocks.createBlock,
     InspectorControls = _wp$blocks.InspectorControls,
     RichText = _wp$blocks.RichText,
-    ColorPalette = _wp$blocks.ColorPalette;
+    ColorPalette = _wp$blocks.ColorPalette,
+    BlockControls = _wp$blocks.BlockControls;
 var _wp$components = wp.components,
     SelectControl = _wp$components.SelectControl,
     RangeControl = _wp$components.RangeControl,
-    PanelBody = _wp$components.PanelBody;
+    PanelBody = _wp$components.PanelBody,
+    IconButton = _wp$components.IconButton;
 
 var AdvList = function (_Component) {
     _inherits(AdvList, _Component);
@@ -96,7 +98,8 @@ var AdvList = function (_Component) {
                 mergeBlocks = _props2.mergeBlocks,
                 setAttributes = _props2.setAttributes,
                 onReplace = _props2.onReplace,
-                className = _props2.className;
+                className = _props2.className,
+                blockID = _props2.id;
             var id = attributes.id,
                 values = attributes.values,
                 icon = attributes.icon,
@@ -110,6 +113,21 @@ var AdvList = function (_Component) {
             var listClassName = [className, id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
 
             return [isSelected && React.createElement(
+                BlockControls,
+                null,
+                React.createElement(
+                    'div',
+                    { className: 'components-toolbar' },
+                    React.createElement(IconButton, {
+                        label: __('Refresh this list when it conflict with other lists styles'),
+                        icon: 'update',
+                        className: 'components-toolbar__control',
+                        onClick: function onClick() {
+                            return setAttributes({ id: 'advgblist-' + blockID });
+                        }
+                    })
+                )
+            ), isSelected && React.createElement(
                 InspectorControls,
                 { key: 'advgb-list-controls' },
                 React.createElement(
