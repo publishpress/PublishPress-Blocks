@@ -26,7 +26,8 @@ var _wp$components = wp.components,
     PanelColor = _wp$components.PanelColor,
     TextControl = _wp$components.TextControl,
     ToggleControl = _wp$components.ToggleControl,
-    SelectControl = _wp$components.SelectControl;
+    SelectControl = _wp$components.SelectControl,
+    IconButton = _wp$components.IconButton;
 
 var AdvButton = function (_Component) {
     _inherits(AdvButton, _Component);
@@ -58,7 +59,8 @@ var AdvButton = function (_Component) {
                 attributes = _props2.attributes,
                 setAttributes = _props2.setAttributes,
                 isSelected = _props2.isSelected,
-                className = _props2.className;
+                className = _props2.className,
+                blockID = _props2.id;
             var id = attributes.id,
                 align = attributes.align,
                 url = attributes.url,
@@ -90,7 +92,19 @@ var AdvButton = function (_Component) {
                 { key: 'advgb-button-toolbar' },
                 React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
                         return setAttributes({ align: align });
-                    } })
+                    } }),
+                React.createElement(
+                    'div',
+                    { className: 'components-toolbar' },
+                    React.createElement(IconButton, {
+                        label: __('Refresh this button when it conflict with other buttons styles'),
+                        icon: 'update',
+                        className: 'components-toolbar__control',
+                        onClick: function onClick() {
+                            return setAttributes({ id: 'advgbbutton-' + blockID });
+                        }
+                    })
+                )
             ), React.createElement(
                 'span',
                 { key: 'advgb-button', style: { display: 'inline-block' } },

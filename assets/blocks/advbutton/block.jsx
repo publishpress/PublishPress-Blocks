@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { registerBlockType, createBlock, InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wp.blocks;
-const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl } = wp.components;
+const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl, IconButton } = wp.components;
 
 class AdvButton extends Component {
     constructor() {
@@ -33,6 +33,7 @@ class AdvButton extends Component {
             setAttributes,
             isSelected,
             className,
+            id: blockID,
         } = this.props;
         const {
             id,
@@ -65,6 +66,14 @@ class AdvButton extends Component {
             isSelected && (
                 <BlockControls key="advgb-button-toolbar" >
                     <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
+                    <div className="components-toolbar">
+                        <IconButton
+                            label={ __( 'Refresh this button when it conflict with other buttons styles' ) }
+                            icon="update"
+                            className="components-toolbar__control"
+                            onClick={ () => setAttributes( { id: 'advgbbutton-' + blockID } ) }
+                        />
+                    </div>
                 </BlockControls>
             ),
             <span key="advgb-button" style={ { display: 'inline-block' } } >
