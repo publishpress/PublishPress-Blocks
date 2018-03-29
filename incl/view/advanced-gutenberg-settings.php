@@ -129,16 +129,43 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </div>
 
         <div class="col-sm-5" id="advgb-customstyles-info">
-            <div class="advgb-customstyles-title">
-                <label for="advgb-customstyles-title"><?php _e('Style title', 'advanced-gutenberg') ?></label>
+            <div class="control-group">
+                <label for="advgb-customstyles-title">
+                    <?php _e('Style title', 'advanced-gutenberg') ?>
+                </label>
                 <input type="text" name="customstyles-title" id="advgb-customstyles-title" value="" />
             </div>
-            <div class="advgb-customstyles-classname">
-                <label for="advgb-customstyles-classname"><?php _e('Style class', 'advanced-gutenberg') ?></label>
+            <div class="control-group">
+                <label for="advgb-customstyles-classname">
+                    <?php _e('Style class', 'advanced-gutenberg') ?>
+                </label>
                 <input type="text" name="customstyles-classname" id="advgb-customstyles-classname" value="" />
             </div>
-            <div class="advgb-customstyles-css">
-                <label for="advgb-customstyles-css"><?php _e('Custom CSS', 'advanced-gutenberg') ?></label>
+            <div id="identify-colors" class="control-group clearfix">
+                <div class="control-label">
+                    <label for="advgb-customstyles-identify-color"
+                           class="advgb_qtip"
+                           alt="<?php _e(
+                               'This option help you identify specific custom styles in the list
+                                (usually set this same as the custom style\'s background color)',
+                               'advanced-gutenberg'
+                           ) ?>"
+                    >
+                        <?php _e('Identification color', 'advanced-gutenberg') ?>
+                    </label>
+                </div>
+                <div class="controls">
+                    <input type="text"
+                           name="customstyles-identify-color"
+                           id="advgb-customstyles-identify-color"
+                           class="minicolors minicolors-input"
+                           value="#000000" />
+                </div>
+            </div>
+            <div class="control-group advgb-customstyles-css">
+                <label for="advgb-customstyles-css">
+                    <?php _e('Custom CSS', 'advanced-gutenberg') ?>
+                </label>
                 <textarea name="customstyles-css" id="advgb-customstyles-css"></textarea>
             </div>
             <div id="css-tips" style="border-top: 1px solid #ccc">

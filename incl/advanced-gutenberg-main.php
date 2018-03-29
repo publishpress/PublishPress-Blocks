@@ -515,6 +515,10 @@ float: left;'
             'codemirror_hint_style',
             plugins_url('assets/js/codemirror/addon/hint/show-hint.css', dirname(__FILE__))
         );
+        wp_register_style(
+            'minicolors_css',
+            plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
+        );
 
         // Register JS
         wp_register_script(
@@ -565,6 +569,10 @@ float: left;'
         wp_register_script(
             'less_js',
             plugins_url('assets/js/less.js', dirname(__FILE__))
+        );
+        wp_register_script(
+            'minicolors_js',
+            plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__))
         );
     }
 
@@ -691,6 +699,7 @@ float: left;'
         wp_enqueue_style('advgb_quirk');
         wp_enqueue_style('tabs_style');
         wp_enqueue_style('button_switch_style');
+        wp_enqueue_style('minicolors_css');
         wp_enqueue_style('qtip_style');
         wp_enqueue_style('codemirror_css');
         wp_enqueue_style('codemirror_hint_style');
@@ -701,6 +710,7 @@ float: left;'
         wp_enqueue_script('tabs_js');
         wp_enqueue_script('qtip_js');
         wp_enqueue_script('less_js');
+        wp_enqueue_script('minicolors_js');
         wp_enqueue_script('codemirror_js');
         wp_enqueue_script('codemirror_hint');
         wp_enqueue_script('codemirror_mode_css');

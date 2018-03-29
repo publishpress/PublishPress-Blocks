@@ -37,6 +37,12 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('.minicolors-input').minicolors('settings', {
+        change: function() {
+            jQuery(this).trigger('change');
+        }
+    }).attr('maxlength', '7');
+
     // Function for Custom Style tab
     initCustomStyleMenu();
 
