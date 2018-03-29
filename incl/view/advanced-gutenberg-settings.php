@@ -101,11 +101,10 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
     </div>
 
     <div id="customstyles-tab" class="tab-content clearfix" style="display: none;">
-        <h3 style="margin: 0; padding: 5px 0 10px 0;">
-            <?php _e('Custom styles', 'advanced-gutenberg') ?>
-        </h3>
-
         <div class="col-sm-2" id="advgb-customstyles-list">
+            <h3 style="margin: 0; padding: 5px 0 10px 0;">
+                <?php _e('Custom styles', 'advanced-gutenberg') ?>
+            </h3>
             <div id="mybootstrap">
                 <ul class="advgb-customstyles-list">
                     <?php

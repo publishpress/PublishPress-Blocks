@@ -105,9 +105,11 @@
 #savedInfo {
     color: blue;
 }
+
 #advgb-customstyles-info label {
     display: block;
     font-size: 16px;
+    margin: 10px 0;
 }
 #advgb-customstyles-info input {
     border: 1px solid #ddd !important;
