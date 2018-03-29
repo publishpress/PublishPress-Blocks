@@ -13,6 +13,7 @@ class AdvancedGutenbergMain
             'id' => 1,
             'title' => 'Blue message',
             'name' => 'blue-message',
+            'identifyColor' => '#3399ff',
             'css' => 'background: none repeat scroll 0 0 #3399ff;
 color: #ffffff;
 text-shadow: none;
@@ -24,6 +25,7 @@ padding: 10px;'
             'id' => 2,
             'title' => 'Green message',
             'name' => 'green-message',
+            'identifyColor' => '#8cc14c',
             'css' => 'background: none repeat scroll 0 0 #8cc14c;
 color: #ffffff;
 text-shadow: none;
@@ -35,6 +37,7 @@ padding: 10px;'
             'id' => 3,
             'title' => 'Orange message',
             'name' => 'orange-message',
+            'identifyColor' => '#faa732',
             'css' => 'background: none repeat scroll 0 0 #faa732;
 color: #ffffff;
 text-shadow: none;
@@ -46,6 +49,7 @@ padding: 10px;'
             'id' => 4,
             'title' => 'Red message',
             'name' => 'red-message',
+            'identifyColor' => '#da4d31',
             'css' => 'background: none repeat scroll 0 0 #da4d31;
 color: #ffffff;
 text-shadow: none;
@@ -57,6 +61,7 @@ padding: 10px;'
             'id' => 5,
             'title' => 'Grey message',
             'name' => 'grey-message',
+            'identifyColor' => '#53555c',
             'css' => 'background: none repeat scroll 0 0 #53555c;
 color: #ffffff;
 text-shadow: none;
@@ -68,6 +73,7 @@ padding: 10px;'
             'id' => 6,
             'title' => 'Left block',
             'name' => 'left-block',
+            'identifyColor' => '#ff00ff',
             'css' => 'background: none repeat scroll 0 0px, radial-gradient(ellipse at center center, #ffffff 0%, #f2f2f2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
 color: #8b8e97;
 padding: 10px;
@@ -78,6 +84,7 @@ float: left;'
             'id' => 7,
             'title' => 'Right block',
             'name' => 'right-block',
+            'identifyColor' => '#00ddff',
             'css' => 'background: none repeat scroll 0 0px, radial-gradient(ellipse at center center, #ffffff 0%, #f2f2f2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
 color: #8b8e97;
 padding: 10px;
@@ -88,6 +95,7 @@ float: right;'
             'id' => 8,
             'title' => 'Blockquotes',
             'name' => 'blockquotes',
+            'identifyColor' => '#cccccc',
             'css' => 'background: none;
 border-left: 5px solid #f1f1f1;
 color: #8B8E97;
