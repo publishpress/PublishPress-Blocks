@@ -36,7 +36,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </li>
     </ul>
 
-    <div id="config-tab" class="tab-content clearfix">
+    <div id="config-tab" class="tab-content clearfix" style="display: none;">
         <form method="post">
             <?php wp_nonce_field('advgb_settings_nonce', 'advgb_settings_nonce_field') ?>
             <ul class="settings-list">
@@ -100,7 +100,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </form>
     </div>
 
-    <div id="customstyles-tab" class="tab-content clearfix">
+    <div id="customstyles-tab" class="tab-content clearfix" style="display: none;">
         <h3 style="margin: 0; padding: 5px 0 10px 0;">
             <?php _e('Custom styles', 'advanced-gutenberg') ?>
         </h3>
@@ -167,7 +167,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </div>
     </div>
 
-    <div id="translation-tab" class="tab-content clearfix">
+    <div id="translation-tab" class="tab-content clearfix" style="display: none;">
         <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); ?>
     </div>
 </div>
