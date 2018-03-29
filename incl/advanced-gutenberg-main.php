@@ -382,7 +382,8 @@ float: left;'
                 'id' => $new_style_id,
                 'title' => __('New class', 'wp-smart-editor'),
                 'name' => __('new-class', 'wp-smart-editor'),
-                'css' => ''
+                'css' => '',
+                'identifyColor' => '#000000'
             );
             array_push($custom_style_data, $new_style_array);
             update_option('advgb_custom_styles', $custom_style_data);
@@ -415,7 +416,8 @@ float: left;'
                         'id' => $new_id['id'] + 1,
                         'title' => sanitize_text_field($data['title']),
                         'name' => sanitize_text_field($data['name']),
-                        'css' => $data['css']
+                        'css' => $data['css'],
+                        'identifyColor' => $data['identifyColor'],
                     );
 
                     array_push($new_style_copied_array, $copied_styles);
@@ -444,6 +446,7 @@ float: left;'
             $style_id = $_POST['id'];
             $new_title = sanitize_text_field($_POST['title']);
             $new_classname = sanitize_text_field($_POST['name']);
+            $new_identify_color = sanitize_text_field($_POST['mycolor']);
             $new_css = $_POST['mycss'];
             // Validate new name
             if (!preg_match($regexWithSpaces, $new_title) || !preg_match($regex, $new_classname)) {
@@ -457,6 +460,7 @@ float: left;'
                     $data['title'] = $new_title;
                     $data['name'] = $new_classname;
                     $data['css'] = $new_css;
+                    $data['identifyColor'] = $new_identify_color;
                 }
                 array_push($new_data_array, $data);
             }
