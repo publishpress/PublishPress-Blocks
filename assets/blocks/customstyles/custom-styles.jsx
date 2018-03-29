@@ -8,6 +8,9 @@ addFilter( 'blocks.registerBlockType', 'advgb/registerCustomStyleClass', functio
     settings.attributes = Object.assign( settings.attributes, {
         customStyle: {
             type: 'string'
+        },
+        identifyColor: {
+            type: 'string'
         }
     } );
 
@@ -19,7 +22,8 @@ if (advGb_CS) {
     advGb_CS.unshift( {
         id: 0,
         label: __( 'Paragraph' ),
-        value: ''
+        value: '',
+        identifyColor: ''
     } );
 }
 
@@ -31,7 +35,14 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
             props.isSelected && props.name === "core/paragraph" &&
             <InspectorControls key="advgb-custom-controls">
                 <SelectControl
-                    label={__( 'Custom styles' )}
+                    label={ [
+                        __( 'Custom styles' ),
+                        <span className={'components-panel__color-area'}
+                              style={ {
+                                  background: props.attributes.identifyColor,
+                                  verticalAlign: 'text-bottom',
+                              } } />
+                    ] }
                     help={__( 'This option let you add custom style for current paragraph. (Front-end only!)' )}
                     value={props.attributes.customStyle}
                     options={advGb_CS.map( ( cstyle, index ) => {
@@ -41,8 +52,10 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
                         return cstyle;
                     } )}
                     onChange={( cstyle ) => {
+                        const { identifyColor } = advGb_CS.filter( ( style ) => style.value === cstyle )[0];
                         props.setAttributes( {
                             customStyle: cstyle,
+                            identifyColor: identifyColor,
                             backgroundColor: undefined,
                             textColor: undefined,
                             fontSize: undefined,
