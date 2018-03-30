@@ -187,9 +187,13 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
             </div>
         </div>
         <div class="col-sm-5" id="advgb-customstyles-preview">
-            <p class="previous-block" style="margin-bottom: 20px"><?php _e('Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph', 'advanced-gutenberg') ?></p>
+            <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px;">
+                <?php _e('Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph', 'advanced-gutenberg') ?>
+            </p>
             <div class="advgb-customstyles-target"><?php _e('Example of text', 'advanced-gutenberg') ?></div>
-            <p class="follow-block"><?php _e('Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph', 'advanced-gutenberg') ?></p>
+            <p class="follow-block">
+                <?php _e('Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph', 'advanced-gutenberg') ?>
+            </p>
         </div>
     </div>
 
