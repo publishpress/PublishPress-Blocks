@@ -2,9 +2,25 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.0.0",
-  "wp_version": "4.9.1",
+  "version": "1.1.0",
+  "wp_version": "4.9.4",
   "changelog": {
+    "1.1.0": [
+      {
+        "type": "feature",
+        "title": "New settings: Custom styles (add custom styles for paragraph blocks)"
+      },
+      {
+        "type": "feature",
+        "title": "New blocks: Summary"
+      }
+    ],
+    "1.0.1": [
+      {
+        "type": "fix",
+        "title": "Compatibility with Gutenberg version 2.2.0"
+      }
+    ],
     "1.0.0": [
       {
         "type": "feature",
