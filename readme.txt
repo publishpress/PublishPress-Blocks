@@ -19,6 +19,8 @@ Additional features added to Gutenberg plugin:
 - Select each edition tool per profile
 - Activate lightbox effect in Gutenberg galleries
 - Display alt information as lightbox caption in galleries
+- Create your custom CSS styles from the configuration and apply it to any gutenberg block
+- Insert the Gutenberg post summary based on content headers
 
 > <strong>Note about Advanced Gutenberg dev.</strong><br>
 > * This plugin is based on official Gutenberg plugin under active developement
