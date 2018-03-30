@@ -8,11 +8,15 @@
     "1.1.0": [
       {
         "type": "feature",
-        "title": "New settings: Custom styles (add custom styles for paragraph blocks)"
+        "title": "Create custom CSS styles add apply to paragraph blocks"
+      },
+       {
+        "type": "feature",
+        "title": "Identify CSS property wity with: name, class and color"
       },
       {
         "type": "feature",
-        "title": "New blocks: Summary"
+        "title": "New Summary block: Insert Gutenberg summary based on content headers"
       }
     ],
     "1.0.1": [
