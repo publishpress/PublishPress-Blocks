@@ -127,6 +127,7 @@ float: left;'
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
             add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
+            add_filter('active_new_blocks_by_default', array($this, 'activeNewInstalledBlocks'));
 
             // Ajax
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -901,8 +902,10 @@ float: left;'
                     $this->active_profile = $postID;
                     $active_blocks_saved  = get_post_meta($this->active_profile, 'active_blocks', true);
 
+                    $active_blocks_filtered = apply_filters('active_new_blocks_by_default', $active_blocks_saved);
+
                     // Return allowed blocks
-                    return $active_blocks_saved;
+                    return $active_blocks_filtered;
                 }
             }
         endwhile;
@@ -980,5 +983,30 @@ float: left;'
         array_push($buttons, 'customstyles');
 
         return $buttons;
+    }
+
+    /**
+     * Active newly installed blocks by default
+     *
+     * @param $current_activated_blocks     array   Current activated block list
+     *
+     * @return mixed    Array of activated blocks
+     */
+    public function activeNewInstalledBlocks($current_activated_blocks)
+    {
+        $new_blocks = array(
+            'advgb/summary'
+        );
+
+        $all_blocks_saved = get_option('advgb_blocks_list');
+        foreach ($new_blocks as $block) {
+            if (!in_array($block, $all_blocks_saved)) {
+                if (!in_array($block, $current_activated_blocks)) {
+                    array_push($current_activated_blocks, $block);
+                }
+            }
+        }
+
+        return $current_activated_blocks;
     }
 }
