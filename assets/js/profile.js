@@ -1,9 +1,11 @@
 jQuery(document).ready(function ($) {
+    // Click save settings button
     $('#save-advgb-profile').unbind('click').click(function (e) {
         e.preventDefault();
         $('#publish').click();
     });
 
+    // Click update blocks list button
     $('#update-list-btn').unbind('click').click(function () {
         var willUpdate = confirm('Make sure everthing is saved before updating. Continue?');
         if (willUpdate) {
@@ -34,6 +36,7 @@ jQuery(document).ready(function ($) {
         })
     });
 
+    // Search users input
     $('#user-search-input').on('keypress', function (e) {
         if (e.which === 13) {
             e.preventDefault();
@@ -41,6 +44,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    // Role filter
     $('#advgb-roles-filter').change(function () {
         var roleKey = $(this).val();
         var searchKey = $('#user-search-input').val();
@@ -61,6 +65,7 @@ jQuery(document).ready(function ($) {
         })
     });
 
+    // Clear search users
     $('#advgb-clear-btn').click(function () {
         $('#user-search-input').val('');
         $('#advgb-roles-filter').val('');

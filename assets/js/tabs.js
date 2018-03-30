@@ -20,7 +20,7 @@
 
       // If no match is found, use the first link or any with class 'active' as the initial active tab.
       if ($active.length === 0) {
-          $active = $(this).find('li.tab a.active').first();
+        $active = $(this).find('li.tab a.active').first();
       }
       if ($active.length === 0) {
         $active = $(this).find('li.tab a').first();
@@ -33,6 +33,7 @@
       }
 
       $content = $($active[0].hash);
+      $($content).show();
 
       // append indicator then set indicator width to tab width
       $this.append('<div class="indicator"></div>');

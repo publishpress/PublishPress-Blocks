@@ -60,3 +60,98 @@
 .save-settings-block {
     margin-top: 20px;
 }
+
+/*Style for CustomStyle tab*/
+#advgb-customstyles-list {
+    padding: 0;
+}
+#advgb-customstyles-list a {
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+}
+.advgb-customstyles-list {
+    margin-bottom: 20px;
+}
+.advgb-customstyles-items-class {
+    cursor: pointer;
+    margin: 0;
+}
+#advgb-customstyles-list li:hover a, #advgb-customstyles-list li:hover ul {
+    color: #08C;
+}
+#advgb-customstyles-list i {
+    font-size: 13px;
+}
+#advgb-customstyles-list .active a, #advgb-customstyles-list .active ul {
+    color: #08C;
+}
+.advgb-customstyles-items {
+    margin-bottom: 3px;
+}
+.advgb-customstyles-items a.copy,
+.advgb-customstyles-items a.trash {
+    display: none;
+    float: right;
+}
+.advgb-customstyles-items a.copy:hover,
+.advgb-customstyles-items a.trash:hover {
+    color: red !important;
+}
+.advgb-customstyles-items:hover a.trash,
+.advgb-customstyles-items:hover a.copy {
+    display: inline;
+}
+#savedInfo {
+    color: blue;
+}
+
+#advgb-customstyles-info label {
+    display: block;
+    font-size: 16px;
+    margin: 10px 0;
+}
+#advgb-customstyles-info input:not(.minicolors-input) {
+    border: 1px solid #ddd !important;
+    padding: 5px;
+    background: #fff !important;
+}
+#advgb-customstyles-info input:not(.minicolors-input):focus {
+    border: 1px solid #5b9dd9 !important;
+    box-shadow: 0 0 2px rgba(30,140,190,.8) !important;
+    -moz-box-shadow: 0 0 2px rgba(30,140,190,.8) !important;
+    -webkit-box-shadow: 0 0 2px rgba(30,140,190,.8) !important;
+}
+#advgb-customstyles-info input:not(.minicolors-input),
+#advgb-customstyles-info textarea {
+    width: 100%;
+}
+#advgb-customstyles-title {
+    border: 1px solid black;
+}
+#advgb-customstyles-css {
+    resize: none;
+}
+.advgb-customstyles-css .CodeMirror {
+    height: 200px;
+    border: 1px solid #ccc;
+}
+
+.minicolors-input {
+    height: auto !important;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    min-width: 100px;
+    font-size: 15px;
+}
+
+#identify-colors {
+    margin: 10px 0;
+}
+
+#identify-colors .control-label {
+    float: left;
+}
+
+#identify-colors div.minicolors {
+    margin: 5px 10px;
+}

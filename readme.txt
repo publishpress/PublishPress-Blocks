@@ -41,7 +41,7 @@ Before leaving a review >> Feel free to ask questions here in the support sectio
 
 = To install the plugin manually: =
 * Require Gutenberg plugin to be installed first
-* Download and unzip the plugin wp-smart-editor.zip
+* Download and unzip the plugin advanced-gutenberg.zip
 * Upload the /advanced-gutenberg directory to /wp-content/plugins/
 * Activate the plugin through the 'Plugins' menu in WordPress
 * Use the left menus: Gutenberg > Profiles AND Settings > Advanced Gutenberg
