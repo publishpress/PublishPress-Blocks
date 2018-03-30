@@ -107,6 +107,7 @@ class SummaryBlock extends Component {
         // No heading blocks
         let summaryContent = (
             <Placeholder
+                key="summary-placeholder"
                 icon={blockIcon}
                 label={blockTitle}
                 instructions={__( 'Your current post/page has no headings. Try add some headings and update this block later' )}
@@ -123,11 +124,12 @@ class SummaryBlock extends Component {
         if (headings.length > 0) {
             const { selectBlock } = dispatch( 'core/editor' );
             summaryContent = (
-                <ul className={'advgb-toc'}>
+                <ul className={'advgb-toc'} key="summary-toc">
                     {headings.map( ( heading ) => {
                         return (
                             <li className={'toc-level-' + heading.level}
                                 style={{ marginLeft: heading.level * 20 }}
+                                key={heading.anchor}
                             >
                                 <a href={'#' + heading.anchor}
                                    onClick={() => selectBlock( heading.uid )}
@@ -140,10 +142,10 @@ class SummaryBlock extends Component {
                 </ul>
             )
         }
-
+        const { PluginSidebar, PluginMoreMenuItem } = wp.editPost.__experimental;
         return [
             isSelected && !!headings.length && (
-                <BlockControls>
+                <BlockControls key={'summary-controls'}>
                     <Toolbar>
                         <IconButton className={'components-icon-button components-toolbar__control'}
                                     icon={'update'}
@@ -184,6 +186,7 @@ registerBlockType( 'advgb/summary', {
                 {headings.map( ( heading ) => {
                     return (
                         <li className={'toc-level-' + heading.level}
+                            key="summary-save"
                             style={{ marginLeft: heading.level * 20 }}
                         >
                             <a href={'#' + heading.anchor}>{heading.content}</a>
