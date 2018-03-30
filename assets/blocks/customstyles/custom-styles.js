@@ -28,7 +28,7 @@ addFilter('blocks.registerBlockType', 'advgb/registerCustomStyleClass', function
 if (advGb_CS) {
     advGb_CS.unshift({
         id: 0,
-        label: __('Paragraph'),
+        label: __('Paragraph', 'advanced-gutenberg'),
         value: '',
         identifyColor: ''
     });
@@ -41,7 +41,7 @@ addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
             InspectorControls,
             { key: 'advgb-custom-controls' },
             React.createElement(SelectControl, {
-                label: [__('Custom styles'), React.createElement('span', { className: 'components-panel__color-area',
+                label: [__('Custom styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
                     style: {
                         background: props.attributes.identifyColor,
                         verticalAlign: 'text-bottom',
@@ -50,7 +50,7 @@ addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
                         width: '16px',
                         height: '16px'
                     } })],
-                help: __('This option let you add custom style for current paragraph. (Front-end only!)'),
+                help: __('This option let you add custom style for current paragraph. (Front-end only!)', 'advanced-gutenberg'),
                 value: props.attributes.customStyle,
                 options: advGb_CS.map(function (cstyle, index) {
                     if (cstyle.title) advGb_CS[index].label = cstyle.title;

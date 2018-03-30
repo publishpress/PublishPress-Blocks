@@ -30,7 +30,7 @@ var addFilter = wp.hooks.addFilter;
 
 
 var blockIcon = 'list-view';
-var blockTitle = __('Summary');
+var blockTitle = __('Summary', 'advanced-gutenberg');
 
 // Add button to insert summary inside table of contents component
 (function () {
@@ -46,7 +46,7 @@ var blockTitle = __('Summary');
                 return block.name === 'advgb/summary';
             }).length;
             setTimeout(function () {
-                var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Summary') + '</button>');
+                var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Summary', 'advanced-gutenberg') + '</button>');
 
                 $('.gutenberg #editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
                 summaryButton.unbind('click').click(function () {
@@ -76,7 +76,7 @@ addFilter('blocks.BlockEdit', 'advgb/addHeadingNotice', function (BlockEdit) {
             React.createElement(
                 'p',
                 { style: { color: 'red', fontStyle: 'italic' } },
-                __('After manually changing the anchor, remember to refresh summary block to make the links work!')
+                __('After manually changing the anchor, remember to refresh summary block to make the links work!', 'advanced-gutenberg')
             )
         )];
     };
@@ -150,14 +150,14 @@ var SummaryBlock = function (_Component) {
                     key: 'summary-placeholder',
                     icon: blockIcon,
                     label: blockTitle,
-                    instructions: __('Your current post/page has no headings. Try add some headings and update this block later')
+                    instructions: __('Your current post/page has no headings. Try add some headings and update this block later', 'advanced-gutenberg')
                 },
                 React.createElement(
                     Button,
                     { onClick: this.updateSummary,
                         className: 'button'
                     },
-                    __('Update')
+                    __('Update', 'advanced-gutenberg')
                 )
             );
 
@@ -198,7 +198,7 @@ var SummaryBlock = function (_Component) {
                     null,
                     React.createElement(IconButton, { className: 'components-icon-button components-toolbar__control',
                         icon: 'update',
-                        label: __('Update Summary'),
+                        label: __('Update Summary', 'advanced-gutenberg'),
                         onClick: this.updateSummary
                     })
                 )
@@ -211,7 +211,7 @@ var SummaryBlock = function (_Component) {
 
 registerBlockType('advgb/summary', {
     title: blockTitle,
-    description: __('Show the table of content of current post/page.'),
+    description: __('Show the table of content of current post/page.', 'advanced-gutenberg'),
     icon: blockIcon,
     category: 'formatting',
     keywords: [__('summary'), __('table of content'), __('list')],
