@@ -2,13 +2,27 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "wp_version": "4.9.4",
   "changelog": {
+    "1.1.0": [
+      {
+        "type": "feature",
+        "title": "Create custom CSS styles add apply to paragraph blocks"
+      },
+       {
+        "type": "feature",
+        "title": "Identify CSS property wity with: name, class and color"
+      },
+      {
+        "type": "feature",
+        "title": "New Summary block: Insert Gutenberg summary based on content headers"
+      }
+    ],
     "1.0.1": [
       {
         "type": "fix",
-        "title": "Compatiblibility with Gutenberg version 2.2.0"
+        "title": "Compatibility with Gutenberg version 2.2.0"
       }
     ],
     "1.0.0": [

@@ -1,0 +1,10 @@
+.gutenberg #editor ul.advgb-toc, ul.advgb-toc {
+    list-style: none !important;
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+.advgb-toc li {
+    min-height: 20px;
+}

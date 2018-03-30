@@ -19,6 +19,8 @@ Additional features added to Gutenberg plugin:
 - Select each edition tool per profile
 - Activate lightbox effect in Gutenberg galleries
 - Display alt information as lightbox caption in galleries
+- Create your custom CSS styles from the configuration and apply on paragraph blocks
+- Insert the Gutenberg post summary based on content headers
 
 > <strong>Note about Advanced Gutenberg dev.</strong><br>
 > * This plugin is based on official Gutenberg plugin under active developement
@@ -41,7 +43,7 @@ Before leaving a review >> Feel free to ask questions here in the support sectio
 
 = To install the plugin manually: =
 * Require Gutenberg plugin to be installed first
-* Download and unzip the plugin wp-smart-editor.zip
+* Download and unzip the plugin advanced-gutenberg.zip
 * Upload the /advanced-gutenberg directory to /wp-content/plugins/
 * Activate the plugin through the 'Plugins' menu in WordPress
 * Use the left menus: Gutenberg > Profiles AND Settings > Advanced Gutenberg
@@ -69,6 +71,8 @@ Yes, and that's really easy! JU Translation is a translation tool included in al
 1. Profile edition with edition tool selection
 1. Attribute profiles to user or user roles
 1. Add lightbox to Gutenberg gallery images
+1. Custom CSS applied to Gutenberg paragraph blocks
+1. Summary with anchors based on gutenberg headers
 
 == Changelog ==
 

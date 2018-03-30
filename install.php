@@ -9,6 +9,17 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
         exit;
     }
 
+    if (defined('GUTENBERG_VERSION')) {
+        $versionRequired = '2.3.0';
+        if (version_compare(GUTENBERG_VERSION, $versionRequired, 'lt')) {
+            wp_die(
+                'We require at least Gutenberg version ' . $versionRequired
+                .'. Please update Gutenberg then comeback later!'
+            );
+            exit;
+        }
+    }
+
     // Get all GB-ADV active profiles
     $args     = array(
         'post_type' => 'advgb_profiles',
