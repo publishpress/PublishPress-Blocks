@@ -41,6 +41,10 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
                               style={ {
                                   background: props.attributes.identifyColor,
                                   verticalAlign: 'text-bottom',
+                                  borderRadius: '50%',
+                                  border: 'none',
+                                  width: '16px',
+                                  height: '16px',
                               } } />
                     ] }
                     help={__( 'This option let you add custom style for current paragraph. (Front-end only!)' )}
