@@ -6,7 +6,7 @@ const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
 
 const blockIcon = 'list-view';
-const blockTitle = __( 'Summary', 'advanced-gutenberg' );
+const blockTitle = __( 'Summary' );
 
 // Add button to insert summary inside table of contents component
 ( function () {
@@ -20,7 +20,7 @@ const blockTitle = __( 'Summary', 'advanced-gutenberg' );
             setTimeout( function () {
                 const summaryButton = $(
                     '<button class="button" style="position: absolute; bottom: 10px; right: 15px">'
-                        + __( 'Insert Summary', 'advanced-gutenberg' ) +
+                        + __( 'Insert Summary' ) +
                     '</button>'
                 );
 
@@ -49,7 +49,7 @@ addFilter( 'blocks.BlockEdit', 'advgb/addHeadingNotice', function ( BlockEdit ) 
             isSelected && blockType === 'core/heading' && attributes.nodeName !== 'H1' &&
             <InspectorControls key="advgb-summary-controls-hint">
                 <p style={{ color: 'red', fontStyle: 'italic' }}>
-                    {__( 'After manually changing the anchor, remember to refresh summary block to make the links work!', 'advanced-gutenberg' )}
+                    {__( 'After manually changing the anchor, remember to refresh summary block to make the links work!' )}
                 </p>
             </InspectorControls>,
         ] )
@@ -110,12 +110,12 @@ class SummaryBlock extends Component {
                 key="summary-placeholder"
                 icon={blockIcon}
                 label={blockTitle}
-                instructions={__( 'Your current post/page has no headings. Try add some headings and update this block later', 'advanced-gutenberg' )}
+                instructions={__( 'Your current post/page has no headings. Try add some headings and update this block later' )}
             >
                 <Button onClick={this.updateSummary}
                         className={'button'}
                 >
-                    {__( 'Update', 'advanced-gutenberg' )}
+                    {__( 'Update' )}
                 </Button>
             </Placeholder>
         );
@@ -149,7 +149,7 @@ class SummaryBlock extends Component {
                     <Toolbar>
                         <IconButton className={'components-icon-button components-toolbar__control'}
                                     icon={'update'}
-                                    label={__( 'Update Summary', 'advanced-gutenberg' )}
+                                    label={__( 'Update Summary' )}
                                     onClick={this.updateSummary}
                         />
                     </Toolbar>
@@ -162,7 +162,7 @@ class SummaryBlock extends Component {
 
 registerBlockType( 'advgb/summary', {
     title: blockTitle,
-    description: __( 'Show the table of content of current post/page.', 'advanced-gutenberg' ),
+    description: __( 'Show the table of content of current post/page.' ),
     icon: blockIcon,
     category: 'formatting',
     keywords: [ __( 'summary' ), __( 'table of content' ), __( 'list' ) ],

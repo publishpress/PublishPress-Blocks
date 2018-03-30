@@ -380,8 +380,8 @@ float: left;'
             $new_style_id = $new_style_id['id'] + 1;
             $new_style_array = array(
                 'id' => $new_style_id,
-                'title' => __('New class', 'advanced-gutenberg'),
-                'name' => __('new-class', 'advanced-gutenberg'),
+                'title' => __('New class', 'wp-smart-editor'),
+                'name' => __('new-class', 'wp-smart-editor'),
                 'css' => '',
                 'identifyColor' => '#000000'
             );
