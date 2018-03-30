@@ -142,7 +142,7 @@ class SummaryBlock extends Component {
                 </ul>
             )
         }
-        const { PluginSidebar, PluginMoreMenuItem } = wp.editPost.__experimental;
+
         return [
             isSelected && !!headings.length && (
                 <BlockControls key={'summary-controls'}>

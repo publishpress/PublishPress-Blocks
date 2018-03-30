@@ -189,9 +189,6 @@ var SummaryBlock = function (_Component) {
                     })
                 );
             }
-            var _wp$editPost$__experi = wp.editPost.__experimental,
-                PluginSidebar = _wp$editPost$__experi.PluginSidebar,
-                PluginMoreMenuItem = _wp$editPost$__experi.PluginMoreMenuItem;
 
             return [isSelected && !!headings.length && React.createElement(
                 BlockControls,
