@@ -992,7 +992,7 @@ float: left;'
 
     /**
      * Function to add buttons for tinyMCE toolbars
-     * @param $plgs
+     * @param $buttons
      *
      * @return array
      */
@@ -1013,7 +1013,9 @@ float: left;'
     public function activeNewInstalledBlocks($current_activated_blocks)
     {
         $new_blocks = array(
-            'advgb/summary'
+            'advgb/summary',
+            'advgb/button',
+            'advgb/list',
         );
 
         $all_blocks_saved = get_option('advgb_blocks_list');
