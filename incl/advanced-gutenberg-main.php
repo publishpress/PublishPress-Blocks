@@ -13,6 +13,7 @@ class AdvancedGutenbergMain
             'id' => 1,
             'title' => 'Blue message',
             'name' => 'blue-message',
+            'identifyColor' => '#3399ff',
             'css' => 'background: none repeat scroll 0 0 #3399ff;
 color: #ffffff;
 text-shadow: none;
@@ -24,6 +25,7 @@ padding: 10px;'
             'id' => 2,
             'title' => 'Green message',
             'name' => 'green-message',
+            'identifyColor' => '#8cc14c',
             'css' => 'background: none repeat scroll 0 0 #8cc14c;
 color: #ffffff;
 text-shadow: none;
@@ -35,6 +37,7 @@ padding: 10px;'
             'id' => 3,
             'title' => 'Orange message',
             'name' => 'orange-message',
+            'identifyColor' => '#faa732',
             'css' => 'background: none repeat scroll 0 0 #faa732;
 color: #ffffff;
 text-shadow: none;
@@ -46,6 +49,7 @@ padding: 10px;'
             'id' => 4,
             'title' => 'Red message',
             'name' => 'red-message',
+            'identifyColor' => '#da4d31',
             'css' => 'background: none repeat scroll 0 0 #da4d31;
 color: #ffffff;
 text-shadow: none;
@@ -57,6 +61,7 @@ padding: 10px;'
             'id' => 5,
             'title' => 'Grey message',
             'name' => 'grey-message',
+            'identifyColor' => '#53555c',
             'css' => 'background: none repeat scroll 0 0 #53555c;
 color: #ffffff;
 text-shadow: none;
@@ -68,6 +73,7 @@ padding: 10px;'
             'id' => 6,
             'title' => 'Left block',
             'name' => 'left-block',
+            'identifyColor' => '#ff00ff',
             'css' => 'background: none repeat scroll 0 0px, radial-gradient(ellipse at center center, #ffffff 0%, #f2f2f2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
 color: #8b8e97;
 padding: 10px;
@@ -78,6 +84,7 @@ float: left;'
             'id' => 7,
             'title' => 'Right block',
             'name' => 'right-block',
+            'identifyColor' => '#00ddff',
             'css' => 'background: none repeat scroll 0 0px, radial-gradient(ellipse at center center, #ffffff 0%, #f2f2f2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
 color: #8b8e97;
 padding: 10px;
@@ -88,6 +95,7 @@ float: right;'
             'id' => 8,
             'title' => 'Blockquotes',
             'name' => 'blockquotes',
+            'identifyColor' => '#cccccc',
             'css' => 'background: none;
 border-left: 5px solid #f1f1f1;
 color: #8B8E97;
@@ -119,6 +127,7 @@ float: left;'
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
             add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
+            add_filter('active_new_blocks_by_default', array($this, 'activeNewInstalledBlocks'));
 
             // Ajax
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -390,9 +399,10 @@ float: left;'
             $new_style_id = $new_style_id['id'] + 1;
             $new_style_array = array(
                 'id' => $new_style_id,
-                'title' => __('New class', 'wp-smart-editor'),
-                'name' => __('new-class', 'wp-smart-editor'),
-                'css' => ''
+                'title' => __('New class', 'advanced-gutenberg'),
+                'name' => __('new-class', 'advanced-gutenberg'),
+                'css' => '',
+                'identifyColor' => '#000000'
             );
             array_push($custom_style_data, $new_style_array);
             update_option('advgb_custom_styles', $custom_style_data);
@@ -425,7 +435,8 @@ float: left;'
                         'id' => $new_id['id'] + 1,
                         'title' => sanitize_text_field($data['title']),
                         'name' => sanitize_text_field($data['name']),
-                        'css' => $data['css']
+                        'css' => $data['css'],
+                        'identifyColor' => $data['identifyColor'],
                     );
 
                     array_push($new_style_copied_array, $copied_styles);
@@ -454,6 +465,7 @@ float: left;'
             $style_id = $_POST['id'];
             $new_title = sanitize_text_field($_POST['title']);
             $new_classname = sanitize_text_field($_POST['name']);
+            $new_identify_color = sanitize_text_field($_POST['mycolor']);
             $new_css = $_POST['mycss'];
             // Validate new name
             if (!preg_match($regexWithSpaces, $new_title) || !preg_match($regex, $new_classname)) {
@@ -467,6 +479,7 @@ float: left;'
                     $data['title'] = $new_title;
                     $data['name'] = $new_classname;
                     $data['css'] = $new_css;
+                    $data['identifyColor'] = $new_identify_color;
                 }
                 array_push($new_data_array, $data);
             }
@@ -533,6 +546,10 @@ float: left;'
             'codemirror_hint_style',
             plugins_url('assets/js/codemirror/addon/hint/show-hint.css', dirname(__FILE__))
         );
+        wp_register_style(
+            'minicolors_css',
+            plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
+        );
 
         // Register JS
         wp_register_script(
@@ -583,6 +600,10 @@ float: left;'
         wp_register_script(
             'less_js',
             plugins_url('assets/js/less.js', dirname(__FILE__))
+        );
+        wp_register_script(
+            'minicolors_js',
+            plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__))
         );
     }
 
@@ -709,6 +730,7 @@ float: left;'
         wp_enqueue_style('advgb_quirk');
         wp_enqueue_style('tabs_style');
         wp_enqueue_style('button_switch_style');
+        wp_enqueue_style('minicolors_css');
         wp_enqueue_style('qtip_style');
         wp_enqueue_style('codemirror_css');
         wp_enqueue_style('codemirror_hint_style');
@@ -719,6 +741,7 @@ float: left;'
         wp_enqueue_script('tabs_js');
         wp_enqueue_script('qtip_js');
         wp_enqueue_script('less_js');
+        wp_enqueue_script('minicolors_js');
         wp_enqueue_script('codemirror_js');
         wp_enqueue_script('codemirror_hint');
         wp_enqueue_script('codemirror_mode_css');
@@ -897,8 +920,10 @@ float: left;'
                     $this->active_profile = $postID;
                     $active_blocks_saved  = get_post_meta($this->active_profile, 'active_blocks', true);
 
+                    $active_blocks_filtered = apply_filters('active_new_blocks_by_default', $active_blocks_saved);
+
                     // Return allowed blocks
-                    return $active_blocks_saved;
+                    return $active_blocks_filtered;
                 }
             }
         endwhile;
@@ -976,5 +1001,30 @@ float: left;'
         array_push($buttons, 'customstyles');
 
         return $buttons;
+    }
+
+    /**
+     * Active newly installed blocks by default
+     *
+     * @param $current_activated_blocks     array   Current activated block list
+     *
+     * @return mixed    Array of activated blocks
+     */
+    public function activeNewInstalledBlocks($current_activated_blocks)
+    {
+        $new_blocks = array(
+            'advgb/summary'
+        );
+
+        $all_blocks_saved = get_option('advgb_blocks_list');
+        foreach ($new_blocks as $block) {
+            if (!in_array($block, $all_blocks_saved)) {
+                if (!in_array($block, $current_activated_blocks)) {
+                    array_push($current_activated_blocks, $block);
+                }
+            }
+        }
+
+        return $current_activated_blocks;
     }
 }

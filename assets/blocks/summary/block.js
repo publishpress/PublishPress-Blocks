@@ -147,6 +147,7 @@ var SummaryBlock = function (_Component) {
             var summaryContent = React.createElement(
                 Placeholder,
                 {
+                    key: 'summary-placeholder',
                     icon: blockIcon,
                     label: blockTitle,
                     instructions: __('Your current post/page has no headings. Try add some headings and update this block later')
@@ -167,12 +168,13 @@ var SummaryBlock = function (_Component) {
 
                 summaryContent = React.createElement(
                     'ul',
-                    { className: 'advgb-toc' },
+                    { className: 'advgb-toc', key: 'summary-toc' },
                     headings.map(function (heading) {
                         return React.createElement(
                             'li',
                             { className: 'toc-level-' + heading.level,
-                                style: { marginLeft: heading.level * 20 }
+                                style: { marginLeft: heading.level * 20 },
+                                key: heading.anchor
                             },
                             React.createElement(
                                 'a',
@@ -190,7 +192,7 @@ var SummaryBlock = function (_Component) {
 
             return [isSelected && !!headings.length && React.createElement(
                 BlockControls,
-                null,
+                { key: 'summary-controls' },
                 React.createElement(
                     Toolbar,
                     null,
@@ -237,6 +239,7 @@ registerBlockType('advgb/summary', {
                 return React.createElement(
                     'li',
                     { className: 'toc-level-' + heading.level,
+                        key: 'summary-save',
                         style: { marginLeft: heading.level * 20 }
                     },
                     React.createElement(

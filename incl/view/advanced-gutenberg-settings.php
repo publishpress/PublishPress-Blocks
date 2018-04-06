@@ -36,7 +36,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </li>
     </ul>
 
-    <div id="config-tab" class="tab-content clearfix">
+    <div id="config-tab" class="tab-content clearfix" style="display: none;">
         <form method="post">
             <?php wp_nonce_field('advgb_settings_nonce', 'advgb_settings_nonce_field') ?>
             <ul class="settings-list">
@@ -100,12 +100,11 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </form>
     </div>
 
-    <div id="customstyles-tab" class="tab-content clearfix">
-        <h3 style="margin: 0; padding: 5px 0 10px 0;">
-            <?php _e('Custom styles', 'advanced-gutenberg') ?>
-        </h3>
-
+    <div id="customstyles-tab" class="tab-content clearfix" style="display: none;">
         <div class="col-sm-2" id="advgb-customstyles-list">
+            <h3 style="margin: 0; padding: 5px 0 10px 0;">
+                <?php _e('Custom styles', 'advanced-gutenberg') ?>
+            </h3>
             <div id="mybootstrap">
                 <ul class="advgb-customstyles-list">
                     <?php
@@ -130,16 +129,43 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </div>
 
         <div class="col-sm-5" id="advgb-customstyles-info">
-            <div class="advgb-customstyles-title">
-                <label for="advgb-customstyles-title"><?php _e('Style title', 'advanced-gutenberg') ?></label>
+            <div class="control-group">
+                <label for="advgb-customstyles-title">
+                    <?php _e('Style title', 'advanced-gutenberg') ?>
+                </label>
                 <input type="text" name="customstyles-title" id="advgb-customstyles-title" value="" />
             </div>
-            <div class="advgb-customstyles-classname">
-                <label for="advgb-customstyles-classname"><?php _e('Style class', 'advanced-gutenberg') ?></label>
+            <div class="control-group">
+                <label for="advgb-customstyles-classname">
+                    <?php _e('Style class', 'advanced-gutenberg') ?>
+                </label>
                 <input type="text" name="customstyles-classname" id="advgb-customstyles-classname" value="" />
             </div>
-            <div class="advgb-customstyles-css">
-                <label for="advgb-customstyles-css"><?php _e('Custom CSS', 'advanced-gutenberg') ?></label>
+            <div id="identify-colors" class="control-group clearfix">
+                <div class="control-label">
+                    <label for="advgb-customstyles-identify-color"
+                           class="advgb_qtip"
+                           alt="<?php _e(
+                               'This option help you identify specific custom styles in the list
+                                (usually set this same as the custom style\'s background color)',
+                               'advanced-gutenberg'
+                           ) ?>"
+                    >
+                        <?php _e('Identification color', 'advanced-gutenberg') ?>
+                    </label>
+                </div>
+                <div class="controls">
+                    <input type="text"
+                           name="customstyles-identify-color"
+                           id="advgb-customstyles-identify-color"
+                           class="minicolors minicolors-input"
+                           value="#000000" />
+                </div>
+            </div>
+            <div class="control-group advgb-customstyles-css">
+                <label for="advgb-customstyles-css">
+                    <?php _e('Custom CSS', 'advanced-gutenberg') ?>
+                </label>
                 <textarea name="customstyles-css" id="advgb-customstyles-css"></textarea>
             </div>
             <div id="css-tips" style="border-top: 1px solid #ccc">
@@ -161,13 +187,17 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
             </div>
         </div>
         <div class="col-sm-5" id="advgb-customstyles-preview">
-            <p class="previous-block" style="margin-bottom: 20px"><?php _e('Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph', 'advanced-gutenberg') ?></p>
+            <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px;">
+                <?php _e('Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph', 'advanced-gutenberg') ?>
+            </p>
             <div class="advgb-customstyles-target"><?php _e('Example of text', 'advanced-gutenberg') ?></div>
-            <p class="follow-block"><?php _e('Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph', 'advanced-gutenberg') ?></p>
+            <p class="follow-block">
+                <?php _e('Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph', 'advanced-gutenberg') ?>
+            </p>
         </div>
     </div>
 
-    <div id="translation-tab" class="tab-content clearfix">
+    <div id="translation-tab" class="tab-content clearfix" style="display: none;">
         <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); ?>
     </div>
 </div>

@@ -105,22 +105,24 @@
 #savedInfo {
     color: blue;
 }
+
 #advgb-customstyles-info label {
     display: block;
     font-size: 16px;
+    margin: 10px 0;
 }
-#advgb-customstyles-info input {
+#advgb-customstyles-info input:not(.minicolors-input) {
     border: 1px solid #ddd !important;
     padding: 5px;
     background: #fff !important;
 }
-#advgb-customstyles-info input:focus {
+#advgb-customstyles-info input:not(.minicolors-input):focus {
     border: 1px solid #5b9dd9 !important;
     box-shadow: 0 0 2px rgba(30,140,190,.8) !important;
     -moz-box-shadow: 0 0 2px rgba(30,140,190,.8) !important;
     -webkit-box-shadow: 0 0 2px rgba(30,140,190,.8) !important;
 }
-#advgb-customstyles-info input,
+#advgb-customstyles-info input:not(.minicolors-input),
 #advgb-customstyles-info textarea {
     width: 100%;
 }
@@ -133,4 +135,23 @@
 .advgb-customstyles-css .CodeMirror {
     height: 200px;
     border: 1px solid #ccc;
+}
+
+.minicolors-input {
+    height: auto !important;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    min-width: 100px;
+    font-size: 15px;
+}
+
+#identify-colors {
+    margin: 10px 0;
+}
+
+#identify-colors .control-label {
+    float: left;
+}
+
+#identify-colors div.minicolors {
+    margin: 5px 10px;
 }

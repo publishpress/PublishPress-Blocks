@@ -37,6 +37,15 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('.minicolors-input').minicolors('settings', {
+        change: function() {
+            jQuery(this).trigger('change');
+        },
+        hide: function () {
+            saveCustomStyleChanges();
+        }
+    }).attr('maxlength', '7');
+
     // Function for Custom Style tab
     initCustomStyleMenu();
 
@@ -202,6 +211,7 @@ jQuery(document).ready(function ($) {
                 if (stt === 'success') {
                     $('#advgb-customstyles-title').val(res.title);
                     $('#advgb-customstyles-classname').val(res.name);
+                    $('#advgb-customstyles-identify-color').minicolors('value', res.identifyColor);
 
                     myStyleId = id_element;
                     myCustomCss = '{\n' + res.css + '\n}';
@@ -291,6 +301,7 @@ jQuery(document).ready(function ($) {
     function saveCustomStyleChanges() {
         var myTitle =  $('#advgb-customstyles-title').val().trim();
         var myClassname =  $('#advgb-customstyles-classname').val().trim();
+        var myIdentifyColor =  $('#advgb-customstyles-identify-color').val().trim();
 
         $.ajax({
             url: ajaxurl,
@@ -301,6 +312,7 @@ jQuery(document).ready(function ($) {
                 title: myTitle,
                 name: myClassname,
                 mycss: myCustomCss,
+                mycolor: myIdentifyColor,
                 task: 'style_save'
             },
             success: function (res, stt) {
