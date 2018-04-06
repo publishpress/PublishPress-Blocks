@@ -88,7 +88,7 @@ class AdvButton extends Component {
                     keepPlaceholderOnFocus
                 />
             </span>,
-            <style>
+            <style key="advgb-button-styles">
                 {`.${id} {
                     font-size: ${textSize}px;
                     color: ${textColor};
@@ -195,13 +195,14 @@ class AdvButton extends Component {
                         />
                         {borderStyle !== 'none' &&
                             [
-                                <PanelColor title={ __( 'Border color' ) } colorValue={ borderColor } initialOpen={ false } >
+                                <PanelColor key="border-color" title={ __( 'Border color' ) } colorValue={ borderColor } initialOpen={ false } >
                                     <ColorPalette
                                         value={ borderColor }
                                         onChange={ ( value ) => setAttributes( { borderColor: value } ) }
                                     />
                                 </PanelColor>,
                                 <RangeControl
+                                    key="border-width"
                                     label={ __( 'Border width' ) }
                                     value={ borderWidth || '' }
                                     onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
@@ -209,6 +210,7 @@ class AdvButton extends Component {
                                     max={ 100 }
                                 />,
                                 <RangeControl
+                                    key="border-radius"
                                     label={ __( 'Border radius' ) }
                                     value={ borderRadius || '' }
                                     onChange={ ( value ) => setAttributes( { borderRadius: value } ) }

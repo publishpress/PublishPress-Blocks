@@ -122,7 +122,7 @@ var AdvButton = function (_Component) {
                 })
             ), React.createElement(
                 'style',
-                null,
+                { key: 'advgb-button-styles' },
                 '.' + id + ' {\n                    font-size: ' + textSize + 'px;\n                    color: ' + textColor + ';\n                    background-color: ' + bgColor + ';\n                    padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                    border-width: ' + borderWidth + 'px;\n                    border-color: ' + borderColor + ';\n                    border-radius: ' + borderRadius + 'px;\n                    border-style: ' + borderStyle + ';\n                }\n                .' + id + ':hover {\n                    color: ' + hoverTextColor + ';\n                    background-color: ' + hoverBgColor + ';\n                    box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                }'
             ), isSelected && React.createElement(
                 InspectorControls,
@@ -246,7 +246,7 @@ var AdvButton = function (_Component) {
                     }),
                     borderStyle !== 'none' && [React.createElement(
                         PanelColor,
-                        { title: __('Border color'), colorValue: borderColor, initialOpen: false },
+                        { key: 'border-color', title: __('Border color'), colorValue: borderColor, initialOpen: false },
                         React.createElement(ColorPalette, {
                             value: borderColor,
                             onChange: function onChange(value) {
@@ -254,6 +254,7 @@ var AdvButton = function (_Component) {
                             }
                         })
                     ), React.createElement(RangeControl, {
+                        key: 'border-width',
                         label: __('Border width'),
                         value: borderWidth || '',
                         onChange: function onChange(value) {
@@ -262,6 +263,7 @@ var AdvButton = function (_Component) {
                         min: 0,
                         max: 100
                     }), React.createElement(RangeControl, {
+                        key: 'border-radius',
                         label: __('Border radius'),
                         value: borderRadius || '',
                         onChange: function onChange(value) {
