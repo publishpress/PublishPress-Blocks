@@ -216,7 +216,7 @@ class AdvList extends Component {
                 onRemove={ () => onReplace( [] ) }
                 isSelected={ isSelected }
             />,
-            <div key={'advgb-style'}>
+            <div key="advgb-style">
                 <style>
                     {`.${id} li { font-size: ${fontSize}px }`}
                 </style>
