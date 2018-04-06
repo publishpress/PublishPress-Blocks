@@ -99,7 +99,7 @@ class AdvList extends Component {
 
         return [
             isSelected && (
-                <BlockControls>
+                <BlockControls key="advgb-list-controls">
                     <div className="components-toolbar">
                         <IconButton
                             label={ __( 'Refresh this list when it conflict with other lists styles' ) }
@@ -111,7 +111,7 @@ class AdvList extends Component {
                 </BlockControls>
             ),
             isSelected && (
-                <InspectorControls key="advgb-list-controls">
+                <InspectorControls key="advgb-list-inspectors">
                     <PanelBody title={ __( 'Text Settings' ) } initialOpen={false}>
                         <RangeControl
                             label={ __( 'Text size' ) }
@@ -131,11 +131,11 @@ class AdvList extends Component {
                             options={ listIcons }
                             onChange={ ( icon ) => setAttributes( { icon: icon } ) }
                         />
-                        {icon && ( [
+                        {icon && ( <div>
                             <PanelBody
                                 title={ [
                                     __( 'Icon color' ),
-                                    <span className={ `dashicons dashicons-${icon}` } style={ { color: iconColor, marginLeft: '10px' } } />
+                                    <span key="advgb-list-icon-color" className={ `dashicons dashicons-${icon}` } style={ { color: iconColor, marginLeft: '10px' } } />
                                 ] }
                                 initialOpen={ false }
                             >
@@ -143,7 +143,7 @@ class AdvList extends Component {
                                     value={ iconColor }
                                     onChange={ ( color ) => setAttributes( { iconColor: color } ) }
                                 />
-                            </PanelBody>,
+                            </PanelBody>
                             <RangeControl
                                 label={ __( 'Icon size' ) }
                                 value={ iconSize || '' }
@@ -151,7 +151,7 @@ class AdvList extends Component {
                                 min={ 10 }
                                 max={ 100 }
                                 allowReset
-                            />,
+                            />
                             <RangeControl
                                 label={ __( 'Line height' ) }
                                 value={ lineHeight || '' }
@@ -159,7 +159,7 @@ class AdvList extends Component {
                                 min={ 0 }
                                 max={ 100 }
                                 allowReset
-                            />,
+                            />
                             <RangeControl
                                 label={ __( 'Margin' ) }
                                 value={ margin || '' }
@@ -167,7 +167,7 @@ class AdvList extends Component {
                                 min={ 0 }
                                 max={ 100 }
                                 allowReset
-                            />,
+                            />
                             <RangeControl
                                 label={ __( 'Padding' ) }
                                 value={ padding || '' }
@@ -175,8 +175,9 @@ class AdvList extends Component {
                                 min={ 0 }
                                 max={ 100 }
                                 allowReset
-                            />,
-                        ] ) }
+                            />
+                        </div>
+                        ) }
                     </PanelBody>
                 </InspectorControls>
             ),
@@ -215,7 +216,7 @@ class AdvList extends Component {
                 onRemove={ () => onReplace( [] ) }
                 isSelected={ isSelected }
             />,
-            <div>
+            <div key={'advgb-style'}>
                 <style>
                     {`.${id} li { font-size: ${fontSize}px }`}
                 </style>

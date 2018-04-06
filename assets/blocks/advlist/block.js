@@ -114,7 +114,7 @@ var AdvList = function (_Component) {
 
             return [isSelected && React.createElement(
                 BlockControls,
-                null,
+                { key: 'advgb-list-controls' },
                 React.createElement(
                     'div',
                     { className: 'components-toolbar' },
@@ -129,7 +129,7 @@ var AdvList = function (_Component) {
                 )
             ), isSelected && React.createElement(
                 InspectorControls,
-                { key: 'advgb-list-controls' },
+                { key: 'advgb-list-inspectors' },
                 React.createElement(
                     PanelBody,
                     { title: __('Text Settings'), initialOpen: false },
@@ -157,55 +157,63 @@ var AdvList = function (_Component) {
                             return setAttributes({ icon: icon });
                         }
                     }),
-                    icon && [React.createElement(
-                        PanelBody,
-                        {
-                            title: [__('Icon color'), React.createElement('span', { className: 'dashicons dashicons-' + icon, style: { color: iconColor, marginLeft: '10px' } })],
-                            initialOpen: false
-                        },
-                        React.createElement(ColorPalette, {
-                            value: iconColor,
-                            onChange: function onChange(color) {
-                                return setAttributes({ iconColor: color });
-                            }
+                    icon && React.createElement(
+                        'div',
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            {
+                                title: [__('Icon color'), React.createElement('span', { key: 'advgb-list-icon-color', className: 'dashicons dashicons-' + icon, style: { color: iconColor, marginLeft: '10px' } })],
+                                initialOpen: false
+                            },
+                            React.createElement(ColorPalette, {
+                                value: iconColor,
+                                onChange: function onChange(color) {
+                                    return setAttributes({ iconColor: color });
+                                }
+                            })
+                        ),
+                        React.createElement(RangeControl, {
+                            label: __('Icon size'),
+                            value: iconSize || '',
+                            onChange: function onChange(size) {
+                                return setAttributes({ iconSize: size });
+                            },
+                            min: 10,
+                            max: 100,
+                            allowReset: true
+                        }),
+                        React.createElement(RangeControl, {
+                            label: __('Line height'),
+                            value: lineHeight || '',
+                            onChange: function onChange(size) {
+                                return setAttributes({ lineHeight: size });
+                            },
+                            min: 0,
+                            max: 100,
+                            allowReset: true
+                        }),
+                        React.createElement(RangeControl, {
+                            label: __('Margin'),
+                            value: margin || '',
+                            onChange: function onChange(size) {
+                                return setAttributes({ margin: size });
+                            },
+                            min: 0,
+                            max: 100,
+                            allowReset: true
+                        }),
+                        React.createElement(RangeControl, {
+                            label: __('Padding'),
+                            value: padding || '',
+                            onChange: function onChange(size) {
+                                return setAttributes({ padding: size });
+                            },
+                            min: 0,
+                            max: 100,
+                            allowReset: true
                         })
-                    ), React.createElement(RangeControl, {
-                        label: __('Icon size'),
-                        value: iconSize || '',
-                        onChange: function onChange(size) {
-                            return setAttributes({ iconSize: size });
-                        },
-                        min: 10,
-                        max: 100,
-                        allowReset: true
-                    }), React.createElement(RangeControl, {
-                        label: __('Line height'),
-                        value: lineHeight || '',
-                        onChange: function onChange(size) {
-                            return setAttributes({ lineHeight: size });
-                        },
-                        min: 0,
-                        max: 100,
-                        allowReset: true
-                    }), React.createElement(RangeControl, {
-                        label: __('Margin'),
-                        value: margin || '',
-                        onChange: function onChange(size) {
-                            return setAttributes({ margin: size });
-                        },
-                        min: 0,
-                        max: 100,
-                        allowReset: true
-                    }), React.createElement(RangeControl, {
-                        label: __('Padding'),
-                        value: padding || '',
-                        onChange: function onChange(size) {
-                            return setAttributes({ padding: size });
-                        },
-                        min: 0,
-                        max: 100,
-                        allowReset: true
-                    })]
+                    )
                 )
             ), React.createElement(RichText, {
                 multiline: 'li',
@@ -244,7 +252,7 @@ var AdvList = function (_Component) {
                 isSelected: isSelected
             }), React.createElement(
                 'div',
-                null,
+                { key: 'advgb-style' },
                 React.createElement(
                     'style',
                     null,
