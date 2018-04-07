@@ -1018,11 +1018,14 @@ float: left;'
             'advgb/list',
         );
 
-        $all_blocks_saved = get_option('advgb_blocks_list');
-        foreach ($new_blocks as $block) {
-            if (!in_array($block, $all_blocks_saved)) {
-                if (!in_array($block, $current_activated_blocks)) {
-                    array_push($current_activated_blocks, $block);
+        // Avoid default value (string 'all')
+        if (is_array($current_activated_blocks)) {
+            $all_blocks_saved = get_option('advgb_blocks_list');
+            foreach ($new_blocks as $block) {
+                if (!in_array($block, $all_blocks_saved)) {
+                    if (!in_array($block, $current_activated_blocks)) {
+                        array_push($current_activated_blocks, $block);
+                    }
                 }
             }
         }
