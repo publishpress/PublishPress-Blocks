@@ -35,9 +35,10 @@ var blockTitle = __('Summary');
 // Add button to insert summary inside table of contents component
 (function () {
     jQuery(document).ready(function ($) {
-        var _dispatch = dispatch('core/editor'),
-            insertBlock = _dispatch.insertBlock;
-
+        if (typeof dispatch('core/editor') !== 'undefined') {
+            var _dispatch = dispatch('core/editor'),
+                _insertBlock = _dispatch.insertBlock;
+        }
         var summaryBlock = createBlock('advgb/summary');
 
         $('.gutenberg #editor').find('.table-of-contents').click(function () {
