@@ -177,10 +177,14 @@ float: left;'
             'summary_blocks',
             plugins_url('assets/blocks/summary/style.css', dirname(__FILE__))
         );
+
+        $custom_styles_url = wp_upload_dir();
+        $custom_styles_url = $custom_styles_url['baseurl'] . '/advgb/';
         wp_enqueue_style(
             'custom_styles',
-            plugins_url('assets/css/customstyles/custom_styles.css', dirname(__FILE__))
+            $custom_styles_url . 'custom_styles.css'
         );
+
         wp_enqueue_style(
             'advanced_list',
             plugins_url('assets/blocks/advlist/style.css', dirname(__FILE__))
@@ -813,7 +817,14 @@ float: left;'
         WP_Filesystem();
         global $wp_filesystem;
 
-        $css_file = plugin_dir_path(dirname(__FILE__)). 'assets/css/customstyles/custom_styles.css';
+        $custom_styles_dir = wp_upload_dir();
+        $custom_styles_dir = $custom_styles_dir['basedir'] . '/advgb/';
+        $css_file = $custom_styles_dir . 'custom_styles.css';
+
+        if (!$wp_filesystem->exists($custom_styles_dir)) {
+            $wp_filesystem->mkdir($custom_styles_dir);
+        }
+
         $content = '';
         foreach ($styles_array as $styles) {
             $content .= ".gutenberg #editor ." .$styles['name'] . ", ." . $styles['name'] . " {\n";
