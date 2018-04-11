@@ -2,13 +2,27 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.1.0",
-  "wp_version": "4.9.4",
+  "version": "1.2.0",
+  "wp_version": "4.9.5",
   "changelog": {
+    "1.2.0": [
+      {
+        "type": "feature",
+        "title": "New Advanced Button block: create button with more styles (hover, border, padding...)"
+      },
+       {
+        "type": "feature",
+        "title": "New Advanced List block: create list with list icon, icon color..."
+      },
+      {
+        "type": "fix",
+        "title": "Improve compatibility with other plugins"
+      }
+    ],
     "1.1.0": [
       {
         "type": "feature",
-        "title": "Create custom CSS styles add apply to paragraph blocks"
+        "title": "Create custom CSS styles and apply to paragraph blocks"
       },
        {
         "type": "feature",
