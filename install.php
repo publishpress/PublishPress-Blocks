@@ -74,4 +74,20 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
 
     $wp_roles->add_cap('contributor', 'read_advgb_profile');
     $wp_roles->add_cap('contributor', 'read_private_advgb_profiles');
+
+    // Copy default custom styles if no custom styles file exist
+    WP_Filesystem();
+    global $wp_filesystem;
+    $custom_styles_dir = wp_upload_dir();
+    $custom_styles_dir = $custom_styles_dir['basedir'] . '/advgb/';
+    $css_default_file = plugin_dir_path(__FILE__). 'assets/css/customstyles/custom_styles.css';
+    $css_file = $custom_styles_dir . 'custom_styles.css';
+
+    if (!$wp_filesystem->exists($custom_styles_dir)) {
+        $wp_filesystem->mkdir($custom_styles_dir);
+    }
+
+    if (!$wp_filesystem->exists($css_file)) {
+        $wp_filesystem->copy($css_default_file, $css_file);
+    }
 });
