@@ -195,46 +195,6 @@ var AdvButton = function (_Component) {
                 ),
                 React.createElement(
                     PanelBody,
-                    { title: __('Padding'), initialOpen: false },
-                    React.createElement(RangeControl, {
-                        label: __('Padding top'),
-                        value: paddingTop || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingTop: value });
-                        },
-                        min: 0,
-                        max: 100
-                    }),
-                    React.createElement(RangeControl, {
-                        label: __('Padding right'),
-                        value: paddingRight || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingRight: value });
-                        },
-                        min: 0,
-                        max: 100
-                    }),
-                    React.createElement(RangeControl, {
-                        label: __('Padding bottom'),
-                        value: paddingBottom || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingBottom: value });
-                        },
-                        min: 0,
-                        max: 100
-                    }),
-                    React.createElement(RangeControl, {
-                        label: __('Padding left'),
-                        value: paddingLeft || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingLeft: value });
-                        },
-                        min: 0,
-                        max: 100
-                    })
-                ),
-                React.createElement(
-                    PanelBody,
                     { title: __('Border'), initialOpen: false },
                     React.createElement(SelectControl, {
                         label: __('Border style'),
@@ -272,6 +232,46 @@ var AdvButton = function (_Component) {
                         min: 0,
                         max: 100
                     })]
+                ),
+                React.createElement(
+                    PanelBody,
+                    { title: __('Padding'), initialOpen: false },
+                    React.createElement(RangeControl, {
+                        label: __('Padding top'),
+                        value: paddingTop || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ paddingTop: value });
+                        },
+                        min: 0,
+                        max: 100
+                    }),
+                    React.createElement(RangeControl, {
+                        label: __('Padding right'),
+                        value: paddingRight || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ paddingRight: value });
+                        },
+                        min: 0,
+                        max: 100
+                    }),
+                    React.createElement(RangeControl, {
+                        label: __('Padding bottom'),
+                        value: paddingBottom || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ paddingBottom: value });
+                        },
+                        min: 0,
+                        max: 100
+                    }),
+                    React.createElement(RangeControl, {
+                        label: __('Padding left'),
+                        value: paddingLeft || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ paddingLeft: value });
+                        },
+                        min: 0,
+                        max: 100
+                    })
                 ),
                 React.createElement(
                     PanelBody,

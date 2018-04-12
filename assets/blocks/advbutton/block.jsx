@@ -156,6 +156,40 @@ class AdvButton extends Component {
                             />
                         </PanelColor>
                     </PanelBody>
+                    <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
+                        <SelectControl
+                            label={ __( 'Border style' ) }
+                            value={ borderStyle }
+                            options={ listBorderStyles }
+                            onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
+                        />
+                        {borderStyle !== 'none' &&
+                        [
+                            <PanelColor key="border-color" title={ __( 'Border color' ) } colorValue={ borderColor } initialOpen={ false } >
+                                <ColorPalette
+                                    value={ borderColor }
+                                    onChange={ ( value ) => setAttributes( { borderColor: value } ) }
+                                />
+                            </PanelColor>,
+                            <RangeControl
+                                key="border-width"
+                                label={ __( 'Border width' ) }
+                                value={ borderWidth || '' }
+                                onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />,
+                            <RangeControl
+                                key="border-radius"
+                                label={ __( 'Border radius' ) }
+                                value={ borderRadius || '' }
+                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                        ]
+                        }
+                    </PanelBody>
                     <PanelBody title={ __( 'Padding' ) } initialOpen={ false } >
                         <RangeControl
                             label={ __( 'Padding top' ) }
@@ -185,40 +219,6 @@ class AdvButton extends Component {
                             min={ 0 }
                             max={ 100 }
                         />
-                    </PanelBody>
-                    <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
-                        <SelectControl
-                            label={ __( 'Border style' ) }
-                            value={ borderStyle }
-                            options={ listBorderStyles }
-                            onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
-                        />
-                        {borderStyle !== 'none' &&
-                            [
-                                <PanelColor key="border-color" title={ __( 'Border color' ) } colorValue={ borderColor } initialOpen={ false } >
-                                    <ColorPalette
-                                        value={ borderColor }
-                                        onChange={ ( value ) => setAttributes( { borderColor: value } ) }
-                                    />
-                                </PanelColor>,
-                                <RangeControl
-                                    key="border-width"
-                                    label={ __( 'Border width' ) }
-                                    value={ borderWidth || '' }
-                                    onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />,
-                                <RangeControl
-                                    key="border-radius"
-                                    label={ __( 'Border radius' ) }
-                                    value={ borderRadius || '' }
-                                    onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />
-                            ]
-                        }
                     </PanelBody>
                     <PanelBody title={ __( 'Hover' ) } initialOpen={ false } >
                         <PanelColor title={ __( 'Text color' ) } colorValue={ hoverTextColor } initialOpen={ false } >
