@@ -8,3 +8,20 @@
 .advgb-toc li {
     min-height: 20px;
 }
+
+.advgb-toc-header {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.advgb-toc-header:after {
+    font-family: 'dashicons';
+    content: '\f142';
+    float: right;
+    font-size: 16px;
+}
+
+.advgb-toc-header.collapsed:after {
+    content: '\f140'
+}

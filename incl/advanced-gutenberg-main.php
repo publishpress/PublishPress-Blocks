@@ -986,6 +986,13 @@ float: left;'
             }
         }
 
+        if (strpos($content, 'advgb-toc-header') !== false) {
+            wp_enqueue_script(
+                'summary_minimized',
+                plugins_url('assets/blocks/summary/summaryMinimized.js', dirname(__FILE__))
+            );
+        }
+
         return $content;
     }
 
