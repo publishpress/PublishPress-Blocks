@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { registerBlockType, getBlockContent, createBlock, BlockControls, InspectorControls, ColorPalette } = wp.blocks;
+const { registerBlockType, getBlockContent, createBlock, BlockControls, InspectorControls, ColorPalette, BlockAlignmentToolbar } = wp.blocks;
 const { IconButton, Placeholder, Button, Toolbar, ToggleControl, PanelBody, PanelColor } = wp.components;
 const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
@@ -106,7 +106,7 @@ class SummaryBlock extends Component {
 
     render() {
         const { attributes, isSelected, setAttributes } = this.props;
-        const { headings, loadMinimized, anchorColor } = attributes;
+        const { headings, loadMinimized, anchorColor, align } = attributes;
 
         // No heading blocks
         let summaryContent = (
@@ -150,6 +150,7 @@ class SummaryBlock extends Component {
         return [
             isSelected && !!headings.length && (
                 <BlockControls key={'summary-controls'}>
+                    <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
                     <Toolbar>
                         <IconButton className={'components-icon-button components-toolbar__control'}
                                     icon={'update'}
@@ -195,27 +196,31 @@ registerBlockType( 'advgb/summary', {
     attributes: {
         headings: {
             type: 'array',
-            default: []
+            default: [],
         },
         loadMinimized: {
             type: 'boolean',
             default: false,
         },
         anchorColor: {
-            type: 'string'
+            type: 'string',
         },
+        align: {
+            type: 'string',
+            default: 'none',
+        }
     },
     useOnce: true,
     edit: SummaryBlock,
     save: ( { attributes } ) => {
-        const { headings, loadMinimized, anchorColor } = attributes;
+        const { headings, loadMinimized, anchorColor, align } = attributes;
         // No heading blocks
         if (headings.length < 1) {
             return null;
         }
 
         const summary = (
-            <ul className={'advgb-toc'} style={ loadMinimized && { display: 'none' } }>
+            <ul className={`advgb-toc align${align}`} style={ loadMinimized && { display: 'none' } }>
                 {headings.map( ( heading, index ) => {
                     return (
                         <li className={'toc-level-' + heading.level}
@@ -238,12 +243,22 @@ registerBlockType( 'advgb/summary', {
 
         if ( loadMinimized )
             return (
-                <div>
+                <div className={`align${align}`}>
                     <div className={'advgb-toc-header collapsed'}>{ __( 'Summary' ) }</div>
                     { summary }
                 </div>
             );
 
         return summary;
+    },
+    getEditWrapperProps( attributes ) {
+        const { align } = attributes;
+        const props = { 'data-resized': true };
+
+        if ( 'left' === align || 'right' === align || 'center' === align ) {
+            props[ 'data-align' ] = align;
+        }
+
+        return props;
     },
 } );

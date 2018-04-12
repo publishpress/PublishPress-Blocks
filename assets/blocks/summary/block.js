@@ -18,7 +18,8 @@ var _wp$blocks = wp.blocks,
     createBlock = _wp$blocks.createBlock,
     BlockControls = _wp$blocks.BlockControls,
     InspectorControls = _wp$blocks.InspectorControls,
-    ColorPalette = _wp$blocks.ColorPalette;
+    ColorPalette = _wp$blocks.ColorPalette,
+    BlockAlignmentToolbar = _wp$blocks.BlockAlignmentToolbar;
 var _wp$components = wp.components,
     IconButton = _wp$components.IconButton,
     Placeholder = _wp$components.Placeholder,
@@ -151,7 +152,8 @@ var SummaryBlock = function (_Component) {
                 setAttributes = _props.setAttributes;
             var headings = attributes.headings,
                 loadMinimized = attributes.loadMinimized,
-                anchorColor = attributes.anchorColor;
+                anchorColor = attributes.anchorColor,
+                align = attributes.align;
 
             // No heading blocks
 
@@ -204,6 +206,9 @@ var SummaryBlock = function (_Component) {
             return [isSelected && !!headings.length && React.createElement(
                 BlockControls,
                 { key: 'summary-controls' },
+                React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
+                        return setAttributes({ align: align });
+                    } }),
                 React.createElement(
                     Toolbar,
                     null,
@@ -265,6 +270,10 @@ registerBlockType('advgb/summary', {
         },
         anchorColor: {
             type: 'string'
+        },
+        align: {
+            type: 'string',
+            default: 'none'
         }
     },
     useOnce: true,
@@ -273,7 +282,8 @@ registerBlockType('advgb/summary', {
         var attributes = _ref.attributes;
         var headings = attributes.headings,
             loadMinimized = attributes.loadMinimized,
-            anchorColor = attributes.anchorColor;
+            anchorColor = attributes.anchorColor,
+            align = attributes.align;
         // No heading blocks
 
         if (headings.length < 1) {
@@ -282,7 +292,7 @@ registerBlockType('advgb/summary', {
 
         var summary = React.createElement(
             'ul',
-            { className: 'advgb-toc', style: loadMinimized && { display: 'none' } },
+            { className: 'advgb-toc align' + align, style: loadMinimized && { display: 'none' } },
             headings.map(function (heading, index) {
                 return React.createElement(
                     'li',
@@ -306,7 +316,7 @@ registerBlockType('advgb/summary', {
 
         if (loadMinimized) return React.createElement(
             'div',
-            null,
+            { className: 'align' + align },
             React.createElement(
                 'div',
                 { className: 'advgb-toc-header collapsed' },
@@ -316,5 +326,16 @@ registerBlockType('advgb/summary', {
         );
 
         return summary;
+    },
+    getEditWrapperProps: function getEditWrapperProps(attributes) {
+        var align = attributes.align;
+
+        var props = { 'data-resized': true };
+
+        if ('left' === align || 'right' === align || 'center' === align) {
+            props['data-align'] = align;
+        }
+
+        return props;
     }
 });
