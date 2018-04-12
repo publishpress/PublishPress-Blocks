@@ -4,7 +4,7 @@
 
 #editor .advgb-list, .advgb-list {
     margin-left: 0;
-    list-style: none;
+    list-style-type: none !important;
 }
 
 .advgb-list > li:before {
