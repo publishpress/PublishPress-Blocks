@@ -343,7 +343,7 @@ registerBlockType( 'advgb/button', {
         },
         borderRadius: {
             type: 'number',
-            default: 0
+            default: 50
         },
         hoverTextColor: {
             type: 'string',
