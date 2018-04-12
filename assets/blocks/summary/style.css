@@ -42,3 +42,11 @@
 .advgb-toc-header.collapsed:after {
     content: '\f140'
 }
+
+.wp-block-advgb-summary.alignleft {
+    margin-right: 10px;
+}
+
+.wp-block-advgb-summary.alignright {
+    margin-left: 10px;
+}
