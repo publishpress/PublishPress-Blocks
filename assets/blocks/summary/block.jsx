@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { registerBlockType, BlockControls, createBlock, InspectorControls, getBlockContent } = wp.blocks;
-const { IconButton, Placeholder, Button, Toolbar } = wp.components;
+const { IconButton, Placeholder, Button, Toolbar, ToggleControl, PanelBody } = wp.components;
 const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
 
@@ -105,8 +105,8 @@ class SummaryBlock extends Component {
     }
 
     render() {
-        const { attributes, isSelected } = this.props;
-        const { headings } = attributes;
+        const { attributes, isSelected, setAttributes } = this.props;
+        const { headings, loadMinimized } = attributes;
 
         // No heading blocks
         let summaryContent = (
@@ -159,6 +159,17 @@ class SummaryBlock extends Component {
                     </Toolbar>
                 </BlockControls>
             ),
+            isSelected && (
+                <InspectorControls key="summary-inspector">
+                    <PanelBody title={ __( 'Summary settings' ) } >
+                        <ToggleControl
+                            label={ __( 'Load minimized' ) }
+                            checked={ !!loadMinimized }
+                            onChange={ () => setAttributes( { loadMinimized: !loadMinimized } ) }
+                        />
+                    </PanelBody>
+                </InspectorControls>
+            ),
             summaryContent
         ]
     }
@@ -174,23 +185,27 @@ registerBlockType( 'advgb/summary', {
         headings: {
             type: 'array',
             default: []
+        },
+        loadMinimized: {
+            type: 'boolean',
+            default: false,
         }
     },
     useOnce: true,
     edit: SummaryBlock,
     save: ( { attributes } ) => {
-        const { headings } = attributes;
+        const { headings, loadMinimized } = attributes;
         // No heading blocks
         if (headings.length < 1) {
             return null;
         }
 
-        return (
-            <ul className={'advgb-toc'}>
-                {headings.map( ( heading ) => {
+        const summary = (
+            <ul className={'advgb-toc'} style={ loadMinimized && { display: 'none' } }>
+                {headings.map( ( heading, index ) => {
                     return (
                         <li className={'toc-level-' + heading.level}
-                            key="summary-save"
+                            key={`summary-save-${index}`}
                             style={{ marginLeft: heading.level * 20 }}
                         >
                             <a href={'#' + heading.anchor}>{heading.content}</a>
@@ -198,6 +213,16 @@ registerBlockType( 'advgb/summary', {
                     )
                 } )}
             </ul>
-        )
+        );
+
+        if ( loadMinimized )
+            return (
+                <div>
+                    <div className={'advgb-toc-header collapsed'}>{ __( 'Summary' ) }</div>
+                    { summary }
+                </div>
+            );
+
+        return summary;
     },
 } );

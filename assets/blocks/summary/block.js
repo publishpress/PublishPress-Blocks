@@ -22,7 +22,9 @@ var _wp$components = wp.components,
     IconButton = _wp$components.IconButton,
     Placeholder = _wp$components.Placeholder,
     Button = _wp$components.Button,
-    Toolbar = _wp$components.Toolbar;
+    Toolbar = _wp$components.Toolbar,
+    ToggleControl = _wp$components.ToggleControl,
+    PanelBody = _wp$components.PanelBody;
 var _wp$data = wp.data,
     select = _wp$data.select,
     dispatch = _wp$data.dispatch;
@@ -143,8 +145,10 @@ var SummaryBlock = function (_Component) {
         value: function render() {
             var _props = this.props,
                 attributes = _props.attributes,
-                isSelected = _props.isSelected;
-            var headings = attributes.headings;
+                isSelected = _props.isSelected,
+                setAttributes = _props.setAttributes;
+            var headings = attributes.headings,
+                loadMinimized = attributes.loadMinimized;
 
             // No heading blocks
 
@@ -206,6 +210,20 @@ var SummaryBlock = function (_Component) {
                         onClick: this.updateSummary
                     })
                 )
+            ), isSelected && React.createElement(
+                InspectorControls,
+                { key: 'summary-inspector' },
+                React.createElement(
+                    PanelBody,
+                    { title: __('Summary settings') },
+                    React.createElement(ToggleControl, {
+                        label: __('Load minimized'),
+                        checked: !!loadMinimized,
+                        onChange: function onChange() {
+                            return setAttributes({ loadMinimized: !loadMinimized });
+                        }
+                    })
+                )
             ), summaryContent];
         }
     }]);
@@ -223,27 +241,32 @@ registerBlockType('advgb/summary', {
         headings: {
             type: 'array',
             default: []
+        },
+        loadMinimized: {
+            type: 'boolean',
+            default: false
         }
     },
     useOnce: true,
     edit: SummaryBlock,
     save: function save(_ref) {
         var attributes = _ref.attributes;
-        var headings = attributes.headings;
+        var headings = attributes.headings,
+            loadMinimized = attributes.loadMinimized;
         // No heading blocks
 
         if (headings.length < 1) {
             return null;
         }
 
-        return React.createElement(
+        var summary = React.createElement(
             'ul',
-            { className: 'advgb-toc' },
-            headings.map(function (heading) {
+            { className: 'advgb-toc', style: loadMinimized && { display: 'none' } },
+            headings.map(function (heading, index) {
                 return React.createElement(
                     'li',
                     { className: 'toc-level-' + heading.level,
-                        key: 'summary-save',
+                        key: 'summary-save-' + index,
                         style: { marginLeft: heading.level * 20 }
                     },
                     React.createElement(
@@ -254,5 +277,18 @@ registerBlockType('advgb/summary', {
                 );
             })
         );
+
+        if (loadMinimized) return React.createElement(
+            'div',
+            null,
+            React.createElement(
+                'div',
+                { className: 'advgb-toc-header collapsed' },
+                __('Summary')
+            ),
+            summary
+        );
+
+        return summary;
     }
 });
