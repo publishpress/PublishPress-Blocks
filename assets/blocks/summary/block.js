@@ -14,17 +14,19 @@ var __ = wp.i18n.__;
 var Component = wp.element.Component;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
-    BlockControls = _wp$blocks.BlockControls,
+    getBlockContent = _wp$blocks.getBlockContent,
     createBlock = _wp$blocks.createBlock,
+    BlockControls = _wp$blocks.BlockControls,
     InspectorControls = _wp$blocks.InspectorControls,
-    getBlockContent = _wp$blocks.getBlockContent;
+    ColorPalette = _wp$blocks.ColorPalette;
 var _wp$components = wp.components,
     IconButton = _wp$components.IconButton,
     Placeholder = _wp$components.Placeholder,
     Button = _wp$components.Button,
     Toolbar = _wp$components.Toolbar,
     ToggleControl = _wp$components.ToggleControl,
-    PanelBody = _wp$components.PanelBody;
+    PanelBody = _wp$components.PanelBody,
+    PanelColor = _wp$components.PanelColor;
 var _wp$data = wp.data,
     select = _wp$data.select,
     dispatch = _wp$data.dispatch;
@@ -148,7 +150,8 @@ var SummaryBlock = function (_Component) {
                 isSelected = _props.isSelected,
                 setAttributes = _props.setAttributes;
             var headings = attributes.headings,
-                loadMinimized = attributes.loadMinimized;
+                loadMinimized = attributes.loadMinimized,
+                anchorColor = attributes.anchorColor;
 
             // No heading blocks
 
@@ -222,9 +225,23 @@ var SummaryBlock = function (_Component) {
                         onChange: function onChange() {
                             return setAttributes({ loadMinimized: !loadMinimized });
                         }
-                    })
+                    }),
+                    React.createElement(
+                        PanelColor,
+                        { title: __('Anchor color'), colorValue: anchorColor, initialOpen: false },
+                        React.createElement(ColorPalette, {
+                            value: anchorColor,
+                            onChange: function onChange(value) {
+                                return setAttributes({ anchorColor: value });
+                            }
+                        })
+                    )
                 )
-            ), summaryContent];
+            ), summaryContent, anchorColor && React.createElement(
+                'style',
+                { key: 'summary-style' },
+                '.advgb-toc li a {\n                    color: ' + anchorColor + ';\n                }'
+            )];
         }
     }]);
 
@@ -245,6 +262,9 @@ registerBlockType('advgb/summary', {
         loadMinimized: {
             type: 'boolean',
             default: false
+        },
+        anchorColor: {
+            type: 'string'
         }
     },
     useOnce: true,
@@ -252,7 +272,8 @@ registerBlockType('advgb/summary', {
     save: function save(_ref) {
         var attributes = _ref.attributes;
         var headings = attributes.headings,
-            loadMinimized = attributes.loadMinimized;
+            loadMinimized = attributes.loadMinimized,
+            anchorColor = attributes.anchorColor;
         // No heading blocks
 
         if (headings.length < 1) {
@@ -275,7 +296,12 @@ registerBlockType('advgb/summary', {
                         heading.content
                     )
                 );
-            })
+            }),
+            anchorColor && React.createElement(
+                'style',
+                null,
+                '.advgb-toc li a {\n                            color: ' + anchorColor + ';\n                        }'
+            )
         );
 
         if (loadMinimized) return React.createElement(

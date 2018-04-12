@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { registerBlockType, BlockControls, createBlock, InspectorControls, getBlockContent } = wp.blocks;
-const { IconButton, Placeholder, Button, Toolbar, ToggleControl, PanelBody } = wp.components;
+const { registerBlockType, getBlockContent, createBlock, BlockControls, InspectorControls, ColorPalette } = wp.blocks;
+const { IconButton, Placeholder, Button, Toolbar, ToggleControl, PanelBody, PanelColor } = wp.components;
 const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
 
@@ -106,7 +106,7 @@ class SummaryBlock extends Component {
 
     render() {
         const { attributes, isSelected, setAttributes } = this.props;
-        const { headings, loadMinimized } = attributes;
+        const { headings, loadMinimized, anchorColor } = attributes;
 
         // No heading blocks
         let summaryContent = (
@@ -167,10 +167,21 @@ class SummaryBlock extends Component {
                             checked={ !!loadMinimized }
                             onChange={ () => setAttributes( { loadMinimized: !loadMinimized } ) }
                         />
+                        <PanelColor title={ __('Anchor color') } colorValue={anchorColor} initialOpen={false} >
+                            <ColorPalette
+                                value={anchorColor}
+                                onChange={ (value) => setAttributes( { anchorColor: value } ) }
+                            />
+                        </PanelColor>
                     </PanelBody>
                 </InspectorControls>
             ),
-            summaryContent
+            summaryContent,
+            anchorColor && <style key="summary-style">
+                {`.advgb-toc li a {
+                    color: ${anchorColor};
+                }`}
+            </style>
         ]
     }
 }
@@ -189,12 +200,15 @@ registerBlockType( 'advgb/summary', {
         loadMinimized: {
             type: 'boolean',
             default: false,
-        }
+        },
+        anchorColor: {
+            type: 'string'
+        },
     },
     useOnce: true,
     edit: SummaryBlock,
     save: ( { attributes } ) => {
-        const { headings, loadMinimized } = attributes;
+        const { headings, loadMinimized, anchorColor } = attributes;
         // No heading blocks
         if (headings.length < 1) {
             return null;
@@ -212,6 +226,13 @@ registerBlockType( 'advgb/summary', {
                         </li>
                     )
                 } )}
+                { anchorColor &&
+                    <style>
+                        {`.advgb-toc li a {
+                            color: ${anchorColor};
+                        }`}
+                    </style>
+                }
             </ul>
         );
 
