@@ -60,6 +60,7 @@ class AdvButton extends Component {
             hoverShadowV,
             hoverShadowBlur,
             hoverShadowSpread,
+            transitionSpeed,
         } = attributes;
 
         return [
@@ -103,6 +104,7 @@ class AdvButton extends Component {
                     color: ${hoverTextColor};
                     background-color: ${hoverBgColor};
                     box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
+                    transition: all ${transitionSpeed}s ease;
                 }`}
             </style>,
             isSelected && (
@@ -268,6 +270,13 @@ class AdvButton extends Component {
                                 max={ 50 }
                             />
                         </PanelBody>
+                        <RangeControl
+                            label={ __('Transition speed') }
+                            value={ transitionSpeed || '' }
+                            onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) }
+                            min={ 0 }
+                            max={ 3 }
+                        />
                     </PanelBody>
                 </InspectorControls>
             )
@@ -372,6 +381,10 @@ registerBlockType( 'advgb/button', {
             type: 'number',
             default: 0,
         },
+        transitionSpeed: {
+            type: 'number',
+            default: 0.2,
+        },
         align: {
             type: 'string',
             default: 'none',
@@ -430,6 +443,7 @@ registerBlockType( 'advgb/button', {
             hoverShadowV,
             hoverShadowBlur,
             hoverShadowSpread,
+            transitionSpeed,
         } = attributes;
 
         return (
@@ -455,6 +469,7 @@ registerBlockType( 'advgb/button', {
                         color: ${hoverTextColor};
                         background-color: ${hoverBgColor};
                         box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
+                        transition: all ${transitionSpeed}s ease;
                     }`}
                 </style>
             </div>

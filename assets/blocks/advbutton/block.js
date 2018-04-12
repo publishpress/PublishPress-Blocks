@@ -84,7 +84,8 @@ var AdvButton = function (_Component) {
                 hoverShadowH = attributes.hoverShadowH,
                 hoverShadowV = attributes.hoverShadowV,
                 hoverShadowBlur = attributes.hoverShadowBlur,
-                hoverShadowSpread = attributes.hoverShadowSpread;
+                hoverShadowSpread = attributes.hoverShadowSpread,
+                transitionSpeed = attributes.transitionSpeed;
 
 
             return [isSelected && React.createElement(
@@ -123,7 +124,7 @@ var AdvButton = function (_Component) {
             ), React.createElement(
                 'style',
                 { key: 'advgb-button-styles' },
-                '.' + id + ' {\n                    font-size: ' + textSize + 'px;\n                    color: ' + textColor + ';\n                    background-color: ' + bgColor + ';\n                    padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                    border-width: ' + borderWidth + 'px;\n                    border-color: ' + borderColor + ';\n                    border-radius: ' + borderRadius + 'px;\n                    border-style: ' + borderStyle + ';\n                }\n                .' + id + ':hover {\n                    color: ' + hoverTextColor + ';\n                    background-color: ' + hoverBgColor + ';\n                    box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                }'
+                '.' + id + ' {\n                    font-size: ' + textSize + 'px;\n                    color: ' + textColor + ';\n                    background-color: ' + bgColor + ';\n                    padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                    border-width: ' + borderWidth + 'px;\n                    border-color: ' + borderColor + ';\n                    border-radius: ' + borderRadius + 'px;\n                    border-style: ' + borderStyle + ';\n                }\n                .' + id + ':hover {\n                    color: ' + hoverTextColor + ';\n                    background-color: ' + hoverBgColor + ';\n                    box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                    transition: all ' + transitionSpeed + 's ease;\n                }'
             ), isSelected && React.createElement(
                 InspectorControls,
                 { key: 'advgb-button-inspector' },
@@ -345,7 +346,16 @@ var AdvButton = function (_Component) {
                             min: 0,
                             max: 50
                         })
-                    )
+                    ),
+                    React.createElement(RangeControl, {
+                        label: __('Transition speed'),
+                        value: transitionSpeed || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ transitionSpeed: value });
+                        },
+                        min: 0,
+                        max: 3
+                    })
                 )
             )];
         }
@@ -451,6 +461,10 @@ registerBlockType('advgb/button', {
             type: 'number',
             default: 0
         },
+        transitionSpeed: {
+            type: 'number',
+            default: 0.2
+        },
         align: {
             type: 'string',
             default: 'none'
@@ -502,7 +516,8 @@ registerBlockType('advgb/button', {
             hoverShadowH = attributes.hoverShadowH,
             hoverShadowV = attributes.hoverShadowV,
             hoverShadowBlur = attributes.hoverShadowBlur,
-            hoverShadowSpread = attributes.hoverShadowSpread;
+            hoverShadowSpread = attributes.hoverShadowSpread,
+            transitionSpeed = attributes.transitionSpeed;
 
 
         return React.createElement(
@@ -519,7 +534,7 @@ registerBlockType('advgb/button', {
             React.createElement(
                 'style',
                 null,
-                '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                    }'
+                '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
             )
         );
     },
