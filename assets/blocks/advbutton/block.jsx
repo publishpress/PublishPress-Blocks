@@ -157,6 +157,13 @@ class AdvButton extends Component {
                         </PanelColor>
                     </PanelBody>
                     <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
+                        <RangeControl
+                            label={ __( 'Border radius' ) }
+                            value={ borderRadius || '' }
+                            onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                            min={ 0 }
+                            max={ 100 }
+                        />
                         <SelectControl
                             label={ __( 'Border style' ) }
                             value={ borderStyle }
@@ -176,14 +183,6 @@ class AdvButton extends Component {
                                 label={ __( 'Border width' ) }
                                 value={ borderWidth || '' }
                                 onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />,
-                            <RangeControl
-                                key="border-radius"
-                                label={ __( 'Border radius' ) }
-                                value={ borderRadius || '' }
-                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
                                 min={ 0 }
                                 max={ 100 }
                             />

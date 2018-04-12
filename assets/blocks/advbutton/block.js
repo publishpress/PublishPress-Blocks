@@ -196,6 +196,15 @@ var AdvButton = function (_Component) {
                 React.createElement(
                     PanelBody,
                     { title: __('Border'), initialOpen: false },
+                    React.createElement(RangeControl, {
+                        label: __('Border radius'),
+                        value: borderRadius || '',
+                        onChange: function onChange(value) {
+                            return setAttributes({ borderRadius: value });
+                        },
+                        min: 0,
+                        max: 100
+                    }),
                     React.createElement(SelectControl, {
                         label: __('Border style'),
                         value: borderStyle,
@@ -219,15 +228,6 @@ var AdvButton = function (_Component) {
                         value: borderWidth || '',
                         onChange: function onChange(value) {
                             return setAttributes({ borderWidth: value });
-                        },
-                        min: 0,
-                        max: 100
-                    }), React.createElement(RangeControl, {
-                        key: 'border-radius',
-                        label: __('Border radius'),
-                        value: borderRadius || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ borderRadius: value });
                         },
                         min: 0,
                         max: 100
