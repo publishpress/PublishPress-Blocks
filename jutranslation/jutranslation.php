@@ -5,7 +5,7 @@
  * @package Joomunited\WPMediaFolder\Jutranslation
  */
 
-namespace Joomunited\WPMediaFolder\Jutranslation;
+namespace Joomunited\ADVGB\Jutranslation;
 
 /**
  * Class Jutranslation
