@@ -286,7 +286,8 @@ registerBlockType('advgb/summary', {
         var headings = attributes.headings,
             loadMinimized = attributes.loadMinimized,
             anchorColor = attributes.anchorColor,
-            align = attributes.align,
+            _attributes$align = attributes.align,
+            align = _attributes$align === undefined ? 'none' : _attributes$align,
             postTitle = attributes.postTitle;
         // No heading blocks
 

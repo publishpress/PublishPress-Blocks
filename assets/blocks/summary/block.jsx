@@ -216,7 +216,7 @@ registerBlockType( 'advgb/summary', {
     useOnce: true,
     edit: SummaryBlock,
     save: ( { attributes } ) => {
-        const { headings, loadMinimized, anchorColor, align, postTitle } = attributes;
+        const { headings, loadMinimized, anchorColor, align = 'none', postTitle } = attributes;
         // No heading blocks
         if (headings.length < 1) {
             return null;
