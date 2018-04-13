@@ -228,7 +228,7 @@ var SummaryBlock = function (_Component) {
                         label: __('Load minimized'),
                         checked: !!loadMinimized,
                         onChange: function onChange() {
-                            return setAttributes({ loadMinimized: !loadMinimized });
+                            return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() });
                         }
                     }),
                     React.createElement(
@@ -274,6 +274,9 @@ registerBlockType('advgb/summary', {
         align: {
             type: 'string',
             default: 'none'
+        },
+        postTitle: {
+            type: 'string'
         }
     },
     useOnce: true,
@@ -283,7 +286,8 @@ registerBlockType('advgb/summary', {
         var headings = attributes.headings,
             loadMinimized = attributes.loadMinimized,
             anchorColor = attributes.anchorColor,
-            align = attributes.align;
+            align = attributes.align,
+            postTitle = attributes.postTitle;
         // No heading blocks
 
         if (headings.length < 1) {
@@ -315,8 +319,6 @@ registerBlockType('advgb/summary', {
         );
 
         if (loadMinimized) {
-            var postTitle = select('core/editor').getDocumentTitle();
-
             return React.createElement(
                 'div',
                 { className: 'align' + align },

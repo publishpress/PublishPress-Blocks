@@ -166,7 +166,7 @@ class SummaryBlock extends Component {
                         <ToggleControl
                             label={ __( 'Load minimized' ) }
                             checked={ !!loadMinimized }
-                            onChange={ () => setAttributes( { loadMinimized: !loadMinimized } ) }
+                            onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() } ) }
                         />
                         <PanelColor title={ __('Anchor color') } colorValue={anchorColor} initialOpen={false} >
                             <ColorPalette
@@ -208,12 +208,15 @@ registerBlockType( 'advgb/summary', {
         align: {
             type: 'string',
             default: 'none',
+        },
+        postTitle: {
+            type: 'string',
         }
     },
     useOnce: true,
     edit: SummaryBlock,
     save: ( { attributes } ) => {
-        const { headings, loadMinimized, anchorColor, align } = attributes;
+        const { headings, loadMinimized, anchorColor, align, postTitle } = attributes;
         // No heading blocks
         if (headings.length < 1) {
             return null;
@@ -242,8 +245,6 @@ registerBlockType( 'advgb/summary', {
         );
 
         if ( loadMinimized ) {
-            const postTitle = select('core/editor').getDocumentTitle();
-
             return (
                 <div className={`align${align}`}>
                     <div className={'advgb-toc-header collapsed'}>{ postTitle }</div>
