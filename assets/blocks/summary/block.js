@@ -314,16 +314,20 @@ registerBlockType('advgb/summary', {
             )
         );
 
-        if (loadMinimized) return React.createElement(
-            'div',
-            { className: 'align' + align },
-            React.createElement(
+        if (loadMinimized) {
+            var postTitle = select('core/editor').getDocumentTitle();
+
+            return React.createElement(
                 'div',
-                { className: 'advgb-toc-header collapsed' },
-                __('Summary')
-            ),
-            summary
-        );
+                { className: 'align' + align },
+                React.createElement(
+                    'div',
+                    { className: 'advgb-toc-header collapsed' },
+                    postTitle
+                ),
+                summary
+            );
+        }
 
         return summary;
     },

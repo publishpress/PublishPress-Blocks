@@ -241,13 +241,16 @@ registerBlockType( 'advgb/summary', {
             </ul>
         );
 
-        if ( loadMinimized )
+        if ( loadMinimized ) {
+            const postTitle = select('core/editor').getDocumentTitle();
+
             return (
                 <div className={`align${align}`}>
-                    <div className={'advgb-toc-header collapsed'}>{ __( 'Summary' ) }</div>
-                    { summary }
+                    <div className={'advgb-toc-header collapsed'}>{ postTitle }</div>
+                    {summary}
                 </div>
             );
+        }
 
         return summary;
     },
