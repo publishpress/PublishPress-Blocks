@@ -6,12 +6,16 @@
 
 .gutenberg #editor ul.advgb-toc, ul.advgb-toc {
     list-style: none !important;
-    margin-bottom: 20px;
     padding: 0;
 }
 
+.wp-block-advgb-summary {
+    margin-bottom: 15px;
+}
+
 .gutenberg #editor ul.advgb-toc, ul.advgb-toc:not(.aligncenter):not(.alignleft):not(.alignright) {
-    margin: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .advgb-toc li {
@@ -37,6 +41,7 @@
     font-family: 'dashicons';
     content: '\f142';
     font-size: 16px;
+    vertical-align: bottom;
 }
 
 .advgb-toc-header.collapsed:after {
@@ -49,4 +54,17 @@
 
 .wp-block-advgb-summary.alignright {
     margin-left: 10px;
+}
+
+.wp-block-advgb-summary.alignright .advgb-toc-header {
+    float: right;
+}
+
+.wp-block-advgb-summary.alignright .advgb-toc {
+    clear: both;
+}
+
+.wp-block-advgb-summary.aligncenter .advgb-toc-header {
+    width: fit-content;
+    margin: auto;
 }
