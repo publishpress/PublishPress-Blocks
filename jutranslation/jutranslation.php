@@ -2,7 +2,7 @@
 /**
  * Jutranslation main file
  *
- * @package Joomunited\WPMediaFolder\Jutranslation
+ * @package Joomunited\ADVGB\Jutranslation
  */
 
 namespace Joomunited\ADVGB\Jutranslation;
