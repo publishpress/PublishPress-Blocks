@@ -26,6 +26,7 @@ var _wp$components = wp.components,
     Button = _wp$components.Button,
     Toolbar = _wp$components.Toolbar,
     ToggleControl = _wp$components.ToggleControl,
+    TextControl = _wp$components.TextControl,
     PanelBody = _wp$components.PanelBody,
     PanelColor = _wp$components.PanelColor;
 var _wp$data = wp.data,
@@ -153,7 +154,8 @@ var SummaryBlock = function (_Component) {
             var headings = attributes.headings,
                 loadMinimized = attributes.loadMinimized,
                 anchorColor = attributes.anchorColor,
-                align = attributes.align;
+                align = attributes.align,
+                headerTitle = attributes.headerTitle;
 
             // No heading blocks
 
@@ -231,6 +233,14 @@ var SummaryBlock = function (_Component) {
                             return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() });
                         }
                     }),
+                    loadMinimized && React.createElement(TextControl, {
+                        label: __('Summary header title'),
+                        value: headerTitle || '',
+                        placeholder: __('Enter header…'),
+                        onChange: function onChange(value) {
+                            return setAttributes({ headerTitle: value });
+                        }
+                    }),
                     React.createElement(
                         PanelColor,
                         { title: __('Anchor color'), colorValue: anchorColor, initialOpen: false },
@@ -277,6 +287,9 @@ registerBlockType('advgb/summary', {
         },
         postTitle: {
             type: 'string'
+        },
+        headerTitle: {
+            type: 'string'
         }
     },
     useOnce: true,
@@ -288,7 +301,8 @@ registerBlockType('advgb/summary', {
             anchorColor = attributes.anchorColor,
             _attributes$align = attributes.align,
             align = _attributes$align === undefined ? 'none' : _attributes$align,
-            postTitle = attributes.postTitle;
+            postTitle = attributes.postTitle,
+            headerTitle = attributes.headerTitle;
         // No heading blocks
 
         if (headings.length < 1) {
@@ -326,7 +340,7 @@ registerBlockType('advgb/summary', {
                 React.createElement(
                     'div',
                     { className: 'advgb-toc-header collapsed' },
-                    postTitle
+                    headerTitle || postTitle
                 ),
                 summary
             );

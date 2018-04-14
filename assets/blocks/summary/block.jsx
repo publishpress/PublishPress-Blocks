@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { registerBlockType, getBlockContent, createBlock, BlockControls, InspectorControls, ColorPalette, BlockAlignmentToolbar } = wp.blocks;
-const { IconButton, Placeholder, Button, Toolbar, ToggleControl, PanelBody, PanelColor } = wp.components;
+const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody, PanelColor } = wp.components;
 const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
 
@@ -106,7 +106,7 @@ class SummaryBlock extends Component {
 
     render() {
         const { attributes, isSelected, setAttributes } = this.props;
-        const { headings, loadMinimized, anchorColor, align } = attributes;
+        const { headings, loadMinimized, anchorColor, align, headerTitle } = attributes;
 
         // No heading blocks
         let summaryContent = (
@@ -168,6 +168,14 @@ class SummaryBlock extends Component {
                             checked={ !!loadMinimized }
                             onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() } ) }
                         />
+                        {loadMinimized &&
+                            <TextControl
+                                label={ __( 'Summary header title' ) }
+                                value={ headerTitle || '' }
+                                placeholder={ __( 'Enter header…' ) }
+                                onChange={ (value) => setAttributes( { headerTitle: value } ) }
+                            />
+                        }
                         <PanelColor title={ __('Anchor color') } colorValue={anchorColor} initialOpen={false} >
                             <ColorPalette
                                 value={anchorColor}
@@ -211,12 +219,15 @@ registerBlockType( 'advgb/summary', {
         },
         postTitle: {
             type: 'string',
+        },
+        headerTitle: {
+            type: 'string',
         }
     },
     useOnce: true,
     edit: SummaryBlock,
     save: ( { attributes } ) => {
-        const { headings, loadMinimized, anchorColor, align = 'none', postTitle } = attributes;
+        const { headings, loadMinimized, anchorColor, align = 'none', postTitle, headerTitle } = attributes;
         // No heading blocks
         if (headings.length < 1) {
             return null;
@@ -247,7 +258,7 @@ registerBlockType( 'advgb/summary', {
         if ( loadMinimized ) {
             return (
                 <div className={`align${align}`}>
-                    <div className={'advgb-toc-header collapsed'}>{ postTitle }</div>
+                    <div className={'advgb-toc-header collapsed'}>{ headerTitle || postTitle }</div>
                     {summary}
                 </div>
             );
