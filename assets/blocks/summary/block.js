@@ -14,15 +14,21 @@ var __ = wp.i18n.__;
 var Component = wp.element.Component;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
-    BlockControls = _wp$blocks.BlockControls,
+    getBlockContent = _wp$blocks.getBlockContent,
     createBlock = _wp$blocks.createBlock,
+    BlockControls = _wp$blocks.BlockControls,
     InspectorControls = _wp$blocks.InspectorControls,
-    getBlockContent = _wp$blocks.getBlockContent;
+    ColorPalette = _wp$blocks.ColorPalette,
+    BlockAlignmentToolbar = _wp$blocks.BlockAlignmentToolbar;
 var _wp$components = wp.components,
     IconButton = _wp$components.IconButton,
     Placeholder = _wp$components.Placeholder,
     Button = _wp$components.Button,
-    Toolbar = _wp$components.Toolbar;
+    Toolbar = _wp$components.Toolbar,
+    ToggleControl = _wp$components.ToggleControl,
+    TextControl = _wp$components.TextControl,
+    PanelBody = _wp$components.PanelBody,
+    PanelColor = _wp$components.PanelColor;
 var _wp$data = wp.data,
     select = _wp$data.select,
     dispatch = _wp$data.dispatch;
@@ -35,6 +41,10 @@ var blockTitle = __('Summary');
 // Add button to insert summary inside table of contents component
 (function () {
     jQuery(document).ready(function ($) {
+        if (typeof dispatch('core/editor') === 'undefined') {
+            return false;
+        }
+
         var _dispatch = dispatch('core/editor'),
             insertBlock = _dispatch.insertBlock;
 
@@ -139,8 +149,13 @@ var SummaryBlock = function (_Component) {
         value: function render() {
             var _props = this.props,
                 attributes = _props.attributes,
-                isSelected = _props.isSelected;
-            var headings = attributes.headings;
+                isSelected = _props.isSelected,
+                setAttributes = _props.setAttributes;
+            var headings = attributes.headings,
+                loadMinimized = attributes.loadMinimized,
+                anchorColor = attributes.anchorColor,
+                align = attributes.align,
+                headerTitle = attributes.headerTitle;
 
             // No heading blocks
 
@@ -193,6 +208,9 @@ var SummaryBlock = function (_Component) {
             return [isSelected && !!headings.length && React.createElement(
                 BlockControls,
                 { key: 'summary-controls' },
+                React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
+                        return setAttributes({ align: align });
+                    } }),
                 React.createElement(
                     Toolbar,
                     null,
@@ -202,7 +220,43 @@ var SummaryBlock = function (_Component) {
                         onClick: this.updateSummary
                     })
                 )
-            ), summaryContent];
+            ), isSelected && React.createElement(
+                InspectorControls,
+                { key: 'summary-inspector' },
+                React.createElement(
+                    PanelBody,
+                    { title: __('Summary settings') },
+                    React.createElement(ToggleControl, {
+                        label: __('Load minimized'),
+                        checked: !!loadMinimized,
+                        onChange: function onChange() {
+                            return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() });
+                        }
+                    }),
+                    loadMinimized && React.createElement(TextControl, {
+                        label: __('Summary header title'),
+                        value: headerTitle || '',
+                        placeholder: __('Enter header…'),
+                        onChange: function onChange(value) {
+                            return setAttributes({ headerTitle: value });
+                        }
+                    }),
+                    React.createElement(
+                        PanelColor,
+                        { title: __('Anchor color'), colorValue: anchorColor, initialOpen: false },
+                        React.createElement(ColorPalette, {
+                            value: anchorColor,
+                            onChange: function onChange(value) {
+                                return setAttributes({ anchorColor: value });
+                            }
+                        })
+                    )
+                )
+            ), summaryContent, anchorColor && React.createElement(
+                'style',
+                { key: 'summary-style' },
+                '.advgb-toc li a {\n                    color: ' + anchorColor + ';\n                }'
+            )];
         }
     }]);
 
@@ -219,27 +273,50 @@ registerBlockType('advgb/summary', {
         headings: {
             type: 'array',
             default: []
+        },
+        loadMinimized: {
+            type: 'boolean',
+            default: false
+        },
+        anchorColor: {
+            type: 'string'
+        },
+        align: {
+            type: 'string',
+            default: 'none'
+        },
+        postTitle: {
+            type: 'string'
+        },
+        headerTitle: {
+            type: 'string'
         }
     },
     useOnce: true,
     edit: SummaryBlock,
     save: function save(_ref) {
         var attributes = _ref.attributes;
-        var headings = attributes.headings;
+        var headings = attributes.headings,
+            loadMinimized = attributes.loadMinimized,
+            anchorColor = attributes.anchorColor,
+            _attributes$align = attributes.align,
+            align = _attributes$align === undefined ? 'none' : _attributes$align,
+            postTitle = attributes.postTitle,
+            headerTitle = attributes.headerTitle;
         // No heading blocks
 
         if (headings.length < 1) {
             return null;
         }
 
-        return React.createElement(
+        var summary = React.createElement(
             'ul',
-            { className: 'advgb-toc' },
-            headings.map(function (heading) {
+            { className: 'advgb-toc align' + align, style: loadMinimized && { display: 'none' } },
+            headings.map(function (heading, index) {
                 return React.createElement(
                     'li',
                     { className: 'toc-level-' + heading.level,
-                        key: 'summary-save',
+                        key: 'summary-save-' + index,
                         style: { marginLeft: heading.level * 20 }
                     },
                     React.createElement(
@@ -248,7 +325,38 @@ registerBlockType('advgb/summary', {
                         heading.content
                     )
                 );
-            })
+            }),
+            anchorColor && React.createElement(
+                'style',
+                null,
+                '.advgb-toc li a {\n                            color: ' + anchorColor + ';\n                        }'
+            )
         );
+
+        if (loadMinimized) {
+            return React.createElement(
+                'div',
+                { className: 'align' + align },
+                React.createElement(
+                    'div',
+                    { className: 'advgb-toc-header collapsed' },
+                    headerTitle || postTitle
+                ),
+                summary
+            );
+        }
+
+        return summary;
+    },
+    getEditWrapperProps: function getEditWrapperProps(attributes) {
+        var align = attributes.align;
+
+        var props = { 'data-resized': true };
+
+        if ('left' === align || 'right' === align || 'center' === align) {
+            props['data-align'] = align;
+        }
+
+        return props;
     }
 });

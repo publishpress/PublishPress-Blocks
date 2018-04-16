@@ -1,0 +1,64 @@
+#editor .wp-block-advgb-list {
+    margin-left: 15px;
+}
+
+#editor .advgb-list, .advgb-list {
+    margin-left: 0;
+    list-style-type: none !important;
+}
+
+.advgb-list > li:before {
+    font-family: 'dashicons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    vertical-align: middle;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.advgb-list-admin-post li:before {
+    content: "\f109";
+}
+.advgb-list-admin-generic li:before {
+    content: "\f111";
+}
+.advgb-list-flag li:before {
+    content: "\f227";
+}
+.advgb-list-star-filled li:before {
+    content: "\f155";
+}
+.advgb-list-yes li:before {
+    content: "\f147";
+}
+.advgb-list-minus li:before {
+    content: "\f460";
+}
+.advgb-list-plus li:before {
+    content: "\f132";
+}
+.advgb-list-controls-play li:before {
+    content: "\f522";
+}
+.advgb-list-arrow-right-alt li:before {
+    content: "\f344";
+}
+.advgb-list-dismiss li:before {
+    content: "\f153";
+}
+.advgb-list-warning li:before {
+    content: "\f534";
+}
+.advgb-list-editor-help li:before {
+    content: "\f223";
+}
+.advgb-list-info li:before {
+    content: "\f348";
+}
+.advgb-list-marker li:before {
+    content: "\f159";
+}

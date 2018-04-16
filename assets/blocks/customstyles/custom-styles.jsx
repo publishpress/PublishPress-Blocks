@@ -38,6 +38,7 @@ addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
                     label={ [
                         __( 'Custom styles' ),
                         <span className={'components-panel__color-area'}
+                              key="customstyle-identify"
                               style={ {
                                   background: props.attributes.identifyColor,
                                   verticalAlign: 'text-bottom',
