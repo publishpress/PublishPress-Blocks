@@ -150,6 +150,16 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
+            'advlist_blocks',
+            plugins_url('assets/blocks/advlist/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
+            'advbutton_blocks',
+            plugins_url('assets/blocks/advbutton/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
@@ -167,9 +177,21 @@ float: left;'
             'summary_blocks',
             plugins_url('assets/blocks/summary/style.css', dirname(__FILE__))
         );
+
+        $custom_styles_url = wp_upload_dir();
+        $custom_styles_url = $custom_styles_url['baseurl'] . '/advgb/';
         wp_enqueue_style(
             'custom_styles',
-            plugins_url('assets/css/customstyles/custom_styles.css', dirname(__FILE__))
+            $custom_styles_url . 'custom_styles.css'
+        );
+
+        wp_enqueue_style(
+            'advanced_list',
+            plugins_url('assets/blocks/advlist/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'advbutton_blocks',
+            plugins_url('assets/blocks/advbutton/style.css', dirname(__FILE__))
         );
     }
 
@@ -795,7 +817,14 @@ float: left;'
         WP_Filesystem();
         global $wp_filesystem;
 
-        $css_file = plugin_dir_path(dirname(__FILE__)). 'assets/css/customstyles/custom_styles.css';
+        $custom_styles_dir = wp_upload_dir();
+        $custom_styles_dir = $custom_styles_dir['basedir'] . '/advgb/';
+        $css_file = $custom_styles_dir . 'custom_styles.css';
+
+        if (!$wp_filesystem->exists($custom_styles_dir)) {
+            $wp_filesystem->mkdir($custom_styles_dir);
+        }
+
         $content = '';
         foreach ($styles_array as $styles) {
             $content .= ".gutenberg #editor ." .$styles['name'] . ", ." . $styles['name'] . " {\n";
@@ -882,33 +911,34 @@ float: left;'
         $current_user_role = $current_user->roles[0];
 
         // Get all GB-ADV active profiles
-        $args     = array(
-            'post_type' => 'advgb_profiles',
-            'publish'   => true
-        );
-        $profiles = new WP_Query($args);
+        global $wpdb;
+        $query = 'SELECT * FROM '. $wpdb->prefix. 'posts
+         WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC';
+        $profiles = $wpdb->get_results($query);
 
-        while ($profiles->have_posts()) :
-            $profiles->the_post();
-            $postID           = get_the_ID();
-            $user_id_access   = get_post_meta($postID, 'users_access', true);
-            $user_role_access = get_post_meta($postID, 'roles_access', true);
+        if (!empty($profiles)) {
+            foreach ($profiles as $profile) {
+                $postID           = $profile->ID;
+                $user_id_access   = get_post_meta($postID, 'users_access', true);
+                $user_role_access = get_post_meta($postID, 'roles_access', true);
 
-            // Check which profiles that current user has permission to use and take that ID
-            // the ID of the profiles published most recently will be taken
-            if (is_array($user_role_access) && is_array($user_id_access)) {
-                if (in_array($current_user_id, $user_id_access) || in_array($current_user_role, $user_role_access)) {
-                    // Populate the ID
-                    $this->active_profile = $postID;
-                    $active_blocks_saved  = get_post_meta($this->active_profile, 'active_blocks', true);
+                // Check which profiles that current user has permission to use and take that ID
+                // the ID of the profiles published most recently will be taken
+                if (is_array($user_role_access) && is_array($user_id_access)) {
+                    if (in_array($current_user_id, $user_id_access)
+                        || in_array($current_user_role, $user_role_access)) {
+                        // Populate the ID
+                        $this->active_profile = $postID;
+                        $active_blocks_saved  = get_post_meta($this->active_profile, 'active_blocks', true);
 
-                    $active_blocks_filtered = apply_filters('active_new_blocks_by_default', $active_blocks_saved);
+                        $active_blocks_filtered = apply_filters('active_new_blocks_by_default', $active_blocks_saved);
 
-                    // Return allowed blocks
-                    return $active_blocks_filtered;
+                        // Return allowed blocks
+                        return $active_blocks_filtered;
+                    }
                 }
             }
-        endwhile;
+        }
 
         // If users have no permission, remove all blocks
         return false;
@@ -956,6 +986,13 @@ float: left;'
             }
         }
 
+        if (strpos($content, 'advgb-toc-header') !== false) {
+            wp_enqueue_script(
+                'summary_minimized',
+                plugins_url('assets/blocks/summary/summaryMinimized.js', dirname(__FILE__))
+            );
+        }
+
         return $content;
     }
 
@@ -974,7 +1011,7 @@ float: left;'
 
     /**
      * Function to add buttons for tinyMCE toolbars
-     * @param $plgs
+     * @param $buttons
      *
      * @return array
      */
@@ -995,14 +1032,19 @@ float: left;'
     public function activeNewInstalledBlocks($current_activated_blocks)
     {
         $new_blocks = array(
-            'advgb/summary'
+            'advgb/summary',
+            'advgb/button',
+            'advgb/list',
         );
 
-        $all_blocks_saved = get_option('advgb_blocks_list');
-        foreach ($new_blocks as $block) {
-            if (!in_array($block, $all_blocks_saved)) {
-                if (!in_array($block, $current_activated_blocks)) {
-                    array_push($current_activated_blocks, $block);
+        // Avoid default value (string 'all')
+        if (is_array($current_activated_blocks)) {
+            $all_blocks_saved = get_option('advgb_blocks_list');
+            foreach ($new_blocks as $block) {
+                if (!in_array($block, $all_blocks_saved)) {
+                    if (!in_array($block, $current_activated_blocks)) {
+                        array_push($current_activated_blocks, $block);
+                    }
                 }
             }
         }

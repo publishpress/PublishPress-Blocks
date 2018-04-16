@@ -42,6 +42,7 @@ addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
             { key: 'advgb-custom-controls' },
             React.createElement(SelectControl, {
                 label: [__('Custom styles'), React.createElement('span', { className: 'components-panel__color-area',
+                    key: 'customstyle-identify',
                     style: {
                         background: props.attributes.identifyColor,
                         verticalAlign: 'text-bottom',

@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component } = wp.element;
-const { registerBlockType, BlockControls, createBlock, InspectorControls, getBlockContent } = wp.blocks;
-const { IconButton, Placeholder, Button, Toolbar } = wp.components;
+const { registerBlockType, getBlockContent, createBlock, BlockControls, InspectorControls, ColorPalette, BlockAlignmentToolbar } = wp.blocks;
+const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody, PanelColor } = wp.components;
 const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
 
@@ -11,6 +11,10 @@ const blockTitle = __( 'Summary' );
 // Add button to insert summary inside table of contents component
 ( function () {
     jQuery( document ).ready( function ( $ ) {
+        if (typeof dispatch( 'core/editor' ) === 'undefined') {
+            return false;
+        }
+
         const { insertBlock } = dispatch( 'core/editor' );
         const summaryBlock = createBlock( 'advgb/summary' );
 
@@ -101,8 +105,8 @@ class SummaryBlock extends Component {
     }
 
     render() {
-        const { attributes, isSelected } = this.props;
-        const { headings } = attributes;
+        const { attributes, isSelected, setAttributes } = this.props;
+        const { headings, loadMinimized, anchorColor, align, headerTitle } = attributes;
 
         // No heading blocks
         let summaryContent = (
@@ -146,6 +150,7 @@ class SummaryBlock extends Component {
         return [
             isSelected && !!headings.length && (
                 <BlockControls key={'summary-controls'}>
+                    <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
                     <Toolbar>
                         <IconButton className={'components-icon-button components-toolbar__control'}
                                     icon={'update'}
@@ -155,7 +160,37 @@ class SummaryBlock extends Component {
                     </Toolbar>
                 </BlockControls>
             ),
-            summaryContent
+            isSelected && (
+                <InspectorControls key="summary-inspector">
+                    <PanelBody title={ __( 'Summary settings' ) } >
+                        <ToggleControl
+                            label={ __( 'Load minimized' ) }
+                            checked={ !!loadMinimized }
+                            onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() } ) }
+                        />
+                        {loadMinimized &&
+                            <TextControl
+                                label={ __( 'Summary header title' ) }
+                                value={ headerTitle || '' }
+                                placeholder={ __( 'Enter header…' ) }
+                                onChange={ (value) => setAttributes( { headerTitle: value } ) }
+                            />
+                        }
+                        <PanelColor title={ __('Anchor color') } colorValue={anchorColor} initialOpen={false} >
+                            <ColorPalette
+                                value={anchorColor}
+                                onChange={ (value) => setAttributes( { anchorColor: value } ) }
+                            />
+                        </PanelColor>
+                    </PanelBody>
+                </InspectorControls>
+            ),
+            summaryContent,
+            anchorColor && <style key="summary-style">
+                {`.advgb-toc li a {
+                    color: ${anchorColor};
+                }`}
+            </style>
         ]
     }
 }
@@ -169,31 +204,76 @@ registerBlockType( 'advgb/summary', {
     attributes: {
         headings: {
             type: 'array',
-            default: []
+            default: [],
+        },
+        loadMinimized: {
+            type: 'boolean',
+            default: false,
+        },
+        anchorColor: {
+            type: 'string',
+        },
+        align: {
+            type: 'string',
+            default: 'none',
+        },
+        postTitle: {
+            type: 'string',
+        },
+        headerTitle: {
+            type: 'string',
         }
     },
     useOnce: true,
     edit: SummaryBlock,
     save: ( { attributes } ) => {
-        const { headings } = attributes;
+        const { headings, loadMinimized, anchorColor, align = 'none', postTitle, headerTitle } = attributes;
         // No heading blocks
         if (headings.length < 1) {
             return null;
         }
 
-        return (
-            <ul className={'advgb-toc'}>
-                {headings.map( ( heading ) => {
+        const summary = (
+            <ul className={`advgb-toc align${align}`} style={ loadMinimized && { display: 'none' } }>
+                {headings.map( ( heading, index ) => {
                     return (
                         <li className={'toc-level-' + heading.level}
-                            key="summary-save"
+                            key={`summary-save-${index}`}
                             style={{ marginLeft: heading.level * 20 }}
                         >
                             <a href={'#' + heading.anchor}>{heading.content}</a>
                         </li>
                     )
                 } )}
+                { anchorColor &&
+                    <style>
+                        {`.advgb-toc li a {
+                            color: ${anchorColor};
+                        }`}
+                    </style>
+                }
             </ul>
-        )
+        );
+
+        if ( loadMinimized ) {
+            return (
+                <div className={`align${align}`}>
+                    <div className={'advgb-toc-header collapsed'}>{ headerTitle || postTitle }</div>
+                    {summary}
+                </div>
+            );
+        }
+
+        return summary;
+    },
+    getEditWrapperProps( attributes ) {
+        const { align } = attributes;
+        const props = { 'data-resized': true };
+
+        if ( 'left' === align || 'right' === align || 'center' === align ) {
+            props[ 'data-align' ] = align;
+        }
+
+        return props;
     },
 } );
