@@ -15,6 +15,14 @@
         "title": "New Advanced List block: create list with list icon, icon color..."
       },
       {
+        "type": "feature",
+        "title": "New summary block option: load the block minimized and define text"
+      },
+      {
+        "type": "feature",
+        "title": "New style for summary block: align the block + font style and color options"
+      },
+      {
         "type": "fix",
         "title": "Improve compatibility with other plugins"
       }
