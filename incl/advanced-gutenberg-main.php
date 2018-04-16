@@ -1,13 +1,30 @@
 <?php
-defined('ABSPATH') or die;
+defined('ABSPATH') || die;
 
 /**
  * Main class of Gutenberg Advanced
  */
 class AdvancedGutenbergMain
 {
+    /**
+     * Default role access
+     *
+     * @var array   Array of default role access
+     */
     public static $default_roles_access = array('administrator', 'editor', 'author');
+
+    /**
+     * Default active all blocks for new profile
+     *
+     * @var string  All blocks
+     */
     public static $default_active_blocks = 'all';
+
+    /**
+     * Default custom styles
+     *
+     * @var array   Default custom styles for first install
+     */
     public static $default_custom_styles = array(
         0 => array(
             'id' => 1,
@@ -108,8 +125,17 @@ width: 60%;
 float: left;'
         )
     );
+
+    /**
+     * Activated profile to get activated blocks array
+     *
+     * @var null    ID profiles
+     */
     protected $active_profile = null;
 
+    /**
+     * AdvancedGutenbergMain constructor.
+     */
     public function __construct()
     {
         add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
@@ -141,6 +167,8 @@ float: left;'
 
     /**
      * Enqueue styles and scripts for gutenberg
+     *
+     * @return void
      */
     public function addEditorAssets()
     {
@@ -170,6 +198,8 @@ float: left;'
 
     /**
      * Enqueue styles for gutenberg editor and front-end
+     *
+     * @return void
      */
     public function addEditorAndFrontendStyles()
     {
@@ -197,11 +227,13 @@ float: left;'
 
     /**
      * Ajax to update blocks list
+     *
+     * @return void
      */
     public function updateBlocksList()
     {
-        $blocksList     = $_POST['blocksList'];
-        $categoriesList = $_POST['categoriesList'];
+        $blocksList     = $_POST['blocksList']; // @codingStandardsIgnoreLine
+        $categoriesList = $_POST['categoriesList']; // @codingStandardsIgnoreLine
 
         update_option('advgb_blocks_list', $blocksList);
         update_option('advgb_categories_list', $categoriesList);
@@ -215,7 +247,7 @@ float: left;'
     /**
      * Ajax to get list of users
      *
-     * @return bool,json Return false if failure, json on success
+     * @return boolean,json     Return false if failure, json on success
      */
     public function getUsers()
     {
@@ -225,11 +257,11 @@ float: left;'
             return false;
         }
 
-        $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim($_REQUEST['search'])) : '';
-        $role           = isset($_REQUEST['role']) ? $_REQUEST['role'] : '';
+        $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim($_REQUEST['search'])) : ''; // @codingStandardsIgnoreLine
+        $role           = isset($_REQUEST['role']) ? $_REQUEST['role'] : ''; // @codingStandardsIgnoreLine
         $users_per_page = 20;
         $pagenum        = 1;
-        if ($role == 'none') {
+        if ($role === 'none') {
             $args_all = array(
                 'include' => wp_get_users_with_no_role(),
                 'search'  => $usersearch,
@@ -248,15 +280,15 @@ float: left;'
 
         $total_users = count(get_users($args_all));
         $total_pages = ceil($total_users / $users_per_page);
-        if (isset($_REQUEST['paged'])) {
-            if ($_REQUEST['paged'] == 'first') {
+        if (isset($_REQUEST['paged'])) { // @codingStandardsIgnoreStart
+            if ($_REQUEST['paged'] === 'first') {
                 $pagenum = 1;
-            } elseif ($_REQUEST['paged'] == 'last') {
+            } elseif ($_REQUEST['paged'] === 'last') {
                 $pagenum = $total_pages;
             } else {
                 $pagenum = $_REQUEST['paged'];
             }
-        }
+        } // @codingStandardsIgnoreEnd
         $paged = max(1, $pagenum);
 
         if ($role === 'none') {
@@ -310,7 +342,7 @@ float: left;'
                 }
 
                 if (empty($role_list)) {
-                    $role_list['none'] = _x('None', 'no user roles');
+                    $role_list['none'] = _x('None', 'no user roles', 'advanced-gutenberg');
                 }
                 $roles_list = implode(', ', $role_list);
 
@@ -323,7 +355,7 @@ float: left;'
             $users_list .= '</td></tr>';
         }
 
-        $doneLeft = $doneRight = $skipLeft = $skipRight = false;
+        $doneLeft = $doneRight = $skipLeft = $skipRight = false; // @codingStandardsIgnoreLine
         if ($total_pages > 1) {
             for ($i = 1; $i <= $total_pages; $i ++) {
                 if ($i < $pagenum - 2) {
@@ -334,8 +366,8 @@ float: left;'
                     $skipLeft  = false;
                     $skipRight = false;
                 }
-                if ($i == 1) {
-                    if ($pagenum == 1) {
+                if ($i === 1) {
+                    if ($pagenum === 1) {
                         $pages_list .= '<i class="dashicons dashicons-controls-skipback" id="first-page"></i>';
                     } else {
                         $pages_list .= '<a class="dashicons dashicons-controls-skipback" id="first-page" ';
@@ -343,7 +375,7 @@ float: left;'
                     }
                 }
                 if (! $skipLeft && ! $skipRight) {
-                    if ($i == $pagenum) {
+                    if ($i === $pagenum) {
                         $pages_list .= '<strong>' . $i . '</strong>';
                     } else {
                         $pages_list .= '<a class="switch-page">' . $i . '</a>';
@@ -360,8 +392,8 @@ float: left;'
                     }
                 }
 
-                if ($i == $total_pages) {
-                    if ($pagenum == $total_pages) {
+                if ($i === $total_pages) {
+                    if ($pagenum === $total_pages) {
                         $pages_list .= '<i class="dashicons dashicons-controls-skipforward" id="last-page"></i>';
                     } else {
                         $pages_list .= '<a class="dashicons dashicons-controls-skipforward" id="last-page" ';
@@ -377,7 +409,7 @@ float: left;'
     /**
      * Ajax for custom styles
      *
-     * @return bool,json Return false if failure, json on success
+     * @return boolean,json     Return false if failure, json on success
      */
     public function customStylesAjax()
     {
@@ -395,10 +427,10 @@ float: left;'
         }
 
         $custom_style_data = get_option('advgb_custom_styles');
-        $task = isset($_POST['task']) ? $_POST['task'] : '';
-        if ($task == '') {
+        $task = isset($_POST['task']) ? $_POST['task'] : ''; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
+        if ($task === '') {
             return false;
-        } elseif ($task == 'new') {
+        } elseif ($task === 'new') {
             $new_style_id = end($custom_style_data);
             $new_style_id = $new_style_id['id'] + 1;
             $new_style_array = array(
@@ -411,13 +443,13 @@ float: left;'
             array_push($custom_style_data, $new_style_array);
             update_option('advgb_custom_styles', $custom_style_data);
             wp_send_json($new_style_array);
-        } elseif ($task == 'delete') {
+        } elseif ($task === 'delete') {
             $custom_style_data_delete = get_option('advgb_custom_styles');
-            $style_id = $_POST['id'];
+            $style_id = (int)$_POST['id']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
             $new_style_deleted_array = array();
             $done = false;
             foreach ($custom_style_data_delete as $data) {
-                if ($data['id'] == $style_id) {
+                if ($data['id'] === $style_id) {
                     $done = true;
                     continue;
                 }
@@ -427,14 +459,14 @@ float: left;'
             if ($done) {
                 wp_send_json(array('id' => $style_id), 200);
             }
-        } elseif ($task == 'copy') {
+        } elseif ($task === 'copy') {
             $data_saved = get_option('advgb_custom_styles');
-            $style_id = $_POST['id'];
+            $style_id = (int)$_POST['id']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
             $new_style_copied_array = get_option('advgb_custom_styles');
             $copied_styles = array();
             $new_id = end($new_style_copied_array);
             foreach ($data_saved as $data) {
-                if ($data['id'] == $style_id) {
+                if ($data['id'] === $style_id) {
                     $copied_styles = array(
                         'id' => $new_id['id'] + 1,
                         'title' => sanitize_text_field($data['title']),
@@ -448,12 +480,12 @@ float: left;'
             }
             update_option('advgb_custom_styles', $new_style_copied_array);
             wp_send_json($copied_styles);
-        } elseif ($task == 'preview') {
-            $style_id = $_POST['id'];
+        } elseif ($task === 'preview') {
+            $style_id = (int)$_POST['id']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
             $data_saved = get_option('advgb_custom_styles');
             $get_style_array = array();
             foreach ($data_saved as $data) {
-                if ($data['id'] == $style_id) {
+                if ($data['id'] === $style_id) {
                     foreach ($data as $key => $value) {
                         $data[$key] = esc_html($value);
                     }
@@ -465,12 +497,12 @@ float: left;'
             } else {
                 wp_send_json(false, 404);
             }
-        } elseif ($task == 'style_save') {
-            $style_id = $_POST['id'];
+        } elseif ($task === 'style_save') {
+            $style_id = (int)$_POST['id']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
             $new_title = sanitize_text_field($_POST['title']);
             $new_classname = sanitize_text_field($_POST['name']);
             $new_identify_color = sanitize_text_field($_POST['mycolor']);
-            $new_css = $_POST['mycss'];
+            $new_css = $_POST['mycss']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
             // Validate new name
             if (!preg_match($regexWithSpaces, $new_title) || !preg_match($regex, $new_classname)) {
                 wp_send_json('Invalid characters, please enter another!', 403);
@@ -479,7 +511,7 @@ float: left;'
             $data_saved = get_option('advgb_custom_styles');
             $new_data_array = array();
             foreach ($data_saved as $data) {
-                if ($data['id'] == $style_id) {
+                if ($data['id'] === $style_id) {
                     $data['title'] = $new_title;
                     $data['name'] = $new_classname;
                     $data['css'] = $new_css;
@@ -495,6 +527,8 @@ float: left;'
 
     /**
      * Update the blocks list for first time install
+     *
+     * @return void
      */
     public function initBlocksList()
     {
@@ -510,6 +544,8 @@ float: left;'
 
     /**
      * Register back-end styles and script for later use
+     *
+     * @return void
      */
     public function registerStylesScripts()
     {
@@ -613,6 +649,8 @@ float: left;'
 
     /**
      * Register profiles menu
+     *
+     * @return void
      */
     public function registerAdvgbMenu()
     {
@@ -652,6 +690,8 @@ float: left;'
 
     /**
      * Remove and add metabox for create profile screen
+     *
+     * @return mixed      Mixed value
      */
     public function registerMetaBox()
     {
@@ -660,9 +700,10 @@ float: left;'
 
         /**
          * Make profile only have one column layout
-         * @param $columns  Number of columns to set
          *
-         * @return mixed    Columns
+         * @param integer $columns Number of columns to set
+         *
+         * @return integer   Number of columns
          */
         function advgbSetScreenLayoutColumns($columns)
         {
@@ -675,7 +716,7 @@ float: left;'
         /**
          * Make profile only have one column layout
          *
-         * @return int
+         * @return integer
          */
         function advgbSetScreenLayout()
         {
@@ -695,6 +736,8 @@ float: left;'
 
     /**
      * Load profile view
+     *
+     * @return void
      */
     public function advgbProfilesView()
     {
@@ -712,6 +755,8 @@ float: left;'
 
     /**
      * Register settings menu
+     *
+     * @return void
      */
     public function registerSettingsMenu()
     {
@@ -727,6 +772,8 @@ float: left;'
 
     /**
      * Load settings view
+     *
+     * @return void
      */
     public function advgbSettingsView()
     {
@@ -758,7 +805,7 @@ float: left;'
     /**
      * Save config settings
      *
-     * @return bool True on success, False on failure
+     * @return boolean True on success, False on failure
      */
     public function saveSettings()
     {
@@ -793,7 +840,7 @@ float: left;'
             }
             // Save Custom Styles to a css file
             $get_custom_styles = get_option('advgb_custom_styles');
-            if ($get_custom_styles != false) {
+            if ($get_custom_styles !== false) {
                 $this->writeCustomStyles($get_custom_styles);
             }
 
@@ -808,11 +855,12 @@ float: left;'
 
     /**
      * Write custom styles to a CSS file
-     * @param $styles_array array Array of styles
      *
-     * @return boolean true on success, false on failure
+     * @param array $styles_array Array of styles
+     *
+     * @return boolean True on success, False on failure
      */
-    public function writeCustomStyles($styles_array)
+    public function writeCustomStyles(array $styles_array)
     {
         WP_Filesystem();
         global $wp_filesystem;
@@ -827,7 +875,7 @@ float: left;'
 
         $content = '';
         foreach ($styles_array as $styles) {
-            $content .= ".gutenberg #editor ." .$styles['name'] . ", ." . $styles['name'] . " {\n";
+            $content .= '.gutenberg #editor .' .$styles['name'] . ', .' . $styles['name'] . " {\n";
             $content .= $styles['css'] . "\n} \n";
         }
 
@@ -839,7 +887,8 @@ float: left;'
 
     /**
      * Change post's update messages
-     * @param $msg
+     *
+     * @param string $msg Messages
      *
      * @return mixed
      */
@@ -855,7 +904,8 @@ float: left;'
 
     /**
      * Save profiles settings
-     * @param $postID
+     *
+     * @param integer $postID Profiles ID
      *
      * @return mixed
      */
@@ -871,7 +921,7 @@ float: left;'
         }
 
         // Save settings
-        if ($_POST['post_type'] == 'advgb_profiles'
+        if ($_POST['post_type'] === 'advgb_profiles'
             && current_user_can('edit_post', $postID)
         ) {
             // Save list of active blocks
@@ -901,7 +951,7 @@ float: left;'
     /**
      * Set the active blocks for users regard to Advanced Gutenberg profiles
      *
-     * @return bool|mixed
+     * @return boolean|mixed
      */
     public function initActiveBlocksForGutenberg()
     {
@@ -914,7 +964,7 @@ float: left;'
         global $wpdb;
         $query = 'SELECT * FROM '. $wpdb->prefix. 'posts
          WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC';
-        $profiles = $wpdb->get_results($query);
+        $profiles = $wpdb->get_results($query); // @codingStandardsIgnoreLine
 
         if (!empty($profiles)) {
             foreach ($profiles as $profile) {
@@ -947,7 +997,9 @@ float: left;'
     /**
      * Function to get and load the view
      *
-     * @param $view  string    View to load
+     * @param string $view View to load
+     *
+     * @return void
      */
     public function loadView($view)
     {
@@ -956,9 +1008,10 @@ float: left;'
 
     /**
      * Function to load the lightbox for galleries in front-end
-     * @param $content
      *
-     * @return mixed
+     * @param string $content Post content
+     *
+     * @return string
      */
     public function addGalleryLightbox($content)
     {
@@ -998,11 +1051,12 @@ float: left;'
 
     /**
      * Function to load external plugins for tinyMCE
-     * @param $plgs
+     *
+     * @param array $plgs External plugins
      *
      * @return array
      */
-    public function addTinyMceExternal($plgs)
+    public function addTinyMceExternal(array $plgs)
     {
         $plgs['customstyles'] = plugin_dir_url(dirname(__FILE__)) . 'assets/blocks/customstyles/plugin.js';
 
@@ -1011,11 +1065,12 @@ float: left;'
 
     /**
      * Function to add buttons for tinyMCE toolbars
-     * @param $buttons
+     *
+     * @param array $buttons TinyMCE buttons
      *
      * @return array
      */
-    public function addTinyMceButtons($buttons)
+    public function addTinyMceButtons(array $buttons)
     {
         array_push($buttons, 'customstyles');
 
@@ -1025,11 +1080,11 @@ float: left;'
     /**
      * Active newly installed blocks by default
      *
-     * @param $current_activated_blocks     array   Current activated block list
+     * @param array $current_activated_blocks Current activated block list
      *
      * @return mixed    Array of activated blocks
      */
-    public function activeNewInstalledBlocks($current_activated_blocks)
+    public function activeNewInstalledBlocks(array $current_activated_blocks)
     {
         $new_blocks = array(
             'advgb/summary',
