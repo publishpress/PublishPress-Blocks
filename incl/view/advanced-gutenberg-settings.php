@@ -119,7 +119,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     }
                     $content .= '<li><a class="advgb-customstyles-new"><i class="advgbicon-plus"></i>'.__('Add new class', 'advanced-gutenberg').'</a></li>';
 
-                    echo esc_html($content);
+                    echo $content; // @codingStandardsIgnoreLine
                     ?>
                 </ul>
                 <span id="savedInfo" style="display:none;">
