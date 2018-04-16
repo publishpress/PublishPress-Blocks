@@ -14,6 +14,10 @@
         "type": "feature",
         "title": "New Advanced List block: create list with list icon, icon color..."
       },
+       {
+        "type": "feature",
+        "title": "Summary block: Allow to set anchor links color, block alignment and load summary in minimized"
+      },
       {
         "type": "fix",
         "title": "Improve compatibility with other plugins"
