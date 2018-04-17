@@ -232,8 +232,8 @@ float: left;'
      */
     public function updateBlocksList()
     {
-        $blocksList     = $_POST['blocksList']; // @codingStandardsIgnoreLine
-        $categoriesList = $_POST['categoriesList']; // @codingStandardsIgnoreLine
+        $blocksList     = $_POST['blocksList']; // phpcs:ignore -- background task, no nonce
+        $categoriesList = $_POST['categoriesList']; // phpcs:ignore -- background task, no nonce
 
         update_option('advgb_blocks_list', $blocksList);
         update_option('advgb_categories_list', $categoriesList);
@@ -257,8 +257,9 @@ float: left;'
             return false;
         }
 
-        $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim($_REQUEST['search'])) : ''; // @codingStandardsIgnoreLine
-        $role           = isset($_REQUEST['role']) ? $_REQUEST['role'] : ''; // @codingStandardsIgnoreLine
+        // phpcs:disable WordPress.CSRF.NonceVerification.NoNonceVerification -- View request, no action
+        $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim($_REQUEST['search'])) : '';
+        $role           = isset($_REQUEST['role']) ? $_REQUEST['role'] : '';
         $users_per_page = 20;
         $pagenum        = 1;
         if ($role === 'none') {
@@ -280,7 +281,7 @@ float: left;'
 
         $total_users = count(get_users($args_all));
         $total_pages = ceil($total_users / $users_per_page);
-        if (isset($_REQUEST['paged'])) { // @codingStandardsIgnoreStart
+        if (isset($_REQUEST['paged'])) {
             if ($_REQUEST['paged'] === 'first') {
                 $pagenum = 1;
             } elseif ($_REQUEST['paged'] === 'last') {
@@ -288,7 +289,8 @@ float: left;'
             } else {
                 $pagenum = $_REQUEST['paged'];
             }
-        } // @codingStandardsIgnoreEnd
+        }
+        // phpcs:enabled
         $paged = max(1, $pagenum);
 
         if ($role === 'none') {
@@ -355,7 +357,10 @@ float: left;'
             $users_list .= '</td></tr>';
         }
 
-        $doneLeft = $doneRight = $skipLeft = $skipRight = false; // @codingStandardsIgnoreLine
+        $doneLeft = false;
+        $doneRight = false;
+        $skipLeft = false;
+        $skipRight = false;
         if ($total_pages > 1) {
             for ($i = 1; $i <= $total_pages; $i ++) {
                 if ($i < $pagenum - 2) {
@@ -421,13 +426,17 @@ float: left;'
         $regex = '/^[a-zA-Z0-9_\-]+$/';
         $regexWithSpaces = '/^[\p{L}\p{N}_\- ]+$/u';
 
+        if (!wp_verify_nonce($_POST['nonce'], 'advgb_settings_nonce')) {
+            wp_send_json('Invalid nonce token!', 400);
+        }
+
         $check_exist = get_option('advgb_custom_styles');
         if ($check_exist === false) {
             update_option('advgb_custom_styles', $this::$default_custom_styles);
         }
 
         $custom_style_data = get_option('advgb_custom_styles');
-        $task = isset($_POST['task']) ? $_POST['task'] : ''; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
+        $task = isset($_POST['task']) ? $_POST['task'] : '';
         if ($task === '') {
             return false;
         } elseif ($task === 'new') {
@@ -445,7 +454,7 @@ float: left;'
             wp_send_json($new_style_array);
         } elseif ($task === 'delete') {
             $custom_style_data_delete = get_option('advgb_custom_styles');
-            $style_id = (int)$_POST['id']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
+            $style_id = (int)$_POST['id'];
             $new_style_deleted_array = array();
             $done = false;
             foreach ($custom_style_data_delete as $data) {
@@ -461,7 +470,7 @@ float: left;'
             }
         } elseif ($task === 'copy') {
             $data_saved = get_option('advgb_custom_styles');
-            $style_id = (int)$_POST['id']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
+            $style_id = (int)$_POST['id'];
             $new_style_copied_array = get_option('advgb_custom_styles');
             $copied_styles = array();
             $new_id = end($new_style_copied_array);
@@ -481,7 +490,7 @@ float: left;'
             update_option('advgb_custom_styles', $new_style_copied_array);
             wp_send_json($copied_styles);
         } elseif ($task === 'preview') {
-            $style_id = (int)$_POST['id']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
+            $style_id = (int)$_POST['id'];
             $data_saved = get_option('advgb_custom_styles');
             $get_style_array = array();
             foreach ($data_saved as $data) {
@@ -498,11 +507,11 @@ float: left;'
                 wp_send_json(false, 404);
             }
         } elseif ($task === 'style_save') {
-            $style_id = (int)$_POST['id']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
+            $style_id = (int)$_POST['id'];
             $new_title = sanitize_text_field($_POST['title']);
             $new_classname = sanitize_text_field($_POST['name']);
             $new_identify_color = sanitize_text_field($_POST['mycolor']);
-            $new_css = $_POST['mycss']; // @codingStandardsIgnoreLine WordPress.CSRF.NonceVerification.NoNonceVerification
+            $new_css = $_POST['mycss'];
             // Validate new name
             if (!preg_match($regexWithSpaces, $new_title) || !preg_match($regex, $new_classname)) {
                 wp_send_json('Invalid characters, please enter another!', 403);
@@ -962,9 +971,8 @@ float: left;'
 
         // Get all GB-ADV active profiles
         global $wpdb;
-        $query = 'SELECT * FROM '. $wpdb->prefix. 'posts
-         WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC';
-        $profiles = $wpdb->get_results($query); // @codingStandardsIgnoreLine
+        $profiles = $wpdb->get_results('SELECT * FROM '. $wpdb->prefix. 'posts
+         WHERE post_type="advgb_profiles" AND post_status="publish" ORDER BY post_date_gmt DESC');
 
         if (!empty($profiles)) {
             foreach ($profiles as $profile) {
