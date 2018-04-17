@@ -1,5 +1,5 @@
 <?php
-defined('ABSPATH') or die;
+defined('ABSPATH') || die;
 
 // Run when activate plugin
 register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
