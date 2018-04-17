@@ -10,7 +10,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
 ?>
 <h1><?php esc_html_e('Advanced Gutenberg Settings', 'advanced-gutenberg') ?></h1>
 
-<?php if (isset($_GET['save'])) : // @codingStandardsIgnoreLine ?>
+<?php if (isset($_GET['save'])) : // phpcs:ignore -- display message, no action ?>
 <div id="advgb-config-success">
     <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg') ?>
     <i class="dashicons dashicons-dismiss" id="advgb-config-close"></i>
@@ -110,16 +110,16 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <?php
                     $content = '';
                     foreach ($custom_styles_saved as $customStyles) {
-                        $content .= '<li class="advgb-customstyles-items" data-id-customstyle="'.$customStyles['id'].'">';
+                        $content .= '<li class="advgb-customstyles-items" data-id-customstyle="'.(int)$customStyles['id'].'">';
                         $content .= '<a><i class="advgbicon-quill"></i><span class="advgb-customstyles-items-title">'.esc_html($customStyles['title']).'</span></a>';
                         $content .= '<a class="copy"><i class="advgbicon-copy"></i></a>';
                         $content .= '<a class="trash"><i class="advgbicon-trash"></i></a>';
                         $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('.esc_html($customStyles['name']).')</li></ul>';
                         $content .= '</li>';
                     }
-                    $content .= '<li><a class="advgb-customstyles-new"><i class="advgbicon-plus"></i>'.__('Add new class', 'advanced-gutenberg').'</a></li>';
+                    $content .= '<li><a class="advgb-customstyles-new"><i class="advgbicon-plus"></i>'.esc_html__('Add new class', 'advanced-gutenberg').'</a></li>';
 
-                    echo $content; // @codingStandardsIgnoreLine
+                    echo $content; // phpcs:ignore -- already escaped
                     ?>
                 </ul>
                 <span id="savedInfo" style="display:none;">
@@ -198,6 +198,6 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
     </div>
 
     <div id="translation-tab" class="tab-content clearfix" style="display: none;">
-        <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // @codingStandardsIgnoreLine ?>
+        <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore -- already escaped ?>
     </div>
 </div>

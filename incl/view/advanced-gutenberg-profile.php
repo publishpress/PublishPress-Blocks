@@ -16,9 +16,10 @@ if ($roles_access_saved === '') {
 $users_access_saved = get_post_meta($postid, 'users_access', true);
 $users_access_saved = $users_access_saved ? $users_access_saved : array();
 
-$disabled = $rotating = ''; // @codingStandardsIgnoreLine
+$disabled = '';
+$rotating = '';
 $button_text = __('Update list', 'advanced-gutenberg');
-$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === true); // @codingStandardsIgnoreLine
+$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === true); // phpcs:ignore -- update list, no need nonce
 if ($updating) {
     $disabled = 'disabled';
     $rotating = 'rotating';
@@ -146,7 +147,7 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field');
                 <tbody id="advgb-users-body">
                 <?php
                 $users_per_page = 20;
-                $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // @codingStandardsIgnoreLine
+                $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- View request, no action
                 $paged          = max(1, $pagenum);
                 $args           = array(
                     'number'  => $users_per_page,
@@ -204,7 +205,11 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field');
                        value="<?php echo esc_html($list_users_access) ?>"/>
             </table>
             <p id="pagination">
-                <?php $doneLeft = $doneRight = $skipLeft = $skipRight = false; // @codingStandardsIgnoreLine
+                <?php
+                $doneLeft   = false;
+                $doneRight  = false;
+                $skipLeft   = false;
+                $skipRight  = false;
                 if ($total_pages > 1) {
                     for ($i = 1; $i <= $total_pages; $i ++) {
                         if ($i < $pagenum - 2) {
