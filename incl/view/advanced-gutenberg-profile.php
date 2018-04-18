@@ -19,7 +19,7 @@ $users_access_saved = $users_access_saved ? $users_access_saved : array();
 $disabled = '';
 $rotating = '';
 $button_text = __('Update list', 'advanced-gutenberg');
-$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === true); // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- update list, no need nonce
+$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === 'true'); // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- begin to enqueue update blocks list, we have nonce later
 if ($updating) {
     $disabled = 'disabled';
     $rotating = 'rotating';

@@ -4,6 +4,7 @@ window.onload = function () {
         var allBlocks = wp.blocks.getBlockTypes();
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
+        var nonce = '';
 
         allBlocks.forEach(function (block) {
             var blockItem = {
@@ -16,13 +17,20 @@ window.onload = function () {
             return block;
         });
 
+        if (typeof updateListNonce !== 'undefined') {
+            nonce = updateListNonce[0];
+        } else {
+            nonce = jQuery('#advgb_nonce_field').val();
+        }
+
         jQuery.ajax({
             url: ajaxurl,
             method: 'POST',
             data: {
                 action: 'advgb_update_blocks_list',
                 blocksList: listBlocks,
-                categoriesList: allCategories
+                categoriesList: allCategories,
+                nonce: nonce
             },
             success: function (res) {
                 if (typeof advgbUpdate !== 'undefined' && advgbUpdate.onProfile) {
@@ -100,8 +108,8 @@ window.onload = function () {
             },
             error: function () {
                 alert('Error while updating list!');
-                if (typeof advgbUpdate !== 'undefined' && advgbUpdate.onProfile)
-                    window.location.href = window.location.href.replace('&update_blocks_list=true', '');
+                // if (typeof advgbUpdate !== 'undefined' && advgbUpdate.onProfile)
+                //     window.location.href = window.location.href.replace('&update_blocks_list=true', '');
             }
         });
     }

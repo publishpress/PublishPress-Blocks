@@ -232,8 +232,18 @@ float: left;'
      */
     public function updateBlocksList()
     {
-        $blocksList     = $_POST['blocksList']; // phpcs:ignore -- background task, no nonce
-        $categoriesList = $_POST['categoriesList']; // phpcs:ignore -- background task, no nonce
+        if (!current_user_can('activate_plugins')) {
+            wp_send_json('', 400);
+        }
+
+        if (!wp_verify_nonce($_POST['nonce'], 'advgb_update_blocks_list')
+            && !wp_verify_nonce($_POST['nonce'], 'advgb_nonce')
+        ) {
+            wp_send_json('', 400);
+        }
+
+        $blocksList     = $_POST['blocksList'];
+        $categoriesList = $_POST['categoriesList'];
 
         update_option('advgb_blocks_list', $blocksList);
         update_option('advgb_categories_list', $categoriesList);
@@ -542,12 +552,14 @@ float: left;'
     public function initBlocksList()
     {
         if (get_option('advgb_blocks_list') === false) {
+            $advgb_nonce = wp_create_nonce('advgb_update_blocks_list');
             do_action('enqueue_block_editor_assets');
             wp_enqueue_script(
                 'update_list',
                 plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
                 array('wp-blocks', 'wp-element', 'wp-data')
             );
+            wp_localize_script('update_list', 'updateListNonce', array($advgb_nonce));
         }
     }
 
