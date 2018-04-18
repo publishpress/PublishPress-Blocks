@@ -40,7 +40,7 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
                 'users_access'  => array(),
             )
         );
-        @wp_insert_post($post_data, true); // phpcs:ignore -- Some annoying warnings, no harm here
+        wp_insert_post($post_data, true);
     }
 
     // Add default settings for first time install
