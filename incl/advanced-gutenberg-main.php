@@ -247,7 +247,7 @@ float: left;'
     /**
      * Ajax to get list of users
      *
-     * @return boolean,json     Return false if failure, json on success
+     * @return boolean,void     Return false if failure, echo json on success
      */
     public function getUsers()
     {
@@ -414,7 +414,7 @@ float: left;'
     /**
      * Ajax for custom styles
      *
-     * @return boolean,json     Return false if failure, json on success
+     * @return boolean,void     Return false if failure, echo json on success
      */
     public function customStylesAjax()
     {
