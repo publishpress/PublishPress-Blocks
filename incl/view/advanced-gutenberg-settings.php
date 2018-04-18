@@ -10,7 +10,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
 ?>
 <h1><?php esc_html_e('Advanced Gutenberg Settings', 'advanced-gutenberg') ?></h1>
 
-<?php if (isset($_GET['save'])) : // phpcs:ignore -- display message, no action ?>
+<?php if (isset($_GET['save'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
 <div id="advgb-config-success">
     <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg') ?>
     <i class="dashicons dashicons-dismiss" id="advgb-config-close"></i>
@@ -119,7 +119,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     }
                     $content .= '<li><a class="advgb-customstyles-new"><i class="advgbicon-plus"></i>'.esc_html__('Add new class', 'advanced-gutenberg').'</a></li>';
 
-                    echo $content; // phpcs:ignore -- already escaped
+                    echo $content; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
                     ?>
                 </ul>
                 <span id="savedInfo" style="display:none;">
@@ -198,6 +198,6 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
     </div>
 
     <div id="translation-tab" class="tab-content clearfix" style="display: none;">
-        <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore -- already escaped ?>
+        <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped ?>
     </div>
 </div>
