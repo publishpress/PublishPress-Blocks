@@ -2,9 +2,15 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "wp_version": "4.9.5",
   "changelog": {
+    "1.2.1": [
+      {
+        "type": "fix",
+        "title": "Improve code format and compatibility"
+      }
+    ],
     "1.2.0": [
       {
         "type": "feature",
