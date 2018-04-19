@@ -1100,11 +1100,11 @@ float: left;'
     /**
      * Active newly installed blocks by default
      *
-     * @param array $current_activated_blocks Current activated block list
+     * @param array|string $current_activated_blocks Current activated block list
      *
      * @return mixed    Array of activated blocks
      */
-    public function activeNewInstalledBlocks(array $current_activated_blocks)
+    public function activeNewInstalledBlocks($current_activated_blocks)
     {
         $new_blocks = array(
             'advgb/summary',
