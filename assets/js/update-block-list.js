@@ -108,8 +108,8 @@ window.onload = function () {
             },
             error: function () {
                 alert('Error while updating list!');
-                // if (typeof advgbUpdate !== 'undefined' && advgbUpdate.onProfile)
-                //     window.location.href = window.location.href.replace('&update_blocks_list=true', '');
+                if (typeof advgbUpdate !== 'undefined' && advgbUpdate.onProfile)
+                    window.location.href = window.location.href.replace('&update_blocks_list=true', '');
             }
         });
     }
