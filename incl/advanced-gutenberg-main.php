@@ -559,7 +559,7 @@ float: left;'
                 plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
                 array('wp-blocks', 'wp-element', 'wp-data')
             );
-            wp_localize_script('update_list', 'updateListNonce', array($advgb_nonce));
+            wp_localize_script('update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
         }
     }
 

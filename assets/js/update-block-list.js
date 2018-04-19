@@ -18,7 +18,7 @@ window.onload = function () {
         });
 
         if (typeof updateListNonce !== 'undefined') {
-            nonce = updateListNonce[0];
+            nonce = updateListNonce.nonce;
         } else {
             nonce = jQuery('#advgb_nonce_field').val();
         }
