@@ -63,7 +63,7 @@ registerBlockType('advgb/spacer', {
     title: __('Spacer'),
     description: __('Create space between blocks.'),
     icon: 'align-center',
-    category: 'formatting',
+    category: 'layout',
     keywords: [__('space'), __('spacer'), __('margin')],
     attributes: {
         height: {
