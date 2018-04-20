@@ -21,6 +21,8 @@ Additional features added to Gutenberg plugin:
 - Display alt information as lightbox caption in galleries
 - Create your custom CSS styles from the configuration and apply on paragraph blocks
 - Insert the Gutenberg post summary based on content headers
+- Advanced Button block: create button with more styles (hover, border, padding...)
+- Advanced List block: create list with list icon, icon color
 
 > <strong>Note about Advanced Gutenberg dev.</strong><br>
 > * This plugin is based on official Gutenberg plugin under active developement

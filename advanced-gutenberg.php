@@ -32,11 +32,16 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-defined('ABSPATH') or die;
+defined('ABSPATH') || die;
 
 //Check plugin requirements
 if (version_compare(PHP_VERSION, '5.3', '<')) {
     if (! function_exists('advgb_disable_plugin')) {
+        /**
+         * Disable plugin
+         *
+         * @return void
+         */
         function advgb_disable_plugin()
         {
             if (current_user_can('activate_plugins') && is_plugin_active(plugin_basename(__FILE__))) {
@@ -47,6 +52,11 @@ if (version_compare(PHP_VERSION, '5.3', '<')) {
     }
 
     if (! function_exists('advgb_show_error')) {
+        /**
+         * Show error
+         *
+         * @return void
+         */
         function advgb_show_error()
         {
             echo '<div class="error"><p><strong>Advanced Gutenberg</strong> need at least PHP 5.3 version, please update php before installing the plugin.</p></div>';

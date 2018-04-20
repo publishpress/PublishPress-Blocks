@@ -1,11 +1,11 @@
 <?php
-defined('ABSPATH') or die;
+defined('ABSPATH') || die;
 
 // Run when activate plugin
 register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
     // Check if Gutenberg is activated
     if (!function_exists('register_block_type')) {
-        wp_die('Gutenberg not activated!');
+        wp_die(esc_html__('Gutenberg not activated!', 'advanced-gutenberg'));
         exit;
     }
 
@@ -13,8 +13,9 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
         $versionRequired = '2.3.0';
         if (version_compare(GUTENBERG_VERSION, $versionRequired, 'lt')) {
             wp_die(
-                'We require at least Gutenberg version ' . $versionRequired
-                .'. Please update Gutenberg then comeback later!'
+                esc_html__('We require at least Gutenberg version ', 'advanced-gutenberg')
+                . esc_html($versionRequired) .
+                esc_html__('. Please update Gutenberg then comeback later!', 'advanced-gutenberg')
             );
             exit;
         }
@@ -39,7 +40,7 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
                 'users_access'  => array(),
             )
         );
-        @wp_insert_post($post_data, true);
+        wp_insert_post($post_data, true);
     }
 
     // Add default settings for first time install

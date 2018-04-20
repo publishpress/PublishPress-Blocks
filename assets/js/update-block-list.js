@@ -4,6 +4,7 @@ window.onload = function () {
         var allBlocks = wp.blocks.getBlockTypes();
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
+        var nonce = '';
 
         allBlocks.forEach(function (block) {
             var blockItem = {
@@ -16,13 +17,20 @@ window.onload = function () {
             return block;
         });
 
+        if (typeof updateListNonce !== 'undefined') {
+            nonce = updateListNonce.nonce;
+        } else {
+            nonce = jQuery('#advgb_nonce_field').val();
+        }
+
         jQuery.ajax({
             url: ajaxurl,
             method: 'POST',
             data: {
                 action: 'advgb_update_blocks_list',
                 blocksList: listBlocks,
-                categoriesList: allCategories
+                categoriesList: allCategories,
+                nonce: nonce
             },
             success: function (res) {
                 if (typeof advgbUpdate !== 'undefined' && advgbUpdate.onProfile) {

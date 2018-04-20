@@ -54,13 +54,16 @@ jQuery(document).ready(function ($) {
         (initCustomStyleNew = function () {
             $('#mybootstrap a.advgb-customstyles-new').unbind('click').click(function (e) {
                 that = this;
+                var nonce_val = $('#advgb_settings_nonce_field').val();
+
                 $.ajax({
                     url: ajaxurl,
                     type: 'POST',
                     dataType: 'json',
                     data: {
                         action: 'advgb_custom_styles_ajax',
-                        task: 'new'
+                        task: 'new',
+                        nonce: nonce_val
                     },
                     success: function (res, stt) {
                         if (stt === 'success') {
@@ -69,6 +72,9 @@ jQuery(document).ready(function ($) {
                         } else {
                             alert(stt);
                         }
+                    },
+                    error: function(jqxhr, textStatus, error) {
+                        alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
                     }
                 });
                 return false;
@@ -82,6 +88,8 @@ jQuery(document).ready(function ($) {
                 var cf = confirm('Do you really want to delete "' + $(this).prev().prev().text().trim() + '"?');
                 if (cf === true) {
                     var id = $(that).parent().data('id-customstyle');
+                    var nonce_val = $('#advgb_settings_nonce_field').val();
+
                     $.ajax({
                         url: ajaxurl,
                         type: 'POST',
@@ -89,7 +97,8 @@ jQuery(document).ready(function ($) {
                         data: {
                             action: 'advgb_custom_styles_ajax',
                             id: id,
-                            task: 'delete'
+                            task: 'delete',
+                            nonce: nonce_val
                         },
                         success: function (res, stt) {
                             if (stt === 'success') {
@@ -102,6 +111,9 @@ jQuery(document).ready(function ($) {
                             } else {
                                 alert(stt);
                             }
+                        },
+                        error: function(jqxhr, textStatus, error) {
+                            alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
                         }
                     });
                     return false;
@@ -114,6 +126,8 @@ jQuery(document).ready(function ($) {
             $('#mybootstrap .advgb-customstyles-items a.copy').unbind('click').click(function (e) {
                 that = this;
                 var id = $(that).parent().data('id-customstyle');
+                var nonce_val = $('#advgb_settings_nonce_field').val();
+
                 $.ajax({
                     url: ajaxurl,
                     type: 'POST',
@@ -121,7 +135,8 @@ jQuery(document).ready(function ($) {
                     data: {
                         action: 'advgb_custom_styles_ajax',
                         id: id,
-                        task: 'copy'
+                        task: 'copy',
+                        nonce: nonce_val
                     },
                     success: function (res, stt) {
                         if (stt === 'success') {
@@ -130,6 +145,9 @@ jQuery(document).ready(function ($) {
                         } else {
                             alert(stt);
                         }
+                    },
+                    error: function(jqxhr, textStatus, error) {
+                        alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
                     }
                 });
                 return false;
@@ -198,6 +216,7 @@ jQuery(document).ready(function ($) {
             $('#mybootstrap ul.advgb-customstyles-list li:first-child').addClass('active');
         }
         if (typeof (id_element) === "undefined" || id_element ==="") return;
+        var nonce_val = $('#advgb_settings_nonce_field').val();
         $.ajax({
             url: ajaxurl,
             type: 'POST',
@@ -205,7 +224,8 @@ jQuery(document).ready(function ($) {
             data: {
                 action: 'advgb_custom_styles_ajax',
                 id: id_element,
-                task: 'preview'
+                task: 'preview',
+                nonce: nonce_val
             },
             success: function (res, stt) {
                 if (stt === 'success') {
@@ -231,7 +251,7 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function(jqxhr, textStatus, error) {
-                alert(textStatus + " : " + error);
+                alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
             }
         })
     }
@@ -302,6 +322,7 @@ jQuery(document).ready(function ($) {
         var myTitle =  $('#advgb-customstyles-title').val().trim();
         var myClassname =  $('#advgb-customstyles-classname').val().trim();
         var myIdentifyColor =  $('#advgb-customstyles-identify-color').val().trim();
+        var nonce_val = $('#advgb_settings_nonce_field').val();
 
         $.ajax({
             url: ajaxurl,
@@ -313,7 +334,8 @@ jQuery(document).ready(function ($) {
                 name: myClassname,
                 mycss: myCustomCss,
                 mycolor: myIdentifyColor,
-                task: 'style_save'
+                task: 'style_save',
+                nonce: nonce_val
             },
             success: function (res, stt) {
                 if (stt === 'success') {
