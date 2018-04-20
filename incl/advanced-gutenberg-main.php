@@ -193,6 +193,11 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
+            'extend_options',
+            plugins_url('assets/blocks/extend-options/extend-options.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
@@ -1115,6 +1120,7 @@ float: left;'
             'advgb/summary',
             'advgb/button',
             'advgb/list',
+            'advgb/spacer',
         );
 
         // Avoid default value (string 'all')
