@@ -310,7 +310,7 @@ float: left;'
                 $pagenum = $_REQUEST['paged'];
             }
         }
-        // phpcs:enabled
+        // phpcs:enable
         $paged = max(1, $pagenum);
 
         if ($role === 'none') {
