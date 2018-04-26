@@ -84,7 +84,11 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field');
                                     endif; ?>
                                 />
                                 <label for="block-<?php echo esc_attr($block_id) ?>" class="switch-label">
-                                    <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
+                                    <?php if (strpos($block['icon'], '<svg') !== false) :
+                                        echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
+                                    else : ?>
+                                        <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
+                                    <?php endif; ?>
                                     <span class="block-title" title="<?php echo esc_html($block['title']) ?>">
                                         <?php echo esc_html($block['title']) ?>
                                     </span>

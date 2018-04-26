@@ -192,6 +192,11 @@ float: left;'
             plugins_url('assets/blocks/advbutton/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
+//        wp_enqueue_script(
+//            'counting_blocks',
+//            plugins_url('assets/blocks/count-up/block.js', dirname(__FILE__)),
+//            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+//        );
         wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
@@ -233,7 +238,7 @@ float: left;'
     /**
      * Ajax to update blocks list
      *
-     * @return void
+     * @return mixed
      */
     public function updateBlocksList()
     {
@@ -247,7 +252,20 @@ float: left;'
             wp_send_json('', 400);
         }
 
-        $blocksList     = $_POST['blocksList'];
+        /**
+         * Remove slashes on svg icon
+         *
+         * @param array $block Block to remove slashes
+         *
+         * @return mixed
+         */
+        function removeSlashes(array $block)
+        {
+            $block['icon'] = stripslashes($block['icon']);
+            return $block;
+        }
+
+        $blocksList     = array_map('removeSlashes', $_POST['blocksList']);
         $categoriesList = $_POST['categoriesList'];
 
         update_option('advgb_blocks_list', $blocksList);

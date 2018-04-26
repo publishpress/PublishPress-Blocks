@@ -55,41 +55,9 @@ ul.blocks-list li.block-item {
     padding: 10px;
     display: none;
 }
-.dashicons.dashicons-cover-image:before {
-    content: "\f128";
-}
-.dashicons.dashicons-block-default:before {
-    content: "\f480";
-}
-.dashicons.dashicons-columns:before {
-    content: "\f489";
-}
-.dashicons.dashicons-html:before {
-    content: "\f475";
-}
-.dashicons.dashicons-button:before {
-    content: "\f105";
-}
-.dashicons.dashicons-heading:before {
-    content: "\f324";
-}
-.dashicons.dashicons-shortcode:before {
-    content: "\f475";
-}
-.dashicons.dashicons-embed-generic:before {
-    content: "\f499";
-}
-.dashicons.dashicons-embed-post:before {
-    content: "\f491";
-}
-.dashicons.dashicons-embed-video:before {
-    content: "\f490";
-}
-.dashicons.dashicons-embed-photo:before {
-    content: "\f496";
-}
-.dashicons.dashicons-embed-audio:before {
-    content: "\f500";
+
+.switch-label svg, .switch-label i {
+    vertical-align: top;
 }
 
 /*Users tab*/
