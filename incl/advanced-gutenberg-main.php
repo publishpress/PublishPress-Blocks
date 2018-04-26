@@ -192,11 +192,11 @@ float: left;'
             plugins_url('assets/blocks/advbutton/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
-//        wp_enqueue_script(
-//            'counting_blocks',
-//            plugins_url('assets/blocks/count-up/block.js', dirname(__FILE__)),
-//            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
-//        );
+        wp_enqueue_script(
+            'counting_blocks',
+            plugins_url('assets/blocks/count-up/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
         wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
@@ -1089,6 +1089,21 @@ float: left;'
             );
         }
 
+        if (strpos($content, 'wp-block-advgb-count-up') !== false) {
+            wp_enqueue_script(
+                'waypoint_js',
+                'https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js'
+            );
+            wp_enqueue_script(
+                'countup_lib_js',
+                plugins_url('assets/blocks/count-up/jquery.counterup.min.js', dirname(__FILE__))
+            );
+            wp_enqueue_script(
+                'countup_js',
+                plugins_url('assets/blocks/count-up/countUp.js', dirname(__FILE__))
+            );
+        }
+
         return $content;
     }
 
@@ -1133,6 +1148,7 @@ float: left;'
             'advgb/summary',
             'advgb/button',
             'advgb/list',
+            'advgb/count-up',
         );
 
         // Avoid default value (string 'all')
