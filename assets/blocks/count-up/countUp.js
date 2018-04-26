@@ -1,5 +1,5 @@
 jQuery(document).ready(function ( $ ) {
-    $('.advgb-counter').counterUp({
+    $('.advgb-counter-number').counterUp({
         delay: 10,
         time: 1000
     });

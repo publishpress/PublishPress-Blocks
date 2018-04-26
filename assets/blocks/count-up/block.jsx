@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { registerBlockType, InspectorControls, RichText, ColorPalette } = wp.blocks;
-const { RangeControl, PanelBody, PanelColor } = wp.components;
+const { RangeControl, PanelBody, PanelColor, TextControl, SelectControl, Fill } = wp.components;
 
 class AdvCountUp extends Component {
     constructor() {
@@ -26,6 +26,8 @@ class AdvCountUp extends Component {
             countUpNumber,
             countUpNumberColor,
             countUpNumberSize,
+            countUpSymbol,
+            countUpSymbolPosition,
             descText,
             descTextColor,
         } = attributes;
@@ -58,6 +60,21 @@ class AdvCountUp extends Component {
                             max={ 100 }
                             value={ countUpNumberSize }
                             onChange={ (value) => setAttributes( { countUpNumberSize: value } ) }
+                        />
+                        <TextControl
+                            label={ __( 'Count Up Symbol' ) }
+                            help={ __( 'Add symbol before or after counter number.' ) }
+                            value={ countUpSymbol }
+                            onChange={ (value) => setAttributes( { countUpSymbol: value } ) }
+                        />
+                        <SelectControl
+                            label={ __( 'Symbol Placement' ) }
+                            value={ countUpSymbolPosition }
+                            options={ [
+                                { label: __( 'Before' ), value: 'before' },
+                                { label: __( 'After' ), value: 'after' },
+                            ] }
+                            onChange={ (value) => setAttributes( { countUpSymbolPosition: value } ) }
                         />
                     </PanelBody>
                 </InspectorControls>
@@ -124,6 +141,13 @@ registerBlockType( 'advgb/count-up', {
             type: 'number',
             default: 60,
         },
+        countUpSymbol: {
+            type: 'string',
+        },
+        countUpSymbolPosition: {
+            type: 'string',
+            default: 'before',
+        },
         descText: {
             type: 'string',
             default: __( 'and description' ),
@@ -140,9 +164,13 @@ registerBlockType( 'advgb/count-up', {
             countUpNumber,
             countUpNumberColor,
             countUpNumberSize,
+            countUpSymbol,
+            countUpSymbolPosition,
             descText,
             descTextColor,
         } = attributes;
+
+        const countSymbolElm = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol }</span>;
 
         return (
             <div className={ 'advgb-count-up' } style={ { textAlign: 'center' } }>
@@ -152,7 +180,9 @@ registerBlockType( 'advgb/count-up', {
                 <div className={ 'advgb-counter' }
                      style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                 >
-                    { countUpNumber }
+                    {countUpSymbolPosition === 'before' && countSymbolElm}
+                    <span className={ 'advgb-counter-number' }>{ countUpNumber }</span>
+                    {countUpSymbolPosition === 'after' && countSymbolElm}
                 </div>
                 <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
                     { descText }

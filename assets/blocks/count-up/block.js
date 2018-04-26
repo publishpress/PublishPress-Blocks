@@ -20,7 +20,10 @@ var _wp$blocks = wp.blocks,
 var _wp$components = wp.components,
     RangeControl = _wp$components.RangeControl,
     PanelBody = _wp$components.PanelBody,
-    PanelColor = _wp$components.PanelColor;
+    PanelColor = _wp$components.PanelColor,
+    TextControl = _wp$components.TextControl,
+    SelectControl = _wp$components.SelectControl,
+    Fill = _wp$components.Fill;
 
 var AdvCountUp = function (_Component) {
     _inherits(AdvCountUp, _Component);
@@ -58,6 +61,8 @@ var AdvCountUp = function (_Component) {
                 countUpNumber = attributes.countUpNumber,
                 countUpNumberColor = attributes.countUpNumberColor,
                 countUpNumberSize = attributes.countUpNumberSize,
+                countUpSymbol = attributes.countUpSymbol,
+                countUpSymbolPosition = attributes.countUpSymbolPosition,
                 descText = attributes.descText,
                 descTextColor = attributes.descTextColor;
 
@@ -108,6 +113,22 @@ var AdvCountUp = function (_Component) {
                             value: countUpNumberSize,
                             onChange: function onChange(value) {
                                 return setAttributes({ countUpNumberSize: value });
+                            }
+                        }),
+                        React.createElement(TextControl, {
+                            label: __('Count Up Symbol'),
+                            help: __('Add symbol before or after counter number.'),
+                            value: countUpSymbol,
+                            onChange: function onChange(value) {
+                                return setAttributes({ countUpSymbol: value });
+                            }
+                        }),
+                        React.createElement(SelectControl, {
+                            label: __('Symbol Placement'),
+                            value: countUpSymbolPosition,
+                            options: [{ label: __('Before'), value: 'before' }, { label: __('After'), value: 'after' }],
+                            onChange: function onChange(value) {
+                                return setAttributes({ countUpSymbolPosition: value });
                             }
                         })
                     )
@@ -191,6 +212,13 @@ registerBlockType('advgb/count-up', {
             type: 'number',
             default: 60
         },
+        countUpSymbol: {
+            type: 'string'
+        },
+        countUpSymbolPosition: {
+            type: 'string',
+            default: 'before'
+        },
         descText: {
             type: 'string',
             default: __('and description')
@@ -207,9 +235,17 @@ registerBlockType('advgb/count-up', {
             countUpNumber = attributes.countUpNumber,
             countUpNumberColor = attributes.countUpNumberColor,
             countUpNumberSize = attributes.countUpNumberSize,
+            countUpSymbol = attributes.countUpSymbol,
+            countUpSymbolPosition = attributes.countUpSymbolPosition,
             descText = attributes.descText,
             descTextColor = attributes.descTextColor;
 
+
+        var countSymbolElm = React.createElement(
+            'span',
+            { className: 'advgb-counter-symbol' },
+            countUpSymbol
+        );
 
         return React.createElement(
             'div',
@@ -224,7 +260,13 @@ registerBlockType('advgb/count-up', {
                 { className: 'advgb-counter',
                     style: { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' }
                 },
-                countUpNumber
+                countUpSymbolPosition === 'before' && countSymbolElm,
+                React.createElement(
+                    'span',
+                    { className: 'advgb-counter-number' },
+                    countUpNumber
+                ),
+                countUpSymbolPosition === 'after' && countSymbolElm
             ),
             React.createElement(
                 'p',
