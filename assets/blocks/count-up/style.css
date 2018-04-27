@@ -1,0 +1,12 @@
+.advgb-count-up > div {
+    flex: auto;
+    margin: 0 10px;
+}
+
+.advgb-column-1 .advgb-count-up-columns-two, .advgb-column-1 .advgb-count-up-columns-three {
+    display: none;
+}
+
+.advgb-column-2 .advgb-count-up-columns-three {
+    display: none;
+}

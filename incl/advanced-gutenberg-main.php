@@ -233,6 +233,10 @@ float: left;'
             'advbutton_blocks',
             plugins_url('assets/blocks/advbutton/style.css', dirname(__FILE__))
         );
+        wp_enqueue_style(
+            'advCountUp_blocks',
+            plugins_url('assets/blocks/count-up/style.css', dirname(__FILE__))
+        );
     }
 
     /**

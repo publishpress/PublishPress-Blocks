@@ -22,20 +22,38 @@ class AdvCountUp extends Component {
         const { attributes, setAttributes, isSelected } = this.props;
         const {
             headerText,
+            headerText2,
+            headerText3,
             headerTextColor,
             countUpNumber,
+            countUpNumber2,
+            countUpNumber3,
             countUpNumberColor,
             countUpNumberSize,
             countUpSymbol,
             countUpSymbolPosition,
             descText,
+            descText2,
+            descText3,
             descTextColor,
+            columns,
         } = attributes;
 
         return (
             <Fragment>
                 <InspectorControls>
                     <PanelBody title={ __( 'Count Up Setting' ) }>
+                        <SelectControl
+                            label={ __( 'Columns' ) }
+                            help={ __( 'Set numbers of Count Up be shown.' ) }
+                            value={ columns }
+                            options={ [
+                                { label: 'One', value: 1 },
+                                { label: 'Two', value: 2 },
+                                { label: 'Three', value: 3 },
+                            ] }
+                            onChange={ (value) => setAttributes( { columns: value } ) }
+                        />
                         <PanelColor title={ __( 'Header Color' ) } colorValue={ headerTextColor } initialOpen={ false }>
                             <ColorPalette
                                 value={ headerTextColor }
@@ -78,35 +96,166 @@ class AdvCountUp extends Component {
                         />
                     </PanelBody>
                 </InspectorControls>
-                <div className="advgb-count-up" style={ { textAlign: 'center' } }>
-                    <RichText
-                        tagName={ 'h4' }
-                        value={ headerText }
-                        onChange={ (value) => setAttributes( { headerText: value } ) }
-                        isSelected={ isSelected && currentEdit === 'header' }
-                        onFocus={ () => this.setCurrentEditArea( 'header' ) }
-                        style={ { color: headerTextColor } }
-                    />
-                    <RichText
-                        tagName={ 'div' }
-                        value={ countUpNumber }
-                        onChange={ (value) => setAttributes( { countUpNumber: value } ) }
-                        isSelected={ isSelected && currentEdit === 'countUp' }
-                        onFocus={ () => this.setCurrentEditArea( 'countUp' ) }
-                        style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
-                    />
-                    <RichText
-                        tagName={ 'p' }
-                        value={ descText }
-                        onChange={ (value) => setAttributes( { descText: value } ) }
-                        isSelected={ isSelected && currentEdit === 'desc' }
-                        onFocus={ () => this.setCurrentEditArea( 'desc' ) }
-                        style={ { color: descTextColor } }
-                    />
+                <div className={`advgb-count-up advgb-column-${columns}`} style={ { display: 'flex' } }>
+                    <div className="advgb-count-up-columns-one" style={ { textAlign: 'center' } }>
+                        <RichText
+                            tagName={ 'h4' }
+                            value={ headerText }
+                            onChange={ (value) => setAttributes( { headerText: value } ) }
+                            isSelected={ isSelected && currentEdit === 'header' }
+                            onFocus={ () => this.setCurrentEditArea( 'header' ) }
+                            style={ { color: headerTextColor } }
+                        />
+                        <RichText
+                            tagName={ 'div' }
+                            value={ countUpNumber }
+                            onChange={ (value) => setAttributes( { countUpNumber: value } ) }
+                            isSelected={ isSelected && currentEdit === 'countUp' }
+                            onFocus={ () => this.setCurrentEditArea( 'countUp' ) }
+                            style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
+                        />
+                        <RichText
+                            tagName={ 'p' }
+                            value={ descText }
+                            onChange={ (value) => setAttributes( { descText: value } ) }
+                            isSelected={ isSelected && currentEdit === 'desc' }
+                            onFocus={ () => this.setCurrentEditArea( 'desc' ) }
+                            style={ { color: descTextColor } }
+                        />
+                    </div>
+                    <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
+                        <RichText
+                            tagName={ 'h4' }
+                            value={ headerText2 }
+                            onChange={ (value) => setAttributes( { headerText2: value } ) }
+                            isSelected={ isSelected && currentEdit === 'header2' }
+                            onFocus={ () => this.setCurrentEditArea( 'header2' ) }
+                            style={ { color: headerTextColor } }
+                        />
+                        <RichText
+                            tagName={ 'div' }
+                            value={ countUpNumber2 }
+                            onChange={ (value) => setAttributes( { countUpNumber2: value } ) }
+                            isSelected={ isSelected && currentEdit === 'countUp2' }
+                            onFocus={ () => this.setCurrentEditArea( 'countUp2' ) }
+                            style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
+                        />
+                        <RichText
+                            tagName={ 'p' }
+                            value={ descText2 }
+                            onChange={ (value) => setAttributes( { descText2: value } ) }
+                            isSelected={ isSelected && currentEdit === 'desc2' }
+                            onFocus={ () => this.setCurrentEditArea( 'desc2' ) }
+                            style={ { color: descTextColor } }
+                        />
+                    </div>
+                    <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
+                        <RichText
+                            tagName={ 'h4' }
+                            value={ headerText3 }
+                            onChange={ (value) => setAttributes( { headerText3: value } ) }
+                            isSelected={ isSelected && currentEdit === 'header3' }
+                            onFocus={ () => this.setCurrentEditArea( 'header3' ) }
+                            style={ { color: headerTextColor } }
+                        />
+                        <RichText
+                            tagName={ 'div' }
+                            value={ countUpNumber3 }
+                            onChange={ (value) => setAttributes( { countUpNumber3: value } ) }
+                            isSelected={ isSelected && currentEdit === 'countUp3' }
+                            onFocus={ () => this.setCurrentEditArea( 'countUp3' ) }
+                            style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
+                        />
+                        <RichText
+                            tagName={ 'p' }
+                            value={ descText3 }
+                            onChange={ (value) => setAttributes( { descText3: value } ) }
+                            isSelected={ isSelected && currentEdit === 'desc3' }
+                            onFocus={ () => this.setCurrentEditArea( 'desc3' ) }
+                            style={ { color: descTextColor } }
+                        />
+                    </div>
                 </div>
             </Fragment>
         )
     }
+}
+
+function AdvCountUpSave( { attributes } ) {
+    const {
+        headerText,
+        headerText2,
+        headerText3,
+        headerTextColor,
+        countUpNumber,
+        countUpNumber2,
+        countUpNumber3,
+        countUpNumberColor,
+        countUpNumberSize,
+        countUpSymbol,
+        countUpSymbolPosition,
+        descText,
+        descText2,
+        descText3,
+        descTextColor,
+        columns,
+    } = attributes;
+
+    const countSymbolElm = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol }</span>;
+
+    return (
+        <div className={ 'advgb-count-up' } style={ { display: 'flex' } }>
+            <div className={ 'advgb-count-up-columns-one' } style={ { textAlign: 'center' } }>
+                <h4 className={ 'advgb-count-up-header' } style={ { color: headerTextColor } }>
+                    { headerText }
+                </h4>
+                <div className={ 'advgb-counter' }
+                     style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                >
+                    {countUpSymbolPosition === 'before' && countSymbolElm}
+                    <span className={ 'advgb-counter-number' }>{ countUpNumber }</span>
+                    {countUpSymbolPosition === 'after' && countSymbolElm}
+                </div>
+                <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
+                    { descText }
+                </p>
+            </div>
+            {parseInt(columns) > 1 && (
+                <div className={ 'advgb-count-up-columns-two' } style={ { textAlign: 'center' } }>
+                    <h4 className={ 'advgb-count-up-header' } style={ { color: headerTextColor } }>
+                        { headerText2 }
+                    </h4>
+                    <div className={ 'advgb-counter' }
+                         style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                    >
+                        {countUpSymbolPosition === 'before' && countSymbolElm}
+                        <span className={ 'advgb-counter-number' }>{ countUpNumber2 }</span>
+                        {countUpSymbolPosition === 'after' && countSymbolElm}
+                    </div>
+                    <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
+                        { descText2 }
+                    </p>
+                </div>
+            ) }
+            {parseInt(columns) > 2 && (
+                <div className={ 'advgb-count-up-columns-three' } style={ { textAlign: 'center' } }>
+                    <h4 className={ 'advgb-count-up-header' } style={ { color: headerTextColor } }>
+                        { headerText3 }
+                    </h4>
+                    <div className={ 'advgb-counter' }
+                         style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
+                    >
+                        {countUpSymbolPosition === 'before' && countSymbolElm}
+                        <span className={ 'advgb-counter-number' }>{ countUpNumber3 }</span>
+                        {countUpSymbolPosition === 'after' && countSymbolElm}
+                    </div>
+                    <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
+                        { descText3 }
+                    </p>
+                </div>
+            ) }
+        </div>
+    );
 }
 
 const countUpBlockIcon = (
@@ -125,21 +274,37 @@ registerBlockType( 'advgb/count-up', {
     attributes: {
         headerText: {
             type: 'string',
-            default: __( 'Header text' )
+            default: __( 'Header text' ),
+        },
+        headerText2: {
+            type: 'string',
+            default: __( 'Header text' ),
+        },
+        headerText3: {
+            type: 'string',
+            default: __( 'Header text' ),
         },
         headerTextColor: {
             type: 'string',
         },
         countUpNumber: {
             type: 'number',
-            default: 5678.9
+            default: 56789
+        },
+        countUpNumber2: {
+            type: 'number',
+            default: 56789
+        },
+        countUpNumber3: {
+            type: 'number',
+            default: 56789
         },
         countUpNumberColor: {
             type: 'string',
         },
         countUpNumberSize: {
             type: 'number',
-            default: 60,
+            default: 55,
         },
         countUpSymbol: {
             type: 'string',
@@ -152,42 +317,22 @@ registerBlockType( 'advgb/count-up', {
             type: 'string',
             default: __( 'and description' ),
         },
+        descText2: {
+            type: 'string',
+            default: __( 'and description' ),
+        },
+        descText3: {
+            type: 'string',
+            default: __( 'and description' ),
+        },
         descTextColor: {
             type: 'string',
+        },
+        columns: {
+            type: 'number',
+            default: 1,
         }
     },
     edit: AdvCountUp,
-    save: ( { attributes } ) => {
-        const {
-            headerText,
-            headerTextColor,
-            countUpNumber,
-            countUpNumberColor,
-            countUpNumberSize,
-            countUpSymbol,
-            countUpSymbolPosition,
-            descText,
-            descTextColor,
-        } = attributes;
-
-        const countSymbolElm = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol }</span>;
-
-        return (
-            <div className={ 'advgb-count-up' } style={ { textAlign: 'center' } }>
-                <h4 className={ 'advgb-count-up-header' } style={ { color: headerTextColor } }>
-                    { headerText }
-                </h4>
-                <div className={ 'advgb-counter' }
-                     style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
-                >
-                    {countUpSymbolPosition === 'before' && countSymbolElm}
-                    <span className={ 'advgb-counter-number' }>{ countUpNumber }</span>
-                    {countUpSymbolPosition === 'after' && countSymbolElm}
-                </div>
-                <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
-                    { descText }
-                </p>
-            </div>
-        );
-    }
+    save: AdvCountUpSave,
 } );
