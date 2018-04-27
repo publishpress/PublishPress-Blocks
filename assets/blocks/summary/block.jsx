@@ -6,7 +6,7 @@ const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
 
 const summaryBlockIcon = (
-    <svg fill="#000000" height="20" viewBox="1 2 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+    <svg fill="#000000" height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
         <path d="M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z"/>
         <path d="M0 0h24v24H0z" fill="none"/>
     </svg>
