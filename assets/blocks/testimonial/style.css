@@ -1,0 +1,55 @@
+.advgb-testimonial {
+    display: flex;
+}
+
+.advgb-testimonial > div {
+    flex: auto;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.advgb-column-1 .advgb-testimonial-columns-two, .advgb-column-1 .advgb-testimonial-columns-three {
+    display: none;
+}
+
+.advgb-column-2 .advgb-testimonial-columns-three {
+    display: none;
+}
+
+.advgb-testimonial .advgb-testimonial-avatar-group {
+    position: relative;
+}
+
+.advgb-testimonial .advgb-testimonial-avatar-group:hover .advgb-testimonial-avatar-clear {
+    display: inline-block;
+}
+
+.advgb-testimonial .advgb-testimonial-avatar {
+    display: inline-block;
+    height: 70px;
+    width: 70px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-style: solid;
+}
+
+.advgb-testimonial .advgb-testimonial-avatar-clear {
+    position: absolute;
+    top: 0;
+    margin-left: 5px;
+    display: none;
+    cursor: pointer;
+}
+
+.advgb-testimonial .advgb-testimonial-name {
+    padding: 5px;
+}
+
+.advgb-testimonial p.advgb-testimonial-position {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin: 5px auto;
+}

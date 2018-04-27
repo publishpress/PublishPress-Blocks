@@ -193,10 +193,18 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
-            'counting_blocks',
+            'countUp_blocks',
             plugins_url('assets/blocks/count-up/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
+        wp_enqueue_script(
+            'testimonial_blocks',
+            plugins_url('assets/blocks/testimonial/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
+        wp_localize_script('testimonial_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
+
         wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
@@ -236,6 +244,10 @@ float: left;'
         wp_enqueue_style(
             'advCountUp_blocks',
             plugins_url('assets/blocks/count-up/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'advTestimonial_blocks',
+            plugins_url('assets/blocks/testimonial/style.css', dirname(__FILE__))
         );
     }
 
@@ -1153,6 +1165,7 @@ float: left;'
             'advgb/button',
             'advgb/list',
             'advgb/count-up',
+            'advgb/testimonial',
         );
 
         // Avoid default value (string 'all')
