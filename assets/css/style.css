@@ -43,7 +43,7 @@ ul.blocks-list li.block-item {
 }
 
 .block-item input:not(:checked) + label {
-    color: #999;
+    opacity: 0.5;
 }
 
 .block-item.new-block {
