@@ -22,8 +22,7 @@ var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     PanelColor = _wp$components.PanelColor,
     TextControl = _wp$components.TextControl,
-    SelectControl = _wp$components.SelectControl,
-    Fill = _wp$components.Fill;
+    SelectControl = _wp$components.SelectControl;
 
 var AdvCountUp = function (_Component) {
     _inherits(AdvCountUp, _Component);
