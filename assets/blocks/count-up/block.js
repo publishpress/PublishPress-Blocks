@@ -82,11 +82,11 @@ var AdvCountUp = function (_Component) {
                     React.createElement(
                         PanelBody,
                         { title: __('Count Up Setting') },
-                        React.createElement(SelectControl, {
+                        React.createElement(RangeControl, {
                             label: __('Columns'),
-                            help: __('Set numbers of Count Up be shown.'),
+                            min: 1,
+                            max: 3,
                             value: columns,
-                            options: [{ label: 'One', value: 1 }, { label: 'Two', value: 2 }, { label: 'Three', value: 3 }],
                             onChange: function onChange(value) {
                                 return setAttributes({ columns: value });
                             }
