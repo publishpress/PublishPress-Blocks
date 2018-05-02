@@ -138,7 +138,8 @@ float: left;'
      */
     public function __construct()
     {
-        add_action('wp_enqueue_scripts', array($this, 'registerStylesScripts'));
+        add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
+        add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
 
         if (is_admin()) {
@@ -659,10 +660,6 @@ float: left;'
             'minicolors_css',
             plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
         );
-        wp_register_style(
-            'colorbox_style',
-            plugins_url('assets/css/colorbox.css', dirname(__FILE__))
-        );
 
         // Register JS
         wp_register_script(
@@ -718,6 +715,20 @@ float: left;'
             'minicolors_js',
             plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__))
         );
+    }
+
+    /**
+     * Register front-end styles and script for later use
+     *
+     * @return void
+     */
+    public function registerStylesScriptsFrontend()
+    {
+        wp_register_style(
+            'colorbox_style',
+            plugins_url('assets/css/colorbox.css', dirname(__FILE__))
+        );
+
         wp_register_script(
             'colorbox_js',
             plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__))
