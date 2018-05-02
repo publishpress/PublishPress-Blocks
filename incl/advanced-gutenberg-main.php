@@ -183,18 +183,23 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
-            'advlist_blocks',
+            'advList_blocks',
             plugins_url('assets/blocks/advlist/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
-            'advbutton_blocks',
+            'advButton_blocks',
             plugins_url('assets/blocks/advbutton/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
             'countUp_blocks',
             plugins_url('assets/blocks/count-up/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
+            'advImage_blocks',
+            plugins_url('assets/blocks/advimage/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
@@ -248,6 +253,10 @@ float: left;'
         wp_enqueue_style(
             'advTestimonial_blocks',
             plugins_url('assets/blocks/testimonial/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'advImage_blocks',
+            plugins_url('assets/blocks/advimage/style.css', dirname(__FILE__))
         );
     }
 
@@ -1166,6 +1175,7 @@ float: left;'
             'advgb/list',
             'advgb/count-up',
             'advgb/testimonial',
+            'advgb/image',
         );
 
         // Avoid default value (string 'all')
