@@ -239,8 +239,8 @@ class AdvTestimonial extends Component {
                                              borderColor: avatarBorderColor,
                                              width: avatarSize + 'px',
                                              height: avatarSize + 'px',
-                                             title={ __( 'Click to change avatar' ) }
                                          } }
+                                         title={ __( 'Click to change avatar' ) }
                                     />
                                     <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
                                           title={ __( 'Remove avatar' ) }

@@ -358,7 +358,8 @@ var AdvTestimonial = function (_Component) {
                                             borderColor: avatarBorderColor,
                                             width: avatarSize + 'px',
                                             height: avatarSize + 'px'
-                                        }
+                                        },
+                                        title: __('Click to change avatar')
                                     }),
                                     React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
                                         title: __('Remove avatar'),
