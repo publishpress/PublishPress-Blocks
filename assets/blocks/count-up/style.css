@@ -1,6 +1,14 @@
+.advgb-count-up {
+    margin: 10px auto;
+}
+
 .advgb-count-up > div {
     flex: auto;
     margin: 0 10px;
+}
+
+.advgb-counter {
+    line-height: normal;
 }
 
 .advgb-column-1 .advgb-count-up-columns-two, .advgb-column-1 .advgb-count-up-columns-three {
