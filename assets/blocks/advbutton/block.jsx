@@ -113,7 +113,7 @@ class AdvButton extends Component {
                         <TextControl
                             label={ [
                                 __( 'Link URL' ),
-                                (url && <a href={ url || '#' } target="_blank" style={ { float: 'right' } }>
+                                (url && <a href={ url || '#' } key="link_url" target="_blank" style={ { float: 'right' } }>
                                     { __( 'Preview' ) }
                                 </a>)
                             ] }
