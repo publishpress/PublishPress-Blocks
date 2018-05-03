@@ -17,7 +17,7 @@
 }
 
 .advgb-image-block * {
-    transition: all 0.4s ease-in !important;
+    transition: all 0.4s ease-in-out !important;
 }
 
 .advgb-image-block .button {
