@@ -1130,7 +1130,7 @@ float: left;'
         if (strpos($content, 'wp-block-advgb-count-up') !== false) {
             wp_enqueue_script(
                 'waypoint_js',
-                'https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js'
+                'https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js'
             );
             wp_enqueue_script(
                 'countup_lib_js',
