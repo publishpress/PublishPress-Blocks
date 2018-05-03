@@ -25,6 +25,7 @@ var _wp$components = wp.components,
     PanelColor = _wp$components.PanelColor,
     ToggleControl = _wp$components.ToggleControl,
     SelectControl = _wp$components.SelectControl,
+    TextControl = _wp$components.TextControl,
     IconButton = _wp$components.IconButton,
     Button = _wp$components.Button;
 
@@ -57,7 +58,9 @@ var AdvImage = function (_Component) {
                 attributes = _props.attributes,
                 setAttributes = _props.setAttributes,
                 isSelected = _props.isSelected;
-            var imageUrl = attributes.imageUrl,
+            var openOnClick = attributes.openOnClick,
+                openUrl = attributes.openUrl,
+                imageUrl = attributes.imageUrl,
                 imageID = attributes.imageID,
                 title = attributes.title,
                 titleColor = attributes.titleColor,
@@ -70,7 +73,7 @@ var AdvImage = function (_Component) {
                 vAlign = attributes.vAlign,
                 hAlign = attributes.hAlign;
 
-            var fullWidthClassName = fullWidth ? 'full-width' : '';
+            var blockClassName = ['advgb-image-block', fullWidth && 'full-width'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Fragment,
@@ -109,6 +112,26 @@ var AdvImage = function (_Component) {
                     React.createElement(
                         PanelBody,
                         { title: __('Advanced Image') },
+                        React.createElement(SelectControl, {
+                            label: __('Action on click'),
+                            value: openOnClick,
+                            options: [{ label: __('None'), value: 'none' }, { label: __('Open image in lightbox'), value: 'lightbox' }, { label: __('Open custom URL'), value: 'url' }],
+                            onChange: function onChange(value) {
+                                return setAttributes({ openOnClick: value });
+                            }
+                        }),
+                        openOnClick === 'url' && React.createElement(TextControl, {
+                            label: [__('Link URL'), openUrl && React.createElement(
+                                'a',
+                                { href: openUrl || '#', key: 'advgb_image_link_url', target: '_blank', style: { float: 'right' } },
+                                __('Preview')
+                            )],
+                            value: openUrl,
+                            placeholder: __('Enter URL…'),
+                            onChange: function onChange(text) {
+                                return setAttributes({ openUrl: text });
+                            }
+                        }),
                         React.createElement(
                             PanelBody,
                             { title: __('Image Size') },
@@ -192,7 +215,7 @@ var AdvImage = function (_Component) {
                 ),
                 React.createElement(
                     'div',
-                    { className: 'advgb-image-block ' + fullWidthClassName,
+                    { className: blockClassName,
                         style: {
                             backgroundImage: 'url( ' + imageUrl + ')',
                             height: height,
@@ -270,6 +293,13 @@ registerBlockType('advgb/image', {
     category: 'common',
     keywords: [__('image'), __('photo'), __('box')],
     attributes: {
+        openOnClick: {
+            type: 'string',
+            default: 'none'
+        },
+        openUrl: {
+            type: 'string'
+        },
         imageUrl: {
             type: 'string'
         },
@@ -320,7 +350,9 @@ registerBlockType('advgb/image', {
     edit: AdvImage,
     save: function save(_ref3) {
         var attributes = _ref3.attributes;
-        var imageUrl = attributes.imageUrl,
+        var openOnClick = attributes.openOnClick,
+            openUrl = attributes.openUrl,
+            imageUrl = attributes.imageUrl,
             title = attributes.title,
             titleColor = attributes.titleColor,
             subtitle = attributes.subtitle,
@@ -332,21 +364,25 @@ registerBlockType('advgb/image', {
             vAlign = attributes.vAlign,
             hAlign = attributes.hAlign;
 
-        var fullWidthClassName = fullWidth ? 'full-width' : '';
+        var linkURL = openOnClick === 'url' && !!openUrl ? openUrl : undefined;
+        var blockClassName = ['advgb-image-block', fullWidth && 'full-width', openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox'].filter(Boolean).join(' ');
 
         return React.createElement(
             'div',
-            { className: 'advgb-image-block ' + fullWidthClassName,
+            { className: blockClassName,
                 style: {
                     backgroundImage: 'url( ' + imageUrl + ')',
                     height: height,
                     width: width,
                     justifyContent: vAlign,
                     alignItems: hAlign
-                }
+                },
+                'data-image': imageUrl
             },
-            React.createElement('span', { className: 'advgb-image-overlay',
-                style: { backgroundColor: overlayColor }
+            React.createElement('a', { className: 'advgb-image-overlay',
+                style: { backgroundColor: overlayColor },
+                target: '_blank',
+                href: linkURL
             }),
             React.createElement(
                 'h4',

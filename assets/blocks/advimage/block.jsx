@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { registerBlockType, InspectorControls, BlockControls, RichText, ColorPalette, MediaUpload } = wp.blocks;
-const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, IconButton, Button } = wp.components;
+const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, TextControl, IconButton, Button } = wp.components;
 
 class AdvImage extends Component {
     constructor() {
@@ -19,6 +19,8 @@ class AdvImage extends Component {
         const { currentEdit } = this.state;
         const { attributes, setAttributes, isSelected } = this.props;
         const {
+            openOnClick,
+            openUrl,
             imageUrl,
             imageID,
             title,
@@ -32,7 +34,10 @@ class AdvImage extends Component {
             vAlign,
             hAlign,
         } = attributes;
-        const fullWidthClassName = fullWidth ? 'full-width' : '';
+        const blockClassName = [
+            'advgb-image-block',
+            fullWidth && 'full-width',
+        ].filter( Boolean ).join( ' ' );
 
         return (
             <Fragment>
@@ -61,6 +66,29 @@ class AdvImage extends Component {
                 ) }
                 <InspectorControls>
                     <PanelBody title={ __( 'Advanced Image' ) }>
+                        <SelectControl
+                            label={ __( 'Action on click' ) }
+                            value={ openOnClick }
+                            options={ [
+                                { label: __( 'None' ), value: 'none' },
+                                { label: __( 'Open image in lightbox' ), value: 'lightbox' },
+                                { label: __( 'Open custom URL' ), value: 'url' },
+                            ] }
+                            onChange={ (value) => setAttributes( { openOnClick: value } ) }
+                        />
+                        {openOnClick === 'url' &&
+                            <TextControl
+                                label={ [
+                                    __( 'Link URL' ),
+                                    (openUrl && <a href={ openUrl || '#' } key="advgb_image_link_url" target="_blank" style={ { float: 'right' } }>
+                                        { __( 'Preview' ) }
+                                    </a>)
+                                ] }
+                                value={ openUrl }
+                                placeholder={ __( 'Enter URL…' ) }
+                                onChange={ ( text ) => setAttributes( { openUrl: text } ) }
+                            />
+                        }
                         <PanelBody title={ __( 'Image Size' ) }>
                             <ToggleControl
                                 label={ __( 'Full width' ) }
@@ -126,7 +154,7 @@ class AdvImage extends Component {
                         </PanelBody>
                     </PanelBody>
                 </InspectorControls>
-                <div className={ `advgb-image-block ${fullWidthClassName}` }
+                <div className={ blockClassName }
                      style={ {
                          backgroundImage: `url( ${imageUrl})`,
                          height: height,
@@ -191,6 +219,13 @@ registerBlockType( 'advgb/image', {
     category: 'common',
     keywords: [ __( 'image' ), __( 'photo' ), __( 'box' ) ],
     attributes: {
+        openOnClick: {
+            type: 'string',
+            default: 'none',
+        },
+        openUrl: {
+            type: 'string',
+        },
         imageUrl: {
             type: 'string',
         },
@@ -241,6 +276,8 @@ registerBlockType( 'advgb/image', {
     edit: AdvImage,
     save: ( { attributes } ) => {
         const {
+            openOnClick,
+            openUrl,
             imageUrl,
             title,
             titleColor,
@@ -253,10 +290,15 @@ registerBlockType( 'advgb/image', {
             vAlign,
             hAlign,
         } = attributes;
-        const fullWidthClassName = fullWidth ? 'full-width' : '';
+        const linkURL = ( openOnClick === 'url' && !!openUrl ) ? openUrl : undefined;
+        const blockClassName = [
+            'advgb-image-block',
+            fullWidth && 'full-width',
+            openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
+        ].filter( Boolean ).join( ' ' );
 
         return (
-            <div className={ `advgb-image-block ${fullWidthClassName}` }
+            <div className={ blockClassName }
                  style={ {
                      backgroundImage: `url( ${imageUrl})`,
                      height: height,
@@ -264,9 +306,12 @@ registerBlockType( 'advgb/image', {
                      justifyContent: vAlign,
                      alignItems: hAlign,
                  } }
+                 data-image={ imageUrl }
             >
-                <span className={ 'advgb-image-overlay' }
-                      style={ { backgroundColor: overlayColor } }
+                <a className={ 'advgb-image-overlay' }
+                   style={ { backgroundColor: overlayColor } }
+                   target={ '_blank' }
+                   href={ linkURL }
                 />
                 <h4 className={ 'advgb-image-title' } style={ { color: titleColor } }>
                     {title}

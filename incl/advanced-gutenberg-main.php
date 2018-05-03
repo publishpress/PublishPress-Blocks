@@ -1142,6 +1142,16 @@ float: left;'
             );
         }
 
+        if (strpos($content, 'advgb-image-block') !== false) {
+            wp_enqueue_style('colorbox_style');
+            wp_enqueue_script('colorbox_js');
+
+            wp_enqueue_script(
+                'advgbImageLightbox_js',
+                plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__))
+            );
+        }
+
         return $content;
     }
 
