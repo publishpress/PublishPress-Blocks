@@ -1,5 +1,6 @@
 .advgb-testimonial {
     display: flex;
+    margin: 20px auto;
 }
 
 .advgb-testimonial > div {
