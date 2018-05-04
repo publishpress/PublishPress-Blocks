@@ -174,11 +174,6 @@ float: left;'
     public function addEditorAssets()
     {
         wp_enqueue_script(
-            'spacer_blocks',
-            plugins_url('assets/blocks/spacer/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
-        );
-        wp_enqueue_script(
             'summary_blocks',
             plugins_url('assets/blocks/summary/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
