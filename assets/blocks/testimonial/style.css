@@ -30,13 +30,16 @@
     height: 70px;
     width: 70px;
     margin-bottom: 10px;
-    cursor: pointer;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     border-style: solid;
     border-width: 1px;
     border-color: #fff;
+}
+
+#editor .advgb-testimonial .advgb-testimonial-avatar {
+    cursor: pointer;
 }
 
 .advgb-testimonial .advgb-testimonial-avatar-clear {
