@@ -48,7 +48,7 @@ class AdvTestimonial extends Component {
         return (
             <Fragment>
                 <InspectorControls>
-                    <PanelBody title={ __( 'Count Up Setting' ) }>
+                    <PanelBody title={ __( 'Testimonial Setting' ) }>
                         <RangeControl
                             label={ __( 'Columns' ) }
                             min={ 1 }
