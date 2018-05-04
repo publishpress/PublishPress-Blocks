@@ -41,14 +41,6 @@
     padding: 0;
 }
 
-.advgb-image-subtitle {
-    opacity: 0;
-}
-
-.advgb-image-block:hover .advgb-image-subtitle {
-    opacity: 1;
-}
-
 .advgb-image-block:hover .advgb-image-overlay {
     opacity: 0.5;
 }
