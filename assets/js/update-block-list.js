@@ -1,6 +1,11 @@
 window.onload = function () {
     if (typeof wp.blocks !== 'undefined') {
-        wp.blocks.registerCoreBlocks();
+        if (typeof wp.blocks.registerCoreBlocks === 'function') {
+            wp.blocks.registerCoreBlocks();
+        } else if (typeof wp.coreBlocks.registerCoreBlocks === 'function') {
+            wp.coreBlocks.registerCoreBlocks();
+        }
+
         var allBlocks = wp.blocks.getBlockTypes();
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];

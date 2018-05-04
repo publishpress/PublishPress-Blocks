@@ -606,7 +606,7 @@ float: left;'
             wp_enqueue_script(
                 'update_list',
                 plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-                array('wp-blocks', 'wp-element', 'wp-data')
+                array('wp-blocks', 'wp-element', 'wp-data', 'wp-core-blocks')
             );
             wp_localize_script('update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
         }
@@ -665,7 +665,7 @@ float: left;'
         wp_register_script(
             'update_list',
             plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-            array('wp-blocks', 'wp-element', 'wp-data')
+            array('wp-blocks', 'wp-element', 'wp-data', 'wp-core-blocks')
         );
         wp_register_script(
             'profile_js',
