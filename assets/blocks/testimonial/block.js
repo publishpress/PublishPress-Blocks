@@ -86,7 +86,7 @@ var AdvTestimonial = function (_Component) {
                     null,
                     React.createElement(
                         PanelBody,
-                        { title: __('Testimonial Setting') },
+                        { title: __('Testimonial Settings') },
                         React.createElement(RangeControl, {
                             label: __('Columns'),
                             min: 1,

@@ -81,7 +81,7 @@ var AdvCountUp = function (_Component) {
                     null,
                     React.createElement(
                         PanelBody,
-                        { title: __('Count Up Setting') },
+                        { title: __('Count Up Settings') },
                         React.createElement(RangeControl, {
                             label: __('Columns'),
                             min: 1,
