@@ -114,7 +114,7 @@ class AdvTestimonial extends Component {
                 <div className={`advgb-testimonial advgb-column-${columns}`}>
                     <div className="advgb-testimonial-columns-one">
                         <MediaUpload
-                            onSelect={ (media) => setAttributes( { avatarUrl: media.url, avatarID: media.id } ) }
+                            onSelect={ (media) => setAttributes( { avatarUrl: media.sizes.thumbnail.url, avatarID: media.id } ) }
                             value={ avatarID }
                             type="image"
                             render={ ( { open } ) => (
@@ -169,7 +169,7 @@ class AdvTestimonial extends Component {
                     </div>
                     <div className="advgb-testimonial-columns-two">
                         <MediaUpload
-                            onSelect={ (media) => setAttributes( { avatarUrl2: media.url, avatarID2: media.id } ) }
+                            onSelect={ (media) => setAttributes( { avatarUrl2: media.sizes.thumbnail.url, avatarID2: media.id } ) }
                             value={ avatarID2 }
                             type="image"
                             render={ ( { open } ) => (
@@ -224,7 +224,7 @@ class AdvTestimonial extends Component {
                     </div>
                     <div className="advgb-testimonial-columns-three">
                         <MediaUpload
-                            onSelect={ (media) => setAttributes( { avatarUrl3: media.url, avatarID3: media.id } ) }
+                            onSelect={ (media) => setAttributes( { avatarUrl3: media.sizes.thumbnail.url, avatarID3: media.id } ) }
                             value={ avatarID3 }
                             type="image"
                             render={ ( { open } ) => (

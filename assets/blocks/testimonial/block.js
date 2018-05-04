@@ -187,7 +187,7 @@ var AdvTestimonial = function (_Component) {
                         { className: 'advgb-testimonial-columns-one' },
                         React.createElement(MediaUpload, {
                             onSelect: function onSelect(media) {
-                                return setAttributes({ avatarUrl: media.url, avatarID: media.id });
+                                return setAttributes({ avatarUrl: media.sizes.thumbnail.url, avatarID: media.id });
                             },
                             value: avatarID,
                             type: 'image',
@@ -263,7 +263,7 @@ var AdvTestimonial = function (_Component) {
                         { className: 'advgb-testimonial-columns-two' },
                         React.createElement(MediaUpload, {
                             onSelect: function onSelect(media) {
-                                return setAttributes({ avatarUrl2: media.url, avatarID2: media.id });
+                                return setAttributes({ avatarUrl2: media.sizes.thumbnail.url, avatarID2: media.id });
                             },
                             value: avatarID2,
                             type: 'image',
@@ -339,7 +339,7 @@ var AdvTestimonial = function (_Component) {
                         { className: 'advgb-testimonial-columns-three' },
                         React.createElement(MediaUpload, {
                             onSelect: function onSelect(media) {
-                                return setAttributes({ avatarUrl3: media.url, avatarID3: media.id });
+                                return setAttributes({ avatarUrl3: media.sizes.thumbnail.url, avatarID3: media.id });
                             },
                             value: avatarID3,
                             type: 'image',
