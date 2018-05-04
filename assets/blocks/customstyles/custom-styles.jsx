@@ -5,14 +5,16 @@ const { SelectControl } = wp.components;
 
 // Register custom styles to blocks attributes
 addFilter( 'blocks.registerBlockType', 'advgb/registerCustomStyleClass', function ( settings ) {
-    settings.attributes = Object.assign( settings.attributes, {
-        customStyle: {
-            type: 'string'
-        },
-        identifyColor: {
-            type: 'string'
-        }
-    } );
+    if (settings.name === 'core/paragraph') {
+        settings.attributes = Object.assign( settings.attributes, {
+            customStyle: {
+                type: 'string'
+            },
+            identifyColor: {
+                type: 'string'
+            }
+        } );
+    }
 
     return settings;
 } );
