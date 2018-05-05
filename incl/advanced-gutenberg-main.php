@@ -213,6 +213,12 @@ float: left;'
         );
         $custom_styles_data = get_option('advgb_custom_styles');
         wp_localize_script('custom_styles', 'advGb_CS', $custom_styles_data);
+
+        wp_enqueue_script(
+            'custom_separator',
+            plugins_url('assets/blocks/custom-separator/separator.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
+        );
     }
 
     /**
@@ -253,6 +259,10 @@ float: left;'
         wp_enqueue_style(
             'advImage_blocks',
             plugins_url('assets/blocks/advimage/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'custom_separator',
+            plugins_url('assets/blocks/custom-separator/frontend.css', dirname(__FILE__))
         );
     }
 
