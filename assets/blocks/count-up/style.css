@@ -1,3 +1,10 @@
+#editor .advgb-col-3 {
+    float: left;
+    width: 33%;
+    padding: 10px;
+    text-align: center;
+}
+
 .advgb-count-up {
     margin: 10px auto;
 }

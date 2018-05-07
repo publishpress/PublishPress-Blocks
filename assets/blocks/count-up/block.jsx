@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { registerBlockType, InspectorControls, RichText, ColorPalette } = wp.blocks;
-const { RangeControl, PanelBody, PanelColor, TextControl, SelectControl } = wp.components;
+const { RangeControl, PanelBody, PanelColor, TextControl, FormToggle } = wp.components;
 
 class AdvCountUp extends Component {
     constructor() {
@@ -31,7 +31,11 @@ class AdvCountUp extends Component {
             countUpNumberColor,
             countUpNumberSize,
             countUpSymbol,
-            countUpSymbolPosition,
+            countUpSymbol2,
+            countUpSymbol3,
+            countUpSymbolAfter,
+            countUpSymbolAfter2,
+            countUpSymbolAfter3,
             descText,
             descText2,
             descText3,
@@ -75,21 +79,49 @@ class AdvCountUp extends Component {
                             value={ countUpNumberSize }
                             onChange={ (value) => setAttributes( { countUpNumberSize: value } ) }
                         />
-                        <TextControl
-                            label={ __( 'Count Up Symbol' ) }
-                            help={ __( 'Add symbol before or after counter number.' ) }
-                            value={ countUpSymbol }
-                            onChange={ (value) => setAttributes( { countUpSymbol: value } ) }
-                        />
-                        <SelectControl
-                            label={ __( 'Symbol Placement' ) }
-                            value={ countUpSymbolPosition }
-                            options={ [
-                                { label: __( 'Before' ), value: 'before' },
-                                { label: __( 'After' ), value: 'after' },
-                            ] }
-                            onChange={ (value) => setAttributes( { countUpSymbolPosition: value } ) }
-                        />
+                        <div>{ __( 'Counter Up Symbol' ) }</div>
+                        {
+                            <div className={ 'advgb-col-3' }>
+                                <TextControl
+                                    value={ countUpSymbol }
+                                    onChange={ (value) => setAttributes( { countUpSymbol: value } ) }
+                                />
+                                <FormToggle
+                                    checked={ countUpSymbolAfter }
+                                    onChange={ () => setAttributes( { countUpSymbolAfter: !countUpSymbolAfter } ) }
+                                    title={ !!countUpSymbolAfter ? __( 'After' ) : __( 'Before' ) }
+                                />
+                            </div>
+                        }
+                        {parseInt(columns) > 1 &&
+                            <div className={ 'advgb-col-3' }>
+                                <TextControl
+                                    value={ countUpSymbol2 }
+                                    onChange={ (value) => setAttributes( { countUpSymbol2: value } ) }
+                                />
+                                <FormToggle
+                                    checked={ countUpSymbolAfter2 }
+                                    onChange={ () => setAttributes( { countUpSymbolAfter2: !countUpSymbolAfter2 } ) }
+                                    title={ !!countUpSymbolAfter2 ? __( 'After' ) : __( 'Before' ) }
+                                />
+                            </div>
+                        }
+                        {parseInt(columns) > 2 &&
+                            <div className={ 'advgb-col-3' }>
+                                <TextControl
+                                    value={ countUpSymbol3 }
+                                    onChange={ (value) => setAttributes( { countUpSymbol3: value } ) }
+                                />
+                                <FormToggle
+                                    checked={ countUpSymbolAfter3 }
+                                    onChange={ () => setAttributes( { countUpSymbolAfter3: !countUpSymbolAfter3 } ) }
+                                    title={ !!countUpSymbolAfter3 ? __( 'After' ) : __( 'Before' ) }
+                                />
+                            </div>
+                        }
+                        <p className={'components-base-control__help'} style={ { clear: 'both' } }>
+                            { __( 'Use toggle buttons above to define symbol placement before/after the number (toggle on is after).' ) }
+                        </p>
                     </PanelBody>
                 </InspectorControls>
                 <div className={`advgb-count-up advgb-column-${columns}`} style={ { display: 'flex' } }>
@@ -189,7 +221,11 @@ function AdvCountUpSave( { attributes } ) {
         countUpNumberColor,
         countUpNumberSize,
         countUpSymbol,
-        countUpSymbolPosition,
+        countUpSymbol2,
+        countUpSymbol3,
+        countUpSymbolAfter,
+        countUpSymbolAfter2,
+        countUpSymbolAfter3,
         descText,
         descText2,
         descText3,
@@ -198,6 +234,8 @@ function AdvCountUpSave( { attributes } ) {
     } = attributes;
 
     const countSymbolElm = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol }</span>;
+    const countSymbolElm2 = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol2 }</span>;
+    const countSymbolElm3 = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol3 }</span>;
 
     return (
         <div className={ 'advgb-count-up' } style={ { display: 'flex' } }>
@@ -208,9 +246,9 @@ function AdvCountUpSave( { attributes } ) {
                 <div className={ 'advgb-counter' }
                      style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                 >
-                    {countUpSymbolPosition === 'before' && countSymbolElm}
+                    {!countUpSymbolAfter && countSymbolElm}
                     <span className={ 'advgb-counter-number' }>{ countUpNumber }</span>
-                    {countUpSymbolPosition === 'after' && countSymbolElm}
+                    {!!countUpSymbolAfter && countSymbolElm}
                 </div>
                 <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
                     { descText }
@@ -224,9 +262,9 @@ function AdvCountUpSave( { attributes } ) {
                     <div className={ 'advgb-counter' }
                          style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                     >
-                        {countUpSymbolPosition === 'before' && countSymbolElm}
+                        {!countUpSymbolAfter2 && countSymbolElm2}
                         <span className={ 'advgb-counter-number' }>{ countUpNumber2 }</span>
-                        {countUpSymbolPosition === 'after' && countSymbolElm}
+                        {!!countUpSymbolAfter2 && countSymbolElm2}
                     </div>
                     <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
                         { descText2 }
@@ -241,9 +279,9 @@ function AdvCountUpSave( { attributes } ) {
                     <div className={ 'advgb-counter' }
                          style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                     >
-                        {countUpSymbolPosition === 'before' && countSymbolElm}
+                        {!countUpSymbolAfter3 && countSymbolElm3}
                         <span className={ 'advgb-counter-number' }>{ countUpNumber3 }</span>
-                        {countUpSymbolPosition === 'after' && countSymbolElm}
+                        {!!countUpSymbolAfter3 && countSymbolElm3}
                     </div>
                     <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
                         { descText3 }
@@ -305,9 +343,23 @@ registerBlockType( 'advgb/count-up', {
         countUpSymbol: {
             type: 'string',
         },
-        countUpSymbolPosition: {
+        countUpSymbol2: {
             type: 'string',
-            default: 'before',
+        },
+        countUpSymbol3: {
+            type: 'string',
+        },
+        countUpSymbolAfter: {
+            type: 'boolean',
+            default: false,
+        },
+        countUpSymbolAfter2: {
+            type: 'boolean',
+            default: false,
+        },
+        countUpSymbolAfter3: {
+            type: 'boolean',
+            default: false,
         },
         descText: {
             type: 'string',
