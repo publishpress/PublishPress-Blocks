@@ -638,15 +638,15 @@ registerBlockType('advgb/testimonial', {
         },
         position: {
             type: 'string',
-            default: __('Position')
+            default: __('Job Position')
         },
         position2: {
             type: 'string',
-            default: __('Position')
+            default: __('Job Position')
         },
         position3: {
             type: 'string',
-            default: __('Position')
+            default: __('Job Position')
         },
         positionColor: {
             type: 'string'
