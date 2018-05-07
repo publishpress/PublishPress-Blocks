@@ -485,15 +485,15 @@ registerBlockType('advgb/count-up', {
             type: 'string'
         },
         countUpNumber: {
-            type: 'number',
+            type: 'float',
             default: 56789
         },
         countUpNumber2: {
-            type: 'number',
+            type: 'float',
             default: 56789
         },
         countUpNumber3: {
-            type: 'number',
+            type: 'float',
             default: 56789
         },
         countUpNumberColor: {
