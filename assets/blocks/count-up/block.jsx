@@ -233,9 +233,9 @@ function AdvCountUpSave( { attributes } ) {
         columns,
     } = attributes;
 
-    const countSymbolElm = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol }</span>;
-    const countSymbolElm2 = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol2 }</span>;
-    const countSymbolElm3 = <span className={ 'advgb-counter-symbol' }>{ countUpSymbol3 }</span>;
+    const countSymbolElm = countUpSymbol ? <span className={ 'advgb-counter-symbol' }>{ countUpSymbol }</span> : '';
+    const countSymbolElm2 = countUpSymbol2 ? <span className={ 'advgb-counter-symbol' }>{ countUpSymbol2 }</span> : '';
+    const countSymbolElm3 = countUpSymbol3 ? <span className={ 'advgb-counter-symbol' }>{ countUpSymbol3 }</span> : '';
 
     return (
         <div className={ 'advgb-count-up' } style={ { display: 'flex' } }>

@@ -352,21 +352,21 @@ function AdvCountUpSave(_ref) {
         columns = attributes.columns;
 
 
-    var countSymbolElm = React.createElement(
+    var countSymbolElm = countUpSymbol ? React.createElement(
         'span',
         { className: 'advgb-counter-symbol' },
         countUpSymbol
-    );
-    var countSymbolElm2 = React.createElement(
+    ) : '';
+    var countSymbolElm2 = countUpSymbol2 ? React.createElement(
         'span',
         { className: 'advgb-counter-symbol' },
         countUpSymbol2
-    );
-    var countSymbolElm3 = React.createElement(
+    ) : '';
+    var countSymbolElm3 = countUpSymbol3 ? React.createElement(
         'span',
         { className: 'advgb-counter-symbol' },
         countUpSymbol3
-    );
+    ) : '';
 
     return React.createElement(
         'div',
