@@ -321,7 +321,7 @@ float: left;'
             return false;
         }
 
-        // phpcs:disable WordPress.CSRF.NonceVerification.NoNonceVerification -- View request, no action
+        // phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification -- View request, no action
         $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim($_REQUEST['search'])) : '';
         $role           = isset($_REQUEST['role']) ? $_REQUEST['role'] : '';
         $users_per_page = 20;
