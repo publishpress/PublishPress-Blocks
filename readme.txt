@@ -8,14 +8,14 @@ Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add advanced features to the official WordPress Gutenberg editor plugin like: edition profiles, lightbox on galleries
+Add advanced features to the official WordPress Gutenberg editor plugin like: profile edition, tons of new blocks
 
 == Description ==
 
-This plugin 
+This plugin comes over the Gutenberg plugin with an enhancement of the native blocks or adding new blocks. Gutenberg is the future of WordPress, start building with it today and get ready for tomorrow!
 
 Additional features added to Gutenberg plugin:
-- Create edition profiles and asign user or user group to the profile
+- Create edition profiles and assign user or user group to the profile
 - Select each edition tool per profile
 - Activate lightbox effect in Gutenberg galleries
 - Display alt information as lightbox caption in galleries
@@ -23,17 +23,20 @@ Additional features added to Gutenberg plugin:
 - Insert the Gutenberg post summary based on content headers
 - Advanced Button block: create button with more styles (hover, border, padding...)
 - Advanced List block: create list with list icon, icon color
+- Testimonial block: define avatar, title, text, colors...
+- Counter block: display numbers in a dynamic, fun and engaging way
+- Advanced Image block: a new image block with hover text, overlay, colors, link, advanced size definition
+- Supercharge the separator tool with size, color, spaces
 
-> <strong>Note about Advanced Gutenberg dev.</strong><br>
-> * This plugin is based on official Gutenberg plugin under active developement
-> * Some new features will be implemented soon, the major part of those new features are determined by Gutenberg code evolutions
-> * All suggestions are welcome!
+> <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
 
-> <a href="https://www.joomunited.com/news/gutenberg-advanced-comes-to-wordpress" rel="friend">Read the plugin presentation on our blog</a>
+> <strong>Note about Advanced Gutenberg development</strong><br>
+> This plugin is based on official Gutenberg plugin still under active development. Some new features will be implemented soon, the major part of those new features are determined by Gutenberg code evolutions. All suggestions are welcome!
 
 = Support =
 
 Before leaving a review >> Feel free to ask questions here in the support section, we reply to every question!
+We also have a forum on www.joomunited.com for feature requests.
 
 == Installation ==
 
@@ -56,10 +59,10 @@ Before leaving a review >> Feel free to ask questions here in the support sectio
 We reply to every question about the editor on the forum here, just ask :)
 
 = Does Advanced Gutenberg slowing down my website? =
-The plugin have almost NO impact on page load, it's only loaded during the edition process.
+The plugin has almost NO impact on page load, it's only loaded during the edition process.
 
 = Is Advanced Gutenberg free? =
-Yes totally free of charge.
+Yes, totally free of charge.
 
 = Can I translate Advanced Gutenberg plugin? =
 Yes, and that's really easy! JU Translation is a translation tool included in all our WordPress plugins: get, share and manage your extensions translations from a visual and easy to use interface! You'll find it in the Advanced Gutenberg settings menu
@@ -67,14 +70,15 @@ Yes, and that's really easy! JU Translation is a translation tool included in al
 = I don't see the new buttons or new tools in Advanced Gutenberg =
 1. Make sure the plugin is activated
 2. Make sure that an edition profile is linked to your account for example if you're in admin user role make sure that an edition profile is setup to be loaded for admins
+3. Advanced Gutenberg is pretty well integrated with native Gutenberg, some blocks are new some other are original Gutenberg blocks but supercharged by new features
 
 == Screenshots ==
 
 1. Profile edition with edition tool selection
 1. Attribute profiles to user or user roles
-1. Add lightbox to Gutenberg gallery images
+1. Testimonial and counter blocks
 1. Custom CSS applied to Gutenberg paragraph blocks
-1. Summary with anchors based on gutenberg headers
+1. Summary with anchors based on Gutenberg headers
 
 == Changelog ==
 
@@ -87,4 +91,4 @@ Update through the automatic WordPress updater, all Advanced Gutenberg content a
 
 == Requirements ==
 
-PHP 5.6+, PHP7 or 7.1 recommended for better performance, WordPress 4.8+
+PHP 5.6+, PHP7, 7.1 or 7.2 recommended for better performance, WordPress 4.9+
