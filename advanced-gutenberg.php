@@ -13,6 +13,8 @@
  */
 
 /**
+ * Copyright
+ *
  * @copyright 2014  Joomunited  ( email : contact _at_ joomunited.com )
  *
  *  Original development of this plugin was kindly funded by Joomunited
