@@ -19,7 +19,7 @@ $users_access_saved = $users_access_saved ? $users_access_saved : array();
 $disabled = '';
 $rotating = '';
 $button_text = __('Update list', 'advanced-gutenberg');
-$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === 'true'); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- begin to enqueue update blocks list, we have nonce later
+$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === 'true'); // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- begin to enqueue update blocks list, we have nonce later
 if ($updating) {
     $disabled = 'disabled';
     $rotating = 'rotating';
@@ -85,7 +85,7 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field');
                                 />
                                 <label for="block-<?php echo esc_attr($block_id) ?>" class="switch-label">
                                     <?php if (strpos($block['icon'], '<svg') !== false) :
-                                        echo $block['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped
+                                        echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
                                     else : ?>
                                         <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
                                     <?php endif; ?>
@@ -151,7 +151,7 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field');
                 <tbody id="advgb-users-body">
                 <?php
                 $users_per_page = 20;
-                $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- View request, no action
+                $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- View request, no action
                 $paged          = max(1, $pagenum);
                 $args           = array(
                     'number'  => $users_per_page,
