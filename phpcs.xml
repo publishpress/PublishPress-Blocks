@@ -95,7 +95,7 @@
     </rule>
 
     <!-- Don't use extract for readability and security -->
-    <rule ref="WordPress.Functions.DontExtract"/>
+    <rule ref="WordPress.PHP.DontExtract"/>
 
     <!-- Do not use @ for silent errors -->
     <rule ref="Generic.PHP.NoSilencedErrors"/>
@@ -177,7 +177,7 @@
 
     <!-- Covers rule: Escaping should be done as close to the time of the query as possible,
          preferably by using $wpdb->prepare() -->
-    <rule ref="WordPress.WP.PreparedSQL"/>
+    <rule ref="WordPress.DB.PreparedSQL"/>
 
     <!-- Covers rule: Avoid touching the database directly. -->
     <rule ref="WordPress.DB.RestrictedFunctions"/>
@@ -192,11 +192,11 @@
     </rule>
 
     <!-- https://vip.wordpress.com/documentation/code-review-what-we-look-for/#validation-sanitization-and-escaping -->
-    <rule ref="WordPress.XSS.EscapeOutput"/>
+    <rule ref="WordPress.Security.EscapeOutput"/>
 
     <!-- Verify that a nonce check is done before using values in superglobals.
     https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/73 -->
-    <rule ref="WordPress.CSRF.NonceVerification"/>
+    <rule ref="WordPress.Security.NonceVerification"/>
 
     <!-- Encourage the use of strict ( === and !== ) comparisons.
 		 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/242 -->
@@ -227,7 +227,7 @@
 
     <!-- Warn against overriding WP global variables.
          https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/26 -->
-    <rule ref="WordPress.Variables.GlobalVariables"/>
+    <rule ref="WordPress.WP.GlobalVariablesOverride"/>
 
     <!-- Verify that everything in the global namespace is prefixed. -->
     <rule ref="WordPress.NamingConventions.PrefixAllGlobals"/>

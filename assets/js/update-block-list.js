@@ -1,18 +1,38 @@
 window.onload = function () {
     if (typeof wp.blocks !== 'undefined') {
-        wp.blocks.registerCoreBlocks();
+        if (typeof wp.blocks.registerCoreBlocks === 'function') {
+            wp.blocks.registerCoreBlocks();
+        } else if (typeof wp.coreBlocks.registerCoreBlocks === 'function') {
+            wp.coreBlocks.registerCoreBlocks();
+        }
+
         var allBlocks = wp.blocks.getBlockTypes();
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
         var nonce = '';
 
         allBlocks.forEach(function (block) {
+            var blockItemIcon = '';
             var blockItem = {
                 name: block.name,
                 icon: block.icon,
                 title: block.title,
                 category: block.category
             };
+
+            if (typeof block.icon === 'function') {
+                blockItem.icon = wp.element.renderToString(block.icon());
+                blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
+                blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
+            } else if (typeof block.icon === 'object') {
+                blockItem.icon = wp.element.renderToString(block.icon);
+                blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
+                blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
+            } else if (typeof block.icon === 'string') {
+                blockItemIcon = wp.element.createElement(wp.components.Dashicon, {icon: block.icon});
+                blockItem.icon = wp.element.renderToString(blockItemIcon);
+            }
+
             listBlocks.push(blockItem);
             return block;
         });
@@ -80,12 +100,23 @@ window.onload = function () {
                         var theBlock = $('li.block-item[data-type="'+ block.name +'"]');
                         if (theBlock.length > 0) {
                             theBlock.find('.block-title').text(block.title);
+                            theBlock.find('i').remove();
+                            theBlock.find('svg').remove();
+                            if (block.icon.indexOf('<svg') > -1) {
+                                theBlock.find('.switch-label').prepend(block.icon);
+                            } else {
+                                theBlock.find('.switch-label').prepend('<i class="dashicons dashicons-'+ block.icon +'"></i>');
+                            }
                         } else {
                             var blockHTML = '';
                             blockHTML += '<li class="block-item new-block" data-type="'+ block.name +'">';
                             blockHTML +=    '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'">';
                             blockHTML +=    '<label for="'+ block.name +'" class="switch-label">';
-                            blockHTML +=        '<i class="dashicons dashicons-'+ block.icon +'"></i>';
+                            if (block.icon.indexOf('<svg') > -1) {
+                                blockHTML +=    block.icon;
+                            } else {
+                                blockHTML +=    '<i class="dashicons dashicons-'+ block.icon +'"></i>';
+                            }
                             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
                             blockHTML +=    '</label>';
                             blockHTML += '</li>';

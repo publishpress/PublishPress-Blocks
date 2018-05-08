@@ -5,8 +5,13 @@ const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, Pa
 const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
 
-const blockIcon = 'list-view';
-const blockTitle = __( 'Summary' );
+const summaryBlockIcon = (
+    <svg fill="#000000" height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+    </svg>
+);
+const summaryBlockTitle = __( 'Summary' );
 
 // Add button to insert summary inside table of contents component
 ( function () {
@@ -112,8 +117,8 @@ class SummaryBlock extends Component {
         let summaryContent = (
             <Placeholder
                 key="summary-placeholder"
-                icon={blockIcon}
-                label={blockTitle}
+                icon={summaryBlockIcon}
+                label={summaryBlockTitle}
                 instructions={__( 'Your current post/page has no headings. Try add some headings and update this block later' )}
             >
                 <Button onClick={this.updateSummary}
@@ -196,9 +201,9 @@ class SummaryBlock extends Component {
 }
 
 registerBlockType( 'advgb/summary', {
-    title: blockTitle,
+    title: summaryBlockTitle,
     description: __( 'Show the table of content of current post/page.' ),
-    icon: blockIcon,
+    icon: summaryBlockIcon,
     category: 'formatting',
     keywords: [ __( 'summary' ), __( 'table of content' ), __( 'list' ) ],
     attributes: {

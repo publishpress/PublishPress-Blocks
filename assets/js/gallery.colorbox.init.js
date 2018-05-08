@@ -1,10 +1,10 @@
 jQuery(document).ready(function ($) {
     $('.wp-block-gallery').each(function () {
         // Add lightbox for images
-        $(this).find('.blocks-gallery-item img').colorbox({
+        $(this).find('.blocks-gallery-item').colorbox({
             title: function () {
                 if (parseInt(advgb.imageCaption)) {
-                    var imgCap = $(this).closest('.blocks-gallery-item').find('figcaption').text() || $(this).attr('alt');
+                    var imgCap = $(this).find('figcaption').text() || $(this).find('img').attr('alt');
                     return imgCap;
                 }
 
@@ -16,13 +16,13 @@ jQuery(document).ready(function ($) {
             className: 'advgb_lightbox',
             rel: 'gallery',
             href: function () {
-                return $(this).attr('src');
+                return $(this).find('img').attr('src');
             },
             onComplete: function () {
                 $('.cboxPhoto')
-                    .attr('alt', $(this).attr('alt'))
-                    .attr('title', $(this).attr('title'));
+                    .attr('alt', $(this).find('img').attr('alt'))
+                    .attr('title', $(this).find('img').attr('title'));
             }
         })
-    })
+    });
 });
