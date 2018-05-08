@@ -139,6 +139,7 @@ float: left;'
     public function __construct()
     {
         add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
+        add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
 
         if (is_admin()) {
@@ -178,15 +179,33 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
-            'advlist_blocks',
+            'advList_blocks',
             plugins_url('assets/blocks/advlist/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
-            'advbutton_blocks',
+            'advButton_blocks',
             plugins_url('assets/blocks/advbutton/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
+        wp_enqueue_script(
+            'countUp_blocks',
+            plugins_url('assets/blocks/count-up/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
+            'advImage_blocks',
+            plugins_url('assets/blocks/advimage/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
+            'testimonial_blocks',
+            plugins_url('assets/blocks/testimonial/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
+        wp_localize_script('testimonial_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
+
         wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
@@ -194,6 +213,12 @@ float: left;'
         );
         $custom_styles_data = get_option('advgb_custom_styles');
         wp_localize_script('custom_styles', 'advGb_CS', $custom_styles_data);
+
+        wp_enqueue_script(
+            'custom_separator',
+            plugins_url('assets/blocks/custom-separator/separator.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
+        );
     }
 
     /**
@@ -223,12 +248,28 @@ float: left;'
             'advbutton_blocks',
             plugins_url('assets/blocks/advbutton/style.css', dirname(__FILE__))
         );
+        wp_enqueue_style(
+            'advCountUp_blocks',
+            plugins_url('assets/blocks/count-up/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'advTestimonial_blocks',
+            plugins_url('assets/blocks/testimonial/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'advImage_blocks',
+            plugins_url('assets/blocks/advimage/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'custom_separator',
+            plugins_url('assets/blocks/custom-separator/frontend.css', dirname(__FILE__))
+        );
     }
 
     /**
      * Ajax to update blocks list
      *
-     * @return void
+     * @return mixed
      */
     public function updateBlocksList()
     {
@@ -242,7 +283,20 @@ float: left;'
             wp_send_json('', 400);
         }
 
-        $blocksList     = $_POST['blocksList'];
+        /**
+         * Remove slashes on svg icon
+         *
+         * @param array $block Block to remove slashes
+         *
+         * @return mixed
+         */
+        function removeSlashes(array $block)
+        {
+            $block['icon'] = stripslashes($block['icon']);
+            return $block;
+        }
+
+        $blocksList     = array_map('removeSlashes', $_POST['blocksList']);
         $categoriesList = $_POST['categoriesList'];
 
         update_option('advgb_blocks_list', $blocksList);
@@ -300,7 +354,7 @@ float: left;'
                 $pagenum = $_REQUEST['paged'];
             }
         }
-        // phpcs:enabled
+        // phpcs:enable
         $paged = max(1, $pagenum);
 
         if ($role === 'none') {
@@ -557,7 +611,7 @@ float: left;'
             wp_enqueue_script(
                 'update_list',
                 plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-                array('wp-blocks', 'wp-element', 'wp-data')
+                array('wp-blocks', 'wp-element', 'wp-data', 'wp-core-blocks')
             );
             wp_localize_script('update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
         }
@@ -616,7 +670,7 @@ float: left;'
         wp_register_script(
             'update_list',
             plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-            array('wp-blocks', 'wp-element', 'wp-data')
+            array('wp-blocks', 'wp-element', 'wp-data', 'wp-core-blocks')
         );
         wp_register_script(
             'profile_js',
@@ -665,6 +719,24 @@ float: left;'
         wp_register_script(
             'minicolors_js',
             plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__))
+        );
+    }
+
+    /**
+     * Register front-end styles and script for later use
+     *
+     * @return void
+     */
+    public function registerStylesScriptsFrontend()
+    {
+        wp_register_style(
+            'colorbox_style',
+            plugins_url('assets/css/colorbox.css', dirname(__FILE__))
+        );
+
+        wp_register_script(
+            'colorbox_js',
+            plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__))
         );
     }
 
@@ -1039,15 +1111,9 @@ float: left;'
             $saved_settings = get_option('advgb_settings');
 
             if ($saved_settings['gallery_lightbox']) {
-                wp_enqueue_style(
-                    'colorbox_style',
-                    plugins_url('assets/css/colorbox.css', dirname(__FILE__))
-                );
+                wp_enqueue_style('colorbox_style');
+                wp_enqueue_script('colorbox_js');
 
-                wp_enqueue_script(
-                    'colorbox_js',
-                    plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__))
-                );
                 wp_enqueue_script(
                     'gallery_lightbox_js',
                     plugins_url('assets/js/gallery.colorbox.init.js', dirname(__FILE__))
@@ -1063,6 +1129,31 @@ float: left;'
             wp_enqueue_script(
                 'summary_minimized',
                 plugins_url('assets/blocks/summary/summaryMinimized.js', dirname(__FILE__))
+            );
+        }
+
+        if (strpos($content, 'wp-block-advgb-count-up') !== false) {
+            wp_enqueue_script(
+                'waypoint_js',
+                'https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js'
+            );
+            wp_enqueue_script(
+                'countup_lib_js',
+                plugins_url('assets/blocks/count-up/jquery.counterup.min.js', dirname(__FILE__))
+            );
+            wp_enqueue_script(
+                'countup_js',
+                plugins_url('assets/blocks/count-up/countUp.js', dirname(__FILE__))
+            );
+        }
+
+        if (strpos($content, 'advgb-image-block') !== false) {
+            wp_enqueue_style('colorbox_style');
+            wp_enqueue_script('colorbox_js');
+
+            wp_enqueue_script(
+                'advgbImageLightbox_js',
+                plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__))
             );
         }
 
@@ -1110,6 +1201,9 @@ float: left;'
             'advgb/summary',
             'advgb/button',
             'advgb/list',
+            'advgb/count-up',
+            'advgb/testimonial',
+            'advgb/image',
         );
 
         // Avoid default value (string 'all')

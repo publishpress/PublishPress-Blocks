@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -35,8 +35,13 @@ var _wp$data = wp.data,
 var addFilter = wp.hooks.addFilter;
 
 
-var blockIcon = 'list-view';
-var blockTitle = __('Summary');
+var summaryBlockIcon = React.createElement(
+    "svg",
+    { fill: "#000000", height: "20", viewBox: "2 2 22 22", width: "20", xmlns: "http://www.w3.org/2000/svg" },
+    React.createElement("path", { d: "M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z" }),
+    React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+);
+var summaryBlockTitle = __('Summary');
 
 // Add button to insert summary inside table of contents component
 (function () {
@@ -80,11 +85,11 @@ addFilter('blocks.BlockEdit', 'advgb/addHeadingNotice', function (BlockEdit) {
             attributes = props.attributes;
 
 
-        return [React.createElement(BlockEdit, _extends({ key: 'block-edit-summary' }, props)), isSelected && blockType === 'core/heading' && attributes.nodeName !== 'H1' && React.createElement(
+        return [React.createElement(BlockEdit, _extends({ key: "block-edit-summary" }, props)), isSelected && blockType === 'core/heading' && attributes.nodeName !== 'H1' && React.createElement(
             InspectorControls,
-            { key: 'advgb-summary-controls-hint' },
+            { key: "advgb-summary-controls-hint" },
             React.createElement(
-                'p',
+                "p",
                 { style: { color: 'red', fontStyle: 'italic' } },
                 __('After manually changing the anchor, remember to refresh summary block to make the links work!')
             )
@@ -105,12 +110,12 @@ var SummaryBlock = function (_Component) {
     }
 
     _createClass(SummaryBlock, [{
-        key: 'componentWillMount',
+        key: "componentWillMount",
         value: function componentWillMount() {
             this.updateSummary();
         }
     }, {
-        key: 'updateSummary',
+        key: "updateSummary",
         value: function updateSummary() {
             var headingDatas = [];
             var allBlocks = select('core/editor').getBlocks();
@@ -145,7 +150,7 @@ var SummaryBlock = function (_Component) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _props = this.props,
                 attributes = _props.attributes,
@@ -162,9 +167,9 @@ var SummaryBlock = function (_Component) {
             var summaryContent = React.createElement(
                 Placeholder,
                 {
-                    key: 'summary-placeholder',
-                    icon: blockIcon,
-                    label: blockTitle,
+                    key: "summary-placeholder",
+                    icon: summaryBlockIcon,
+                    label: summaryBlockTitle,
                     instructions: __('Your current post/page has no headings. Try add some headings and update this block later')
                 },
                 React.createElement(
@@ -182,17 +187,17 @@ var SummaryBlock = function (_Component) {
                     selectBlock = _dispatch2.selectBlock;
 
                 summaryContent = React.createElement(
-                    'ul',
-                    { className: 'advgb-toc', key: 'summary-toc' },
+                    "ul",
+                    { className: 'advgb-toc', key: "summary-toc" },
                     headings.map(function (heading) {
                         return React.createElement(
-                            'li',
+                            "li",
                             { className: 'toc-level-' + heading.level,
                                 style: { marginLeft: heading.level * 20 },
                                 key: heading.anchor
                             },
                             React.createElement(
-                                'a',
+                                "a",
                                 { href: '#' + heading.anchor,
                                     onClick: function onClick() {
                                         return selectBlock(heading.uid);
@@ -222,7 +227,7 @@ var SummaryBlock = function (_Component) {
                 )
             ), isSelected && React.createElement(
                 InspectorControls,
-                { key: 'summary-inspector' },
+                { key: "summary-inspector" },
                 React.createElement(
                     PanelBody,
                     { title: __('Summary settings') },
@@ -253,9 +258,9 @@ var SummaryBlock = function (_Component) {
                     )
                 )
             ), summaryContent, anchorColor && React.createElement(
-                'style',
-                { key: 'summary-style' },
-                '.advgb-toc li a {\n                    color: ' + anchorColor + ';\n                }'
+                "style",
+                { key: "summary-style" },
+                ".advgb-toc li a {\n                    color: " + anchorColor + ";\n                }"
             )];
         }
     }]);
@@ -264,9 +269,9 @@ var SummaryBlock = function (_Component) {
 }(Component);
 
 registerBlockType('advgb/summary', {
-    title: blockTitle,
+    title: summaryBlockTitle,
     description: __('Show the table of content of current post/page.'),
-    icon: blockIcon,
+    icon: summaryBlockIcon,
     category: 'formatting',
     keywords: [__('summary'), __('table of content'), __('list')],
     attributes: {
@@ -310,35 +315,35 @@ registerBlockType('advgb/summary', {
         }
 
         var summary = React.createElement(
-            'ul',
-            { className: 'advgb-toc align' + align, style: loadMinimized && { display: 'none' } },
+            "ul",
+            { className: "advgb-toc align" + align, style: loadMinimized && { display: 'none' } },
             headings.map(function (heading, index) {
                 return React.createElement(
-                    'li',
+                    "li",
                     { className: 'toc-level-' + heading.level,
-                        key: 'summary-save-' + index,
+                        key: "summary-save-" + index,
                         style: { marginLeft: heading.level * 20 }
                     },
                     React.createElement(
-                        'a',
+                        "a",
                         { href: '#' + heading.anchor },
                         heading.content
                     )
                 );
             }),
             anchorColor && React.createElement(
-                'style',
+                "style",
                 null,
-                '.advgb-toc li a {\n                            color: ' + anchorColor + ';\n                        }'
+                ".advgb-toc li a {\n                            color: " + anchorColor + ";\n                        }"
             )
         );
 
         if (loadMinimized) {
             return React.createElement(
-                'div',
-                { className: 'align' + align },
+                "div",
+                { className: "align" + align },
                 React.createElement(
-                    'div',
+                    "div",
                     { className: 'advgb-toc-header collapsed' },
                     headerTitle || postTitle
                 ),

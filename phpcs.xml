@@ -160,6 +160,7 @@
         <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
         <exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop" />
         <exclude name="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing" />
+        <exclude name="Squiz.Commenting.FunctionComment.TypeHintMissing" />
     </rule>
     <rule ref="Squiz.Commenting.ClassComment" />
     <rule ref="Squiz.Commenting.VariableComment" />
@@ -187,6 +188,7 @@
         <properties>
             <property name="text_domain" value="advanced-gutenberg" />
         </properties>
+        <exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
     </rule>
 
     <!-- https://vip.wordpress.com/documentation/code-review-what-we-look-for/#validation-sanitization-and-escaping -->
