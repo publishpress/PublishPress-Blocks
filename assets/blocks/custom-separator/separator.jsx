@@ -62,7 +62,7 @@ addFilter( 'blocks.BlockEdit', 'advgb/customSeparatorStyles', function ( BlockEd
                             onChange={( value ) => setAttributes( { borderWidth: value } )}
                         />
                         <RangeControl
-                            label={__( 'Size' )}
+                            label={__( 'Width' )}
                             value={borderSize}
                             min={50}
                             max={1000}
