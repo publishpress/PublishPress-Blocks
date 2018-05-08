@@ -8,15 +8,15 @@
     "1.3.0": [
       {
         "type": "feature",
-        "title": "New Testimonial block"
+        "title": "New block: Testimonial block"
       },
       {
         "type": "feature",
-        "title": "New Advanced Image block"
+        "title": "New block: Advanced Image block"
       },
       {
         "type": "feature",
-        "title": "New Count Up block"
+        "title": "New block: Counter (count up) with symbol"
       },
       {
         "type": "feature",
