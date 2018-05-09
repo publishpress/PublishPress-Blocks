@@ -199,6 +199,11 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
         wp_enqueue_script(
+            'advVideo_blocks',
+            plugins_url('assets/blocks/advvideo/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_script(
             'testimonial_blocks',
             plugins_url('assets/blocks/testimonial/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
@@ -228,11 +233,6 @@ float: left;'
      */
     public function addEditorAndFrontendStyles()
     {
-        wp_enqueue_style(
-            'summary_blocks',
-            plugins_url('assets/blocks/summary/style.css', dirname(__FILE__))
-        );
-
         $custom_styles_url = wp_upload_dir();
         $custom_styles_url = $custom_styles_url['baseurl'] . '/advgb/';
         wp_enqueue_style(
@@ -240,6 +240,10 @@ float: left;'
             $custom_styles_url . 'custom_styles.css'
         );
 
+        wp_enqueue_style(
+            'summary_blocks',
+            plugins_url('assets/blocks/summary/style.css', dirname(__FILE__))
+        );
         wp_enqueue_style(
             'advanced_list',
             plugins_url('assets/blocks/advlist/style.css', dirname(__FILE__))
@@ -263,6 +267,10 @@ float: left;'
         wp_enqueue_style(
             'custom_separator',
             plugins_url('assets/blocks/custom-separator/frontend.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'advVideo_blocks',
+            plugins_url('assets/blocks/advvideo/style.css', dirname(__FILE__))
         );
     }
 
@@ -1204,6 +1212,7 @@ float: left;'
             'advgb/count-up',
             'advgb/testimonial',
             'advgb/image',
+            'advgb/video',
         );
 
         // Avoid default value (string 'all')

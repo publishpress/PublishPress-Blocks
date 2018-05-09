@@ -1,0 +1,43 @@
+.advgb-video-block.full-width {
+    width: 100% !important;
+}
+
+.advgb-video-wrapper {
+    background-color: #2196f3;
+    position: relative;
+    margin: 0 auto;
+}
+
+.advgb-video-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom:  0;
+    right: 0;
+    z-index: 2;
+    opacity: 0.5;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.advgb-button-wrapper {
+    height: 400px;
+    background-color: transparent;
+    z-index: 3;
+    position: relative;
+    width: 100%;
+}
+
+.advgb-play-button {
+    display: flex;
+    align-items:  center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.advgb-button-wrapper button.button {
+    position: absolute;
+    left: calc(50% - 50px);
+    top: 15%;
+}
