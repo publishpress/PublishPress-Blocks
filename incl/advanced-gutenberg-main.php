@@ -1165,6 +1165,16 @@ float: left;'
             );
         }
 
+        if (strpos($content, 'advgb-video-lightbox') !== false) {
+            wp_enqueue_style('colorbox_style');
+            wp_enqueue_script('colorbox_js');
+
+            wp_enqueue_script(
+                'advgbVideoLightbox_js',
+                plugins_url('assets/blocks/advvideo/lightbox.js', dirname(__FILE__))
+            );
+        }
+
         return $content;
     }
 

@@ -1,4 +1,6 @@
-.advgb-video-block.full-width, .advgb-video-block video.full-width  {
+.advgb-video-block.full-width,
+.advgb-video-block.full-width video,
+.advgb-video-block.full-width iframe {
     width: 100% !important;
 }
 
@@ -6,6 +8,7 @@
     background-color: #2196f3;
     position: relative;
     margin: 0 auto;
+    cursor: pointer;
 }
 
 .advgb-video-poster {
@@ -59,4 +62,8 @@
 .advgb-current-video-desc span.spinner {
     float: none;
     margin: 0;
+}
+
+#colorbox.advgb_lightbox .cboxIframe {
+    margin-bottom: 0;
 }
