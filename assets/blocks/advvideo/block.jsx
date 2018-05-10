@@ -384,7 +384,7 @@ registerBlockType( 'advgb/video', {
         },
         playButtonSize: {
             type: 'number',
-            default: 40,
+            default: 80,
         },
         playButtonColor: {
             type: 'string',
