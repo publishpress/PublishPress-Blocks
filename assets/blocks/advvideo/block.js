@@ -25,8 +25,11 @@ var _wp$components = wp.components,
     PanelColor = _wp$components.PanelColor,
     ToggleControl = _wp$components.ToggleControl,
     SelectControl = _wp$components.SelectControl,
+    TextControl = _wp$components.TextControl,
     Button = _wp$components.Button,
-    IconButton = _wp$components.IconButton;
+    IconButton = _wp$components.IconButton,
+    Dashicon = _wp$components.Dashicon,
+    Spinner = _wp$components.Spinner;
 
 var AdvVideo = function (_Component) {
     _inherits(AdvVideo, _Component);
@@ -34,17 +37,27 @@ var AdvVideo = function (_Component) {
     function AdvVideo() {
         _classCallCheck(this, AdvVideo);
 
-        return _possibleConstructorReturn(this, (AdvVideo.__proto__ || Object.getPrototypeOf(AdvVideo)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (AdvVideo.__proto__ || Object.getPrototypeOf(AdvVideo)).apply(this, arguments));
+
+        _this.state = {
+            fetching: false
+        };
+        return _this;
     }
 
     _createClass(AdvVideo, [{
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             var _props = this.props,
                 isSelected = _props.isSelected,
                 attributes = _props.attributes,
                 setAttributes = _props.setAttributes;
             var videoURL = attributes.videoURL,
+                videoID = attributes.videoID,
+                videoSourceType = attributes.videoSourceType,
+                videoTitle = attributes.videoTitle,
                 videoFullWidth = attributes.videoFullWidth,
                 videoWidth = attributes.videoWidth,
                 videoHeight = attributes.videoHeight,
@@ -67,6 +80,38 @@ var AdvVideo = function (_Component) {
             };
 
             var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
+
+            var videoHostIcon = {
+                youtube: React.createElement(
+                    "svg",
+                    { id: "Social_Icons", version: "1.1", viewBox: "0 0 128 128", xmlns: "http://www.w3.org/2000/svg" },
+                    React.createElement(
+                        "g",
+                        { id: "_x34__stroke" },
+                        React.createElement(
+                            "g",
+                            { id: "Youtube_1_" },
+                            React.createElement("rect", { clipRule: "evenodd", fill: "none", height: "128", width: "128" }),
+                            React.createElement("path", { clipRule: "evenodd", d: "M126.72,38.224c0,0-1.252-8.883-5.088-12.794    c-4.868-5.136-10.324-5.16-12.824-5.458c-17.912-1.305-44.78-1.305-44.78-1.305h-0.056c0,0-26.868,0-44.78,1.305    c-2.504,0.298-7.956,0.322-12.828,5.458C2.528,29.342,1.28,38.224,1.28,38.224S0,48.658,0,59.087v9.781    c0,10.433,1.28,20.863,1.28,20.863s1.248,8.883,5.084,12.794c4.872,5.136,11.268,4.975,14.116,5.511    c10.24,0.991,43.52,1.297,43.52,1.297s26.896-0.04,44.808-1.345c2.5-0.302,7.956-0.326,12.824-5.462    c3.836-3.912,5.088-12.794,5.088-12.794S128,79.302,128,68.868v-9.781C128,48.658,126.72,38.224,126.72,38.224z M50.784,80.72    L50.78,44.501l34.584,18.172L50.784,80.72z", fill: "#CE1312", fillRule: "evenodd", id: "Youtube" })
+                        )
+                    )
+                ),
+                vimeo: React.createElement(
+                    "svg",
+                    { height: "25", viewBox: "0 0 32 32", width: "25", xmlns: "http://www.w3.org/2000/svg" },
+                    React.createElement(
+                        "g",
+                        null,
+                        React.createElement("circle", { cx: "16", cy: "16", id: "BG", r: "16", fill: "#5FCCFF" }),
+                        React.createElement("path", { d: "M24,12.4c-0.1,1.6-1.2,3.7-3.3,6.4c-2.2,2.8-4,4.2-5.5,4.2        c-0.9,0-1.7-0.9-2.4-2.6c-0.4-1.6-0.9-3.2-1.3-4.7c-0.5-1.7-1-2.6-1.5-2.6c-0.1,0-0.5,0.3-1.3,0.8l-0.8-1        c0.8-0.7,1.6-1.4,2.3-2.1c1.1-0.9,1.8-1.4,2.4-1.4c1.2-0.1,2,0.7,2.3,2.5c0.3,2,0.5,3.2,0.6,3.7c0.4,1.6,0.8,2.4,1.2,2.4        c0.3,0,0.8-0.5,1.5-1.6c0.7-1.1,1-1.9,1.1-2.4c0.1-0.9-0.3-1.4-1.1-1.4c-0.4,0-0.8,0.1-1.2,0.3c0.8-2.6,2.3-3.8,4.5-3.7        C23.3,9.2,24.1,10.3,24,12.4", id: "Vimeo", fill: "#FFFFFF" })
+                    )
+                ),
+                local: React.createElement(
+                    "svg",
+                    { height: "25", id: "Layer_1", version: "1.1", viewBox: "0 0 24 24", width: "25", xmlns: "http://www.w3.org/2000/svg" },
+                    React.createElement("path", { clipRule: "evenodd", d: "M22.506,21v0.016L17,15.511V19c0,1.105-0.896,2-2,2h-1.5H3H2c-1.104,0-2-0.895-2-2  v-1l0,0V6l0,0V5c0-1.104,0.896-1.999,2-1.999h1l0,0h10.5l0,0H15c1.104,0,2,0.895,2,1.999v3.516l5.5-5.5V3.001  c0.828,0,1.5,0.671,1.5,1.499v15C24,20.327,23.331,20.996,22.506,21z", fillRule: "evenodd" })
+                )
+            };
 
             return React.createElement(
                 Fragment,
@@ -225,10 +270,117 @@ var AdvVideo = function (_Component) {
                             )
                         )
                     ),
-                    React.createElement(
+                    isSelected && React.createElement(
                         "div",
-                        { className: 'advgb-video-input' },
-                        "123"
+                        { className: 'advgb-video-input blocks-button__inline-link' },
+                        React.createElement(Dashicon, { icon: 'admin-links' }),
+                        React.createElement(TextControl, {
+                            placeholder: __('Youtube/Vimeo video ID...'),
+                            value: videoID,
+                            onChange: function onChange(value) {
+                                setAttributes({ videoID: value, videoURL: '', videoTitle: undefined, videoSourceType: '' });
+                            }
+                        }),
+                        React.createElement(
+                            Button,
+                            {
+                                className: "button button-large",
+                                disabled: !videoID || videoSourceType === 'local',
+                                style: { height: '31px' },
+                                onClick: function onClick() {
+                                    if (!!videoID) {
+                                        _this2.setState({ fetching: true });
+
+                                        var url = '';
+                                        if (videoID.match(/^\d+$/g)) {
+                                            url = "https://vimeo.com/" + videoID;
+                                        } else {
+                                            url = "https://www.youtube.com/watch?v=" + videoID;
+                                        }
+
+                                        wp.apiRequest({ path: "/oembed/1.0/proxy?url=" + JSON.stringify(url) }).then(function (obj) {
+                                            _this2.setState({ fetching: false });
+                                            if (!!obj.title && !!obj.provider_name) {
+                                                setAttributes({
+                                                    videoTitle: obj.title,
+                                                    poster: obj.thumbnail_url
+                                                });
+
+                                                switch (obj.provider_name) {
+                                                    case 'YouTube':
+                                                        setAttributes({
+                                                            videoSourceType: 'youtube',
+                                                            videoURL: "https://www.youtube.com/embed/" + videoID + "?rel=0&wmode=transparent"
+                                                        });
+                                                        break;
+                                                    case 'Vimeo':
+                                                        setAttributes({
+                                                            videoSourceType: 'vimeo',
+                                                            videoURL: "https://player.vimeo.com/video/" + videoID
+                                                        });
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                            } else {
+                                                setAttributes({
+                                                    videoTitle: 'ADVGB_FAIL_TO_LOAD',
+                                                    poster: ''
+                                                });
+                                            }
+                                        });
+                                    }
+                                }
+                            },
+                            __('Fetch')
+                        ),
+                        React.createElement(
+                            "span",
+                            { style: { margin: 'auto 10px' } },
+                            __('or use')
+                        ),
+                        React.createElement(MediaUpload, {
+                            type: 'video',
+                            value: videoID,
+                            onSelect: function onSelect(video) {
+                                return setAttributes({ videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' });
+                            },
+                            render: function render(_ref3) {
+                                var open = _ref3.open;
+                                return React.createElement(
+                                    Button,
+                                    {
+                                        className: "button button-large",
+                                        onClick: open
+                                    },
+                                    __('Local video')
+                                );
+                            }
+                        }),
+                        React.createElement(
+                            "div",
+                            { className: 'advgb-current-video-desc', style: { minWidth: '50%', margin: '10px auto' } },
+                            React.createElement(
+                                "strong",
+                                null,
+                                __('Current Video'),
+                                ":"
+                            ),
+                            React.createElement(
+                                "span",
+                                { title: videoSourceType, style: { width: '25px', height: '25px', display: 'inline-block', verticalAlign: 'middle', margin: 'auto 7px' } },
+                                videoHostIcon[videoSourceType] || this.state.fetching && React.createElement(Spinner, null)
+                            ),
+                            React.createElement(
+                                "span",
+                                null,
+                                videoTitle === 'ADVGB_FAIL_TO_LOAD' && React.createElement(
+                                    "strong",
+                                    { style: { color: 'red' } },
+                                    __('Wrong video ID. Please try again')
+                                ) || videoTitle || __('Not selected yet.')
+                            )
+                        )
                     )
                 )
             );
@@ -253,6 +405,15 @@ registerBlockType('advgb/video', {
     keywords: [__('video'), __('embed'), __('media')],
     attributes: {
         videoURL: {
+            type: 'string'
+        },
+        videoID: {
+            type: 'string'
+        },
+        videoSourceType: {
+            type: 'string'
+        },
+        videoTitle: {
             type: 'string'
         },
         videoFullWidth: {
@@ -293,8 +454,8 @@ registerBlockType('advgb/video', {
         }
     },
     edit: AdvVideo,
-    save: function save(_ref3) {
-        var attributes = _ref3.attributes;
+    save: function save(_ref4) {
+        var attributes = _ref4.attributes;
 
         return null;
     }

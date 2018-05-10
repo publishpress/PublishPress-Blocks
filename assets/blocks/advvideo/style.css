@@ -21,7 +21,7 @@
 }
 
 .advgb-button-wrapper {
-    height: 400px;
+    height: 450px;
     background-color: transparent;
     z-index: 3;
     position: relative;
@@ -40,4 +40,23 @@
     position: absolute;
     left: calc(50% - 50px);
     top: 15%;
+}
+
+.advgb-video-input {
+    width: fit-content !important;
+    margin: 10px auto;
+    justify-content: center;
+}
+
+.advgb-video-input .components-base-control {
+    margin-bottom: 0;
+}
+
+.advgb-video-input button.components-button:disabled {
+    opacity: 0.8;
+}
+
+.advgb-current-video-desc span.spinner {
+    float: none;
+    margin: 0;
 }
