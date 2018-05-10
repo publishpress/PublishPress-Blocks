@@ -8,6 +8,58 @@ class AdvVideo extends Component {
         super( ...arguments );
         this.state = {
             fetching: false,
+        };
+
+        this.fetchVideoInfo = this.fetchVideoInfo.bind( this );
+    }
+
+    fetchVideoInfo() {
+        const { attributes, setAttributes } = this.props;
+        const { videoID } = attributes;
+
+        if (!!videoID) {
+            this.setState( { fetching: true } );
+
+            let url = '';
+            if (videoID.match( /^\d+$/g )) {
+                url = `https://vimeo.com/${videoID}`
+            } else {
+                url = `https://www.youtube.com/watch?v=${videoID}`
+            }
+
+            wp.apiRequest( { path: `/oembed/1.0/proxy?url=${ JSON.stringify( url ) }` } ).then(
+                (obj) => {
+                    this.setState( { fetching: false } );
+                    if (!!obj.title && !!obj.provider_name) {
+                        setAttributes( {
+                            videoTitle: obj.title,
+                            poster: obj.thumbnail_url,
+                        } );
+
+                        switch (obj.provider_name) {
+                            case 'YouTube':
+                                setAttributes( {
+                                    videoSourceType: 'youtube',
+                                    videoURL: `https://www.youtube.com/embed/${videoID}?rel=0&wmode=transparent`,
+                                } );
+                                break;
+                            case 'Vimeo':
+                                setAttributes( {
+                                    videoSourceType: 'vimeo',
+                                    videoURL: `https://player.vimeo.com/video/${videoID}`,
+                                } );
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        setAttributes( {
+                            videoTitle: 'ADVGB_FAIL_TO_LOAD',
+                            poster: '',
+                        } );
+                    }
+                }
+            )
         }
     }
 
@@ -251,52 +303,7 @@ class AdvVideo extends Component {
                                 className="button button-large"
                                 disabled={ !videoID || videoSourceType === 'local' }
                                 style={ { height: '31px' } }
-                                onClick={ () => {
-                                    if (!!videoID) {
-                                        this.setState( { fetching: true } );
-
-                                        let url = '';
-                                        if (videoID.match( /^\d+$/g )) {
-                                            url = `https://vimeo.com/${videoID}`
-                                        } else {
-                                            url = `https://www.youtube.com/watch?v=${videoID}`
-                                        }
-
-                                        wp.apiRequest( { path: `/oembed/1.0/proxy?url=${ JSON.stringify( url ) }` } ).then(
-                                            (obj) => {
-                                                this.setState( { fetching: false } );
-                                                if (!!obj.title && !!obj.provider_name) {
-                                                    setAttributes( {
-                                                        videoTitle: obj.title,
-                                                        poster: obj.thumbnail_url,
-                                                    } );
-
-                                                    switch (obj.provider_name) {
-                                                        case 'YouTube':
-                                                            setAttributes( {
-                                                                videoSourceType: 'youtube',
-                                                                videoURL: `https://www.youtube.com/embed/${videoID}?rel=0&wmode=transparent`,
-                                                            } );
-                                                            break;
-                                                        case 'Vimeo':
-                                                            setAttributes( {
-                                                                videoSourceType: 'vimeo',
-                                                                videoURL: `https://player.vimeo.com/video/${videoID}`,
-                                                            } );
-                                                            break;
-                                                        default:
-                                                            break;
-                                                    }
-                                                } else {
-                                                    setAttributes( {
-                                                        videoTitle: 'ADVGB_FAIL_TO_LOAD',
-                                                        poster: '',
-                                                    } );
-                                                }
-                                            }
-                                        )
-                                    }
-                                } }
+                                onClick={ this.fetchVideoInfo }
                             >
                                 { __( 'Fetch' ) }
                             </Button>
