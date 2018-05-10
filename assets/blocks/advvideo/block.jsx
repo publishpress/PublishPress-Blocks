@@ -91,7 +91,7 @@ class AdvVideo extends Component {
 
         return (
             <Fragment>
-                {!!poster &&
+                { ( (!!poster && openInLightbox) || ( !openInLightbox && videoSourceType === 'local' ) ) &&
                     <BlockControls>
                         <MediaUpload
                             type={ 'image' }
@@ -184,10 +184,11 @@ class AdvVideo extends Component {
                     </PanelBody>
                 </InspectorControls>
                 <div className={ blockClassName } style={ { width: videoWidth } }>
-                    <div className={ 'advgb-video-wrapper' } style={ { backgroundColor: overlayColor } }>
-                        <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
-                        <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
-                            {!poster &&
+                    {!!openInLightbox &&
+                        <div className={ 'advgb-video-wrapper' } style={ { backgroundColor: overlayColor } }>
+                            <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
+                            <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
+                                {!poster &&
                                 <MediaUpload
                                     onSelect={ (media) => setAttributes( { poster: media.url, posterID: media.id } ) }
                                     value={ posterID }
@@ -201,19 +202,41 @@ class AdvVideo extends Component {
                                         </Button>
                                     ) }
                                 />
-                            }
-                            <div className={ 'advgb-play-button' }>
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     width={ playButtonSize }
-                                     height={ playButtonSize }
-                                     fill={ playButtonColor }
-                                     viewBox="0 0 24 24"
-                                >
-                                    {PLAY_BUTTON_STYLE[playButtonIcon]}
-                                </svg>
+                                }
+                                <div className={ 'advgb-play-button' }>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width={ playButtonSize }
+                                         height={ playButtonSize }
+                                         fill={ playButtonColor }
+                                         viewBox="0 0 24 24"
+                                    >
+                                        {PLAY_BUTTON_STYLE[playButtonIcon]}
+                                    </svg>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+                    {!openInLightbox && (
+                        ( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
+                            <iframe src={videoURL}
+                                    width={videoWidth}
+                                    height={videoHeight}
+                                    frameBorder="0"
+                                    allowFullScreen/>
+                        )
+                        || (videoSourceType === 'local' &&
+                            <video className={ videoFullWidth && 'full-width' }
+                                   width={videoWidth}
+                                   height={videoHeight}
+                                   poster={poster}
+                                   controls
+                            >
+                                <source src={videoURL}/>
+                                { __( 'Your browser does not support HTML5 video.' ) }
+                            </video>
+                        )
+                        || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />
+                    ) }
                     {isSelected &&
                         <div className={ 'advgb-video-input blocks-button__inline-link' }>
                             <Dashicon icon={ 'admin-links' } />

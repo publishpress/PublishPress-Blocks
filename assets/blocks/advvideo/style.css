@@ -1,4 +1,4 @@
-.advgb-video-block.full-width {
+.advgb-video-block.full-width, .advgb-video-block video.full-width  {
     width: 100% !important;
 }
 

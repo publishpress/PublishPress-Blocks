@@ -116,7 +116,7 @@ var AdvVideo = function (_Component) {
             return React.createElement(
                 Fragment,
                 null,
-                !!poster && React.createElement(
+                (!!poster && openInLightbox || !openInLightbox && videoSourceType === 'local') && React.createElement(
                     BlockControls,
                     null,
                     React.createElement(MediaUpload, {
@@ -229,7 +229,7 @@ var AdvVideo = function (_Component) {
                 React.createElement(
                     "div",
                     { className: blockClassName, style: { width: videoWidth } },
-                    React.createElement(
+                    !!openInLightbox && React.createElement(
                         "div",
                         { className: 'advgb-video-wrapper', style: { backgroundColor: overlayColor } },
                         React.createElement("div", { className: 'advgb-video-poster', style: { backgroundImage: "url(" + poster + ")" } }),
@@ -270,6 +270,21 @@ var AdvVideo = function (_Component) {
                             )
                         )
                     ),
+                    !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
+                        width: videoWidth,
+                        height: videoHeight,
+                        frameBorder: "0",
+                        allowFullScreen: true }) || videoSourceType === 'local' && React.createElement(
+                        "video",
+                        { className: videoFullWidth && 'full-width',
+                            width: videoWidth,
+                            height: videoHeight,
+                            poster: poster,
+                            controls: true
+                        },
+                        React.createElement("source", { src: videoURL }),
+                        __('Your browser does not support HTML5 video.')
+                    ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
                     isSelected && React.createElement(
                         "div",
                         { className: 'advgb-video-input blocks-button__inline-link' },
