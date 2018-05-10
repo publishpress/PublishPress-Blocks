@@ -450,7 +450,8 @@ registerBlockType('advgb/video', {
             type: 'number'
         },
         videoHeight: {
-            type: 'number'
+            type: 'number',
+            default: 450
         },
         playButtonIcon: {
             type: 'string',

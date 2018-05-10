@@ -377,6 +377,7 @@ registerBlockType( 'advgb/video', {
         },
         videoHeight: {
             type: 'number',
+            default: 450,
         },
         playButtonIcon: {
             type: 'string',
