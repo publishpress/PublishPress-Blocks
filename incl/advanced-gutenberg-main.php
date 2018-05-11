@@ -210,7 +210,7 @@ float: left;'
         );
 
         $saved_settings = get_option('advgb_settings');
-        if (isset($saved_settings['google_api_key'])) {
+        if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
             wp_enqueue_script(
                 'map_api',
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
