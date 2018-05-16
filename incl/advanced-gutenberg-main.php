@@ -1208,7 +1208,27 @@ float: left;'
             );
         }
 
+        if (strpos($content, 'advgb-map-block') !== false) {
+            $content = preg_replace_callback(
+                '@<div[^>]*?advgb\-map\-block.*?(</script)@s',
+                array($this, 'decodeHtmlEntity'),
+                $content
+            );
+        }
+
         return $content;
+    }
+
+    /**
+     * Convert html entity to real character
+     *
+     * @param string $match Matched string
+     *
+     * @return mixed
+     */
+    public function decodeHtmlEntity($match)
+    {
+        return str_replace('&lt;', '<', $match[0]);
     }
 
     /**
