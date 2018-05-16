@@ -169,7 +169,7 @@ float: left;'
     /**
      * Enqueue styles and scripts for gutenberg
      *
-     * @return mixed
+     * @return void
      */
     public function addEditorAssets()
     {
@@ -209,31 +209,6 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
 
-        $saved_settings = get_option('advgb_settings');
-        if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
-            wp_enqueue_script(
-                'map_api',
-                'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
-            );
-            add_filter('script_loader_tag', 'addScriptAttributes', 10, 2);
-
-            /**
-             * Add attributes to script tag
-             *
-             * @param string $tag    Script tag
-             * @param string $handle Handle name
-             *
-             * @return mixed
-             */
-            function addScriptAttributes($tag, $handle)
-            {
-                if ('map_api' !== $handle) {
-                    return $tag;
-                }
-                return str_replace(' src', ' defer src', $tag);
-            }
-        }
-
         wp_enqueue_script(
             'testimonial_blocks',
             plugins_url('assets/blocks/testimonial/block.js', dirname(__FILE__)),
@@ -260,7 +235,7 @@ float: left;'
     /**
      * Enqueue styles for gutenberg editor and front-end
      *
-     * @return void
+     * @return mixed
      */
     public function addEditorAndFrontendStyles()
     {
@@ -303,6 +278,31 @@ float: left;'
             'advVideo_blocks',
             plugins_url('assets/blocks/advvideo/style.css', dirname(__FILE__))
         );
+
+        $saved_settings = get_option('advgb_settings');
+        if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
+            wp_enqueue_script(
+                'map_api',
+                'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
+            );
+            add_filter('script_loader_tag', 'addScriptAttributes', 10, 2);
+
+            /**
+             * Add attributes to script tag
+             *
+             * @param string $tag    Script tag
+             * @param string $handle Handle name
+             *
+             * @return mixed
+             */
+            function addScriptAttributes($tag, $handle)
+            {
+                if ('map_api' !== $handle) {
+                    return $tag;
+                }
+                return str_replace(' src', ' defer src', $tag);
+            }
+        }
     }
 
     /**
