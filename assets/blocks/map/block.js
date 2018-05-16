@@ -189,7 +189,7 @@ var AdvMap = function (_Component) {
                             type: "image",
                             value: markerIconID,
                             onSelect: function onSelect(image) {
-                                return setAttributes({ markerIcon: image.url, markerIconID: image.id });
+                                return setAttributes({ markerIcon: image.sizes.thumbnail.url, markerIconID: image.id });
                             },
                             render: function render(_ref) {
                                 var open = _ref.open;
