@@ -244,6 +244,55 @@ registerBlockType( 'advgb/map', {
     },
     edit: AdvMap,
     save: function ( { attributes } ) {
-        return null;
+        const {
+            mapID,
+            lat,
+            lng,
+            zoom,
+            height,
+            markerIcon,
+            markerTitle,
+            markerDesc,
+        } = attributes;
+
+        const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
+        const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${markerTitle}</h2><p class="advgbmap-desc">${markerDesc || ''}</p></div>`;
+
+        return (
+            <div className={ 'advgb-map-block' } style={ { margin: '10px auto' } }>
+                <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
+                <script typeof="text/javascript">
+                    {`window.addEventListener( 'load', function() {
+                        if (typeof google === "undefined") return null;
+                        var location = { lat: parseFloat(${lat}), lng: parseFloat(${lng}) };
+
+                        var map = new google.maps.Map(document.getElementById('${mapID}'), {
+                            zoom: ${zoom},
+                            center: location,
+                        });
+
+                        var infoWindow = new google.maps.InfoWindow({
+                            content: '${infoWindowHtml}'
+                        });
+
+                        var marker = new google.maps.Marker({
+                            position: location,
+                            map: map,
+                            title: '${markerTitle}',
+                            animation: google.maps.Animation.DROP,
+                            icon: {
+                                url: '${markerIcon || DEFAULT_MARKER}',
+                                scaledSize: new google.maps.Size( 27, 43 ),
+                            },
+                        });
+
+                        ${markerTitle &&
+                        `marker.addListener('click', function() {
+                            infoWindow.open(map, marker);
+                        });`}
+                    })`}
+                </script>
+            </div>
+        );
     }
 } );

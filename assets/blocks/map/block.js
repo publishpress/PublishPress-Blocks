@@ -311,7 +311,28 @@ registerBlockType('advgb/map', {
     edit: AdvMap,
     save: function save(_ref2) {
         var attributes = _ref2.attributes;
+        var mapID = attributes.mapID,
+            lat = attributes.lat,
+            lng = attributes.lng,
+            zoom = attributes.zoom,
+            height = attributes.height,
+            markerIcon = attributes.markerIcon,
+            markerTitle = attributes.markerTitle,
+            markerDesc = attributes.markerDesc;
 
-        return null;
+
+        var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
+        var infoWindowHtml = "<div class=\"advgbmap-wrapper\"><h2 class=\"advgbmap-title\">" + markerTitle + "</h2><p class=\"advgbmap-desc\">" + (markerDesc || '') + "</p></div>";
+
+        return React.createElement(
+            "div",
+            { className: 'advgb-map-block', style: { margin: '10px auto' } },
+            React.createElement("div", { className: 'advgb-map-content', id: mapID, style: { height: height } }),
+            React.createElement(
+                "script",
+                { "typeof": "text/javascript" },
+                "window.addEventListener( 'load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = { lat: parseFloat(" + lat + "), lng: parseFloat(" + lng + ") };\n\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                        });\n\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: '" + infoWindowHtml + "'\n                        });\n\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + markerTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size( 27, 43 ),\n                            },\n                        });\n\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
+            )
+        );
     }
 });
