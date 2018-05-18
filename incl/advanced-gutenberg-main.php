@@ -230,6 +230,11 @@ float: left;'
             plugins_url('assets/blocks/custom-separator/separator.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
         );
+        wp_enqueue_script(
+            'custom_columns',
+            plugins_url('assets/blocks/custom-columns/columns.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
+        );
     }
 
     /**
