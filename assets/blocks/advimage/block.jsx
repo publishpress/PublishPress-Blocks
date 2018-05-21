@@ -13,7 +13,7 @@ class AdvImage extends Component {
     }
 
     handleSetup( editor, area ) {
-        editor.on( 'focus', this.setState( { currentEdit: area } ) );
+        editor.on( 'focus', () => this.setState( { currentEdit: area } ) );
     }
 
     render() {

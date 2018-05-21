@@ -46,12 +46,16 @@ var AdvImage = function (_Component) {
     _createClass(AdvImage, [{
         key: 'handleSetup',
         value: function handleSetup(editor, area) {
-            editor.on('focus', this.setState({ currentEdit: area }));
+            var _this2 = this;
+
+            editor.on('focus', function () {
+                return _this2.setState({ currentEdit: area });
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var currentEdit = this.state.currentEdit;
             var _props = this.props,
@@ -255,7 +259,7 @@ var AdvImage = function (_Component) {
                         style: { color: titleColor },
                         isSelected: isSelected && currentEdit === 'title',
                         onSetup: function onSetup(editor) {
-                            return _this2.handleSetup(editor, 'title');
+                            return _this3.handleSetup(editor, 'title');
                         }
                     }),
                     React.createElement(RichText, {
@@ -268,7 +272,7 @@ var AdvImage = function (_Component) {
                         style: { color: subtitleColor },
                         isSelected: isSelected && currentEdit === 'subtitle',
                         onSetup: function onSetup(editor) {
-                            return _this2.handleSetup(editor, 'subtitle');
+                            return _this3.handleSetup(editor, 'subtitle');
                         }
                     })
                 )

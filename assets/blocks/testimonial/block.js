@@ -40,12 +40,16 @@ var AdvTestimonial = function (_Component) {
     _createClass(AdvTestimonial, [{
         key: 'handleSetup',
         value: function handleSetup(editor, area) {
-            editor.on('focus', this.setState({ currentEdit: area }));
+            var _this2 = this;
+
+            editor.on('focus', function () {
+                return _this2.setState({ currentEdit: area });
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var currentEdit = this.state.currentEdit;
             var _props = this.props,
@@ -227,7 +231,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'name',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'name');
+                                return _this3.handleSetup(editor, 'name');
                             },
                             style: { color: nameColor }
                         }),
@@ -240,7 +244,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'position',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'position');
+                                return _this3.handleSetup(editor, 'position');
                             },
                             style: { color: positionColor }
                         }),
@@ -253,7 +257,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'desc',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'desc');
+                                return _this3.handleSetup(editor, 'desc');
                             },
                             style: { color: descColor }
                         })
@@ -303,7 +307,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'name2',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'name2');
+                                return _this3.handleSetup(editor, 'name2');
                             },
                             style: { color: nameColor }
                         }),
@@ -316,7 +320,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'position2',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'position2');
+                                return _this3.handleSetup(editor, 'position2');
                             },
                             style: { color: positionColor }
                         }),
@@ -329,7 +333,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'desc2',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'desc2');
+                                return _this3.handleSetup(editor, 'desc2');
                             },
                             style: { color: descColor }
                         })
@@ -379,7 +383,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'name3',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'name3');
+                                return _this3.handleSetup(editor, 'name3');
                             },
                             style: { color: nameColor }
                         }),
@@ -392,7 +396,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'position3',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'position3');
+                                return _this3.handleSetup(editor, 'position3');
                             },
                             style: { color: positionColor }
                         }),
@@ -405,7 +409,7 @@ var AdvTestimonial = function (_Component) {
                             },
                             isSelected: isSelected && currentEdit === 'desc3',
                             onSetup: function onSetup(editor) {
-                                return _this2.handleSetup(editor, 'desc3');
+                                return _this3.handleSetup(editor, 'desc3');
                             },
                             style: { color: descColor }
                         })
