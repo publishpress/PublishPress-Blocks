@@ -397,7 +397,14 @@ var AdvVideo = function (_Component) {
                             ),
                             React.createElement(
                                 'span',
-                                { title: videoSourceType, style: { width: '25px', height: '25px', display: 'inline-block', verticalAlign: 'middle', margin: 'auto 7px' } },
+                                { title: videoSourceType,
+                                    style: {
+                                        width: '25px',
+                                        height: '25px',
+                                        display: 'inline-block',
+                                        verticalAlign: 'text-bottom',
+                                        margin: 'auto 7px' }
+                                },
                                 videoHostIcon[videoSourceType] || this.state.fetching && React.createElement(Spinner, null)
                             ),
                             React.createElement(

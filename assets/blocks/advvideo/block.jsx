@@ -325,7 +325,14 @@ class AdvVideo extends Component {
                             </div>
                             <div className={ 'advgb-current-video-desc' } style={ { minWidth: '50%', margin: '10px auto' } }>
                                 <strong>{ __( 'Current Video' ) }:</strong>
-                                <span title={videoSourceType} style={ { width: '25px', height: '25px', display: 'inline-block', verticalAlign: 'middle', margin: 'auto 7px' } }>
+                                <span title={videoSourceType}
+                                      style={ {
+                                          width: '25px',
+                                          height: '25px',
+                                          display: 'inline-block',
+                                          verticalAlign: 'text-bottom',
+                                          margin: 'auto 7px' } }
+                                >
                                     {videoHostIcon[videoSourceType] || ( this.state.fetching && <Spinner /> ) }
                                 </span>
                                 <span>
