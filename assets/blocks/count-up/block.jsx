@@ -10,12 +10,10 @@ class AdvCountUp extends Component {
         this.state = {
             currentEdit: '',
         };
-
-        this.setCurrentEditArea = this.setCurrentEditArea.bind( this )
     }
 
-    setCurrentEditArea( area ) {
-        this.setState( { currentEdit: area } )
+    handleSetup( editor, area ) {
+        editor.on( 'focus', this.setState( { currentEdit: area } ) );
     }
 
     render() {
@@ -132,7 +130,7 @@ class AdvCountUp extends Component {
                             value={ headerText }
                             onChange={ (value) => setAttributes( { headerText: value } ) }
                             isSelected={ isSelected && currentEdit === 'header' }
-                            onFocus={ () => this.setCurrentEditArea( 'header' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'header' ) }
                             style={ { color: headerTextColor } }
                         />
                         <RichText
@@ -140,7 +138,7 @@ class AdvCountUp extends Component {
                             value={ countUpNumber }
                             onChange={ (value) => setAttributes( { countUpNumber: value } ) }
                             isSelected={ isSelected && currentEdit === 'countUp' }
-                            onFocus={ () => this.setCurrentEditArea( 'countUp' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'countUp' ) }
                             style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                         />
                         <RichText
@@ -148,7 +146,7 @@ class AdvCountUp extends Component {
                             value={ descText }
                             onChange={ (value) => setAttributes( { descText: value } ) }
                             isSelected={ isSelected && currentEdit === 'desc' }
-                            onFocus={ () => this.setCurrentEditArea( 'desc' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
                             style={ { color: descTextColor } }
                         />
                     </div>
@@ -158,7 +156,7 @@ class AdvCountUp extends Component {
                             value={ headerText2 }
                             onChange={ (value) => setAttributes( { headerText2: value } ) }
                             isSelected={ isSelected && currentEdit === 'header2' }
-                            onFocus={ () => this.setCurrentEditArea( 'header2' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'header2' ) }
                             style={ { color: headerTextColor } }
                         />
                         <RichText
@@ -166,7 +164,7 @@ class AdvCountUp extends Component {
                             value={ countUpNumber2 }
                             onChange={ (value) => setAttributes( { countUpNumber2: value } ) }
                             isSelected={ isSelected && currentEdit === 'countUp2' }
-                            onFocus={ () => this.setCurrentEditArea( 'countUp2' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'countUp2' ) }
                             style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                         />
                         <RichText
@@ -174,7 +172,7 @@ class AdvCountUp extends Component {
                             value={ descText2 }
                             onChange={ (value) => setAttributes( { descText2: value } ) }
                             isSelected={ isSelected && currentEdit === 'desc2' }
-                            onFocus={ () => this.setCurrentEditArea( 'desc2' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
                             style={ { color: descTextColor } }
                         />
                     </div>
@@ -184,7 +182,7 @@ class AdvCountUp extends Component {
                             value={ headerText3 }
                             onChange={ (value) => setAttributes( { headerText3: value } ) }
                             isSelected={ isSelected && currentEdit === 'header3' }
-                            onFocus={ () => this.setCurrentEditArea( 'header3' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'header3' ) }
                             style={ { color: headerTextColor } }
                         />
                         <RichText
@@ -192,7 +190,7 @@ class AdvCountUp extends Component {
                             value={ countUpNumber3 }
                             onChange={ (value) => setAttributes( { countUpNumber3: value } ) }
                             isSelected={ isSelected && currentEdit === 'countUp3' }
-                            onFocus={ () => this.setCurrentEditArea( 'countUp3' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'countUp3' ) }
                             style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                         />
                         <RichText
@@ -200,7 +198,7 @@ class AdvCountUp extends Component {
                             value={ descText3 }
                             onChange={ (value) => setAttributes( { descText3: value } ) }
                             isSelected={ isSelected && currentEdit === 'desc3' }
-                            onFocus={ () => this.setCurrentEditArea( 'desc3' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
                             style={ { color: descTextColor } }
                         />
                     </div>

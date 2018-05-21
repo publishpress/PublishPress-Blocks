@@ -35,15 +35,13 @@ var AdvCountUp = function (_Component) {
         _this.state = {
             currentEdit: ''
         };
-
-        _this.setCurrentEditArea = _this.setCurrentEditArea.bind(_this);
         return _this;
     }
 
     _createClass(AdvCountUp, [{
-        key: 'setCurrentEditArea',
-        value: function setCurrentEditArea(area) {
-            this.setState({ currentEdit: area });
+        key: 'handleSetup',
+        value: function handleSetup(editor, area) {
+            editor.on('focus', this.setState({ currentEdit: area }));
         }
     }, {
         key: 'render',
@@ -210,8 +208,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ headerText: value });
                             },
                             isSelected: isSelected && currentEdit === 'header',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('header');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'header');
                             },
                             style: { color: headerTextColor }
                         }),
@@ -222,8 +220,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ countUpNumber: value });
                             },
                             isSelected: isSelected && currentEdit === 'countUp',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('countUp');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'countUp');
                             },
                             style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
                         }),
@@ -234,8 +232,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ descText: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'desc');
                             },
                             style: { color: descTextColor }
                         })
@@ -250,8 +248,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ headerText2: value });
                             },
                             isSelected: isSelected && currentEdit === 'header2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('header2');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'header2');
                             },
                             style: { color: headerTextColor }
                         }),
@@ -262,8 +260,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ countUpNumber2: value });
                             },
                             isSelected: isSelected && currentEdit === 'countUp2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('countUp2');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'countUp2');
                             },
                             style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
                         }),
@@ -274,8 +272,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ descText2: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc2');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'desc2');
                             },
                             style: { color: descTextColor }
                         })
@@ -290,8 +288,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ headerText3: value });
                             },
                             isSelected: isSelected && currentEdit === 'header3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('header3');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'header3');
                             },
                             style: { color: headerTextColor }
                         }),
@@ -302,8 +300,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ countUpNumber3: value });
                             },
                             isSelected: isSelected && currentEdit === 'countUp3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('countUp3');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'countUp3');
                             },
                             style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
                         }),
@@ -314,8 +312,8 @@ var AdvCountUp = function (_Component) {
                                 return setAttributes({ descText3: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc3');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'desc3');
                             },
                             style: { color: descTextColor }
                         })
