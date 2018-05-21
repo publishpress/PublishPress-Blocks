@@ -388,7 +388,9 @@ var AdvVideo = function (_Component) {
                         ),
                         React.createElement(
                             'div',
-                            { className: 'advgb-current-video-desc', style: { minWidth: '50%', margin: '10px auto' } },
+                            { className: 'advgb-current-video-desc',
+                                style: { minWidth: '50%', margin: '10px auto', textAlign: 'center' }
+                            },
                             React.createElement(
                                 'strong',
                                 null,

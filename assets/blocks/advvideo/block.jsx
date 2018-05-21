@@ -323,7 +323,9 @@ class AdvVideo extends Component {
                                     ) }
                                 />
                             </div>
-                            <div className={ 'advgb-current-video-desc' } style={ { minWidth: '50%', margin: '10px auto' } }>
+                            <div className={ 'advgb-current-video-desc' }
+                                 style={ { minWidth: '50%', margin: '10px auto', textAlign: 'center' } }
+                            >
                                 <strong>{ __( 'Current Video' ) }:</strong>
                                 <span title={videoSourceType}
                                       style={ {
