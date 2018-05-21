@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
-const { Component } = wp.element;
-const { registerBlockType, createBlock, InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wp.blocks;
+const { Component, Fragment } = wp.element;
+const { registerBlockType, createBlock } = wp.blocks;
+const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wp.editor;
 const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl, IconButton } = wp.components;
 
 class AdvButton extends Component {
@@ -63,9 +64,9 @@ class AdvButton extends Component {
             transitionSpeed,
         } = attributes;
 
-        return [
-            isSelected && (
-                <BlockControls key="advgb-button-toolbar" >
+        return (
+            <Fragment>
+                <BlockControls>
                     <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
                     <div className="components-toolbar">
                         <IconButton
@@ -76,39 +77,37 @@ class AdvButton extends Component {
                         />
                     </div>
                 </BlockControls>
-            ),
-            <span key="advgb-button" style={ { display: 'inline-block' } } >
-                <RichText
-                    tagName="span"
-                    placeholder={ __( 'Add text…' ) }
-                    value={ text }
-                    onChange={ ( value ) => setAttributes( { text: value } ) }
-                    formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-                    isSelected={ isSelected }
-                    className={ `wp-block-advgb-button_link ${id}` }
-                    keepPlaceholderOnFocus
-                />
-            </span>,
-            <style key="advgb-button-styles">
-                {`.${id} {
-                    font-size: ${textSize}px;
-                    color: ${textColor};
-                    background-color: ${bgColor};
-                    padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
-                    border-width: ${borderWidth}px;
-                    border-color: ${borderColor};
-                    border-radius: ${borderRadius}px;
-                    border-style: ${borderStyle};
-                }
-                .${id}:hover {
-                    color: ${hoverTextColor};
-                    background-color: ${hoverBgColor};
-                    box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
-                    transition: all ${transitionSpeed}s ease;
-                }`}
-            </style>,
-            isSelected && (
-                <InspectorControls key="advgb-button-inspector">
+                <span style={ { display: 'inline-block' } } >
+                    <RichText
+                        tagName="span"
+                        placeholder={ __( 'Add text…' ) }
+                        value={ text }
+                        onChange={ ( value ) => setAttributes( { text: value } ) }
+                        formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+                        isSelected={ isSelected }
+                        className={ `wp-block-advgb-button_link ${id}` }
+                        keepPlaceholderOnFocus
+                    />
+                </span>
+                <style>
+                    {`.${id} {
+                        font-size: ${textSize}px;
+                        color: ${textColor};
+                        background-color: ${bgColor};
+                        padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
+                        border-width: ${borderWidth}px;
+                        border-color: ${borderColor};
+                        border-radius: ${borderRadius}px;
+                        border-style: ${borderStyle};
+                    }
+                    .${id}:hover {
+                        color: ${hoverTextColor};
+                        background-color: ${hoverBgColor};
+                        box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
+                        transition: all ${transitionSpeed}s ease;
+                    }`}
+                </style>
+                <InspectorControls>
                     <PanelBody title={ __( 'Button link' ) }>
                         <TextControl
                             label={ [
@@ -279,8 +278,8 @@ class AdvButton extends Component {
                         />
                     </PanelBody>
                 </InspectorControls>
-            )
-        ]
+            </Fragment>
+        )
     }
 }
 
