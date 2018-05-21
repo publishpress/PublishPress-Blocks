@@ -11,6 +11,11 @@
     cursor: pointer;
 }
 
+.gutenberg #editor .advgb-video-block {
+    position: relative;
+    z-index: 1;
+}
+
 .advgb-video-poster {
     position: absolute;
     top: 0;
@@ -53,10 +58,17 @@
 
 .advgb-video-input .components-base-control {
     margin-bottom: 0;
+    display: inline-block;
 }
 
 .advgb-video-input button.components-button:disabled {
     opacity: 0.8;
+}
+
+.advgb-video-link-icon {
+    vertical-align: text-bottom;
+    margin-right: 5px;
+    color: #888;
 }
 
 .advgb-current-video-desc span.spinner {

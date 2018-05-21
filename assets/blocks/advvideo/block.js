@@ -340,48 +340,52 @@ var AdvVideo = function (_Component) {
                     ) || !videoSourceType && React.createElement('div', { style: { width: videoWidth, height: videoHeight } })),
                     isSelected && React.createElement(
                         'div',
-                        { className: 'advgb-video-input blocks-button__inline-link' },
-                        React.createElement(Dashicon, { icon: 'admin-links' }),
-                        React.createElement(TextControl, {
-                            placeholder: __('Youtube/Vimeo video ID...'),
-                            value: videoID,
-                            onChange: function onChange(value) {
-                                setAttributes({ videoID: value, videoURL: '', videoTitle: undefined, videoSourceType: '' });
-                            }
-                        }),
+                        { className: 'advgb-video-input-block' },
                         React.createElement(
-                            Button,
-                            {
-                                className: 'button button-large',
-                                disabled: !videoID || videoSourceType === 'local',
-                                style: { height: '31px' },
-                                onClick: this.fetchVideoInfo
-                            },
-                            __('Fetch')
+                            'div',
+                            { className: 'advgb-video-input' },
+                            React.createElement(Dashicon, { className: 'advgb-video-link-icon', icon: 'admin-links' }),
+                            React.createElement(TextControl, {
+                                placeholder: __('Youtube/Vimeo video ID...'),
+                                value: videoID,
+                                onChange: function onChange(value) {
+                                    setAttributes({ videoID: value, videoURL: '', videoTitle: undefined, videoSourceType: '' });
+                                }
+                            }),
+                            React.createElement(
+                                Button,
+                                {
+                                    className: 'button button-large',
+                                    disabled: !videoID || videoSourceType === 'local',
+                                    style: { height: '31px', margin: '1px 0' },
+                                    onClick: this.fetchVideoInfo
+                                },
+                                __('Fetch')
+                            ),
+                            React.createElement(
+                                'span',
+                                { style: { margin: 'auto 10px' } },
+                                __('or use')
+                            ),
+                            React.createElement(MediaUpload, {
+                                type: 'video',
+                                value: videoID,
+                                onSelect: function onSelect(video) {
+                                    return setAttributes({ videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' });
+                                },
+                                render: function render(_ref3) {
+                                    var open = _ref3.open;
+                                    return React.createElement(
+                                        Button,
+                                        {
+                                            className: 'button button-large',
+                                            onClick: open
+                                        },
+                                        __('Local video')
+                                    );
+                                }
+                            })
                         ),
-                        React.createElement(
-                            'span',
-                            { style: { margin: 'auto 10px' } },
-                            __('or use')
-                        ),
-                        React.createElement(MediaUpload, {
-                            type: 'video',
-                            value: videoID,
-                            onSelect: function onSelect(video) {
-                                return setAttributes({ videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' });
-                            },
-                            render: function render(_ref3) {
-                                var open = _ref3.open;
-                                return React.createElement(
-                                    Button,
-                                    {
-                                        className: 'button button-large',
-                                        onClick: open
-                                    },
-                                    __('Local video')
-                                );
-                            }
-                        }),
                         React.createElement(
                             'div',
                             { className: 'advgb-current-video-desc', style: { minWidth: '50%', margin: '10px auto' } },

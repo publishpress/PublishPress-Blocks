@@ -290,37 +290,39 @@ class AdvVideo extends Component {
                         || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />
                     ) }
                     {isSelected &&
-                        <div className={ 'advgb-video-input blocks-button__inline-link' }>
-                            <Dashicon icon={ 'admin-links' } />
-                            <TextControl
-                                placeholder={ __( 'Youtube/Vimeo video ID...' ) }
-                                value={ videoID }
-                                onChange={ (value) => {
-                                    setAttributes( { videoID: value, videoURL: '', videoTitle: undefined, videoSourceType: '' } );
-                                } }
-                            />
-                            <Button
-                                className="button button-large"
-                                disabled={ !videoID || videoSourceType === 'local' }
-                                style={ { height: '31px' } }
-                                onClick={ this.fetchVideoInfo }
-                            >
-                                { __( 'Fetch' ) }
-                            </Button>
-                            <span style={ { margin: 'auto 10px' } }>{ __( 'or use' ) }</span>
-                            <MediaUpload
-                                type={ 'video' }
-                                value={ videoID }
-                                onSelect={ (video) => setAttributes( { videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' } ) }
-                                render={ ( { open } ) => (
-                                    <Button
-                                        className="button button-large"
-                                        onClick={ open }
-                                    >
-                                        { __( 'Local video' ) }
-                                    </Button>
-                                ) }
-                            />
+                        <div className={ 'advgb-video-input-block' }>
+                            <div className={ 'advgb-video-input' }>
+                                <Dashicon className="advgb-video-link-icon" icon={ 'admin-links' } />
+                                <TextControl
+                                    placeholder={ __( 'Youtube/Vimeo video ID...' ) }
+                                    value={ videoID }
+                                    onChange={ (value) => {
+                                        setAttributes( { videoID: value, videoURL: '', videoTitle: undefined, videoSourceType: '' } );
+                                    } }
+                                />
+                                <Button
+                                    className="button button-large"
+                                    disabled={ !videoID || videoSourceType === 'local' }
+                                    style={ { height: '31px', margin: '1px 0' } }
+                                    onClick={ this.fetchVideoInfo }
+                                >
+                                    { __( 'Fetch' ) }
+                                </Button>
+                                <span style={ { margin: 'auto 10px' } }>{ __( 'or use' ) }</span>
+                                <MediaUpload
+                                    type={ 'video' }
+                                    value={ videoID }
+                                    onSelect={ (video) => setAttributes( { videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' } ) }
+                                    render={ ( { open } ) => (
+                                        <Button
+                                            className="button button-large"
+                                            onClick={ open }
+                                        >
+                                            { __( 'Local video' ) }
+                                        </Button>
+                                    ) }
+                                />
+                            </div>
                             <div className={ 'advgb-current-video-desc' } style={ { minWidth: '50%', margin: '10px auto' } }>
                                 <strong>{ __( 'Current Video' ) }:</strong>
                                 <span title={videoSourceType} style={ { width: '25px', height: '25px', display: 'inline-block', verticalAlign: 'middle', margin: 'auto 7px' } }>
