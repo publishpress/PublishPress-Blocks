@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { registerBlockType, InspectorControls, RichText, ColorPalette, MediaUpload } = wp.blocks;
+const { registerBlockType } = wp.blocks;
+const { InspectorControls, RichText, ColorPalette, MediaUpload } = wp.editor;
 const { RangeControl, PanelBody, PanelColor } = wp.components;
 
 class AdvTestimonial extends Component {

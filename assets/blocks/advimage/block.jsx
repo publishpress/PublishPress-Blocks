@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { registerBlockType, InspectorControls, BlockControls, RichText, ColorPalette, MediaUpload } = wp.blocks;
+const { registerBlockType } = wp.blocks;
+const { InspectorControls, BlockControls, RichText, ColorPalette, MediaUpload } = wp.editor;
 const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, TextControl, IconButton, Button } = wp.components;
 
 class AdvImage extends Component {

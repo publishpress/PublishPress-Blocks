@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { registerBlockType, InspectorControls, RichText, ColorPalette } = wp.blocks;
+const { registerBlockType } = wp.blocks;
+const { InspectorControls, RichText, ColorPalette } = wp.editor;
 const { RangeControl, PanelBody, PanelColor, TextControl, FormToggle } = wp.components;
 
 class AdvCountUp extends Component {

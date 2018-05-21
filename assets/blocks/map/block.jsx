@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { registerBlockType, InspectorControls, BlockControls, RichText, MediaUpload } = wp.blocks;
+const { registerBlockType } = wp.blocks;
+const { InspectorControls, BlockControls, RichText, MediaUpload } = wp.editor;
 const { PanelBody, TextControl, TextareaControl, RangeControl, BaseControl, Button, Placeholder } = wp.components;
 
 const mapBlockIcon = (
