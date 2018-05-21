@@ -118,7 +118,6 @@ class SummaryBlock extends Component {
         // No heading blocks
         let summaryContent = (
             <Placeholder
-                key="summary-placeholder"
                 icon={summaryBlockIcon}
                 label={summaryBlockTitle}
                 instructions={__( 'Your current post/page has no headings. Try add some headings and update this block later' )}
@@ -135,7 +134,7 @@ class SummaryBlock extends Component {
         if (headings.length > 0) {
             const { selectBlock } = dispatch( 'core/editor' );
             summaryContent = (
-                <ul className={'advgb-toc'} key="summary-toc">
+                <ul className={'advgb-toc'}>
                     {headings.map( ( heading ) => {
                         return (
                             <li className={'toc-level-' + heading.level}

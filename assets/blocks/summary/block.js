@@ -172,7 +172,6 @@ var SummaryBlock = function (_Component) {
             var summaryContent = React.createElement(
                 Placeholder,
                 {
-                    key: "summary-placeholder",
                     icon: summaryBlockIcon,
                     label: summaryBlockTitle,
                     instructions: __('Your current post/page has no headings. Try add some headings and update this block later')
@@ -193,7 +192,7 @@ var SummaryBlock = function (_Component) {
 
                 summaryContent = React.createElement(
                     "ul",
-                    { className: 'advgb-toc', key: "summary-toc" },
+                    { className: 'advgb-toc' },
                     headings.map(function (heading) {
                         return React.createElement(
                             "li",
