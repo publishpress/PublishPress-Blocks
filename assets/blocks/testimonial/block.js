@@ -38,9 +38,9 @@ var AdvTestimonial = function (_Component) {
     }
 
     _createClass(AdvTestimonial, [{
-        key: 'setCurrentEditArea',
-        value: function setCurrentEditArea(area) {
-            this.setState({ currentEdit: area });
+        key: 'handleSetup',
+        value: function handleSetup(editor, area) {
+            editor.on('focus', this.setState({ currentEdit: area }));
         }
     }, {
         key: 'render',
@@ -226,8 +226,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ name: value });
                             },
                             isSelected: isSelected && currentEdit === 'name',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('name');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'name');
                             },
                             style: { color: nameColor }
                         }),
@@ -239,8 +239,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ position: value });
                             },
                             isSelected: isSelected && currentEdit === 'position',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('position');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'position');
                             },
                             style: { color: positionColor }
                         }),
@@ -252,8 +252,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ desc: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'desc');
                             },
                             style: { color: descColor }
                         })
@@ -302,8 +302,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ name2: value });
                             },
                             isSelected: isSelected && currentEdit === 'name2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('name2');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'name2');
                             },
                             style: { color: nameColor }
                         }),
@@ -315,8 +315,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ position2: value });
                             },
                             isSelected: isSelected && currentEdit === 'position2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('position2');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'position2');
                             },
                             style: { color: positionColor }
                         }),
@@ -328,8 +328,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ desc2: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc2');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'desc2');
                             },
                             style: { color: descColor }
                         })
@@ -378,8 +378,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ name3: value });
                             },
                             isSelected: isSelected && currentEdit === 'name3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('name3');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'name3');
                             },
                             style: { color: nameColor }
                         }),
@@ -391,8 +391,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ position3: value });
                             },
                             isSelected: isSelected && currentEdit === 'position3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('position3');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'position3');
                             },
                             style: { color: positionColor }
                         }),
@@ -404,8 +404,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ desc3: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc3');
+                            onSetup: function onSetup(editor) {
+                                return _this2.handleSetup(editor, 'desc3');
                             },
                             style: { color: descColor }
                         })

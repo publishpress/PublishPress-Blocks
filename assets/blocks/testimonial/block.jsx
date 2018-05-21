@@ -12,8 +12,8 @@ class AdvTestimonial extends Component {
         }
     }
 
-    setCurrentEditArea( area ) {
-        this.setState( { currentEdit: area } );
+    handleSetup( editor, area ) {
+        editor.on( 'focus', this.setState( { currentEdit: area } ) );
     }
 
     render() {
@@ -146,7 +146,7 @@ class AdvTestimonial extends Component {
                             value={ name }
                             onChange={ (value) => setAttributes( { name: value } ) }
                             isSelected={ isSelected && currentEdit === 'name' }
-                            onFocus={ () => this.setCurrentEditArea( 'name' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'name' ) }
                             style={ { color: nameColor } }
                         />
                         <RichText
@@ -155,7 +155,7 @@ class AdvTestimonial extends Component {
                             value={ position }
                             onChange={ (value) => setAttributes( { position: value } ) }
                             isSelected={ isSelected && currentEdit === 'position' }
-                            onFocus={ () => this.setCurrentEditArea( 'position' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'position' ) }
                             style={ { color: positionColor } }
                         />
                         <RichText
@@ -164,7 +164,7 @@ class AdvTestimonial extends Component {
                             value={ desc }
                             onChange={ (value) => setAttributes( { desc: value } ) }
                             isSelected={ isSelected && currentEdit === 'desc' }
-                            onFocus={ () => this.setCurrentEditArea( 'desc' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
                             style={ { color: descColor } }
                         />
                     </div>
@@ -201,7 +201,7 @@ class AdvTestimonial extends Component {
                             value={ name2 }
                             onChange={ (value) => setAttributes( { name2: value } ) }
                             isSelected={ isSelected && currentEdit === 'name2' }
-                            onFocus={ () => this.setCurrentEditArea( 'name2' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'name2' ) }
                             style={ { color: nameColor } }
                         />
                         <RichText
@@ -210,7 +210,7 @@ class AdvTestimonial extends Component {
                             value={ position2 }
                             onChange={ (value) => setAttributes( { position2: value } ) }
                             isSelected={ isSelected && currentEdit === 'position2' }
-                            onFocus={ () => this.setCurrentEditArea( 'position2' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'position2' ) }
                             style={ { color: positionColor } }
                         />
                         <RichText
@@ -219,7 +219,7 @@ class AdvTestimonial extends Component {
                             value={ desc2 }
                             onChange={ (value) => setAttributes( { desc2: value } ) }
                             isSelected={ isSelected && currentEdit === 'desc2' }
-                            onFocus={ () => this.setCurrentEditArea( 'desc2' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
                             style={ { color: descColor } }
                         />
                     </div>
@@ -256,7 +256,7 @@ class AdvTestimonial extends Component {
                             value={ name3 }
                             onChange={ (value) => setAttributes( { name3: value } ) }
                             isSelected={ isSelected && currentEdit === 'name3' }
-                            onFocus={ () => this.setCurrentEditArea( 'name3' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'name3' ) }
                             style={ { color: nameColor } }
                         />
                         <RichText
@@ -265,7 +265,7 @@ class AdvTestimonial extends Component {
                             value={ position3 }
                             onChange={ (value) => setAttributes( { position3: value } ) }
                             isSelected={ isSelected && currentEdit === 'position3' }
-                            onFocus={ () => this.setCurrentEditArea( 'position3' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'position3' ) }
                             style={ { color: positionColor } }
                         />
                         <RichText
@@ -274,7 +274,7 @@ class AdvTestimonial extends Component {
                             value={ desc3 }
                             onChange={ (value) => setAttributes( { desc3: value } ) }
                             isSelected={ isSelected && currentEdit === 'desc3' }
-                            onFocus={ () => this.setCurrentEditArea( 'desc3' ) }
+                            onSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
                             style={ { color: descColor } }
                         />
                     </div>
