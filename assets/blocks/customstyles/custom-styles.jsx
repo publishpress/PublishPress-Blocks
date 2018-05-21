@@ -1,6 +1,7 @@
 const { addFilter } = wp.hooks;
 const { __ } = wp.i18n;
-const { InspectorControls, hasBlockSupport } = wp.blocks;
+const { hasBlockSupport } = wp.blocks;
+const { InspectorControls } = wp.editor;
 const { SelectControl } = wp.components;
 
 // Register custom styles to blocks attributes

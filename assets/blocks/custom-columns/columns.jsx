@@ -1,6 +1,6 @@
 const { addFilter } = wp.hooks;
 const { __ } = wp.i18n;
-const { InspectorControls } = wp.blocks;
+const { InspectorControls } = wp.editor;
 const { PanelBody, RangeControl } = wp.components;
 
 // Register extra attributes

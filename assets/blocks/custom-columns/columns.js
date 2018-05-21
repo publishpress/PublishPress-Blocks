@@ -4,7 +4,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var addFilter = wp.hooks.addFilter;
 var __ = wp.i18n.__;
-var InspectorControls = wp.blocks.InspectorControls;
+var InspectorControls = wp.editor.InspectorControls;
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     RangeControl = _wp$components.RangeControl;
