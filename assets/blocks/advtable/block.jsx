@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { registerBlockType } = wp.blocks;
+const { registerBlockType, createBlock } = wp.blocks;
 const { InspectorControls, BlockControls, RichText, MediaUpload, BlockAlignmentToolbar, ColorPalette } = wp.editor;
 const { PanelBody, PanelColor, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu } = wp.components;
 
@@ -444,4 +444,15 @@ registerBlockType( 'advgb/table', {
             return { 'data-align': align };
         }
     },
+    transforms: {
+        from: [
+            {
+                type: 'block',
+                blocks: [ 'core/table' ],
+                transform: ( blockAttributes ) => {
+                    return createBlock( 'advgb/table', { ...blockAttributes } );
+                },
+            },
+        ],
+    }
 } );

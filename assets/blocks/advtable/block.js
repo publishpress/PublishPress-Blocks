@@ -14,7 +14,9 @@ var __ = wp.i18n.__;
 var _wp$element = wp.element,
     Component = _wp$element.Component,
     Fragment = _wp$element.Fragment;
-var registerBlockType = wp.blocks.registerBlockType;
+var _wp$blocks = wp.blocks,
+    registerBlockType = _wp$blocks.registerBlockType,
+    createBlock = _wp$blocks.createBlock;
 var _wp$editor = wp.editor,
     InspectorControls = _wp$editor.InspectorControls,
     BlockControls = _wp$editor.BlockControls,
@@ -524,5 +526,15 @@ registerBlockType('advgb/table', {
         if ('left' === align || 'right' === align || 'wide' === align || 'full' === align) {
             return { 'data-align': align };
         }
+    },
+
+    transforms: {
+        from: [{
+            type: 'block',
+            blocks: ['core/table'],
+            transform: function transform(blockAttributes) {
+                return createBlock('advgb/table', _extends({}, blockAttributes));
+            }
+        }]
     }
 });
