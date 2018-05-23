@@ -4,11 +4,6 @@
     text-align: initial;
 }
 
-.gutenberg #editor ul.advgb-toc {
-    position: relative;
-    z-index: 1;
-}
-
 .gutenberg #editor ul.advgb-toc, ul.advgb-toc {
     list-style: none !important;
     padding: 0;
