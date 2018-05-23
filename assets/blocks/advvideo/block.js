@@ -125,12 +125,12 @@ var AdvVideo = function (_Component) {
 
 
             var PLAY_BUTTON_STYLE = {
-                normal: [React.createElement('path', { d: 'M8 5v14l11-7z', key: 'x' }), React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none', key: 'y' })],
-                circleFill: [React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none', key: 'x' }), React.createElement('path', { key: 'y', d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z' })],
-                circleOutline: [React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none', key: 'x' }), React.createElement('path', { key: 'y', d: 'M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' })],
-                videoCam: [React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none', key: 'x' }), React.createElement('path', { key: 'y', d: 'M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z' })],
+                normal: [React.createElement('path', { key: 'x', d: 'M8 5v14l11-7z' }), React.createElement('path', { key: 'y', d: 'M0 0h24v24H0z', fill: 'none' })],
+                circleFill: [React.createElement('path', { key: 'x', d: 'M0 0h24v24H0z', fill: 'none' }), React.createElement('path', { key: 'y', d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z' })],
+                circleOutline: [React.createElement('path', { key: 'x', d: 'M0 0h24v24H0z', fill: 'none' }), React.createElement('path', { key: 'y', d: 'M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' })],
+                videoCam: [React.createElement('path', { key: 'x', d: 'M0 0h24v24H0z', fill: 'none' }), React.createElement('path', { key: 'y', d: 'M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z' })],
                 squareCurved: [React.createElement('path', { key: 'x', d: 'M20 8H4V6h16v2zm-2-6H6v2h12V2zm4 10v8c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-8c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2zm-6 4l-6-3.27v6.53L16 16z' }), React.createElement('path', { key: 'y', fill: 'none', d: 'M0 0h24v24H0z' })],
-                starSticker: [React.createElement('path', { key: 'x', d: 'M0 0h24v24H0z', fill: 'none' }), React.createElement('path', { key: 'x', d: 'M20 12c0-1.1.9-2 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2zm-4.42 4.8L12 14.5l-3.58 2.3 1.08-4.12-3.29-2.69 4.24-.25L12 5.8l1.54 3.95 4.24.25-3.29 2.69 1.09 4.11z' })]
+                starSticker: [React.createElement('path', { key: 'x', d: 'M0 0h24v24H0z', fill: 'none' }), React.createElement('path', { key: 'y', d: 'M20 12c0-1.1.9-2 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-1.99.9-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2zm-4.42 4.8L12 14.5l-3.58 2.3 1.08-4.12-3.29-2.69 4.24-.25L12 5.8l1.54 3.95 4.24.25-3.29 2.69 1.09 4.11z' })]
             };
 
             var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
