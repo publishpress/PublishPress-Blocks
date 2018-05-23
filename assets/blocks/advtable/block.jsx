@@ -173,6 +173,7 @@ class AdvTable extends Component {
                     editor.dom.setStyles( selectedCell, {
                         'border-top-color': '#000',
                     } );
+                    editor.undoManager.add();
                 },
             },
             {
@@ -187,6 +188,7 @@ class AdvTable extends Component {
                     editor.dom.setStyles( selectedCell, {
                         'border-right-color': '#000',
                     } );
+                    editor.undoManager.add();
                 },
             },
             {
@@ -201,6 +203,7 @@ class AdvTable extends Component {
                     editor.dom.setStyles( selectedCell, {
                         'border-bottom-color': '#000',
                     } );
+                    editor.undoManager.add();
                 },
             },
             {
@@ -215,6 +218,7 @@ class AdvTable extends Component {
                     editor.dom.setStyles( selectedCell, {
                         'border-left-color': '#000',
                     } );
+                    editor.undoManager.add();
                 },
             },
             {
@@ -232,6 +236,7 @@ class AdvTable extends Component {
                         'border-bottom-color': '#000',
                         'border-left-color': '#000',
                     } );
+                    editor.undoManager.add();
                 },
             },
             {
@@ -249,6 +254,7 @@ class AdvTable extends Component {
                         'border-bottom-color': 'inherit',
                         'border-left-color': 'inherit',
                     } );
+                    editor.undoManager.add();
                 },
             },
         ];
@@ -296,6 +302,7 @@ class AdvTable extends Component {
                                 value={ selectedCellBgColor }
                                 onChange={ ( value ) => {
                                     editor.dom.setStyle( selectedCell, 'background-color', value || '' );
+                                    editor.undoManager.add();
                                     this.setState( { selectedCellBgColor: value } );
                                 } }
                             />
@@ -305,6 +312,7 @@ class AdvTable extends Component {
                                 value={ selectedCellTextColor }
                                 onChange={ ( value ) => {
                                     editor.dom.setStyle( selectedCell, 'color', value || '' );
+                                    editor.undoManager.add();
                                     this.setState( { selectedCellTextColor: value } );
                                 } }
                             />
@@ -319,6 +327,7 @@ class AdvTable extends Component {
                             ] }
                             onChange={ ( value ) => {
                                 editor.dom.setStyle( selectedCell, 'border-style', value );
+                                editor.undoManager.add();
                                 this.setState( { selectedCellBorderStyle: value } );
                             } }
                         />
@@ -329,6 +338,7 @@ class AdvTable extends Component {
                             max={ 10 }
                             onChange={ ( value ) => {
                                 editor.dom.setStyle( selectedCell, 'border-width', value );
+                                editor.undoManager.add();
                                 this.setState( { selectedCellBorderWidth: value } );
                             } }
                         />
@@ -352,6 +362,7 @@ class AdvTable extends Component {
                                 value={ selectedCellPaddingTop }
                                 onChange={ ( value ) => {
                                     editor.dom.setStyle( selectedCell, 'padding-top', value || '' );
+                                    editor.undoManager.add();
                                     this.setState( { selectedCellPaddingTop: value || '' } );
                                 } }
                                 allowReset
@@ -363,6 +374,7 @@ class AdvTable extends Component {
                                 value={ selectedCellPaddingRight }
                                 onChange={ ( value ) => {
                                     editor.dom.setStyle( selectedCell, 'padding-right', value || '' );
+                                    editor.undoManager.add();
                                     this.setState( { selectedCellPaddingRight: value || '' } );
                                 } }
                                 allowReset
@@ -374,6 +386,7 @@ class AdvTable extends Component {
                                 value={ selectedCellPaddingBottom }
                                 onChange={ ( value ) => {
                                     editor.dom.setStyle( selectedCell, 'padding-bottom', value || '' );
+                                    editor.undoManager.add();
                                     this.setState( { selectedCellPaddingBottom: value || '' } );
                                 } }
                                 allowReset
@@ -385,6 +398,7 @@ class AdvTable extends Component {
                                 value={ selectedCellPaddingLeft }
                                 onChange={ ( value ) => {
                                     editor.dom.setStyle( selectedCell, 'padding-left', value || '' );
+                                    editor.undoManager.add();
                                     this.setState( { selectedCellPaddingLeft: value || '' } );
                                 } }
                                 allowReset

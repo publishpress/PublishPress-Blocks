@@ -180,6 +180,7 @@ var AdvTable = function (_Component) {
                     editor.dom.setStyles(selectedCell, {
                         'border-top-color': '#000'
                     });
+                    editor.undoManager.add();
                 }
             }, {
                 title: __('Border Right'),
@@ -193,6 +194,7 @@ var AdvTable = function (_Component) {
                     editor.dom.setStyles(selectedCell, {
                         'border-right-color': '#000'
                     });
+                    editor.undoManager.add();
                 }
             }, {
                 title: __('Border Bottom'),
@@ -206,6 +208,7 @@ var AdvTable = function (_Component) {
                     editor.dom.setStyles(selectedCell, {
                         'border-bottom-color': '#000'
                     });
+                    editor.undoManager.add();
                 }
             }, {
                 title: __('Border Left'),
@@ -219,6 +222,7 @@ var AdvTable = function (_Component) {
                     editor.dom.setStyles(selectedCell, {
                         'border-left-color': '#000'
                     });
+                    editor.undoManager.add();
                 }
             }, {
                 title: __('Border All'),
@@ -235,6 +239,7 @@ var AdvTable = function (_Component) {
                         'border-bottom-color': '#000',
                         'border-left-color': '#000'
                     });
+                    editor.undoManager.add();
                 }
             }, {
                 title: __('Border None'),
@@ -251,6 +256,7 @@ var AdvTable = function (_Component) {
                         'border-bottom-color': 'inherit',
                         'border-left-color': 'inherit'
                     });
+                    editor.undoManager.add();
                 }
             }];
 
@@ -311,6 +317,7 @@ var AdvTable = function (_Component) {
                                 value: selectedCellBgColor,
                                 onChange: function onChange(value) {
                                     editor.dom.setStyle(selectedCell, 'background-color', value || '');
+                                    editor.undoManager.add();
                                     _this3.setState({ selectedCellBgColor: value });
                                 }
                             })
@@ -322,6 +329,7 @@ var AdvTable = function (_Component) {
                                 value: selectedCellTextColor,
                                 onChange: function onChange(value) {
                                     editor.dom.setStyle(selectedCell, 'color', value || '');
+                                    editor.undoManager.add();
                                     _this3.setState({ selectedCellTextColor: value });
                                 }
                             })
@@ -332,6 +340,7 @@ var AdvTable = function (_Component) {
                             options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
                             onChange: function onChange(value) {
                                 editor.dom.setStyle(selectedCell, 'border-style', value);
+                                editor.undoManager.add();
                                 _this3.setState({ selectedCellBorderStyle: value });
                             }
                         }),
@@ -342,6 +351,7 @@ var AdvTable = function (_Component) {
                             max: 10,
                             onChange: function onChange(value) {
                                 editor.dom.setStyle(selectedCell, 'border-width', value);
+                                editor.undoManager.add();
                                 _this3.setState({ selectedCellBorderWidth: value });
                             }
                         }),
@@ -373,6 +383,7 @@ var AdvTable = function (_Component) {
                                 value: selectedCellPaddingTop,
                                 onChange: function onChange(value) {
                                     editor.dom.setStyle(selectedCell, 'padding-top', value || '');
+                                    editor.undoManager.add();
                                     _this3.setState({ selectedCellPaddingTop: value || '' });
                                 },
                                 allowReset: true
@@ -384,6 +395,7 @@ var AdvTable = function (_Component) {
                                 value: selectedCellPaddingRight,
                                 onChange: function onChange(value) {
                                     editor.dom.setStyle(selectedCell, 'padding-right', value || '');
+                                    editor.undoManager.add();
                                     _this3.setState({ selectedCellPaddingRight: value || '' });
                                 },
                                 allowReset: true
@@ -395,6 +407,7 @@ var AdvTable = function (_Component) {
                                 value: selectedCellPaddingBottom,
                                 onChange: function onChange(value) {
                                     editor.dom.setStyle(selectedCell, 'padding-bottom', value || '');
+                                    editor.undoManager.add();
                                     _this3.setState({ selectedCellPaddingBottom: value || '' });
                                 },
                                 allowReset: true
@@ -406,6 +419,7 @@ var AdvTable = function (_Component) {
                                 value: selectedCellPaddingLeft,
                                 onChange: function onChange(value) {
                                     editor.dom.setStyle(selectedCell, 'padding-left', value || '');
+                                    editor.undoManager.add();
                                     _this3.setState({ selectedCellPaddingLeft: value || '' });
                                 },
                                 allowReset: true
