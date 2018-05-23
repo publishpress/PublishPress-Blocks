@@ -54,12 +54,12 @@ var AdvTable = function (_Component) {
             selectedCell: null,
             selectedCellBgColor: null,
             selectedCellTextColor: null,
-            selectedCellBorderStyle: null,
-            selectedCellBorderWidth: null,
-            selectedCellPaddingTop: null,
-            selectedCellPaddingRight: null,
-            selectedCellPaddingBottom: null,
-            selectedCellPaddingLeft: null
+            selectedCellBorderStyle: '',
+            selectedCellBorderWidth: '',
+            selectedCellPaddingTop: '',
+            selectedCellPaddingRight: '',
+            selectedCellPaddingBottom: '',
+            selectedCellPaddingLeft: ''
         };
 
         _this.handleSetup = _this.handleSetup.bind(_this);
@@ -83,7 +83,7 @@ var AdvTable = function (_Component) {
                 var selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
                 var selectedCellBgColor = editor.dom.getStyle(selectedCell, 'background-color');
                 var selectedCellTextColor = editor.dom.getStyle(selectedCell, 'color');
-                var selectedCellBorderStyle = editor.dom.getStyle(selectedCell, 'border-style');
+                var selectedCellBorderStyle = editor.dom.getStyle(selectedCell, 'border-style') || 'solid';
                 var selectedCellBorderWidth = editor.dom.getStyle(selectedCell, 'border-width') || '1px';
                 selectedCellBorderWidth = parseInt(selectedCellBorderWidth.replace('px', ''));
                 var selectedCellPaddingTop = editor.dom.getStyle(selectedCell, 'padding-top');

@@ -19,12 +19,12 @@ class AdvTable extends Component {
             selectedCell: null,
             selectedCellBgColor: null,
             selectedCellTextColor: null,
-            selectedCellBorderStyle: null,
-            selectedCellBorderWidth: null,
-            selectedCellPaddingTop: null,
-            selectedCellPaddingRight: null,
-            selectedCellPaddingBottom: null,
-            selectedCellPaddingLeft: null,
+            selectedCellBorderStyle: '',
+            selectedCellBorderWidth: '',
+            selectedCellPaddingTop: '',
+            selectedCellPaddingRight: '',
+            selectedCellPaddingBottom: '',
+            selectedCellPaddingLeft: '',
         };
 
         this.handleSetup = this.handleSetup.bind( this );
@@ -71,7 +71,7 @@ class AdvTable extends Component {
             const selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
             const selectedCellBgColor = editor.dom.getStyle( selectedCell, 'background-color' );
             const selectedCellTextColor = editor.dom.getStyle( selectedCell, 'color' );
-            const selectedCellBorderStyle = editor.dom.getStyle( selectedCell, 'border-style' );
+            const selectedCellBorderStyle = editor.dom.getStyle( selectedCell, 'border-style' ) || 'solid';
             let selectedCellBorderWidth = editor.dom.getStyle( selectedCell, 'border-width' ) || '1px' ;
             selectedCellBorderWidth = parseInt( selectedCellBorderWidth.replace( 'px', '' ) );
             let selectedCellPaddingTop = editor.dom.getStyle( selectedCell, 'padding-top' );
