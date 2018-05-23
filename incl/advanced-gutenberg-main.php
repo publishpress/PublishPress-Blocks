@@ -208,6 +208,15 @@ float: left;'
             plugins_url('assets/blocks/map/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
         );
+        wp_enqueue_script(
+            'advTable_blocks',
+            plugins_url('assets/blocks/advtable/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+        );
+        wp_enqueue_style(
+            'advTable_blocks',
+            plugins_url('assets/blocks/advtable/style.css', dirname(__FILE__))
+        );
 
         wp_enqueue_script(
             'testimonial_blocks',
@@ -282,6 +291,10 @@ float: left;'
         wp_enqueue_style(
             'advVideo_blocks',
             plugins_url('assets/blocks/advvideo/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'advTable_frontend',
+            plugins_url('assets/blocks/advtable/frontend.css', dirname(__FILE__))
         );
 
         $saved_settings = get_option('advgb_settings');
@@ -1282,6 +1295,7 @@ float: left;'
             'advgb/image',
             'advgb/video',
             'advgb/map',
+            'advgb/table',
         );
 
         // Avoid default value (string 'all')
