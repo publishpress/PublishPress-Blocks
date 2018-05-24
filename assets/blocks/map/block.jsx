@@ -2,7 +2,7 @@ const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { registerBlockType } = wp.blocks;
 const { InspectorControls, BlockControls, RichText, MediaUpload } = wp.editor;
-const { PanelBody, TextControl, TextareaControl, RangeControl, BaseControl, Button, Placeholder } = wp.components;
+const { PanelBody, TextControl, TextareaControl, RangeControl, BaseControl, Button, Placeholder, Spinner } = wp.components;
 
 const mapBlockIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="2 2 22 22">
@@ -23,10 +23,12 @@ class AdvMap extends Component {
     constructor() {
         super( ...arguments );
         this.state = {
-            stillTyping: false,
+            currentAddress: '',
+            fetching: false,
         };
 
         this.initMap = this.initMap.bind(this);
+        this.fetchLocation = this.fetchLocation.bind(this);
     }
 
     componentWillMount() {
@@ -41,9 +43,17 @@ class AdvMap extends Component {
         this.initMap();
     }
 
-    componentDidUpdate() {
-        clearTimeout(mapWillUpdate);
-        mapWillUpdate = setTimeout(this.initMap, 1000);
+    componentDidUpdate( prevProps, prevState ) {
+        const { address: prevAddr, useLatLng: prevUseLatLng } = prevProps.attributes;
+        const { address, useLatLng } = this.props.attributes;
+
+        if (prevAddr !== address || prevUseLatLng !== useLatLng || prevState !== this.state)
+            return null;
+
+        if (prevProps.attributes !== this.props.attributes) {
+            clearTimeout(mapWillUpdate);
+            mapWillUpdate = setTimeout(this.initMap, 1000);
+        }
     }
 
     initMap() {
@@ -84,10 +94,46 @@ class AdvMap extends Component {
         }
     }
 
+    fetchLocation() {
+        if (typeof google === "undefined" || advgbMapError)
+            return null;
+
+        const { attributes, setAttributes } = this.props;
+        const { address } = attributes;
+        const geoCoder = new google.maps.Geocoder();
+        const { OK, ZERO_RESULTS } = google.maps.GeocoderStatus;
+        const that = this;
+
+        if (geoCoder) {
+            that.setState( { fetching: true } );
+            geoCoder.geocode( { address }, function ( res, stt ) {
+                if (stt === OK) {
+                    const { location } = res[0].geometry;
+
+                    setAttributes( {
+                        lat: location.lat(),
+                        lng: location.lng(),
+                        currentAddress: res[0].formatted_address,
+                    } );
+                } else if (stt === ZERO_RESULTS) {
+                    setAttributes( { currentAddress: __( 'No matching address found!' ) } );
+                } else {
+                    setAttributes( { currentAddress: stt } );
+                }
+
+                that.setState( { fetching: false } );
+            } )
+        }
+    }
+
     render() {
+        const { fetching } = this.state;
         const { attributes, setAttributes } = this.props;
         const {
             mapID,
+            useLatLng,
+            address,
+            currentAddress,
             lat,
             lng,
             zoom,
@@ -103,17 +149,59 @@ class AdvMap extends Component {
                 {typeof google !== 'undefined' &&
                     <InspectorControls>
                         <PanelBody title={ __( 'Map settings' ) }>
-                            <TextControl
-                                label={ __( 'Location' ) }
-                                value={ lat }
-                                placeholder={ __( 'Enter latitude…' ) }
-                                onChange={ (value) => setAttributes( { lat: value } ) }
-                            />
-                            <TextControl
-                                value={ lng }
-                                placeholder={ __( 'Enter longitude…' ) }
-                                onChange={ (value) => setAttributes( { lng: value } ) }
-                            />
+                            {!useLatLng &&
+                                <Fragment>
+                                    <TextControl
+                                        label={ [
+                                            __( 'Address' ),
+                                            <a key="switch-type"
+                                               style={ { marginLeft: '10px' } }
+                                               onClick={ () => setAttributes( { useLatLng: !useLatLng } ) }
+                                            >
+                                                { __( 'Use Lat/Lng' ) }
+                                            </a>
+                                        ] }
+                                        value={ address }
+                                        placeholder={ __( 'Enter address…' ) }
+                                        onChange={ (value) => setAttributes( { address: value } ) }
+                                    />
+                                    <div>
+                                        <Button className="button button-large" onClick={ this.fetchLocation }>
+                                            { __( 'Fetch Location' ) }
+                                        </Button>
+                                        {fetching && <Spinner /> }
+                                        <div style={ { margin: '10px auto' } }>
+                                            <strong style={ { marginRight: '5px' } }>{ __( 'Current' ) }:</strong>
+                                            <span>{ currentAddress }</span>
+                                        </div>
+                                    </div>
+                                </Fragment>
+                            }
+                            {!!useLatLng &&
+                                <Fragment>
+                                    <TextControl
+                                        label={ [
+                                            __( 'Location' ),
+                                            <a key="switch-type"
+                                               style={ { marginLeft: '10px' } }
+                                               onClick={ () => setAttributes( { useLatLng: !useLatLng } ) }
+                                            >
+                                                { __( 'Use Address' ) }
+                                            </a>
+                                        ] }
+                                        value={ lat }
+                                        placeholder={ __( 'Enter latitude…' ) }
+                                        title={ __( 'Latitude' ) }
+                                        onChange={ (value) => setAttributes( { lat: value } ) }
+                                    />
+                                    <TextControl
+                                        value={ lng }
+                                        placeholder={ __( 'Enter longitude…' ) }
+                                        title={ __( 'Longitude' ) }
+                                        onChange={ (value) => setAttributes( { lng: value } ) }
+                                    />
+                                </Fragment>
+                            }
                             <RangeControl
                                 label={ __( 'Zoom level' ) }
                                 value={ zoom }
@@ -154,7 +242,7 @@ class AdvMap extends Component {
                                             >
                                                 { __( 'Choose icon' ) }
                                             </Button>
-                                            { !!markerIcon &&
+                                            {!!markerIcon &&
                                             <img style={ { maxHeight: '30px', marginLeft: '10px' } }
                                                  src={ markerIcon }
                                                  alt={ __( 'Marker icon' ) }/>
@@ -211,6 +299,16 @@ registerBlockType( 'advgb/map', {
     keywords: [ __( 'google map' ), __( 'location' ), __( 'address' ) ],
     attributes: {
         mapID: {
+            type: 'string',
+        },
+        useLatLng: {
+            type: 'boolean',
+            default: false,
+        },
+        address: {
+            type: 'string',
+        },
+        currentAddress: {
             type: 'string',
         },
         lat: {

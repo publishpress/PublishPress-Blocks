@@ -25,7 +25,8 @@ var _wp$components = wp.components,
     RangeControl = _wp$components.RangeControl,
     BaseControl = _wp$components.BaseControl,
     Button = _wp$components.Button,
-    Placeholder = _wp$components.Placeholder;
+    Placeholder = _wp$components.Placeholder,
+    Spinner = _wp$components.Spinner;
 
 
 var mapBlockIcon = React.createElement(
@@ -52,10 +53,12 @@ var AdvMap = function (_Component) {
         var _this = _possibleConstructorReturn(this, (AdvMap.__proto__ || Object.getPrototypeOf(AdvMap)).apply(this, arguments));
 
         _this.state = {
-            stillTyping: false
+            currentAddress: '',
+            fetching: false
         };
 
         _this.initMap = _this.initMap.bind(_this);
+        _this.fetchLocation = _this.fetchLocation.bind(_this);
         return _this;
     }
 
@@ -79,9 +82,21 @@ var AdvMap = function (_Component) {
         }
     }, {
         key: "componentDidUpdate",
-        value: function componentDidUpdate() {
-            clearTimeout(mapWillUpdate);
-            mapWillUpdate = setTimeout(this.initMap, 1000);
+        value: function componentDidUpdate(prevProps, prevState) {
+            var _prevProps$attributes = prevProps.attributes,
+                prevAddr = _prevProps$attributes.address,
+                prevUseLatLng = _prevProps$attributes.useLatLng;
+            var _props$attributes = this.props.attributes,
+                address = _props$attributes.address,
+                useLatLng = _props$attributes.useLatLng;
+
+
+            if (prevAddr !== address || prevUseLatLng !== useLatLng || prevState !== this.state) return null;
+
+            if (prevProps.attributes !== this.props.attributes) {
+                clearTimeout(mapWillUpdate);
+                mapWillUpdate = setTimeout(this.initMap, 1000);
+            }
         }
     }, {
         key: "initMap",
@@ -89,14 +104,14 @@ var AdvMap = function (_Component) {
             if (typeof google === "undefined" || !this.props.attributes.mapID || advgbMapError) return null;
 
             var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-            var _props$attributes = this.props.attributes,
-                mapID = _props$attributes.mapID,
-                lat = _props$attributes.lat,
-                lng = _props$attributes.lng,
-                zoom = _props$attributes.zoom,
-                markerTitle = _props$attributes.markerTitle,
-                markerIcon = _props$attributes.markerIcon,
-                markerDesc = _props$attributes.markerDesc;
+            var _props$attributes2 = this.props.attributes,
+                mapID = _props$attributes2.mapID,
+                lat = _props$attributes2.lat,
+                lng = _props$attributes2.lng,
+                zoom = _props$attributes2.zoom,
+                markerTitle = _props$attributes2.markerTitle,
+                markerIcon = _props$attributes2.markerIcon,
+                markerDesc = _props$attributes2.markerDesc;
 
             var location = { lat: parseFloat(lat), lng: parseFloat(lng) };
 
@@ -127,12 +142,55 @@ var AdvMap = function (_Component) {
             }
         }
     }, {
-        key: "render",
-        value: function render() {
+        key: "fetchLocation",
+        value: function fetchLocation() {
+            if (typeof google === "undefined" || advgbMapError) return null;
+
             var _props2 = this.props,
                 attributes = _props2.attributes,
                 setAttributes = _props2.setAttributes;
+            var address = attributes.address;
+
+            var geoCoder = new google.maps.Geocoder();
+            var _google$maps$Geocoder = google.maps.GeocoderStatus,
+                OK = _google$maps$Geocoder.OK,
+                ZERO_RESULTS = _google$maps$Geocoder.ZERO_RESULTS;
+
+            var that = this;
+
+            if (geoCoder) {
+                that.setState({ fetching: true });
+                geoCoder.geocode({ address: address }, function (res, stt) {
+                    if (stt === OK) {
+                        var location = res[0].geometry.location;
+
+
+                        setAttributes({
+                            lat: location.lat(),
+                            lng: location.lng(),
+                            currentAddress: res[0].formatted_address
+                        });
+                    } else if (stt === ZERO_RESULTS) {
+                        setAttributes({ currentAddress: __('No matching address found!') });
+                    } else {
+                        setAttributes({ currentAddress: stt });
+                    }
+
+                    that.setState({ fetching: false });
+                });
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var fetching = this.state.fetching;
+            var _props3 = this.props,
+                attributes = _props3.attributes,
+                setAttributes = _props3.setAttributes;
             var mapID = attributes.mapID,
+                useLatLng = attributes.useLatLng,
+                address = attributes.address,
+                currentAddress = attributes.currentAddress,
                 lat = attributes.lat,
                 lng = attributes.lng,
                 zoom = attributes.zoom,
@@ -152,21 +210,82 @@ var AdvMap = function (_Component) {
                     React.createElement(
                         PanelBody,
                         { title: __('Map settings') },
-                        React.createElement(TextControl, {
-                            label: __('Location'),
-                            value: lat,
-                            placeholder: __('Enter latitude…'),
-                            onChange: function onChange(value) {
-                                return setAttributes({ lat: value });
-                            }
-                        }),
-                        React.createElement(TextControl, {
-                            value: lng,
-                            placeholder: __('Enter longitude…'),
-                            onChange: function onChange(value) {
-                                return setAttributes({ lng: value });
-                            }
-                        }),
+                        !useLatLng && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(TextControl, {
+                                label: [__('Address'), React.createElement(
+                                    "a",
+                                    { key: "switch-type",
+                                        style: { marginLeft: '10px' },
+                                        onClick: function onClick() {
+                                            return setAttributes({ useLatLng: !useLatLng });
+                                        }
+                                    },
+                                    __('Use Lat/Lng')
+                                )],
+                                value: address,
+                                placeholder: __('Enter address…'),
+                                onChange: function onChange(value) {
+                                    return setAttributes({ address: value });
+                                }
+                            }),
+                            React.createElement(
+                                "div",
+                                null,
+                                React.createElement(
+                                    Button,
+                                    { className: "button button-large", onClick: this.fetchLocation },
+                                    __('Fetch Location')
+                                ),
+                                fetching && React.createElement(Spinner, null),
+                                React.createElement(
+                                    "div",
+                                    { style: { margin: '10px auto' } },
+                                    React.createElement(
+                                        "strong",
+                                        { style: { marginRight: '5px' } },
+                                        __('Current'),
+                                        ":"
+                                    ),
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        currentAddress
+                                    )
+                                )
+                            )
+                        ),
+                        !!useLatLng && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(TextControl, {
+                                label: [__('Location'), React.createElement(
+                                    "a",
+                                    { key: "switch-type",
+                                        style: { marginLeft: '10px' },
+                                        onClick: function onClick() {
+                                            return setAttributes({ useLatLng: !useLatLng });
+                                        }
+                                    },
+                                    __('Use Address')
+                                )],
+                                value: lat,
+                                placeholder: __('Enter latitude…'),
+                                title: __('Latitude'),
+                                onChange: function onChange(value) {
+                                    return setAttributes({ lat: value });
+                                }
+                            }),
+                            React.createElement(TextControl, {
+                                value: lng,
+                                placeholder: __('Enter longitude…'),
+                                title: __('Longitude'),
+                                onChange: function onChange(value) {
+                                    return setAttributes({ lng: value });
+                                }
+                            })
+                        ),
                         React.createElement(RangeControl, {
                             label: __('Zoom level'),
                             value: zoom,
@@ -276,6 +395,16 @@ registerBlockType('advgb/map', {
     keywords: [__('google map'), __('location'), __('address')],
     attributes: {
         mapID: {
+            type: 'string'
+        },
+        useLatLng: {
+            type: 'boolean',
+            default: false
+        },
+        address: {
+            type: 'string'
+        },
+        currentAddress: {
             type: 'string'
         },
         lat: {
