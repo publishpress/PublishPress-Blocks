@@ -430,7 +430,7 @@ var AdvVideo = function (_Component) {
                                 videoTitle === 'ADVGB_FAIL_TO_LOAD' && React.createElement(
                                     'strong',
                                     { style: { color: 'red' } },
-                                    __('Wrong video ID. Please try another.')
+                                    __('Wrong video URL/ID. Please try another.')
                                 ) || videoTitle || __('Not selected yet.')
                             )
                         )

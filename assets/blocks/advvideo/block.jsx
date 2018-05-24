@@ -355,7 +355,7 @@ class AdvVideo extends Component {
                                 </span>
                                 <span>
                                     {
-                                        ( videoTitle === 'ADVGB_FAIL_TO_LOAD' && <strong style={ { color: 'red' } }>{ __( 'Wrong video ID. Please try another.' ) }</strong> )
+                                        ( videoTitle === 'ADVGB_FAIL_TO_LOAD' && <strong style={ { color: 'red' } }>{ __( 'Wrong video URL/ID. Please try another.' ) }</strong> )
                                         || videoTitle
                                         || __( 'Not selected yet.' )
                                     }
