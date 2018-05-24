@@ -48,13 +48,12 @@
 .advgb-video-input {
     width: fit-content !important;
     margin: 10px auto;
-    justify-content: center;
-    display: flex;
 }
 
 .advgb-video-input .components-base-control {
     margin-bottom: 0;
     display: inline-block;
+    width: 300px;
 }
 
 .advgb-video-input button.components-button:disabled {

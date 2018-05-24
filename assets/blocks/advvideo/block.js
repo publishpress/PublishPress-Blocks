@@ -57,6 +57,7 @@ var AdvVideo = function (_Component) {
                 setAttributes = _props.setAttributes;
             var videoID = attributes.videoID;
 
+            var realID = videoID;
 
             if (!!videoID) {
                 this.setState({ fetching: true });
@@ -67,6 +68,20 @@ var AdvVideo = function (_Component) {
                 } else {
                     url = 'https://www.youtube.com/watch?v=' + videoID;
                 }
+
+                if (videoID.indexOf('http') > -1) {
+                    url = videoID;
+                }
+
+                if (videoID.match(/youtube.com/)) {
+                    realID = videoID.split('v=');
+                    realID = realID[1];
+                } else if (videoID.match(/youtu.be|vimeo.com/)) {
+                    realID = videoID.split('/');
+                    realID = realID[realID.length - 1];
+                }
+
+                if (realID.indexOf('&') > -1) realID = realID.substring(0, realID.indexOf('&'));
 
                 wp.apiRequest({ path: '/oembed/1.0/proxy?url=' + JSON.stringify(url) }).then(function (obj) {
                     _this2.setState({ fetching: false });
@@ -80,13 +95,13 @@ var AdvVideo = function (_Component) {
                             case 'YouTube':
                                 setAttributes({
                                     videoSourceType: 'youtube',
-                                    videoURL: 'https://www.youtube.com/embed/' + videoID + '?rel=0&wmode=transparent'
+                                    videoURL: 'https://www.youtube.com/embed/' + realID + '?rel=0&wmode=transparent'
                                 });
                                 break;
                             case 'Vimeo':
                                 setAttributes({
                                     videoSourceType: 'vimeo',
-                                    videoURL: 'https://player.vimeo.com/video/' + videoID
+                                    videoURL: 'https://player.vimeo.com/video/' + realID
                                 });
                                 break;
                             default:
@@ -346,7 +361,7 @@ var AdvVideo = function (_Component) {
                             { className: 'advgb-video-input' },
                             React.createElement(Dashicon, { className: 'advgb-video-link-icon', icon: 'admin-links' }),
                             React.createElement(TextControl, {
-                                placeholder: __('Youtube/Vimeo video ID...'),
+                                placeholder: __('Youtube/Vimeo video URL/ID…'),
                                 value: videoID,
                                 onChange: function onChange(value) {
                                     setAttributes({ videoID: value, videoURL: '', videoTitle: undefined, videoSourceType: '' });
