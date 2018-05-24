@@ -263,9 +263,12 @@ registerBlockType( 'advgb/map', {
             <div className={ 'advgb-map-block' } style={ { margin: '10px auto' } }>
                 <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
                 <script typeof="text/javascript">
-                    {`window.addEventListener( 'load', function() {
+                    {`window.addEventListener('load', function() {
                         if (typeof google === "undefined") return null;
-                        var location = { lat: parseFloat(${lat}), lng: parseFloat(${lng}) };
+                        var location = {
+                            lat: parseFloat(${lat}),
+                            lng: parseFloat(${lng})
+                        };
 
                         var map = new google.maps.Map(document.getElementById('${mapID}'), {
                             zoom: ${zoom},
@@ -283,7 +286,7 @@ registerBlockType( 'advgb/map', {
                             animation: google.maps.Animation.DROP,
                             icon: {
                                 url: '${markerIcon || DEFAULT_MARKER}',
-                                scaledSize: new google.maps.Size( 27, 43 ),
+                                scaledSize: new google.maps.Size(27, 43),
                             },
                         });
 
