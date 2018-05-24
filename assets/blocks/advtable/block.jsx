@@ -19,6 +19,7 @@ class AdvTable extends Component {
             selectedCell: null,
             selectedCellBgColor: null,
             selectedCellTextColor: null,
+            selectedCellBorderColor: null,
             selectedCellBorderStyle: '',
             selectedCellBorderWidth: '',
             selectedCellPaddingTop: '',
@@ -71,6 +72,7 @@ class AdvTable extends Component {
             const selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
             const selectedCellBgColor = editor.dom.getStyle( selectedCell, 'background-color' );
             const selectedCellTextColor = editor.dom.getStyle( selectedCell, 'color' );
+            const selectedCellBorderColor = editor.dom.getAttrib( selectedCell, 'data-border-color' );
             const selectedCellBorderStyle = editor.dom.getStyle( selectedCell, 'border-style' ) || 'solid';
             let selectedCellBorderWidth = editor.dom.getStyle( selectedCell, 'border-width' ) || '1px' ;
             selectedCellBorderWidth = parseInt( selectedCellBorderWidth.replace( 'px', '' ) );
@@ -91,6 +93,7 @@ class AdvTable extends Component {
                 selectedCell,
                 selectedCellBgColor,
                 selectedCellTextColor,
+                selectedCellBorderColor,
                 selectedCellBorderStyle,
                 selectedCellBorderWidth,
                 selectedCellPaddingTop,
@@ -109,6 +112,7 @@ class AdvTable extends Component {
             selectedCell,
             selectedCellBgColor,
             selectedCellTextColor,
+            selectedCellBorderColor,
             selectedCellBorderStyle,
             selectedCellBorderWidth,
             selectedCellPaddingTop,
@@ -171,7 +175,7 @@ class AdvTable extends Component {
                 ),
                 onClick: () => {
                     editor.dom.setStyles( selectedCell, {
-                        'border-top-color': '#000',
+                        'border-top-color': selectedCellBorderColor,
                     } );
                     editor.undoManager.add();
                 },
@@ -186,7 +190,7 @@ class AdvTable extends Component {
                 ),
                 onClick: () => {
                     editor.dom.setStyles( selectedCell, {
-                        'border-right-color': '#000',
+                        'border-right-color': selectedCellBorderColor,
                     } );
                     editor.undoManager.add();
                 },
@@ -201,7 +205,7 @@ class AdvTable extends Component {
                 ),
                 onClick: () => {
                     editor.dom.setStyles( selectedCell, {
-                        'border-bottom-color': '#000',
+                        'border-bottom-color': selectedCellBorderColor,
                     } );
                     editor.undoManager.add();
                 },
@@ -216,7 +220,7 @@ class AdvTable extends Component {
                 ),
                 onClick: () => {
                     editor.dom.setStyles( selectedCell, {
-                        'border-left-color': '#000',
+                        'border-left-color': selectedCellBorderColor,
                     } );
                     editor.undoManager.add();
                 },
@@ -231,10 +235,10 @@ class AdvTable extends Component {
                 ),
                 onClick: () => {
                     editor.dom.setStyles( selectedCell, {
-                        'border-top-color': '#000',
-                        'border-right-color': '#000',
-                        'border-bottom-color': '#000',
-                        'border-left-color': '#000',
+                        'border-top-color': selectedCellBorderColor,
+                        'border-right-color': selectedCellBorderColor,
+                        'border-bottom-color': selectedCellBorderColor,
+                        'border-left-color': selectedCellBorderColor,
                     } );
                     editor.undoManager.add();
                 },
@@ -249,10 +253,10 @@ class AdvTable extends Component {
                 ),
                 onClick: () => {
                     editor.dom.setStyles( selectedCell, {
-                        'border-top-color': 'inherit',
-                        'border-right-color': 'inherit',
-                        'border-bottom-color': 'inherit',
-                        'border-left-color': 'inherit',
+                        'border-top-color': '',
+                        'border-right-color': '',
+                        'border-bottom-color': '',
+                        'border-left-color': '',
                     } );
                     editor.undoManager.add();
                 },
@@ -317,43 +321,59 @@ class AdvTable extends Component {
                                 } }
                             />
                         </PanelColor>
-                        <SelectControl
-                            label={ __( 'Border Style' ) }
-                            value={ selectedCellBorderStyle }
-                            options={ [
-                                { label: __( 'Solid' ), value: 'solid' },
-                                { label: __( 'Dashed' ), value: 'dashed' },
-                                { label: __( 'Dotted' ), value: 'dotted' },
-                            ] }
-                            onChange={ ( value ) => {
-                                editor.dom.setStyle( selectedCell, 'border-style', value );
-                                editor.undoManager.add();
-                                this.setState( { selectedCellBorderStyle: value } );
-                            } }
-                        />
-                        <RangeControl
-                            label={ __( 'Border width' ) }
-                            value={ selectedCellBorderWidth }
-                            min={ 1 }
-                            max={ 10 }
-                            onChange={ ( value ) => {
-                                editor.dom.setStyle( selectedCell, 'border-width', value );
-                                editor.undoManager.add();
-                                this.setState( { selectedCellBorderWidth: value } );
-                            } }
-                        />
-                        <div className={ 'advgb-border-item-wrapper' }>
-                            {BORDER_SELECT.map( ( item, index ) => (
-                                <div className={ 'advgb-border-item' } key={ index }>
+                        <PanelBody title={ __( 'Border' ) } initialOpen={ false }>
+                            <SelectControl
+                                label={ __( 'Border Style' ) }
+                                value={ selectedCellBorderStyle }
+                                options={ [
+                                    { label: __( 'Solid' ), value: 'solid' },
+                                    { label: __( 'Dashed' ), value: 'dashed' },
+                                    { label: __( 'Dotted' ), value: 'dotted' },
+                                ] }
+                                onChange={ ( value ) => {
+                                    editor.dom.setStyle( selectedCell, 'border-style', value );
+                                    editor.undoManager.add();
+                                    this.setState( { selectedCellBorderStyle: value } );
+                                } }
+                            />
+                            <PanelColor title={ __( 'Border Color' ) } colorValue={ selectedCellBorderColor } initialOpen={ false }>
+                                <ColorPalette
+                                    value={ selectedCellBorderColor }
+                                    onChange={ (value) => {
+                                        editor.dom.setAttrib( selectedCell, 'data-border-color', value || '' );
+                                        [ 'top', 'right', 'bottom', 'left' ].map( function ( pos ) {
+                                            if (editor.dom.getStyle( selectedCell, `border-${pos}-color` ))
+                                                editor.dom.setStyle( selectedCell, `border-${pos}-color`, value || '' );
+                                        } );
+                                        editor.undoManager.add();
+                                        this.setState( { selectedCellBorderColor: value } );
+                                    } }
+                                />
+                            </PanelColor>
+                            <RangeControl
+                                label={ __( 'Border width' ) }
+                                value={ selectedCellBorderWidth }
+                                min={ 1 }
+                                max={ 10 }
+                                onChange={ ( value ) => {
+                                    editor.dom.setStyle( selectedCell, 'border-width', value );
+                                    editor.undoManager.add();
+                                    this.setState( { selectedCellBorderWidth: value } );
+                                } }
+                            />
+                            <div className={ 'advgb-border-item-wrapper' }>
+                                {BORDER_SELECT.map( ( item, index ) => (
+                                    <div className={ 'advgb-border-item' } key={ index }>
                                     <span title={ item.title }
                                           onClick={ item.onClick }
                                           className={ item.selected ? 'selected' : '' }
                                     >
                                         { item.icon }
                                     </span>
-                                </div>
-                            ) ) }
-                        </div>
+                                    </div>
+                                ) ) }
+                            </div>
+                        </PanelBody>
                         <PanelBody title={ __( 'Padding' ) } initialOpen={ false }>
                             <RangeControl
                                 label={ __( 'Padding Top' ) }

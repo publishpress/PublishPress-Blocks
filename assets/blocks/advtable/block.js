@@ -54,6 +54,7 @@ var AdvTable = function (_Component) {
             selectedCell: null,
             selectedCellBgColor: null,
             selectedCellTextColor: null,
+            selectedCellBorderColor: null,
             selectedCellBorderStyle: '',
             selectedCellBorderWidth: '',
             selectedCellPaddingTop: '',
@@ -83,6 +84,7 @@ var AdvTable = function (_Component) {
                 var selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
                 var selectedCellBgColor = editor.dom.getStyle(selectedCell, 'background-color');
                 var selectedCellTextColor = editor.dom.getStyle(selectedCell, 'color');
+                var selectedCellBorderColor = editor.dom.getAttrib(selectedCell, 'data-border-color');
                 var selectedCellBorderStyle = editor.dom.getStyle(selectedCell, 'border-style') || 'solid';
                 var selectedCellBorderWidth = editor.dom.getStyle(selectedCell, 'border-width') || '1px';
                 selectedCellBorderWidth = parseInt(selectedCellBorderWidth.replace('px', ''));
@@ -99,6 +101,7 @@ var AdvTable = function (_Component) {
                     selectedCell: selectedCell,
                     selectedCellBgColor: selectedCellBgColor,
                     selectedCellTextColor: selectedCellTextColor,
+                    selectedCellBorderColor: selectedCellBorderColor,
                     selectedCellBorderStyle: selectedCellBorderStyle,
                     selectedCellBorderWidth: selectedCellBorderWidth,
                     selectedCellPaddingTop: selectedCellPaddingTop,
@@ -125,6 +128,7 @@ var AdvTable = function (_Component) {
                 selectedCell = _state.selectedCell,
                 selectedCellBgColor = _state.selectedCellBgColor,
                 selectedCellTextColor = _state.selectedCellTextColor,
+                selectedCellBorderColor = _state.selectedCellBorderColor,
                 selectedCellBorderStyle = _state.selectedCellBorderStyle,
                 selectedCellBorderWidth = _state.selectedCellBorderWidth,
                 selectedCellPaddingTop = _state.selectedCellPaddingTop,
@@ -178,7 +182,7 @@ var AdvTable = function (_Component) {
                 ),
                 onClick: function onClick() {
                     editor.dom.setStyles(selectedCell, {
-                        'border-top-color': '#000'
+                        'border-top-color': selectedCellBorderColor
                     });
                     editor.undoManager.add();
                 }
@@ -192,7 +196,7 @@ var AdvTable = function (_Component) {
                 ),
                 onClick: function onClick() {
                     editor.dom.setStyles(selectedCell, {
-                        'border-right-color': '#000'
+                        'border-right-color': selectedCellBorderColor
                     });
                     editor.undoManager.add();
                 }
@@ -206,7 +210,7 @@ var AdvTable = function (_Component) {
                 ),
                 onClick: function onClick() {
                     editor.dom.setStyles(selectedCell, {
-                        'border-bottom-color': '#000'
+                        'border-bottom-color': selectedCellBorderColor
                     });
                     editor.undoManager.add();
                 }
@@ -220,7 +224,7 @@ var AdvTable = function (_Component) {
                 ),
                 onClick: function onClick() {
                     editor.dom.setStyles(selectedCell, {
-                        'border-left-color': '#000'
+                        'border-left-color': selectedCellBorderColor
                     });
                     editor.undoManager.add();
                 }
@@ -234,10 +238,10 @@ var AdvTable = function (_Component) {
                 ),
                 onClick: function onClick() {
                     editor.dom.setStyles(selectedCell, {
-                        'border-top-color': '#000',
-                        'border-right-color': '#000',
-                        'border-bottom-color': '#000',
-                        'border-left-color': '#000'
+                        'border-top-color': selectedCellBorderColor,
+                        'border-right-color': selectedCellBorderColor,
+                        'border-bottom-color': selectedCellBorderColor,
+                        'border-left-color': selectedCellBorderColor
                     });
                     editor.undoManager.add();
                 }
@@ -251,10 +255,10 @@ var AdvTable = function (_Component) {
                 ),
                 onClick: function onClick() {
                     editor.dom.setStyles(selectedCell, {
-                        'border-top-color': 'inherit',
-                        'border-right-color': 'inherit',
-                        'border-bottom-color': 'inherit',
-                        'border-left-color': 'inherit'
+                        'border-top-color': '',
+                        'border-right-color': '',
+                        'border-bottom-color': '',
+                        'border-left-color': ''
                     });
                     editor.undoManager.add();
                 }
@@ -334,44 +338,63 @@ var AdvTable = function (_Component) {
                                 }
                             })
                         ),
-                        React.createElement(SelectControl, {
-                            label: __('Border Style'),
-                            value: selectedCellBorderStyle,
-                            options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
-                            onChange: function onChange(value) {
-                                editor.dom.setStyle(selectedCell, 'border-style', value);
-                                editor.undoManager.add();
-                                _this3.setState({ selectedCellBorderStyle: value });
-                            }
-                        }),
-                        React.createElement(RangeControl, {
-                            label: __('Border width'),
-                            value: selectedCellBorderWidth,
-                            min: 1,
-                            max: 10,
-                            onChange: function onChange(value) {
-                                editor.dom.setStyle(selectedCell, 'border-width', value);
-                                editor.undoManager.add();
-                                _this3.setState({ selectedCellBorderWidth: value });
-                            }
-                        }),
                         React.createElement(
-                            "div",
-                            { className: 'advgb-border-item-wrapper' },
-                            BORDER_SELECT.map(function (item, index) {
-                                return React.createElement(
-                                    "div",
-                                    { className: 'advgb-border-item', key: index },
-                                    React.createElement(
-                                        "span",
-                                        { title: item.title,
-                                            onClick: item.onClick,
-                                            className: item.selected ? 'selected' : ''
-                                        },
-                                        item.icon
-                                    )
-                                );
-                            })
+                            PanelBody,
+                            { title: __('Border'), initialOpen: false },
+                            React.createElement(SelectControl, {
+                                label: __('Border Style'),
+                                value: selectedCellBorderStyle,
+                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                onChange: function onChange(value) {
+                                    editor.dom.setStyle(selectedCell, 'border-style', value);
+                                    editor.undoManager.add();
+                                    _this3.setState({ selectedCellBorderStyle: value });
+                                }
+                            }),
+                            React.createElement(
+                                PanelColor,
+                                { title: __('Border Color'), colorValue: selectedCellBorderColor, initialOpen: false },
+                                React.createElement(ColorPalette, {
+                                    value: selectedCellBorderColor,
+                                    onChange: function onChange(value) {
+                                        editor.dom.setAttrib(selectedCell, 'data-border-color', value || '');
+                                        ['top', 'right', 'bottom', 'left'].map(function (pos) {
+                                            if (editor.dom.getStyle(selectedCell, "border-" + pos + "-color")) editor.dom.setStyle(selectedCell, "border-" + pos + "-color", value || '');
+                                        });
+                                        editor.undoManager.add();
+                                        _this3.setState({ selectedCellBorderColor: value });
+                                    }
+                                })
+                            ),
+                            React.createElement(RangeControl, {
+                                label: __('Border width'),
+                                value: selectedCellBorderWidth,
+                                min: 1,
+                                max: 10,
+                                onChange: function onChange(value) {
+                                    editor.dom.setStyle(selectedCell, 'border-width', value);
+                                    editor.undoManager.add();
+                                    _this3.setState({ selectedCellBorderWidth: value });
+                                }
+                            }),
+                            React.createElement(
+                                "div",
+                                { className: 'advgb-border-item-wrapper' },
+                                BORDER_SELECT.map(function (item, index) {
+                                    return React.createElement(
+                                        "div",
+                                        { className: 'advgb-border-item', key: index },
+                                        React.createElement(
+                                            "span",
+                                            { title: item.title,
+                                                onClick: item.onClick,
+                                                className: item.selected ? 'selected' : ''
+                                            },
+                                            item.icon
+                                        )
+                                    );
+                                })
+                            )
                         ),
                         React.createElement(
                             PanelBody,
