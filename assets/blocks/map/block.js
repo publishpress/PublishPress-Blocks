@@ -114,6 +114,7 @@ var AdvMap = function (_Component) {
                 markerDesc = _props$attributes2.markerDesc;
 
             var location = { lat: parseFloat(lat), lng: parseFloat(lng) };
+            var that = this;
 
             var map = new google.maps.Map(document.getElementById(mapID), {
                 zoom: zoom,
@@ -128,6 +129,7 @@ var AdvMap = function (_Component) {
                 position: location,
                 map: map,
                 title: markerTitle,
+                draggable: true,
                 animation: google.maps.Animation.DROP,
                 icon: {
                     url: markerIcon || DEFAULT_MARKER,
@@ -140,6 +142,14 @@ var AdvMap = function (_Component) {
                     infoWindow.open(map, marker);
                 });
             }
+
+            marker.addListener('dragend', function () {
+                var newLocation = marker.getPosition();
+                var newLat = newLocation.lat();
+                var newLng = newLocation.lng();
+
+                that.props.setAttributes({ lat: newLat, lng: newLng });
+            });
         }
     }, {
         key: "fetchLocation",
