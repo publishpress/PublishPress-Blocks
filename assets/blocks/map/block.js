@@ -477,7 +477,8 @@ registerBlockType('advgb/map', {
             default: __('Eiffel Tower')
         },
         markerDesc: {
-            type: 'string'
+            type: 'string',
+            default: ''
         }
     },
     edit: AdvMap,

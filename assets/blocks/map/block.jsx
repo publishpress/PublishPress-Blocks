@@ -384,6 +384,7 @@ registerBlockType( 'advgb/map', {
         },
         markerDesc: {
             type: 'string',
+            default: '',
         },
     },
     edit: AdvMap,
