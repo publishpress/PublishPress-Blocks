@@ -122,6 +122,7 @@ var AdvMap = function (_Component) {
 
             var location = { lat: parseFloat(lat), lng: parseFloat(lng) };
             var that = this;
+            var formattedDesc = markerDesc.replace(/\n/g, '<br/>');
             var map = currentMap;
             var marker = currentMarker;
             var infoWindow = currentInfo;
@@ -139,13 +140,13 @@ var AdvMap = function (_Component) {
 
             if (!infoWindow) {
                 infoWindow = new google.maps.InfoWindow({
-                    content: "<div class=\"advgbmap-wrapper\">\n                    <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                    <p class=\"advgbmap-desc\">" + (markerDesc || '') + "</p>\n                </div>",
+                    content: "<div class=\"advgbmap-wrapper\">\n                    <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                    <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n                </div>",
                     maxWidth: 500
                 });
                 this.setState({ currentInfo: infoWindow });
             }
 
-            infoWindow.setContent("<div class=\"advgbmap-wrapper\">\n                    <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                    <p class=\"advgbmap-desc\">" + (markerDesc || '') + "</p>\n                </div>");
+            infoWindow.setContent("<div class=\"advgbmap-wrapper\">\n                <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n            </div>");
 
             if (!marker) {
                 marker = new google.maps.Marker({
@@ -492,8 +493,9 @@ registerBlockType('advgb/map', {
             markerDesc = attributes.markerDesc;
 
 
+        var formattedDesc = markerDesc.replace(/\n/g, '<br/>');
         var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-        var infoWindowHtml = "<div class=\"advgbmap-wrapper\"><h2 class=\"advgbmap-title\">" + markerTitle + "</h2><p class=\"advgbmap-desc\">" + (markerDesc || '') + "</p></div>";
+        var infoWindowHtml = "<div class=\"advgbmap-wrapper\"><h2 class=\"advgbmap-title\">" + markerTitle + "</h2><p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p></div>";
 
         return React.createElement(
             "div",

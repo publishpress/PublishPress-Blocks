@@ -68,6 +68,7 @@ class AdvMap extends Component {
         const { mapID, lat, lng, zoom, markerTitle, markerIcon, markerDesc } = this.props.attributes;
         const location = { lat: parseFloat(lat), lng: parseFloat(lng) };
         const that = this;
+        const formattedDesc = markerDesc.replace(/\n/g, '<br/>');
         let map = currentMap;
         let marker = currentMarker;
         let infoWindow = currentInfo;
@@ -87,7 +88,7 @@ class AdvMap extends Component {
             infoWindow = new google.maps.InfoWindow( {
                 content: `<div class="advgbmap-wrapper">
                     <h2 class="advgbmap-title">${markerTitle}</h2>
-                    <p class="advgbmap-desc">${markerDesc || ''}</p>
+                    <p class="advgbmap-desc">${formattedDesc || ''}</p>
                 </div>`,
                 maxWidth: 500,
             } );
@@ -96,9 +97,9 @@ class AdvMap extends Component {
 
         infoWindow.setContent(
             `<div class="advgbmap-wrapper">
-                    <h2 class="advgbmap-title">${markerTitle}</h2>
-                    <p class="advgbmap-desc">${markerDesc || ''}</p>
-                </div>`
+                <h2 class="advgbmap-title">${markerTitle}</h2>
+                <p class="advgbmap-desc">${formattedDesc || ''}</p>
+            </div>`
         );
 
         if (!marker) {
@@ -398,8 +399,9 @@ registerBlockType( 'advgb/map', {
             markerDesc,
         } = attributes;
 
+        const formattedDesc = markerDesc.replace(/\n/g, '<br/>');
         const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-        const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${markerTitle}</h2><p class="advgbmap-desc">${markerDesc || ''}</p></div>`;
+        const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${markerTitle}</h2><p class="advgbmap-desc">${formattedDesc || ''}</p></div>`;
 
         return (
             <div className={ 'advgb-map-block' } style={ { margin: '10px auto' } }>
