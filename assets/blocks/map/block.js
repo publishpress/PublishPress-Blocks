@@ -54,6 +54,9 @@ var AdvMap = function (_Component) {
 
         _this.state = {
             currentAddress: '',
+            currentMap: null,
+            currentMarker: null,
+            currentInfo: null,
             fetching: false
         };
 
@@ -104,6 +107,10 @@ var AdvMap = function (_Component) {
             if (typeof google === "undefined" || !this.props.attributes.mapID || advgbMapError) return null;
 
             var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
+            var _state = this.state,
+                currentMap = _state.currentMap,
+                currentMarker = _state.currentMarker,
+                currentInfo = _state.currentInfo;
             var _props$attributes2 = this.props.attributes,
                 mapID = _props$attributes2.mapID,
                 lat = _props$attributes2.lat,
@@ -115,26 +122,51 @@ var AdvMap = function (_Component) {
 
             var location = { lat: parseFloat(lat), lng: parseFloat(lng) };
             var that = this;
+            var map = currentMap;
+            var marker = currentMarker;
+            var infoWindow = currentInfo;
 
-            var map = new google.maps.Map(document.getElementById(mapID), {
-                zoom: zoom,
-                center: location
-            });
+            if (!map) {
+                map = new google.maps.Map(document.getElementById(mapID), {
+                    zoom: zoom,
+                    center: location
+                });
+                this.setState({ currentMap: map });
+            }
 
-            var infoWindow = new google.maps.InfoWindow({
-                content: "<div class=\"advgbmap-wrapper\">\n                <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                <p class=\"advgbmap-desc\">" + (markerDesc || '') + "</p>\n            </div>"
-            });
+            map.setCenter(location);
+            map.setZoom(zoom);
 
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map,
-                title: markerTitle,
-                draggable: true,
-                animation: google.maps.Animation.DROP,
-                icon: {
-                    url: markerIcon || DEFAULT_MARKER,
-                    scaledSize: new google.maps.Size(27, 43)
-                }
+            if (!infoWindow) {
+                infoWindow = new google.maps.InfoWindow({
+                    content: "<div class=\"advgbmap-wrapper\">\n                    <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                    <p class=\"advgbmap-desc\">" + (markerDesc || '') + "</p>\n                </div>",
+                    maxWidth: 500
+                });
+                this.setState({ currentInfo: infoWindow });
+            }
+
+            infoWindow.setContent("<div class=\"advgbmap-wrapper\">\n                    <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                    <p class=\"advgbmap-desc\">" + (markerDesc || '') + "</p>\n                </div>");
+
+            if (!marker) {
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    title: markerTitle,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    icon: {
+                        url: markerIcon || DEFAULT_MARKER,
+                        scaledSize: new google.maps.Size(27, 43)
+                    }
+                });
+                this.setState({ currentMarker: marker });
+            }
+
+            marker.setPosition(location);
+            marker.setTitle(markerTitle);
+            marker.setIcon({
+                url: markerIcon || DEFAULT_MARKER,
+                scaledSize: new google.maps.Size(27, 43)
             });
 
             if (!!markerTitle) {
