@@ -77,6 +77,7 @@ class AdvMap extends Component {
             map = new google.maps.Map(document.getElementById(mapID), {
                 zoom: zoom,
                 center: location,
+                gestureHandling: 'cooperative',
             });
             this.setState( { currentMap: map } );
         }
@@ -418,6 +419,7 @@ registerBlockType( 'advgb/map', {
                         var map = new google.maps.Map(document.getElementById('${mapID}'), {
                             zoom: ${zoom},
                             center: location,
+                            gestureHandling: 'cooperative',
                         });
 
                         var infoWindow = new google.maps.InfoWindow({
