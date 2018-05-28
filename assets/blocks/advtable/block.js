@@ -27,6 +27,7 @@ var _wp$editor = wp.editor,
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
     PanelColor = _wp$components.PanelColor,
+    BaseControl = _wp$components.BaseControl,
     RangeControl = _wp$components.RangeControl,
     SelectControl = _wp$components.SelectControl,
     IconButton = _wp$components.IconButton,
@@ -60,7 +61,9 @@ var AdvTable = function (_Component) {
             selectedCellPaddingTop: '',
             selectedCellPaddingRight: '',
             selectedCellPaddingBottom: '',
-            selectedCellPaddingLeft: ''
+            selectedCellPaddingLeft: '',
+            selectedCellTextAlign: null,
+            selectedCellVerticalAlign: null
         };
 
         _this.handleSetup = _this.handleSetup.bind(_this);
@@ -96,6 +99,8 @@ var AdvTable = function (_Component) {
                 if (selectedCellPaddingRight) selectedCellPaddingRight = selectedCellPaddingRight.replace('px', '');
                 if (selectedCellPaddingBottom) selectedCellPaddingBottom = selectedCellPaddingBottom.replace('px', '');
                 if (selectedCellPaddingLeft) selectedCellPaddingLeft = selectedCellPaddingLeft.replace('px', '');
+                var selectedCellTextAlign = editor.dom.getStyle(selectedCell, 'text-align');
+                var selectedCellVerticalAlign = editor.dom.getStyle(selectedCell, 'vertical-align');
 
                 return _this2.setState({
                     selectedCell: selectedCell,
@@ -107,7 +112,9 @@ var AdvTable = function (_Component) {
                     selectedCellPaddingTop: selectedCellPaddingTop,
                     selectedCellPaddingRight: selectedCellPaddingRight,
                     selectedCellPaddingBottom: selectedCellPaddingBottom,
-                    selectedCellPaddingLeft: selectedCellPaddingLeft
+                    selectedCellPaddingLeft: selectedCellPaddingLeft,
+                    selectedCellTextAlign: selectedCellTextAlign,
+                    selectedCellVerticalAlign: selectedCellVerticalAlign
                 });
             });
         }
@@ -135,7 +142,9 @@ var AdvTable = function (_Component) {
                 selectedCellPaddingTop = _state.selectedCellPaddingTop,
                 selectedCellPaddingRight = _state.selectedCellPaddingRight,
                 selectedCellPaddingBottom = _state.selectedCellPaddingBottom,
-                selectedCellPaddingLeft = _state.selectedCellPaddingLeft;
+                selectedCellPaddingLeft = _state.selectedCellPaddingLeft,
+                selectedCellTextAlign = _state.selectedCellTextAlign,
+                selectedCellVerticalAlign = _state.selectedCellVerticalAlign;
 
 
             var TABLE_CONTROLS = [{
@@ -263,6 +272,53 @@ var AdvTable = function (_Component) {
                     });
                     editor.undoManager.add();
                 }
+            }];
+
+            var HORZ_ALIGNMENT_CONTROLS = [{
+                icon: 'editor-alignleft',
+                title: __('Align left'),
+                align: 'left'
+            }, {
+                icon: 'editor-aligncenter',
+                title: __('Align center'),
+                align: 'center'
+            }, {
+                icon: 'editor-alignright',
+                title: __('Align right'),
+                align: 'right'
+            }, {
+                icon: 'editor-justify',
+                title: __('Align justify'),
+                align: 'justify'
+            }];
+
+            var VERT_ALIGNMENT_CONTROLS = [{
+                icon: React.createElement(
+                    "svg",
+                    { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                    React.createElement("path", { d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" }),
+                    React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                ),
+                title: __('Align top'),
+                align: 'top'
+            }, {
+                icon: React.createElement(
+                    "svg",
+                    { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                    React.createElement("path", { d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z" }),
+                    React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                ),
+                title: __('Align middle'),
+                align: 'middle'
+            }, {
+                icon: React.createElement(
+                    "svg",
+                    { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                    React.createElement("path", { d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" }),
+                    React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                ),
+                title: __('Align bottom'),
+                align: 'bottom'
             }];
 
             return React.createElement(
@@ -461,6 +517,44 @@ var AdvTable = function (_Component) {
                                 },
                                 allowReset: true
                             })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Text Alignment'), initialOpen: false },
+                            React.createElement(
+                                BaseControl,
+                                { label: __('Horizontal Align') },
+                                React.createElement(Toolbar, {
+                                    controls: HORZ_ALIGNMENT_CONTROLS.map(function (control) {
+                                        var isActive = selectedCellTextAlign === control.align;
+
+                                        return _extends({}, control, {
+                                            isActive: isActive,
+                                            onClick: function onClick() {
+                                                editor.dom.setStyle(selectedCell, 'text-align', isActive ? '' : control.align);
+                                                editor.undoManager.add();
+                                            }
+                                        });
+                                    })
+                                })
+                            ),
+                            React.createElement(
+                                BaseControl,
+                                { label: __('Vertical Align') },
+                                React.createElement(Toolbar, {
+                                    controls: VERT_ALIGNMENT_CONTROLS.map(function (control) {
+                                        var isActive = selectedCellVerticalAlign === control.align;
+
+                                        return _extends({}, control, {
+                                            isActive: isActive,
+                                            onClick: function onClick() {
+                                                editor.dom.setStyle(selectedCell, 'vertical-align', isActive ? '' : control.align);
+                                                editor.undoManager.add();
+                                            }
+                                        });
+                                    })
+                                })
+                            )
                         )
                     )
                 ),

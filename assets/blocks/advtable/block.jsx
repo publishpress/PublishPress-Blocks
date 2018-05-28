@@ -2,7 +2,7 @@ const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { registerBlockType, createBlock } = wp.blocks;
 const { InspectorControls, BlockControls, RichText, MediaUpload, BlockAlignmentToolbar, ColorPalette } = wp.editor;
-const { PanelBody, PanelColor, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu } = wp.components;
+const { PanelBody, PanelColor, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu } = wp.components;
 
 const tableBlockIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="2 2 22 22">
@@ -26,6 +26,8 @@ class AdvTable extends Component {
             selectedCellPaddingRight: '',
             selectedCellPaddingBottom: '',
             selectedCellPaddingLeft: '',
+            selectedCellTextAlign: null,
+            selectedCellVerticalAlign: null,
         };
 
         this.handleSetup = this.handleSetup.bind( this );
@@ -88,6 +90,8 @@ class AdvTable extends Component {
                 selectedCellPaddingBottom = selectedCellPaddingBottom.replace( 'px', '' );
             if (selectedCellPaddingLeft)
                 selectedCellPaddingLeft = selectedCellPaddingLeft.replace( 'px', '' );
+            const selectedCellTextAlign = editor.dom.getStyle( selectedCell, 'text-align' );
+            const selectedCellVerticalAlign = editor.dom.getStyle( selectedCell, 'vertical-align' );
 
             return this.setState( {
                 selectedCell,
@@ -100,6 +104,8 @@ class AdvTable extends Component {
                 selectedCellPaddingRight,
                 selectedCellPaddingBottom,
                 selectedCellPaddingLeft,
+                selectedCellTextAlign,
+                selectedCellVerticalAlign,
             } )
         } );
     }
@@ -119,6 +125,8 @@ class AdvTable extends Component {
             selectedCellPaddingRight,
             selectedCellPaddingBottom,
             selectedCellPaddingLeft,
+            selectedCellTextAlign,
+            selectedCellVerticalAlign,
         } = this.state;
 
         const TABLE_CONTROLS = [
@@ -260,6 +268,62 @@ class AdvTable extends Component {
                     } );
                     editor.undoManager.add();
                 },
+            },
+        ];
+
+        const HORZ_ALIGNMENT_CONTROLS = [
+            {
+                icon: 'editor-alignleft',
+                title: __( 'Align left' ),
+                align: 'left',
+            },
+            {
+                icon: 'editor-aligncenter',
+                title: __( 'Align center' ),
+                align: 'center',
+            },
+            {
+                icon: 'editor-alignright',
+                title: __( 'Align right' ),
+                align: 'right',
+            },
+            {
+                icon: 'editor-justify',
+                title: __( 'Align justify' ),
+                align: 'justify',
+            },
+        ];
+
+        const VERT_ALIGNMENT_CONTROLS = [
+            {
+                icon: (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z"/>
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                    </svg>
+                ),
+                title: __( 'Align top' ),
+                align: 'top',
+            },
+            {
+                icon: (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"/>
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                    </svg>
+                ),
+                title: __( 'Align middle' ),
+                align: 'middle',
+            },
+            {
+                icon: (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                        <path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z"/>
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                    </svg>
+                ),
+                title: __( 'Align bottom' ),
+                align: 'bottom',
             },
         ];
 
@@ -433,6 +497,40 @@ class AdvTable extends Component {
                                 } }
                                 allowReset
                             />
+                        </PanelBody>
+                        <PanelBody title={ __( 'Text Alignment' ) } initialOpen={ false }>
+                            <BaseControl label={ __( 'Horizontal Align' ) }>
+                                <Toolbar
+                                    controls={ HORZ_ALIGNMENT_CONTROLS.map( ( control ) => {
+                                        const isActive = ( selectedCellTextAlign === control.align );
+
+                                        return {
+                                            ...control,
+                                            isActive,
+                                            onClick: () => {
+                                                editor.dom.setStyle( selectedCell, 'text-align', isActive ? '' : control.align );
+                                                editor.undoManager.add();
+                                            },
+                                        };
+                                    } ) }
+                                />
+                            </BaseControl>
+                            <BaseControl label={ __( 'Vertical Align' ) }>
+                                <Toolbar
+                                    controls={ VERT_ALIGNMENT_CONTROLS.map( ( control ) => {
+                                        const isActive = ( selectedCellVerticalAlign === control.align );
+
+                                        return {
+                                            ...control,
+                                            isActive,
+                                            onClick: () => {
+                                                editor.dom.setStyle( selectedCell, 'vertical-align', isActive ? '' : control.align );
+                                                editor.undoManager.add();
+                                            },
+                                        };
+                                    } ) }
+                                />
+                            </BaseControl>
                         </PanelBody>
                     </PanelBody>
                 </InspectorControls>
