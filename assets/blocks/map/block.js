@@ -359,7 +359,7 @@ var AdvMap = function (_Component) {
 
                                 return React.createElement(
                                     BaseControl,
-                                    { label: [__('Marker Icon'), markerIcon && React.createElement(
+                                    { label: [__('Marker Icon (27x43 px)'), markerIcon && React.createElement(
                                             "a",
                                             { key: "marker-icon-remove",
                                                 style: { marginLeft: '10px' },

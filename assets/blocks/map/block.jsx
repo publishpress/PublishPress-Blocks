@@ -269,7 +269,7 @@ class AdvMap extends Component {
                                 render={ ( { open } ) => {
                                     return (
                                         <BaseControl label={ [
-                                            __( 'Marker Icon' ),
+                                            __( 'Marker Icon (27x43 px)' ),
                                             markerIcon && (
                                                 <a key="marker-icon-remove"
                                                    style={ { marginLeft: '10px' } }
