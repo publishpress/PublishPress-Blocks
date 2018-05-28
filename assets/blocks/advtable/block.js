@@ -359,7 +359,7 @@ var AdvTable = function (_Component) {
                             React.createElement(SelectControl, {
                                 label: __('Border Style'),
                                 value: selectedCellBorderStyle,
-                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }, { label: __('None'), value: 'none' }],
                                 onChange: function onChange(value) {
                                     editor.dom.setStyle(selectedCell, 'border-style', value);
                                     editor.undoManager.add();

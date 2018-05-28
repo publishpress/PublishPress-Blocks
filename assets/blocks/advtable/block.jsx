@@ -339,6 +339,7 @@ class AdvTable extends Component {
                                     { label: __( 'Solid' ), value: 'solid' },
                                     { label: __( 'Dashed' ), value: 'dashed' },
                                     { label: __( 'Dotted' ), value: 'dotted' },
+                                    { label: __( 'None' ), value: 'none' },
                                 ] }
                                 onChange={ ( value ) => {
                                     editor.dom.setStyle( selectedCell, 'border-style', value );
