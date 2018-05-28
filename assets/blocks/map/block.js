@@ -462,7 +462,7 @@ registerBlockType('advgb/map', {
         },
         zoom: {
             type: 'number',
-            default: 15
+            default: 14
         },
         height: {
             type: 'number',
