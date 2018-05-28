@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
-const { Component } = wp.element;
-const { registerBlockType, getBlockContent, createBlock, BlockControls, InspectorControls, ColorPalette, BlockAlignmentToolbar } = wp.blocks;
+const { Component, Fragment } = wp.element;
+const { registerBlockType, getBlockContent, createBlock } = wp.blocks;
+const { BlockControls, InspectorControls, ColorPalette, BlockAlignmentToolbar } = wp.editor;
 const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody, PanelColor } = wp.components;
 const { select, dispatch } = wp.data;
 const { addFilter } = wp.hooks;
@@ -15,11 +16,12 @@ const summaryBlockTitle = __( 'Summary' );
 
 // Add button to insert summary inside table of contents component
 ( function () {
-    jQuery( document ).ready( function ( $ ) {
+    jQuery( window ).on( 'load', function () {
         if (typeof dispatch( 'core/editor' ) === 'undefined') {
             return false;
         }
 
+        const $ = jQuery;
         const { insertBlock } = dispatch( 'core/editor' );
         const summaryBlock = createBlock( 'advgb/summary' );
 
@@ -116,7 +118,6 @@ class SummaryBlock extends Component {
         // No heading blocks
         let summaryContent = (
             <Placeholder
-                key="summary-placeholder"
                 icon={summaryBlockIcon}
                 label={summaryBlockTitle}
                 instructions={__( 'Your current post/page has no headings. Try add some headings and update this block later' )}
@@ -133,7 +134,7 @@ class SummaryBlock extends Component {
         if (headings.length > 0) {
             const { selectBlock } = dispatch( 'core/editor' );
             summaryContent = (
-                <ul className={'advgb-toc'} key="summary-toc">
+                <ul className={'advgb-toc'}>
                     {headings.map( ( heading ) => {
                         return (
                             <li className={'toc-level-' + heading.level}
@@ -152,9 +153,10 @@ class SummaryBlock extends Component {
             )
         }
 
-        return [
-            isSelected && !!headings.length && (
-                <BlockControls key={'summary-controls'}>
+        return (
+            <Fragment>
+                {!!headings.length && (
+                <BlockControls>
                     <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
                     <Toolbar>
                         <IconButton className={'components-icon-button components-toolbar__control'}
@@ -164,9 +166,8 @@ class SummaryBlock extends Component {
                         />
                     </Toolbar>
                 </BlockControls>
-            ),
-            isSelected && (
-                <InspectorControls key="summary-inspector">
+                ) }
+                <InspectorControls>
                     <PanelBody title={ __( 'Summary settings' ) } >
                         <ToggleControl
                             label={ __( 'Load minimized' ) }
@@ -189,14 +190,16 @@ class SummaryBlock extends Component {
                         </PanelColor>
                     </PanelBody>
                 </InspectorControls>
-            ),
-            summaryContent,
-            anchorColor && <style key="summary-style">
-                {`.advgb-toc li a {
-                    color: ${anchorColor};
-                }`}
-            </style>
-        ]
+                {summaryContent}
+                {anchorColor &&
+                    <style>
+                        {`.advgb-toc li a {
+                        color: ${anchorColor};
+                    }`}
+                    </style>
+                }
+            </Fragment>
+        )
     }
 }
 

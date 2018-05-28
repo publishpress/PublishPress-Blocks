@@ -1,6 +1,6 @@
 const { addFilter } = wp.hooks;
 const { __ } = wp.i18n;
-const { InspectorControls, ColorPalette } = wp.blocks;
+const { InspectorControls, ColorPalette } = wp.editor;
 const { SelectControl, PanelColor, PanelBody, RangeControl } = wp.components;
 
 // Register extra attributes to separator blocks

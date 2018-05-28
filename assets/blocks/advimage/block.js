@@ -12,13 +12,13 @@ var __ = wp.i18n.__;
 var _wp$element = wp.element,
     Component = _wp$element.Component,
     Fragment = _wp$element.Fragment;
-var _wp$blocks = wp.blocks,
-    registerBlockType = _wp$blocks.registerBlockType,
-    InspectorControls = _wp$blocks.InspectorControls,
-    BlockControls = _wp$blocks.BlockControls,
-    RichText = _wp$blocks.RichText,
-    ColorPalette = _wp$blocks.ColorPalette,
-    MediaUpload = _wp$blocks.MediaUpload;
+var registerBlockType = wp.blocks.registerBlockType;
+var _wp$editor = wp.editor,
+    InspectorControls = _wp$editor.InspectorControls,
+    BlockControls = _wp$editor.BlockControls,
+    RichText = _wp$editor.RichText,
+    ColorPalette = _wp$editor.ColorPalette,
+    MediaUpload = _wp$editor.MediaUpload;
 var _wp$components = wp.components,
     RangeControl = _wp$components.RangeControl,
     PanelBody = _wp$components.PanelBody,
@@ -44,14 +44,18 @@ var AdvImage = function (_Component) {
     }
 
     _createClass(AdvImage, [{
-        key: 'setCurrentEditArea',
-        value: function setCurrentEditArea(area) {
-            this.setState({ currentEdit: area });
+        key: 'handleSetup',
+        value: function handleSetup(editor, area) {
+            var _this2 = this;
+
+            editor.on('focus', function () {
+                return _this2.setState({ currentEdit: area });
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var currentEdit = this.state.currentEdit;
             var _props = this.props,
@@ -254,8 +258,8 @@ var AdvImage = function (_Component) {
                         },
                         style: { color: titleColor },
                         isSelected: isSelected && currentEdit === 'title',
-                        onFocus: function onFocus() {
-                            return _this2.setCurrentEditArea('title');
+                        onSetup: function onSetup(editor) {
+                            return _this3.handleSetup(editor, 'title');
                         }
                     }),
                     React.createElement(RichText, {
@@ -267,8 +271,8 @@ var AdvImage = function (_Component) {
                         },
                         style: { color: subtitleColor },
                         isSelected: isSelected && currentEdit === 'subtitle',
-                        onFocus: function onFocus() {
-                            return _this2.setCurrentEditArea('subtitle');
+                        onSetup: function onSetup(editor) {
+                            return _this3.handleSetup(editor, 'subtitle');
                         }
                     })
                 )

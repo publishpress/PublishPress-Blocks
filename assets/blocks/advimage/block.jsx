@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
-const { registerBlockType, InspectorControls, BlockControls, RichText, ColorPalette, MediaUpload } = wp.blocks;
+const { registerBlockType } = wp.blocks;
+const { InspectorControls, BlockControls, RichText, ColorPalette, MediaUpload } = wp.editor;
 const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, TextControl, IconButton, Button } = wp.components;
 
 class AdvImage extends Component {
@@ -11,8 +12,8 @@ class AdvImage extends Component {
         }
     }
 
-    setCurrentEditArea( area ) {
-        this.setState( { currentEdit: area } );
+    handleSetup( editor, area ) {
+        editor.on( 'focus', () => this.setState( { currentEdit: area } ) );
     }
 
     render() {
@@ -188,7 +189,7 @@ class AdvImage extends Component {
                         onChange={ (value) => setAttributes( { title: value } ) }
                         style={ { color: titleColor } }
                         isSelected={ isSelected && currentEdit === 'title' }
-                        onFocus={ () => this.setCurrentEditArea( 'title' ) }
+                        onSetup={ ( editor ) => this.handleSetup( editor, 'title' ) }
                     />
                     <RichText
                         tagName={ 'p' }
@@ -197,7 +198,7 @@ class AdvImage extends Component {
                         onChange={ (value) => setAttributes( { subtitle: value } ) }
                         style={ { color: subtitleColor } }
                         isSelected={ isSelected && currentEdit === 'subtitle' }
-                        onFocus={ () => this.setCurrentEditArea( 'subtitle' ) }
+                        onSetup={ ( editor ) => this.handleSetup( editor, 'subtitle' ) }
                     />
                 </div>
             </Fragment>

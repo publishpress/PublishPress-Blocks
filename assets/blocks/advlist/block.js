@@ -13,14 +13,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var __ = wp.i18n.__;
-var Component = wp.element.Component;
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
-    createBlock = _wp$blocks.createBlock,
-    InspectorControls = _wp$blocks.InspectorControls,
-    RichText = _wp$blocks.RichText,
-    ColorPalette = _wp$blocks.ColorPalette,
-    BlockControls = _wp$blocks.BlockControls;
+    createBlock = _wp$blocks.createBlock;
+var _wp$editor = wp.editor,
+    InspectorControls = _wp$editor.InspectorControls,
+    RichText = _wp$editor.RichText,
+    ColorPalette = _wp$editor.ColorPalette,
+    BlockControls = _wp$editor.BlockControls;
 var _wp$components = wp.components,
     SelectControl = _wp$components.SelectControl,
     RangeControl = _wp$components.RangeControl,
@@ -112,158 +115,164 @@ var AdvList = function (_Component) {
 
             var listClassName = [className, id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
 
-            return [isSelected && React.createElement(
-                BlockControls,
-                { key: 'advgb-list-controls' },
+            return React.createElement(
+                Fragment,
+                null,
                 React.createElement(
-                    'div',
-                    { className: 'components-toolbar' },
-                    React.createElement(IconButton, {
-                        label: __('Refresh this list when it conflict with other lists styles'),
-                        icon: 'update',
-                        className: 'components-toolbar__control',
-                        onClick: function onClick() {
-                            return setAttributes({ id: 'advgblist-' + blockID });
-                        }
-                    })
-                )
-            ), isSelected && React.createElement(
-                InspectorControls,
-                { key: 'advgb-list-inspectors' },
-                React.createElement(
-                    PanelBody,
-                    { title: __('Text Settings'), initialOpen: false },
-                    React.createElement(RangeControl, {
-                        label: __('Text size'),
-                        value: fontSize || '',
-                        onChange: function onChange(size) {
-                            return setAttributes({ fontSize: size });
-                        },
-                        min: 10,
-                        max: 100,
-                        beforeIcon: 'editor-textcolor',
-                        allowReset: true
-                    })
+                    BlockControls,
+                    null,
+                    React.createElement(
+                        'div',
+                        { className: 'components-toolbar' },
+                        React.createElement(IconButton, {
+                            label: __('Refresh this list when it conflict with other lists styles'),
+                            icon: 'update',
+                            className: 'components-toolbar__control',
+                            onClick: function onClick() {
+                                return setAttributes({ id: 'advgblist-' + blockID });
+                            }
+                        })
+                    )
                 ),
                 React.createElement(
-                    PanelBody,
-                    { title: __('Icon Settings') },
-                    React.createElement(SelectControl, {
-                        label: __('List icon'),
-                        help: __('Select an icon for styling'),
-                        value: icon,
-                        options: listIcons,
-                        onChange: function onChange(icon) {
-                            return setAttributes({ icon: icon });
-                        }
-                    }),
-                    icon && React.createElement(
-                        'div',
-                        null,
-                        React.createElement(
-                            PanelBody,
-                            {
-                                title: [__('Icon color'), React.createElement('span', { key: 'advgb-list-icon-color', className: 'dashicons dashicons-' + icon, style: { color: iconColor, marginLeft: '10px' } })],
-                                initialOpen: false
-                            },
-                            React.createElement(ColorPalette, {
-                                value: iconColor,
-                                onChange: function onChange(color) {
-                                    return setAttributes({ iconColor: color });
-                                }
-                            })
-                        ),
+                    InspectorControls,
+                    null,
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Text Settings'), initialOpen: false },
                         React.createElement(RangeControl, {
-                            label: __('Icon size'),
-                            value: iconSize || '',
+                            label: __('Text size'),
+                            value: fontSize || '',
                             onChange: function onChange(size) {
-                                return setAttributes({ iconSize: size });
+                                return setAttributes({ fontSize: size });
                             },
                             min: 10,
                             max: 100,
-                            allowReset: true
-                        }),
-                        React.createElement(RangeControl, {
-                            label: __('Line height'),
-                            value: lineHeight || '',
-                            onChange: function onChange(size) {
-                                return setAttributes({ lineHeight: size });
-                            },
-                            min: 0,
-                            max: 100,
-                            allowReset: true
-                        }),
-                        React.createElement(RangeControl, {
-                            label: __('Margin'),
-                            value: margin || '',
-                            onChange: function onChange(size) {
-                                return setAttributes({ margin: size });
-                            },
-                            min: 0,
-                            max: 100,
-                            allowReset: true
-                        }),
-                        React.createElement(RangeControl, {
-                            label: __('Padding'),
-                            value: padding || '',
-                            onChange: function onChange(size) {
-                                return setAttributes({ padding: size });
-                            },
-                            min: 0,
-                            max: 100,
+                            beforeIcon: 'editor-textcolor',
                             allowReset: true
                         })
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Icon Settings') },
+                        React.createElement(SelectControl, {
+                            label: __('List icon'),
+                            help: __('Select an icon for styling'),
+                            value: icon,
+                            options: listIcons,
+                            onChange: function onChange(icon) {
+                                return setAttributes({ icon: icon });
+                            }
+                        }),
+                        icon && React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                PanelBody,
+                                {
+                                    title: [__('Icon color'), React.createElement('span', { key: 'advgb-list-icon-color', className: 'dashicons dashicons-' + icon, style: { color: iconColor, marginLeft: '10px' } })],
+                                    initialOpen: false
+                                },
+                                React.createElement(ColorPalette, {
+                                    value: iconColor,
+                                    onChange: function onChange(color) {
+                                        return setAttributes({ iconColor: color });
+                                    }
+                                })
+                            ),
+                            React.createElement(RangeControl, {
+                                label: __('Icon size'),
+                                value: iconSize || '',
+                                onChange: function onChange(size) {
+                                    return setAttributes({ iconSize: size });
+                                },
+                                min: 10,
+                                max: 100,
+                                allowReset: true
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Line height'),
+                                value: lineHeight || '',
+                                onChange: function onChange(size) {
+                                    return setAttributes({ lineHeight: size });
+                                },
+                                min: 0,
+                                max: 100,
+                                allowReset: true
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Margin'),
+                                value: margin || '',
+                                onChange: function onChange(size) {
+                                    return setAttributes({ margin: size });
+                                },
+                                min: 0,
+                                max: 100,
+                                allowReset: true
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Padding'),
+                                value: padding || '',
+                                onChange: function onChange(size) {
+                                    return setAttributes({ padding: size });
+                                },
+                                min: 0,
+                                max: 100,
+                                allowReset: true
+                            })
+                        )
+                    )
+                ),
+                React.createElement(RichText, {
+                    multiline: 'li',
+                    tagName: 'ul',
+                    getSettings: this.getEditorSettings,
+                    onSetup: this.setupEditor,
+                    onChange: this.setNextValues,
+                    value: values,
+                    wrapperClassName: 'advgb-list-item',
+                    className: listClassName,
+                    placeholder: __('Write advanced list…'),
+                    onMerge: mergeBlocks,
+                    onSplit: insertBlocksAfter ? function (before, after) {
+                        for (var _len = arguments.length, blocks = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+                            blocks[_key - 2] = arguments[_key];
+                        }
+
+                        if (!blocks.length) {
+                            blocks.push(createBlock('core/paragraph'));
+                        }
+
+                        if (after.length) {
+                            blocks.push(createBlock('advgb/list', _extends({}, attributes, {
+                                values: after,
+                                id: undefined
+                            })));
+                        }
+
+                        setAttributes({ values: before });
+                        insertBlocksAfter(blocks);
+                    } : undefined,
+                    onRemove: function onRemove() {
+                        return onReplace([]);
+                    },
+                    isSelected: isSelected
+                }),
+                React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li { font-size: ' + fontSize + 'px }'
+                    ),
+                    icon && React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li:before {\n                                font-size: ' + iconSize + 'px;\n                                color: ' + iconColor + ';\n                                line-height: ' + lineHeight + 'px;\n                                margin: ' + margin + 'px;\n                                padding: ' + padding + 'px;\n                            }'
                     )
                 )
-            ), React.createElement(RichText, {
-                multiline: 'li',
-                key: 'advgb-list',
-                tagName: 'ul',
-                getSettings: this.getEditorSettings,
-                onSetup: this.setupEditor,
-                onChange: this.setNextValues,
-                value: values,
-                wrapperClassName: 'advgb-list-item',
-                className: listClassName,
-                placeholder: __('Write advanced list…'),
-                onMerge: mergeBlocks,
-                onSplit: insertBlocksAfter ? function (before, after) {
-                    for (var _len = arguments.length, blocks = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-                        blocks[_key - 2] = arguments[_key];
-                    }
-
-                    if (!blocks.length) {
-                        blocks.push(createBlock('core/paragraph'));
-                    }
-
-                    if (after.length) {
-                        blocks.push(createBlock('advgb/list', _extends({}, attributes, {
-                            values: after,
-                            id: undefined
-                        })));
-                    }
-
-                    setAttributes({ values: before });
-                    insertBlocksAfter(blocks);
-                } : undefined,
-                onRemove: function onRemove() {
-                    return onReplace([]);
-                },
-                isSelected: isSelected
-            }), React.createElement(
-                'div',
-                { key: 'advgb-style' },
-                React.createElement(
-                    'style',
-                    null,
-                    '.' + id + ' li { font-size: ' + fontSize + 'px }'
-                ),
-                icon && React.createElement(
-                    'style',
-                    null,
-                    '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
-                )
-            )];
+            );
         }
     }]);
 

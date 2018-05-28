@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
-const { Component } = wp.element;
-const { registerBlockType, createBlock, InspectorControls, RichText, ColorPalette, BlockControls } = wp.blocks;
+const { Component, Fragment } = wp.element;
+const { registerBlockType, createBlock } = wp.blocks;
+const { InspectorControls, RichText, ColorPalette, BlockControls } = wp.editor;
 const { SelectControl, RangeControl, PanelBody, IconButton } = wp.components;
 
 class AdvList extends Component {
@@ -97,9 +98,9 @@ class AdvList extends Component {
             icon && `advgb-list-${icon}`
         ].filter( Boolean ).join( ' ' );
 
-        return [
-            isSelected && (
-                <BlockControls key="advgb-list-controls">
+        return (
+            <Fragment>
+                <BlockControls>
                     <div className="components-toolbar">
                         <IconButton
                             label={ __( 'Refresh this list when it conflict with other lists styles' ) }
@@ -109,9 +110,7 @@ class AdvList extends Component {
                         />
                     </div>
                 </BlockControls>
-            ),
-            isSelected && (
-                <InspectorControls key="advgb-list-inspectors">
+                <InspectorControls>
                     <PanelBody title={ __( 'Text Settings' ) } initialOpen={false}>
                         <RangeControl
                             label={ __( 'Text size' ) }
@@ -180,59 +179,58 @@ class AdvList extends Component {
                         ) }
                     </PanelBody>
                 </InspectorControls>
-            ),
-            <RichText
-                multiline="li"
-                key="advgb-list"
-                tagName="ul"
-                getSettings={ this.getEditorSettings }
-                onSetup={ this.setupEditor }
-                onChange={ this.setNextValues }
-                value={ values }
-                wrapperClassName="advgb-list-item"
-                className={ listClassName }
-                placeholder={__('Write advanced list…')}
-                onMerge={ mergeBlocks }
-                onSplit={
-                    insertBlocksAfter ?
-                        ( before, after, ...blocks ) => {
-                            if ( ! blocks.length ) {
-                                blocks.push( createBlock( 'core/paragraph' ) );
-                            }
+                <RichText
+                    multiline="li"
+                    tagName="ul"
+                    getSettings={ this.getEditorSettings }
+                    onSetup={ this.setupEditor }
+                    onChange={ this.setNextValues }
+                    value={ values }
+                    wrapperClassName="advgb-list-item"
+                    className={ listClassName }
+                    placeholder={__('Write advanced list…')}
+                    onMerge={ mergeBlocks }
+                    onSplit={
+                        insertBlocksAfter ?
+                            ( before, after, ...blocks ) => {
+                                if ( ! blocks.length ) {
+                                    blocks.push( createBlock( 'core/paragraph' ) );
+                                }
 
-                            if ( after.length ) {
-                                blocks.push( createBlock( 'advgb/list', {
-                                    ...attributes,
-                                    values: after,
-                                    id: undefined,
-                                } ) );
-                            }
+                                if ( after.length ) {
+                                    blocks.push( createBlock( 'advgb/list', {
+                                        ...attributes,
+                                        values: after,
+                                        id: undefined,
+                                    } ) );
+                                }
 
-                            setAttributes( { values: before } );
-                            insertBlocksAfter( blocks );
-                        } :
-                        undefined
-                }
-                onRemove={ () => onReplace( [] ) }
-                isSelected={ isSelected }
-            />,
-            <div key="advgb-style">
-                <style>
-                    {`.${id} li { font-size: ${fontSize}px }`}
-                </style>
-                {icon &&
+                                setAttributes( { values: before } );
+                                insertBlocksAfter( blocks );
+                            } :
+                            undefined
+                    }
+                    onRemove={ () => onReplace( [] ) }
+                    isSelected={ isSelected }
+                />
+                <div>
                     <style>
-                        {`.${id} li:before {
-                            font-size: ${iconSize}px;
-                            color: ${iconColor};
-                            line-height: ${lineHeight}px;
-                            margin: ${margin}px;
-                            padding: ${padding}px;
-                        }`}
+                        {`.${id} li { font-size: ${fontSize}px }`}
                     </style>
-                }
-            </div>
-        ]
+                    {icon &&
+                        <style>
+                            {`.${id} li:before {
+                                font-size: ${iconSize}px;
+                                color: ${iconColor};
+                                line-height: ${lineHeight}px;
+                                margin: ${margin}px;
+                                padding: ${padding}px;
+                            }`}
+                        </style>
+                    }
+                </div>
+            </Fragment>
+        )
     }
 }
 

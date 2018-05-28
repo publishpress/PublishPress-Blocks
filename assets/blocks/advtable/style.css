@@ -1,0 +1,34 @@
+.wp-block-advgb-table table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.wp-block-advgb-table table td, .wp-block-advgb-table table tr {
+    border-color: #dddddd;
+    border-style: solid;
+    border-width: 1px;
+    padding: .5em;
+}
+
+.advgb-border-item-wrapper {
+    display: flex;
+    flex: auto;
+    flex-wrap: wrap;
+    margin: 0 0 1em;
+}
+
+.advgb-border-item {
+    min-width: 25%;
+    text-align: center;
+    margin: 5px 0;
+}
+
+.advgb-border-item span {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.advgb-border-item svg {
+    vertical-align: middle;
+}

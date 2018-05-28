@@ -4,9 +4,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var addFilter = wp.hooks.addFilter;
 var __ = wp.i18n.__;
-var _wp$blocks = wp.blocks,
-    InspectorControls = _wp$blocks.InspectorControls,
-    ColorPalette = _wp$blocks.ColorPalette;
+var _wp$editor = wp.editor,
+    InspectorControls = _wp$editor.InspectorControls,
+    ColorPalette = _wp$editor.ColorPalette;
 var _wp$components = wp.components,
     SelectControl = _wp$components.SelectControl,
     PanelColor = _wp$components.PanelColor,
