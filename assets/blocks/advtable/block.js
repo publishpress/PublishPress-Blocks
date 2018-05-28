@@ -122,7 +122,8 @@ var AdvTable = function (_Component) {
                 setAttributes = _props.setAttributes,
                 className = _props.className;
             var content = attributes.content,
-                align = attributes.align;
+                align = attributes.align,
+                maxWidth = attributes.maxWidth;
             var _state = this.state,
                 editor = _state.editor,
                 selectedCell = _state.selectedCell,
@@ -313,6 +314,20 @@ var AdvTable = function (_Component) {
                     null,
                     React.createElement(
                         PanelBody,
+                        { title: __('Table Settings') },
+                        React.createElement(RangeControl, {
+                            label: __('Max width (px)'),
+                            help: __('Set this to 0 to make max-width is 100%'),
+                            min: 0,
+                            max: 1999,
+                            value: maxWidth,
+                            onChange: function onChange(value) {
+                                return setAttributes({ maxWidth: value });
+                            }
+                        })
+                    ),
+                    React.createElement(
+                        PanelBody,
                         { title: __('Single Cell Settings') },
                         React.createElement(
                             PanelColor,
@@ -387,8 +402,7 @@ var AdvTable = function (_Component) {
                                         React.createElement(
                                             "span",
                                             { title: item.title,
-                                                onClick: item.onClick,
-                                                className: item.selected ? 'selected' : ''
+                                                onClick: item.onClick
                                             },
                                             item.icon
                                         )
@@ -408,18 +422,6 @@ var AdvTable = function (_Component) {
                                     editor.dom.setStyle(selectedCell, 'padding-top', value || '');
                                     editor.undoManager.add();
                                     _this3.setState({ selectedCellPaddingTop: value || '' });
-                                },
-                                allowReset: true
-                            }),
-                            React.createElement(RangeControl, {
-                                label: __('Padding Right'),
-                                min: 0,
-                                max: 50,
-                                value: selectedCellPaddingRight,
-                                onChange: function onChange(value) {
-                                    editor.dom.setStyle(selectedCell, 'padding-right', value || '');
-                                    editor.undoManager.add();
-                                    _this3.setState({ selectedCellPaddingRight: value || '' });
                                 },
                                 allowReset: true
                             }),
@@ -446,6 +448,18 @@ var AdvTable = function (_Component) {
                                     _this3.setState({ selectedCellPaddingLeft: value || '' });
                                 },
                                 allowReset: true
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Padding Right'),
+                                min: 0,
+                                max: 50,
+                                value: selectedCellPaddingRight,
+                                onChange: function onChange(value) {
+                                    editor.dom.setStyle(selectedCell, 'padding-right', value || '');
+                                    editor.undoManager.add();
+                                    _this3.setState({ selectedCellPaddingRight: value || '' });
+                                },
+                                allowReset: true
                             })
                         )
                     )
@@ -465,7 +479,8 @@ var AdvTable = function (_Component) {
                     },
                     onChange: function onChange(value) {
                         return setAttributes({ content: value });
-                    }
+                    },
+                    style: { maxWidth: !!maxWidth && maxWidth + 'px' }
                 })
             );
         }
@@ -547,15 +562,25 @@ registerBlockType('advgb/table', {
         },
         align: {
             type: 'string'
+        },
+        maxWidth: {
+            type: 'number',
+            default: 0
         }
     },
     edit: AdvTable,
     save: function save(_ref2) {
         var attributes = _ref2.attributes;
         var content = attributes.content,
-            align = attributes.align;
+            align = attributes.align,
+            maxWidth = attributes.maxWidth;
 
-        return React.createElement(RichText.Content, { tagName: "table", className: 'advgb-table-frontend ' + (align ? "align" + align : ''), value: content });
+        return React.createElement(RichText.Content, {
+            tagName: "table",
+            className: 'advgb-table-frontend ' + (align ? "align" + align : ''),
+            style: { maxWidth: !!maxWidth ? maxWidth + 'px' : undefined },
+            value: content
+        });
     },
     getEditWrapperProps: function getEditWrapperProps(attributes) {
         var align = attributes.align;

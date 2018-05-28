@@ -106,7 +106,7 @@ class AdvTable extends Component {
 
     render() {
         const { isSelected, attributes, setAttributes, className } = this.props;
-        const { content, align } = attributes;
+        const { content, align, maxWidth } = attributes;
         const {
             editor,
             selectedCell,
@@ -300,6 +300,16 @@ class AdvTable extends Component {
                     </Toolbar>
                 </BlockControls>
                 <InspectorControls>
+                    <PanelBody title={ __( 'Table Settings' ) }>
+                        <RangeControl
+                            label={ __( 'Max width (px)' ) }
+                            help={ __( 'Set this to 0 to make max-width is 100%' ) }
+                            min={ 0 }
+                            max={ 1999 }
+                            value={ maxWidth }
+                            onChange={ ( value ) => setAttributes( { maxWidth: value } ) }
+                        />
+                    </PanelBody>
                     <PanelBody title={ __( 'Single Cell Settings' ) }>
                         <PanelColor title={ __( 'Background Color' ) } colorValue={ selectedCellBgColor } initialOpen={ false }>
                             <ColorPalette
@@ -366,7 +376,6 @@ class AdvTable extends Component {
                                     <div className={ 'advgb-border-item' } key={ index }>
                                     <span title={ item.title }
                                           onClick={ item.onClick }
-                                          className={ item.selected ? 'selected' : '' }
                                     >
                                         { item.icon }
                                     </span>
@@ -384,18 +393,6 @@ class AdvTable extends Component {
                                     editor.dom.setStyle( selectedCell, 'padding-top', value || '' );
                                     editor.undoManager.add();
                                     this.setState( { selectedCellPaddingTop: value || '' } );
-                                } }
-                                allowReset
-                            />
-                            <RangeControl
-                                label={ __( 'Padding Right' ) }
-                                min={ 0 }
-                                max={ 50 }
-                                value={ selectedCellPaddingRight }
-                                onChange={ ( value ) => {
-                                    editor.dom.setStyle( selectedCell, 'padding-right', value || '' );
-                                    editor.undoManager.add();
-                                    this.setState( { selectedCellPaddingRight: value || '' } );
                                 } }
                                 allowReset
                             />
@@ -423,6 +420,18 @@ class AdvTable extends Component {
                                 } }
                                 allowReset
                             />
+                            <RangeControl
+                                label={ __( 'Padding Right' ) }
+                                min={ 0 }
+                                max={ 50 }
+                                value={ selectedCellPaddingRight }
+                                onChange={ ( value ) => {
+                                    editor.dom.setStyle( selectedCell, 'padding-right', value || '' );
+                                    editor.undoManager.add();
+                                    this.setState( { selectedCellPaddingRight: value || '' } );
+                                } }
+                                allowReset
+                            />
                         </PanelBody>
                     </PanelBody>
                 </InspectorControls>
@@ -437,6 +446,7 @@ class AdvTable extends Component {
                     value={ content }
                     onSetup={ ( editor ) => this.handleSetup( editor, isSelected ) }
                     onChange={ ( value ) => setAttributes( { content: value } ) }
+                    style={ { maxWidth: !!maxWidth && maxWidth + 'px' } }
                 />
             </Fragment>
         )
@@ -464,12 +474,21 @@ registerBlockType( 'advgb/table', {
         align: {
             type: 'string',
         },
+        maxWidth: {
+            type: 'number',
+            default: 0
+        }
     },
     edit: AdvTable,
     save: function ( { attributes } ) {
-        const { content, align } = attributes;
+        const { content, align, maxWidth } = attributes;
         return (
-            <RichText.Content tagName="table" className={ 'advgb-table-frontend ' + (align ? `align${ align }` : '') } value={ content } />
+            <RichText.Content
+                tagName="table"
+                className={ 'advgb-table-frontend ' + (align ? `align${ align }` : '') }
+                style={ { maxWidth: !!maxWidth ? maxWidth + 'px' : undefined } }
+                value={ content }
+            />
         );
     },
     getEditWrapperProps( attributes ) {
