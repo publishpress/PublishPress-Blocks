@@ -198,7 +198,7 @@ var AdvVideo = function (_Component) {
                             var open = _ref.open;
                             return React.createElement(IconButton, {
                                 className: 'components-toolbar__control',
-                                label: __('Change poster'),
+                                label: __('Change image preview'),
                                 icon: 'edit',
                                 onClick: open
                             });
@@ -206,7 +206,7 @@ var AdvVideo = function (_Component) {
                     }),
                     React.createElement(IconButton, {
                         className: 'components-toolbar__control',
-                        label: __('Remove poster'),
+                        label: __('Remove image preview'),
                         icon: 'no',
                         onClick: function onClick() {
                             return setAttributes({ poster: undefined, posterID: undefined });
@@ -221,7 +221,7 @@ var AdvVideo = function (_Component) {
                         { title: __('Advanced Video Settings') },
                         React.createElement(ToggleControl, {
                             label: __('Open video in light box'),
-                            help: __('We highly recommend to keep video open in light box to use all of blocks features!'),
+                            help: __('Lightbox offers additional display options.'),
                             checked: openInLightbox,
                             onChange: function onChange() {
                                 return setAttributes({ openInLightbox: !openInLightbox });
@@ -319,7 +319,7 @@ var AdvVideo = function (_Component) {
                                             className: 'button button-large',
                                             onClick: open
                                         },
-                                        __('Choose poster')
+                                        __('Select image preview')
                                     );
                                 }
                             }),
