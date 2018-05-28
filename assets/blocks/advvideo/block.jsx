@@ -1,7 +1,7 @@
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { registerBlockType } = wp.blocks;
-const { InspectorControls, BlockControls, RichText, ColorPalette, MediaUpload } = wp.editor;
+const { InspectorControls, BlockControls, ColorPalette, MediaUpload } = wp.editor;
 const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, TextControl, Button, IconButton, Dashicon, Spinner } = wp.components;
 
 class AdvVideo extends Component {

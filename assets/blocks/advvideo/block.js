@@ -16,7 +16,6 @@ var registerBlockType = wp.blocks.registerBlockType;
 var _wp$editor = wp.editor,
     InspectorControls = _wp$editor.InspectorControls,
     BlockControls = _wp$editor.BlockControls,
-    RichText = _wp$editor.RichText,
     ColorPalette = _wp$editor.ColorPalette,
     MediaUpload = _wp$editor.MediaUpload;
 var _wp$components = wp.components,
