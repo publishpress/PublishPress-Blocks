@@ -12,12 +12,12 @@ var __ = wp.i18n.__;
 var _wp$element = wp.element,
     Component = _wp$element.Component,
     Fragment = _wp$element.Fragment;
-var _wp$blocks = wp.blocks,
-    registerBlockType = _wp$blocks.registerBlockType,
-    InspectorControls = _wp$blocks.InspectorControls,
-    RichText = _wp$blocks.RichText,
-    ColorPalette = _wp$blocks.ColorPalette,
-    MediaUpload = _wp$blocks.MediaUpload;
+var registerBlockType = wp.blocks.registerBlockType;
+var _wp$editor = wp.editor,
+    InspectorControls = _wp$editor.InspectorControls,
+    RichText = _wp$editor.RichText,
+    ColorPalette = _wp$editor.ColorPalette,
+    MediaUpload = _wp$editor.MediaUpload;
 var _wp$components = wp.components,
     RangeControl = _wp$components.RangeControl,
     PanelBody = _wp$components.PanelBody,
@@ -38,14 +38,18 @@ var AdvTestimonial = function (_Component) {
     }
 
     _createClass(AdvTestimonial, [{
-        key: 'setCurrentEditArea',
-        value: function setCurrentEditArea(area) {
-            this.setState({ currentEdit: area });
+        key: 'handleSetup',
+        value: function handleSetup(editor, area) {
+            var _this2 = this;
+
+            editor.on('focus', function () {
+                return _this2.setState({ currentEdit: area });
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var currentEdit = this.state.currentEdit;
             var _props = this.props,
@@ -226,8 +230,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ name: value });
                             },
                             isSelected: isSelected && currentEdit === 'name',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('name');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'name');
                             },
                             style: { color: nameColor }
                         }),
@@ -239,8 +243,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ position: value });
                             },
                             isSelected: isSelected && currentEdit === 'position',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('position');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'position');
                             },
                             style: { color: positionColor }
                         }),
@@ -252,8 +256,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ desc: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'desc');
                             },
                             style: { color: descColor }
                         })
@@ -302,8 +306,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ name2: value });
                             },
                             isSelected: isSelected && currentEdit === 'name2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('name2');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'name2');
                             },
                             style: { color: nameColor }
                         }),
@@ -315,8 +319,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ position2: value });
                             },
                             isSelected: isSelected && currentEdit === 'position2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('position2');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'position2');
                             },
                             style: { color: positionColor }
                         }),
@@ -328,8 +332,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ desc2: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc2',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc2');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'desc2');
                             },
                             style: { color: descColor }
                         })
@@ -378,8 +382,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ name3: value });
                             },
                             isSelected: isSelected && currentEdit === 'name3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('name3');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'name3');
                             },
                             style: { color: nameColor }
                         }),
@@ -391,8 +395,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ position3: value });
                             },
                             isSelected: isSelected && currentEdit === 'position3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('position3');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'position3');
                             },
                             style: { color: positionColor }
                         }),
@@ -404,8 +408,8 @@ var AdvTestimonial = function (_Component) {
                                 return setAttributes({ desc3: value });
                             },
                             isSelected: isSelected && currentEdit === 'desc3',
-                            onFocus: function onFocus() {
-                                return _this2.setCurrentEditArea('desc3');
+                            onSetup: function onSetup(editor) {
+                                return _this3.handleSetup(editor, 'desc3');
                             },
                             style: { color: descColor }
                         })

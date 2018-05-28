@@ -11,15 +11,18 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var __ = wp.i18n.__;
-var Component = wp.element.Component;
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
-    createBlock = _wp$blocks.createBlock,
-    InspectorControls = _wp$blocks.InspectorControls,
-    BlockControls = _wp$blocks.BlockControls,
-    BlockAlignmentToolbar = _wp$blocks.BlockAlignmentToolbar,
-    RichText = _wp$blocks.RichText,
-    ColorPalette = _wp$blocks.ColorPalette;
+    createBlock = _wp$blocks.createBlock;
+var _wp$editor = wp.editor,
+    InspectorControls = _wp$editor.InspectorControls,
+    BlockControls = _wp$editor.BlockControls,
+    BlockAlignmentToolbar = _wp$editor.BlockAlignmentToolbar,
+    RichText = _wp$editor.RichText,
+    ColorPalette = _wp$editor.ColorPalette;
 var _wp$components = wp.components,
     RangeControl = _wp$components.RangeControl,
     PanelBody = _wp$components.PanelBody,
@@ -88,276 +91,283 @@ var AdvButton = function (_Component) {
                 transitionSpeed = attributes.transitionSpeed;
 
 
-            return [isSelected && React.createElement(
-                BlockControls,
-                { key: 'advgb-button-toolbar' },
-                React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
-                        return setAttributes({ align: align });
-                    } }),
+            return React.createElement(
+                Fragment,
+                null,
                 React.createElement(
-                    'div',
-                    { className: 'components-toolbar' },
-                    React.createElement(IconButton, {
-                        label: __('Refresh this button when it conflict with other buttons styles'),
-                        icon: 'update',
-                        className: 'components-toolbar__control',
-                        onClick: function onClick() {
-                            return setAttributes({ id: 'advgbbutton-' + blockID });
-                        }
-                    })
-                )
-            ), React.createElement(
-                'span',
-                { key: 'advgb-button', style: { display: 'inline-block' } },
-                React.createElement(RichText, {
-                    tagName: 'span',
-                    placeholder: __('Add text…'),
-                    value: text,
-                    onChange: function onChange(value) {
-                        return setAttributes({ text: value });
-                    },
-                    formattingControls: ['bold', 'italic', 'strikethrough'],
-                    isSelected: isSelected,
-                    className: 'wp-block-advgb-button_link ' + id,
-                    keepPlaceholderOnFocus: true
-                })
-            ), React.createElement(
-                'style',
-                { key: 'advgb-button-styles' },
-                '.' + id + ' {\n                    font-size: ' + textSize + 'px;\n                    color: ' + textColor + ';\n                    background-color: ' + bgColor + ';\n                    padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                    border-width: ' + borderWidth + 'px;\n                    border-color: ' + borderColor + ';\n                    border-radius: ' + borderRadius + 'px;\n                    border-style: ' + borderStyle + ';\n                }\n                .' + id + ':hover {\n                    color: ' + hoverTextColor + ';\n                    background-color: ' + hoverBgColor + ';\n                    box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                    transition: all ' + transitionSpeed + 's ease;\n                }'
-            ), isSelected && React.createElement(
-                InspectorControls,
-                { key: 'advgb-button-inspector' },
-                React.createElement(
-                    PanelBody,
-                    { title: __('Button link') },
-                    React.createElement(TextControl, {
-                        label: [__('Link URL'), url && React.createElement(
-                            'a',
-                            { href: url || '#', key: 'link_url', target: '_blank', style: { float: 'right' } },
-                            __('Preview')
-                        )],
-                        value: url || '',
-                        placeholder: __('Enter URL…'),
-                        onChange: function onChange(text) {
-                            return setAttributes({ url: text });
-                        }
-                    }),
-                    React.createElement(ToggleControl, {
-                        label: __('Open in new tab'),
-                        checked: !!urlOpenNewTab,
-                        onChange: function onChange() {
-                            return setAttributes({ urlOpenNewTab: !attributes.urlOpenNewTab });
-                        }
-                    })
-                ),
-                React.createElement(
-                    PanelBody,
-                    { title: __('Text/Color') },
-                    React.createElement(RangeControl, {
-                        label: __('Text size'),
-                        value: textSize || '',
-                        onChange: function onChange(size) {
-                            return setAttributes({ textSize: size });
-                        },
-                        min: 10,
-                        max: 100,
-                        beforeIcon: 'editor-textcolor',
-                        allowReset: true
-                    }),
+                    BlockControls,
+                    null,
+                    React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
+                            return setAttributes({ align: align });
+                        } }),
                     React.createElement(
-                        PanelColor,
-                        {
-                            title: __('Text color'),
-                            colorValue: textColor,
-                            initialOpen: false
-                        },
-                        React.createElement(ColorPalette, {
-                            value: textColor,
-                            onChange: function onChange(color) {
-                                return setAttributes({ textColor: color });
-                            }
-                        })
-                    ),
-                    React.createElement(
-                        PanelColor,
-                        {
-                            title: __('Background color'),
-                            colorValue: bgColor,
-                            initialOpen: false
-                        },
-                        React.createElement(ColorPalette, {
-                            value: bgColor,
-                            onChange: function onChange(color) {
-                                return setAttributes({ bgColor: color });
+                        'div',
+                        { className: 'components-toolbar' },
+                        React.createElement(IconButton, {
+                            label: __('Refresh this button when it conflict with other buttons styles'),
+                            icon: 'update',
+                            className: 'components-toolbar__control',
+                            onClick: function onClick() {
+                                return setAttributes({ id: 'advgbbutton-' + blockID });
                             }
                         })
                     )
                 ),
                 React.createElement(
-                    PanelBody,
-                    { title: __('Border'), initialOpen: false },
-                    React.createElement(RangeControl, {
-                        label: __('Border radius'),
-                        value: borderRadius || '',
+                    'span',
+                    { style: { display: 'inline-block' } },
+                    React.createElement(RichText, {
+                        tagName: 'span',
+                        placeholder: __('Add text…'),
+                        value: text,
                         onChange: function onChange(value) {
-                            return setAttributes({ borderRadius: value });
+                            return setAttributes({ text: value });
                         },
-                        min: 0,
-                        max: 100
-                    }),
-                    React.createElement(SelectControl, {
-                        label: __('Border style'),
-                        value: borderStyle,
-                        options: listBorderStyles,
-                        onChange: function onChange(value) {
-                            return setAttributes({ borderStyle: value });
-                        }
-                    }),
-                    borderStyle !== 'none' && [React.createElement(
-                        PanelColor,
-                        { key: 'border-color', title: __('Border color'), colorValue: borderColor, initialOpen: false },
-                        React.createElement(ColorPalette, {
-                            value: borderColor,
-                            onChange: function onChange(value) {
-                                return setAttributes({ borderColor: value });
-                            }
-                        })
-                    ), React.createElement(RangeControl, {
-                        key: 'border-width',
-                        label: __('Border width'),
-                        value: borderWidth || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ borderWidth: value });
-                        },
-                        min: 0,
-                        max: 100
-                    })]
-                ),
-                React.createElement(
-                    PanelBody,
-                    { title: __('Padding'), initialOpen: false },
-                    React.createElement(RangeControl, {
-                        label: __('Padding top'),
-                        value: paddingTop || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingTop: value });
-                        },
-                        min: 0,
-                        max: 100
-                    }),
-                    React.createElement(RangeControl, {
-                        label: __('Padding right'),
-                        value: paddingRight || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingRight: value });
-                        },
-                        min: 0,
-                        max: 100
-                    }),
-                    React.createElement(RangeControl, {
-                        label: __('Padding bottom'),
-                        value: paddingBottom || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingBottom: value });
-                        },
-                        min: 0,
-                        max: 100
-                    }),
-                    React.createElement(RangeControl, {
-                        label: __('Padding left'),
-                        value: paddingLeft || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ paddingLeft: value });
-                        },
-                        min: 0,
-                        max: 100
+                        formattingControls: ['bold', 'italic', 'strikethrough'],
+                        isSelected: isSelected,
+                        className: 'wp-block-advgb-button_link ' + id,
+                        keepPlaceholderOnFocus: true
                     })
                 ),
                 React.createElement(
-                    PanelBody,
-                    { title: __('Hover'), initialOpen: false },
+                    'style',
+                    null,
+                    '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
+                ),
+                React.createElement(
+                    InspectorControls,
+                    null,
                     React.createElement(
-                        PanelColor,
-                        { title: __('Text color'), colorValue: hoverTextColor, initialOpen: false },
-                        React.createElement(ColorPalette, {
-                            value: hoverTextColor,
-                            onChange: function onChange(value) {
-                                return setAttributes({ hoverTextColor: value });
+                        PanelBody,
+                        { title: __('Button link') },
+                        React.createElement(TextControl, {
+                            label: [__('Link URL'), url && React.createElement(
+                                'a',
+                                { href: url || '#', key: 'link_url', target: '_blank', style: { float: 'right' } },
+                                __('Preview')
+                            )],
+                            value: url || '',
+                            placeholder: __('Enter URL…'),
+                            onChange: function onChange(text) {
+                                return setAttributes({ url: text });
                             }
-                        })
-                    ),
-                    React.createElement(
-                        PanelColor,
-                        { title: __('Background color'), colorValue: hoverBgColor, initialOpen: false },
-                        React.createElement(ColorPalette, {
-                            value: hoverBgColor,
-                            onChange: function onChange(value) {
-                                return setAttributes({ hoverBgColor: value });
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Open in new tab'),
+                            checked: !!urlOpenNewTab,
+                            onChange: function onChange() {
+                                return setAttributes({ urlOpenNewTab: !attributes.urlOpenNewTab });
                             }
                         })
                     ),
                     React.createElement(
                         PanelBody,
-                        { title: __('Shadow'), initialOpen: false },
+                        { title: __('Text/Color') },
+                        React.createElement(RangeControl, {
+                            label: __('Text size'),
+                            value: textSize || '',
+                            onChange: function onChange(size) {
+                                return setAttributes({ textSize: size });
+                            },
+                            min: 10,
+                            max: 100,
+                            beforeIcon: 'editor-textcolor',
+                            allowReset: true
+                        }),
                         React.createElement(
                             PanelColor,
-                            { title: __('Shadow color'), colorValue: hoverShadowColor, initialOpen: false },
+                            {
+                                title: __('Text color'),
+                                colorValue: textColor,
+                                initialOpen: false
+                            },
                             React.createElement(ColorPalette, {
-                                value: hoverShadowColor,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ hoverShadowColor: value });
+                                value: textColor,
+                                onChange: function onChange(color) {
+                                    return setAttributes({ textColor: color });
                                 }
                             })
                         ),
-                        React.createElement(RangeControl, {
-                            label: __('Shadow H offset'),
-                            value: hoverShadowH || '',
-                            onChange: function onChange(value) {
-                                return setAttributes({ hoverShadowH: value });
+                        React.createElement(
+                            PanelColor,
+                            {
+                                title: __('Background color'),
+                                colorValue: bgColor,
+                                initialOpen: false
                             },
-                            min: -50,
-                            max: 50
-                        }),
+                            React.createElement(ColorPalette, {
+                                value: bgColor,
+                                onChange: function onChange(color) {
+                                    return setAttributes({ bgColor: color });
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Border'), initialOpen: false },
                         React.createElement(RangeControl, {
-                            label: __('Shadow V offset'),
-                            value: hoverShadowV || '',
+                            label: __('Border radius'),
+                            value: borderRadius || '',
                             onChange: function onChange(value) {
-                                return setAttributes({ hoverShadowV: value });
-                            },
-                            min: -50,
-                            max: 50
-                        }),
-                        React.createElement(RangeControl, {
-                            label: __('Shadow blur'),
-                            value: hoverShadowBlur || '',
-                            onChange: function onChange(value) {
-                                return setAttributes({ hoverShadowBlur: value });
-                            },
-                            min: 0,
-                            max: 50
-                        }),
-                        React.createElement(RangeControl, {
-                            label: __('Shadow spread'),
-                            value: hoverShadowSpread || '',
-                            onChange: function onChange(value) {
-                                return setAttributes({ hoverShadowSpread: value });
+                                return setAttributes({ borderRadius: value });
                             },
                             min: 0,
-                            max: 50
+                            max: 100
+                        }),
+                        React.createElement(SelectControl, {
+                            label: __('Border style'),
+                            value: borderStyle,
+                            options: listBorderStyles,
+                            onChange: function onChange(value) {
+                                return setAttributes({ borderStyle: value });
+                            }
+                        }),
+                        borderStyle !== 'none' && [React.createElement(
+                            PanelColor,
+                            { key: 'border-color', title: __('Border color'), colorValue: borderColor, initialOpen: false },
+                            React.createElement(ColorPalette, {
+                                value: borderColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderColor: value });
+                                }
+                            })
+                        ), React.createElement(RangeControl, {
+                            key: 'border-width',
+                            label: __('Border width'),
+                            value: borderWidth || '',
+                            onChange: function onChange(value) {
+                                return setAttributes({ borderWidth: value });
+                            },
+                            min: 0,
+                            max: 100
+                        })]
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Padding'), initialOpen: false },
+                        React.createElement(RangeControl, {
+                            label: __('Padding top'),
+                            value: paddingTop || '',
+                            onChange: function onChange(value) {
+                                return setAttributes({ paddingTop: value });
+                            },
+                            min: 0,
+                            max: 100
+                        }),
+                        React.createElement(RangeControl, {
+                            label: __('Padding right'),
+                            value: paddingRight || '',
+                            onChange: function onChange(value) {
+                                return setAttributes({ paddingRight: value });
+                            },
+                            min: 0,
+                            max: 100
+                        }),
+                        React.createElement(RangeControl, {
+                            label: __('Padding bottom'),
+                            value: paddingBottom || '',
+                            onChange: function onChange(value) {
+                                return setAttributes({ paddingBottom: value });
+                            },
+                            min: 0,
+                            max: 100
+                        }),
+                        React.createElement(RangeControl, {
+                            label: __('Padding left'),
+                            value: paddingLeft || '',
+                            onChange: function onChange(value) {
+                                return setAttributes({ paddingLeft: value });
+                            },
+                            min: 0,
+                            max: 100
                         })
                     ),
-                    React.createElement(RangeControl, {
-                        label: __('Transition speed'),
-                        value: transitionSpeed || '',
-                        onChange: function onChange(value) {
-                            return setAttributes({ transitionSpeed: value });
-                        },
-                        min: 0,
-                        max: 3
-                    })
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Hover'), initialOpen: false },
+                        React.createElement(
+                            PanelColor,
+                            { title: __('Text color'), colorValue: hoverTextColor, initialOpen: false },
+                            React.createElement(ColorPalette, {
+                                value: hoverTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverTextColor: value });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelColor,
+                            { title: __('Background color'), colorValue: hoverBgColor, initialOpen: false },
+                            React.createElement(ColorPalette, {
+                                value: hoverBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverBgColor: value });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Shadow'), initialOpen: false },
+                            React.createElement(
+                                PanelColor,
+                                { title: __('Shadow color'), colorValue: hoverShadowColor, initialOpen: false },
+                                React.createElement(ColorPalette, {
+                                    value: hoverShadowColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ hoverShadowColor: value });
+                                    }
+                                })
+                            ),
+                            React.createElement(RangeControl, {
+                                label: __('Shadow H offset'),
+                                value: hoverShadowH || '',
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverShadowH: value });
+                                },
+                                min: -50,
+                                max: 50
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Shadow V offset'),
+                                value: hoverShadowV || '',
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverShadowV: value });
+                                },
+                                min: -50,
+                                max: 50
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Shadow blur'),
+                                value: hoverShadowBlur || '',
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverShadowBlur: value });
+                                },
+                                min: 0,
+                                max: 50
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Shadow spread'),
+                                value: hoverShadowSpread || '',
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverShadowSpread: value });
+                                },
+                                min: 0,
+                                max: 50
+                            })
+                        ),
+                        React.createElement(RangeControl, {
+                            label: __('Transition speed'),
+                            value: transitionSpeed || '',
+                            onChange: function onChange(value) {
+                                return setAttributes({ transitionSpeed: value });
+                            },
+                            min: 0,
+                            max: 3
+                        })
+                    )
                 )
-            )];
+            );
         }
     }]);
 

@@ -4,9 +4,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var addFilter = wp.hooks.addFilter;
 var __ = wp.i18n.__;
-var _wp$blocks = wp.blocks,
-    InspectorControls = _wp$blocks.InspectorControls,
-    hasBlockSupport = _wp$blocks.hasBlockSupport;
+var hasBlockSupport = wp.blocks.hasBlockSupport;
+var InspectorControls = wp.editor.InspectorControls;
 var SelectControl = wp.components.SelectControl;
 
 // Register custom styles to blocks attributes

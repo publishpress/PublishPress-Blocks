@@ -11,15 +11,18 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var __ = wp.i18n.__;
-var Component = wp.element.Component;
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment;
 var _wp$blocks = wp.blocks,
     registerBlockType = _wp$blocks.registerBlockType,
     getBlockContent = _wp$blocks.getBlockContent,
-    createBlock = _wp$blocks.createBlock,
-    BlockControls = _wp$blocks.BlockControls,
-    InspectorControls = _wp$blocks.InspectorControls,
-    ColorPalette = _wp$blocks.ColorPalette,
-    BlockAlignmentToolbar = _wp$blocks.BlockAlignmentToolbar;
+    createBlock = _wp$blocks.createBlock;
+var _wp$editor = wp.editor,
+    BlockControls = _wp$editor.BlockControls,
+    InspectorControls = _wp$editor.InspectorControls,
+    ColorPalette = _wp$editor.ColorPalette,
+    BlockAlignmentToolbar = _wp$editor.BlockAlignmentToolbar;
 var _wp$components = wp.components,
     IconButton = _wp$components.IconButton,
     Placeholder = _wp$components.Placeholder,
@@ -45,10 +48,12 @@ var summaryBlockTitle = __('Summary');
 
 // Add button to insert summary inside table of contents component
 (function () {
-    jQuery(document).ready(function ($) {
+    jQuery(window).on('load', function () {
         if (typeof dispatch('core/editor') === 'undefined') {
             return false;
         }
+
+        var $ = jQuery;
 
         var _dispatch = dispatch('core/editor'),
             insertBlock = _dispatch.insertBlock;
@@ -167,7 +172,6 @@ var SummaryBlock = function (_Component) {
             var summaryContent = React.createElement(
                 Placeholder,
                 {
-                    key: "summary-placeholder",
                     icon: summaryBlockIcon,
                     label: summaryBlockTitle,
                     instructions: __('Your current post/page has no headings. Try add some headings and update this block later')
@@ -188,7 +192,7 @@ var SummaryBlock = function (_Component) {
 
                 summaryContent = React.createElement(
                     "ul",
-                    { className: 'advgb-toc', key: "summary-toc" },
+                    { className: 'advgb-toc' },
                     headings.map(function (heading) {
                         return React.createElement(
                             "li",
@@ -210,58 +214,65 @@ var SummaryBlock = function (_Component) {
                 );
             }
 
-            return [isSelected && !!headings.length && React.createElement(
-                BlockControls,
-                { key: 'summary-controls' },
-                React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
-                        return setAttributes({ align: align });
-                    } }),
-                React.createElement(
-                    Toolbar,
+            return React.createElement(
+                Fragment,
+                null,
+                !!headings.length && React.createElement(
+                    BlockControls,
                     null,
-                    React.createElement(IconButton, { className: 'components-icon-button components-toolbar__control',
-                        icon: 'update',
-                        label: __('Update Summary'),
-                        onClick: this.updateSummary
-                    })
-                )
-            ), isSelected && React.createElement(
-                InspectorControls,
-                { key: "summary-inspector" },
-                React.createElement(
-                    PanelBody,
-                    { title: __('Summary settings') },
-                    React.createElement(ToggleControl, {
-                        label: __('Load minimized'),
-                        checked: !!loadMinimized,
-                        onChange: function onChange() {
-                            return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() });
-                        }
-                    }),
-                    loadMinimized && React.createElement(TextControl, {
-                        label: __('Summary header title'),
-                        value: headerTitle || '',
-                        placeholder: __('Enter header…'),
-                        onChange: function onChange(value) {
-                            return setAttributes({ headerTitle: value });
-                        }
-                    }),
+                    React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
+                            return setAttributes({ align: align });
+                        } }),
                     React.createElement(
-                        PanelColor,
-                        { title: __('Anchor color'), colorValue: anchorColor, initialOpen: false },
-                        React.createElement(ColorPalette, {
-                            value: anchorColor,
-                            onChange: function onChange(value) {
-                                return setAttributes({ anchorColor: value });
-                            }
+                        Toolbar,
+                        null,
+                        React.createElement(IconButton, { className: 'components-icon-button components-toolbar__control',
+                            icon: 'update',
+                            label: __('Update Summary'),
+                            onClick: this.updateSummary
                         })
                     )
+                ),
+                React.createElement(
+                    InspectorControls,
+                    null,
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Summary settings') },
+                        React.createElement(ToggleControl, {
+                            label: __('Load minimized'),
+                            checked: !!loadMinimized,
+                            onChange: function onChange() {
+                                return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() });
+                            }
+                        }),
+                        loadMinimized && React.createElement(TextControl, {
+                            label: __('Summary header title'),
+                            value: headerTitle || '',
+                            placeholder: __('Enter header…'),
+                            onChange: function onChange(value) {
+                                return setAttributes({ headerTitle: value });
+                            }
+                        }),
+                        React.createElement(
+                            PanelColor,
+                            { title: __('Anchor color'), colorValue: anchorColor, initialOpen: false },
+                            React.createElement(ColorPalette, {
+                                value: anchorColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ anchorColor: value });
+                                }
+                            })
+                        )
+                    )
+                ),
+                summaryContent,
+                anchorColor && React.createElement(
+                    "style",
+                    null,
+                    ".advgb-toc li a {\n                        color: " + anchorColor + ";\n                    }"
                 )
-            ), summaryContent, anchorColor && React.createElement(
-                "style",
-                { key: "summary-style" },
-                ".advgb-toc li a {\n                    color: " + anchorColor + ";\n                }"
-            )];
+            );
         }
     }]);
 

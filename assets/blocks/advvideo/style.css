@@ -1,0 +1,76 @@
+.advgb-video-block.full-width,
+.advgb-video-block.full-width video,
+.advgb-video-block.full-width iframe {
+    width: 100% !important;
+}
+
+.advgb-video-wrapper {
+    background-color: #2196f3;
+    position: relative;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.advgb-video-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom:  0;
+    right: 0;
+    z-index: 2;
+    opacity: 0.5;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.advgb-button-wrapper {
+    height: 450px;
+    background-color: transparent;
+    z-index: 3;
+    position: relative;
+    width: 100%;
+}
+
+.advgb-play-button {
+    display: flex;
+    align-items:  center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.advgb-button-wrapper button.button {
+    position: absolute;
+    left: calc(50% - 50px);
+    top: 15%;
+}
+
+.advgb-video-input {
+    width: fit-content !important;
+    margin: 10px auto;
+}
+
+.advgb-video-input .components-base-control {
+    margin-bottom: 0;
+    display: inline-block;
+    width: 300px;
+}
+
+.advgb-video-input button.components-button:disabled {
+    opacity: 0.8;
+}
+
+.advgb-video-link-icon {
+    vertical-align: text-bottom;
+    margin-right: 5px;
+    color: #888;
+}
+
+.advgb-current-video-desc span.spinner {
+    float: none;
+    margin: 0;
+}
+
+#colorbox.advgb_lightbox .cboxIframe {
+    margin-bottom: 0;
+}

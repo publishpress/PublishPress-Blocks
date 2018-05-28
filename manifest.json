@@ -2,9 +2,31 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.3.0",
-  "wp_version": "4.9.5",
+  "version": "1.4.0",
+  "wp_version": "4.9.6",
   "changelog": {
+    "1.4.0": [
+      {
+        "type": "feature",
+        "title": "New block: Map block"
+      },
+      {
+        "type": "feature",
+        "title": "New block: Advanced Video block"
+      },
+      {
+        "type": "feature",
+        "title": "New block: Advanced Table block"
+      },
+      {
+        "type": "feature",
+        "title": "New options to add margin and padding to Columns and Text Columns block"
+      },
+      {
+        "type": "fix",
+        "title": "Update code format to match latest Gutenberg release"
+      }
+    ],
     "1.3.0": [
       {
         "type": "feature",
