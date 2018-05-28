@@ -353,6 +353,7 @@ registerBlockType( 'advgb/map', {
         },
         address: {
             type: 'string',
+            default: '',
         },
         currentAddress: {
             type: 'string',
@@ -401,9 +402,10 @@ registerBlockType( 'advgb/map', {
             markerDesc,
         } = attributes;
 
-        const formattedDesc = markerDesc.replace(/\n/g, '<br/>');
+        const formattedDesc = markerDesc.replace( /\n/g, '<br/>' ).replace( /'/, '\\\'' );
+        const formattedTitle = markerTitle.replace( /'/, '\\\'' );
         const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-        const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${markerTitle}</h2><p class="advgbmap-desc">${formattedDesc || ''}</p></div>`;
+        const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${formattedTitle}</h2><p class="advgbmap-desc">${formattedDesc || ''}</p></div>`;
 
         return (
             <div className={ 'advgb-map-block' } style={ { margin: '10px auto' } }>
@@ -429,7 +431,7 @@ registerBlockType( 'advgb/map', {
                         var marker = new google.maps.Marker({
                             position: location,
                             map: map,
-                            title: '${markerTitle}',
+                            title: '${formattedTitle}',
                             animation: google.maps.Animation.DROP,
                             icon: {
                                 url: '${markerIcon || DEFAULT_MARKER}',

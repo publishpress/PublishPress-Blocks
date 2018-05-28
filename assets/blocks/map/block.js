@@ -446,7 +446,8 @@ registerBlockType('advgb/map', {
             default: false
         },
         address: {
-            type: 'string'
+            type: 'string',
+            default: ''
         },
         currentAddress: {
             type: 'string'
@@ -495,9 +496,10 @@ registerBlockType('advgb/map', {
             markerDesc = attributes.markerDesc;
 
 
-        var formattedDesc = markerDesc.replace(/\n/g, '<br/>');
+        var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
+        var formattedTitle = markerTitle.replace(/'/, '\\\'');
         var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-        var infoWindowHtml = "<div class=\"advgbmap-wrapper\"><h2 class=\"advgbmap-title\">" + markerTitle + "</h2><p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p></div>";
+        var infoWindowHtml = "<div class=\"advgbmap-wrapper\"><h2 class=\"advgbmap-title\">" + formattedTitle + "</h2><p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p></div>";
 
         return React.createElement(
             "div",
@@ -506,7 +508,7 @@ registerBlockType('advgb/map', {
             React.createElement(
                 "script",
                 { "typeof": "text/javascript" },
-                "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            gestureHandling: 'cooperative',\n                        });\n\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: '" + infoWindowHtml + "'\n                        });\n\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + markerTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
+                "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            gestureHandling: 'cooperative',\n                        });\n\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: '" + infoWindowHtml + "'\n                        });\n\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
             )
         );
     }
