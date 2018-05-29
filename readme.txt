@@ -23,11 +23,12 @@ Additional features added to Gutenberg plugin:
 - Insert the Gutenberg post summary based on content headers
 - Advanced Button block: create button with more styles (hover, border, padding...)
 - Advanced List block: create list with list icon, icon color
-- Map block: load a Google map position with zomm, icon, tooltip, title...
+- Map block: load a Google map position with zoom, icon, tooltip, title...
 - Advanced Table block: create table with style! color, border, cell size and more
 - Testimonial block: define avatar, title, text, colors...
 - Counter block: display numbers in a dynamic, fun and engaging way
 - Advanced Image block: a new image block with hover text, overlay, colors, link, advanced size definition
+- Advanced Video block: load and display local and remote video
 - Supercharge the separator tool with size, color, spaces
 
 > <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
