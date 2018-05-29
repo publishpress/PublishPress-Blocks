@@ -28,6 +28,7 @@ Additional features added to Gutenberg plugin:
 - Testimonial block: define avatar, title, text, colors...
 - Counter block: display numbers in a dynamic, fun and engaging way
 - Advanced Image block: a new image block with hover text, overlay, colors, link, advanced size definition
+- Advanced Image block: load and display local and remote video
 - Supercharge the separator tool with size, color, spaces
 
 > <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
