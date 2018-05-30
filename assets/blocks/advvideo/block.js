@@ -54,7 +54,8 @@ var AdvVideo = function (_Component) {
             var _props = this.props,
                 attributes = _props.attributes,
                 setAttributes = _props.setAttributes;
-            var videoID = attributes.videoID;
+            var videoID = attributes.videoID,
+                poster = attributes.poster;
 
             var realID = videoID;
 
@@ -87,7 +88,7 @@ var AdvVideo = function (_Component) {
                     if (!!obj.title && !!obj.provider_name) {
                         setAttributes({
                             videoTitle: obj.title,
-                            poster: obj.thumbnail_url
+                            poster: poster ? poster : obj.thumbnail_url
                         });
 
                         switch (obj.provider_name) {

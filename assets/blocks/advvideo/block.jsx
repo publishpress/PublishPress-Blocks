@@ -16,7 +16,7 @@ class AdvVideo extends Component {
 
     fetchVideoInfo() {
         const { attributes, setAttributes } = this.props;
-        const { videoID } = attributes;
+        const { videoID, poster } = attributes;
         let realID = videoID;
 
         if (!!videoID) {
@@ -50,7 +50,7 @@ class AdvVideo extends Component {
                     if (!!obj.title && !!obj.provider_name) {
                         setAttributes( {
                             videoTitle: obj.title,
-                            poster: obj.thumbnail_url,
+                            poster: poster ? poster : obj.thumbnail_url,
                         } );
 
                         switch (obj.provider_name) {
