@@ -176,42 +176,42 @@ float: left;'
         wp_enqueue_script(
             'summary_blocks',
             plugins_url('assets/blocks/summary/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_script(
             'advList_blocks',
             plugins_url('assets/blocks/advlist/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_script(
             'advButton_blocks',
             plugins_url('assets/blocks/advbutton/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_script(
             'countUp_blocks',
             plugins_url('assets/blocks/count-up/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_script(
             'advImage_blocks',
             plugins_url('assets/blocks/advimage/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_script(
             'advVideo_blocks',
             plugins_url('assets/blocks/advvideo/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_script(
             'map_blocks',
             plugins_url('assets/blocks/map/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_script(
             'advTable_blocks',
             plugins_url('assets/blocks/advtable/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_style(
             'advTable_blocks',
@@ -221,7 +221,7 @@ float: left;'
         wp_enqueue_script(
             'testimonial_blocks',
             plugins_url('assets/blocks/testimonial/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
         wp_localize_script('testimonial_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
@@ -229,7 +229,7 @@ float: left;'
         wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
         );
         $custom_styles_data = get_option('advgb_custom_styles');
         wp_localize_script('custom_styles', 'advGb_CS', $custom_styles_data);
@@ -237,12 +237,12 @@ float: left;'
         wp_enqueue_script(
             'custom_separator',
             plugins_url('assets/blocks/custom-separator/separator.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
         );
         wp_enqueue_script(
             'custom_columns',
             plugins_url('assets/blocks/custom-columns/columns.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date' )
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
         );
     }
 
@@ -265,11 +265,11 @@ float: left;'
             plugins_url('assets/blocks/summary/style.css', dirname(__FILE__))
         );
         wp_enqueue_style(
-            'advanced_list',
+            'advList_blocks',
             plugins_url('assets/blocks/advlist/style.css', dirname(__FILE__))
         );
         wp_enqueue_style(
-            'advbutton_blocks',
+            'advButton_blocks',
             plugins_url('assets/blocks/advbutton/style.css', dirname(__FILE__))
         );
         wp_enqueue_style(
@@ -664,11 +664,17 @@ float: left;'
     {
         if (get_option('advgb_blocks_list') === false) {
             $advgb_nonce = wp_create_nonce('advgb_update_blocks_list');
+            wp_enqueue_script('wp-blocks');
+            wp_enqueue_script('wp-element');
+            wp_enqueue_script('wp-data');
+            wp_enqueue_script('wp-components');
+            wp_enqueue_script('wp-core-blocks');
+            wp_enqueue_script('wp-editor');
             do_action('enqueue_block_editor_assets');
             wp_enqueue_script(
                 'update_list',
                 plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-                array('wp-blocks', 'wp-element', 'wp-data', 'wp-core-blocks')
+                array()
             );
             wp_localize_script('update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
         }
@@ -726,8 +732,7 @@ float: left;'
         // Register JS
         wp_register_script(
             'update_list',
-            plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-            array('wp-blocks', 'wp-element', 'wp-data', 'wp-core-blocks')
+            plugins_url('assets/js/update-block-list.js', dirname(__FILE__))
         );
         wp_register_script(
             'profile_js',
