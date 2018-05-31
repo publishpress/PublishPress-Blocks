@@ -18,16 +18,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette,
-        MediaUpload = wpEditor.MediaUpload;
+        ColorPalette = wpEditor.ColorPalette;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         PanelColor = wpComponents.PanelColor,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
-        IconButton = wpComponents.IconButton,
         Dashicon = wpComponents.Dashicon;
 
 
@@ -315,6 +312,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             borderColor: borderColor
                                         }
                                     },
+                                    React.createElement(
+                                        "span",
+                                        { className: "advgb-accordion-remove",
+                                            title: __('Remove'),
+                                            onClick: function onClick() {
+                                                return setAttributes({ items: items.filter(function (cItem, cIndex) {
+                                                        return cIndex !== index;
+                                                    }) });
+                                            }
+                                        },
+                                        React.createElement(Dashicon, { icon: "no" })
+                                    ),
                                     React.createElement(
                                         "span",
                                         { className: "advgb-accordion-header-icon" },
