@@ -217,6 +217,11 @@ float: left;'
             'advTable_blocks',
             plugins_url('assets/blocks/advtable/style.css', dirname(__FILE__))
         );
+        wp_enqueue_script(
+            'accordion_blocks',
+            plugins_url('assets/blocks/accordion/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
+        );
 
         wp_enqueue_script(
             'testimonial_blocks',
@@ -296,6 +301,12 @@ float: left;'
             'advTable_frontend',
             plugins_url('assets/blocks/advtable/frontend.css', dirname(__FILE__))
         );
+        wp_enqueue_style(
+            'accordion_blocks',
+            plugins_url('assets/blocks/accordion/style.css', dirname(__FILE__))
+        );
+
+        wp_enqueue_script('jquery-ui-accordion');
 
         $saved_settings = get_option('advgb_settings');
         if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
@@ -1301,6 +1312,7 @@ float: left;'
             'advgb/video',
             'advgb/map',
             'advgb/table',
+            'advgb/accordion',
         );
 
         // Avoid default value (string 'all')
