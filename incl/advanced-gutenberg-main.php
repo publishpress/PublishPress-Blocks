@@ -222,6 +222,7 @@ float: left;'
             plugins_url('assets/blocks/accordion/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
+        wp_enqueue_script('jquery-ui-accordion');
 
         wp_enqueue_script(
             'testimonial_blocks',
@@ -305,8 +306,6 @@ float: left;'
             'accordion_blocks',
             plugins_url('assets/blocks/accordion/style.css', dirname(__FILE__))
         );
-
-        wp_enqueue_script('jquery-ui-accordion');
 
         $saved_settings = get_option('advgb_settings');
         if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
@@ -1248,6 +1247,16 @@ float: left;'
                 array($this, 'decodeHtmlEntity'),
                 $content
             );
+        }
+
+        if (strpos($content, 'advgb-accordion-block') !== false) {
+            wp_enqueue_script('jquery-ui-accordion');
+            wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
+                $(".advgb-accordion-block").accordion({
+                    header: ".advgb-accordion-header",
+                    heightStyle: "content"
+                });
+            });');
         }
 
         return $content;

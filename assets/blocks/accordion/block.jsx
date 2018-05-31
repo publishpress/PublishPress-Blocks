@@ -74,6 +74,7 @@
                 if (!refresh) {
                     jQuery( `#block-${this.props.id} .advgb-accordion-block` ).accordion( {
                         header: ".advgb-accordion-header",
+                        heightStyle: "content",
                     } );
                 } else {
                     jQuery(`#block-${this.props.id} .advgb-accordion-block`).accordion('refresh');
@@ -208,7 +209,7 @@
                                          backgroundColor: headerBgColor,
                                          color: headerTextColor,
                                          borderStyle: borderStyle,
-                                         borderWidth: borderWidth,
+                                         borderWidth: borderWidth + 'px',
                                          borderColor: borderColor,
                                      } }
                                 >
@@ -230,7 +231,7 @@
                                          backgroundColor: bodyBgColor,
                                          color: bodyTextColor,
                                          borderStyle: borderStyle,
-                                         borderWidth: borderWidth,
+                                         borderWidth: borderWidth + 'px',
                                          borderColor: borderColor,
                                      } }
                                 >
@@ -329,7 +330,54 @@
         },
         edit: AdvAccordion,
         save: function ( { attributes } ) {
-            return null;
+            const {
+                items,
+                headerBgColor,
+                headerTextColor,
+                headerIcon,
+                headerIconColor,
+                bodyBgColor,
+                bodyTextColor,
+                borderStyle,
+                borderWidth,
+                borderColor,
+            } = attributes;
+
+            return (
+                <div className="advgb-accordion-block">
+                    {items.map( ( item, index ) => (
+                        <Fragment key={ index }>
+                            <div className="advgb-accordion-header"
+                                 style={ {
+                                     backgroundColor: headerBgColor,
+                                     color: headerTextColor,
+                                     borderStyle: borderStyle,
+                                     borderWidth: borderWidth + 'px',
+                                     borderColor: borderColor,
+                                 } }
+                            >
+                                <span className="advgb-accordion-header-icon">
+                                    <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        { HEADER_ICONS[headerIcon] }
+                                    </svg>
+                                </span>
+                                <RichText.Content tagName="h4" value={ item.header }/>
+                            </div>
+                            <div className="advgb-accordion-body"
+                                 style={ {
+                                     backgroundColor: bodyBgColor,
+                                     color: bodyTextColor,
+                                     borderStyle: borderStyle,
+                                     borderWidth: borderWidth + 'px',
+                                     borderColor: borderColor,
+                                 } }
+                            >
+                                <RichText.Content tagName="p" value={ item.body }/>
+                            </div>
+                        </Fragment>
+                    ) ) }
+                </div>
+            );
         },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
