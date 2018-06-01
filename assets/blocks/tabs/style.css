@@ -1,6 +1,8 @@
 ul.advgb-tabs-panel {
     list-style-type: none !important;
     border: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
 }
 
 ul.advgb-tabs-panel:after {
@@ -13,12 +15,15 @@ li.advgb-tab {
     float: left;
     padding: 10px 15px;
     margin: 0;
+    margin-bottom: -1px;
     border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     position: relative;
 }
 
-li.advgb-tab a {
+li.advgb-tab a, li.advgb-tab a:focus, li.advgb-tab a:hover {
     text-decoration: none;
+    box-shadow: none;
 }
 
 li.advgb-tab.ui-tabs-active {

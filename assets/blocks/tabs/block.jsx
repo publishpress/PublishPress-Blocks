@@ -150,7 +150,29 @@
         },
         edit: AdvTabsBlock,
         save: function ( { attributes } ) {
-            return null;
+            const { tabItems } = attributes;
+
+            return (
+                <div className="advgb-tabs-block">
+                    <ul className="advgb-tabs-panel">
+                        {tabItems.map( ( item, index ) => (
+                            <li key={ index } className="advgb-tab">
+                                <a href={`#${item.header.toLowerCase().replace(/ /g, '')}-${index}`}>
+                                    <RichText.Content tagName="span" value={ item.header }/>
+                                </a>
+                            </li>
+                        ) ) }
+                    </ul>
+                    {tabItems.map( ( item, index ) => (
+                        <div key={ index }
+                             id={`${item.header.toLowerCase().replace(/ /g, '')}-${index}`}
+                             className="advgb-tab-body"
+                        >
+                            <RichText.Content tagName="p" value={ item.body }/>
+                        </div>
+                    ) ) }
+                </div>
+            );
         },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );

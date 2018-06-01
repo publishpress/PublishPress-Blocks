@@ -222,8 +222,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvTabsBlock,
         save: function save(_ref) {
             var attributes = _ref.attributes;
+            var tabItems = attributes.tabItems;
 
-            return null;
+
+            return React.createElement(
+                'div',
+                { className: 'advgb-tabs-block' },
+                React.createElement(
+                    'ul',
+                    { className: 'advgb-tabs-panel' },
+                    tabItems.map(function (item, index) {
+                        return React.createElement(
+                            'li',
+                            { key: index, className: 'advgb-tab' },
+                            React.createElement(
+                                'a',
+                                { href: '#' + item.header.toLowerCase().replace(/ /g, '') + '-' + index },
+                                React.createElement(RichText.Content, { tagName: 'span', value: item.header })
+                            )
+                        );
+                    })
+                ),
+                tabItems.map(function (item, index) {
+                    return React.createElement(
+                        'div',
+                        { key: index,
+                            id: item.header.toLowerCase().replace(/ /g, '') + '-' + index,
+                            className: 'advgb-tab-body'
+                        },
+                        React.createElement(RichText.Content, { tagName: 'p', value: item.body })
+                    );
+                })
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);

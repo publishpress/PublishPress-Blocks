@@ -1269,6 +1269,13 @@ float: left;'
             });');
         }
 
+        if (strpos($content, 'advgb-tabs-block') !== false) {
+            wp_enqueue_script('jquery-ui-tabs');
+            wp_add_inline_script('jquery-ui-tabs', 'jQuery(document).ready(function($){
+                $(".advgb-tabs-block").tabs();
+            });');
+        }
+
         return $content;
     }
 
