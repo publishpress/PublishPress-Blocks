@@ -2,7 +2,7 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, ColorPalette } = wpEditor;
+    const { InspectorControls, RichText, ColorPalette, InnerBlocks } = wpEditor;
     const { RangeControl, PanelBody, PanelColor, BaseControl , SelectControl, Dashicon } = wpComponents;
 
     class AdvTabsBlock extends Component {
@@ -72,8 +72,25 @@
                                             placeholder={ __( 'Title…' ) }
                                         />
                                     </a>
+                                    <span className="advgb-tab-remove"
+                                          onClick={ () => setAttributes( {
+                                              tabItems: tabItems.filter( (vl, idx) => idx !== index )
+                                          } ) }
+                                    >
+                                        <Dashicon icon="no"/>
+                                    </span>
                                 </li>
                             ) ) }
+                            <li className="advgb-tab advgb-add-tab">
+                                <span onClick={ () => setAttributes( {
+                                    tabItems: [
+                                        ...tabItems,
+                                        { header: __( 'New Tab' ), body: __( 'Enter your content.' ) }
+                                    ]
+                                } ) }>
+                                    <Dashicon icon="plus-alt"/>
+                                </span>
+                            </li>
                         </ul>
                         {tabItems.map( ( item, index ) => (
                             <div key={ index }

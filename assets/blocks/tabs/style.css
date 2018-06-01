@@ -14,6 +14,7 @@ li.advgb-tab {
     padding: 10px 15px;
     margin: 0;
     border-right: 1px solid #ccc;
+    position: relative;
 }
 
 li.advgb-tab a {
@@ -26,6 +27,33 @@ li.advgb-tab.ui-tabs-active {
 
 li.advgb-tab.ui-tabs-active a {
     color: #fff;
+}
+
+li.advgb-add-tab svg {
+    color: #2196f3;
+    vertical-align: sub;
+    cursor: pointer;
+}
+
+span.advgb-tab-remove {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    height: 20px;
+    color: #fff;
+    background-color: #ff0000;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    z-index: 1;
+}
+
+li.advgb-tab:hover span.advgb-tab-remove {
+    display: block;
+}
+
+span.advgb-tab-remove svg {
+    vertical-align: baseline;
 }
 
 div.advgb-tab-body {

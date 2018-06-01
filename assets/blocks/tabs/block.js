@@ -4,6 +4,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -17,7 +19,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        ColorPalette = wpEditor.ColorPalette,
+        InnerBlocks = wpEditor.InnerBlocks;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         PanelColor = wpComponents.PanelColor,
@@ -124,9 +127,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             },
                                             placeholder: __('Title…')
                                         })
+                                    ),
+                                    React.createElement(
+                                        'span',
+                                        { className: 'advgb-tab-remove',
+                                            onClick: function onClick() {
+                                                return setAttributes({
+                                                    tabItems: tabItems.filter(function (vl, idx) {
+                                                        return idx !== index;
+                                                    })
+                                                });
+                                            }
+                                        },
+                                        React.createElement(Dashicon, { icon: 'no' })
                                     )
                                 );
-                            })
+                            }),
+                            React.createElement(
+                                'li',
+                                { className: 'advgb-tab advgb-add-tab' },
+                                React.createElement(
+                                    'span',
+                                    { onClick: function onClick() {
+                                            return setAttributes({
+                                                tabItems: [].concat(_toConsumableArray(tabItems), [{ header: __('New Tab'), body: __('Enter your content.') }])
+                                            });
+                                        } },
+                                    React.createElement(Dashicon, { icon: 'plus-alt' })
+                                )
+                            )
                         ),
                         tabItems.map(function (item, index) {
                             return React.createElement(
