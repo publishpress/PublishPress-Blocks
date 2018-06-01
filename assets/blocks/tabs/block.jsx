@@ -16,10 +16,10 @@
         }
 
         componentDidUpdate( prevProps ) {
-            const { tabsHeader: prevHeader } = prevProps.attributes;
-            const { tabsHeader } = this.props.attributes;
+            const { tabItems: prevItems } = prevProps.attributes;
+            const { tabItems } = this.props.attributes;
 
-            if (prevHeader !== tabsHeader) {
+            if (prevItems !== tabItems) {
                 this.initTabs( true );
             }
         }
@@ -38,29 +38,36 @@
             }
         }
 
+        updateTabs( value, index ) {
+            const { attributes, setAttributes } = this.props;
+            const { tabItems } = attributes;
+
+            let newItems = tabItems.map( ( item, thisIndex ) => {
+                if ( index === thisIndex ) {
+                    item = { ...item, ...value };
+                }
+
+                return item;
+            } );
+
+            setAttributes( { tabItems: newItems } )
+        }
+
         render() {
             const { attributes, setAttributes } = this.props;
-            const {
-                tabsHeader,
-                tabsBody,
-            } = attributes;
+            const { tabItems } = attributes;
 
             return (
                 <Fragment>
                     <div className="advgb-tabs-block">
                         <ul className="advgb-tabs-panel">
-                            {tabsHeader.map( ( item, index ) => (
+                            {tabItems.map( ( item, index ) => (
                                 <li key={ index } className="advgb-tab">
-                                    <a href={`#${item.toLowerCase().replace(/ /g, '')}-${index}`}>
+                                    <a href={`#${item.header.toLowerCase().replace(/ /g, '')}-${index}`}>
                                         <RichText
                                             tagName="p"
-                                            value={ item }
-                                            onChange={ ( value ) => {
-                                                let newHeader = [...tabsHeader];
-                                                if (value.length === 0) value[0] = '';
-                                                newHeader[index] = value[0];
-                                                setAttributes( { tabsHeader: newHeader } );
-                                            } }
+                                            value={ item.header }
+                                            onChange={ ( value ) => this.updateTabs( { header: value[0] || '' }, index ) }
                                             onSplit={ () => null }
                                             placeholder={ __( 'Title…' ) }
                                         />
@@ -68,19 +75,15 @@
                                 </li>
                             ) ) }
                         </ul>
-                        {tabsBody.map( ( item, index ) => (
+                        {tabItems.map( ( item, index ) => (
                             <div key={ index }
-                                 id={`${tabsHeader[index].toLowerCase().replace(/ /g, '')}-${index}`}
+                                 id={`${item.header.toLowerCase().replace(/ /g, '')}-${index}`}
                                  className="advgb-tab-body"
                             >
                                 <RichText
                                     tagName="p"
-                                    value={ item }
-                                    onChange={ ( value ) => {
-                                        let newBody = [...tabsBody];
-                                        newBody[index] = value;
-                                        setAttributes( { tabsBody: newBody } )
-                                    } }
+                                    value={ item.body }
+                                    onChange={ ( value ) => this.updateTabs( { body: value }, index ) }
                                     placeholder={ __( 'Enter text…' ) }
                                 />
                             </div>
@@ -106,21 +109,22 @@
         category: "formatting",
         keywords: [ __( 'tabs' ), __( 'cards' ) ],
         attributes: {
-            tabsHeader: {
-                type: 'array',
+            tabItems: {
+                type: "array",
                 default: [
-                    __( 'Tab 1' ),
-                    __( 'Tab 2' ),
-                    __( 'Tab 3' ),
-                ],
-            },
-            tabsBody: {
-                type: 'array',
-                default: [
-                    __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit 1.' ),
-                    __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit 2.' ),
-                    __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit 3.' ),
-                ],
+                    {
+                        header: __( 'Tab 1' ),
+                        body: __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit 1.' )
+                    },
+                    {
+                        header: __( 'Tab 2' ),
+                        body: __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit 2.' )
+                    },
+                    {
+                        header: __( 'Tab 3' ),
+                        body: __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit 3.' )
+                    },
+                ]
             }
         },
         edit: AdvTabsBlock,

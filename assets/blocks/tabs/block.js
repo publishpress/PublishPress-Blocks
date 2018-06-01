@@ -1,8 +1,8 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -42,11 +42,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
-                var prevHeader = prevProps.attributes.tabsHeader;
-                var tabsHeader = this.props.attributes.tabsHeader;
+                var prevItems = prevProps.attributes.tabItems;
+                var tabItems = this.props.attributes.tabItems;
 
 
-                if (prevHeader !== tabsHeader) {
+                if (prevItems !== tabItems) {
                     this.initTabs(true);
                 }
             }
@@ -68,13 +68,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: 'render',
-            value: function render() {
+            key: 'updateTabs',
+            value: function updateTabs(value, index) {
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
-                var tabsHeader = attributes.tabsHeader,
-                    tabsBody = attributes.tabsBody;
+                var tabItems = attributes.tabItems;
+
+
+                var newItems = tabItems.map(function (item, thisIndex) {
+                    if (index === thisIndex) {
+                        item = _extends({}, item, value);
+                    }
+
+                    return item;
+                });
+
+                setAttributes({ tabItems: newItems });
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                var _this2 = this;
+
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var tabItems = attributes.tabItems;
 
 
                 return React.createElement(
@@ -86,21 +106,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'ul',
                             { className: 'advgb-tabs-panel' },
-                            tabsHeader.map(function (item, index) {
+                            tabItems.map(function (item, index) {
                                 return React.createElement(
                                     'li',
                                     { key: index, className: 'advgb-tab' },
                                     React.createElement(
                                         'a',
-                                        { href: '#' + item.toLowerCase().replace(/ /g, '') + '-' + index },
+                                        { href: '#' + item.header.toLowerCase().replace(/ /g, '') + '-' + index },
                                         React.createElement(RichText, {
                                             tagName: 'p',
-                                            value: item,
+                                            value: item.header,
                                             onChange: function onChange(value) {
-                                                var newHeader = [].concat(_toConsumableArray(tabsHeader));
-                                                if (value.length === 0) value[0] = '';
-                                                newHeader[index] = value[0];
-                                                setAttributes({ tabsHeader: newHeader });
+                                                return _this2.updateTabs({ header: value[0] || '' }, index);
                                             },
                                             onSplit: function onSplit() {
                                                 return null;
@@ -111,20 +128,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 );
                             })
                         ),
-                        tabsBody.map(function (item, index) {
+                        tabItems.map(function (item, index) {
                             return React.createElement(
                                 'div',
                                 { key: index,
-                                    id: tabsHeader[index].toLowerCase().replace(/ /g, '') + '-' + index,
+                                    id: item.header.toLowerCase().replace(/ /g, '') + '-' + index,
                                     className: 'advgb-tab-body'
                                 },
                                 React.createElement(RichText, {
                                     tagName: 'p',
-                                    value: item,
+                                    value: item.body,
                                     onChange: function onChange(value) {
-                                        var newBody = [].concat(_toConsumableArray(tabsBody));
-                                        newBody[index] = value;
-                                        setAttributes({ tabsBody: newBody });
+                                        return _this2.updateTabs({ body: value }, index);
                                     },
                                     placeholder: __('Enter text…')
                                 })
@@ -153,13 +168,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: "formatting",
         keywords: [__('tabs'), __('cards')],
         attributes: {
-            tabsHeader: {
-                type: 'array',
-                default: [__('Tab 1'), __('Tab 2'), __('Tab 3')]
-            },
-            tabsBody: {
-                type: 'array',
-                default: [__('Lorem ipsum dolor sit amet, consectetur adipiscing elit 1.'), __('Lorem ipsum dolor sit amet, consectetur adipiscing elit 2.'), __('Lorem ipsum dolor sit amet, consectetur adipiscing elit 3.')]
+            tabItems: {
+                type: "array",
+                default: [{
+                    header: __('Tab 1'),
+                    body: __('Lorem ipsum dolor sit amet, consectetur adipiscing elit 1.')
+                }, {
+                    header: __('Tab 2'),
+                    body: __('Lorem ipsum dolor sit amet, consectetur adipiscing elit 2.')
+                }, {
+                    header: __('Tab 3'),
+                    body: __('Lorem ipsum dolor sit amet, consectetur adipiscing elit 3.')
+                }]
             }
         },
         edit: AdvTabsBlock,
