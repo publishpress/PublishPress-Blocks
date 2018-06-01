@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, ColorPalette, InnerBlocks } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, BaseControl , SelectControl, Dashicon } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, SelectControl, Dashicon, Tooltip } = wpComponents;
 
     class AdvTabsBlock extends Component {
         constructor() {
@@ -72,24 +72,28 @@
                                             placeholder={ __( 'Title…' ) }
                                         />
                                     </a>
-                                    <span className="advgb-tab-remove"
-                                          onClick={ () => setAttributes( {
-                                              tabItems: tabItems.filter( (vl, idx) => idx !== index )
-                                          } ) }
-                                    >
-                                        <Dashicon icon="no"/>
-                                    </span>
+                                    <Tooltip text={ __( 'Remove tab' ) }>
+                                        <span className="advgb-tab-remove"
+                                              onClick={ () => setAttributes( {
+                                                  tabItems: tabItems.filter( (vl, idx) => idx !== index )
+                                              } ) }
+                                        >
+                                            <Dashicon icon="no"/>
+                                        </span>
+                                    </Tooltip>
                                 </li>
                             ) ) }
                             <li className="advgb-tab advgb-add-tab">
-                                <span onClick={ () => setAttributes( {
-                                    tabItems: [
-                                        ...tabItems,
-                                        { header: __( 'New Tab' ), body: __( 'Enter your content.' ) }
-                                    ]
-                                } ) }>
-                                    <Dashicon icon="plus-alt"/>
-                                </span>
+                                <Tooltip text={ __( 'Add tab' ) }>
+                                    <span onClick={ () => setAttributes( {
+                                        tabItems: [
+                                            ...tabItems,
+                                            { header: __( 'New Tab' ), body: __( 'Enter your content.' ) }
+                                        ]
+                                    } ) }>
+                                        <Dashicon icon="plus-alt"/>
+                                    </span>
+                                </Tooltip>
                             </li>
                         </ul>
                         {tabItems.map( ( item, index ) => (

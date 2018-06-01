@@ -24,9 +24,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         PanelColor = wpComponents.PanelColor,
-        BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
-        Dashicon = wpComponents.Dashicon;
+        Dashicon = wpComponents.Dashicon,
+        Tooltip = wpComponents.Tooltip;
 
     var AdvTabsBlock = function (_Component) {
         _inherits(AdvTabsBlock, _Component);
@@ -129,17 +129,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         })
                                     ),
                                     React.createElement(
-                                        'span',
-                                        { className: 'advgb-tab-remove',
-                                            onClick: function onClick() {
-                                                return setAttributes({
-                                                    tabItems: tabItems.filter(function (vl, idx) {
-                                                        return idx !== index;
-                                                    })
-                                                });
-                                            }
-                                        },
-                                        React.createElement(Dashicon, { icon: 'no' })
+                                        Tooltip,
+                                        { text: __('Remove tab') },
+                                        React.createElement(
+                                            'span',
+                                            { className: 'advgb-tab-remove',
+                                                onClick: function onClick() {
+                                                    return setAttributes({
+                                                        tabItems: tabItems.filter(function (vl, idx) {
+                                                            return idx !== index;
+                                                        })
+                                                    });
+                                                }
+                                            },
+                                            React.createElement(Dashicon, { icon: 'no' })
+                                        )
                                     )
                                 );
                             }),
@@ -147,13 +151,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 'li',
                                 { className: 'advgb-tab advgb-add-tab' },
                                 React.createElement(
-                                    'span',
-                                    { onClick: function onClick() {
-                                            return setAttributes({
-                                                tabItems: [].concat(_toConsumableArray(tabItems), [{ header: __('New Tab'), body: __('Enter your content.') }])
-                                            });
-                                        } },
-                                    React.createElement(Dashicon, { icon: 'plus-alt' })
+                                    Tooltip,
+                                    { text: __('Add tab') },
+                                    React.createElement(
+                                        'span',
+                                        { onClick: function onClick() {
+                                                return setAttributes({
+                                                    tabItems: [].concat(_toConsumableArray(tabItems), [{ header: __('New Tab'), body: __('Enter your content.') }])
+                                                });
+                                            } },
+                                        React.createElement(Dashicon, { icon: 'plus-alt' })
+                                    )
                                 )
                             )
                         ),
