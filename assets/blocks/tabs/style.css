@@ -1,0 +1,35 @@
+ul.advgb-tabs-panel {
+    list-style-type: none !important;
+    border: 1px solid #ccc;
+}
+
+ul.advgb-tabs-panel:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+li.advgb-tab {
+    float: left;
+    padding: 10px 15px;
+    margin: 0;
+    border-right: 1px solid #ccc;
+}
+
+li.advgb-tab a {
+    text-decoration: none;
+}
+
+li.advgb-tab.ui-tabs-active {
+    background-color: #2196f3;
+}
+
+li.advgb-tab.ui-tabs-active a {
+    color: #fff;
+}
+
+div.advgb-tab-body {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-top: none !important;
+}
