@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, ColorPalette, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, Tooltip } = wpComponents;
 
     class AdvTestimonial extends Component {
         constructor() {
@@ -121,23 +121,25 @@
                                 type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
-                                        <div className={ 'advgb-testimonial-avatar' }
-                                             onClick={ open }
-                                             style={ {
-                                                 backgroundImage: `url(${avatarUrl ? avatarUrl : advgbAvatar.holder})`,
-                                                 backgroundColor: avatarColor,
-                                                 borderRadius: avatarBorderRadius + '%',
-                                                 borderWidth: avatarBorderWidth + 'px',
-                                                 borderColor: avatarBorderColor,
-                                                 width: avatarSize + 'px',
-                                                 height: avatarSize + 'px',
-                                             } }
-                                             title={ __( 'Click to change avatar' ) }
-                                        />
-                                        <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
-                                              title={ __( 'Remove avatar' ) }
-                                              onClick={ () => setAttributes( { avatarUrl: undefined, avatarID: undefined } ) }
-                                        />
+                                        <Tooltip text={ __( 'Click to change avatar' ) }>
+                                            <div className={ 'advgb-testimonial-avatar' }
+                                                 onClick={ open }
+                                                 style={ {
+                                                     backgroundImage: `url(${avatarUrl ? avatarUrl : advgbAvatar.holder})`,
+                                                     backgroundColor: avatarColor,
+                                                     borderRadius: avatarBorderRadius + '%',
+                                                     borderWidth: avatarBorderWidth + 'px',
+                                                     borderColor: avatarBorderColor,
+                                                     width: avatarSize + 'px',
+                                                     height: avatarSize + 'px',
+                                                 } }
+                                            />
+                                        </Tooltip>
+                                        <Tooltip text={ __( 'Remove avatar' ) }>
+                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
+                                                  onClick={ () => setAttributes( { avatarUrl: undefined, avatarID: undefined } ) }
+                                            />
+                                        </Tooltip>
                                     </div>
                                 ) }
                             />
@@ -176,23 +178,25 @@
                                 type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
-                                        <div className={ 'advgb-testimonial-avatar' }
-                                             onClick={ open }
-                                             style={ {
-                                                 backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbAvatar.holder})`,
-                                                 backgroundColor: avatarColor,
-                                                 borderRadius: avatarBorderRadius + '%',
-                                                 borderWidth: avatarBorderWidth + 'px',
-                                                 borderColor: avatarBorderColor,
-                                                 width: avatarSize + 'px',
-                                                 height: avatarSize + 'px',
-                                             } }
-                                             title={ __( 'Click to change avatar' ) }
-                                        />
-                                        <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
-                                              title={ __( 'Remove avatar' ) }
-                                              onClick={ () => setAttributes( { avatarUrl2: undefined, avatarID2: undefined } ) }
-                                        />
+                                        <Tooltip text={ __( 'Click to change avatar' ) }>
+                                            <div className={ 'advgb-testimonial-avatar' }
+                                                 onClick={ open }
+                                                 style={ {
+                                                     backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbAvatar.holder})`,
+                                                     backgroundColor: avatarColor,
+                                                     borderRadius: avatarBorderRadius + '%',
+                                                     borderWidth: avatarBorderWidth + 'px',
+                                                     borderColor: avatarBorderColor,
+                                                     width: avatarSize + 'px',
+                                                     height: avatarSize + 'px',
+                                                 } }
+                                            />
+                                        </Tooltip>
+                                        <Tooltip text={ __( 'Remove avatar' ) }>
+                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
+                                                  onClick={ () => setAttributes( { avatarUrl2: undefined, avatarID2: undefined } ) }
+                                            />
+                                        </Tooltip>
                                     </div>
                                 ) }
                             />
@@ -231,23 +235,25 @@
                                 type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
-                                        <div className={ 'advgb-testimonial-avatar' }
-                                             onClick={ open }
-                                             style={ {
-                                                 backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbAvatar.holder})`,
-                                                 backgroundColor: avatarColor,
-                                                 borderRadius: avatarBorderRadius + '%',
-                                                 borderWidth: avatarBorderWidth + 'px',
-                                                 borderColor: avatarBorderColor,
-                                                 width: avatarSize + 'px',
-                                                 height: avatarSize + 'px',
-                                             } }
-                                             title={ __( 'Click to change avatar' ) }
-                                        />
-                                        <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
-                                              title={ __( 'Remove avatar' ) }
-                                              onClick={ () => setAttributes( { avatarUrl3: undefined, avatarID3: undefined } ) }
-                                        />
+                                        <Tooltip text={ __( 'Click to change avatar' ) }>
+                                            <div className={ 'advgb-testimonial-avatar' }
+                                                 onClick={ open }
+                                                 style={ {
+                                                     backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbAvatar.holder})`,
+                                                     backgroundColor: avatarColor,
+                                                     borderRadius: avatarBorderRadius + '%',
+                                                     borderWidth: avatarBorderWidth + 'px',
+                                                     borderColor: avatarBorderColor,
+                                                     width: avatarSize + 'px',
+                                                     height: avatarSize + 'px',
+                                                 } }
+                                            />
+                                        </Tooltip>
+                                        <Tooltip text={ __( 'Remove avatar' ) }>
+                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
+                                                  onClick={ () => setAttributes( { avatarUrl3: undefined, avatarID3: undefined } ) }
+                                            />
+                                        </Tooltip>
                                     </div>
                                 ) }
                             />

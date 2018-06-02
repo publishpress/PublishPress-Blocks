@@ -19,7 +19,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         MediaUpload = wpEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor;
+        PanelColor = wpComponents.PanelColor,
+        Tooltip = wpComponents.Tooltip;
 
     var AdvTestimonial = function (_Component) {
         _inherits(AdvTestimonial, _Component);
@@ -198,25 +199,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return React.createElement(
                                         'div',
                                         { className: 'advgb-testimonial-avatar-group' },
-                                        React.createElement('div', { className: 'advgb-testimonial-avatar',
-                                            onClick: open,
-                                            style: {
-                                                backgroundImage: 'url(' + (avatarUrl ? avatarUrl : advgbAvatar.holder) + ')',
-                                                backgroundColor: avatarColor,
-                                                borderRadius: avatarBorderRadius + '%',
-                                                borderWidth: avatarBorderWidth + 'px',
-                                                borderColor: avatarBorderColor,
-                                                width: avatarSize + 'px',
-                                                height: avatarSize + 'px'
-                                            },
-                                            title: __('Click to change avatar')
-                                        }),
-                                        React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
-                                            title: __('Remove avatar'),
-                                            onClick: function onClick() {
-                                                return setAttributes({ avatarUrl: undefined, avatarID: undefined });
-                                            }
-                                        })
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Click to change avatar') },
+                                            React.createElement('div', { className: 'advgb-testimonial-avatar',
+                                                onClick: open,
+                                                style: {
+                                                    backgroundImage: 'url(' + (avatarUrl ? avatarUrl : advgbAvatar.holder) + ')',
+                                                    backgroundColor: avatarColor,
+                                                    borderRadius: avatarBorderRadius + '%',
+                                                    borderWidth: avatarBorderWidth + 'px',
+                                                    borderColor: avatarBorderColor,
+                                                    width: avatarSize + 'px',
+                                                    height: avatarSize + 'px'
+                                                }
+                                            })
+                                        ),
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Remove avatar') },
+                                            React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
+                                                onClick: function onClick() {
+                                                    return setAttributes({ avatarUrl: undefined, avatarID: undefined });
+                                                }
+                                            })
+                                        )
                                     );
                                 }
                             }),
@@ -274,25 +281,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return React.createElement(
                                         'div',
                                         { className: 'advgb-testimonial-avatar-group' },
-                                        React.createElement('div', { className: 'advgb-testimonial-avatar',
-                                            onClick: open,
-                                            style: {
-                                                backgroundImage: 'url(' + (avatarUrl2 ? avatarUrl2 : advgbAvatar.holder) + ')',
-                                                backgroundColor: avatarColor,
-                                                borderRadius: avatarBorderRadius + '%',
-                                                borderWidth: avatarBorderWidth + 'px',
-                                                borderColor: avatarBorderColor,
-                                                width: avatarSize + 'px',
-                                                height: avatarSize + 'px'
-                                            },
-                                            title: __('Click to change avatar')
-                                        }),
-                                        React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
-                                            title: __('Remove avatar'),
-                                            onClick: function onClick() {
-                                                return setAttributes({ avatarUrl2: undefined, avatarID2: undefined });
-                                            }
-                                        })
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Click to change avatar') },
+                                            React.createElement('div', { className: 'advgb-testimonial-avatar',
+                                                onClick: open,
+                                                style: {
+                                                    backgroundImage: 'url(' + (avatarUrl2 ? avatarUrl2 : advgbAvatar.holder) + ')',
+                                                    backgroundColor: avatarColor,
+                                                    borderRadius: avatarBorderRadius + '%',
+                                                    borderWidth: avatarBorderWidth + 'px',
+                                                    borderColor: avatarBorderColor,
+                                                    width: avatarSize + 'px',
+                                                    height: avatarSize + 'px'
+                                                }
+                                            })
+                                        ),
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Remove avatar') },
+                                            React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
+                                                onClick: function onClick() {
+                                                    return setAttributes({ avatarUrl2: undefined, avatarID2: undefined });
+                                                }
+                                            })
+                                        )
                                     );
                                 }
                             }),
@@ -350,25 +363,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return React.createElement(
                                         'div',
                                         { className: 'advgb-testimonial-avatar-group' },
-                                        React.createElement('div', { className: 'advgb-testimonial-avatar',
-                                            onClick: open,
-                                            style: {
-                                                backgroundImage: 'url(' + (avatarUrl3 ? avatarUrl3 : advgbAvatar.holder) + ')',
-                                                backgroundColor: avatarColor,
-                                                borderRadius: avatarBorderRadius + '%',
-                                                borderWidth: avatarBorderWidth + 'px',
-                                                borderColor: avatarBorderColor,
-                                                width: avatarSize + 'px',
-                                                height: avatarSize + 'px'
-                                            },
-                                            title: __('Click to change avatar')
-                                        }),
-                                        React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
-                                            title: __('Remove avatar'),
-                                            onClick: function onClick() {
-                                                return setAttributes({ avatarUrl3: undefined, avatarID3: undefined });
-                                            }
-                                        })
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Click to change avatar') },
+                                            React.createElement('div', { className: 'advgb-testimonial-avatar',
+                                                onClick: open,
+                                                style: {
+                                                    backgroundImage: 'url(' + (avatarUrl3 ? avatarUrl3 : advgbAvatar.holder) + ')',
+                                                    backgroundColor: avatarColor,
+                                                    borderRadius: avatarBorderRadius + '%',
+                                                    borderWidth: avatarBorderWidth + 'px',
+                                                    borderColor: avatarBorderColor,
+                                                    width: avatarSize + 'px',
+                                                    height: avatarSize + 'px'
+                                                }
+                                            })
+                                        ),
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Remove avatar') },
+                                            React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
+                                                onClick: function onClick() {
+                                                    return setAttributes({ avatarUrl3: undefined, avatarID3: undefined });
+                                                }
+                                            })
+                                        )
                                     );
                                 }
                             }),

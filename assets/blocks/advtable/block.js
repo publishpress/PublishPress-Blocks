@@ -29,7 +29,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         IconButton = wpComponents.IconButton,
         Toolbar = wpComponents.Toolbar,
-        DropdownMenu = wpComponents.DropdownMenu;
+        DropdownMenu = wpComponents.DropdownMenu,
+        Tooltip = wpComponents.Tooltip;
 
 
     var tableBlockIcon = React.createElement(
@@ -453,11 +454,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             "div",
                                             { className: 'advgb-border-item', key: index },
                                             React.createElement(
-                                                "span",
-                                                { title: item.title,
-                                                    onClick: item.onClick
-                                                },
-                                                item.icon
+                                                Tooltip,
+                                                { text: item.title },
+                                                React.createElement(
+                                                    "span",
+                                                    { onClick: item.onClick },
+                                                    item.icon
+                                                )
                                             )
                                         );
                                     })

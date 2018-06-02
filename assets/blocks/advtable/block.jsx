@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, MediaUpload, BlockAlignmentToolbar, ColorPalette } = wpEditor;
-    const { PanelBody, PanelColor, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu } = wpComponents;
+    const { PanelBody, PanelColor, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu, Tooltip } = wpComponents;
 
     const tableBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
@@ -440,11 +440,9 @@
                                 <div className={ 'advgb-border-item-wrapper' }>
                                     {BORDER_SELECT.map( ( item, index ) => (
                                         <div className={ 'advgb-border-item' } key={ index }>
-                                    <span title={ item.title }
-                                          onClick={ item.onClick }
-                                    >
-                                        { item.icon }
-                                    </span>
+                                            <Tooltip text={ item.title }>
+                                                <span onClick={ item.onClick }>{ item.icon }</span>
+                                            </Tooltip>
                                         </div>
                                     ) ) }
                                 </div>

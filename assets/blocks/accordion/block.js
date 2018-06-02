@@ -25,7 +25,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelColor = wpComponents.PanelColor,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
-        Dashicon = wpComponents.Dashicon;
+        Dashicon = wpComponents.Dashicon,
+        Tooltip = wpComponents.Tooltip;
 
 
     var HEADER_ICONS = {
@@ -313,16 +314,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         }
                                     },
                                     React.createElement(
-                                        "span",
-                                        { className: "advgb-accordion-remove",
-                                            title: __('Remove'),
-                                            onClick: function onClick() {
-                                                return setAttributes({ items: items.filter(function (cItem, cIndex) {
-                                                        return cIndex !== index;
-                                                    }) });
-                                            }
-                                        },
-                                        React.createElement(Dashicon, { icon: "no" })
+                                        Tooltip,
+                                        { text: __('Remove item') },
+                                        React.createElement(
+                                            "span",
+                                            { className: "advgb-accordion-remove",
+                                                onClick: function onClick() {
+                                                    return setAttributes({ items: items.filter(function (cItem, cIndex) {
+                                                            return cIndex !== index;
+                                                        }) });
+                                                }
+                                            },
+                                            React.createElement(Dashicon, { icon: "no" })
+                                        )
                                     ),
                                     React.createElement(
                                         "span",

@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, ColorPalette } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, BaseControl , SelectControl, Dashicon } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, BaseControl , SelectControl, Dashicon, Tooltip } = wpComponents;
 
     const HEADER_ICONS = {
         plus: (
@@ -213,12 +213,13 @@
                                          borderColor: borderColor,
                                      } }
                                 >
-                                    <span className="advgb-accordion-remove"
-                                          title={ __( 'Remove' ) }
-                                          onClick={ () => setAttributes( { items: items.filter( ( cItem, cIndex) => cIndex !== index ) } ) }
-                                    >
-                                        <Dashicon icon="no"/>
-                                    </span>
+                                    <Tooltip text={ __( 'Remove item' ) }>
+                                        <span className="advgb-accordion-remove"
+                                              onClick={ () => setAttributes( { items: items.filter( ( cItem, cIndex) => cIndex !== index ) } ) }
+                                        >
+                                            <Dashicon icon="no"/>
+                                        </span>
+                                    </Tooltip>
                                     <span className="advgb-accordion-header-icon">
                                         <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                             { HEADER_ICONS[headerIcon] }
