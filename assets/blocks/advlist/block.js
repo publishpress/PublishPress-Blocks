@@ -22,10 +22,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RichText = wpEditor.RichText,
         ColorPalette = wpEditor.ColorPalette,
         BlockControls = wpEditor.BlockControls;
-    var SelectControl = wpComponents.SelectControl,
+    var BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        IconButton = wpComponents.IconButton;
+        IconButton = wpComponents.IconButton,
+        Dashicon = wpComponents.Dashicon;
 
     var AdvList = function (_Component) {
         _inherits(AdvList, _Component);
@@ -152,17 +153,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Icon Settings') },
-                            React.createElement(SelectControl, {
-                                label: __('List icon'),
-                                help: __('Select an icon for styling'),
-                                value: icon,
-                                options: listIcons,
-                                onChange: function onChange(icon) {
-                                    return setAttributes({ icon: icon });
-                                }
-                            }),
+                            React.createElement(
+                                BaseControl,
+                                { label: __('List icon') },
+                                React.createElement(
+                                    'div',
+                                    { className: 'advgb-icon-items-wrapper' },
+                                    listIcons.map(function (item, index) {
+                                        return React.createElement(
+                                            'div',
+                                            { className: 'advgb-icon-item h20', key: index },
+                                            React.createElement(
+                                                'span',
+                                                { onClick: function onClick() {
+                                                        return setAttributes({ icon: item.value });
+                                                    },
+                                                    className: [item.value === icon && 'active', item.value === '' && 'remove-icon'].filter(Boolean).join(' ')
+                                                },
+                                                React.createElement(Dashicon, { icon: item.value })
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
                             icon && React.createElement(
-                                'div',
+                                Fragment,
                                 null,
                                 React.createElement(
                                     PanelBody,

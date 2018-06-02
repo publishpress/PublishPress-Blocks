@@ -60,12 +60,12 @@
     cursor: pointer;
 }
 
-.advgb-icon-item span {
+.advgb-icon-item > span {
     display: inline-block;
     height: 24px;
 }
 
-.advgb-icon-item span.active {
+.advgb-icon-item .active {
     outline: 1px solid #ccc;
     background-color: #ddd;
 }

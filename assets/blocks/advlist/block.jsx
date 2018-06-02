@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, ColorPalette, BlockControls } = wpEditor;
-    const { SelectControl, RangeControl, PanelBody, IconButton } = wpComponents;
+    const { BaseControl, RangeControl, PanelBody, IconButton, Dashicon } = wpComponents;
 
     class AdvList extends Component {
         constructor() {
@@ -124,14 +124,24 @@
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Icon Settings' ) }>
-                            <SelectControl
-                                label={ __( 'List icon' ) }
-                                help={ __( 'Select an icon for styling' ) }
-                                value={ icon }
-                                options={ listIcons }
-                                onChange={ ( icon ) => setAttributes( { icon: icon } ) }
-                            />
-                            {icon && ( <div>
+                            <BaseControl label={ __( 'List icon' ) }>
+                                <div className="advgb-icon-items-wrapper">
+                                    { listIcons.map( (item, index) => (
+                                        <div className="advgb-icon-item h20" key={ index }>
+                                            <span onClick={ () => setAttributes( { icon: item.value } ) }
+                                                  className={ [
+                                                      item.value === icon && 'active',
+                                                      item.value === '' && 'remove-icon',
+                                                  ].filter( Boolean ).join( ' ' ) }
+                                            >
+                                                <Dashicon icon={item.value}/>
+                                            </span>
+                                        </div>
+                                    ) ) }
+                                </div>
+                            </BaseControl>
+                            {icon && (
+                                <Fragment>
                                     <PanelBody
                                         title={ [
                                             __( 'Icon color' ),
@@ -176,7 +186,7 @@
                                         max={ 100 }
                                         allowReset
                                     />
-                                </div>
+                                </Fragment>
                             ) }
                         </PanelBody>
                     </InspectorControls>
