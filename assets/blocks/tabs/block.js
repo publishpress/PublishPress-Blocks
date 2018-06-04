@@ -18,14 +18,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
-        RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette,
-        InnerBlocks = wpEditor.InnerBlocks;
-    var RangeControl = wpComponents.RangeControl,
-        PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
-        SelectControl = wpComponents.SelectControl,
-        Dashicon = wpComponents.Dashicon,
+        RichText = wpEditor.RichText;
+    var Dashicon = wpComponents.Dashicon,
         Tooltip = wpComponents.Tooltip;
 
     var AdvTabsBlock = function (_Component) {

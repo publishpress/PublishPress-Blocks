@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, ColorPalette, InnerBlocks } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, SelectControl, Dashicon, Tooltip } = wpComponents;
+    const { InspectorControls, RichText } = wpEditor;
+    const { Dashicon, Tooltip } = wpComponents;
 
     class AdvTabsBlock extends Component {
         constructor() {
