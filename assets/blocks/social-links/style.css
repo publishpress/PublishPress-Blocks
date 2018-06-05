@@ -16,8 +16,8 @@
     outline: 1px solid #2196f3;
 }
 
-.advgb-social-icon svg {
-    vertical-align: middle;
+.advgb-social-icon svg, .advgb-social-icon img {
+    vertical-align: top;
 }
 
 .advgb-social-icon img {
