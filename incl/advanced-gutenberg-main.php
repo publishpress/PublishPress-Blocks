@@ -231,6 +231,12 @@ float: left;'
         wp_enqueue_script('jquery-ui-tabs');
 
         wp_enqueue_script(
+            'social_blocks',
+            plugins_url('assets/blocks/social-links/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
+        );
+
+        wp_enqueue_script(
             'testimonial_blocks',
             plugins_url('assets/blocks/testimonial/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
@@ -315,6 +321,10 @@ float: left;'
         wp_enqueue_style(
             'tabs_blocks',
             plugins_url('assets/blocks/tabs/style.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'social_blocks',
+            plugins_url('assets/blocks/social-links/style.css', dirname(__FILE__))
         );
 
         $saved_settings = get_option('advgb_settings');
@@ -1340,6 +1350,7 @@ float: left;'
             'advgb/table',
             'advgb/accordion',
             'advgb/tabs',
+            'advgb/social-links',
         );
 
         // Avoid default value (string 'all')

@@ -1,0 +1,40 @@
+.advgb-social-icons {
+    display:  inline-block;
+}
+
+.advgb-social-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 5px;
+    padding: 3px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.advgb-social-icon.selected {
+    outline: 1px solid #2196f3;
+}
+
+.advgb-social-icon svg {
+    vertical-align: middle;
+}
+
+.advgb-social-icon img {
+    max-width: 100%;
+    height: auto;
+}
+
+.advgb-social-link {
+    display: flex;
+    flex: auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.advgb-social-link .components-base-control {
+    margin: 0;
+    margin-left: 10px;
+    width: 350px;
+}
