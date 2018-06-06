@@ -28,7 +28,7 @@
         }
 
         render() {
-            const { attributes, setAttributes } = this.props;
+            const { attributes, setAttributes, isSelected } = this.props;
             const { items, align, iconSize, iconSpace } = attributes;
             const { currentSelected } = this.state;
 
@@ -130,20 +130,22 @@
                                 </span>
                             ) ) }
                         </div>
-                        <div className="advgb-social-link">
-                            <strong>{ __( 'Social link:' ) }</strong>
-                            <TextControl
-                                placeholder={ __( 'Enter social link…' ) }
-                                value={ items[currentSelected].link }
-                                onChange={ ( value ) => {
-                                    let newItems = items.map( (vl, idx) => {
-                                        if (idx === parseInt(currentSelected)) vl = { ...vl, link: value };
-                                        return vl;
-                                    } );
-                                    return setAttributes( { items: newItems } );
-                                } }
-                            />
-                        </div>
+                        {isSelected && (
+                            <div className="advgb-social-link">
+                                <strong>{ __( 'Social link:' ) }</strong>
+                                <TextControl
+                                    placeholder={ __( 'Enter social link…' ) }
+                                    value={ items[currentSelected].link }
+                                    onChange={ ( value ) => {
+                                        let newItems = items.map( (vl, idx) => {
+                                            if (idx === parseInt(currentSelected)) vl = { ...vl, link: value };
+                                            return vl;
+                                        } );
+                                        return setAttributes( { items: newItems } );
+                                    } }
+                                />
+                            </div>
+                        ) }
                     </div>
                 </Fragment>
             )

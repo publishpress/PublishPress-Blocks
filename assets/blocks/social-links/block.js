@@ -62,7 +62,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var _props = this.props,
                     attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                    setAttributes = _props.setAttributes,
+                    isSelected = _props.isSelected;
                 var items = attributes.items,
                     align = attributes.align,
                     iconSize = attributes.iconSize,
@@ -196,7 +197,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 );
                             })
                         ),
-                        React.createElement(
+                        isSelected && React.createElement(
                             "div",
                             { className: "advgb-social-link" },
                             React.createElement(
