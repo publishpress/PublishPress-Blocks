@@ -81,7 +81,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             var newClassName = [extraProps.className, enableTooltip && 'advgb-has-qtip'].filter(Boolean).join(' ');
 
-            // Strip HTML tag from text coz it could break the article's content
             var text = new DOMParser().parseFromString(tooltipText, 'text/html');
             var formattedText = text.body.innerText || '';
 

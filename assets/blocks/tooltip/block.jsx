@@ -66,7 +66,6 @@
                 enableTooltip && 'advgb-has-qtip',
             ].filter( Boolean ).join( ' ' );
 
-            // Strip HTML tag from text coz it could break the article's content
             const text = new DOMParser().parseFromString( tooltipText, 'text/html' );
             const formattedText = text.body.innerText || '';
 
