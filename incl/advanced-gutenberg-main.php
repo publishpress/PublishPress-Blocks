@@ -262,6 +262,11 @@ float: left;'
             plugins_url('assets/blocks/custom-columns/columns.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
         );
+        wp_enqueue_script(
+            'custom_tooltip',
+            plugins_url('assets/blocks/tooltip/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
+        );
     }
 
     /**
@@ -1284,6 +1289,40 @@ float: left;'
             wp_add_inline_script('jquery-ui-tabs', 'jQuery(document).ready(function($){
                 $(".advgb-tabs-block").tabs();
             });');
+        }
+
+        if (strpos($content, 'advgb-has-qtip') !== false) {
+            wp_enqueue_style('qtip_style', plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__)));
+            wp_enqueue_script('qtip_js', plugins_url('assets/js/jquery.qtip.min.js', dirname(__FILE__)));
+            wp_add_inline_script('qtip_js', 'jQuery(document).ready(function($){
+                $(".advgb-has-qtip").qtip({
+                    content: {
+                        text: function() {
+                            return $(this).attr("data-tooltip").replace(/\n/g, "<br/>")
+                        }
+                    },
+                    position: {
+                        my: "bottom middle",
+                        at: "top middle"
+                    },
+                    style: {
+                        tip: {
+                            corner: true
+                        },
+                        classes: "advgb_frontend_qtip"
+                    },
+                    show: "hover",
+                    hide: {
+                        fixed: true,
+                        delay: 10
+                    }
+                });
+            });');
+            wp_add_inline_style('qtip_style', '.qtip.advgb_frontend_qtip {
+                background: #000000;
+                color: #ffffff;
+                border: 1px solid #000000;
+            }');
         }
 
         return $content;
