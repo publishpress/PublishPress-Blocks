@@ -109,7 +109,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { key: index, className: 'advgb-tab' },
                                     React.createElement(
                                         'a',
-                                        { href: '#' + item.header.toLowerCase().replace(/ /g, '') + '-' + index },
+                                        { href: '#' + item.header.toLowerCase().replace(/ /g, '').trim() + '-' + index },
                                         React.createElement(RichText, {
                                             tagName: 'p',
                                             value: item.header,

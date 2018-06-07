@@ -63,7 +63,7 @@
                         <ul className="advgb-tabs-panel">
                             {tabItems.map( ( item, index ) => (
                                 <li key={ index } className="advgb-tab">
-                                    <a href={`#${item.header.toLowerCase().replace(/ /g, '')}-${index}`}>
+                                    <a href={`#${item.header.toLowerCase().replace(/ /g, '').trim()}-${index}`}>
                                         <RichText
                                             tagName="p"
                                             value={ item.header }
