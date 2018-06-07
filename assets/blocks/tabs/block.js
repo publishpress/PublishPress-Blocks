@@ -109,7 +109,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { key: index, className: 'advgb-tab' },
                                     React.createElement(
                                         'a',
-                                        { href: '#' + item.header.toLowerCase().replace(/ /g, '').trim() + '-' + index },
+                                        { href: '#' + item.header.toLowerCase().replace(/\s/g, '').trim() + '-' + index },
                                         React.createElement(RichText, {
                                             tagName: 'p',
                                             value: item.header,
@@ -163,7 +163,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return React.createElement(
                                 'div',
                                 { key: index,
-                                    id: item.header.toLowerCase().replace(/ /g, '') + '-' + index,
+                                    id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
                                     className: 'advgb-tab-body'
                                 },
                                 React.createElement(RichText, {
@@ -231,7 +231,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { key: index, className: 'advgb-tab' },
                             React.createElement(
                                 'a',
-                                { href: '#' + item.header.toLowerCase().replace(/ /g, '') + '-' + index },
+                                { href: '#' + item.header.toLowerCase().replace(/\s/g, '') + '-' + index },
                                 React.createElement(RichText.Content, { tagName: 'span', value: item.header })
                             )
                         );
@@ -241,7 +241,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return React.createElement(
                         'div',
                         { key: index,
-                            id: item.header.toLowerCase().replace(/ /g, '') + '-' + index,
+                            id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
                             className: 'advgb-tab-body'
                         },
                         React.createElement(RichText.Content, { tagName: 'p', value: item.body })

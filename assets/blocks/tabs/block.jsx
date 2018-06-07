@@ -63,7 +63,7 @@
                         <ul className="advgb-tabs-panel">
                             {tabItems.map( ( item, index ) => (
                                 <li key={ index } className="advgb-tab">
-                                    <a href={`#${item.header.toLowerCase().replace(/ /g, '').trim()}-${index}`}>
+                                    <a href={`#${item.header.toLowerCase().replace(/\s/g, '').trim()}-${index}`}>
                                         <RichText
                                             tagName="p"
                                             value={ item.header }
@@ -98,7 +98,7 @@
                         </ul>
                         {tabItems.map( ( item, index ) => (
                             <div key={ index }
-                                 id={`${item.header.toLowerCase().replace(/ /g, '')}-${index}`}
+                                 id={`${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
                                  className="advgb-tab-body"
                             >
                                 <RichText
@@ -157,7 +157,7 @@
                     <ul className="advgb-tabs-panel">
                         {tabItems.map( ( item, index ) => (
                             <li key={ index } className="advgb-tab">
-                                <a href={`#${item.header.toLowerCase().replace(/ /g, '')}-${index}`}>
+                                <a href={`#${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}>
                                     <RichText.Content tagName="span" value={ item.header }/>
                                 </a>
                             </li>
@@ -165,7 +165,7 @@
                     </ul>
                     {tabItems.map( ( item, index ) => (
                         <div key={ index }
-                             id={`${item.header.toLowerCase().replace(/ /g, '')}-${index}`}
+                             id={`${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
                              className="advgb-tab-body"
                         >
                             <RichText.Content tagName="p" value={ item.body }/>
