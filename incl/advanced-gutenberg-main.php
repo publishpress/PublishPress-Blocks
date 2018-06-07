@@ -162,7 +162,7 @@ float: left;'
             add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
         } else {
             // Front-end
-            add_filter('the_content', array($this, 'addGalleryLightbox'));
+            add_filter('the_content', array($this, 'addFrontendContentAssets'));
         }
     }
 
@@ -830,6 +830,14 @@ float: left;'
             'colorbox_js',
             plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__))
         );
+
+        $saved_settings = get_option('advgb_settings');
+        $blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
+
+        wp_add_inline_style(
+            'colorbox_style',
+            '#content .entry-content > * {margin-bottom: '.$blocks_spacing.'px}'
+        );
     }
 
     /**
@@ -1012,6 +1020,7 @@ float: left;'
             }
 
             $save_config['google_api_key'] = $_POST['google_api_key'];
+            $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
 
             update_option('advgb_settings', $save_config);
 
@@ -1193,13 +1202,13 @@ float: left;'
     }
 
     /**
-     * Function to load the lightbox for galleries in front-end
+     * Function to load assets for post/page on front-end
      *
      * @param string $content Post content
      *
      * @return string
      */
-    public function addGalleryLightbox($content)
+    public function addFrontendContentAssets($content)
     {
         if (strpos($content, 'wp-block-gallery') !== false) {
             $saved_settings = get_option('advgb_settings');
