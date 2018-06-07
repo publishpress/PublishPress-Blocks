@@ -143,7 +143,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 'li',
-                                { className: 'advgb-tab advgb-add-tab' },
+                                { className: 'advgb-tab advgb-add-tab ui-state-default' },
                                 React.createElement(
                                     Tooltip,
                                     { text: __('Add tab') },

@@ -83,7 +83,7 @@
                                     </Tooltip>
                                 </li>
                             ) ) }
-                            <li className="advgb-tab advgb-add-tab">
+                            <li className="advgb-tab advgb-add-tab ui-state-default">
                                 <Tooltip text={ __( 'Add tab' ) }>
                                     <span onClick={ () => setAttributes( {
                                         tabItems: [
