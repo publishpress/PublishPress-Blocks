@@ -312,7 +312,7 @@
             },
             headerIcon: {
                 type: 'string',
-                default: 'plus',
+                default: 'plusCircleOutline',
             },
             headerIconColor: {
                 type: 'string',
