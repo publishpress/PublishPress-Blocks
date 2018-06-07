@@ -836,7 +836,7 @@ float: left;'
 
         wp_add_inline_style(
             'colorbox_style',
-            '#content .entry-content > * {margin-bottom: '.$blocks_spacing.'px}'
+            '.entry-content > * {margin-bottom: '.$blocks_spacing.'px}'
         );
     }
 
