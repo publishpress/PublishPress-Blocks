@@ -368,7 +368,7 @@
                                         { HEADER_ICONS[headerIcon] }
                                     </svg>
                                 </span>
-                                <RichText.Content tagName="h4" value={ item.header }/>
+                                <h4 className="advgb-accordion-header-title">{ item.header }</h4>
                             </div>
                             <div className="advgb-accordion-body"
                                  style={ {

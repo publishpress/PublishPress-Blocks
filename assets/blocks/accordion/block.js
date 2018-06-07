@@ -496,7 +496,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     HEADER_ICONS[headerIcon]
                                 )
                             ),
-                            React.createElement(RichText.Content, { tagName: "h4", value: item.header })
+                            React.createElement(
+                                "h4",
+                                { className: "advgb-accordion-header-title" },
+                                item.header
+                            )
                         ),
                         React.createElement(
                             "div",
