@@ -1,8 +1,9 @@
-.advgb-accordion-header {
+.advgb-accordion-header.ui-accordion-header {
     padding: 5px 40px 5px 10px;
     border: 1px solid #ccc;
     margin-top: 10px;
     position: relative;
+    background: none;
 }
 
 .advgb-accordion-remove {
@@ -17,10 +18,18 @@
     border-radius: 50%;
 }
 
+.ui-accordion-header-icon.ui-icon {
+    display: none;
+}
+
 .advgb-accordion-header-icon {
     float: right;
     margin-right: -30px;
-    line-height: 40px;
+    line-height: 1.8;
+}
+
+.advgb-accordion-header-icon svg {
+    vertical-align: middle;
 }
 
 .advgb-accordion-header h4 {
@@ -28,18 +37,20 @@
     margin: 0;
     clear: none;
     color: inherit;
+    line-height: 1.8;
 }
 
 .advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon {
     display: none;
 }
 
-.advgb-accordion-body {
+.advgb-accordion-body.ui-accordion-content {
     padding: 10px;
     border: 1px solid #ccc;
     border-top: none !important;
     margin-bottom: 10px;
     width: 100%;
+    background: none;
 }
 
 .advgb-accordion-controls {
