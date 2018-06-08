@@ -318,6 +318,7 @@
             },
             headerIconColor: {
                 type: 'string',
+                default: '#fff',
             },
             bodyBgColor: {
                 type: 'string',

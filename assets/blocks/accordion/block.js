@@ -436,7 +436,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: 'plusCircleOutline'
             },
             headerIconColor: {
-                type: 'string'
+                type: 'string',
+                default: '#fff'
             },
             bodyBgColor: {
                 type: 'string'
