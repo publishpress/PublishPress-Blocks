@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, ColorPalette, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, TextControl, Button, IconButton, Dashicon, Spinner } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, ToggleControl, BaseControl, TextControl, Button, IconButton, Dashicon, Spinner } = wpComponents;
 
     const PLAY_BUTTON_STYLE = {
         normal: [
@@ -223,19 +223,20 @@
                             }
                             {!!openInLightbox &&
                             <PanelBody title={ __( 'Play Button' ) }>
-                                <SelectControl
-                                    label={ __( 'Play Button Icon' ) }
-                                    value={ playButtonIcon }
-                                    options={ [
-                                        { label: __( 'Normal' ), value: 'normal' },
-                                        { label: __( 'Circle' ), value: 'circleFill' },
-                                        { label: __( 'Outline Circle' ), value: 'circleOutline' },
-                                        { label: __( 'Video Camera' ), value: 'videoCam' },
-                                        { label: __( 'Square Curved' ), value: 'squareCurved' },
-                                        { label: __( 'Star' ), value: 'starSticker' },
-                                    ] }
-                                    onChange={ (value) => setAttributes( { playButtonIcon: value } ) }
-                                />
+                                <BaseControl label={ __( 'Icon Style' ) }>
+                                    <div className="advgb-icon-items-wrapper">
+                                        {Object.keys( PLAY_BUTTON_STYLE ).map( ( key, index ) => (
+                                            <div className="advgb-icon-item" key={ index }>
+                                                <span className={ key === playButtonIcon ? 'active' : '' }
+                                                      onClick={ () => setAttributes( { playButtonIcon: key } ) }>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        { PLAY_BUTTON_STYLE[key] }
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        ) ) }
+                                    </div>
+                                </BaseControl>
                                 <RangeControl
                                     label={ __( 'Play Button Size' ) }
                                     value={ playButtonSize }

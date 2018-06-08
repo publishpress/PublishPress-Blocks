@@ -21,7 +21,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelBody = wpComponents.PanelBody,
         PanelColor = wpComponents.PanelColor,
         ToggleControl = wpComponents.ToggleControl,
-        SelectControl = wpComponents.SelectControl,
+        BaseControl = wpComponents.BaseControl,
         TextControl = wpComponents.TextControl,
         Button = wpComponents.Button,
         IconButton = wpComponents.IconButton,
@@ -264,14 +264,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             !!openInLightbox && React.createElement(
                                 PanelBody,
                                 { title: __('Play Button') },
-                                React.createElement(SelectControl, {
-                                    label: __('Play Button Icon'),
-                                    value: playButtonIcon,
-                                    options: [{ label: __('Normal'), value: 'normal' }, { label: __('Circle'), value: 'circleFill' }, { label: __('Outline Circle'), value: 'circleOutline' }, { label: __('Video Camera'), value: 'videoCam' }, { label: __('Square Curved'), value: 'squareCurved' }, { label: __('Star'), value: 'starSticker' }],
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ playButtonIcon: value });
-                                    }
-                                }),
+                                React.createElement(
+                                    BaseControl,
+                                    { label: __('Icon Style') },
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-icon-items-wrapper" },
+                                        Object.keys(PLAY_BUTTON_STYLE).map(function (key, index) {
+                                            return React.createElement(
+                                                "div",
+                                                { className: "advgb-icon-item", key: index },
+                                                React.createElement(
+                                                    "span",
+                                                    { className: key === playButtonIcon ? 'active' : '',
+                                                        onClick: function onClick() {
+                                                            return setAttributes({ playButtonIcon: key });
+                                                        } },
+                                                    React.createElement(
+                                                        "svg",
+                                                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                        PLAY_BUTTON_STYLE[key]
+                                                    )
+                                                )
+                                            );
+                                        })
+                                    )
+                                ),
                                 React.createElement(RangeControl, {
                                     label: __('Play Button Size'),
                                     value: playButtonSize,
