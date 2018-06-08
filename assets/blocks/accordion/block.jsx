@@ -292,7 +292,7 @@
                 default: [
                     {
                         header: 'Header 1',
-                        body: 'Description 1',
+                        body: 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated',
                     },
                     {
                         header: 'Header 2',

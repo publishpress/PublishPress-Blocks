@@ -414,7 +414,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'array',
                 default: [{
                     header: 'Header 1',
-                    body: 'Description 1'
+                    body: 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated'
                 }, {
                     header: 'Header 2',
                     body: 'Description 2'
