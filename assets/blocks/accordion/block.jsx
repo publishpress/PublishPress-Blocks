@@ -120,6 +120,7 @@
                 borderStyle,
                 borderWidth,
                 borderColor,
+                borderRadius,
             } = attributes;
 
             return (
@@ -199,6 +200,13 @@
                                 max={ 10 }
                                 onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
                             />
+                            <RangeControl
+                                label={ __( 'Border radius' ) }
+                                value={ borderRadius }
+                                min={ 0 }
+                                max={ 100 }
+                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                            />
                         </PanelBody>
                     </InspectorControls>
                     <div className="advgb-accordion-block">
@@ -211,6 +219,7 @@
                                          borderStyle: borderStyle,
                                          borderWidth: borderWidth + 'px',
                                          borderColor: borderColor,
+                                         borderRadius: borderRadius + 'px',
                                      } }
                                 >
                                     <Tooltip text={ __( 'Remove item' ) }>
@@ -240,6 +249,7 @@
                                          borderStyle: borderStyle,
                                          borderWidth: borderWidth + 'px',
                                          borderColor: borderColor,
+                                         borderRadius: borderRadius + 'px',
                                      } }
                                 >
                                     <RichText
@@ -331,12 +341,16 @@
                 default: 'solid',
             },
             borderWidth: {
-                type: 'string',
+                type: 'number',
                 default: 1,
             },
             borderColor: {
                 type: 'string',
             },
+            borderRadius: {
+                type: 'number',
+                default: 2,
+            }
         },
         edit: AdvAccordion,
         save: function ( { attributes } ) {
@@ -351,6 +365,7 @@
                 borderStyle,
                 borderWidth,
                 borderColor,
+                borderRadius,
             } = attributes;
 
             return (
@@ -364,6 +379,7 @@
                                      borderStyle: borderStyle,
                                      borderWidth: borderWidth + 'px',
                                      borderColor: borderColor,
+                                     borderRadius: borderRadius + 'px',
                                  } }
                             >
                                 <span className="advgb-accordion-header-icon">
@@ -380,6 +396,7 @@
                                      borderStyle: borderStyle,
                                      borderWidth: borderWidth + 'px',
                                      borderColor: borderColor,
+                                     borderRadius: borderRadius + 'px',
                                  } }
                             >
                                 <RichText.Content tagName="p" value={ item.body }/>

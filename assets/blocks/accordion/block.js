@@ -166,7 +166,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     bodyTextColor = attributes.bodyTextColor,
                     borderStyle = attributes.borderStyle,
                     borderWidth = attributes.borderWidth,
-                    borderColor = attributes.borderColor;
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius;
 
 
                 return React.createElement(
@@ -292,6 +293,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderWidth: value });
                                 }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border radius'),
+                                value: borderRadius,
+                                min: 0,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderRadius: value });
+                                }
                             })
                         )
                     ),
@@ -310,7 +320,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             color: headerTextColor,
                                             borderStyle: borderStyle,
                                             borderWidth: borderWidth + 'px',
-                                            borderColor: borderColor
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px'
                                         }
                                     },
                                     React.createElement(
@@ -357,7 +368,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             color: bodyTextColor,
                                             borderStyle: borderStyle,
                                             borderWidth: borderWidth + 'px',
-                                            borderColor: borderColor
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px'
                                         }
                                     },
                                     React.createElement(RichText, {
@@ -450,11 +462,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: 'solid'
             },
             borderWidth: {
-                type: 'string',
+                type: 'number',
                 default: 1
             },
             borderColor: {
                 type: 'string'
+            },
+            borderRadius: {
+                type: 'number',
+                default: 2
             }
         },
         edit: AdvAccordion,
@@ -469,7 +485,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 bodyTextColor = attributes.bodyTextColor,
                 borderStyle = attributes.borderStyle,
                 borderWidth = attributes.borderWidth,
-                borderColor = attributes.borderColor;
+                borderColor = attributes.borderColor,
+                borderRadius = attributes.borderRadius;
 
 
             return React.createElement(
@@ -487,7 +504,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     color: headerTextColor,
                                     borderStyle: borderStyle,
                                     borderWidth: borderWidth + 'px',
-                                    borderColor: borderColor
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
                                 }
                             },
                             React.createElement(
@@ -513,7 +531,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     color: bodyTextColor,
                                     borderStyle: borderStyle,
                                     borderWidth: borderWidth + 'px',
-                                    borderColor: borderColor
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
                                 }
                             },
                             React.createElement(RichText.Content, { tagName: "p", value: item.body })
