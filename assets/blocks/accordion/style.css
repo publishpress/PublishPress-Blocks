@@ -45,7 +45,7 @@
 }
 
 .advgb-accordion-body.ui-accordion-content {
-    padding: 10px;
+    padding: 10px 10px 10px 15px;
     border: 1px solid #ccc;
     border-top: none !important;
     margin-bottom: 10px;
