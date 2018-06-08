@@ -306,9 +306,11 @@
             },
             headerBgColor: {
                 type: 'string',
+                default: '#000',
             },
             headerTextColor: {
                 type: 'string',
+                default: '#fff',
             },
             headerIcon: {
                 type: 'string',

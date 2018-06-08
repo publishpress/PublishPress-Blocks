@@ -424,10 +424,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }]
             },
             headerBgColor: {
-                type: 'string'
+                type: 'string',
+                default: '#000'
             },
             headerTextColor: {
-                type: 'string'
+                type: 'string',
+                default: '#fff'
             },
             headerIcon: {
                 type: 'string',
