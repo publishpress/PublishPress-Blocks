@@ -17,8 +17,7 @@ li.advgb-tab.ui-state-default {
     padding: 10px 15px;
     margin: 0;
     margin-bottom: -1px;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border: 1px solid #ccc;
     position: relative;
     background: none;
 }
@@ -29,11 +28,19 @@ li.advgb-tab a, li.advgb-tab a:focus, li.advgb-tab a:hover {
 }
 
 li.advgb-tab.ui-tabs-active {
-    background-color: #2196f3;
+    background-color: #2196f3 !important;
 }
 
 li.advgb-tab.ui-tabs-active a {
-    color: #fff;
+    color: #fff !important;
+}
+
+li.advgb-tab.advgb-add-tab.ui-state-default {
+    border: 1px solid transparent;
+}
+
+li.advgb-tab.advgb-add-tab.ui-state-default:hover {
+    background: #ccc;
 }
 
 li.advgb-add-tab span {
@@ -68,7 +75,8 @@ span.advgb-tab-remove svg {
 }
 
 div.advgb-tab-body {
-    padding: 10px;
+    padding: 10px 10px 10px 15px;
     border: 1px solid #ccc;
     border-top: none !important;
+    background: none;
 }

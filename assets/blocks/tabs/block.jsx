@@ -2,13 +2,12 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText } = wpEditor;
-    const { Dashicon, Tooltip } = wpComponents;
+    const { InspectorControls, RichText, ColorPalette } = wpEditor;
+    const { Dashicon, Tooltip, PanelBody, PanelColor, RangeControl, SelectControl } = wpComponents;
 
     class AdvTabsBlock extends Component {
         constructor() {
             super( ...arguments );
-
         }
 
         componentDidMount() {
@@ -55,15 +54,104 @@
 
         render() {
             const { attributes, setAttributes } = this.props;
-            const { tabItems } = attributes;
+            const {
+                tabItems,
+                headerBgColor,
+                headerTextColor,
+                bodyBgColor,
+                bodyTextColor,
+                borderStyle,
+                borderWidth,
+                borderColor,
+                borderRadius,
+            } = attributes;
 
             return (
                 <Fragment>
-                    <div className="advgb-tabs-block">
-                        <ul className="advgb-tabs-panel">
+                    <InspectorControls>
+                        <PanelBody title={ __( 'Header settings' ) }>
+                            <PanelColor title={ __( 'Background Color' ) } colorValue={ headerBgColor } initialOpen={ false }>
+                                <ColorPalette
+                                    value={ headerBgColor }
+                                    onChange={ ( value ) => setAttributes( { headerBgColor: value } ) }
+                                />
+                            </PanelColor>
+                            <PanelColor title={ __( 'Text Color' ) } colorValue={ headerTextColor } initialOpen={ false }>
+                                <ColorPalette
+                                    value={ headerTextColor }
+                                    onChange={ ( value ) => setAttributes( { headerTextColor: value } ) }
+                                />
+                            </PanelColor>
+                        </PanelBody>
+                        <PanelBody title={ __( 'Body Settings' ) } initialOpen={ false }>
+                            <PanelColor title={ __( 'Background Color' ) } colorValue={ bodyBgColor } initialOpen={ false }>
+                                <ColorPalette
+                                    value={ bodyBgColor }
+                                    onChange={ ( value ) => setAttributes( { bodyBgColor: value } ) }
+                                />
+                            </PanelColor>
+                            <PanelColor title={ __( 'Text Color' ) } colorValue={ bodyTextColor } initialOpen={ false }>
+                                <ColorPalette
+                                    value={ bodyTextColor }
+                                    onChange={ ( value ) => setAttributes( { bodyTextColor: value } ) }
+                                />
+                            </PanelColor>
+                        </PanelBody>
+                        <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
+                            <SelectControl
+                                label={ __( 'Border Style' ) }
+                                value={ borderStyle }
+                                options={ [
+                                    { label: __( 'Solid' ), value: 'solid' },
+                                    { label: __( 'Dashed' ), value: 'dashed' },
+                                    { label: __( 'Dotted' ), value: 'dotted' },
+                                ] }
+                                onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
+                            />
+                            <PanelColor title={ __( 'Border Color' ) } colorValue={ borderColor } initialOpen={ false }>
+                                <ColorPalette
+                                    value={ borderColor }
+                                    onChange={ ( value ) => setAttributes( { borderColor: value } ) }
+                                />
+                            </PanelColor>
+                            <RangeControl
+                                label={ __( 'Border width' ) }
+                                value={ borderWidth }
+                                min={ 1 }
+                                max={ 10 }
+                                onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+                            />
+                            <RangeControl
+                                label={ __( 'Border radius' ) }
+                                value={ borderRadius }
+                                min={ 0 }
+                                max={ 100 }
+                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                            />
+                        </PanelBody>
+                    </InspectorControls>
+                    <div className="advgb-tabs-block" style={ { border: 'none' } }>
+                        <ul className="advgb-tabs-panel"
+                            style={ {
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px',
+                            } }
+                        >
                             {tabItems.map( ( item, index ) => (
-                                <li key={ index } className="advgb-tab">
-                                    <a href={`#${item.header.toLowerCase().replace(/\s/g, '').trim()}-${index}`}>
+                                <li key={ index } className="advgb-tab"
+                                    style={ {
+                                        backgroundColor: headerBgColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth + 'px',
+                                        borderColor: borderColor,
+                                        borderRadius: borderRadius + 'px',
+                                    } }
+                                >
+                                    <a href={`#${item.header.toLowerCase().replace(/\s/g, '').trim()}-${index}`}
+                                       style={ { color: headerTextColor } }
+                                    >
                                         <RichText
                                             tagName="p"
                                             value={ item.header }
@@ -83,7 +171,7 @@
                                     </Tooltip>
                                 </li>
                             ) ) }
-                            <li className="advgb-tab advgb-add-tab ui-state-default">
+                            <li className="advgb-tab advgb-add-tab ui-state-default" style={ { borderRadius: borderRadius + 'px' } }>
                                 <Tooltip text={ __( 'Add tab' ) }>
                                     <span onClick={ () => setAttributes( {
                                         tabItems: [
@@ -100,6 +188,14 @@
                             <div key={ index }
                                  id={`${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
                                  className="advgb-tab-body"
+                                 style={ {
+                                     backgroundColor: bodyBgColor,
+                                     color: bodyTextColor,
+                                     borderStyle: borderStyle,
+                                     borderWidth: borderWidth + 'px',
+                                     borderColor: borderColor,
+                                     borderRadius: borderRadius + 'px',
+                                 } }
                             >
                                 <RichText
                                     tagName="p"
@@ -147,17 +243,73 @@
                     },
                 ]
             },
+            headerBgColor: {
+                type: 'string',
+                default: '#000',
+            },
+            headerTextColor: {
+                type: 'string',
+                default: '#fff',
+            },
+            bodyBgColor: {
+                type: 'string',
+            },
+            bodyTextColor: {
+                type: 'string',
+            },
+            borderStyle: {
+                type: 'string',
+                default: 'solid',
+            },
+            borderWidth: {
+                type: 'number',
+                default: 1,
+            },
+            borderColor: {
+                type: 'string',
+            },
+            borderRadius: {
+                type: 'number',
+                default: 2,
+            }
         },
         edit: AdvTabsBlock,
         save: function ( { attributes } ) {
-            const { tabItems } = attributes;
+            const {
+                tabItems,
+                headerBgColor,
+                headerTextColor,
+                bodyBgColor,
+                bodyTextColor,
+                borderStyle,
+                borderWidth,
+                borderColor,
+                borderRadius,
+            } = attributes;
 
             return (
-                <div className="advgb-tabs-block">
-                    <ul className="advgb-tabs-panel">
+                <div className="advgb-tabs-block" style={ { border: 'none' } }>
+                    <ul className="advgb-tabs-panel"
+                        style={ {
+                            borderStyle: borderStyle,
+                            borderWidth: borderWidth + 'px',
+                            borderColor: borderColor,
+                            borderRadius: borderRadius + 'px',
+                        } }
+                    >
                         {tabItems.map( ( item, index ) => (
-                            <li key={ index } className="advgb-tab">
-                                <a href={`#${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}>
+                            <li key={ index } className="advgb-tab"
+                                style={ {
+                                    backgroundColor: headerBgColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px',
+                                } }
+                            >
+                                <a href={`#${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
+                                   style={ { color: headerTextColor } }
+                                >
                                     <RichText.Content tagName="span" value={ item.header }/>
                                 </a>
                             </li>
@@ -167,6 +319,14 @@
                         <div key={ index }
                              id={`${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
                              className="advgb-tab-body"
+                             style={ {
+                                 backgroundColor: bodyBgColor,
+                                 color: bodyTextColor,
+                                 borderStyle: borderStyle,
+                                 borderWidth: borderWidth + 'px',
+                                 borderColor: borderColor,
+                                 borderRadius: borderRadius + 'px',
+                             } }
                         >
                             <RichText.Content tagName="p" value={ item.body }/>
                         </div>

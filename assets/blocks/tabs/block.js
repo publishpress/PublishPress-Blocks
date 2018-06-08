@@ -18,9 +18,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
-        RichText = wpEditor.RichText;
+        RichText = wpEditor.RichText,
+        ColorPalette = wpEditor.ColorPalette;
     var Dashicon = wpComponents.Dashicon,
-        Tooltip = wpComponents.Tooltip;
+        Tooltip = wpComponents.Tooltip,
+        PanelBody = wpComponents.PanelBody,
+        PanelColor = wpComponents.PanelColor,
+        RangeControl = wpComponents.RangeControl,
+        SelectControl = wpComponents.SelectControl;
 
     var AdvTabsBlock = function (_Component) {
         _inherits(AdvTabsBlock, _Component);
@@ -91,25 +96,142 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
-                var tabItems = attributes.tabItems;
+                var tabItems = attributes.tabItems,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius;
 
 
                 return React.createElement(
                     Fragment,
                     null,
                     React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Header settings') },
+                            React.createElement(
+                                PanelColor,
+                                { title: __('Background Color'), colorValue: headerBgColor, initialOpen: false },
+                                React.createElement(ColorPalette, {
+                                    value: headerBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ headerBgColor: value });
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                PanelColor,
+                                { title: __('Text Color'), colorValue: headerTextColor, initialOpen: false },
+                                React.createElement(ColorPalette, {
+                                    value: headerTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ headerTextColor: value });
+                                    }
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Body Settings'), initialOpen: false },
+                            React.createElement(
+                                PanelColor,
+                                { title: __('Background Color'), colorValue: bodyBgColor, initialOpen: false },
+                                React.createElement(ColorPalette, {
+                                    value: bodyBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ bodyBgColor: value });
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                PanelColor,
+                                { title: __('Text Color'), colorValue: bodyTextColor, initialOpen: false },
+                                React.createElement(ColorPalette, {
+                                    value: bodyTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ bodyTextColor: value });
+                                    }
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Border Settings'), initialOpen: false },
+                            React.createElement(SelectControl, {
+                                label: __('Border Style'),
+                                value: borderStyle,
+                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderStyle: value });
+                                }
+                            }),
+                            React.createElement(
+                                PanelColor,
+                                { title: __('Border Color'), colorValue: borderColor, initialOpen: false },
+                                React.createElement(ColorPalette, {
+                                    value: borderColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderColor: value });
+                                    }
+                                })
+                            ),
+                            React.createElement(RangeControl, {
+                                label: __('Border width'),
+                                value: borderWidth,
+                                min: 1,
+                                max: 10,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderWidth: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border radius'),
+                                value: borderRadius,
+                                min: 0,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderRadius: value });
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
                         'div',
-                        { className: 'advgb-tabs-block' },
+                        { className: 'advgb-tabs-block', style: { border: 'none' } },
                         React.createElement(
                             'ul',
-                            { className: 'advgb-tabs-panel' },
+                            { className: 'advgb-tabs-panel',
+                                style: {
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
+                                }
+                            },
                             tabItems.map(function (item, index) {
                                 return React.createElement(
                                     'li',
-                                    { key: index, className: 'advgb-tab' },
+                                    { key: index, className: 'advgb-tab',
+                                        style: {
+                                            backgroundColor: headerBgColor,
+                                            borderStyle: borderStyle,
+                                            borderWidth: borderWidth + 'px',
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px'
+                                        }
+                                    },
                                     React.createElement(
                                         'a',
-                                        { href: '#' + item.header.toLowerCase().replace(/\s/g, '').trim() + '-' + index },
+                                        { href: '#' + item.header.toLowerCase().replace(/\s/g, '').trim() + '-' + index,
+                                            style: { color: headerTextColor }
+                                        },
                                         React.createElement(RichText, {
                                             tagName: 'p',
                                             value: item.header,
@@ -143,7 +265,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 'li',
-                                { className: 'advgb-tab advgb-add-tab ui-state-default' },
+                                { className: 'advgb-tab advgb-add-tab ui-state-default', style: { borderRadius: borderRadius + 'px' } },
                                 React.createElement(
                                     Tooltip,
                                     { text: __('Add tab') },
@@ -164,7 +286,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 'div',
                                 { key: index,
                                     id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
-                                    className: 'advgb-tab-body'
+                                    className: 'advgb-tab-body',
+                                    style: {
+                                        backgroundColor: bodyBgColor,
+                                        color: bodyTextColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth + 'px',
+                                        borderColor: borderColor,
+                                        borderRadius: borderRadius + 'px'
+                                    }
                                 },
                                 React.createElement(RichText, {
                                     tagName: 'p',
@@ -211,27 +341,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     header: __('Tab 3'),
                     body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated 3.')
                 }]
+            },
+            headerBgColor: {
+                type: 'string',
+                default: '#000'
+            },
+            headerTextColor: {
+                type: 'string',
+                default: '#fff'
+            },
+            bodyBgColor: {
+                type: 'string'
+            },
+            bodyTextColor: {
+                type: 'string'
+            },
+            borderStyle: {
+                type: 'string',
+                default: 'solid'
+            },
+            borderWidth: {
+                type: 'number',
+                default: 1
+            },
+            borderColor: {
+                type: 'string'
+            },
+            borderRadius: {
+                type: 'number',
+                default: 2
             }
         },
         edit: AdvTabsBlock,
         save: function save(_ref) {
             var attributes = _ref.attributes;
-            var tabItems = attributes.tabItems;
+            var tabItems = attributes.tabItems,
+                headerBgColor = attributes.headerBgColor,
+                headerTextColor = attributes.headerTextColor,
+                bodyBgColor = attributes.bodyBgColor,
+                bodyTextColor = attributes.bodyTextColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                borderColor = attributes.borderColor,
+                borderRadius = attributes.borderRadius;
 
 
             return React.createElement(
                 'div',
-                { className: 'advgb-tabs-block' },
+                { className: 'advgb-tabs-block', style: { border: 'none' } },
                 React.createElement(
                     'ul',
-                    { className: 'advgb-tabs-panel' },
+                    { className: 'advgb-tabs-panel',
+                        style: {
+                            borderStyle: borderStyle,
+                            borderWidth: borderWidth + 'px',
+                            borderColor: borderColor,
+                            borderRadius: borderRadius + 'px'
+                        }
+                    },
                     tabItems.map(function (item, index) {
                         return React.createElement(
                             'li',
-                            { key: index, className: 'advgb-tab' },
+                            { key: index, className: 'advgb-tab',
+                                style: {
+                                    backgroundColor: headerBgColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
+                                }
+                            },
                             React.createElement(
                                 'a',
-                                { href: '#' + item.header.toLowerCase().replace(/\s/g, '') + '-' + index },
+                                { href: '#' + item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
+                                    style: { color: headerTextColor }
+                                },
                                 React.createElement(RichText.Content, { tagName: 'span', value: item.header })
                             )
                         );
@@ -242,7 +426,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         'div',
                         { key: index,
                             id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
-                            className: 'advgb-tab-body'
+                            className: 'advgb-tab-body',
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
                         },
                         React.createElement(RichText.Content, { tagName: 'p', value: item.body })
                     );
