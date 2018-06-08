@@ -26,10 +26,11 @@
     float: right;
     margin-right: -30px;
     line-height: 1.8;
+    font-size: 1.2em;
 }
 
 .advgb-accordion-header-icon svg {
-    vertical-align: middle;
+    vertical-align: sub;
 }
 
 .advgb-accordion-header h4.advgb-accordion-header-title, .advgb-accordion-header h4 {
@@ -38,6 +39,7 @@
     clear: none;
     color: inherit;
     line-height: 1.8;
+    font-size: 1.2em;
 }
 
 .advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon {
