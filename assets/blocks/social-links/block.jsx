@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, MediaUpload, AlignmentToolbar, ColorPalette } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, TextControl, IconButton, Toolbar, Tooltip } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, TextControl, IconButton, Button, Toolbar, Tooltip } = wpComponents;
 
     const socialBlockIconContent = (
         <Fragment>
@@ -208,34 +208,6 @@
                                 } }
                             />
                         </Toolbar>
-                        <MediaUpload
-                            type="image"
-                            value={ items[currentSelected].iconID }
-                            onSelect={ (media) => {
-                                let newItems = items.map( (item, index) => {
-                                    if (index === currentSelected) {
-                                        item = {
-                                            ...item,
-                                            icon: media.sizes.thumbnail.url,
-                                            iconID: media.id,
-                                        };
-                                    }
-                                    return item;
-                                } );
-
-                                setAttributes( { items: newItems } )
-                            } }
-                            render={ ( { open } ) => (
-                                <Toolbar>
-                                    <IconButton
-                                        className="components-toolbar__control"
-                                        icon="format-image"
-                                        label={ __( 'Choose icon' ) }
-                                        onClick={ open }
-                                    />
-                                </Toolbar>
-                            ) }
-                        />
                         <AlignmentToolbar value={ align } onChange={ ( value ) => setAttributes( { align: value } ) } />
                     </BlockControls>
                     <InspectorControls>
@@ -334,20 +306,54 @@
                             ) ) }
                         </div>
                         {isSelected && (
-                            <div className="advgb-social-link">
-                                <strong>{ __( 'Social link:' ) }</strong>
-                                <TextControl
-                                    placeholder={ __( 'Enter social link…' ) }
-                                    value={ items[currentSelected].link }
-                                    onChange={ ( value ) => {
-                                        let newItems = items.map( (vl, idx) => {
-                                            if (idx === parseInt(currentSelected)) vl = { ...vl, link: value };
-                                            return vl;
-                                        } );
-                                        return setAttributes( { items: newItems } );
-                                    } }
-                                />
-                            </div>
+                            <Fragment>
+                                <div className="advgb-social-link">
+                                    <strong>{ __( 'Social link:' ) }</strong>
+                                    <TextControl
+                                        placeholder={ __( 'Enter social link…' ) }
+                                        value={ items[currentSelected].link }
+                                        onChange={ ( value ) => {
+                                            let newItems = items.map( (vl, idx) => {
+                                                if (idx === parseInt(currentSelected)) vl = { ...vl, link: value };
+                                                return vl;
+                                            } );
+                                            return setAttributes( { items: newItems } );
+                                        } }
+                                    />
+                                </div>
+                                <div className="advgb-social-link">
+                                    <strong>{ __( 'Custom icon:' ) }</strong>
+                                    <div className="components-base-control">
+                                        <MediaUpload
+                                            type="image"
+                                            value={ items[currentSelected].iconID }
+                                            onSelect={ (media) => {
+                                                let newItems = items.map( (item, index) => {
+                                                    if (index === currentSelected) {
+                                                        item = {
+                                                            ...item,
+                                                            icon: media.sizes.thumbnail.url,
+                                                            iconID: media.id,
+                                                        };
+                                                    }
+                                                    return item;
+                                                } );
+
+                                                setAttributes( { items: newItems } )
+                                            } }
+                                            render={ ( { open } ) => (
+                                                <Button
+                                                    className="button button-large"
+                                                    onClick={ open }
+                                                >
+                                                    { __( 'Upload' ) }
+                                                </Button>
+                                            ) }
+                                        />
+                                        <small style={ { marginLeft: '10px' } }>{ __( 'or use preset icons on the right.' ) }</small>
+                                    </div>
+                                </div>
+                            </Fragment>
                         ) }
                     </div>
                 </Fragment>

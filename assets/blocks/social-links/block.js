@@ -27,6 +27,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelColor = wpComponents.PanelColor,
         TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
+        Button = wpComponents.Button,
         Toolbar = wpComponents.Toolbar,
         Tooltip = wpComponents.Tooltip;
 
@@ -327,36 +328,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             })
                         ),
-                        React.createElement(MediaUpload, {
-                            type: "image",
-                            value: items[currentSelected].iconID,
-                            onSelect: function onSelect(media) {
-                                var newItems = items.map(function (item, index) {
-                                    if (index === currentSelected) {
-                                        item = _extends({}, item, {
-                                            icon: media.sizes.thumbnail.url,
-                                            iconID: media.id
-                                        });
-                                    }
-                                    return item;
-                                });
-
-                                setAttributes({ items: newItems });
-                            },
-                            render: function render(_ref) {
-                                var open = _ref.open;
-                                return React.createElement(
-                                    Toolbar,
-                                    null,
-                                    React.createElement(IconButton, {
-                                        className: "components-toolbar__control",
-                                        icon: "format-image",
-                                        label: __('Choose icon'),
-                                        onClick: open
-                                    })
-                                );
-                            }
-                        }),
                         React.createElement(AlignmentToolbar, { value: align, onChange: function onChange(value) {
                                 return setAttributes({ align: value });
                             } })
@@ -488,24 +459,74 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ),
                         isSelected && React.createElement(
-                            "div",
-                            { className: "advgb-social-link" },
+                            Fragment,
+                            null,
                             React.createElement(
-                                "strong",
-                                null,
-                                __('Social link:')
+                                "div",
+                                { className: "advgb-social-link" },
+                                React.createElement(
+                                    "strong",
+                                    null,
+                                    __('Social link:')
+                                ),
+                                React.createElement(TextControl, {
+                                    placeholder: __('Enter social link…'),
+                                    value: items[currentSelected].link,
+                                    onChange: function onChange(value) {
+                                        var newItems = items.map(function (vl, idx) {
+                                            if (idx === parseInt(currentSelected)) vl = _extends({}, vl, { link: value });
+                                            return vl;
+                                        });
+                                        return setAttributes({ items: newItems });
+                                    }
+                                })
                             ),
-                            React.createElement(TextControl, {
-                                placeholder: __('Enter social link…'),
-                                value: items[currentSelected].link,
-                                onChange: function onChange(value) {
-                                    var newItems = items.map(function (vl, idx) {
-                                        if (idx === parseInt(currentSelected)) vl = _extends({}, vl, { link: value });
-                                        return vl;
-                                    });
-                                    return setAttributes({ items: newItems });
-                                }
-                            })
+                            React.createElement(
+                                "div",
+                                { className: "advgb-social-link" },
+                                React.createElement(
+                                    "strong",
+                                    null,
+                                    __('Custom icon:')
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { className: "components-base-control" },
+                                    React.createElement(MediaUpload, {
+                                        type: "image",
+                                        value: items[currentSelected].iconID,
+                                        onSelect: function onSelect(media) {
+                                            var newItems = items.map(function (item, index) {
+                                                if (index === currentSelected) {
+                                                    item = _extends({}, item, {
+                                                        icon: media.sizes.thumbnail.url,
+                                                        iconID: media.id
+                                                    });
+                                                }
+                                                return item;
+                                            });
+
+                                            setAttributes({ items: newItems });
+                                        },
+                                        render: function render(_ref) {
+                                            var open = _ref.open;
+                                            return React.createElement(
+                                                Button,
+                                                {
+                                                    className: "button button-large",
+                                                    onClick: open
+                                                },
+                                                __('Upload')
+                                            );
+                                        }
+                                    }),
+                                    React.createElement(
+                                        "small",
+                                        { style: { marginLeft: '10px' } },
+                                        __('or use preset icons on the right.')
+                                    )
+                                )
+                            )
                         )
                     )
                 );
