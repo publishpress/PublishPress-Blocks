@@ -835,7 +835,7 @@ float: left;'
         $blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 
         wp_add_inline_style(
-            'colorbox_style',
+            'dashicons',
             '.entry-content > * {margin-bottom: '.$blocks_spacing.'px}'
         );
     }
