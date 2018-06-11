@@ -50,4 +50,5 @@ span.advgb-social-icon.selected:before {
     margin: 0;
     margin-left: 10px;
     width: 350px;
+    text-align: left;
 }
