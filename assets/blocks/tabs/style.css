@@ -1,6 +1,7 @@
 ul.advgb-tabs-panel {
     list-style-type: none !important;
     border: 1px solid #ccc;
+    border-bottom: none !important;
     margin: 0 !important;
     padding: 0 !important;
     background: none;
@@ -33,6 +34,7 @@ li.advgb-tab a, li.advgb-tab a:focus, li.advgb-tab a:hover {
 
 li.advgb-tab.ui-tabs-active {
     background-color: #2196f3 !important;
+    border-bottom-color: transparent !important;
 }
 
 li.advgb-tab.ui-tabs-active a {
@@ -50,6 +52,7 @@ li.advgb-tab.advgb-add-tab.ui-state-default:hover {
 li.advgb-add-tab span {
     line-height: 1.8;
     cursor: pointer;
+    font-size: 16px;
 }
 
 li.advgb-add-tab svg {
@@ -81,6 +84,5 @@ span.advgb-tab-remove svg {
 div.advgb-tab-body {
     padding: 10px 10px 10px 15px;
     border: 1px solid #ccc;
-    border-top: none !important;
     background: none;
 }
