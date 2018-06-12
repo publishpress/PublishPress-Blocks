@@ -75,7 +75,7 @@
             return (
                 <Fragment>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Tab settings' ) }>
+                        <PanelBody title={ __( 'Tab Settings' ) }>
                             <PanelColor title={ __( 'Background Color' ) } colorValue={ headerBgColor } initialOpen={ false }>
                                 <ColorPalette
                                     value={ headerBgColor }
