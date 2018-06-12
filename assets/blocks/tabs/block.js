@@ -333,13 +333,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: "array",
                 default: [{
                     header: __('Tab 1'),
-                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated 1.')
+                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
                 }, {
                     header: __('Tab 2'),
-                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated 2.')
+                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
                 }, {
                     header: __('Tab 3'),
-                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated 3.')
+                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
                 }]
             },
             headerBgColor: {
