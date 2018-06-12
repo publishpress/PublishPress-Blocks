@@ -115,7 +115,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Header settings') },
+                            { title: __('Tab settings') },
                             React.createElement(
                                 PanelColor,
                                 { title: __('Background Color'), colorValue: headerBgColor, initialOpen: false },
