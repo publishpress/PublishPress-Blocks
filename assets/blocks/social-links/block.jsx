@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, MediaUpload, AlignmentToolbar, ColorPalette } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, TextControl, IconButton, Button, Toolbar, Tooltip } = wpComponents;
+    const { RangeControl, BaseControl, PanelBody, PanelColor, TextControl, IconButton, Button, Toolbar, Tooltip } = wpComponents;
 
     const socialBlockIconContent = (
         <Fragment>
@@ -236,13 +236,41 @@
 
                                                       setAttributes( { items: newItems } )
                                                   } }>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50">
-                                                { ICONS_SET[key] }
-                                            </svg>
-                                        </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50">
+                                                    { ICONS_SET[key] }
+                                                </svg>
+                                            </span>
                                         </Tooltip>
                                     </div>
                                 ) ) }
+                                <BaseControl label={ __( 'Custom icon' ) }>
+                                    <MediaUpload
+                                        type="image"
+                                        value={ items[currentSelected].iconID }
+                                        onSelect={ (media) => {
+                                            let newItems = items.map( (item, index) => {
+                                                if (index === currentSelected) {
+                                                    item = {
+                                                        ...item,
+                                                        icon: media.sizes.thumbnail.url,
+                                                        iconID: media.id,
+                                                    };
+                                                }
+                                                return item;
+                                            } );
+
+                                            setAttributes( { items: newItems } )
+                                        } }
+                                        render={ ( { open } ) => (
+                                            <Button
+                                                className="button button-large"
+                                                onClick={ open }
+                                            >
+                                                { __( 'Upload/Choose' ) }
+                                            </Button>
+                                        ) }
+                                    />
+                                </BaseControl>
                             </div>
                         </PanelBody>
                         <PanelBody title={ __( 'Icons settings' ) }>
@@ -320,38 +348,6 @@
                                             return setAttributes( { items: newItems } );
                                         } }
                                     />
-                                </div>
-                                <div className="advgb-social-link">
-                                    <strong>{ __( 'Custom icon:' ) }</strong>
-                                    <div className="components-base-control">
-                                        <MediaUpload
-                                            type="image"
-                                            value={ items[currentSelected].iconID }
-                                            onSelect={ (media) => {
-                                                let newItems = items.map( (item, index) => {
-                                                    if (index === currentSelected) {
-                                                        item = {
-                                                            ...item,
-                                                            icon: media.sizes.thumbnail.url,
-                                                            iconID: media.id,
-                                                        };
-                                                    }
-                                                    return item;
-                                                } );
-
-                                                setAttributes( { items: newItems } )
-                                            } }
-                                            render={ ( { open } ) => (
-                                                <Button
-                                                    className="button button-large"
-                                                    onClick={ open }
-                                                >
-                                                    { __( 'Upload' ) }
-                                                </Button>
-                                            ) }
-                                        />
-                                        <small style={ { marginLeft: '10px' } }>{ __( 'or use preset icons on the right.' ) }</small>
-                                    </div>
                                 </div>
                             </Fragment>
                         ) }

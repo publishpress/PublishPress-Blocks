@@ -23,6 +23,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         AlignmentToolbar = wpEditor.AlignmentToolbar,
         ColorPalette = wpEditor.ColorPalette;
     var RangeControl = wpComponents.RangeControl,
+        BaseControl = wpComponents.BaseControl,
         PanelBody = wpComponents.PanelBody,
         PanelColor = wpComponents.PanelColor,
         TextControl = wpComponents.TextControl,
@@ -379,7 +380,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             )
                                         )
                                     );
-                                })
+                                }),
+                                React.createElement(
+                                    BaseControl,
+                                    { label: __('Custom icon') },
+                                    React.createElement(MediaUpload, {
+                                        type: "image",
+                                        value: items[currentSelected].iconID,
+                                        onSelect: function onSelect(media) {
+                                            var newItems = items.map(function (item, index) {
+                                                if (index === currentSelected) {
+                                                    item = _extends({}, item, {
+                                                        icon: media.sizes.thumbnail.url,
+                                                        iconID: media.id
+                                                    });
+                                                }
+                                                return item;
+                                            });
+
+                                            setAttributes({ items: newItems });
+                                        },
+                                        render: function render(_ref) {
+                                            var open = _ref.open;
+                                            return React.createElement(
+                                                Button,
+                                                {
+                                                    className: "button button-large",
+                                                    onClick: open
+                                                },
+                                                __('Upload/Choose')
+                                            );
+                                        }
+                                    })
+                                )
                             )
                         ),
                         React.createElement(
@@ -480,52 +513,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return setAttributes({ items: newItems });
                                     }
                                 })
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "advgb-social-link" },
-                                React.createElement(
-                                    "strong",
-                                    null,
-                                    __('Custom icon:')
-                                ),
-                                React.createElement(
-                                    "div",
-                                    { className: "components-base-control" },
-                                    React.createElement(MediaUpload, {
-                                        type: "image",
-                                        value: items[currentSelected].iconID,
-                                        onSelect: function onSelect(media) {
-                                            var newItems = items.map(function (item, index) {
-                                                if (index === currentSelected) {
-                                                    item = _extends({}, item, {
-                                                        icon: media.sizes.thumbnail.url,
-                                                        iconID: media.id
-                                                    });
-                                                }
-                                                return item;
-                                            });
-
-                                            setAttributes({ items: newItems });
-                                        },
-                                        render: function render(_ref) {
-                                            var open = _ref.open;
-                                            return React.createElement(
-                                                Button,
-                                                {
-                                                    className: "button button-large",
-                                                    onClick: open
-                                                },
-                                                __('Upload')
-                                            );
-                                        }
-                                    }),
-                                    React.createElement(
-                                        "small",
-                                        { style: { marginLeft: '10px' } },
-                                        __('or use preset icons on the right.')
-                                    )
-                                )
                             )
                         )
                     )
