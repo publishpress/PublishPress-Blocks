@@ -147,6 +147,7 @@
                                         borderWidth: borderWidth + 'px',
                                         borderColor: borderColor,
                                         borderRadius: borderRadius + 'px',
+                                        margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
                                     } }
                                 >
                                     <a href={`#${item.header.toLowerCase().replace(/\s/g, '').trim()}-${index}`}
@@ -171,7 +172,13 @@
                                     </Tooltip>
                                 </li>
                             ) ) }
-                            <li className="advgb-tab advgb-add-tab ui-state-default" style={ { borderRadius: borderRadius + 'px' } }>
+                            <li className="advgb-tab advgb-add-tab ui-state-default"
+                                style={ {
+                                    borderRadius: borderRadius + 'px',
+                                    borderWidth: borderWidth + 'px',
+                                    margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
+                                } }
+                            >
                                 <Tooltip text={ __( 'Add tab' ) }>
                                     <span onClick={ () => setAttributes( {
                                         tabItems: [
@@ -305,6 +312,7 @@
                                     borderWidth: borderWidth + 'px',
                                     borderColor: borderColor,
                                     borderRadius: borderRadius + 'px',
+                                    margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
                                 } }
                             >
                                 <a href={`#${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}

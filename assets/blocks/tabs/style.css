@@ -49,12 +49,12 @@ li.advgb-tab.advgb-add-tab.ui-state-default:hover {
 
 li.advgb-add-tab span {
     line-height: 1.8;
+    cursor: pointer;
 }
 
 li.advgb-add-tab svg {
     color: #2196f3;
     vertical-align: sub;
-    cursor: pointer;
 }
 
 span.advgb-tab-remove {

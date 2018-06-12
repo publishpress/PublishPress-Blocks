@@ -224,7 +224,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             borderStyle: borderStyle,
                                             borderWidth: borderWidth + 'px',
                                             borderColor: borderColor,
-                                            borderRadius: borderRadius + 'px'
+                                            borderRadius: borderRadius + 'px',
+                                            margin: '-' + borderWidth + 'px 0 -' + borderWidth + 'px -' + borderWidth + 'px'
                                         }
                                     },
                                     React.createElement(
@@ -265,7 +266,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 'li',
-                                { className: 'advgb-tab advgb-add-tab ui-state-default', style: { borderRadius: borderRadius + 'px' } },
+                                { className: 'advgb-tab advgb-add-tab ui-state-default',
+                                    style: {
+                                        borderRadius: borderRadius + 'px',
+                                        borderWidth: borderWidth + 'px',
+                                        margin: '-' + borderWidth + 'px 0 -' + borderWidth + 'px -' + borderWidth + 'px'
+                                    }
+                                },
                                 React.createElement(
                                     Tooltip,
                                     { text: __('Add tab') },
@@ -408,7 +415,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderStyle: borderStyle,
                                     borderWidth: borderWidth + 'px',
                                     borderColor: borderColor,
-                                    borderRadius: borderRadius + 'px'
+                                    borderRadius: borderRadius + 'px',
+                                    margin: '-' + borderWidth + 'px 0 -' + borderWidth + 'px -' + borderWidth + 'px'
                                 }
                             },
                             React.createElement(
