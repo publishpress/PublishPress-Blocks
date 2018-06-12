@@ -12,6 +12,9 @@
 
         componentDidMount() {
             this.initTabs();
+            if (!this.props.attributes.blockID) {
+                this.props.setAttributes( { blockID: this.props.id } );
+            }
         }
 
         componentDidUpdate( prevProps ) {
@@ -53,7 +56,7 @@
         }
 
         render() {
-            const { attributes, setAttributes } = this.props;
+            const { attributes, setAttributes, id } = this.props;
             const {
                 tabItems,
                 headerBgColor,
@@ -64,6 +67,9 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
+                blockID,
+                activeTabBgColor,
+                activeTabTextColor,
             } = attributes;
 
             return (
@@ -82,6 +88,20 @@
                                     onChange={ ( value ) => setAttributes( { headerTextColor: value } ) }
                                 />
                             </PanelColor>
+                            <PanelBody title={ __( 'Active Tab Settings' ) }>
+                                <PanelColor title={ __( 'Background Color' ) } colorValue={ activeTabBgColor } initialOpen={ false }>
+                                    <ColorPalette
+                                        value={ activeTabBgColor }
+                                        onChange={ ( value ) => setAttributes( { activeTabBgColor: value } ) }
+                                    />
+                                </PanelColor>
+                                <PanelColor title={ __( 'Text Color' ) } colorValue={ activeTabTextColor } initialOpen={ false }>
+                                    <ColorPalette
+                                        value={ activeTabTextColor }
+                                        onChange={ ( value ) => setAttributes( { activeTabTextColor: value } ) }
+                                    />
+                                </PanelColor>
+                            </PanelBody>
                         </PanelBody>
                         <PanelBody title={ __( 'Body Settings' ) } initialOpen={ false }>
                             <PanelColor title={ __( 'Background Color' ) } colorValue={ bodyBgColor } initialOpen={ false }>
@@ -213,6 +233,16 @@
                             </div>
                         ) ) }
                     </div>
+                    {!!blockID &&
+                        <style>
+                            {activeTabBgColor && `#block-${id} li.advgb-tab.ui-tabs-active {
+                                background-color: ${activeTabBgColor} !important;
+                            }`}
+                            {activeTabTextColor && `#block-${id} li.advgb-tab.ui-tabs-active a {
+                                color: ${activeTabTextColor} !important;
+                            }`}
+                        </style>
+                    }
                 </Fragment>
             )
         }
@@ -278,7 +308,16 @@
             borderRadius: {
                 type: 'number',
                 default: 2,
-            }
+            },
+            blockID: {
+                type: 'string',
+            },
+            activeTabBgColor: {
+                type: 'string',
+            },
+            activeTabTextColor: {
+                type: 'string',
+            },
         },
         edit: AdvTabsBlock,
         save: function ( { attributes } ) {
@@ -292,10 +331,13 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
+                blockID,
+                activeTabBgColor,
+                activeTabTextColor,
             } = attributes;
 
             return (
-                <div className="advgb-tabs-block" style={ { border: 'none' } }>
+                <div id={`advgb-tabs-${blockID}`} className="advgb-tabs-block" style={ { border: 'none' } }>
                     <ul className="advgb-tabs-panel"
                         style={ {
                             borderStyle: borderStyle,
@@ -339,6 +381,17 @@
                             <RichText.Content tagName="p" value={ item.body }/>
                         </div>
                     ) ) }
+                    {!!blockID &&
+                        <style>
+                            {activeTabBgColor && `#advgb-tabs-${blockID} li.advgb-tab.ui-tabs-active {
+                                background-color: ${activeTabBgColor} !important;
+                            }
+                            `}
+                            {activeTabTextColor && `#advgb-tabs-${blockID} li.advgb-tab.ui-tabs-active a {
+                                color: ${activeTabTextColor} !important;
+                            }`}
+                        </style>
+                    }
                 </div>
             );
         },

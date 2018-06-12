@@ -40,6 +40,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'componentDidMount',
             value: function componentDidMount() {
                 this.initTabs();
+                if (!this.props.attributes.blockID) {
+                    this.props.setAttributes({ blockID: this.props.id });
+                }
             }
         }, {
             key: 'componentDidUpdate',
@@ -95,7 +98,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var _props2 = this.props,
                     attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                    setAttributes = _props2.setAttributes,
+                    id = _props2.id;
                 var tabItems = attributes.tabItems,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
@@ -104,7 +108,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderStyle = attributes.borderStyle,
                     borderWidth = attributes.borderWidth,
                     borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius;
+                    borderRadius = attributes.borderRadius,
+                    blockID = attributes.blockID,
+                    activeTabBgColor = attributes.activeTabBgColor,
+                    activeTabTextColor = attributes.activeTabTextColor;
 
 
                 return React.createElement(
@@ -135,6 +142,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return setAttributes({ headerTextColor: value });
                                     }
                                 })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Active Tab Settings') },
+                                React.createElement(
+                                    PanelColor,
+                                    { title: __('Background Color'), colorValue: activeTabBgColor, initialOpen: false },
+                                    React.createElement(ColorPalette, {
+                                        value: activeTabBgColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ activeTabBgColor: value });
+                                        }
+                                    })
+                                ),
+                                React.createElement(
+                                    PanelColor,
+                                    { title: __('Text Color'), colorValue: activeTabTextColor, initialOpen: false },
+                                    React.createElement(ColorPalette, {
+                                        value: activeTabTextColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ activeTabTextColor: value });
+                                        }
+                                    })
+                                )
                             )
                         ),
                         React.createElement(
@@ -313,6 +344,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             );
                         })
+                    ),
+                    !!blockID && React.createElement(
+                        'style',
+                        null,
+                        activeTabBgColor && '#block-' + id + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }',
+                        activeTabTextColor && '#block-' + id + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
                     )
                 );
             }
@@ -377,6 +414,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             borderRadius: {
                 type: 'number',
                 default: 2
+            },
+            blockID: {
+                type: 'string'
+            },
+            activeTabBgColor: {
+                type: 'string'
+            },
+            activeTabTextColor: {
+                type: 'string'
             }
         },
         edit: AdvTabsBlock,
@@ -390,12 +436,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderStyle = attributes.borderStyle,
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
-                borderRadius = attributes.borderRadius;
+                borderRadius = attributes.borderRadius,
+                blockID = attributes.blockID,
+                activeTabBgColor = attributes.activeTabBgColor,
+                activeTabTextColor = attributes.activeTabTextColor;
 
 
             return React.createElement(
                 'div',
-                { className: 'advgb-tabs-block', style: { border: 'none' } },
+                { id: 'advgb-tabs-' + blockID, className: 'advgb-tabs-block', style: { border: 'none' } },
                 React.createElement(
                     'ul',
                     { className: 'advgb-tabs-panel',
@@ -446,7 +495,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         },
                         React.createElement(RichText.Content, { tagName: 'p', value: item.body })
                     );
-                })
+                }),
+                !!blockID && React.createElement(
+                    'style',
+                    null,
+                    activeTabBgColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }\n                            ',
+                    activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
+                )
             );
         }
     });
