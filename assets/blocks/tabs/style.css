@@ -14,12 +14,16 @@ ul.advgb-tabs-panel:after {
 
 li.advgb-tab.ui-state-default {
     float: left;
-    padding: 10px 15px;
     margin: 0;
     margin-bottom: -1px;
     border: 1px solid #ccc;
     position: relative;
     background: none;
+}
+
+li.advgb-tab > a, li.advgb-add-tab > span {
+    padding: 10px 15px;
+    display: inline-block;
 }
 
 li.advgb-tab a, li.advgb-tab a:focus, li.advgb-tab a:hover {
