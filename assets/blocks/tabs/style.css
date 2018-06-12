@@ -12,7 +12,7 @@ ul.advgb-tabs-panel:after {
     clear: both;
 }
 
-li.advgb-tab.ui-state-default {
+li.advgb-tab, li.advgb-tab.ui-state-default {
     float: left;
     margin: 0;
     margin-bottom: -1px;
