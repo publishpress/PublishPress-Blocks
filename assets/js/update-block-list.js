@@ -15,21 +15,23 @@ window.onload = function () {
             var blockItemIcon = '';
             var blockItem = {
                 name: block.name,
-                icon: block.icon,
+                icon: block.icon.src,
                 title: block.title,
                 category: block.category
             };
 
-            if (typeof block.icon === 'function') {
-                blockItem.icon = wp.element.renderToString(block.icon());
+            var savedIcon = !!block.icon.src ? block.icon.src : block.icon;
+
+            if (typeof savedIcon === 'function') {
+                blockItem.icon = wp.element.renderToString(savedIcon());
                 blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
                 blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
-            } else if (typeof block.icon === 'object') {
-                blockItem.icon = wp.element.renderToString(block.icon);
+            } else if (typeof savedIcon === 'object') {
+                blockItem.icon = wp.element.renderToString(savedIcon);
                 blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
                 blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
-            } else if (typeof block.icon === 'string') {
-                blockItemIcon = wp.element.createElement(wp.components.Dashicon, {icon: block.icon});
+            } else if (typeof savedIcon === 'string') {
+                blockItemIcon = wp.element.createElement(wp.components.Dashicon, {icon: savedIcon});
                 blockItem.icon = wp.element.renderToString(blockItemIcon);
             }
 
