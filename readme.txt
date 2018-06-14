@@ -2,17 +2,17 @@
 Contributors: JoomUnited
 Tags: editor, text editor, page builder
 Requires at least: 4.8
-Tested up to: {{wp_version}}
-Stable tag: {{version}}
+Tested up to: 4.9.6
+Stable tag: 1.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add advanced features to the official WordPress Gutenberg editor plugin like: profile edition, tons of new blocks
+Supercharge WordPress Gutenberg editor plugin with 20+ new blocks. Create custom Gutenberg block profiles by user or user roles
 
 == Description ==
 
-This plugin comes over the Gutenberg plugin with an enhancement of the native blocks or adding new blocks. Gutenberg is the future of WordPress, start building with it today and get ready for tomorrow!
+This plugin comes over the Gutenberg plugin with an enhancement of the native block system or by adding new blocks. Gutenberg is the future of WordPress, start building with it today and get ready for tomorrow!
 
 Additional features added to Gutenberg plugin:
 - Create edition profiles and assign user or user group to the profile
@@ -23,18 +23,27 @@ Additional features added to Gutenberg plugin:
 - Insert the Gutenberg post summary based on content headers
 - Advanced Button block: create button with more styles (hover, border, padding...)
 - Advanced List block: create list with list icon, icon color
-- Map block: load a Google map position with zomm, icon, tooltip, title...
+- Map block: load a Google map position with zoom, icon, tooltip, title...
 - Advanced Table block: create table with style! color, border, cell size and more
+- Accordion block: display content in a fully configurable accordion
+- Tabs block: display content in a fully tabbed UX
 - Testimonial block: define avatar, title, text, colors...
 - Counter block: display numbers in a dynamic, fun and engaging way
 - Advanced Image block: a new image block with hover text, overlay, colors, link, advanced size definition
 - Advanced Image block: load and display local and remote video
+- Advanced Video block: load and display local and remote video
 - Supercharge the separator tool with size, color, spaces
+- Social links block: add predefined or custom icon/link to your favorite social networks
 
 > <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
 
-> <strong>Note about Advanced Gutenberg development</strong><br>
-> This plugin is based on official Gutenberg plugin still under active development. Some new features will be implemented soon, the major part of those new features are determined by Gutenberg code evolutions. All suggestions are welcome!
+Main plugins from JoomUnited:
+
+* WP Media Folder: <a href="https://www.joomunited.com/wordpress-products/wp-media-folder" rel="friend"> https://www.joomunited.com/wordpress-products/wp-media-folder</a>
+* WP File Download: <a href="https://www.joomunited.com/wordpress-products/wp-table-manager" rel="friend"> https://www.joomunited.com/wordpress-products/wp-table-manager</a>
+* WP Table Manager: <a href="https://www.joomunited.com/wordpress-products/wp-file-download" rel="friend">https://www.joomunited.com/wordpress-products/wp-file-download</a>
+* WP Speed of Light: <a href="https://www.joomunited.com/wordpress-products/wp-speed-of-light" rel="friend">https://www.joomunited.com/wordpress-products/wp-speed-of-light</a>
+* WP Latest Posts: <a href="https://www.joomunited.com/wordpress-products/wp-latest-posts" rel="friend">https://www.joomunited.com/wordpress-products/wp-latest-posts</a>
 
 = Support =
 
@@ -64,6 +73,9 @@ We reply to every question about the editor on the forum here, just ask :) We al
 = Does Advanced Gutenberg slowing down my website? =
 The plugin has almost NO impact on page load, it's only loaded during the edition process.
 
+= What is the Gutenberg version version resuired to run Advanced Gutenberg plugin properly? =
+The latest one, always! We're testing it with previous versions but the latest version of Gutenberg brings new features for developer and allow better content edition. 
+
 = Is Advanced Gutenberg free? =
 Yes, totally free of charge.
 
@@ -91,14 +103,61 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Attribute profiles to user or user roles
 1. Testimonial and counter blocks
 1. Custom CSS applied to Gutenberg paragraph blocks
-1. Summary with anchors based on Gutenberg headers
+1. Build fully custom accordions and tabs from Gutenberg
 1. Google Maps Gutenberg Block
 1. Advanced Video block including remote video (Youtube...) and local video (.mp4...)
 1. Advanced table manager: manage tables in Gutenberg with several styling options
 
 == Changelog ==
 
-{{changelog}}
+= 1.5.0 =
+* Add : New block: Accordion block
+* Add : New block: Tabs block
+* Add : New block: Social links block
+* Add : Option to define default vertical spacing between blocks (frontend)
+* Fix : Advanced Video block: Not override poster after fetching video
+* Fix : Error while updating blocks list on profile
+
+= 1.4.0 =
+* Add : New block: Map block
+* Add : New block: Advanced Video block
+* Add : New block: Advanced Table block
+* Add : New options to add margin & padding on Columns and Text Columns block
+* Fix : Update code format to match latest Gutenberg release
+
+= 1.3.0 =
+* Add : New block: Testimonial block
+* Add : New block: Advanced Image block
+* Add : New block: Counter (count up) with symbol
+* Add : New options to customize Separator block
+* Fix : Make block icons in profile display properly like in Gutenberg
+
+= 1.2.1 =
+* Fix : Improve code format and compatibility
+
+= 1.2.0 =
+* Add : New Advanced Button block: create button with more styles (hover, border, padding...)
+* Add : New Advanced List block: create list with list icon, icon color...
+* Add : Summary block: Allow to set anchor links color, block alignment and load summary in minimized
+* Add : New summary block option: load the block minimized and define text
+* Add : New style for summary block: align the block + font style and color options
+* Fix : Improve compatibility with other plugins
+
+= 1.1.0 =
+* Add : Create custom CSS styles and apply to paragraph blocks
+* Add : Identify CSS property wity with: name, class and color
+* Add : New Summary block: Insert Gutenberg summary based on content headers
+
+= 1.0.1 =
+* Fix : Compatibility with Gutenberg version 2.2.0
+
+= 1.0.0 =
+* Add : Initial version
+* Add : Blocks access: Define which editor blocks Users / User roles can use
+* Add : Make gallery blocks images can be opened in a popup lightbox
+* Add : Option to display alt text as caption when a gallery lightbox is opened
+
+
 
 == Upgrade Notice ==
 

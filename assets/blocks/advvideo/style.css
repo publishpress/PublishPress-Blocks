@@ -41,8 +41,9 @@
 
 .advgb-button-wrapper button.button {
     position: absolute;
-    left: calc(50% - 50px);
-    top: 15%;
+    left: 50%;
+    top: 25%;
+    transform: translateX(-50%) !important;
 }
 
 .advgb-video-input {

@@ -25,6 +25,12 @@ if ($updating) {
     $rotating = 'rotating';
     $button_text = __('Still updating... Please wait a bit...', 'advanced-gutenberg');
 
+    wp_enqueue_script('wp-blocks');
+    wp_enqueue_script('wp-element');
+    wp_enqueue_script('wp-data');
+    wp_enqueue_script('wp-components');
+    wp_enqueue_script('wp-core-blocks');
+    wp_enqueue_script('wp-editor');
     do_action('enqueue_block_editor_assets');
     wp_enqueue_script('update_list');
     wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
