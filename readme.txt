@@ -110,53 +110,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 == Changelog ==
 
-= 1.5.0 =
-* Add : New block: Accordion block
-* Add : New block: Tabs block
-* Add : New block: Social links block
-* Add : Option to define default vertical spacing between blocks (frontend)
-* Fix : Advanced Video block: Not override poster after fetching video
-* Fix : Error while updating blocks list on profile
-
-= 1.4.0 =
-* Add : New block: Map block
-* Add : New block: Advanced Video block
-* Add : New block: Advanced Table block
-* Add : New options to add margin & padding on Columns and Text Columns block
-* Fix : Update code format to match latest Gutenberg release
-
-= 1.3.0 =
-* Add : New block: Testimonial block
-* Add : New block: Advanced Image block
-* Add : New block: Counter (count up) with symbol
-* Add : New options to customize Separator block
-* Fix : Make block icons in profile display properly like in Gutenberg
-
-= 1.2.1 =
-* Fix : Improve code format and compatibility
-
-= 1.2.0 =
-* Add : New Advanced Button block: create button with more styles (hover, border, padding...)
-* Add : New Advanced List block: create list with list icon, icon color...
-* Add : Summary block: Allow to set anchor links color, block alignment and load summary in minimized
-* Add : New summary block option: load the block minimized and define text
-* Add : New style for summary block: align the block + font style and color options
-* Fix : Improve compatibility with other plugins
-
-= 1.1.0 =
-* Add : Create custom CSS styles and apply to paragraph blocks
-* Add : Identify CSS property wity with: name, class and color
-* Add : New Summary block: Insert Gutenberg summary based on content headers
-
-= 1.0.1 =
-* Fix : Compatibility with Gutenberg version 2.2.0
-
-= 1.0.0 =
-* Add : Initial version
-* Add : Blocks access: Define which editor blocks Users / User roles can use
-* Add : Make gallery blocks images can be opened in a popup lightbox
-* Add : Option to display alt text as caption when a gallery lightbox is opened
-
+{{changelog}}
 
 
 == Upgrade Notice ==
