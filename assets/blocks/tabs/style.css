@@ -1,0 +1,88 @@
+ul.advgb-tabs-panel {
+    list-style-type: none !important;
+    border: 1px solid #ccc;
+    border-bottom: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none;
+}
+
+ul.advgb-tabs-panel:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+li.advgb-tab, li.advgb-tab.ui-state-default {
+    float: left;
+    margin: 0;
+    margin-bottom: -1px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: none;
+}
+
+li.advgb-tab > a, li.advgb-add-tab > span {
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+li.advgb-tab a, li.advgb-tab a:focus, li.advgb-tab a:hover {
+    text-decoration: none;
+    box-shadow: none;
+}
+
+li.advgb-tab.ui-tabs-active {
+    background-color: #2196f3 !important;
+    border-bottom-color: transparent !important;
+}
+
+li.advgb-tab.ui-tabs-active a {
+    color: #fff !important;
+}
+
+li.advgb-tab.advgb-add-tab.ui-state-default {
+    border: 1px solid transparent;
+}
+
+li.advgb-tab.advgb-add-tab.ui-state-default:hover {
+    background: #ccc;
+}
+
+li.advgb-add-tab span {
+    line-height: 1.8;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+li.advgb-add-tab svg {
+    color: #2196f3;
+    vertical-align: sub;
+}
+
+span.advgb-tab-remove {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    height: 20px;
+    color: #fff;
+    background-color: #FCB908;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    z-index: 1;
+}
+
+li.advgb-tab:hover span.advgb-tab-remove {
+    display: block;
+}
+
+span.advgb-tab-remove svg {
+    vertical-align: baseline;
+}
+
+div.advgb-tab-body {
+    padding: 10px 10px 10px 15px;
+    border: 1px solid #ccc;
+    background: none;
+}

@@ -2,9 +2,35 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "wp_version": "4.9.6",
   "changelog": {
+    "1.5.0": [
+      {
+        "type": "feature",
+        "title": "New block: Accordion block"
+      },
+      {
+        "type": "feature",
+        "title": "New block: Tabs block"
+      },
+      {
+        "type": "feature",
+        "title": "New block: Social links block"
+      },
+      {
+        "type": "feature",
+        "title": "Option to define default vertical spacing between blocks (frontend)"
+      },
+      {
+        "type": "fix",
+        "title": "Advanced Video block: Not override poster after fetching video"
+      },
+      {
+        "type": "fix",
+        "title": "Error while updating blocks list on profile"
+      }
+    ],
     "1.4.0": [
       {
         "type": "feature",

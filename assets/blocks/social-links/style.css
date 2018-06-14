@@ -1,0 +1,54 @@
+.advgb-social-icons {
+    display:  inline-block;
+}
+
+.advgb-social-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 5px;
+    padding: 3px;
+    cursor: pointer;
+    vertical-align: middle;
+    color: #000;
+    position: relative;
+}
+
+.advgb-social-icon.selected {
+    outline: 2px solid #000;
+}
+
+span.advgb-social-icon.selected:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    border: 2px solid #fff;
+    height: 100%;
+    width: 100%;
+    border-radius: 25%;
+}
+
+.advgb-social-icon svg, .advgb-social-icon img {
+    vertical-align: top;
+}
+
+.advgb-social-icon img {
+    max-width: 100%;
+    height: auto;
+}
+
+.advgb-social-link {
+    display: flex;
+    flex: auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.advgb-social-link .components-base-control {
+    margin: 0;
+    margin-left: 10px;
+    width: 350px;
+    text-align: left;
+}

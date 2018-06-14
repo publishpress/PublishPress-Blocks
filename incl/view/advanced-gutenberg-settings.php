@@ -6,6 +6,7 @@ $saved_settings = get_option('advgb_settings');
 $gallery_lightbox_checked = $saved_settings['gallery_lightbox'] ? 'checked' : '';
 $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] ? 'checked' : '';
 $google_api_key_saved = isset($saved_settings['google_api_key']) ? $saved_settings['google_api_key'] : '';
+$blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 
 $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_styles);
 ?>
@@ -108,6 +109,35 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                             <a target="_blank" href="https://support.google.com/googleapi/answer/6158862" style="margin-left: 10px">
                                 <?php esc_html_e('How to create a Google API Key', 'advanced-gutenberg') ?>
                             </a>
+                        </span>
+                    </div>
+                </li>
+
+                <li class="settings-option">
+                    <h3 class="settings-separator-title">
+                        <?php esc_html_e('Blocks Settings', 'advanced-gutenberg') ?>
+                    </h3>
+                </li>
+                <li class="settings-option">
+                    <div class="settings-option-wrapper">
+                        <label for="blocks_spacing"
+                               class="advgb_qtip switch-label"
+                               alt="<?php esc_attr_e(
+                                   'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Blocks spacing', 'advanced-gutenberg') ?>
+                        </label>
+                        <span>
+                            <input type="number"
+                                   min="0"
+                                   name="blocks_spacing"
+                                   id="blocks_spacing"
+                                   style="margin-left: 10px; width: 50px"
+                                   value="<?php echo esc_html($blocks_spacing) ?>"
+                            >
+                            <span>px</span>
                         </span>
                     </div>
                 </li>
