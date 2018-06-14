@@ -25,11 +25,14 @@ Additional features added to Gutenberg plugin:
 - Advanced List block: create list with list icon, icon color
 - Map block: load a Google map position with zoom, icon, tooltip, title...
 - Advanced Table block: create table with style! color, border, cell size and more
+- Accordion block: display content in a fully configurable accordion
+- Tabs block: display content in a fully tabbed UX
 - Testimonial block: define avatar, title, text, colors...
 - Counter block: display numbers in a dynamic, fun and engaging way
 - Advanced Image block: a new image block with hover text, overlay, colors, link, advanced size definition
 - Advanced Video block: load and display local and remote video
 - Supercharge the separator tool with size, color, spaces
+- Social links block: add predefined or custom icon/link to your favorite social networks
 
 > <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
 
@@ -64,6 +67,9 @@ We reply to every question about the editor on the forum here, just ask :) We al
 = Does Advanced Gutenberg slowing down my website? =
 The plugin has almost NO impact on page load, it's only loaded during the edition process.
 
+= What is the Gutenberg version version resuired to run Advanced Gutenberg plugin properly? =
+The latest one, always! We're testing it with previous versions but the latest version of Gutenberg brings new features for developer and allow better content edition. 
+
 = Is Advanced Gutenberg free? =
 Yes, totally free of charge.
 
@@ -91,7 +97,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Attribute profiles to user or user roles
 1. Testimonial and counter blocks
 1. Custom CSS applied to Gutenberg paragraph blocks
-1. Summary with anchors based on Gutenberg headers
+1. Build fully custom accordions and tabs from Gutenberg
 1. Google Maps Gutenberg Block
 1. Advanced Video block including remote video (Youtube...) and local video (.mp4...)
 1. Advanced table manager: manage tables in Gutenberg with several styling options
