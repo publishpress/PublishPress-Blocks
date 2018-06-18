@@ -16,7 +16,9 @@
                 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z"/>
         </Fragment>
     );
-    const socialBlockIcon = <svg width="24" height="24" viewBox="0 0 24 24">{socialBlockIconContent}</svg>;
+
+    const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
+    const socialBlockIcon = <svg width="24" height="24" viewBox="0 0 24 24" fill={blockColor}>{socialBlockIconContent}</svg>;
 
     const ICONS_SET = {
         blogger: (
