@@ -7,6 +7,7 @@ $gallery_lightbox_checked = $saved_settings['gallery_lightbox'] ? 'checked' : ''
 $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] ? 'checked' : '';
 $google_api_key_saved = isset($saved_settings['google_api_key']) ? $saved_settings['google_api_key'] : '';
 $blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
+$blocks_icon_color = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#000000';
 
 $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_styles);
 ?>
@@ -138,6 +139,26 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                                    value="<?php echo esc_html($blocks_spacing) ?>"
                             >
                             <span>px</span>
+                        </span>
+                    </div>
+                </li>
+                <li class="settings-option">
+                    <div class="settings-option-wrapper">
+                        <label for="blocks_icon_color"
+                               class="advgb_qtip switch-label"
+                               alt="<?php esc_attr_e(
+                                   'Set color for blocks that added by Advanced Gutenberg',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Blocks icon color', 'advanced-gutenberg') ?>
+                        </label>
+                        <span>
+                            <input type="text"
+                                   name="blocks_icon_color"
+                                   id="blocks_icon_color"
+                                   class="minicolors minicolors-input"
+                                   value="<?php echo esc_html($blocks_icon_color) ?>" />
                         </span>
                     </div>
                 </li>

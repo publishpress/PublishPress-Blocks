@@ -56,6 +56,10 @@
     border: 1px solid #000000;
 }
 
+.settings-option-wrapper .minicolors-theme-default {
+    margin-left: 10px;
+}
+
 /*Save setting button*/
 .save-settings-block {
     margin-top: 20px;
