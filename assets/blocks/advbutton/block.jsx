@@ -79,17 +79,17 @@
                         </div>
                     </BlockControls>
                     <span style={ { display: 'inline-block' } } >
-                    <RichText
-                        tagName="span"
-                        placeholder={ __( 'Add text…' ) }
-                        value={ text }
-                        onChange={ ( value ) => setAttributes( { text: value } ) }
-                        formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-                        isSelected={ isSelected }
-                        className={ `wp-block-advgb-button_link ${id}` }
-                        keepPlaceholderOnFocus
-                    />
-                </span>
+                        <RichText
+                            tagName="span"
+                            placeholder={ __( 'Add text…' ) }
+                            value={ text }
+                            onChange={ ( value ) => setAttributes( { text: value } ) }
+                            formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+                            isSelected={ isSelected }
+                            className={ `wp-block-advgb-button_link ${id}` }
+                            keepPlaceholderOnFocus
+                        />
+                    </span>
                     <style>
                         {`.${id} {
                         font-size: ${textSize}px;
