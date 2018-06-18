@@ -1366,16 +1366,13 @@ float: left;'
         // Avoid default value (string 'all')
         if (is_array($current_activated_blocks)) {
             $all_blocks_saved = get_option('advgb_blocks_list');
-            foreach ($new_blocks as $block) {
-                $is_old = false;
-                foreach ($all_blocks_saved as $saved_block) {
-                    if ($block === $saved_block['name']) {
-                        $is_old = true;
-                        break;
-                    }
-                }
+            $all_blocks_saved_name = array();
+            foreach ($all_blocks_saved as $saved_block) {
+                array_push($all_blocks_saved_name, $saved_block['name']);
+            }
 
-                if (!$is_old) {
+            foreach ($new_blocks as $block) {
+                if (!in_array($block, $all_blocks_saved_name)) {
                     if (!in_array($block, $current_activated_blocks)) {
                         array_push($current_activated_blocks, $block);
                     }
