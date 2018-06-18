@@ -78,18 +78,17 @@ wp_nonce_field('advgb_nonce', 'advgb_nonce_field');
                         <?php foreach ($all_blocks_list as $block) : ?>
                             <?php if ($block['category'] !== $category['slug']) :
                                 continue;
-                            endif;
-                            $block_id = strtolower(str_replace(' ', '', $block['title'])) ?>
+                            endif; ?>
                             <li class="block-item" data-type="<?php echo esc_attr($block['name']) ?>">
                                 <input type="checkbox" name="active_blocks[]"
-                                       id="block-<?php echo esc_attr($block_id) ?>"
+                                       id="block-<?php echo esc_attr($block['name']) ?>"
                                        value="<?php echo esc_attr($block['name']) ?>"
                                     <?php if ($active_blocks_saved === 'all'
                                               || in_array($block['name'], $active_blocks_saved)) :
                                         echo 'checked';
                                     endif; ?>
                                 />
-                                <label for="block-<?php echo esc_attr($block_id) ?>" class="switch-label">
+                                <label for="block-<?php echo esc_attr($block['name']) ?>" class="switch-label">
                                     <?php if (strpos($block['icon'], '<svg') !== false) :
                                         echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
                                     else : ?>
