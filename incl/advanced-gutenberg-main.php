@@ -262,6 +262,10 @@ float: left;'
             plugins_url('assets/blocks/custom-columns/columns.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
         );
+
+        $saved_settings = get_option('advgb_settings');
+        $blocks_icon_color = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
+        wp_localize_script('summary_blocks', 'advgbBlocks', array('color' => $blocks_icon_color));
     }
 
     /**
@@ -1021,6 +1025,7 @@ float: left;'
 
             $save_config['google_api_key'] = $_POST['google_api_key'];
             $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
+            $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
 
             update_option('advgb_settings', $save_config);
 
