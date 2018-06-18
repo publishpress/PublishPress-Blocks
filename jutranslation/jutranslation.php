@@ -186,6 +186,22 @@ class Jutranslation
         $addons = apply_filters(self::$extension_slug . '_get_addons', array());
         ksort($addons);
 
+        if (PHP_VERSION_ID < 70300) {
+            if (!function_exists('is_countable')) {
+                /**
+                 * Check countable variables from php version 7.0.3
+                 *
+                 * @param mixed $var Variable to check
+                 *
+                 * @return boolean
+                 */
+                function is_countable($var) // phpcs:ignore
+                {
+                    return is_array($var) || $var instanceof Countable || $var instanceof ResourceBundle || $var instanceof SimpleXmlElement;
+                }
+            }
+        }
+
         $languages = array();
         foreach ($installed_languages as $installed_language) {
             foreach ($addons as $addon) {
@@ -248,8 +264,10 @@ class Jutranslation
 
                 //Check if a translation exists for each entry
                 foreach ($mo->entries as $entry) {
-                    if (count($entry->translations[0])) {
-                        $language->overrided++;
+                    if (is_countable($entry->translations[0])) {
+                        if (count($entry->translations[0])) {
+                            $language->overrided++;
+                        }
                     }
                 }
             }
