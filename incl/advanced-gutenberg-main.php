@@ -149,6 +149,7 @@ float: left;'
             add_action('admin_init', array($this, 'initBlocksList'));
             add_action('admin_menu', array($this, 'registerMetaBox'));
             add_action('admin_menu', array($this, 'registerSettingsMenu'), 5);
+            add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('load-settings_page_advgb_settings', array($this, 'saveSettings'));
             add_filter('allowed_block_types', array($this, 'initActiveBlocksForGutenberg'));
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
@@ -723,6 +724,10 @@ float: left;'
     {
         // Register CSS
         wp_register_style(
+            'main_style',
+            plugins_url('assets/css/main.css', dirname(__FILE__))
+        );
+        wp_register_style(
             'profile_style',
             plugins_url('assets/css/style.css', dirname(__FILE__))
         );
@@ -761,6 +766,10 @@ float: left;'
         wp_register_style(
             'minicolors_css',
             plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'material_icon_font',
+            plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
         );
 
         // Register JS
@@ -842,6 +851,41 @@ float: left;'
             'dashicons',
             '.entry-content > * {margin-bottom: '.$blocks_spacing.'px}'
         );
+    }
+
+    /**
+     * Register main menu
+     *
+     * @return void
+     */
+    public function registerMainMenu()
+    {
+        add_menu_page(
+            __('Advanced Gutenberg', 'advanced-gutenberg'),
+            __('Advanced Gutenberg', 'advanced-gutenberg'),
+            'manage_options',
+            'advgb_main',
+            array($this, 'advgbMainView'),
+            'dashicons-edit'
+        );
+    }
+
+    /**
+     * Load main view
+     *
+     * @return void
+     */
+    public function advgbMainView()
+    {
+        wp_enqueue_style('material_icon_font');
+        wp_enqueue_style('tabs_style');
+        wp_enqueue_style('main_style');
+
+        wp_enqueue_script('waves_js');
+        wp_enqueue_script('velocity_js');
+        wp_enqueue_script('tabs_js');
+
+        $this->loadView('main-view');
     }
 
     /**
