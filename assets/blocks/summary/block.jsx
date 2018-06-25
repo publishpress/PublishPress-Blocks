@@ -234,7 +234,9 @@
                 type: 'string',
             }
         },
-        useOnce: true,
+        supports: {
+            multiple: false,
+        },
         edit: SummaryBlock,
         save: ( { attributes } ) => {
             const { headings, loadMinimized, anchorColor, align = 'none', postTitle, headerTitle } = attributes;
