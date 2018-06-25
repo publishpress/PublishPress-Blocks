@@ -774,6 +774,10 @@ float: left;'
 
         // Register JS
         wp_register_script(
+            'main_js',
+            plugins_url('assets/js/main.js', dirname(__FILE__))
+        );
+        wp_register_script(
             'update_list',
             plugins_url('assets/js/update-block-list.js', dirname(__FILE__))
         );
@@ -884,6 +888,7 @@ float: left;'
         wp_enqueue_script('waves_js');
         wp_enqueue_script('velocity_js');
         wp_enqueue_script('tabs_js');
+        wp_enqueue_script('main_js');
 
         $this->loadView('main-view');
     }
