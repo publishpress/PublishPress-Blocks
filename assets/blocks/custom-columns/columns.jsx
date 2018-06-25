@@ -25,7 +25,7 @@
     } );
 
     // Add options to edit in backend
-    addFilter( 'blocks.BlockEdit', 'advgb/editColumnsAttrs', function ( BlockEdit ) {
+    addFilter( 'editor.BlockEdit', 'advgb/editColumnsAttrs', function ( BlockEdit ) {
         return ( props ) => {
             if (props.name === "core/text-columns" || props.name === "core/columns") {
                 const { isSelected, attributes, setAttributes, id } = props;

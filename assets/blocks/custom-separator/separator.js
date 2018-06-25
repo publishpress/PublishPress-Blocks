@@ -36,7 +36,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     });
 
     // Add option to select styles for separator
-    addFilter('blocks.BlockEdit', 'advgb/customSeparatorStyles', function (BlockEdit) {
+    addFilter('editor.BlockEdit', 'advgb/customSeparatorStyles', function (BlockEdit) {
         return function (props) {
             if (props.name === "core/separator") {
                 var isSelected = props.isSelected,
