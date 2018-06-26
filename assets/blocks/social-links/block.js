@@ -43,7 +43,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     var socialBlockIcon = React.createElement(
         "svg",
-        { width: "24", height: "24", viewBox: "0 0 24 24", fill: blockColor },
+        { width: "20", height: "20", viewBox: "0 0 24 24", fill: blockColor },
         socialBlockIconContent
     );
 

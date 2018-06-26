@@ -18,7 +18,7 @@
     );
 
     const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
-    const socialBlockIcon = <svg width="24" height="24" viewBox="0 0 24 24" fill={blockColor}>{socialBlockIconContent}</svg>;
+    const socialBlockIcon = <svg width="20" height="20" viewBox="0 0 24 24" fill={blockColor}>{socialBlockIconContent}</svg>;
 
     const ICONS_SET = {
         blogger: (
