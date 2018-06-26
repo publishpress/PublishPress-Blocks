@@ -1,0 +1,66 @@
+#profiles-list {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e1e1e1;
+}
+
+#profiles-list th {
+    text-align: left;
+}
+
+#profiles-list th {
+    padding: 10px;
+}
+
+#profiles-list tbody td {
+    padding: 20px 10px;
+}
+
+#profiles-list thead th, #profiles-list tfoot th {
+    border-top: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+#profiles-list .profile-header-title {
+    width: 70%;
+}
+
+#profiles-list .profile-header-author {
+    width: 15%;
+}
+
+#profiles-list .profile-header-date {
+    width: 15%;
+}
+
+.advgb-profile .profile-title .profile-delete {
+    visibility: hidden;
+    cursor: pointer;
+    font-size: 20px;
+    vertical-align: sub;
+    margin-left: 10px;
+}
+
+.advgb-profile:hover .profile-delete {
+    visibility: visible;
+}
+
+#profiles-list .sorting-header {
+    cursor: pointer;
+}
+
+#profiles-list .sorting-header i {
+    vertical-align: bottom;
+}
+
+.sorting-header.desc i.dashicons:before {
+    content: "\f140";
+}
+
+.sorting-header.asc i.dashicons:before {
+    content: "\f142";
+}
+
+.advgb-profile .profile-title a {
+    text-decoration: none;
+}

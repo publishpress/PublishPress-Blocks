@@ -8,6 +8,35 @@
     box-sizing: border-box;
 }
 
+/*Button styles*/
+button.advgb-menu-button {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #9fabba;
+    min-width: 190px;
+    padding: 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+button.advgb-menu-button a {
+    color: #000;
+    text-decoration: none;
+}
+
+button.advgb-menu-button i {
+    margin-right: 5px;
+}
+
+button.advgb-menu-button:hover {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
 /*Left Panel styles*/
 #advgb-left-panel {
     float: left;
@@ -107,5 +136,39 @@ input.advgb-menu-search-input::placeholder {
 #advgb-right-panel {
     float: left;
     width: calc(100% - 300px);
-    padding: 20px;
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+.advgb-header {
+    margin: 10px auto;
+    padding: 10px 0;
+}
+
+.advgb-header .header-title {
+    margin: 0;
+    display: inline-block;
+    padding: 10px;
+}
+
+.inline-button-wrapper {
+    float: right;
+}
+
+/*Search input styles*/
+.advgb-search-wrapper {
+    margin: 25px auto;
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+}
+
+.advgb-search-wrapper .advgb-search-input {
+    display: inline-block;
+    width: calc(100% - 30px);
+    border: none;
+}
+
+.advgb-search-wrapper .advgb-search-input:focus {
+    border: none;
+    box-shadow: none;
 }

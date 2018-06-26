@@ -36,7 +36,7 @@ $tabs_data = array(
         </div>
         <ul class="tabs menu-tabs">
             <?php foreach ($tabs_data as $tab) : ?>
-                <li class="tab">
+                <li class="tab" data-tab-title="<?php echo esc_attr($tab['title']) ?>">
                     <a href="#<?php echo esc_attr($tab['id']) ?>"
                        class="link-tab white-text waves-effect waves-light"
                     >
