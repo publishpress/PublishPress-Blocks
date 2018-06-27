@@ -41,7 +41,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
     var socialBlockIcon = React.createElement(
         "svg",
-        { width: "24", height: "24", viewBox: "0 0 24 24" },
+        { width: "20", height: "20", viewBox: "0 0 24 24" },
         socialBlockIconContent
     );
 

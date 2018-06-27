@@ -1,6 +1,6 @@
 === Advanced Gutenberg ===
 Contributors: JoomUnited
-Tags: editor, text editor, page builder
+Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor
 Requires at least: 4.8
 Tested up to: 4.9.6
 Stable tag: 1.5.0
