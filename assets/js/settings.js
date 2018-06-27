@@ -12,6 +12,18 @@ jQuery(document).ready(function ($) {
         $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
     }
 
+    $('#enable_blocks_spacing').on('change', function () {
+        if (this.checked) {
+            $('#blocks_spacing_wrapper').removeClass('hidden-item');
+        } else {
+            $('#blocks_spacing_wrapper').addClass('hidden-item');
+        }
+    });
+
+    if ($('#enable_blocks_spacing').is(':checked')) {
+        $('#blocks_spacing_wrapper').removeClass('hidden-item');
+    }
+
     $('#advgb-config-close').click(function () {
         $('#advgb-config-success').slideUp();
     });
