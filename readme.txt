@@ -2,8 +2,8 @@
 Contributors: JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor
 Requires at least: 4.8
-Tested up to: 4.9.6
-Stable tag: 1.5.0
+Tested up to: {{wp_version}}
+Stable tag: {{version}}
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
