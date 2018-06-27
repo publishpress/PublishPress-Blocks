@@ -6,6 +6,7 @@ $saved_settings = get_option('advgb_settings');
 $gallery_lightbox_checked = $saved_settings['gallery_lightbox'] ? 'checked' : '';
 $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] ? 'checked' : '';
 $google_api_key_saved = isset($saved_settings['google_api_key']) ? $saved_settings['google_api_key'] : '';
+$enable_blocks_spacing = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
 $blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 
 $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_styles);
@@ -120,6 +121,27 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 </li>
                 <li class="settings-option">
                     <div class="settings-option-wrapper">
+                        <label for="enable_blocks_spacing"
+                               class="advgb_qtip switch-label"
+                               alt="<?php esc_attr_e(
+                                   'Enable block spacing settings',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Enable blocks spacing', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="switch-btn">
+                            <label class="switch">
+                                <input type="checkbox" name="enable_blocks_spacing"
+                                       id="enable_blocks_spacing"
+                                       value="1"
+                                    <?php echo esc_attr($enable_blocks_spacing) ?>
+                                />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-option-wrapper hidden-item" id="blocks_spacing_wrapper">
                         <label for="blocks_spacing"
                                class="advgb_qtip switch-label"
                                alt="<?php esc_attr_e(

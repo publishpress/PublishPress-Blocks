@@ -832,12 +832,14 @@ float: left;'
         );
 
         $saved_settings = get_option('advgb_settings');
-        $blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
+        if (isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing']) {
+            $blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 
-        wp_add_inline_style(
-            'dashicons',
-            '.entry-content > * {margin-bottom: '.$blocks_spacing.'px}'
-        );
+            wp_add_inline_style(
+                'dashicons',
+                '.entry-content > * {margin-bottom: ' . $blocks_spacing . 'px}'
+            );
+        }
     }
 
     /**
@@ -1017,6 +1019,12 @@ float: left;'
                 $save_config['gallery_lightbox_caption'] = 1;
             } else {
                 $save_config['gallery_lightbox_caption'] = 0;
+            }
+
+            if (isset($_POST['enable_blocks_spacing'])) {
+                $save_config['enable_blocks_spacing'] = 1;
+            } else {
+                $save_config['enable_blocks_spacing'] = 0;
             }
 
             $save_config['google_api_key'] = $_POST['google_api_key'];
