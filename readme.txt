@@ -8,6 +8,8 @@ Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+
+
 Supercharge WordPress Gutenberg editor plugin with 20+ new blocks. Create custom Gutenberg block profiles by user or user roles
 
 == Description ==
