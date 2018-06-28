@@ -133,7 +133,7 @@ window.onload = function () {
                     });
 
                     $('#update-list-btn').removeAttr('disabled')
-                        .find('span').text('Update')
+                        .find('span').text('Refresh')
                         .parent().find('i').removeClass('rotating');
 
                     $('#block-update-notice').fadeIn(500).delay(2000).fadeOut(500);

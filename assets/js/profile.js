@@ -1,16 +1,10 @@
 jQuery(document).ready(function ($) {
-    // Click save settings button
-    $('#save-advgb-profile').unbind('click').click(function (e) {
-        e.preventDefault();
-        $('#publish').click();
-    });
-
     // Click update blocks list button
     $('#update-list-btn').unbind('click').click(function () {
         var willUpdate = confirm('Make sure everthing is saved before updating. Continue?');
         if (willUpdate) {
             $(this).find('i').addClass('rotating');
-            $(this).find('span').text('Updating...');
+            $(this).find('span').text('Refreshing...');
             window.location.href += '&update_blocks_list=true';
         }
     });

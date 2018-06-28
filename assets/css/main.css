@@ -1,7 +1,12 @@
 #advgb-main-wrapper {
-    height: 1000px;
     margin-left: -20px;
     font-family: 'Roboto', sans-serif;
+}
+
+#advgb-main-wrapper:after {
+    content: '';
+    display: block;
+    clear: both;
 }
 
 #advgb-main-wrapper * {
@@ -20,6 +25,7 @@ button.advgb-menu-button {
     font-weight: bold;
     cursor: pointer;
     text-align: center;
+    transition: all ease 0.5s;
 }
 
 button.advgb-menu-button a {
@@ -29,6 +35,9 @@ button.advgb-menu-button a {
 
 button.advgb-menu-button i {
     margin-right: 5px;
+    font-size: 14px;
+    height: 14px;
+    vertical-align: text-top;
 }
 
 button.advgb-menu-button:hover {
@@ -37,14 +46,46 @@ button.advgb-menu-button:hover {
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
+button.advgb-menu-button.advgb-button-orange {
+    background-color: #ff8726;
+    color: #fff;
+    border-color: #ff8726;
+}
+
+.orange-text {
+    color: #ff8726 !important;
+}
+
+.inline-button-wrapper {
+    float: right;
+}
+
+/*Top navigation tabs styles*/
+.tabs.advgb-top-tabs {
+    width: fit-content !important;
+}
+
+.tabs.advgb-top-tabs .indicator {
+    background-color: #ff8726;
+}
+
+.tabs.advgb-top-tabs li.tab {
+    text-transform: capitalize;
+    min-width: 200px;
+}
+
+.tabs.advgb-top-tabs li.tab a.link-tab {
+    color: #ff8726;
+}
+
 /*Left Panel styles*/
 #advgb-left-panel {
-    float: left;
     width: 300px;
     height: 100%;
     padding: 20px 0;
     background-image: linear-gradient(to bottom, #6465e2, #60c3ef);
     box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.1);
+    position: fixed;
 }
 
 .advgb-logo a {
@@ -134,25 +175,21 @@ input.advgb-menu-search-input::placeholder {
 
 /*Right content styles*/
 #advgb-right-panel {
-    float: left;
     width: calc(100% - 300px);
     padding: 0 20px;
     font-size: 14px;
+    margin-left: 300px;
 }
 
 .advgb-header {
-    margin: 10px auto;
+    margin-bottom: 15px;
     padding: 10px 0;
 }
 
 .advgb-header .header-title {
     margin: 0;
     display: inline-block;
-    padding: 10px;
-}
-
-.inline-button-wrapper {
-    float: right;
+    padding: 10px 0;
 }
 
 /*Search input styles*/
@@ -160,6 +197,10 @@ input.advgb-menu-search-input::placeholder {
     margin: 25px auto;
     padding: 10px;
     border: 1px solid #e1e1e1;
+}
+
+.advgb-search-wrapper.focused {
+    border: 1px solid #ff8726;
 }
 
 .advgb-search-wrapper .advgb-search-input {

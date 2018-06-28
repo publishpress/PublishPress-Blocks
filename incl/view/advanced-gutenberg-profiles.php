@@ -1,13 +1,18 @@
 <?php
 defined('ABSPATH') || die;
 
+if (isset($_GET['view']) && $_GET['view'] === 'profile') { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- view only
+    $this->loadView('profile');
+    return false;
+}
+
 wp_enqueue_style(
     'profiles_styles',
-    plugins_url('assets/css/profiles.css', dirname(dirname(__FILE__)))
+    plugins_url('assets/css/profiles.css', ADVANCED_GUTENBERG_PLUGIN)
 );
 wp_enqueue_script(
     'profiles_js',
-    plugins_url('assets/js/profiles.js', dirname(dirname(__FILE__)))
+    plugins_url('assets/js/profiles.js', ADVANCED_GUTENBERG_PLUGIN)
 );
 
 $args     = array(

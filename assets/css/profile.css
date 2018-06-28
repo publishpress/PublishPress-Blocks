@@ -21,6 +21,15 @@ button[disabled] {
     margin: 15px 0;
 }
 
+.tab-content .advgb-header {
+    margin-top: 15px;
+}
+
+.profile-title .advgb-search-wrapper {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
 ul.blocks-list {
     margin: 10px;
 }

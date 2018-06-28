@@ -12,6 +12,12 @@
                     $(this).hide();
                 }
             })
+        });
+
+        $('.advgb-search-input').on('focus', function () {
+            $(this).parent('.advgb-search-wrapper').addClass('focused');
+        }).on('blur', function () {
+            $(this).parent('.advgb-search-wrapper').removeClass('focused');
         })
     })
 })(jQuery);
