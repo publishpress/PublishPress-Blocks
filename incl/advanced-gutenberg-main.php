@@ -143,14 +143,10 @@ float: left;'
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
 
         if (is_admin()) {
-            add_action('init', array($this, 'registerAdvgbMenu'));
-            add_action('save_post_advgb_profiles', array($this, 'saveAdvgbProfile'));
-            add_filter('post_updated_messages', array($this, 'updatePostMsg'));
+            add_action('init', array($this, 'registerAdvgbProfile'));
             add_action('admin_init', array($this, 'initBlocksList'));
-            add_action('admin_menu', array($this, 'registerMetaBox'));
-            add_action('admin_menu', array($this, 'registerSettingsMenu'), 5);
             add_action('admin_menu', array($this, 'registerMainMenu'));
-            add_action('load-settings_page_advgb_settings', array($this, 'saveSettings'));
+            add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
             add_filter('allowed_block_types', array($this, 'initActiveBlocksForGutenberg'));
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
@@ -729,7 +725,7 @@ float: left;'
         );
         wp_register_style(
             'profile_style',
-            plugins_url('assets/css/style.css', dirname(__FILE__))
+            plugins_url('assets/css/profile.css', dirname(__FILE__))
         );
         wp_register_style(
             'settings_style',
@@ -895,11 +891,11 @@ float: left;'
     }
 
     /**
-     * Register profiles menu
+     * Register profiles custom post type
      *
      * @return void
      */
-    public function registerAdvgbMenu()
+    public function registerAdvgbProfile()
     {
         $labels = array(
             'name'               => __('Advanced Gutenberg Profiles', 'advanced-gutenberg'),  // Profile title
@@ -919,7 +915,6 @@ float: left;'
             'labels'       => $labels,
             'public'       => false,
             'show_ui'      => true,
-            'show_in_menu' => 'gutenberg',
             'supports'     => array('title', 'author'),
             'capabilities' => array(
                 'edit_posts'          => 'edit_advgb_profiles',
@@ -936,117 +931,13 @@ float: left;'
     }
 
     /**
-     * Remove and add metabox for create profile screen
+     * Save data function
      *
-     * @return mixed      Mixed value
+     * @return boolean True on success, False on failure
      */
-    public function registerMetaBox()
+    public function saveAdvgbData()
     {
-        remove_meta_box('authordiv', 'advgb_profiles', 'core');
-        remove_meta_box('slugdiv', 'advgb_profiles', 'core');
-
-        /**
-         * Make profile only have one column layout
-         *
-         * @param integer $columns Number of columns to set
-         *
-         * @return integer   Number of columns
-         */
-        function advgbSetScreenLayoutColumns($columns)
-        {
-            $columns['advgb_profiles'] = 1;
-
-            return $columns;
-        }
-        add_filter('screen_layout_columns', 'advgbSetScreenLayoutColumns');
-
-        /**
-         * Make profile only have one column layout
-         *
-         * @return integer
-         */
-        function advgbSetScreenLayout()
-        {
-            return 1;
-        }
-        add_filter('get_user_option_screen_layout_advgb_profiles', 'advgbSetScreenLayout');
-
-        add_meta_box(
-            'advgb_meta_box',
-            __('Advanced Gutenberg Profile', 'advanced-gutenberg'),
-            array($this, 'advgbProfilesView'),
-            'advgb_profiles',
-            'normal',
-            'core'
-        );
-    }
-
-    /**
-     * Load profile view
-     *
-     * @return void
-     */
-    public function advgbProfilesView()
-    {
-        wp_enqueue_style('tabs_style');
-        wp_enqueue_style('button_switch_style');
-        wp_enqueue_style('profile_style');
-
-        wp_enqueue_script('waves_js');
-        wp_enqueue_script('velocity_js');
-        wp_enqueue_script('tabs_js');
-        wp_enqueue_script('profile_js');
-
-        $this->loadView('profile');
-    }
-
-    /**
-     * Register settings menu
-     *
-     * @return void
-     */
-    public function registerSettingsMenu()
-    {
-        add_submenu_page(
-            'options-general.php',
-            __('Advanced Gutenberg Settings', 'advanced-gutenberg'),
-            __('Advanced Gutenberg', 'advanced-gutenberg'),
-            'manage_options',
-            'advgb_settings',
-            array($this, 'advgbSettingsView')
-        );
-    }
-
-    /**
-     * Load settings view
-     *
-     * @return void
-     */
-    public function advgbSettingsView()
-    {
-        wp_enqueue_style('font_icons');
-        wp_enqueue_style('advgb_quirk');
-        wp_enqueue_style('tabs_style');
-        wp_enqueue_style('button_switch_style');
-        wp_enqueue_style('minicolors_css');
-        wp_enqueue_style('qtip_style');
-        wp_enqueue_style('codemirror_css');
-        wp_enqueue_style('codemirror_hint_style');
-        wp_enqueue_style('settings_style');
-
-        wp_enqueue_script('waves_js');
-        wp_enqueue_script('velocity_js');
-        wp_enqueue_script('tabs_js');
-        wp_enqueue_script('qtip_js');
-        wp_enqueue_script('less_js');
-        wp_enqueue_script('minicolors_js');
-        wp_enqueue_script('codemirror_js');
-        wp_enqueue_script('codemirror_hint');
-        wp_enqueue_script('codemirror_mode_css');
-        wp_enqueue_script('codemirror_hint_css');
-        wp_enqueue_script('settings_js');
-
-        $this->loadView('settings');
+        return false;
     }
 
     /**
@@ -1137,44 +1028,25 @@ float: left;'
     }
 
     /**
-     * Change post's update messages
-     *
-     * @param string $msg Messages
-     *
-     * @return mixed
-     */
-    public function updatePostMsg($msg)
-    {
-        $msg['advgb_profiles'] = array(
-            1 => __('Advanced Gutenberg profile updated.', 'advanced-gutenberg'),
-            6 => __('Advanced Gutenberg profile created.', 'advanced-gutenberg')
-        );
-
-        return $msg;
-    }
-
-    /**
      * Save profiles settings
      *
-     * @param integer $postID Profiles ID
-     *
      * @return mixed
      */
-    public function saveAdvgbProfile($postID)
+    public function saveAdvgbProfile()
     {
         // Check nonce field
         if (!isset($_POST['advgb_nonce_field'])) {
-            return $postID;
+            return false;
         }
         // Verify nonce
         if (!wp_verify_nonce($_POST['advgb_nonce_field'], 'advgb_nonce')) {
-            return $postID;
+            return false;
         }
 
+        $postID = $_POST['advgb_profile_id'];
+
         // Save settings
-        if ($_POST['post_type'] === 'advgb_profiles'
-            && current_user_can('edit_post', $postID)
-        ) {
+        if (current_user_can('edit_post', $postID)) {
             // Save list of active blocks
             $active_blocks = array();
             if (isset($_POST['active_blocks'])) {
