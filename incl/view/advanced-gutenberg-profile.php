@@ -1,13 +1,7 @@
 <?php
 defined('ABSPATH') || die;
 
-wp_enqueue_style('tabs_style');
-wp_enqueue_style('button_switch_style');
 wp_enqueue_style('profile_style');
-
-wp_enqueue_script('waves_js');
-wp_enqueue_script('velocity_js');
-wp_enqueue_script('tabs_js');
 wp_enqueue_script('profile_js');
 
 $all_blocks_list     = get_option('advgb_blocks_list');
@@ -73,7 +67,7 @@ if ($updating) {
                         <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
                     </span>
                     <button type="button" id="update-list-btn"
-                            class="advgb-menu-button orange-text"
+                            class="advgb-menu-button orange-text waves-effect waves-dark"
                             <?php echo esc_attr($disabled) ?>
                             title="<?php esc_attr_e('Update the blocks list', 'advanced-gutenberg') ?>"
                     >
@@ -81,7 +75,7 @@ if ($updating) {
                         <span><?php echo esc_html($button_text) ?></span>
                     </button>
 
-                    <button class="advgb-menu-button">
+                    <button class="advgb-menu-button waves-effect waves-dark" type="button">
                         <a href="">
                             <i class="mi mi-add"></i>
                             <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
@@ -102,7 +96,7 @@ if ($updating) {
                 <div class="advgb-search-wrapper">
                     <input type="text" class="profile-title-input advgb-search-input"
                            placeholder="<?php esc_html_e('Enter title here', 'advanced-gutenberg') ?>"
-                           value="<?php esc_html_e($post_title) ?>"
+                           value="<?php echo esc_html($post_title) ?>"
                     >
                 </div>
             </div>
@@ -117,21 +111,16 @@ if ($updating) {
             <div class="blocks-section">
                 <?php foreach ($all_categories_list as $category) : ?>
                     <div class="category-block clearfix" data-category="<?php echo esc_attr($category['slug']) ?>">
-                        <h3 class="category-name"><?php echo esc_html($category['title']) ?></h3>
+                        <h3 class="category-name">
+                            <span><?php echo esc_html($category['title']) ?></span>
+                            <i class="mi"></i>
+                        </h3>
                         <ul class="blocks-list">
                             <?php foreach ($all_blocks_list as $block) : ?>
                                 <?php if ($block['category'] !== $category['slug']) :
                                     continue;
                                 endif; ?>
                                 <li class="block-item" data-type="<?php echo esc_attr($block['name']) ?>">
-                                    <input type="checkbox" name="active_blocks[]"
-                                           id="block-<?php echo esc_attr($block['name']) ?>"
-                                           value="<?php echo esc_attr($block['name']) ?>"
-                                        <?php if ($active_blocks_saved === 'all'
-                                                  || in_array($block['name'], $active_blocks_saved)) :
-                                            echo 'checked';
-                                        endif; ?>
-                                    />
                                     <label for="block-<?php echo esc_attr($block['name']) ?>" class="switch-label">
                                         <?php if (strpos($block['icon'], '<svg') !== false) :
                                             echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
@@ -142,6 +131,39 @@ if ($updating) {
                                             <?php echo esc_html($block['title']) ?>
                                         </span>
                                     </label>
+                                    <span class="block-config">
+                                        <svg width="24px" height="24px" viewBox="0 0 24 24">
+                                            <path fill="none" d="M0,0h24v24H0V0z"></path>
+                                            <path d="M19.43,12.98c0.04-0.32,0.07-0.64,0.07-0.98c0-0.34-0.03-0.66-0.07-0.98l2.11-1.65c0.19-0.15,0.24-0.42,0.12-0.64l-2-3.46
+                                                c-0.09-0.16-0.26-0.25-0.44-0.25c-0.06,0-0.12,0.01-0.17,0.03l-2.49,1c-0.52-0.4-1.08-0.73-1.69-0.98l-0.38-2.65
+                                                C14.46,2.18,14.25,2,14,2h-4C9.75,2,9.54,2.18,9.51,2.42L9.13,5.07C8.52,5.32,7.96,5.66,7.44,6.05l-2.49-1
+                                                C4.89,5.03,4.83,5.02,4.77,5.02c-0.17,0-0.34,0.09-0.43,0.25l-2,3.46C2.21,8.95,2.27,9.22,2.46,9.37l2.11,1.65
+                                                C4.53,11.34,4.5,11.67,4.5,12c0,0.33,0.03,0.66,0.07,0.98l-2.11,1.65c-0.19,0.15-0.24,0.42-0.12,0.64l2,3.46
+                                                c0.09,0.16,0.26,0.25,0.44,0.25c0.06,0,0.12-0.01,0.17-0.03l2.49-1c0.52,0.4,1.08,0.73,1.69,0.98l0.38,2.65
+                                                C9.54,21.82,9.75,22,10,22h4c0.25,0,0.46-0.18,0.49-0.42l0.38-2.65c0.61-0.25,1.17-0.59,1.69-0.98l2.49,1
+                                                c0.06,0.02,0.12,0.03,0.18,0.03c0.17,0,0.34-0.09,0.43-0.25l2-3.46c0.12-0.22,0.07-0.49-0.12-0.64L19.43,12.98z M17.45,11.27
+                                                c0.04,0.31,0.05,0.52,0.05,0.73c0,0.21-0.02,0.43-0.05,0.73l-0.14,1.13l0.89,0.7l1.08,0.84l-0.7,1.21l-1.27-0.51l-1.04-0.42
+                                                l-0.9,0.68c-0.43,0.32-0.84,0.56-1.25,0.73l-1.06,0.43l-0.16,1.13L12.7,20H11.3l-0.19-1.35l-0.16-1.13l-1.06-0.43
+                                                c-0.43-0.18-0.83-0.41-1.23-0.71l-0.91-0.7l-1.06,0.43l-1.27,0.51l-0.7-1.21l1.08-0.84l0.89-0.7l-0.14-1.13
+                                                C6.52,12.43,6.5,12.2,6.5,12s0.02-0.43,0.05-0.73l0.14-1.13L5.8,9.44L4.72,8.6l0.7-1.21l1.27,0.51l1.04,0.42l0.9-0.68
+                                                c0.43-0.32,0.84-0.56,1.25-0.73l1.06-0.43l0.16-1.13L11.3,4h1.39l0.19,1.35l0.16,1.13l1.06,0.43c0.43,0.18,0.83,0.41,1.23,0.71
+                                                l0.91,0.7l1.06-0.43l1.27-0.51l0.7,1.21L18.2,9.44l-0.89,0.7L17.45,11.27z"></path>
+                                            <path d="M12,8c-2.21,0-4,1.79-4,4s1.79,4,4,4s4-1.79,4-4S14.21,8,12,8z M12,14c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2
+                                                S13.1,14,12,14z"></path>
+                                        </svg>
+                                    </span>
+                                    <div class="switch-btn">
+                                        <label class="switch">
+                                            <input type="checkbox" name="active_blocks[]"
+                                                   id="block-<?php echo esc_attr($block['name']) ?>"
+                                                   value="<?php echo esc_attr($block['name']) ?>"
+                                                <?php if ($active_blocks_saved === 'all' || in_array($block['name'], $active_blocks_saved)) :
+                                                    echo 'checked';
+                                                endif; ?>
+                                            />
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
                                 </li>
                             <?php endforeach; ?>
                         </ul>

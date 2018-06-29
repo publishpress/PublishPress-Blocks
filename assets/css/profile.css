@@ -32,15 +32,38 @@ button[disabled] {
 
 ul.blocks-list {
     margin: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 ul.blocks-list li.block-item {
-    float: left;
     margin-bottom: 5px;
-    padding: 5px 10px;
+    margin-right: 5px;
+    padding: 20px 15px;
     transition: background-color .5s ease-out;
     -moz-transition: background-color .5s ease-out;
     -webkit-transition: background-color .5s ease-out;
+}
+
+.category-block.collapsed .blocks-list {
+    display: none;
+}
+
+.category-block .category-name > * {
+    vertical-align: text-top;
+}
+
+.category-block .category-name i:before {
+    content: '\e313';
+}
+
+.category-block.collapsed .category-name i:before {
+    content: '\e315';
+}
+
+.category-block .category-name {
+    cursor: pointer;
 }
 
 .block-title {
@@ -51,12 +74,32 @@ ul.blocks-list li.block-item {
     display: none;
 }
 
-.block-item input:not(:checked) + label {
-    opacity: 0.5;
-}
-
 .block-item.new-block {
     background-color: #FF8855;
+}
+
+.block-item > * {
+    float: left;
+    line-height: 27px;
+}
+
+.block-item label.switch-label > * {
+    vertical-align: middle;
+}
+
+.block-config {
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.block-config svg {
+    vertical-align: middle;
+    fill: #75a3bb;
+}
+
+.block-config i:before {
+    font-size: 24px;
 }
 
 #block-update-notice {

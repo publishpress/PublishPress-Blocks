@@ -143,3 +143,7 @@ nav,
 .waves-effect.waves-light .waves-ripple {
     background-color: rgba(255, 255, 255, 0.45);
 }
+
+.waves-effect.waves-dark .waves-ripple {
+    background-color: rgba(140, 140, 140, 0.45);
+}

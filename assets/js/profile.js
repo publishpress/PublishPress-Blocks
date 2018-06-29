@@ -9,6 +9,33 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    // Toggle blocks list in category when click category title
+    $('.category-block .category-name').unbind('click').click(function () {
+        var categoryWrapper = $(this).closest('.category-block');
+
+        if (categoryWrapper.hasClass('collapsed')) {
+            categoryWrapper.removeClass('collapsed');
+        } else {
+            categoryWrapper.addClass('collapsed');
+        }
+    });
+
+    // Search blocks function
+    $('.blocks-search-input').on('input', function () {
+        var searchKey = $(this).val().trim().toLowerCase();
+
+        $('.block-item .block-title').each(function () {
+            var blockTitle = $(this).text().toLowerCase().trim(),
+                blockItem = $(this).closest('.block-item');
+
+            if (blockTitle.indexOf(searchKey) > -1) {
+                blockItem.show();
+            } else {
+                blockItem.hide();
+            }
+        })
+    });
+
     // Ajax for displaying users list
     $('#user-search-input').bind('searchUsers', function () {
         var searchKey = $(this).val();

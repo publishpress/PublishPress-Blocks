@@ -28,6 +28,10 @@ button.advgb-menu-button {
     transition: all ease 0.5s;
 }
 
+button.advgb-menu-button:focus {
+    outline: none;
+}
+
 button.advgb-menu-button a {
     color: #000;
     text-decoration: none;

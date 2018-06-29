@@ -880,6 +880,7 @@ float: left;'
         wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
         wp_enqueue_style('material_icon_font');
         wp_enqueue_style('tabs_style');
+        wp_enqueue_style('button_switch_style');
         wp_enqueue_style('main_style');
 
         wp_enqueue_script('waves_js');
