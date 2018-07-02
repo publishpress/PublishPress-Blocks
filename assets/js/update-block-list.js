@@ -89,7 +89,10 @@ window.onload = function () {
                         } else {
                             var categoryHTML = '';
                             categoryHTML += '<div class="category-block clearfix" data-category='+ category.slug +'>';
-                            categoryHTML +=     '<h3 class="category-name">'+ category.title +'</h3>';
+                            categoryHTML +=     '<h3 class="category-name">';
+                            categoryHTML +=         '<span>'+ category.title +'</span>';
+                            categoryHTML +=         '<i class="mi"></i>';
+                            categoryHTML +=     '</h3>';
                             categoryHTML +=     '<ul class="blocks-list"></ul>';
                             categoryHTML += '</div>';
 
@@ -102,8 +105,8 @@ window.onload = function () {
                         var theBlock = $('li.block-item[data-type="'+ block.name +'"]');
                         if (theBlock.length > 0) {
                             theBlock.find('.block-title').text(block.title);
-                            theBlock.find('i').remove();
-                            theBlock.find('svg').remove();
+                            theBlock.find('label').find('i').remove();
+                            theBlock.find('label').find('svg').remove();
                             if (block.icon.indexOf('<svg') > -1) {
                                 theBlock.find('.switch-label').prepend(block.icon);
                             } else {
@@ -112,7 +115,6 @@ window.onload = function () {
                         } else {
                             var blockHTML = '';
                             blockHTML += '<li class="block-item new-block" data-type="'+ block.name +'">';
-                            blockHTML +=    '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'">';
                             blockHTML +=    '<label for="'+ block.name +'" class="switch-label">';
                             if (block.icon.indexOf('<svg') > -1) {
                                 blockHTML +=    block.icon;
@@ -121,6 +123,13 @@ window.onload = function () {
                             }
                             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
                             blockHTML +=    '</label>';
+                            blockHTML +=    '<span class="block-config"><i class="mi mi-settings"></i></span>';
+                            blockHTML +=    '<div class="switch-btn">';
+                            blockHTML +=        '<label class="switch">';
+                            blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'"/>';
+                            blockHTML +=            '<span class="slider round"></span>';
+                            blockHTML +=        '</label>';
+                            blockHTML +=    '</div>';
                             blockHTML += '</li>';
 
                             var categoryBlock = $('.category-block[data-category="'+ block.category +'"]');
