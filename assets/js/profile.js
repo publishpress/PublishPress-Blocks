@@ -1,4 +1,18 @@
 jQuery(document).ready(function ($) {
+    // Switch top tab we will change title text and hide unneeded buttons
+    $('#profiles-container .advgb-top-tabs .tab a').unbind('click').click(function () {
+        var currentText = $(this).text().trim();
+        var currentHref = $(this).attr('href');
+
+        $('.profile-header .header-title').text(currentText);
+
+        if (currentHref.indexOf('users') > -1) {
+            $('#update-list-btn').hide();
+        } else {
+            $('#update-list-btn').show();
+        }
+    });
+
     // Click update blocks list button
     $('#update-list-btn').unbind('click').click(function () {
         var willUpdate = confirm('Make sure everthing is saved before updating. Continue?');
@@ -18,6 +32,10 @@ jQuery(document).ready(function ($) {
         } else {
             categoryWrapper.addClass('collapsed');
         }
+    });
+
+    $('.users-search-toggle').unbind('click').click(function () {
+        $(this).closest('.users-search').find('#user-search-input').animate({width: 'toggle'});
     });
 
     // Search blocks function

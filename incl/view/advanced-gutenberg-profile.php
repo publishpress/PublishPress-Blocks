@@ -58,49 +58,49 @@ if ($updating) {
             </li>
         </ul>
 
-        <!--Blocks list tab-->
-        <div id="blocks-list-tab" class="tab-content">
-            <div class="advgb-header">
-                <h1 class="header-title"><?php esc_html_e('Edit Profile', 'advanced-gutenberg') ?></h1>
-                <div class="inline-button-wrapper">
+        <div class="advgb-header profile-header">
+            <h1 class="header-title"><?php esc_html_e('Edit Profile', 'advanced-gutenberg') ?></h1>
+            <div class="inline-button-wrapper">
                     <span id="block-update-notice">
                         <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
                     </span>
-                    <button type="button" id="update-list-btn"
-                            class="advgb-menu-button orange-text waves-effect waves-dark"
-                            <?php echo esc_attr($disabled) ?>
-                            title="<?php esc_attr_e('Update the blocks list', 'advanced-gutenberg') ?>"
-                    >
-                        <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>"></i>
-                        <span><?php echo esc_html($button_text) ?></span>
-                    </button>
+                <button type="button" id="update-list-btn"
+                        class="advgb-action-button orange-text waves-effect waves-dark"
+                    <?php echo esc_attr($disabled) ?>
+                        title="<?php esc_attr_e('Update the blocks list', 'advanced-gutenberg') ?>"
+                >
+                    <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>"></i>
+                    <span><?php echo esc_html($button_text) ?></span>
+                </button>
 
-                    <button class="advgb-menu-button waves-effect waves-dark" type="button">
-                        <a href="">
-                            <i class="mi mi-add"></i>
-                            <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
-                        </a>
-                    </button>
+                <button class="advgb-action-button waves-effect waves-dark" type="button">
+                    <a href="">
+                        <i class="mi mi-add"></i>
+                        <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
+                    </a>
+                </button>
 
-                    <button class="advgb-menu-button advgb-button-orange waves-effect waves-light save-profile-button"
-                            type="submit"
-                            name="advgb_profile_save"
-                    >
-                        <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
-                    </button>
-                </div>
+                <button class="advgb-action-button advgb-button-orange waves-effect waves-light save-profile-button"
+                        type="submit"
+                        name="advgb_profile_save"
+                >
+                    <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
+                </button>
             </div>
+        </div>
 
-            <div class="profile-title">
-                <h4><?php esc_html_e('Profile title', 'advanced-gutenberg') ?></h4>
-                <div class="advgb-search-wrapper">
-                    <input type="text" class="profile-title-input advgb-search-input"
-                           placeholder="<?php esc_html_e('Enter title here', 'advanced-gutenberg') ?>"
-                           value="<?php echo esc_html($post_title) ?>"
-                    >
-                </div>
+        <div class="profile-title">
+            <h4><?php esc_html_e('Profile title', 'advanced-gutenberg') ?></h4>
+            <div class="advgb-search-wrapper">
+                <input type="text" class="profile-title-input advgb-search-input"
+                       placeholder="<?php esc_html_e('Enter title here', 'advanced-gutenberg') ?>"
+                       value="<?php echo esc_html($post_title) ?>"
+                >
             </div>
+        </div>
 
+        <!--Blocks list tab-->
+        <div id="blocks-list-tab" class="tab-content">
             <div class="advgb-search-wrapper">
                 <input type="text" class="blocks-search-input advgb-search-input"
                        placeholder="<?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>"
@@ -174,14 +174,14 @@ if ($updating) {
 
         <!--Users access tab-->
         <div id="users-tab" class="tab-content">
-            <h3><?php esc_html_e('Active this profile for this user(s)', 'advanced-gutenberg') ?>:</h3>
-            <div class="users-block">
+            <div class="users-block-title clearfix">
+                <h3><?php esc_html_e('Active this profile for this user(s)', 'advanced-gutenberg') ?>:</h3>
                 <div class="advgb-users-search-box">
-                    <input type="text"
-                           id="user-search-input"
-                           name="s"
-                           placeholder="<?php esc_attr_e('Search users', 'advanced-gutenberg') ?>"
-                           value=""/>
+                    <input type="button"
+                           name="advgb-clear-btn"
+                           id="advgb-clear-btn"
+                           class="orange-text"
+                           value="<?php esc_attr_e('Clear', 'advanced-gutenberg') ?>"/>
                     <select name="advgb-roles-filter" id="advgb-roles-filter">
                         <option value=""><?php esc_html_e('Use role filter', 'advanced-gutenberg') ?></option>
                         <?php
@@ -192,16 +192,21 @@ if ($updating) {
                         }
                         ?>
                     </select>
-                    <input type="button"
-                           name="advgb-clear-btn"
-                           id="advgb-clear-btn"
-                           class="button"
-                           value="<?php esc_attr_e('Clear', 'advanced-gutenberg') ?>"/>
+                    <div class="users-search" style="display: inline-block;">
+                        <input type="text"
+                               id="user-search-input"
+                               name="s"
+                               placeholder="<?php esc_attr_e('Search users', 'advanced-gutenberg') ?>"
+                               value=""/>
+                        <i class="mi mi-search users-search-toggle" title="<?php esc_attr_e('Search', 'advanced-gutenberg') ?>"></i>
+                    </div>
                 </div>
+            </div>
+            <div class="users-block">
                 <table class="widefat fixed" id="advgb-users-list">
                     <thead>
                     <tr>
-                        <th scope="col" id="advgb-users-select-box" class="manage-col">
+                        <th scope="col" id="advgb-users-select-box" class="manage-col" width="5%">
                             <input type="hidden" id="advgb-users-checkall" name="select-user" value="">
                         </th>
                         <th scope="col" id="advgb-users-name" class="manage-col">
@@ -243,7 +248,7 @@ if ($updating) {
                             echo '<input type="checkbox" name="advgb-users[]" value="' . esc_html($userid) . '" >';
                             echo '</td>';
                             echo '<td class="name column-name">';
-                            echo '<span style="color: #0073aa">' . esc_html($user_object->display_name) . '</span>';
+                            echo '<span>' . esc_html($user_object->display_name) . '</span>';
                             echo '</td>';
                             echo '<td class="username column-username">';
                             echo '<strong>' . esc_html($user_object->user_login) . '</strong>';
@@ -332,13 +337,13 @@ if ($updating) {
                 </p>
             </div> <!--end Users blocks-->
 
-            <h3><?php esc_html_e('Active this profile for this group(s)', 'advanced-gutenberg') ?>:</h3>
+            <h3 style="margin: 45px 0 25px"><?php esc_html_e('Active this profile for this group(s)', 'advanced-gutenberg') ?>:</h3>
             <div class="advgb-groups-block">
-                <ul class="advgb-groups-list">
+                <ul class="advgb-groups-list clearfix">
                     <?php
                     $roles_list = $wp_roles->get_names();
                     foreach ($roles_list as $role => $role_name) :?>
-                        <li>
+                        <li class="clearfix">
                             <label for="<?php echo esc_attr($role) ?>" class="switch-label"
                                    style="vertical-align: middle;"><?php echo esc_html($role_name) ?></label>
                             <div class="switch-btn">
@@ -361,7 +366,7 @@ if ($updating) {
         </div>
 
         <!--Save button-->
-        <button class="advgb-menu-button advgb-button-orange waves-effect waves-light save-profile-button"
+        <button class="advgb-action-button advgb-button-orange waves-effect waves-light save-profile-button"
                 type="submit"
                 name="advgb_profile_save"
         >

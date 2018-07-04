@@ -480,7 +480,7 @@ float: left;'
                 $users_list .= '<input type="checkbox" name="advgb-users[]" value="' . $userid . '" />';
                 $users_list .= '</td>';
                 $users_list .= '<td class="name column-name">';
-                $users_list .= '<span style="color: #0073aa">' . $user_object->display_name . '</span>';
+                $users_list .= '<span>' . $user_object->display_name . '</span>';
                 $users_list .= '</td>';
                 $users_list .= '<td class="username column-username">';
                 $users_list .= '<strong>' . $user_object->user_login . '</strong>';

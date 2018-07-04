@@ -14,7 +14,7 @@
 }
 
 /*Button styles*/
-button.advgb-menu-button {
+button.advgb-action-button {
     background-color: #fff;
     color: #000;
     border: 1px solid #9fabba;
@@ -28,29 +28,29 @@ button.advgb-menu-button {
     transition: all ease 0.5s;
 }
 
-button.advgb-menu-button:focus {
+button.advgb-action-button:focus {
     outline: none;
 }
 
-button.advgb-menu-button a {
+button.advgb-action-button a {
     color: #000;
     text-decoration: none;
 }
 
-button.advgb-menu-button i {
+button.advgb-action-button i {
     margin-right: 5px;
     font-size: 14px;
     height: 14px;
     vertical-align: text-top;
 }
 
-button.advgb-menu-button:hover {
+button.advgb-action-button:hover {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-button.advgb-menu-button.advgb-button-orange {
+button.advgb-action-button.advgb-button-orange {
     background-color: #ff8726;
     color: #fff;
     border-color: #ff8726;
@@ -194,6 +194,7 @@ input.advgb-menu-search-input::placeholder {
     margin: 0;
     display: inline-block;
     padding: 10px 0;
+    text-transform: capitalize;
 }
 
 /*Search input styles*/

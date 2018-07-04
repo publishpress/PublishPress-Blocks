@@ -28,7 +28,7 @@ $profiles = get_posts($args);
 <div class="advgb-header">
     <h1 class="header-title"><?php esc_html_e('Advanced Gutenberg Profiles', 'advanced-gutenberg') ?></h1>
     <div class="inline-button-wrapper">
-        <button class="advgb-menu-button">
+        <button class="advgb-action-button">
             <a href="">
                 <i class="mi mi-add"></i>
                 <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>

@@ -16,6 +16,10 @@ button[disabled] {
     opacity: 0.7;
 }
 
+.profile-header {
+    margin-top: 30px;
+}
+
 /* Block list tab style */
 .tab-content h3 {
     margin: 15px 0;
@@ -25,9 +29,17 @@ button[disabled] {
     margin-top: 15px;
 }
 
+.profile-title {
+    padding: 10px;
+}
+
 .profile-title .advgb-search-wrapper {
     margin-top: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 0;
+}
+
+#blocks-list-tab .advgb-search-wrapper {
+    margin-top: 0;
 }
 
 ul.blocks-list {
@@ -113,16 +125,97 @@ ul.blocks-list li.block-item {
 }
 
 /*Users tab*/
-.advgb-users-search-box {
-    margin: 10px 0;
+.users-block-title {
+    margin: 15px 0;
+    padding: 10px 0;
 }
 
-#users-tab .advgb-users-search-box > * {
+.users-block-title h3 {
+    float: left;
+    margin: 0;
+    line-height: 39px;
+}
+
+#advgb-users-list {
+    position: relative;
+}
+
+#advgb-users-name {
+    position: absolute;
+    left: 0;
+    width: 50%;
+}
+
+#users-tab .advgb-users-search-box {
+    float: right;
+    margin: 0;
+}
+
+#users-tab .advgb-users-search-box input, #users-tab .advgb-users-search-box select {
     vertical-align: middle;
+    padding: 10px 25px;
+}
+
+#users-tab .advgb-users-search-box select {
+    height: 39px;
+}
+
+.users-block-title #advgb-clear-btn {
+    background-color: #fff;
+    border: 1px solid #ff8726;
+    cursor: pointer;
+}
+
+.users-block-title .users-search {
+    border: 1px solid #ddd;
+}
+
+#users-tab .users-block-title #user-search-input {
+    border: none;
+    padding: 10px;
+    margin: 0;
+    display: none;
+    width: 200px;
+}
+
+.users-block-title .users-search-toggle {
+    font-size: 23px;
+    padding: 7px 10px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#advgb-users-body .select-box input[type=checkbox]:checked {
+    background-color: #49bf88;
+    border: 1px solid #49bf88;
+}
+
+#advgb-users-body .select-box input[type=checkbox]:before {
+    color: #fff;
+}
+
+#advgb-users-list thead th span {
+    color: #0073aa;
 }
 
 .advgb-groups-block {
     margin: 10px;
+}
+
+.advgb-groups-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.advgb-groups-list li {
+    margin-bottom: 10px;
+    padding: 20px;
+    flex-basis: 33%;
+}
+
+.advgb-groups-list li label {
+    line-height: 28px;
 }
 
 /*Save setting button*/
