@@ -938,6 +938,10 @@ float: left;'
      */
     public function saveAdvgbData()
     {
+        if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- we check nonce below
+            $this->saveAdvgbProfile();
+        }
+
         return false;
     }
 
@@ -1035,7 +1039,7 @@ float: left;'
      */
     public function saveAdvgbProfile()
     {
-        // Check nonce field
+        // Check nonce field exist
         if (!isset($_POST['advgb_nonce_field'])) {
             return false;
         }
@@ -1046,7 +1050,7 @@ float: left;'
 
         $postID = $_POST['advgb_profile_id'];
 
-        // Save settings
+        // Save profile settings
         if (current_user_can('edit_post', $postID)) {
             // Save list of active blocks
             $active_blocks = array();
@@ -1067,6 +1071,15 @@ float: left;'
             }
             update_post_meta($postID, 'users_access', $users_access);
             update_post_meta($postID, 'roles_access', $roles_access);
+
+            // Update profile title
+            $post_title = trim($_POST['advgb_profile_title']);
+            wp_update_post(array(
+                'ID' => $postID,
+                'post_title' => $post_title,
+            ));
+
+            wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profile&id=' . $postID . '&save=success'));
         }
 
         return $postID;

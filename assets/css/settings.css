@@ -11,26 +11,6 @@
     visibility: hidden;
 }
 
-#advgb-config-success {
-    padding: 10px;
-    margin: 20px 20px 20px 0;
-    background-color: #ffffff;
-    border-left: 5px solid #46b450;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
-    -moz-box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
-    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
-}
-
-#advgb-config-close {
-    float: right;
-    color: #aaaaaa;
-}
-
-#advgb-config-close:hover {
-    color: #c00;
-    cursor: pointer;
-}
-
 .settings-list ul {
     padding-left: 40px;
 }

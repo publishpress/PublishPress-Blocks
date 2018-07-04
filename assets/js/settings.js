@@ -12,10 +12,6 @@ jQuery(document).ready(function ($) {
         $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
     }
 
-    $('#advgb-config-close').click(function () {
-        $('#advgb-config-success').slideUp();
-    });
-
     $('.advgb_qtip').qtip({
         content: {
             attr: 'alt'

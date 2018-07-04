@@ -18,6 +18,10 @@
             $(this).parent('.advgb-search-wrapper').addClass('focused');
         }).on('blur', function () {
             $(this).parent('.advgb-search-wrapper').removeClass('focused');
-        })
+        });
+
+        $('#advgb-save-close').click(function () {
+            $('#advgb-save-success').slideUp();
+        });
     })
 })(jQuery);

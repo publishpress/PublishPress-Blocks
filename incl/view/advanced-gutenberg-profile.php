@@ -40,6 +40,7 @@ if ($updating) {
     wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
 }
 ?>
+
 <form method="post">
     <?php wp_nonce_field('advgb_nonce', 'advgb_nonce_field'); ?>
     <input type="hidden" name="advgb_profile_id" value="<?php echo esc_html($postid) ?>" />
@@ -57,6 +58,16 @@ if ($updating) {
                 </a>
             </li>
         </ul>
+
+        <?php if (isset($_GET['save'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
+            <div id="advgb-save-success">
+                <?php esc_html_e('Profile saved successfully!', 'advanced-gutenberg') ?>
+                <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profiles')) ?>" target="_self">
+                    <?php esc_html_e('Return to profiles list', 'advanced-gutenberg') ?>
+                </a>
+                <i class="dashicons dashicons-dismiss" id="advgb-save-close"></i>
+            </div>
+        <?php endif; ?>
 
         <div class="advgb-header profile-header">
             <h1 class="header-title"><?php esc_html_e('Edit Profile', 'advanced-gutenberg') ?></h1>
@@ -93,6 +104,7 @@ if ($updating) {
             <h4><?php esc_html_e('Profile title', 'advanced-gutenberg') ?></h4>
             <div class="advgb-search-wrapper">
                 <input type="text" class="profile-title-input advgb-search-input"
+                       name="advgb_profile_title"
                        placeholder="<?php esc_html_e('Enter title here', 'advanced-gutenberg') ?>"
                        value="<?php echo esc_html($post_title) ?>"
                 >

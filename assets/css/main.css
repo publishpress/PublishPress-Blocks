@@ -185,6 +185,30 @@ input.advgb-menu-search-input::placeholder {
     margin-left: 300px;
 }
 
+#advgb-save-success {
+    padding: 10px;
+    margin: 20px 20px 20px 0;
+    background-color: #ffffff;
+    border-left: 5px solid #46b450;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+    -moz-box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+}
+
+#advgb-save-close {
+    float: right;
+    color: #aaaaaa;
+}
+
+#advgb-save-close:hover {
+    color: #c00;
+    cursor: pointer;
+}
+
+#advgb-right-panel .advgb-content-wrapper#profiles {
+    padding-top: 30px;
+}
+
 .advgb-header {
     margin-bottom: 15px;
     padding: 10px 0;
