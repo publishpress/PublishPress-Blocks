@@ -20,6 +20,12 @@ if ($roles_access_saved === '') {
 $users_access_saved = get_post_meta($postid, 'users_access', true);
 $users_access_saved = $users_access_saved ? $users_access_saved : array();
 
+if ($postid === 'new') {
+    $active_blocks_saved = self::$default_active_blocks;
+    $roles_access_saved = self::$default_roles_access;
+    $users_access_saved = array();
+}
+
 $disabled = '';
 $rotating = '';
 $button_text = __('Refresh', 'advanced-gutenberg');
@@ -85,7 +91,7 @@ if ($updating) {
                 </button>
 
                 <button class="advgb-action-button waves-effect waves-dark" type="button">
-                    <a href="">
+                    <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>">
                         <i class="mi mi-add"></i>
                         <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
                     </a>

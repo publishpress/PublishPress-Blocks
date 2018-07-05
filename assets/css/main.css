@@ -205,10 +205,6 @@ input.advgb-menu-search-input::placeholder {
     cursor: pointer;
 }
 
-#advgb-right-panel .advgb-content-wrapper#profiles {
-    padding-top: 30px;
-}
-
 .advgb-header {
     margin-bottom: 15px;
     padding: 10px 0;

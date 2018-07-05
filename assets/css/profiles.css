@@ -12,6 +12,10 @@
     padding: 10px;
 }
 
+#profiles-list th span {
+    color: #568095;
+}
+
 #profiles-list tbody td {
     padding: 20px 10px;
 }

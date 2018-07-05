@@ -22,14 +22,13 @@ $args     = array(
     'order'     => 'desc'
 );
 $profiles = get_posts($args);
-
 ?>
 
-<div class="advgb-header">
+<div class="advgb-header" style="padding-top: 40px">
     <h1 class="header-title"><?php esc_html_e('Advanced Gutenberg Profiles', 'advanced-gutenberg') ?></h1>
     <div class="inline-button-wrapper">
         <button class="advgb-action-button">
-            <a href="">
+            <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>">
                 <i class="mi mi-add"></i>
                 <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
             </a>
@@ -72,7 +71,7 @@ $profiles = get_posts($args);
                 <tr class="advgb-profile">
                     <td class="profile-title">
                         <a href="<?php echo esc_html(admin_url('admin.php?page=advgb_main&view=profile&id='.$profile->ID)) ?>">
-                            <?php echo esc_html($profile->post_title) ?>
+                            <?php echo esc_html($profile->post_title ? $profile->post_title : __('(untitled)', 'advanced-gutenberg')) ?>
                         </a>
                         <i class="mi mi-delete-forever profile-delete"
                            title="<?php esc_attr_e('Delete', 'advanced-gutenberg') ?>"
@@ -80,7 +79,7 @@ $profiles = get_posts($args);
                         </i>
                     </td>
                     <td class="profile-author"><?php the_author_meta('display_name', $profile->post_author) ?></td>
-                    <td class="profile-date"><?php echo get_the_date('Y-m-d H:i', $profile->ID) ?></td>
+                    <td class="profile-date"><?php echo get_the_date('Y/m/d - H:i', $profile->ID) ?></td>
                 </tr>
             <?php endforeach; ?>
         <?php else : ?>

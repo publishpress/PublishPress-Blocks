@@ -1051,15 +1051,14 @@ float: left;'
         $postID = $_POST['advgb_profile_id'];
 
         // Save profile settings
-        if (current_user_can('edit_post', $postID)) {
-            // Save list of active blocks
+        if (current_user_can('publish_posts')) {
+            // Get list of active blocks
             $active_blocks = array();
             if (isset($_POST['active_blocks'])) {
                 $active_blocks = $_POST['active_blocks'];
             }
-            update_post_meta($postID, 'active_blocks', $active_blocks);
 
-            // Save users permission
+            // Get users permission
             $users_access = array();
             $roles_access = array();
             if (isset($_POST['advgb-users-access-list'])) {
@@ -1069,15 +1068,35 @@ float: left;'
             if (isset($_POST['advgb-roles'])) {
                 $roles_access = $_POST['advgb-roles'];
             }
-            update_post_meta($postID, 'users_access', $users_access);
-            update_post_meta($postID, 'roles_access', $roles_access);
 
-            // Update profile title
+            // Get new profile title
             $post_title = trim($_POST['advgb_profile_title']);
-            wp_update_post(array(
-                'ID' => $postID,
-                'post_title' => $post_title,
-            ));
+
+            // Save data
+            if ($postID !== 'new') { // Update profile if have post ID
+                if (!current_user_can('edit_post', $postID)) {
+                    return false;
+                }
+
+                update_post_meta($postID, 'active_blocks', $active_blocks);
+                update_post_meta($postID, 'users_access', $users_access);
+                update_post_meta($postID, 'roles_access', $roles_access);
+                wp_update_post(array(
+                    'ID' => $postID,
+                    'post_title' => $post_title,
+                ));
+            } else { // Create new profile
+                $postID = wp_insert_post(array(
+                    'post_title'  => $post_title,
+                    'post_type'   => 'advgb_profiles',
+                    'post_status' => 'publish',
+                    'meta_input'  => array(
+                        'active_blocks' => $active_blocks,
+                        'roles_access'  => $roles_access,
+                        'users_access'  => $users_access,
+                    )
+                ));
+            }
 
             wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profile&id=' . $postID . '&save=success'));
         }

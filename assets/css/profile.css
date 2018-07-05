@@ -164,6 +164,7 @@ ul.blocks-list li.block-item {
     background-color: #fff;
     border: 1px solid #ff8726;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .users-block-title .users-search {
