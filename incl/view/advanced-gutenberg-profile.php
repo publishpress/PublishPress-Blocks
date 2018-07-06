@@ -86,8 +86,10 @@ if ($updating) {
                     <?php echo esc_attr($disabled) ?>
                         title="<?php esc_attr_e('Update the blocks list', 'advanced-gutenberg') ?>"
                 >
-                    <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>"></i>
-                    <span><?php echo esc_html($button_text) ?></span>
+                    <span>
+                        <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>"></i>
+                        <span><?php echo esc_html($button_text) ?></span>
+                    </span>
                 </button>
 
                 <button class="advgb-action-button waves-effect waves-dark" type="button">
@@ -198,7 +200,7 @@ if ($updating) {
                     <input type="button"
                            name="advgb-clear-btn"
                            id="advgb-clear-btn"
-                           class="orange-text"
+                           class="orange-text advgb-rect-btn"
                            value="<?php esc_attr_e('Clear', 'advanced-gutenberg') ?>"/>
                     <select name="advgb-roles-filter" id="advgb-roles-filter">
                         <option value=""><?php esc_html_e('Use role filter', 'advanced-gutenberg') ?></option>

@@ -160,13 +160,6 @@ ul.blocks-list li.block-item {
     height: 39px;
 }
 
-.users-block-title #advgb-clear-btn {
-    background-color: #fff;
-    border: 1px solid #ff8726;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
 .users-block-title .users-search {
     border: 1px solid #ddd;
 }
@@ -184,15 +177,6 @@ ul.blocks-list li.block-item {
     padding: 7px 10px;
     vertical-align: middle;
     cursor: pointer;
-}
-
-#advgb-users-body .select-box input[type=checkbox]:checked {
-    background-color: #49bf88;
-    border: 1px solid #49bf88;
-}
-
-#advgb-users-body .select-box input[type=checkbox]:before {
-    color: #fff;
 }
 
 #advgb-users-list thead th span {

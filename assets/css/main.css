@@ -18,14 +18,18 @@ button.advgb-action-button {
     background-color: #fff;
     color: #000;
     border: 1px solid #9fabba;
-    min-width: 190px;
-    padding: 10px;
     border-radius: 20px;
     text-transform: uppercase;
     font-weight: bold;
     cursor: pointer;
     text-align: center;
     transition: all ease 0.5s;
+}
+
+button.advgb-action-button > * {
+    padding: 10px;
+    min-width: 180px;
+    display: inline-block;
 }
 
 button.advgb-action-button:focus {
@@ -56,12 +60,31 @@ button.advgb-action-button.advgb-button-orange {
     border-color: #ff8726;
 }
 
+.advgb-rect-btn {
+    background-color: #fff;
+    border: 1px solid #ff8726;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #ff8726;
+    padding: 10px 15px;
+}
+
 .orange-text {
     color: #ff8726 !important;
 }
 
 .inline-button-wrapper {
     float: right;
+}
+
+/*Checkbox style*/
+.select-box input[type=checkbox]:checked {
+    background-color: #49bf88;
+    border: 1px solid #49bf88;
+}
+
+.select-box input[type=checkbox]:before {
+    color: #fff;
 }
 
 /*Top navigation tabs styles*/

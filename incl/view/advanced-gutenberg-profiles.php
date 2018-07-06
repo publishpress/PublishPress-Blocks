@@ -22,6 +22,7 @@ $args     = array(
     'order'     => 'desc'
 );
 $profiles = get_posts($args);
+wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
 ?>
 
 <div class="advgb-header" style="padding-top: 40px">
@@ -36,7 +37,12 @@ $profiles = get_posts($args);
     </div>
 </div>
 <div class="profiles-list-wrapper">
-    <div class="advgb-search-wrapper">
+    <div class="profiles-action-btn" style="float: left; margin: 25px auto">
+        <button type="button" id="delete-selected-profiles" class="advgb-rect-btn">
+            <?php esc_html_e('Delete selected', 'advanced-gutenberg') ?>
+        </button>
+    </div>
+    <div class="advgb-search-wrapper" style="float: right; width: 350px">
         <input type="text" class="profiles-search-input advgb-search-input"
                placeholder="<?php esc_html_e('Search profiles by title or author', 'advanced-gutenberg') ?>"
         >
@@ -45,6 +51,9 @@ $profiles = get_posts($args);
     <table id="profiles-list">
         <thead>
             <tr>
+                <th class="profile-header-checkbox select-box">
+                    <input type="checkbox" class="select-all-profiles">
+                </th>
                 <th class="profile-header-title sorting-header" data-sort="title">
                     <span>
                         <span><?php esc_html_e('Title', 'advanced-gutenberg') ?></span>
@@ -68,7 +77,10 @@ $profiles = get_posts($args);
         <tbody>
         <?php if (count($profiles) > 0) : ?>
             <?php foreach ($profiles as $profile) : ?>
-                <tr class="advgb-profile">
+                <tr class="advgb-profile" data-profile-id="<?php echo esc_html($profile->ID) ?>">
+                    <td class="profile-checkbox select-box">
+                        <input type="checkbox" name="advgb_profile[]" value="<?php echo esc_html($profile->ID) ?>">
+                    </td>
                     <td class="profile-title">
                         <a href="<?php echo esc_html(admin_url('admin.php?page=advgb_main&view=profile&id='.$profile->ID)) ?>">
                             <?php echo esc_html($profile->post_title ? $profile->post_title : __('(untitled)', 'advanced-gutenberg')) ?>
@@ -92,6 +104,9 @@ $profiles = get_posts($args);
         </tbody>
         <tfoot>
             <tr>
+                <th class="profile-header-checkbox select-box">
+                    <input type="checkbox" class="select-all-profiles">
+                </th>
                 <th class="profile-header-title sorting-header" data-sort="title">
                     <span>
                         <span><?php esc_html_e('Title', 'advanced-gutenberg') ?></span>

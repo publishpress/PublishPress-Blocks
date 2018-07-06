@@ -123,11 +123,6 @@ jQuery(document).ready(function ($) {
         })
     });
 
-    // Check all buttons
-    $('#advgb-users-checkall').click(function () {
-        $('#advgb-users-body').find(':checkbox').attr('checked', this.checked);
-    });
-
     // Switch page
     function switchPage() {
         $('.switch-page').unbind('click').click(function () {

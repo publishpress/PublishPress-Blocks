@@ -4,6 +4,10 @@
     border: 1px solid #e1e1e1;
 }
 
+#delete-selected-profiles {
+    padding: 14px 15px;
+}
+
 #profiles-list th {
     text-align: left;
 }

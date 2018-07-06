@@ -157,6 +157,7 @@ float: left;'
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
             add_action('wp_ajax_advgb_get_users', array($this, 'getUsers'));
             add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
+            add_action('wp_ajax_advgb_delete_profiles', array($this, 'deleteProfiles'));
         } else {
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
@@ -405,7 +406,7 @@ float: left;'
     {
         // Check users permissions
         if (! current_user_can('create_advgb_profiles')) {
-            wp_send_json('No permission!', 403);
+            wp_send_json(__('No permission!', 'advanced-gutenberg'), 403);
             return false;
         }
 
@@ -572,7 +573,7 @@ float: left;'
     {
         // Check users permissions
         if (!current_user_can('activate_plugins')) {
-            wp_send_json('No permission!', 403);
+            wp_send_json(__('No permission!', 'advanced-gutenberg'), 403);
             return false;
         }
         $regex = '/^[a-zA-Z0-9_\-]+$/';
@@ -683,6 +684,37 @@ float: left;'
             update_option('advgb_custom_styles', $new_data_array);
         } else {
             wp_send_json(null, 404);
+        }
+    }
+
+    /**
+     * Ajax for delete profiles
+     *
+     * @return boolean,void     Return false if failure, echo json on success
+     */
+    public function deleteProfiles()
+    {
+        // Check users permissions
+        if (!current_user_can('delete_pages')) {
+            wp_send_json(__('No permission!', 'advanced-gutenberg'), 403);
+            return false;
+        }
+
+        if (!wp_verify_nonce($_POST['pNonce'], 'advgb_profiles_nonce')) {
+            wp_send_json(__('Fail to verify nonce!', 'advanced-gutenberg'), 400);
+            return false;
+        };
+
+        $profiles_to_delete = $_POST['ids'];
+        if (count($profiles_to_delete)) {
+            $deleted = array();
+            foreach ($profiles_to_delete as $profile) {
+                if (wp_delete_post($profile)) {
+                    array_push($deleted, $profile);
+                }
+            }
+
+            wp_send_json(array('deleted' => $deleted), 200);
         }
     }
 
