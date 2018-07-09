@@ -23,5 +23,11 @@
         $('#advgb-save-close').click(function () {
             $('#advgb-save-success').slideUp();
         });
+
+        $('a[href=#settings]').one('click', function () {
+            setTimeout(function () {
+                $('#settings ul.tabs').itabs();
+            }, 100);
+        });
     })
 })(jQuery);

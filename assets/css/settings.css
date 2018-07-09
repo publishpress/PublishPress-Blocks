@@ -11,13 +11,39 @@
     visibility: hidden;
 }
 
+.advgb-settings-header {
+    margin: 40px auto;
+}
+
 .settings-list ul {
     padding-left: 40px;
+}
+
+.settings-option {
+    float: left;
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.settings-option.full-width, .settings-separator {
+    width: 100%;
+}
+
+.settings-separator .settings-separator-title {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .settings-option .switch-label {
     min-width: 200px;
     overflow: inherit;
+    line-height: 28px;
+}
+
+.settings-option .switch-label + * {
+    float: right;
+    margin-right: 30px;
 }
 
 .settings-option-wrapper {

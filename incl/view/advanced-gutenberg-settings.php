@@ -1,6 +1,22 @@
 <?php
 defined('ABSPATH') || die;
 
+wp_enqueue_style('font_icons');
+wp_enqueue_style('minicolors_css');
+wp_enqueue_style('qtip_style');
+wp_enqueue_style('codemirror_css');
+wp_enqueue_style('codemirror_hint_style');
+wp_enqueue_style('settings_style');
+
+wp_enqueue_script('qtip_js');
+wp_enqueue_script('less_js');
+wp_enqueue_script('minicolors_js');
+wp_enqueue_script('codemirror_js');
+wp_enqueue_script('codemirror_hint');
+wp_enqueue_script('codemirror_mode_css');
+wp_enqueue_script('codemirror_hint_css');
+wp_enqueue_script('settings_js');
+
 $saved_settings = get_option('advgb_settings');
 
 $gallery_lightbox_checked = $saved_settings['gallery_lightbox'] ? 'checked' : '';
@@ -11,40 +27,36 @@ $blocks_icon_color = isset($saved_settings['blocks_icon_color']) ? $saved_settin
 
 $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_styles);
 ?>
-<h1><?php esc_html_e('Advanced Gutenberg Settings', 'advanced-gutenberg') ?></h1>
-
-<?php if (isset($_GET['save'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
-<div id="advgb-config-success">
-    <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg') ?>
-    <i class="dashicons dashicons-dismiss" id="advgb-config-close"></i>
-</div>
-<?php endif; ?>
 
 <div id="advgb-settings-container" style="margin-right: 20px">
-    <ul class="tabs cyan z-depth-1">
+    <ul class="tabs advgb-top-tabs">
         <li class="tab">
-            <a href="#config-tab" class="link-tab white-text waves-effect waves-light">
+            <a href="#config-tab" class="link-tab waves-effect waves-light">
                 <?php esc_html_e('Configuration', 'advanced-gutenberg') ?>
             </a>
         </li>
         <li class="tab">
-            <a href="#customstyles-tab" class="link-tab white-text waves-effect waves-light" id="custom-styles-tab">
+            <a href="#customstyles-tab" class="link-tab waves-effect waves-light" id="custom-styles-tab">
                 <?php esc_html_e('Custom styles', 'advanced-gutenberg') ?>
-            </a>
-        </li>
-        <li class="tab">
-            <a href="#translation-tab" class="link-tab white-text waves-effect waves-light">
-                <?php esc_html_e('Translation tools', 'advanced-gutenberg') ?>
             </a>
         </li>
     </ul>
 
+    <h1 class="advgb-settings-header"><?php esc_html_e('Configuration', 'advanced-gutenberg') ?></h1>
+
+    <?php if (isset($_GET['save'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
+        <div id="advgb-save-success">
+            <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg') ?>
+            <i class="dashicons dashicons-dismiss" id="advgb-save-close"></i>
+        </div>
+    <?php endif; ?>
+
     <div id="config-tab" class="tab-content clearfix" style="display: none;">
         <form method="post">
             <?php wp_nonce_field('advgb_settings_nonce', 'advgb_settings_nonce_field') ?>
-            <ul class="settings-list">
-                <li class="settings-option">
-                    <div class="settings-option-wrapper">
+            <ul class="settings-list clearfix">
+                <li class="settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
                         <label for="gallery_lightbox"
                                class="switch-label advgb_qtip"
                                alt="<?php esc_attr_e(
@@ -66,8 +78,8 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         </div>
                     </div>
                 </li>
-                <li class="settings-option hidden-item" id="gallery_lightbox_caption_wrapper">
-                    <div class="settings-option-wrapper">
+                <li class="settings-option hidden-item clearfix" id="gallery_lightbox_caption_wrapper">
+                    <div class="settings-option-wrapper clearfix">
                         <label for="gallery_lightbox_caption"
                                class="switch-label advgb_qtip"
                                alt="<?php esc_attr_e(
@@ -89,10 +101,11 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         </div>
                     </div>
                 </li>
-                <li class="settings-option">
-                    <div class="settings-option-wrapper">
+                <li class="settings-option full-width clearfix">
+                    <div class="settings-option-wrapper clearfix">
                         <label for="google_api_key"
                                class="advgb_qtip switch-label"
+                               style="float: none; margin-bottom: 10px"
                                alt="<?php esc_attr_e(
                                    'This API key is required to using Map Block.',
                                    'advanced-gutenberg'
@@ -100,27 +113,27 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         >
                             <?php esc_html_e('Google API Key', 'advanced-gutenberg') ?>
                         </label>
-                        <span>
+                        <span style="display: block; float: none;">
                             <input type="text"
                                    name="google_api_key"
                                    id="google_api_key"
                                    style="margin-left: 10px; width: 330px"
                                    value="<?php echo esc_html($google_api_key_saved) ?>"
                             >
-                            <a target="_blank" href="https://support.google.com/googleapi/answer/6158862" style="margin-left: 10px">
+                            <a target="_blank" href="https://support.google.com/googleapi/answer/6158862" style="margin-left: 10px;color:#ff8726">
                                 <?php esc_html_e('How to create a Google API Key', 'advanced-gutenberg') ?>
                             </a>
                         </span>
                     </div>
                 </li>
 
-                <li class="settings-option">
-                    <h3 class="settings-separator-title">
+                <li class="settings-option settings-separator">
+                    <p class="settings-separator-title">
                         <?php esc_html_e('Blocks Settings', 'advanced-gutenberg') ?>
-                    </h3>
+                    </p>
                 </li>
-                <li class="settings-option">
-                    <div class="settings-option-wrapper">
+                <li class="settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
                         <label for="blocks_spacing"
                                class="advgb_qtip switch-label"
                                alt="<?php esc_attr_e(
@@ -142,8 +155,8 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         </span>
                     </div>
                 </li>
-                <li class="settings-option">
-                    <div class="settings-option-wrapper">
+                <li class="settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
                         <label for="blocks_icon_color"
                                class="advgb_qtip switch-label"
                                alt="<?php esc_attr_e(
@@ -166,11 +179,11 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
 
             <div class="save-settings-block">
                 <button type="submit"
-                        class="cyan white-text waves-effect waves-light material-btn"
+                        class="advgb-action-button advgb-button-orange waves-effect waves-light"
                         id="save-settings"
                         name="save_settings"
                 >
-                    <?php esc_html_e('Save', 'advanced-gutenberg') ?>
+                    <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
                 </button>
             </div>
         </form>
@@ -271,9 +284,5 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 <?php esc_html_e('Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph', 'advanced-gutenberg') ?>
             </p>
         </div>
-    </div>
-
-    <div id="translation-tab" class="tab-content clearfix" style="display: none;">
-        <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped ?>
     </div>
 </div>
