@@ -105,6 +105,13 @@ button.advgb-action-button.advgb-button-orange {
     color: #ff8726;
 }
 
+.tabs.advgb-top-tabs li.tab a.link-tab.active:before {
+    content: '\f147';
+    font-family: 'dashicons';
+    font-size: 20px;
+    vertical-align: middle;
+}
+
 /*Left Panel styles*/
 #advgb-left-panel {
     width: 300px;
