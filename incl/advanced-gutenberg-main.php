@@ -776,10 +776,6 @@ float: left;'
             plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
         );
         wp_register_style(
-            'font_icons',
-            plugins_url('assets/css/fonts.css', dirname(__FILE__))
-        );
-        wp_register_style(
             'advgb_quirk',
             plugins_url('assets/css/quirk.css', dirname(__FILE__))
         );

@@ -1,7 +1,6 @@
 <?php
 defined('ABSPATH') || die;
 
-wp_enqueue_style('font_icons');
 wp_enqueue_style('minicolors_css');
 wp_enqueue_style('qtip_style');
 wp_enqueue_style('codemirror_css');
