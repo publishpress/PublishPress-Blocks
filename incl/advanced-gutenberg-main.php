@@ -969,6 +969,8 @@ float: left;'
     {
         if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveAdvgbProfile();
+        } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- we check nonce below
+            $this->saveSettings();
         }
 
         return false;
@@ -1005,7 +1007,7 @@ float: left;'
             update_option('advgb_settings', $save_config);
 
             if (isset($_REQUEST['_wp_http_referer'])) {
-                wp_redirect($_REQUEST['_wp_http_referer'] . '&save=success#config-tab');
+                wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success#settings'));
                 exit;
             }
         }
@@ -1020,8 +1022,8 @@ float: left;'
                 $this->writeCustomStyles($get_custom_styles);
             }
 
-            if (!empty($_REQUEST['_wp_http_referer'])) {
-                wp_redirect($_REQUEST['_wp_http_referer'] . '&save=success#customstyles-tab');
+            if (isset($_REQUEST['_wp_http_referer'])) {
+                wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success#settings'));
                 exit;
             }
         }
@@ -1127,7 +1129,7 @@ float: left;'
                 ));
             }
 
-            wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profile&id=' . $postID . '&save=success'));
+            wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profile&id=' . $postID . '&save_profile=success'));
         }
 
         return $postID;

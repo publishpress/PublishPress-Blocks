@@ -65,7 +65,7 @@ if ($updating) {
             </li>
         </ul>
 
-        <?php if (isset($_GET['save'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
+        <?php if (isset($_GET['save_profile'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
             <div id="advgb-save-success">
                 <?php esc_html_e('Profile saved successfully!', 'advanced-gutenberg') ?>
                 <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profiles')) ?>" target="_self">
