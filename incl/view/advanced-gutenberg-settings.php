@@ -117,7 +117,8 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                             <input type="text"
                                    name="google_api_key"
                                    id="google_api_key"
-                                   style="margin-left: 10px; width: 330px"
+                                   class="advgb-input"
+                                   style="margin-left: 10px; width: 370px"
                                    value="<?php echo esc_html($google_api_key_saved) ?>"
                             >
                             <a target="_blank" href="https://support.google.com/googleapi/answer/6158862" style="margin-left: 10px;color:#ff8726">
@@ -136,6 +137,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_spacing"
                                class="advgb_qtip switch-label"
+                               style="line-height: 50px"
                                alt="<?php esc_attr_e(
                                    'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
                                    'advanced-gutenberg'
@@ -148,7 +150,8 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                                    min="0"
                                    name="blocks_spacing"
                                    id="blocks_spacing"
-                                   style="margin-left: 10px; width: 50px"
+                                   class="advgb-input"
+                                   style="margin-left: 10px; width: 80px"
                                    value="<?php echo esc_html($blocks_spacing) ?>"
                             >
                             <span>px</span>
@@ -159,6 +162,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_icon_color"
                                class="advgb_qtip switch-label"
+                               style="line-height: 50px"
                                alt="<?php esc_attr_e(
                                    'Set color for blocks that added by Advanced Gutenberg',
                                    'advanced-gutenberg'
@@ -170,7 +174,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                             <input type="text"
                                    name="blocks_icon_color"
                                    id="blocks_icon_color"
-                                   class="minicolors minicolors-input"
+                                   class="minicolors minicolors-input advgb-input"
                                    value="<?php echo esc_html($blocks_icon_color) ?>" />
                         </span>
                     </div>
@@ -190,23 +194,20 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
     </div>
 
     <div id="customstyles-tab" class="tab-content clearfix" style="display: none;">
-        <div class="col-sm-2" id="advgb-customstyles-list">
-            <h3 style="margin: 0; padding: 5px 0 10px 0;">
-                <?php esc_html_e('Custom styles', 'advanced-gutenberg') ?>
-            </h3>
+        <div class="col-sm-3" id="advgb-customstyles-list">
             <div id="mybootstrap">
                 <ul class="advgb-customstyles-list">
                     <?php
                     $content = '';
                     foreach ($custom_styles_saved as $customStyles) {
                         $content .= '<li class="advgb-customstyles-items" data-id-customstyle="'.(int)$customStyles['id'].'">';
-                        $content .= '<a><i class="advgbicon-quill"></i><span class="advgb-customstyles-items-title">'.esc_html($customStyles['title']).'</span></a>';
-                        $content .= '<a class="copy"><i class="advgbicon-copy"></i></a>';
-                        $content .= '<a class="trash"><i class="advgbicon-trash"></i></a>';
+                        $content .= '<a><i class="title-icon" style="background-color: '. $customStyles['identifyColor'] .'"></i><span class="advgb-customstyles-items-title">'.esc_html($customStyles['title']).'</span></a>';
+                        $content .= '<a class="copy" title="'. __('Copy', 'advanced-gutenberg') .'"><i class="mi mi-content-copy"></i></a>';
+                        $content .= '<a class="trash" title="'. __('Delete', 'advanced-gutenberg') .'"><i class="mi mi-delete"></i></a>';
                         $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('.esc_html($customStyles['name']).')</li></ul>';
                         $content .= '</li>';
                     }
-                    $content .= '<li><a class="advgb-customstyles-new"><i class="advgbicon-plus"></i>'.esc_html__('Add new class', 'advanced-gutenberg').'</a></li>';
+                    $content .= '<li><a class="advgb-customstyles-new"><i class="mi mi-add"></i>'.esc_html__('Add new class', 'advanced-gutenberg').'</a></li>';
 
                     echo $content; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
                     ?>
@@ -222,13 +223,13 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 <label for="advgb-customstyles-title">
                     <?php esc_html_e('Style title', 'advanced-gutenberg') ?>
                 </label>
-                <input type="text" name="customstyles-title" id="advgb-customstyles-title" value="" />
+                <input type="text" class="advgb-input" name="customstyles-title" id="advgb-customstyles-title" value="" />
             </div>
             <div class="control-group">
                 <label for="advgb-customstyles-classname">
                     <?php esc_html_e('Style class', 'advanced-gutenberg') ?>
                 </label>
-                <input type="text" name="customstyles-classname" id="advgb-customstyles-classname" value="" />
+                <input type="text" class="advgb-input" name="customstyles-classname" id="advgb-customstyles-classname" value="" />
             </div>
             <div id="identify-colors" class="control-group clearfix">
                 <div class="control-label">
@@ -247,7 +248,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <input type="text"
                            name="customstyles-identify-color"
                            id="advgb-customstyles-identify-color"
-                           class="minicolors minicolors-input"
+                           class="minicolors minicolors-input advgb-input"
                            value="#000000" />
                 </div>
             </div>
@@ -257,25 +258,26 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 </label>
                 <textarea name="customstyles-css" id="advgb-customstyles-css"></textarea>
             </div>
-            <div id="css-tips" style="border-top: 1px solid #ccc">
+            <div id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
                 <small><?php esc_html_e('Hint: Use "Ctrl + Space" for auto completion', 'advanced-gutenberg') ?></small>
             </div>
-            <div class="col-sm-12" style="text-align: center">
+            <div class="col-sm-12" style="text-align: center; margin-top: 30px">
                 <form method="POST">
                     <?php wp_nonce_field('advgb_cstyles_nonce', 'advgb_cstyles_nonce_field'); ?>
-                    <button class="cyan white-text waves-effect waves-light material-btn"
+                    <button class="advgb-action-button advgb-button-orange waves-effect waves-light"
                             style="margin: 10px auto"
                             type="submit"
                             id="save_custom_styles"
                             name="save_custom_styles"
                             value="1"
                     >
-                        <?php esc_html_e('Save styles', 'advanced-gutenberg') ?>
+                        <span><?php esc_html_e('Save styles', 'advanced-gutenberg') ?></span>
                     </button>
                 </form>
             </div>
         </div>
-        <div class="col-sm-5" id="advgb-customstyles-preview">
+        <div class="col-sm-4" id="advgb-customstyles-preview">
+            <p class="preview-title"><?php esc_html_e('Preview', 'advanced-gutenberg'); ?></p>
             <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px;">
                 <?php esc_html_e('Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph', 'advanced-gutenberg') ?>
             </p>

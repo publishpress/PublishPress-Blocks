@@ -68,7 +68,7 @@ jQuery(document).ready(function ($) {
                     },
                     success: function (res, stt) {
                         if (stt === 'success') {
-                            $(that).parent().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="advgbicon-quill"></i> <span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><i class="advgbicon-copy"></i></a><a class="trash"><i class="advgbicon-trash"></i></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('+ res.name +')</li></ul></li>');
+                            $(that).parent().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="title-icon"></i> <span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><i class="mi mi-content-copy"></i></a><a class="trash"><i class="mi mi-delete"></i></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('+ res.name +')</li></ul></li>');
                             initCustomStyleMenu();
                         } else {
                             alert(stt);
@@ -141,7 +141,7 @@ jQuery(document).ready(function ($) {
                     },
                     success: function (res, stt) {
                         if (stt === 'success') {
-                            $(that).parents('.advgb-customstyles-list').find('li').last().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="advgbicon-quill"></i> <span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><i class="advgbicon-copy"></i></a><a class="trash"><i class="advgbicon-trash"></i></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('+ res.name +')</li></ul></li>');
+                            $(that).parents('.advgb-customstyles-list').find('li').last().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="title-icon" style="background-color: '+res.identifyColor+'"></i> <span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><i class="mi mi-content-copy"></i></a><a class="trash"><i class="mi mi-delete"></i></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('+ res.name +')</li></ul></li>');
                             initCustomStyleMenu();
                         } else {
                             alert(stt);
