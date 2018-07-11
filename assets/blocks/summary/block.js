@@ -113,8 +113,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(SummaryBlock, [{
-            key: "componentWillMount",
-            value: function componentWillMount() {
+            key: "componentDidMount",
+            value: function componentDidMount() {
                 this.updateSummary();
             }
         }, {

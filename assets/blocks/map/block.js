@@ -58,8 +58,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvMap, [{
-            key: "componentWillMount",
-            value: function componentWillMount() {
+            key: "componentDidMount",
+            value: function componentDidMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,
@@ -69,10 +69,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (!attributes.mapID) {
                     setAttributes({ mapID: 'advgbmap-' + id });
                 }
-            }
-        }, {
-            key: "componentDidMount",
-            value: function componentDidMount() {
+
                 this.initMap();
             }
         }, {

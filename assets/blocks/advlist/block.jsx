@@ -14,7 +14,7 @@
             this.setNextValues = this.setNextValues.bind( this );
         }
 
-        componentWillMount() {
+        componentDidMount() {
             const { attributes, setAttributes, id } = this.props;
 
             if ( !attributes.id ) {
