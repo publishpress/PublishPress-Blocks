@@ -27,6 +27,14 @@
     clear: both;
 }
 
+.no-display {
+    display: none;
+}
+
+.hidden-item {
+    visibility: hidden;
+}
+
 .tabs {
     display: flex;
     position: relative;
@@ -271,8 +279,9 @@ input.ju-checkbox:checked:before {
 }
 
 .ju-switch-button {
-    float: left;
+    float: right;
     margin-left: 10px;
+    margin-right: 30px;
 }
 
 .ju-switch-button .switch {
