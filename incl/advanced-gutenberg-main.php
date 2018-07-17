@@ -752,6 +752,14 @@ float: left;'
     {
         // Register CSS
         wp_register_style(
+            'ju_framework_styles',
+            plugins_url('assets/css/style.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'ju_framework_styles_min',
+            plugins_url('assets/css/style.min.css', dirname(__FILE__))
+        );
+        wp_register_style(
             'main_style',
             plugins_url('assets/css/main.css', dirname(__FILE__))
         );
