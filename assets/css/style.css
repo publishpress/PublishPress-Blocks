@@ -421,11 +421,13 @@ input.ju-input.minicolors .minicolors-grid .minicolors-picker > div {
     text-align: left;
     position: relative;
     line-height: normal;
+    background-color: transparent;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab {
     padding: 20px;
     opacity: 0.7;
+    background-color: transparent;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active {
