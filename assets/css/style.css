@@ -243,12 +243,12 @@ input.ju-input.minicolors .minicolors-grid .minicolors-picker > div {
     box-sizing: content-box;
 }
 
-.ju-checkbox:checked {
+input.ju-checkbox:checked {
     background-color: #49bf88;
     border: 1px solid #49bf88;
 }
 
-.ju-checkbox:checked:before {
+input.ju-checkbox:checked:before {
     color: #fff;
 }
 
