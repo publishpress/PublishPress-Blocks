@@ -20,8 +20,8 @@
             $(this).parent('.advgb-search-wrapper').removeClass('focused');
         });
 
-        $('#advgb-save-close').click(function () {
-            $('#advgb-save-success').slideUp();
+        $('.ju-notice-close').click(function () {
+            $(this).closest('.ju-notice-msg').slideUp();
         });
 
         $('a[href=#settings]').one('click', function () {
