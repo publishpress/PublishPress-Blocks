@@ -263,7 +263,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
             <div class="col-sm-12" style="text-align: center; margin-top: 30px">
                 <form method="POST">
                     <?php wp_nonce_field('advgb_cstyles_nonce', 'advgb_cstyles_nonce_field'); ?>
-                    <button class="advgb-action-button advgb-button-orange waves-effect waves-light"
+                    <button class="ju-button orange-button waves-effect waves-light"
                             style="margin: 10px auto"
                             type="submit"
                             id="save_custom_styles"
