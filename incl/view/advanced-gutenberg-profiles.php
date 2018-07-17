@@ -28,17 +28,15 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
 <div class="advgb-header" style="padding-top: 40px">
     <h1 class="header-title"><?php esc_html_e('Advanced Gutenberg Profiles', 'advanced-gutenberg') ?></h1>
     <div class="inline-button-wrapper">
-        <button class="advgb-action-button">
-            <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>">
-                <i class="mi mi-add"></i>
-                <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
-            </a>
-        </button>
+        <a class="ju-button" href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>">
+            <i class="mi mi-add"></i>
+            <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
+        </a>
     </div>
 </div>
 <div class="profiles-list-wrapper">
     <div class="profiles-action-btn" style="float: left; margin: 25px auto">
-        <button type="button" id="delete-selected-profiles" class="advgb-rect-btn">
+        <button type="button" id="delete-selected-profiles" class="ju-rect-button">
             <?php esc_html_e('Delete selected', 'advanced-gutenberg') ?>
         </button>
     </div>
