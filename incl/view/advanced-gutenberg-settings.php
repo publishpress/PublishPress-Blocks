@@ -28,7 +28,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
 ?>
 
 <div id="advgb-settings-container" style="margin-right: 20px">
-    <ul class="tabs advgb-top-tabs">
+    <ul class="tabs ju-top-tabs">
         <li class="tab">
             <a href="#config-tab" class="link-tab waves-effect waves-light">
                 <?php esc_html_e('Configuration', 'advanced-gutenberg') ?>
@@ -44,9 +44,9 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
     <h1 class="advgb-settings-header"><?php esc_html_e('Configuration', 'advanced-gutenberg') ?></h1>
 
     <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
-        <div id="advgb-save-success">
+        <div class="ju-notice-msg ju-notice-success">
             <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg') ?>
-            <i class="dashicons dashicons-dismiss" id="advgb-save-close"></i>
+            <i class="dashicons dashicons-dismiss ju-notice-close"></i>
         </div>
     <?php endif; ?>
 
@@ -54,10 +54,10 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         <form method="post">
             <?php wp_nonce_field('advgb_settings_nonce', 'advgb_settings_nonce_field') ?>
             <ul class="settings-list clearfix">
-                <li class="settings-option clearfix">
+                <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper clearfix">
                         <label for="gallery_lightbox"
-                               class="switch-label advgb_qtip"
+                               class="ju-setting-label advgb_qtip"
                                alt="<?php esc_attr_e(
                                    'Open gallery images as a lightbox style popup',
                                    'advanced-gutenberg'
@@ -65,22 +65,22 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         >
                             <?php esc_html_e('Open galleries in lightbox', 'advanced-gutenberg') ?>
                         </label>
-                        <div class="switch-btn">
+                        <div class="ju-switch-button">
                             <label class="switch">
                                 <input type="checkbox" name="gallery_lightbox"
                                        id="gallery_lightbox"
                                        value="1"
                                     <?php echo esc_attr($gallery_lightbox_checked) ?>
                                 />
-                                <span class="slider round"></span>
+                                <span class="slider"></span>
                             </label>
                         </div>
                     </div>
                 </li>
-                <li class="settings-option hidden-item clearfix" id="gallery_lightbox_caption_wrapper">
+                <li class="ju-settings-option hidden-item clearfix" id="gallery_lightbox_caption_wrapper">
                     <div class="settings-option-wrapper clearfix">
                         <label for="gallery_lightbox_caption"
-                               class="switch-label advgb_qtip"
+                               class="ju-setting-label advgb_qtip"
                                alt="<?php esc_attr_e(
                                    'Show images caption in lightbox.',
                                    'advanced-gutenberg'
@@ -88,22 +88,22 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         >
                             <?php esc_html_e('Image caption', 'advanced-gutenberg') ?>
                         </label>
-                        <div class="switch-btn">
+                        <div class="ju-switch-button">
                             <label class="switch">
                                 <input type="checkbox" name="gallery_lightbox_caption"
                                        id="gallery_lightbox_caption"
                                        value="1"
                                     <?php echo esc_attr($gallery_lightbox_caption_checked) ?>
                                 />
-                                <span class="slider round"></span>
+                                <span class="slider"></span>
                             </label>
                         </div>
                     </div>
                 </li>
-                <li class="settings-option full-width clearfix">
+                <li class="ju-settings-option full-width clearfix">
                     <div class="settings-option-wrapper clearfix">
                         <label for="google_api_key"
-                               class="advgb_qtip switch-label"
+                               class="ju-setting-label advgb_qtip"
                                style="float: none; margin-bottom: 10px"
                                alt="<?php esc_attr_e(
                                    'This API key is required to using Map Block.',
@@ -116,7 +116,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                             <input type="text"
                                    name="google_api_key"
                                    id="google_api_key"
-                                   class="advgb-input"
+                                   class="ju-input"
                                    style="margin-left: 10px; width: 370px"
                                    value="<?php echo esc_html($google_api_key_saved) ?>"
                             >
@@ -127,15 +127,15 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     </div>
                 </li>
 
-                <li class="settings-option settings-separator">
+                <li class="ju-settings-option settings-separator">
                     <p class="settings-separator-title">
                         <?php esc_html_e('Blocks Settings', 'advanced-gutenberg') ?>
                     </p>
                 </li>
-                <li class="settings-option clearfix">
+                <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_spacing"
-                               class="advgb_qtip switch-label"
+                               class="ju-setting-label advgb_qtip"
                                style="line-height: 50px"
                                alt="<?php esc_attr_e(
                                    'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
@@ -149,7 +149,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                                    min="0"
                                    name="blocks_spacing"
                                    id="blocks_spacing"
-                                   class="advgb-input"
+                                   class="ju-input"
                                    style="margin-left: 10px; width: 80px"
                                    value="<?php echo esc_html($blocks_spacing) ?>"
                             >
@@ -157,10 +157,10 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         </span>
                     </div>
                 </li>
-                <li class="settings-option clearfix">
+                <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_icon_color"
-                               class="advgb_qtip switch-label"
+                               class="ju-setting-label advgb_qtip"
                                style="line-height: 50px"
                                alt="<?php esc_attr_e(
                                    'Set color for blocks that added by Advanced Gutenberg',
@@ -173,7 +173,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                             <input type="text"
                                    name="blocks_icon_color"
                                    id="blocks_icon_color"
-                                   class="minicolors minicolors-input advgb-input"
+                                   class="minicolors minicolors-input ju-input"
                                    value="<?php echo esc_html($blocks_icon_color) ?>" />
                         </span>
                     </div>
@@ -182,7 +182,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
 
             <div class="save-settings-block">
                 <button type="submit"
-                        class="advgb-action-button advgb-button-orange waves-effect waves-light"
+                        class="ju-button orange-button waves-effect waves-light"
                         id="save-settings"
                         name="save_settings"
                 >

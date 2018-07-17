@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
         $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
     }
 
-    $('#settings .advgb-top-tabs .tab a').click(function () {
+    $('#settings .ju-top-tabs .tab a').click(function () {
         var currentText = $(this).text().trim();
         $('#settings .advgb-settings-header').text(currentText);
     });

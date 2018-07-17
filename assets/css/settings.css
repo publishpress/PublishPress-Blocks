@@ -3,14 +3,6 @@
     padding: 10px;
 }
 
-.no-display {
-    display: none;
-}
-
-.hidden-item {
-    visibility: hidden;
-}
-
 .advgb-settings-header {
     margin: 40px auto;
 }
@@ -19,29 +11,7 @@
     padding-left: 40px;
 }
 
-.settings-option {
-    float: left;
-    width: 50%;
-    margin-bottom: 20px;
-}
-
-.settings-option.full-width, .settings-separator {
-    width: 100%;
-}
-
-.settings-separator .settings-separator-title {
-    display: block;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.settings-option .switch-label {
-    min-width: 200px;
-    overflow: inherit;
-    line-height: 28px;
-}
-
-.settings-option .switch-label + * {
+.ju-settings-option .ju-setting-label + * {
     float: right;
     margin-right: 30px;
 }
@@ -54,12 +24,6 @@
     transition: none;
     -moz-transition: none;
     -webkit-transition: none;
-}
-
-.qtip.advgb_qtip {
-    background: #000000;
-    color: #ffffff;
-    border: 1px solid #000000;
 }
 
 .settings-option-wrapper .minicolors-theme-default {
