@@ -52,7 +52,7 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
         <thead>
             <tr>
                 <th class="profile-header-checkbox select-box">
-                    <input type="checkbox" class="select-all-profiles">
+                    <input type="checkbox" class="select-all-profiles ju-checkbox">
                 </th>
                 <th class="profile-header-title sorting-header" data-sort="title">
                     <span>
@@ -79,7 +79,7 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
             <?php foreach ($profiles as $profile) : ?>
                 <tr class="advgb-profile" data-profile-id="<?php echo esc_html($profile->ID) ?>">
                     <td class="profile-checkbox select-box">
-                        <input type="checkbox" name="advgb_profile[]" value="<?php echo esc_html($profile->ID) ?>">
+                        <input type="checkbox" class="ju-checkbox" name="advgb_profile[]" value="<?php echo esc_html($profile->ID) ?>">
                     </td>
                     <td class="profile-title">
                         <a href="<?php echo esc_html(admin_url('admin.php?page=advgb_main&view=profile&id='.$profile->ID)) ?>">
@@ -105,7 +105,7 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
         <tfoot>
             <tr>
                 <th class="profile-header-checkbox select-box">
-                    <input type="checkbox" class="select-all-profiles">
+                    <input type="checkbox" class="select-all-profiles ju-checkbox">
                 </th>
                 <th class="profile-header-title sorting-header" data-sort="title">
                     <span>
