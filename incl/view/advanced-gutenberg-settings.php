@@ -222,13 +222,13 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 <label for="advgb-customstyles-title">
                     <?php esc_html_e('Style title', 'advanced-gutenberg') ?>
                 </label>
-                <input type="text" class="advgb-input" name="customstyles-title" id="advgb-customstyles-title" value="" />
+                <input type="text" class="ju-input" name="customstyles-title" id="advgb-customstyles-title" value="" />
             </div>
             <div class="control-group">
                 <label for="advgb-customstyles-classname">
                     <?php esc_html_e('Style class', 'advanced-gutenberg') ?>
                 </label>
-                <input type="text" class="advgb-input" name="customstyles-classname" id="advgb-customstyles-classname" value="" />
+                <input type="text" class="ju-input" name="customstyles-classname" id="advgb-customstyles-classname" value="" />
             </div>
             <div id="identify-colors" class="control-group clearfix">
                 <div class="control-label">
@@ -247,7 +247,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <input type="text"
                            name="customstyles-identify-color"
                            id="advgb-customstyles-identify-color"
-                           class="minicolors minicolors-input advgb-input"
+                           class="minicolors minicolors-input ju-input"
                            value="#000000" />
                 </div>
             </div>
