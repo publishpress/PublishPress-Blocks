@@ -908,8 +908,11 @@ float: left;'
         wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
         wp_enqueue_style('material_icon_font');
         wp_enqueue_style('advgb_quirk');
-        wp_enqueue_style('tabs_style');
-        wp_enqueue_style('button_switch_style');
+        if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
+            wp_enqueue_style('ju_framework_styles');
+        } else {
+            wp_enqueue_style('ju_framework_styles_min');
+        }
         wp_enqueue_style('main_style');
 
         wp_enqueue_script('waves_js');
