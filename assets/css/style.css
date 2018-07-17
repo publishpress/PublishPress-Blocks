@@ -357,6 +357,7 @@ input.ju-checkbox:checked:before {
     min-width: 150px;
     max-width: calc(100% - 150px);
     overflow: hidden;
+    white-space: nowrap;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     margin: 0;
