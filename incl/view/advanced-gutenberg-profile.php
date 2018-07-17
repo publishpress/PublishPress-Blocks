@@ -7,7 +7,7 @@ wp_enqueue_script('profile_js');
 $all_blocks_list     = get_option('advgb_blocks_list');
 $all_categories_list = get_option('advgb_categories_list');
 
-$postid              = $_GET['id']; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- view  only
+$postid              = $_GET['id']; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- view only
 $post_title          = get_the_title($postid);
 $active_blocks_saved = get_post_meta($postid, 'active_blocks', true);
 $active_blocks_saved = $active_blocks_saved ? $active_blocks_saved : self::$default_active_blocks;

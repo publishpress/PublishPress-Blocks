@@ -970,6 +970,10 @@ float: left;'
      */
     public function saveAdvgbData()
     {
+        if (isset($_GET['view']) && $_GET['view'] === 'profile' && !isset($_GET['id'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- redirect only
+            wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profiles'));
+        }
+
         if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveAdvgbProfile();
         } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- we check nonce below
