@@ -58,6 +58,11 @@ ul.blocks-list li.block-item {
     -webkit-transition: background-color .5s ease-out;
 }
 
+ul.blocks-list li.block-item .ju-setting-label svg,
+ul.blocks-list li.block-item .ju-setting-label i {
+    vertical-align: middle;
+}
+
 .category-block.collapsed .blocks-list {
     display: none;
 }
@@ -92,7 +97,7 @@ ul.blocks-list li.block-item {
 
 .block-item > * {
     float: left;
-    line-height: 27px;
+    line-height: 50px;
 }
 
 .block-item label.switch-label > * {

@@ -81,7 +81,26 @@
     background-color: #ff8726;
 }
 
-.waves-effect .waves-riple {
+.waves-effect {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    will-change: opacity, transform;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.waves-effect .waves-ripple {
     position: absolute;
     width: 20px;
     height: 20px;
@@ -104,11 +123,11 @@
     transform: scale(0);
 }
 
-.waves-effect.waves-light .waves-riple {
+.waves-effect.waves-light .waves-ripple {
     background-color: rgba(255, 255, 255, 0.45);
 }
 
-.waves-effect.waves-dark .waves-riple {
+.waves-effect.waves-dark .waves-ripple {
     background-color: rgba(140, 140, 140, 0.45);
 }
 
@@ -120,6 +139,7 @@
     border: 1px solid #9fabba;
     text-transform: uppercase;
     display: inline-block;
+    text-decoration: none;
     cursor: pointer;
     text-align: center;
     transition: all ease 0.5s;
@@ -462,10 +482,13 @@ input.ju-input.minicolors .minicolors-grid .minicolors-picker > div {
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab {
     text-transform: capitalize;
     min-width: 200px;
+    background-color: #fff;
+    padding: 15px;
 }
 
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab {
     color: #ff8726;
+    background-color: #fff;
 }
 
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab.active:before {
@@ -473,6 +496,12 @@ input.ju-input.minicolors .minicolors-grid .minicolors-picker > div {
     font-family: 'dashicons';
     font-size: 20px;
     vertical-align: middle;
+}
+
+.ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs .indicator {

@@ -52,7 +52,7 @@ if ($updating) {
     <input type="hidden" name="advgb_profile_id" value="<?php echo esc_html($postid) ?>" />
     <div id="profiles-container">
         <!--Tabs-->
-        <ul class="tabs advgb-top-tabs">
+        <ul class="tabs ju-top-tabs">
             <li class="tab">
                 <a href="#blocks-list-tab" class="link-tab">
                     <?php esc_html_e('Blocks List', 'advanced-gutenberg') ?>
@@ -66,12 +66,12 @@ if ($updating) {
         </ul>
 
         <?php if (isset($_GET['save_profile'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
-            <div id="advgb-save-success">
+            <div class="ju-notice-msg ju-notice-success">
                 <?php esc_html_e('Profile saved successfully!', 'advanced-gutenberg') ?>
                 <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profiles')) ?>" target="_self">
                     <?php esc_html_e('Return to profiles list', 'advanced-gutenberg') ?>
                 </a>
-                <i class="dashicons dashicons-dismiss" id="advgb-save-close"></i>
+                <i class="dashicons dashicons-dismiss ju-notice-close"></i>
             </div>
         <?php endif; ?>
 
@@ -82,24 +82,24 @@ if ($updating) {
                         <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
                     </span>
                 <button type="button" id="update-list-btn"
-                        class="advgb-action-button orange-text waves-effect waves-dark"
+                        class="ju-button orange-outline-button waves-effect waves-dark"
                     <?php echo esc_attr($disabled) ?>
                         title="<?php esc_attr_e('Update the blocks list', 'advanced-gutenberg') ?>"
                 >
                     <span>
-                        <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>"></i>
+                        <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>" style="vertical-align: bottom"></i>
                         <span><?php echo esc_html($button_text) ?></span>
                     </span>
                 </button>
 
-                <button class="advgb-action-button waves-effect waves-dark" type="button">
-                    <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>">
-                        <i class="mi mi-add"></i>
-                        <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
-                    </a>
-                </button>
+                <a class="ju-button waves-effect waves-dark"
+                   href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>"
+                >
+                    <i class="mi mi-add"></i>
+                    <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
+                </a>
 
-                <button class="advgb-action-button advgb-button-orange waves-effect waves-light save-profile-button"
+                <button class="ju-button orange-button waves-effect waves-light save-profile-button"
                         type="submit"
                         name="advgb_profile_save"
                 >
@@ -141,7 +141,7 @@ if ($updating) {
                                     continue;
                                 endif; ?>
                                 <li class="block-item" data-type="<?php echo esc_attr($block['name']) ?>">
-                                    <label for="block-<?php echo esc_attr($block['name']) ?>" class="switch-label">
+                                    <label for="block-<?php echo esc_attr($block['name']) ?>" class="ju-setting-label">
                                         <?php if (strpos($block['icon'], '<svg') !== false) :
                                             echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
                                         else : ?>
@@ -172,7 +172,7 @@ if ($updating) {
                                                 S13.1,14,12,14z"></path>
                                         </svg>
                                     </span>
-                                    <div class="switch-btn">
+                                    <div class="ju-switch-button">
                                         <label class="switch">
                                             <input type="checkbox" name="active_blocks[]"
                                                    id="block-<?php echo esc_attr($block['name']) ?>"
@@ -181,7 +181,7 @@ if ($updating) {
                                                     echo 'checked';
                                                 endif; ?>
                                             />
-                                            <span class="slider round"></span>
+                                            <span class="slider"></span>
                                         </label>
                                     </div>
                                 </li>
@@ -366,7 +366,7 @@ if ($updating) {
                         <li class="clearfix">
                             <label for="<?php echo esc_attr($role) ?>" class="switch-label"
                                    style="vertical-align: middle;"><?php echo esc_html($role_name) ?></label>
-                            <div class="switch-btn">
+                            <div class="ju-switch-button">
                                 <label class="switch">
                                     <input type="checkbox" class="extra-btn"
                                            name="advgb-roles[]"
@@ -376,7 +376,7 @@ if ($updating) {
                                                     echo 'checked';
                                             endif; ?>
                                     />
-                                    <span class="slider round"></span>
+                                    <span class="slider"></span>
                                 </label>
                             </div>
                         </li>
@@ -386,7 +386,7 @@ if ($updating) {
         </div>
 
         <!--Save button-->
-        <button class="advgb-action-button advgb-button-orange waves-effect waves-light save-profile-button"
+        <button class="ju-button orange-button waves-effect waves-light save-profile-button"
                 type="submit"
                 name="advgb_profile_save"
         >
