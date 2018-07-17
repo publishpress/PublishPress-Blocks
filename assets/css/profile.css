@@ -204,10 +204,6 @@ ul.blocks-list li.block-item .ju-setting-label i {
     flex-basis: 33%;
 }
 
-.advgb-groups-list li label {
-    line-height: 28px;
-}
-
 /*Save setting button*/
 .save-settings-block {
     margin-top: 20px;

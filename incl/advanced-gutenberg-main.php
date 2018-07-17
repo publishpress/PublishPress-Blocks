@@ -478,7 +478,7 @@ float: left;'
             foreach ($wp_user_search as $userid => $user_object) {
                 $users_list .= '<tr>';
                 $users_list .= '<td class="select-box">';
-                $users_list .= '<input type="checkbox" name="advgb-users[]" value="' . $userid . '" />';
+                $users_list .= '<input class="ju-checkbox" type="checkbox" name="advgb-users[]" value="' . $userid . '" />';
                 $users_list .= '</td>';
                 $users_list .= '<td class="name column-name">';
                 $users_list .= '<span>' . $user_object->display_name . '</span>';

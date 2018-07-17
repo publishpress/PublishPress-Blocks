@@ -200,7 +200,7 @@ if ($updating) {
                     <input type="button"
                            name="advgb-clear-btn"
                            id="advgb-clear-btn"
-                           class="orange-text advgb-rect-btn"
+                           class="ju-rect-button"
                            value="<?php esc_attr_e('Clear', 'advanced-gutenberg') ?>"/>
                     <select name="advgb-roles-filter" id="advgb-roles-filter">
                         <option value=""><?php esc_html_e('Use role filter', 'advanced-gutenberg') ?></option>
@@ -265,7 +265,7 @@ if ($updating) {
                         foreach ($wp_user_search as $userid => $user_object) {
                             echo '<tr>';
                             echo '<td class="select-box">';
-                            echo '<input type="checkbox" name="advgb-users[]" value="' . esc_html($userid) . '" >';
+                            echo '<input class="ju-checkbox" type="checkbox" name="advgb-users[]" value="' . esc_html($userid) . '" />';
                             echo '</td>';
                             echo '<td class="name column-name">';
                             echo '<span>' . esc_html($user_object->display_name) . '</span>';
@@ -364,7 +364,7 @@ if ($updating) {
                     $roles_list = $wp_roles->get_names();
                     foreach ($roles_list as $role => $role_name) :?>
                         <li class="clearfix">
-                            <label for="<?php echo esc_attr($role) ?>" class="switch-label"
+                            <label for="<?php echo esc_attr($role) ?>" class="ju-setting-label"
                                    style="vertical-align: middle;"><?php echo esc_html($role_name) ?></label>
                             <div class="ju-switch-button">
                                 <label class="switch">
