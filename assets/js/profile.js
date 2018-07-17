@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
     // Switch top tab we will change title text and hide unneeded buttons
-    $('#profiles-container .advgb-top-tabs .tab a').unbind('click').click(function () {
+    $('#profiles-container .ju-top-tabs .tab a').unbind('click').click(function () {
         var currentText = $(this).text().trim();
         var currentHref = $(this).attr('href');
 
