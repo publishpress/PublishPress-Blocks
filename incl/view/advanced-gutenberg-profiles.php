@@ -28,7 +28,9 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
 <div class="advgb-header" style="padding-top: 40px">
     <h1 class="header-title"><?php esc_html_e('Advanced Gutenberg Profiles', 'advanced-gutenberg') ?></h1>
     <div class="inline-button-wrapper">
-        <a class="ju-button" href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>">
+        <a class="ju-button waves-effect waves-dark"
+           href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>"
+        >
             <i class="mi mi-add"></i>
             <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
         </a>
