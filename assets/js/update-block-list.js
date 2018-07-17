@@ -108,14 +108,14 @@ window.onload = function () {
                             theBlock.find('label').find('i').remove();
                             theBlock.find('label').find('svg').remove();
                             if (block.icon.indexOf('<svg') > -1) {
-                                theBlock.find('.switch-label').prepend(block.icon);
+                                theBlock.find('.ju-setting-label').prepend(block.icon);
                             } else {
-                                theBlock.find('.switch-label').prepend('<i class="dashicons dashicons-'+ block.icon +'"></i>');
+                                theBlock.find('.ju-setting-label').prepend('<i class="dashicons dashicons-'+ block.icon +'"></i>');
                             }
                         } else {
                             var blockHTML = '';
                             blockHTML += '<li class="block-item new-block" data-type="'+ block.name +'">';
-                            blockHTML +=    '<label for="'+ block.name +'" class="switch-label">';
+                            blockHTML +=    '<label for="'+ block.name +'" class="ju-setting-label">';
                             if (block.icon.indexOf('<svg') > -1) {
                                 blockHTML +=    block.icon;
                             } else {
@@ -124,10 +124,10 @@ window.onload = function () {
                             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
                             blockHTML +=    '</label>';
                             blockHTML +=    '<span class="block-config"><i class="mi mi-settings"></i></span>';
-                            blockHTML +=    '<div class="switch-btn">';
+                            blockHTML +=    '<div class="ju-switch-button">';
                             blockHTML +=        '<label class="switch">';
                             blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'"/>';
-                            blockHTML +=            '<span class="slider round"></span>';
+                            blockHTML +=            '<span class="slider"></span>';
                             blockHTML +=        '</label>';
                             blockHTML +=    '</div>';
                             blockHTML += '</li>';
