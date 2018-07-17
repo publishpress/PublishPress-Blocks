@@ -772,14 +772,6 @@ float: left;'
             plugins_url('assets/css/settings.css', dirname(__FILE__))
         );
         wp_register_style(
-            'tabs_style',
-            plugins_url('assets/css/tabs.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'button_switch_style',
-            plugins_url('assets/css/switch-button.css', dirname(__FILE__))
-        );
-        wp_register_style(
             'qtip_style',
             plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
         );
