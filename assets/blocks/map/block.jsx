@@ -29,15 +29,13 @@
             this.fetchLocation = this.fetchLocation.bind(this);
         }
 
-        componentWillMount() {
+        componentDidMount() {
             const { attributes, setAttributes, id } = this.props;
 
             if (!attributes.mapID) {
                 setAttributes( { mapID: 'advgbmap-' + id } );
             }
-        }
 
-        componentDidMount() {
             this.initMap();
         }
 

@@ -80,7 +80,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     })();
 
     // Add notice for user to refresh summary if manually change heading anchor
-    addFilter('blocks.BlockEdit', 'advgb/addHeadingNotice', function (BlockEdit) {
+    addFilter('editor.BlockEdit', 'advgb/addHeadingNotice', function (BlockEdit) {
         return function (props) {
             var isSelected = props.isSelected,
                 blockType = props.name,
@@ -112,8 +112,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(SummaryBlock, [{
-            key: "componentWillMount",
-            value: function componentWillMount() {
+            key: "componentDidMount",
+            value: function componentDidMount() {
                 this.updateSummary();
             }
         }, {
@@ -126,7 +126,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
                 headingBlocks.map(function (heading) {
                     var thisHead = {};
-                    thisHead['level'] = parseInt(heading.attributes.nodeName.replace(/h/gi, ''));
+                    thisHead['level'] = parseInt(heading.attributes.level);
 
                     // We only get heading from h2
                     if (thisHead['level'] > 1) {
@@ -305,7 +305,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string'
             }
         },
-        useOnce: true,
+        supports: {
+            multiple: false
+        },
         edit: SummaryBlock,
         save: function save(_ref) {
             var attributes = _ref.attributes;

@@ -37,7 +37,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     }
 
     // Add option to select custom styles for paragraph blocks
-    addFilter('blocks.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
+    addFilter('editor.BlockEdit', 'advgb/customStyles', function (BlockEdit) {
         return function (props) {
             return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-class-name' }, props)), props.isSelected && props.name === "core/paragraph" && React.createElement(
                 InspectorControls,

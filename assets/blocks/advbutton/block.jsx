@@ -10,7 +10,7 @@
             super( ...arguments );
         }
 
-        componentWillMount() {
+        componentDidMount() {
             const { attributes, setAttributes, id } = this.props;
 
             if ( !attributes.id ) {
