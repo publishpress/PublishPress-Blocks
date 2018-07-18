@@ -84,7 +84,7 @@
             const headingBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' ) );
             headingBlocks.map( ( heading ) => {
                 let thisHead = {};
-                thisHead[ 'level' ] = parseInt( heading.attributes.nodeName.replace( /h/gi, '' ) );
+                thisHead[ 'level' ] = parseInt( heading.attributes.level );
 
                 // We only get heading from h2
                 if (thisHead[ 'level' ] > 1) {

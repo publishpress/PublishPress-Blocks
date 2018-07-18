@@ -126,7 +126,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
                 headingBlocks.map(function (heading) {
                     var thisHead = {};
-                    thisHead['level'] = parseInt(heading.attributes.nodeName.replace(/h/gi, ''));
+                    thisHead['level'] = parseInt(heading.attributes.level);
 
                     // We only get heading from h2
                     if (thisHead['level'] > 1) {
