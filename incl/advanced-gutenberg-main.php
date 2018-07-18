@@ -211,10 +211,6 @@ float: left;'
             plugins_url('assets/blocks/advtable/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
-        wp_enqueue_style(
-            'advTable_blocks',
-            plugins_url('assets/blocks/advtable/style.css', dirname(__FILE__))
-        );
         wp_enqueue_script(
             'accordion_blocks',
             plugins_url('assets/blocks/accordion/block.js', dirname(__FILE__)),
@@ -280,54 +276,17 @@ float: left;'
             $custom_styles_url . 'custom_styles.css'
         );
 
-        wp_enqueue_style(
-            'summary_blocks',
-            plugins_url('assets/blocks/summary/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'advList_blocks',
-            plugins_url('assets/blocks/advlist/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'advButton_blocks',
-            plugins_url('assets/blocks/advbutton/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'advCountUp_blocks',
-            plugins_url('assets/blocks/count-up/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'advTestimonial_blocks',
-            plugins_url('assets/blocks/testimonial/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'advImage_blocks',
-            plugins_url('assets/blocks/advimage/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'custom_separator',
-            plugins_url('assets/blocks/custom-separator/frontend.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'advVideo_blocks',
-            plugins_url('assets/blocks/advvideo/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'advTable_frontend',
-            plugins_url('assets/blocks/advtable/frontend.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'accordion_blocks',
-            plugins_url('assets/blocks/accordion/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'tabs_blocks',
-            plugins_url('assets/blocks/tabs/style.css', dirname(__FILE__))
-        );
-        wp_enqueue_style(
-            'social_blocks',
-            plugins_url('assets/blocks/social-links/style.css', dirname(__FILE__))
-        );
+        if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
+            wp_enqueue_style(
+                'blocks_frontend_styles',
+                plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
+            );
+        } else {
+            wp_enqueue_style(
+                'blocks_frontend_styles_min',
+                plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
+            );
+        }
 
         $saved_settings = get_option('advgb_settings');
         if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
