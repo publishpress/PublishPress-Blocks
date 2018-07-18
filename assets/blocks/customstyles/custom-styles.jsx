@@ -32,7 +32,7 @@
     }
 
     // Add option to select custom styles for paragraph blocks
-    addFilter( 'blocks.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
+    addFilter( 'editor.BlockEdit', 'advgb/customStyles', function ( BlockEdit ) {
         return ( props ) => {
             return ( [
                 <BlockEdit key="block-edit-custom-class-name" {...props} />,

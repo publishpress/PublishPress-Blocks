@@ -80,7 +80,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     })();
 
     // Add notice for user to refresh summary if manually change heading anchor
-    addFilter('blocks.BlockEdit', 'advgb/addHeadingNotice', function (BlockEdit) {
+    addFilter('editor.BlockEdit', 'advgb/addHeadingNotice', function (BlockEdit) {
         return function (props) {
             var isSelected = props.isSelected,
                 blockType = props.name,
