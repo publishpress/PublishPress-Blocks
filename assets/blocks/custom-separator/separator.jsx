@@ -27,7 +27,7 @@
     } );
 
     // Add option to select styles for separator
-    addFilter( 'blocks.BlockEdit', 'advgb/customSeparatorStyles', function ( BlockEdit ) {
+    addFilter( 'editor.BlockEdit', 'advgb/customSeparatorStyles', function ( BlockEdit ) {
         return ( props ) => {
             if (props.name === "core/separator") {
                 const { isSelected, attributes, setAttributes, id } = props;

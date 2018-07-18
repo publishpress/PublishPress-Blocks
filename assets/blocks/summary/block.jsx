@@ -52,7 +52,7 @@
     } )();
 
     // Add notice for user to refresh summary if manually change heading anchor
-    addFilter( 'blocks.BlockEdit', 'advgb/addHeadingNotice', function ( BlockEdit ) {
+    addFilter( 'editor.BlockEdit', 'advgb/addHeadingNotice', function ( BlockEdit ) {
         return ( props ) => {
             const { isSelected, name: blockType, attributes } = props;
 
@@ -74,7 +74,7 @@
             this.updateSummary = this.updateSummary.bind( this );
         }
 
-        componentWillMount() {
+        componentDidMount() {
             this.updateSummary();
         };
 
@@ -84,7 +84,7 @@
             const headingBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' ) );
             headingBlocks.map( ( heading ) => {
                 let thisHead = {};
-                thisHead[ 'level' ] = parseInt( heading.attributes.nodeName.replace( /h/gi, '' ) );
+                thisHead[ 'level' ] = parseInt( heading.attributes.level );
 
                 // We only get heading from h2
                 if (thisHead[ 'level' ] > 1) {
@@ -233,7 +233,9 @@
                 type: 'string',
             }
         },
-        useOnce: true,
+        supports: {
+            multiple: false,
+        },
         edit: SummaryBlock,
         save: ( { attributes } ) => {
             const { headings, loadMinimized, anchorColor, align = 'none', postTitle, headerTitle } = attributes;
