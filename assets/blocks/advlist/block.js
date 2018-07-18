@@ -43,8 +43,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvList, [{
-            key: 'componentWillMount',
-            value: function componentWillMount() {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,

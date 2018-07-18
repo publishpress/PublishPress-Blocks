@@ -74,7 +74,7 @@
             this.updateSummary = this.updateSummary.bind( this );
         }
 
-        componentWillMount() {
+        componentDidMount() {
             this.updateSummary();
         };
 

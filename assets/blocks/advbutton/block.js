@@ -39,8 +39,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvButton, [{
-            key: 'componentWillMount',
-            value: function componentWillMount() {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,
