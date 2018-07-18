@@ -305,7 +305,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string'
             }
         },
-        useOnce: true,
+        supports: {
+            multiple: false
+        },
         edit: SummaryBlock,
         save: function save(_ref) {
             var attributes = _ref.attributes;
