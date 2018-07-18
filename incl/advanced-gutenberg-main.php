@@ -278,12 +278,12 @@ float: left;'
 
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
             wp_enqueue_style(
-                'blocks_frontend_styles',
+                'blocks_styles',
                 plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
             );
         } else {
             wp_enqueue_style(
-                'blocks_frontend_styles_min',
+                'blocks_styles_min',
                 plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
             );
         }
