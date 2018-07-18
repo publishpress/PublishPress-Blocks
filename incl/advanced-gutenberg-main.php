@@ -869,7 +869,8 @@ float: left;'
 
         wp_register_script(
             'colorbox_js',
-            plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__))
+            plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__)),
+            array('jquery')
         );
 
         $saved_settings = get_option('advgb_settings');
@@ -1229,14 +1230,16 @@ float: left;'
         if (strpos($content, 'advgb-toc-header') !== false) {
             wp_enqueue_script(
                 'summary_minimized',
-                plugins_url('assets/blocks/summary/summaryMinimized.js', dirname(__FILE__))
+                plugins_url('assets/blocks/summary/summaryMinimized.js', dirname(__FILE__)),
+                array('jquery')
             );
         }
 
         if (strpos($content, 'wp-block-advgb-count-up') !== false) {
             wp_enqueue_script(
                 'waypoint_js',
-                'https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js'
+                'https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js',
+                array('jquery')
             );
             wp_enqueue_script(
                 'countup_lib_js',
