@@ -1,3 +1,8 @@
+#editor .advgb-accordion-block .advgb-accordion-header p.mce-content-body,
+#editor .advgb-accordion-block .advgb-accordion-body p.mce-content-body {
+    color: inherit;
+}
+
 .advgb-accordion-header.ui-accordion-header {
     padding: 5px 40px 5px 10px;
     border: 1px solid #ccc;
