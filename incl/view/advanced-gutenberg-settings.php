@@ -42,14 +42,14 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </li>
     </ul>
 
-    <h1 class="advgb-settings-header"><?php esc_html_e('Configuration', 'advanced-gutenberg') ?></h1>
-
     <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
         <div class="ju-notice-msg ju-notice-success">
             <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg') ?>
             <i class="dashicons dashicons-dismiss ju-notice-close"></i>
         </div>
     <?php endif; ?>
+
+    <h1 class="advgb-settings-header"><?php esc_html_e('Configuration', 'advanced-gutenberg') ?></h1>
 
     <div id="config-tab" class="tab-content clearfix" style="display: none;">
         <form method="post">
