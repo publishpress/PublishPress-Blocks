@@ -72,7 +72,7 @@
                 if (realID.indexOf( '&' ) > -1)
                     realID = realID.substring( 0, realID.indexOf( '&' ) );
 
-                wp.apiRequest( { path: `/oembed/1.0/proxy?url=${ JSON.stringify( url ) }` } ).then(
+                wp.apiRequest( { path: `/oembed/1.0/proxy&url=${ encodeURIComponent( url ) }` } ).then(
                     (obj) => {
                         this.setState( { fetching: false } );
                         if (!!obj.title && !!obj.provider_name) {
