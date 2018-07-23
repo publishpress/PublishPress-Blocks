@@ -26,7 +26,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         IconButton = wpComponents.IconButton,
-        Dashicon = wpComponents.Dashicon;
+        Dashicon = wpComponents.Dashicon,
+        Toolbar = wpComponents.Toolbar;
 
     var AdvList = function (_Component) {
         _inherits(AdvList, _Component);
@@ -120,8 +121,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         BlockControls,
                         null,
                         React.createElement(
-                            'div',
-                            { className: 'components-toolbar' },
+                            Toolbar,
+                            null,
                             React.createElement(IconButton, {
                                 label: __('Refresh this list when it conflict with other lists styles'),
                                 icon: 'update',

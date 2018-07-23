@@ -25,7 +25,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
-        Button = wpComponents.Button;
+        Button = wpComponents.Button,
+        Toolbar = wpComponents.Toolbar;
 
     var AdvImage = function (_Component) {
         _inherits(AdvImage, _Component);
@@ -83,30 +84,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     imageID && React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(MediaUpload, {
-                            type: 'image',
-                            value: imageID,
-                            onSelect: function onSelect(image) {
-                                return setAttributes({ imageUrl: image.url, imageID: image.id });
-                            },
-                            render: function render(_ref) {
-                                var open = _ref.open;
-                                return React.createElement(IconButton, {
-                                    className: 'components-toolbar__control',
-                                    label: __('Change image'),
-                                    icon: 'edit',
-                                    onClick: open
-                                });
-                            }
-                        }),
-                        React.createElement(IconButton, {
-                            className: 'components-toolbar__control',
-                            label: __('Remove image'),
-                            icon: 'no',
-                            onClick: function onClick() {
-                                return setAttributes({ imageUrl: undefined, imageID: undefined });
-                            }
-                        })
+                        React.createElement(
+                            Toolbar,
+                            null,
+                            React.createElement(MediaUpload, {
+                                type: 'image',
+                                value: imageID,
+                                onSelect: function onSelect(image) {
+                                    return setAttributes({ imageUrl: image.url, imageID: image.id });
+                                },
+                                render: function render(_ref) {
+                                    var open = _ref.open;
+                                    return React.createElement(IconButton, {
+                                        className: 'components-toolbar__control',
+                                        label: __('Change image'),
+                                        icon: 'edit',
+                                        onClick: open
+                                    });
+                                }
+                            }),
+                            React.createElement(IconButton, {
+                                className: 'components-toolbar__control',
+                                label: __('Remove image'),
+                                icon: 'no',
+                                onClick: function onClick() {
+                                    return setAttributes({ imageUrl: undefined, imageID: undefined });
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         InspectorControls,

@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, ColorPalette, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, ToggleControl, BaseControl, TextControl, Button, IconButton, Dashicon, Spinner } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, ToggleControl, BaseControl, TextControl, Button, IconButton, Dashicon, Spinner, Toolbar } = wpComponents;
 
     const PLAY_BUTTON_STYLE = {
         normal: [
@@ -163,25 +163,27 @@
                 <Fragment>
                     { ( (!!poster && openInLightbox) || ( !openInLightbox && videoSourceType === 'local' ) ) &&
                     <BlockControls>
-                        <MediaUpload
-                            type={ 'image' }
-                            value={ posterID }
-                            onSelect={ (image) => setAttributes( { poster: image.url, posterID: image.id } ) }
-                            render={ ( { open } ) => (
-                                <IconButton
-                                    className="components-toolbar__control"
-                                    label={ __( 'Change image preview' ) }
-                                    icon={ 'edit' }
-                                    onClick={ open }
-                                />
-                            ) }
-                        />
-                        <IconButton
-                            className="components-toolbar__control"
-                            label={ __( 'Remove image preview' ) }
-                            icon={ 'no' }
-                            onClick={ () => setAttributes( { poster: undefined, posterID: undefined } ) }
-                        />
+                        <Toolbar>
+                            <MediaUpload
+                                type={ 'image' }
+                                value={ posterID }
+                                onSelect={ (image) => setAttributes( { poster: image.url, posterID: image.id } ) }
+                                render={ ( { open } ) => (
+                                    <IconButton
+                                        className="components-toolbar__control"
+                                        label={ __( 'Change image preview' ) }
+                                        icon={ 'edit' }
+                                        onClick={ open }
+                                    />
+                                ) }
+                            />
+                            <IconButton
+                                className="components-toolbar__control"
+                                label={ __( 'Remove image preview' ) }
+                                icon={ 'no' }
+                                onClick={ () => setAttributes( { poster: undefined, posterID: undefined } ) }
+                            />
+                        </Toolbar>
                     </BlockControls>
                     }
                     <InspectorControls>

@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, ColorPalette, BlockControls } = wpEditor;
-    const { BaseControl, RangeControl, PanelBody, IconButton, Dashicon } = wpComponents;
+    const { BaseControl, RangeControl, PanelBody, IconButton, Dashicon, Toolbar } = wpComponents;
 
     class AdvList extends Component {
         constructor() {
@@ -102,14 +102,14 @@
             return (
                 <Fragment>
                     <BlockControls>
-                        <div className="components-toolbar">
+                        <Toolbar>
                             <IconButton
                                 label={ __( 'Refresh this list when it conflict with other lists styles' ) }
                                 icon="update"
                                 className="components-toolbar__control"
                                 onClick={ () => setAttributes( { id: 'advgblist-' + blockID } ) }
                             />
-                        </div>
+                        </Toolbar>
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Text Settings' ) } initialOpen={false}>

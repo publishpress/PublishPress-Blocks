@@ -26,7 +26,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Button = wpComponents.Button,
         IconButton = wpComponents.IconButton,
         Dashicon = wpComponents.Dashicon,
-        Spinner = wpComponents.Spinner;
+        Spinner = wpComponents.Spinner,
+        Toolbar = wpComponents.Toolbar;
 
 
     var PLAY_BUTTON_STYLE = {
@@ -187,30 +188,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     (!!poster && openInLightbox || !openInLightbox && videoSourceType === 'local') && React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(MediaUpload, {
-                            type: 'image',
-                            value: posterID,
-                            onSelect: function onSelect(image) {
-                                return setAttributes({ poster: image.url, posterID: image.id });
-                            },
-                            render: function render(_ref) {
-                                var open = _ref.open;
-                                return React.createElement(IconButton, {
-                                    className: "components-toolbar__control",
-                                    label: __('Change image preview'),
-                                    icon: 'edit',
-                                    onClick: open
-                                });
-                            }
-                        }),
-                        React.createElement(IconButton, {
-                            className: "components-toolbar__control",
-                            label: __('Remove image preview'),
-                            icon: 'no',
-                            onClick: function onClick() {
-                                return setAttributes({ poster: undefined, posterID: undefined });
-                            }
-                        })
+                        React.createElement(
+                            Toolbar,
+                            null,
+                            React.createElement(MediaUpload, {
+                                type: 'image',
+                                value: posterID,
+                                onSelect: function onSelect(image) {
+                                    return setAttributes({ poster: image.url, posterID: image.id });
+                                },
+                                render: function render(_ref) {
+                                    var open = _ref.open;
+                                    return React.createElement(IconButton, {
+                                        className: "components-toolbar__control",
+                                        label: __('Change image preview'),
+                                        icon: 'edit',
+                                        onClick: open
+                                    });
+                                }
+                            }),
+                            React.createElement(IconButton, {
+                                className: "components-toolbar__control",
+                                label: __('Remove image preview'),
+                                icon: 'no',
+                                onClick: function onClick() {
+                                    return setAttributes({ poster: undefined, posterID: undefined });
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         InspectorControls,

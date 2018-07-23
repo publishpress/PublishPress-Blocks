@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl, IconButton } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
 
     class AdvButton extends Component {
         constructor() {
@@ -69,14 +69,14 @@
                 <Fragment>
                     <BlockControls>
                         <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
-                        <div className="components-toolbar">
+                        <Toolbar>
                             <IconButton
                                 label={ __( 'Refresh this button when it conflict with other buttons styles' ) }
                                 icon="update"
                                 className="components-toolbar__control"
                                 onClick={ () => setAttributes( { id: 'advgbbutton-' + blockID } ) }
                             />
-                        </div>
+                        </Toolbar>
                     </BlockControls>
                     <span style={ { display: 'inline-block' } } >
                         <RichText

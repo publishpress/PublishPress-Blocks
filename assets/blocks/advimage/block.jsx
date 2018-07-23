@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, ColorPalette, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, TextControl, IconButton, Button } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, TextControl, IconButton, Button, Toolbar } = wpComponents;
 
     class AdvImage extends Component {
         constructor() {
@@ -45,25 +45,27 @@
                 <Fragment>
                     {imageID && (
                         <BlockControls>
-                            <MediaUpload
-                                type={ 'image' }
-                                value={ imageID }
-                                onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id } ) }
-                                render={ ( { open } ) => (
-                                    <IconButton
-                                        className="components-toolbar__control"
-                                        label={ __( 'Change image' ) }
-                                        icon={ 'edit' }
-                                        onClick={ open }
-                                    />
-                                ) }
-                            />
-                            <IconButton
-                                className="components-toolbar__control"
-                                label={ __( 'Remove image' ) }
-                                icon={ 'no' }
-                                onClick={ () => setAttributes( { imageUrl: undefined, imageID: undefined } ) }
-                            />
+                            <Toolbar>
+                                <MediaUpload
+                                    type={ 'image' }
+                                    value={ imageID }
+                                    onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id } ) }
+                                    render={ ( { open } ) => (
+                                        <IconButton
+                                            className="components-toolbar__control"
+                                            label={ __( 'Change image' ) }
+                                            icon={ 'edit' }
+                                            onClick={ open }
+                                        />
+                                    ) }
+                                />
+                                <IconButton
+                                    className="components-toolbar__control"
+                                    label={ __( 'Remove image' ) }
+                                    icon={ 'no' }
+                                    onClick={ () => setAttributes( { imageUrl: undefined, imageID: undefined } ) }
+                                />
+                            </Toolbar>
                         </BlockControls>
                     ) }
                     <InspectorControls>

@@ -27,7 +27,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         TextControl = wpComponents.TextControl,
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
-        IconButton = wpComponents.IconButton;
+        IconButton = wpComponents.IconButton,
+        Toolbar = wpComponents.Toolbar;
 
     var AdvButton = function (_Component) {
         _inherits(AdvButton, _Component);
@@ -98,8 +99,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ align: align });
                             } }),
                         React.createElement(
-                            'div',
-                            { className: 'components-toolbar' },
+                            Toolbar,
+                            null,
                             React.createElement(IconButton, {
                                 label: __('Refresh this button when it conflict with other buttons styles'),
                                 icon: 'update',
