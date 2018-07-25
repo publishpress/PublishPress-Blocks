@@ -483,6 +483,7 @@ input.ju-checkbox:checked:before {
     padding: 0 20px;
     font-size: 14px;
     margin-left: 300px;
+    background-color: #f3f6fa;
 }
 
 .ju-main-wrapper .ju-right-panel .ju-top-tabs-wrapper {
