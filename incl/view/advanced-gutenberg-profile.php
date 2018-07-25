@@ -142,7 +142,7 @@ if ($updating) {
                                 <?php if ($block['category'] !== $category['slug']) :
                                     continue;
                                 endif; ?>
-                                <li class="block-item" data-type="<?php echo esc_attr($block['name']) ?>">
+                                <li class="block-item ju-settings-option" data-type="<?php echo esc_attr($block['name']) ?>">
                                     <label for="block-<?php echo esc_attr($block['name']) ?>" class="ju-setting-label">
                                         <?php if (strpos($block['icon'], '<svg') !== false) :
                                             echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
@@ -365,7 +365,7 @@ if ($updating) {
                     <?php
                     $roles_list = $wp_roles->get_names();
                     foreach ($roles_list as $role => $role_name) :?>
-                        <li class="clearfix">
+                        <li class="clearfix ju-settings-option">
                             <label for="<?php echo esc_attr($role) ?>" class="ju-setting-label"
                                    style="vertical-align: middle;"><?php echo esc_html($role_name) ?></label>
                             <div class="ju-switch-button">
