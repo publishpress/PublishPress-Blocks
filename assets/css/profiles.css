@@ -41,6 +41,10 @@
     width: 15%;
 }
 
+.advgb-profile {
+    background-color: #fff;
+}
+
 .advgb-profile .profile-title .profile-delete {
     visibility: hidden;
     cursor: pointer;
