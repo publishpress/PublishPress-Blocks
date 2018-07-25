@@ -26,6 +26,7 @@
     padding: 10px;
     border: 1px solid #e1e1e1;
     border-radius: 4px;
+    background-color: transparent;
 }
 
 .advgb-search-wrapper.focused {
@@ -36,6 +37,8 @@
     display: inline-block;
     width: calc(100% - 30px);
     border: none;
+    box-shadow: none;
+    background-color: inherit;
 }
 
 .advgb-search-wrapper .advgb-search-input:focus {

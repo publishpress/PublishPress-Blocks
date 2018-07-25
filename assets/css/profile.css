@@ -36,6 +36,12 @@ button[disabled] {
 .profile-title .advgb-search-wrapper {
     margin-top: 10px;
     margin-bottom: 0;
+    box-shadow: 0 20px 20px 0 rgba(186, 192, 213, 0.08);
+    background-color: #fff;
+}
+
+.profile-title .advgb-search-wrapper:not(.focused) {
+    border-color: transparent;
 }
 
 #blocks-list-tab .advgb-search-wrapper {
