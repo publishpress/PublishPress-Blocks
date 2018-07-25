@@ -56,9 +56,10 @@ ul.blocks-list {
 }
 
 ul.blocks-list li.block-item {
-    margin-bottom: 5px;
-    margin-right: 5px;
-    padding: 20px 15px;
+    margin: 10px;
+    padding: 5px;
+    background-color: #fff;
+    flex-basis: 284px;
     transition: background-color .5s ease-out;
     -moz-transition: background-color .5s ease-out;
     -webkit-transition: background-color .5s ease-out;
@@ -67,6 +68,10 @@ ul.blocks-list li.block-item {
 ul.blocks-list li.block-item .ju-setting-label svg,
 ul.blocks-list li.block-item .ju-setting-label i {
     vertical-align: middle;
+}
+
+ul.blocks-list li.block-item .ju-switch-button {
+    margin-right: 0;
 }
 
 .category-block.collapsed .blocks-list {
