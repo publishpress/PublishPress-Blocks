@@ -66,7 +66,7 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
                         <i class="dashicons"></i>
                     </span>
                 </th>
-                <th class="profile-header-date sorting-header" data-sort="date">
+                <th class="profile-header-date sorting-header desc" data-sort="date">
                     <span>
                         <span><?php esc_html_e('Date', 'advanced-gutenberg') ?></span>
                         <i class="dashicons"></i>
@@ -119,7 +119,7 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
                         <i class="dashicons"></i>
                     </span>
                 </th>
-                <th class="profile-header-date sorting-header" data-sort="date">
+                <th class="profile-header-date sorting-header desc" data-sort="date">
                     <span>
                         <span><?php esc_html_e('Date', 'advanced-gutenberg') ?></span>
                         <i class="dashicons"></i>
