@@ -205,12 +205,6 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         </span>
                     </div>
                 </li>
-                <li class="ju-settings-option clearfix">
-                    <input type="radio" id="aaa" name="a12">
-                    <label for="aaa">text</label>
-                    <input type="radio" id="bbb" name="a12">
-                    <label for="bbb">adfsd</label>
-                </li>
             </ul>
 
             <div class="save-settings-block">
