@@ -1,7 +1,7 @@
 #profiles-list {
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid #e1e1e1;
+    border: none;
 }
 
 #delete-selected-profiles {
@@ -24,11 +24,6 @@
     padding: 20px 10px;
 }
 
-#profiles-list thead th, #profiles-list tfoot th {
-    border-top: 1px solid #e1e1e1;
-    border-bottom: 1px solid #e1e1e1;
-}
-
 #profiles-list .profile-header-title {
     width: 70%;
 }
@@ -43,6 +38,10 @@
 
 .advgb-profile {
     background-color: #fff;
+}
+
+.advgb-profile td {
+    border-bottom: 10px solid #f3f6fa;
 }
 
 .advgb-profile .profile-title .profile-delete {
