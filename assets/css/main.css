@@ -2,6 +2,10 @@
     float: right;
 }
 
+#wpwrap {
+    background-color: #f3f6fa;
+}
+
 .advgb-header {
     margin-bottom: 15px;
     padding: 10px 0;

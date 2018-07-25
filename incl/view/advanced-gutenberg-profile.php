@@ -240,7 +240,7 @@ if ($updating) {
                         <th scope="col" id="advgb-users-email" class="manage-col">
                             <span><?php esc_html_e('Email', 'advanced-gutenberg') ?></span>
                         </th>
-                        <th scope="col" id="advgb-users-role" class="manage-col">
+                        <th scope="col" id="advgb-users-role" class="manage-col" width="15%">
                             <span><?php esc_html_e('Role', 'advanced-gutenberg') ?></span>
                         </th>
                     </tr>
@@ -261,7 +261,7 @@ if ($updating) {
                     // Query the user IDs for this page
                     $wp_user_search = get_users($args);
                     $total_users    = count(get_users());
-                    $total_pages    = ceil($total_users / $users_per_page);
+                    $total_pages    = (int)ceil($total_users / $users_per_page);
 
                     if (count($wp_user_search)) {
                         foreach ($wp_user_search as $userid => $user_object) {

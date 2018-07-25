@@ -392,14 +392,14 @@ float: left;'
         }
 
         $total_users = count(get_users($args_all));
-        $total_pages = ceil($total_users / $users_per_page);
+        $total_pages = (int)ceil($total_users / $users_per_page);
         if (isset($_REQUEST['paged'])) {
             if ($_REQUEST['paged'] === 'first') {
                 $pagenum = 1;
             } elseif ($_REQUEST['paged'] === 'last') {
-                $pagenum = $total_pages;
+                $pagenum = (int)$total_pages;
             } else {
-                $pagenum = $_REQUEST['paged'];
+                $pagenum = (int)$_REQUEST['paged'];
             }
         }
         // phpcs:enable
