@@ -1,7 +1,3 @@
-.tab-content {
-    padding: 10px;
-}
-
 .advgb-settings-header {
     margin: 40px auto;
 }
@@ -35,6 +31,15 @@
 }
 
 /*Style for CustomStyle tab*/
+#customstyles-tab {
+    background-color: #f9fafb;
+}
+
+#customstyles-tab > div {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 #advgb-customstyles-list {
     padding: 0;
 }
@@ -62,6 +67,7 @@
 
 #advgb-customstyles-list li.advgb-customstyles-items.active {
     border-left: 5px solid #6372e4;
+    background-color: #fff;
 }
 
 #advgb-customstyles-list li:hover a, #advgb-customstyles-list li:hover ul {
@@ -123,6 +129,11 @@
     color: blue;
 }
 
+#advgb-customstyles-info {
+    background-color: #fff;
+    padding: 20px;
+}
+
 #advgb-customstyles-info label {
     display: block;
     font-size: 16px;
@@ -165,6 +176,10 @@
 
 #identify-colors {
     margin: 10px 0;
+}
+
+#advgb-customstyles-preview {
+    padding: 20px;
 }
 
 .preview-title {
