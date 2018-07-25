@@ -29,18 +29,20 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
 ?>
 
 <div id="advgb-settings-container" style="margin-right: 20px">
-    <ul class="tabs ju-top-tabs">
-        <li class="tab">
-            <a href="#config-tab" class="link-tab waves-effect waves-light">
-                <?php esc_html_e('Configuration', 'advanced-gutenberg') ?>
-            </a>
-        </li>
-        <li class="tab">
-            <a href="#customstyles-tab" class="link-tab waves-effect waves-light" id="custom-styles-tab">
-                <?php esc_html_e('Custom styles', 'advanced-gutenberg') ?>
-            </a>
-        </li>
-    </ul>
+    <div class="ju-top-tabs-wrapper">
+        <ul class="tabs ju-top-tabs">
+            <li class="tab">
+                <a href="#config-tab" class="link-tab waves-effect waves-light">
+                    <?php esc_html_e('Configuration', 'advanced-gutenberg') ?>
+                </a>
+            </li>
+            <li class="tab">
+                <a href="#customstyles-tab" class="link-tab waves-effect waves-light" id="custom-styles-tab">
+                    <?php esc_html_e('Custom styles', 'advanced-gutenberg') ?>
+                </a>
+            </li>
+        </ul>
+    </div>
 
     <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
         <div class="ju-notice-msg ju-notice-success">
@@ -202,6 +204,12 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                                    value="<?php echo esc_html($blocks_icon_color) ?>" />
                         </span>
                     </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <input type="radio" id="aaa" name="a12">
+                    <label for="aaa">text</label>
+                    <input type="radio" id="bbb" name="a12">
+                    <label for="bbb">adfsd</label>
                 </li>
             </ul>
 

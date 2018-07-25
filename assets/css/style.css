@@ -485,6 +485,11 @@ input.ju-checkbox:checked:before {
     margin-left: 300px;
 }
 
+.ju-main-wrapper .ju-right-panel .ju-top-tabs-wrapper {
+    background-color: #fff;
+    margin: auto -20px;
+}
+
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs {
     width: fit-content !important;
 }

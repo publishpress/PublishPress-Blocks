@@ -52,18 +52,20 @@ if ($updating) {
     <input type="hidden" name="advgb_profile_id" value="<?php echo esc_html($postid) ?>" />
     <div id="profiles-container">
         <!--Tabs-->
-        <ul class="tabs ju-top-tabs">
-            <li class="tab">
-                <a href="#blocks-list-tab" class="link-tab">
-                    <?php esc_html_e('Blocks List', 'advanced-gutenberg') ?>
-                </a>
-            </li>
-            <li class="tab">
-                <a href="#users-tab" class="link-tab">
-                    <?php esc_html_e('Profile Attribution', 'advanced-gutenberg') ?>
-                </a>
-            </li>
-        </ul>
+        <div class="ju-top-tabs-wrapper">
+            <ul class="tabs ju-top-tabs">
+                <li class="tab">
+                    <a href="#blocks-list-tab" class="link-tab">
+                        <?php esc_html_e('Blocks List', 'advanced-gutenberg') ?>
+                    </a>
+                </li>
+                <li class="tab">
+                    <a href="#users-tab" class="link-tab">
+                        <?php esc_html_e('Profile Attribution', 'advanced-gutenberg') ?>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
         <?php if (isset($_GET['save_profile'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
             <div class="ju-notice-msg ju-notice-success">
