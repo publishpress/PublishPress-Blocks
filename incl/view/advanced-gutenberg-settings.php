@@ -120,11 +120,11 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                                    name="google_api_key"
                                    id="google_api_key"
                                    class="ju-input"
-                                   style="margin-left: 10px; width: 370px"
+                                   style="margin-left: 10px; width: 370px; display: block;"
                                    value="<?php echo esc_html($google_api_key_saved) ?>"
                             >
                             <a target="_blank" href="https://support.google.com/googleapi/answer/6158862"
-                               style="display: block; margin: 15px; margin-left: 10px; color: #ff8726;">
+                               style="display: inline-block; margin: 15px; margin-left: 10px; color: #ff8726;">
                                 <?php esc_html_e('How to create a Google API Key', 'advanced-gutenberg') ?>
                             </a>
                         </span>
