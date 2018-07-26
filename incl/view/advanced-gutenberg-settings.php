@@ -234,7 +234,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('.esc_html($customStyles['name']).')</li></ul>';
                         $content .= '</li>';
                     }
-                    $content .= '<li style="text-align: center"><a class="advgb-customstyles-new ju-button"><i class="mi mi-add"></i>'.esc_html__('Add new class', 'advanced-gutenberg').'</a></li>';
+                    $content .= '<li style="text-align: center; margin-top: 20px"><a class="advgb-customstyles-new ju-button"><i class="mi mi-add"></i>'.esc_html__('Add new class', 'advanced-gutenberg').'</a></li>';
 
                     echo $content; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
                     ?>
