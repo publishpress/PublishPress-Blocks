@@ -3,6 +3,10 @@ defined('ABSPATH') || die;
 
 wp_enqueue_style('profile_style');
 wp_enqueue_script('profile_js');
+wp_localize_script('profile_js', 'advgb', array(
+    'onProfileView' => true,
+    'toProfilesList' => admin_url('admin.php?page=advgb_main&view=profiles'),
+));
 
 $all_blocks_list     = get_option('advgb_blocks_list');
 $all_categories_list = get_option('advgb_categories_list');

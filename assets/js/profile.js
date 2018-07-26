@@ -34,6 +34,15 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    if (typeof advgb !== undefined) {
+        if (advgb.onProfileView) {
+            $('.ju-menu-tabs a.link-tab[href="#profiles"]').click(function () {
+                window.location = advgb.toProfilesList;
+                return false;
+            });
+        }
+    }
+
     $('.users-search-toggle').unbind('click').click(function () {
         $(this).closest('.users-search').find('#user-search-input').animate({width: 'toggle'});
     });
