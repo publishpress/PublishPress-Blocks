@@ -110,7 +110,7 @@ ul.blocks-list li.block-item .ju-switch-button {
     display: none;
 }
 
-.block-item.new-block {
+ul.blocks-list li.block-item.new-block {
     background-color: #FF8855;
 }
 
