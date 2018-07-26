@@ -49,17 +49,18 @@ button[disabled] {
 }
 
 ul.blocks-list {
-    margin: 10px;
+    margin: 10px 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
 ul.blocks-list li.block-item {
-    margin: 10px;
+    margin: 10px 15px;
+    margin-left: 0;
     padding: 5px;
     background-color: #fff;
-    flex-basis: 284px;
+    flex-basis: 290px;
     transition: background-color .5s ease-out;
     -moz-transition: background-color .5s ease-out;
     -webkit-transition: background-color .5s ease-out;
@@ -100,6 +101,8 @@ ul.blocks-list li.block-item .ju-switch-button {
 
 .category-block .category-name {
     cursor: pointer;
+    color: #9fa7b5;
+    font-size: 18px;
 }
 
 .block-title {

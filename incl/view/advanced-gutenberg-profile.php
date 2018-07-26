@@ -391,6 +391,7 @@ if ($updating) {
         <button class="ju-button orange-button waves-effect waves-light save-profile-button"
                 type="submit"
                 name="advgb_profile_save"
+                style="margin-left: 10px"
         >
             <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
         </button>
