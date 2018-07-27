@@ -108,7 +108,7 @@
 
 .advgb-customstyles-items a.copy:hover,
 .advgb-customstyles-items a.trash:hover {
-    color: red !important;
+    color: #F98436 !important;
 }
 
 .advgb-customstyles-items:hover a.trash,
