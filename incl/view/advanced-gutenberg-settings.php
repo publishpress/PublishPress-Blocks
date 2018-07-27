@@ -28,7 +28,7 @@ $blocks_icon_color = isset($saved_settings['blocks_icon_color']) ? $saved_settin
 $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_styles);
 ?>
 
-<div id="advgb-settings-container" style="margin-right: 20px">
+<div id="advgb-settings-container">
     <div class="ju-top-tabs-wrapper">
         <ul class="tabs ju-top-tabs">
             <li class="tab">
