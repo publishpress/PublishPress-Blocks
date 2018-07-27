@@ -29,13 +29,13 @@
 .advgb-search-wrapper {
     margin: 25px auto;
     padding: 10px;
-    border: 1px solid #e1e1e1;
+    border: 2px solid #e1e1e1;
     border-radius: 4px;
     background-color: transparent;
 }
 
 .advgb-search-wrapper.focused {
-    border: 1px solid #ff8726;
+    border: 2px solid #ff8726;
 }
 
 .advgb-search-wrapper .advgb-search-input {
@@ -49,4 +49,9 @@
 .advgb-search-wrapper .advgb-search-input:focus {
     border: none;
     box-shadow: none;
+}
+
+.advgb-search-wrapper > i {
+    font-size: 22px;
+    vertical-align: text-bottom;
 }
