@@ -852,7 +852,7 @@ float: left;'
     {
         add_menu_page(
             __('Advanced Gutenberg', 'advanced-gutenberg'),
-            __('Advanced Gutenberg', 'advanced-gutenberg'),
+            __('Adv. Gutenberg', 'advanced-gutenberg'),
             'manage_options',
             'advgb_main',
             array($this, 'advgbMainView'),
