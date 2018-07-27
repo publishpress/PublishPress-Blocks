@@ -84,26 +84,25 @@ if ($updating) {
         <div class="advgb-header profile-header">
             <h1 class="header-title"><?php esc_html_e('Edit Profile', 'advanced-gutenberg') ?></h1>
             <div class="inline-button-wrapper">
-                    <span id="block-update-notice">
-                        <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
-                    </span>
+                <span id="block-update-notice">
+                    <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
+                </span>
+
+                <a class="ju-button waves-effect waves-dark"
+                   href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>"
+                >
+                    <i class="dashicons dashicons-plus" style="vertical-align: bottom"></i>
+                    <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
+                </a>
+
                 <button type="button" id="update-list-btn"
                         class="ju-button orange-outline-button waves-effect waves-dark"
                     <?php echo esc_attr($disabled) ?>
                         title="<?php esc_attr_e('Update the blocks list', 'advanced-gutenberg') ?>"
                 >
-                    <span>
-                        <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>" style="vertical-align: bottom"></i>
-                        <span><?php echo esc_html($button_text) ?></span>
-                    </span>
+                    <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>" style="vertical-align: bottom"></i>
+                    <span><?php echo esc_html($button_text) ?></span>
                 </button>
-
-                <a class="ju-button waves-effect waves-dark"
-                   href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>"
-                >
-                    <i class="mi mi-add"></i>
-                    <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
-                </a>
 
                 <button class="ju-button orange-button waves-effect waves-light save-profile-button"
                         type="submit"
