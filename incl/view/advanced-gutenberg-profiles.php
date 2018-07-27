@@ -31,7 +31,7 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
         <a class="ju-button waves-effect waves-dark"
            href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>"
         >
-            <i class="mi mi-add"></i>
+            <i class="dashicons dashicons-plus"></i>
             <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
         </a>
     </div>
