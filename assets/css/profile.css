@@ -231,10 +231,16 @@ ul.blocks-list li.block-item.new-block {
 #users-tab .advgb-users-search-box select {
     height: 39px;
     box-shadow: none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .users-block-title .users-search {
     border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 #users-tab .users-block-title #user-search-input {
@@ -244,6 +250,10 @@ ul.blocks-list li.block-item.new-block {
     display: none;
     width: 200px;
     box-shadow: none;
+    background-color: transparent;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .users-block-title .users-search-toggle {
