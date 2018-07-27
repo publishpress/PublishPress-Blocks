@@ -140,7 +140,7 @@
 }
 
 .ju-button {
-    background-color: #fff;
+    background-color: transparent;
     color: #000;
     padding: 10px 15px;
     min-width: 180px;
@@ -150,6 +150,7 @@
     text-decoration: none;
     cursor: pointer;
     text-align: center;
+    letter-spacing: 2px;
     transition: all ease 0.5s;
     -webkit-border-radius: 40px;
     -moz-border-radius: 40px;
@@ -175,7 +176,7 @@
 .ju-button.orange-outline-button {
     background-color: #fff;
     color: #ff8726;
-    border-color: #ff8726;
+    border-color: #fff;
 }
 
 .ju-rect-button {
