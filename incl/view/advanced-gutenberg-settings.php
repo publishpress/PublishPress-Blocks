@@ -44,9 +44,16 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </ul>
     </div>
 
-    <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
+    <?php if (isset($_GET['save_settings']) || isset($_GET['save_styles'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
         <div class="ju-notice-msg ju-notice-success">
-            <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg') ?>
+            <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action
+                esc_html_e('Settings saved successfully', 'advanced-gutenberg');
+            elseif (isset($_GET['save_styles'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action
+                esc_html_e('Your styles have been saved', 'advanced-gutenberg');
+                wp_add_inline_script('settings_js', 'jQuery(document).ready(function($) {
+                    $("#custom-styles-tab").trigger("click");
+                });');
+            endif; ?>
             <i class="dashicons dashicons-dismiss ju-notice-close"></i>
         </div>
     <?php endif; ?>
