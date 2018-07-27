@@ -160,7 +160,7 @@ ul.blocks-list li.block-item.new-block {
 
 .block-config svg {
     vertical-align: middle;
-    fill: #75a3bb;
+    fill: #ccc;
 }
 
 .block-config i:before {
