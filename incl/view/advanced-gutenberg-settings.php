@@ -238,6 +238,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         $content .= '<a><i class="title-icon" style="background-color: '. $customStyles['identifyColor'] .'"></i><span class="advgb-customstyles-items-title">'.esc_html($customStyles['title']).'</span></a>';
                         $content .= '<a class="copy" title="'. __('Copy', 'advanced-gutenberg') .'"><i class="mi mi-content-copy"></i></a>';
                         $content .= '<a class="trash" title="'. __('Delete', 'advanced-gutenberg') .'"><i class="mi mi-delete"></i></a>';
+                        $content .= '<a class="edit" title="'. __('Edit', 'advanced-gutenberg') .'"><i class="mi mi-edit"></i></a>';
                         $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('.esc_html($customStyles['name']).')</li></ul>';
                         $content .= '</li>';
                     }
@@ -252,20 +253,14 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
             </div>
         </div>
 
-        <div class="col-sm-5" id="advgb-customstyles-info">
-            <div class="control-group">
-                <label for="advgb-customstyles-title">
-                    <?php esc_html_e('Style title', 'advanced-gutenberg') ?>
-                </label>
-                <input type="text" class="ju-input" name="customstyles-title" id="advgb-customstyles-title" value="" />
-            </div>
-            <div class="control-group">
+        <div class="col-sm-9" id="advgb-customstyles-info">
+            <div class="control-group col-sm-6">
                 <label for="advgb-customstyles-classname">
                     <?php esc_html_e('Style class', 'advanced-gutenberg') ?>
                 </label>
                 <input type="text" class="ju-input" name="customstyles-classname" id="advgb-customstyles-classname" value="" />
             </div>
-            <div id="identify-colors" class="control-group clearfix">
+            <div id="identify-colors" class="control-group clearfix col-sm-6">
                 <div class="control-label">
                     <label for="advgb-customstyles-identify-color"
                            class="advgb_qtip"
@@ -295,7 +290,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
             <div id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
                 <small><?php esc_html_e('Hint: Use "Ctrl + Space" for auto completion', 'advanced-gutenberg') ?></small>
             </div>
-            <div class="col-sm-12" style="text-align: center; margin-top: 30px">
+            <div style="text-align: center; margin-top: 15px; margin-bottom: 15px">
                 <form method="POST">
                     <?php wp_nonce_field('advgb_cstyles_nonce', 'advgb_cstyles_nonce_field'); ?>
                     <button class="ju-button orange-button waves-effect waves-light"
@@ -309,16 +304,17 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     </button>
                 </form>
             </div>
-        </div>
-        <div class="col-sm-4" id="advgb-customstyles-preview">
-            <p class="preview-title"><?php esc_html_e('Preview', 'advanced-gutenberg'); ?></p>
-            <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px;">
-                <?php esc_html_e('Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph', 'advanced-gutenberg') ?>
-            </p>
-            <div class="advgb-customstyles-target"><?php esc_html_e('Example of text', 'advanced-gutenberg') ?></div>
-            <p class="follow-block">
-                <?php esc_html_e('Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph', 'advanced-gutenberg') ?>
-            </p>
+
+            <div id="advgb-customstyles-preview">
+                <p class="preview-title"><?php esc_html_e('Preview', 'advanced-gutenberg'); ?></p>
+                <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px;">
+                    <?php esc_html_e('Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph', 'advanced-gutenberg') ?>
+                </p>
+                <div class="advgb-customstyles-target"><?php esc_html_e('Example of text', 'advanced-gutenberg') ?></div>
+                <p class="follow-block">
+                    <?php esc_html_e('Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph', 'advanced-gutenberg') ?>
+                </p>
+            </div>
         </div>
     </div>
 </div>

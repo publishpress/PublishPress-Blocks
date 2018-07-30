@@ -620,12 +620,29 @@ float: left;'
             }
         } elseif ($task === 'style_save') {
             $style_id = (int)$_POST['id'];
-            $new_title = sanitize_text_field($_POST['title']);
             $new_classname = sanitize_text_field($_POST['name']);
             $new_identify_color = sanitize_text_field($_POST['mycolor']);
             $new_css = $_POST['mycss'];
             // Validate new name
-            if (!preg_match($regexWithSpaces, $new_title) || !preg_match($regex, $new_classname)) {
+            if (!preg_match($regex, $new_classname)) {
+                wp_send_json('Invalid characters, please enter another!', 403);
+                return false;
+            }
+            $data_saved = get_option('advgb_custom_styles');
+            $new_data_array = array();
+            foreach ($data_saved as $data) {
+                if ($data['id'] === $style_id) {
+                    $data['name'] = $new_classname;
+                    $data['css'] = $new_css;
+                    $data['identifyColor'] = $new_identify_color;
+                }
+                array_push($new_data_array, $data);
+            }
+            update_option('advgb_custom_styles', $new_data_array);
+        } elseif ($task === 'edit') {
+            $new_title = sanitize_text_field($_POST['title']);
+            $style_id = (int)$_POST['id'];
+            if (!preg_match($regexWithSpaces, $new_title)) {
                 wp_send_json('Invalid characters, please enter another!', 403);
                 return false;
             }
@@ -634,13 +651,11 @@ float: left;'
             foreach ($data_saved as $data) {
                 if ($data['id'] === $style_id) {
                     $data['title'] = $new_title;
-                    $data['name'] = $new_classname;
-                    $data['css'] = $new_css;
-                    $data['identifyColor'] = $new_identify_color;
                 }
                 array_push($new_data_array, $data);
             }
             update_option('advgb_custom_styles', $new_data_array);
+            wp_send_json(array('title' => $new_title), 200);
         } else {
             wp_send_json(null, 404);
         }
