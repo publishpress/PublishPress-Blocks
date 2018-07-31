@@ -156,6 +156,11 @@ ul.blocks-list li.block-item.new-block {
     display: inline-block;
     cursor: pointer;
     margin: 0 10px;
+    visibility: hidden;
+}
+
+li.block-item[data-type*='advgb'] .block-config {
+    visibility: visible;
 }
 
 .block-config svg {
