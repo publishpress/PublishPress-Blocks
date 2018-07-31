@@ -54,6 +54,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (prevItems !== tabItems) {
                     this.initTabs(true);
                 }
+
+                if (tabItems.length === 0) {
+                    this.props.setAttributes({
+                        tabItems: [{
+                            header: 'Tab 1',
+                            body: 'At least one tab must remaining, to remove block use "Remove Block" button from right menu.'
+                        }]
+                    });
+                }
             }
         }, {
             key: 'initTabs',

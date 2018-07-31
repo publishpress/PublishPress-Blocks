@@ -24,6 +24,17 @@
             if (prevItems !== tabItems) {
                 this.initTabs( true );
             }
+
+            if (tabItems.length === 0) {
+                this.props.setAttributes( {
+                    tabItems: [
+                        {
+                            header: 'Tab 1',
+                            body: 'At least one tab must remaining, to remove block use "Remove Block" button from right menu.',
+                        },
+                    ],
+                } );
+            }
         }
 
         initTabs( refresh = false ) {
@@ -52,7 +63,7 @@
                 return item;
             } );
 
-            setAttributes( { tabItems: newItems } )
+            setAttributes( { tabItems: newItems } );
         }
 
         render() {

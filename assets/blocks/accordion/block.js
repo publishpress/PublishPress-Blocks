@@ -100,6 +100,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (prevProps.attributes.items.length < this.props.attributes.items.length) {
                     this.initAccordion(true);
                 }
+
+                if (this.props.attributes.items.length === 0) {
+                    this.props.setAttributes({
+                        items: [{
+                            header: 'Header 1',
+                            body: 'At least one accordion must remaining, to remove block use "Remove Block" button from right menu.'
+                        }]
+                    });
+                }
             }
         }, {
             key: "initAccordion",
@@ -472,6 +481,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             borderRadius: {
                 type: 'number',
                 default: 2
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvAccordion,
