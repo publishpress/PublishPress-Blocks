@@ -156,7 +156,7 @@ if ($updating) {
                                             <?php echo esc_html($block['title']) ?>
                                         </span>
                                     </label>
-                                    <span class="block-config">
+                                    <span class="block-config" title="<?php esc_html_e('Edit block default config', 'advanced-gutenberg') ?>">
                                         <svg width="24px" height="24px" viewBox="0 0 24 24">
                                             <path fill="none" d="M0,0h24v24H0V0z"></path>
                                             <path d="M19.43,12.98c0.04-0.32,0.07-0.64,0.07-0.98c0-0.34-0.03-0.66-0.07-0.98l2.11-1.65c0.19-0.15,0.24-0.42,0.12-0.64l-2-3.46
