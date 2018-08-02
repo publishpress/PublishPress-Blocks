@@ -114,7 +114,7 @@ window.onload = function () {
                             }
                         } else {
                             var blockHTML = '';
-                            blockHTML += '<li class="block-item new-block" data-type="'+ block.name +'">';
+                            blockHTML += '<li class="block-item ju-settings-option new-block" data-type="'+ block.name +'">';
                             blockHTML +=    '<label for="'+ block.name +'" class="ju-setting-label">';
                             if (block.icon.indexOf('<svg') > -1) {
                                 blockHTML +=    block.icon;
