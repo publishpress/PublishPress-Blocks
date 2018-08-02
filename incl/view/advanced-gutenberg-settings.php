@@ -364,7 +364,10 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
             <li class="block-config-item ju-settings-option">
                 <?php echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 <span class="block-title"><?php echo esc_html($block['title']); ?></span>
-                <i class="mi mi-settings block-config-button" title="<?php esc_html_e('Edit', 'advanced-gutenberg') ?>"></i>
+                <i class="mi mi-settings block-config-button"
+                   title="<?php esc_html_e('Edit', 'advanced-gutenberg') ?>"
+                   data-block="<?php echo esc_attr($block['name']); ?>"
+                ></i>
             </li>
             <?php endforeach; ?>
         </ul>

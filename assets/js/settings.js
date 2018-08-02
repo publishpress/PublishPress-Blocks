@@ -472,4 +472,27 @@ jQuery(document).ready(function ($) {
             }
         })
     }
+
+    // Search block in blocks config tab
+    $('.blocks-config-search').on('input', function () {
+        var searchKey = $(this).val().trim().toLowerCase();
+
+        $('.blocks-config-list .block-config-item .block-title').each(function () {
+            var blockTitle = $(this).text().trim().toLowerCase();
+
+            if (blockTitle.indexOf(searchKey) > -1) {
+                $(this).closest('.block-config-item').show();
+            } else {
+                $(this).closest('.block-config-item').hide();
+            }
+        })
+    });
+
+    // Open the block config modal
+    $('.blocks-config-list .block-config-item .block-config-button').unbind('click').click(function () {
+        var blockName = $(this).data('block');
+        blockName = blockName.replace('/', '-');
+
+        tb_show('Edit Block Default Config', 'admin.php?page=' + blockName + '&noheader=1&width=960&TB_iframe=1');
+    })
 });
