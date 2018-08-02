@@ -64,9 +64,6 @@ ul.blocks-list li.block-item {
     transition: background-color .5s ease-out;
     -moz-transition: background-color .5s ease-out;
     -webkit-transition: background-color .5s ease-out;
-    -webkit-box-shadow: 0 10px 30px 0 rgba(160, 166, 190, 0.08);
-    -moz-box-shadow: 0 10px 30px 0 rgba(160, 166, 190, 0.08);
-    box-shadow: 0 10px 30px 0 rgba(160, 166, 190, 0.08);
 }
 
 ul.blocks-list li.block-item .ju-setting-label {
