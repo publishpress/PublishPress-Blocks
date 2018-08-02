@@ -146,6 +146,7 @@ float: left;'
             add_action('init', array($this, 'registerAdvgbProfile'));
             add_action('admin_init', array($this, 'initBlocksList'));
             add_action('admin_menu', array($this, 'registerMainMenu'));
+            add_action('admin_menu', array($this, 'registerBlockConfigPage'));
             add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
             add_filter('allowed_block_types', array($this, 'initActiveBlocksForGutenberg'));
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
@@ -1168,6 +1169,48 @@ float: left;'
 
         // If users have no permission, remove all blocks
         return false;
+    }
+
+    /**
+     * Register block config page
+     *
+     * @return void
+     */
+    public function registerBlockConfigPage()
+    {
+        $advgb_block = array(
+            'accordion', 'button', 'image', 'list',
+            'table', 'video', 'count-up', 'map',
+            'social-links', 'summary', 'tabs', 'testimonial',
+        );
+
+        foreach ($advgb_block as $block) {
+            add_submenu_page(
+                'admin.php?',
+                __('Block Config', 'advanced-gutenberg'),
+                __('Block Config', 'advanced-gutenberg'),
+                'manage_options',
+                'advgb-' . $block,
+                array($this, 'loadBlockConfigView')
+            );
+        }
+    }
+
+    /**
+     * Function to get and load the block config view
+     *
+     * @param string $block View to load
+     *
+     * @return void
+     */
+    public function loadBlockConfigView($block = '')
+    {
+        if (!$block) {
+            $block = $_GET['page']; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- view only
+            $block = str_replace('advgb-', '', $block);
+        }
+
+        include_once(plugin_dir_path(__FILE__) . 'view/block-config/block-' . $block . '.php');
     }
 
     /**
