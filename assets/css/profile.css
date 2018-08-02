@@ -60,7 +60,7 @@ ul.blocks-list li.block-item {
     margin-left: 0;
     padding: 5px;
     background-color: #fff;
-    flex-basis: 260px;
+    flex-basis: 230px;
     transition: background-color .5s ease-out;
     -moz-transition: background-color .5s ease-out;
     -webkit-transition: background-color .5s ease-out;
@@ -141,7 +141,6 @@ ul.blocks-list li.block-item.new-block {
     line-height: 50px;
 }
 
-.block-item.ju-settings-option .block-config,
 .block-item.ju-settings-option .ju-switch-button {
     float: left;
     margin-right: 0;
@@ -150,26 +149,6 @@ ul.blocks-list li.block-item.new-block {
 
 .block-item label.switch-label > * {
     vertical-align: middle;
-}
-
-.block-config {
-    display: inline-block;
-    cursor: pointer;
-    margin: 0 10px;
-    visibility: hidden;
-}
-
-li.block-item[data-type*='advgb'] .block-config {
-    visibility: visible;
-}
-
-.block-config svg {
-    vertical-align: middle;
-    fill: #ccc;
-}
-
-.block-config i:before {
-    font-size: 24px;
 }
 
 #block-update-notice {

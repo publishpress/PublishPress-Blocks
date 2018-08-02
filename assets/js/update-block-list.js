@@ -123,7 +123,6 @@ window.onload = function () {
                             }
                             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
                             blockHTML +=    '</label>';
-                            blockHTML +=    '<span class="block-config"><i class="mi mi-settings"></i></span>';
                             blockHTML +=    '<div class="ju-switch-button">';
                             blockHTML +=        '<label class="switch">';
                             blockHTML +=            '<input id="'+ block.name +'" type="checkbox" name="active_blocks[]" value="'+ block.name +'"/>';
