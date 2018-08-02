@@ -625,6 +625,10 @@ div.advgb-tab-body {
     margin: 20px auto;
 }
 
+#editor .advgb-testimonial {
+    padding: 15px 0;
+}
+
 .advgb-testimonial > div {
     flex: auto;
     margin: 0 10px;
