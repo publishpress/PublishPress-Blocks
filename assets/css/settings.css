@@ -185,3 +185,30 @@
     font-weight: bold;
     font-size: 18px;
 }
+
+/*Default config tab*/
+ul.blocks-config-list {
+    display:  flex;
+    flex: auto;
+    flex-wrap: wrap;
+}
+
+li.block-config-item {
+    flex-basis: 230px;
+    padding: 20px 10px;
+}
+
+li.block-config-item svg {
+    vertical-align: middle;
+    width: auto;
+    height: 30px;
+}
+
+li.block-config-item .block-config-button {
+    line-height: 30px;
+    float: right;
+    font-size: 25px;
+    margin-right: 10px;
+    cursor: pointer;
+    color: #888;
+}

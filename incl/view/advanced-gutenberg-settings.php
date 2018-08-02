@@ -14,16 +14,43 @@ wp_enqueue_script('codemirror_js');
 wp_enqueue_script('codemirror_hint');
 wp_enqueue_script('codemirror_mode_css');
 wp_enqueue_script('codemirror_hint_css');
+wp_enqueue_script('thickbox');
 wp_enqueue_script('settings_js');
 
-$saved_settings = get_option('advgb_settings');
+$saved_settings    = get_option('advgb_settings');
+$blocks_list_saved = get_option('advgb_blocks_list');
+$advgb_blocks = array();
 
-$gallery_lightbox_checked = $saved_settings['gallery_lightbox'] ? 'checked' : '';
+foreach ($blocks_list_saved as $block) {
+    if (strpos($block['name'], 'advgb/') === false) {
+        continue;
+    } else {
+        array_push($advgb_blocks, $block);
+    }
+}
+
+/**
+ * Sort array
+ *
+ * @param string $key Array key to sort
+ *
+ * @return Closure
+ */
+function sortBy($key)
+{
+    return function ($a, $b) use ($key) {
+        return strnatcmp($a[$key], $b[$key]);
+    };
+}
+
+usort($advgb_blocks, sortBy('title'));
+
+$gallery_lightbox_checked         = $saved_settings['gallery_lightbox'] ? 'checked' : '';
 $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] ? 'checked' : '';
-$google_api_key_saved = isset($saved_settings['google_api_key']) ? $saved_settings['google_api_key'] : '';
-$enable_blocks_spacing = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
-$blocks_spacing = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
-$blocks_icon_color = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#000000';
+$google_api_key_saved             = isset($saved_settings['google_api_key']) ? $saved_settings['google_api_key'] : '';
+$enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
+$blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
+$blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#000000';
 
 $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_styles);
 ?>
@@ -39,6 +66,11 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
             <li class="tab">
                 <a href="#customstyles-tab" class="link-tab waves-effect waves-light" id="custom-styles-tab">
                     <?php esc_html_e('Custom styles', 'advanced-gutenberg') ?>
+                </a>
+            </li>
+            <li class="tab">
+                <a href="#block-config-tab" class="link-tab waves-effect waves-light">
+                    <?php esc_html_e('Default blocks config', 'advanced-gutenberg') ?>
                 </a>
             </li>
         </ul>
@@ -209,7 +241,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                                    name="blocks_icon_color"
                                    id="blocks_icon_color"
                                    class="minicolors minicolors-input ju-input"
-                                   value="<?php echo esc_html($blocks_icon_color) ?>" />
+                                   value="<?php echo esc_html($blocks_icon_color) ?>"/>
                         </span>
                     </div>
                 </li>
@@ -234,15 +266,15 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <?php
                     $content = '';
                     foreach ($custom_styles_saved as $customStyles) {
-                        $content .= '<li class="advgb-customstyles-items" data-id-customstyle="'.(int)$customStyles['id'].'">';
-                        $content .= '<a><i class="title-icon" style="background-color: '. $customStyles['identifyColor'] .'"></i><span class="advgb-customstyles-items-title">'.esc_html($customStyles['title']).'</span></a>';
-                        $content .= '<a class="copy" title="'. __('Copy', 'advanced-gutenberg') .'"><i class="mi mi-content-copy"></i></a>';
-                        $content .= '<a class="trash" title="'. __('Delete', 'advanced-gutenberg') .'"><i class="mi mi-delete"></i></a>';
-                        $content .= '<a class="edit" title="'. __('Edit', 'advanced-gutenberg') .'"><i class="mi mi-edit"></i></a>';
-                        $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('.esc_html($customStyles['name']).')</li></ul>';
+                        $content .= '<li class="advgb-customstyles-items" data-id-customstyle="' . (int) $customStyles['id'] . '">';
+                        $content .= '<a><i class="title-icon" style="background-color: ' . $customStyles['identifyColor'] . '"></i><span class="advgb-customstyles-items-title">' . esc_html($customStyles['title']) . '</span></a>';
+                        $content .= '<a class="copy" title="' . __('Copy', 'advanced-gutenberg') . '"><i class="mi mi-content-copy"></i></a>';
+                        $content .= '<a class="trash" title="' . __('Delete', 'advanced-gutenberg') . '"><i class="mi mi-delete"></i></a>';
+                        $content .= '<a class="edit" title="' . __('Edit', 'advanced-gutenberg') . '"><i class="mi mi-edit"></i></a>';
+                        $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">(' . esc_html($customStyles['name']) . ')</li></ul>';
                         $content .= '</li>';
                     }
-                    $content .= '<li style="text-align: center; margin-top: 20px"><a class="advgb-customstyles-new ju-button"><i class="mi mi-add"></i>'.esc_html__('Add new class', 'advanced-gutenberg').'</a></li>';
+                    $content .= '<li style="text-align: center; margin-top: 20px"><a class="advgb-customstyles-new ju-button"><i class="mi mi-add"></i>' . esc_html__('Add new class', 'advanced-gutenberg') . '</a></li>';
 
                     echo $content; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
                     ?>
@@ -258,7 +290,8 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 <label for="advgb-customstyles-classname">
                     <?php esc_html_e('Style class', 'advanced-gutenberg') ?>
                 </label>
-                <input type="text" class="ju-input" name="customstyles-classname" id="advgb-customstyles-classname" value="" />
+                <input type="text" class="ju-input" name="customstyles-classname" id="advgb-customstyles-classname"
+                       value=""/>
             </div>
             <div id="identify-colors" class="control-group clearfix col-sm-6">
                 <div class="control-label">
@@ -278,7 +311,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                            name="customstyles-identify-color"
                            id="advgb-customstyles-identify-color"
                            class="minicolors minicolors-input ju-input"
-                           value="#000000" />
+                           value="#000000"/>
                 </div>
             </div>
             <div class="control-group advgb-customstyles-css">
@@ -316,5 +349,24 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 </p>
             </div>
         </div>
+    </div>
+
+    <div id="block-config-tab" class="tab-content clearfix">
+        <div class="advgb-search-wrapper">
+            <input type="text"
+                   class="advgb-search-input blocks-config-search"
+                   placeholder="<?php esc_html_e('Search blocks', 'advanced-gutenberg') ?>"
+            >
+            <i class="mi mi-search"></i>
+        </div>
+        <ul class="blocks-config-list clearfix">
+            <?php foreach ($advgb_blocks as $block) : ?>
+            <li class="block-config-item ju-settings-option">
+                <?php echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped ?>
+                <span class="block-title"><?php echo esc_html($block['title']); ?></span>
+                <i class="mi mi-settings block-config-button" title="<?php esc_html_e('Edit', 'advanced-gutenberg') ?>"></i>
+            </li>
+            <?php endforeach; ?>
+        </ul>
     </div>
 </div>
