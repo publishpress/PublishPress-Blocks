@@ -220,6 +220,7 @@ input.ju-input {
 input.ju-input:focus {
     border-color: #ff8726;
     box-shadow: none;
+    outline: none;
 }
 
 input.ju-input.minicolors {
@@ -412,6 +413,7 @@ input.ju-radiobox:focus {
     text-overflow: ellipsis;
     margin: 0;
     line-height: 50px;
+    cursor: pointer;
 }
 
 .ju-main-wrapper {
