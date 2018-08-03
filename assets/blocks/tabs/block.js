@@ -41,7 +41,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentDidMount() {
                 this.initTabs();
                 if (!this.props.attributes.blockID) {
-                    this.props.setAttributes({ blockID: this.props.id });
+                    this.props.setAttributes({ blockID: this.props.clientId });
                 }
             }
         }, {
@@ -71,12 +71,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 if (typeof jQuery !== "undefined") {
                     if (!refresh) {
-                        jQuery('#block-' + this.props.id + ' .advgb-tabs-block').tabs();
+                        jQuery('#block-' + this.props.clientId + ' .advgb-tabs-block').tabs();
                     } else {
-                        jQuery('#block-' + this.props.id + ' .advgb-tabs-block').tabs('refresh');
+                        jQuery('#block-' + this.props.clientId + ' .advgb-tabs-block').tabs('refresh');
                     }
 
-                    jQuery('#block-' + this.props.id + ' .advgb-tabs-block a').on('keydown', function (e) {
+                    jQuery('#block-' + this.props.clientId + ' .advgb-tabs-block a').on('keydown', function (e) {
                         e.stopPropagation();
                     });
                 }
@@ -108,7 +108,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes,
-                    id = _props2.id;
+                    clientId = _props2.clientId;
                 var tabItems = attributes.tabItems,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
@@ -357,8 +357,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     !!blockID && React.createElement(
                         'style',
                         null,
-                        activeTabBgColor && '#block-' + id + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }',
-                        activeTabTextColor && '#block-' + id + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
+                        activeTabBgColor && '#block-' + clientId + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }',
+                        activeTabTextColor && '#block-' + clientId + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
                     )
                 );
             }

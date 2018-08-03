@@ -13,7 +13,7 @@
         componentDidMount() {
             this.initTabs();
             if (!this.props.attributes.blockID) {
-                this.props.setAttributes( { blockID: this.props.id } );
+                this.props.setAttributes( { blockID: this.props.clientId } );
             }
         }
 
@@ -40,12 +40,12 @@
         initTabs( refresh = false ) {
             if (typeof jQuery !== "undefined") {
                 if (!refresh) {
-                    jQuery(`#block-${this.props.id} .advgb-tabs-block`).tabs();
+                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs();
                 } else {
-                    jQuery(`#block-${this.props.id} .advgb-tabs-block`).tabs('refresh');
+                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs('refresh');
                 }
 
-                jQuery(`#block-${this.props.id} .advgb-tabs-block a`).on( 'keydown', function ( e ) {
+                jQuery(`#block-${this.props.clientId} .advgb-tabs-block a`).on( 'keydown', function ( e ) {
                     e.stopPropagation();
                 } )
             }
@@ -67,7 +67,7 @@
         }
 
         render() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
             const {
                 tabItems,
                 headerBgColor,
@@ -246,10 +246,10 @@
                     </div>
                     {!!blockID &&
                         <style>
-                            {activeTabBgColor && `#block-${id} li.advgb-tab.ui-tabs-active {
+                            {activeTabBgColor && `#block-${clientId} li.advgb-tab.ui-tabs-active {
                                 background-color: ${activeTabBgColor} !important;
                             }`}
-                            {activeTabTextColor && `#block-${id} li.advgb-tab.ui-tabs-active a {
+                            {activeTabTextColor && `#block-${clientId} li.advgb-tab.ui-tabs-active a {
                                 color: ${activeTabTextColor} !important;
                             }`}
                         </style>

@@ -49,12 +49,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,
-                    id = _props.id;
+                    clientId = _props.clientId;
 
 
                 if (!attributes.id) {
                     setAttributes({
-                        id: 'advgblist-' + id
+                        id: 'advgblist-' + clientId
                     });
                 }
             }
@@ -101,7 +101,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes = _props2.setAttributes,
                     onReplace = _props2.onReplace,
                     className = _props2.className,
-                    blockID = _props2.id;
+                    blockID = _props2.clientId;
                 var id = attributes.id,
                     values = attributes.values,
                     icon = attributes.icon,

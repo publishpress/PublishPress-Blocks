@@ -45,11 +45,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,
-                    id = _props.id;
+                    clientId = _props.clientId;
 
 
                 if (!attributes.id) {
-                    setAttributes({ id: 'advgbbtn-' + id });
+                    setAttributes({ id: 'advgbbtn-' + clientId });
                 }
             }
         }, {
@@ -61,7 +61,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes = _props2.setAttributes,
                     isSelected = _props2.isSelected,
                     className = _props2.className,
-                    blockID = _props2.id;
+                    blockID = _props2.clientId;
                 var id = attributes.id,
                     align = attributes.align,
                     url = attributes.url,

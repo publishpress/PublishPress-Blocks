@@ -32,10 +32,10 @@
         }
 
         componentDidMount() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
 
             if (!attributes.mapID) {
-                setAttributes( { mapID: 'advgbmap-' + id } );
+                setAttributes( { mapID: 'advgbmap-' + clientId } );
             }
 
             this.initMap();

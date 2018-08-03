@@ -11,10 +11,10 @@
         }
 
         componentDidMount() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
 
             if ( !attributes.id ) {
-                setAttributes( { id: 'advgbbtn-' + id } );
+                setAttributes( { id: 'advgbbtn-' + clientId } );
             }
         }
 
@@ -35,7 +35,7 @@
                 setAttributes,
                 isSelected,
                 className,
-                id: blockID,
+                clientId: blockID,
             } = this.props;
             const {
                 id,

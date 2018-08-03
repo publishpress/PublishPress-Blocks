@@ -63,11 +63,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,
-                    id = _props.id;
+                    clientId = _props.clientId;
 
 
                 if (!attributes.mapID) {
-                    setAttributes({ mapID: 'advgbmap-' + id });
+                    setAttributes({ mapID: 'advgbmap-' + clientId });
                 }
 
                 this.initMap();

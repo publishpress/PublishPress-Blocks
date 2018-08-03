@@ -15,11 +15,11 @@
         }
 
         componentDidMount() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
 
             if ( !attributes.id ) {
                 setAttributes( {
-                    id: 'advgblist-' + id
+                    id: 'advgblist-' + clientId
                 } )
             }
         }
@@ -79,7 +79,7 @@
                 setAttributes,
                 onReplace,
                 className,
-                id: blockID,
+                clientId: blockID,
             } = this.props;
             const {
                 id,

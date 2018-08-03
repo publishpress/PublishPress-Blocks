@@ -83,15 +83,15 @@
         initAccordion( refresh = false ) {
             if (typeof jQuery !== "undefined") {
                 if (!refresh) {
-                    jQuery( `#block-${this.props.id} .advgb-accordion-block` ).accordion( {
+                    jQuery( `#block-${this.props.clientId} .advgb-accordion-block` ).accordion( {
                         header: ".advgb-accordion-header",
                         heightStyle: "content",
                     } );
                 } else {
-                    jQuery(`#block-${this.props.id} .advgb-accordion-block`).accordion('refresh');
+                    jQuery(`#block-${this.props.clientId} .advgb-accordion-block`).accordion('refresh');
                 }
 
-                jQuery(`#block-${this.props.id} .advgb-accordion-block h4`).on( 'keydown', function ( e ) {
+                jQuery(`#block-${this.props.clientId} .advgb-accordion-block h4`).on( 'keydown', function ( e ) {
                     e.stopPropagation();
                 } )
             }
