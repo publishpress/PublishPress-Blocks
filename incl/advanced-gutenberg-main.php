@@ -1433,4 +1433,86 @@ float: left;'
 
         return $current_activated_blocks;
     }
+
+    /**
+     * Render html for block config settings fields
+     *
+     * @param array $fieldset Array of field to render
+     * @param array $data     Data will load as value to field
+     *
+     * @return boolean        Echo html content
+     */
+    public function renderBlockConfigFields($fieldset, $data)
+    {
+        $html = '';
+        foreach ($fieldset as $category) {
+            $html .= '<div class="block-config-category">';
+            $html .= '<h3 class="block-config-category-title">' . $category['label'] . '</h3>';
+            $html .= '<ul class="block-config-settings clearfix">';
+
+            foreach ($category['settings'] as $setting) {
+                $settingValue = $this->setConfigValue($data, $setting['name']);
+                $html .= '<li class="ju-settings-option full-width block-config-option">';
+                $html .= '<label for="setting-'. $setting['name'] .'" class="ju-setting-label">' . $setting['title'] . '</label>';
+                $html .= '<div class="block-config-input-wrapper">';
+
+                switch ($setting['type']) {
+                    case 'text':
+                    case 'number':
+                        $html .= '<input type="' . $setting['type'] . '" class="ju-input block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" ';
+                        if ($setting['type'] === 'number' && (isset($setting['min']) || isset($setting['max']))) {
+                            $html .= ' min="' . $setting['min'] . '" max="' . $setting['max'] . '" ';
+                        }
+                        $html .= ' value="'. $settingValue .'" />';
+                        break;
+                    case 'color':
+                        $html .= '<input type="text" class="minicolors minicolors-input ju-input block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" value="'. $settingValue .'" />';
+                        break;
+                    case 'select':
+                        $html .= '<select class="block-config-select" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
+
+                        foreach ($setting['options'] as $option) {
+                            $selected = $option['value'] === $settingValue ? 'selected' : '';
+                            $html .= '<option value="' . $option['value'] . '" ' . $selected . '>' . $option['label'] . '</option>';
+                        }
+
+                        $html .= '</select>';
+                        break;
+                    default:
+                        $html .= '<div>' . __('Type field not defined', 'advanced-gutenberg') . '</div>';
+                        break;
+                }
+
+                $html .= '</div>';
+                $html .= '</li>';
+            }
+
+            $html .= '</ul>';
+            $html .= '</div>';
+        }
+
+        echo $html; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
+        return true;
+    }
+
+    /**
+     * Set value to config field
+     *
+     * @param array  $valueList  Array of values to set
+     * @param string $valueToGet Value field to set
+     * @param mixed  $default    Default value if value field from list not set
+     *
+     * @return string           Value after check
+     */
+    private function setConfigValue($valueList, $valueToGet, $default = '')
+    {
+        $valueReturn = $default;
+        if (gettype($valueList) === 'array') {
+            if (isset($valueList[$valueToGet])) {
+                $valueReturn = $valueList[$valueToGet];
+            }
+        }
+
+        return $valueReturn;
+    }
 }
