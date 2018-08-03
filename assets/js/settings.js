@@ -493,6 +493,6 @@ jQuery(document).ready(function ($) {
         var blockName = $(this).data('block');
         blockName = blockName.replace('/', '-');
 
-        tb_show('Edit Block Default Config', 'admin.php?page=' + blockName + '&noheader=1&width=960&TB_iframe=1');
+        tb_show('Edit Block Default Config', 'admin.php?page=' + blockName + '&noheader=1&width=550&height=600&TB_iframe=1');
     })
 });

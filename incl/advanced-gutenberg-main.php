@@ -1207,8 +1207,33 @@ float: left;'
     {
         if (!$block) {
             $block = $_GET['page']; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- view only
-            $block = str_replace('advgb-', '', $block);
         }
+
+        wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
+        wp_enqueue_style(
+            'minicolors_css',
+            plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
+        );
+        wp_enqueue_style(
+            'ju_framework_styles_min',
+            plugins_url('assets/css/style.min.css', ADVANCED_GUTENBERG_PLUGIN)
+        );
+        wp_enqueue_style(
+            'block-config-css',
+            plugins_url('assets/css/block-config.css', ADVANCED_GUTENBERG_PLUGIN)
+        );
+
+        wp_enqueue_script(
+            'minicolors_js',
+            plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__))
+        );
+        wp_enqueue_script(
+            'block-config-js',
+            plugins_url('assets/js/block-config.js', ADVANCED_GUTENBERG_PLUGIN),
+            array('jquery')
+        );
+
+        $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
 
         include_once(plugin_dir_path(__FILE__) . 'view/block-config/block-' . $block . '.php');
     }
