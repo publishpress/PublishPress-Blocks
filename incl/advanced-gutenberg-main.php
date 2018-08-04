@@ -1469,7 +1469,7 @@ float: left;'
                         $html .= '<input type="text" class="minicolors minicolors-input ju-input block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" value="'. $settingValue .'" />';
                         break;
                     case 'select':
-                        $html .= '<select class="block-config-select" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
+                        $html .= '<select class="block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
 
                         foreach ($setting['options'] as $option) {
                             $selected = $option['value'] === $settingValue ? 'selected' : '';
@@ -1477,6 +1477,15 @@ float: left;'
                         }
 
                         $html .= '</select>';
+                        break;
+                    case 'checkbox':
+                        $checked = (int)$settingValue === 1 ? 'checked' : '';
+                        $html .= '<div class="ju-switch-button">';
+                        $html .= '<label class="switch">';
+                        $html .=    '<input type="checkbox" value="1" class="block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" ' . $checked . '/>';
+                        $html .=    '<span class="slider"></span>';
+                        $html .= '</label>';
+                        $html .= '</div>';
                         break;
                     default:
                         $html .= '<div>' . __('Type field not defined', 'advanced-gutenberg') . '</div>';

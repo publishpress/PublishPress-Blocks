@@ -54,11 +54,15 @@ input.block-config-input[type="number"] {
     width: 130px;
 }
 
-select.block-config-select {
+select.block-config-input {
     padding: 14px;
     border-radius: 4px;
     font-size: 14px;
     min-width: 130px;
+}
+
+.block-config-option .ju-switch-button {
+    margin-right: 0;
 }
 
 .minicolors-input {
