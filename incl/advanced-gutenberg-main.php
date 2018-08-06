@@ -1599,7 +1599,7 @@ float: left;'
         $current_block = $block;
 
         if (!isset($blocks_settings_list[$current_block])) {
-            wp_die('Not setup this block yet');
+            wp_die(esc_html(__('Config for this block is currently unsupported.', 'advanced-gutenberg')));
             return;
         }
 
