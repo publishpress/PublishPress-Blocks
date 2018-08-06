@@ -1349,6 +1349,161 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-button' => array(
+                array(
+                    'label'    => __('Text and Color', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Text Size', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textSize',
+                            'min'   => 10,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Text Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'textColor'
+                        ),
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'bgColor',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Border Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title'   => __('Border Style', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'borderStyle',
+                            'options' => array(
+                                array(
+                                    'label' => __('Solid', 'advanced-gutenberg'),
+                                    'value' => 'solid',
+                                ),
+                                array(
+                                    'label' => __('Dashed', 'advanced-gutenberg'),
+                                    'value' => 'dashed',
+                                ),
+                                array(
+                                    'label' => __('Dotted', 'advanced-gutenberg'),
+                                    'value' => 'dotted',
+                                ),
+                            )
+                        ),
+                        array(
+                            'title' => __('Border Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'borderColor',
+                        ),
+                        array(
+                            'title' => __('Border Width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'borderWidth',
+                            'min'   => 1,
+                            'max'   => 10,
+                        ),
+                        array(
+                            'title' => __('Border Radius', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'borderRadius',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Padding Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Padding Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'paddingTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'paddingRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'paddingBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'paddingLeft',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Hover Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Text Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'hoverTextColor'
+                        ),
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'hoverBgColor',
+                        ),
+                        array(
+                            'title' => __('Shadow Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'hoverShadowColor',
+                        ),
+                        array(
+                            'title' => __('Shadow H Offset', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'hoverShadowH',
+                            'min'   => -50,
+                            'max'   => 50,
+                        ),
+                        array(
+                            'title' => __('Shadow V Offset', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'hoverShadowV',
+                            'min'   => -50,
+                            'max'   => 50,
+                        ),
+                        array(
+                            'title' => __('Shadow Blur', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'hoverShadowBlur',
+                            'min'   => 0,
+                            'max'   => 50,
+                        ),
+                        array(
+                            'title' => __('Shadow Spread', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'hoverShadowSpread',
+                            'min'   => 0,
+                            'max'   => 50,
+                        ),
+                        array(
+                            'title' => __('Transition Speed', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'transitionSpeed',
+                            'min'   => 0,
+                            'max'   => 3,
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
