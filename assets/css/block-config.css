@@ -2,6 +2,18 @@
     background-color: #f3f6fa;
 }
 
+#advgb-loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center 200px;
+}
+
 .block-config-modal-wrapper {
     padding: 15px;
 }

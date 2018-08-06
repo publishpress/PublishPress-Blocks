@@ -1212,7 +1212,7 @@ float: left;'
         wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
         wp_enqueue_style(
             'minicolors_css',
-            plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
+            plugins_url('assets/css/jquery.minicolors.css', ADVANCED_GUTENBERG_PLUGIN)
         );
         wp_enqueue_style(
             'ju_framework_styles_min',
@@ -1225,7 +1225,7 @@ float: left;'
 
         wp_enqueue_script(
             'minicolors_js',
-            plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__))
+            plugins_url('assets/js/jquery.minicolors.min.js', ADVANCED_GUTENBERG_PLUGIN)
         );
         wp_enqueue_script(
             'block-config-js',
