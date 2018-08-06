@@ -1234,11 +1234,131 @@ float: left;'
         );
 
         $blocks_settings_list = array(
-
+            'advgb-accordion' => array(
+                array(
+                    'label'    => __('Header Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'headerBgColor',
+                        ),
+                        array(
+                            'title' => __('Text Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'headerTextColor'
+                        ),
+                        array(
+                            'title'   => __('Header Icon', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'headerIcon',
+                            'options' => array(
+                                array(
+                                    'label' => __('Plus', 'advanced-gutenberg'),
+                                    'value' => 'plus',
+                                ),
+                                array(
+                                    'label' => __('Plus Circle', 'advanced-gutenberg'),
+                                    'value' => 'plusCircle',
+                                ),
+                                array(
+                                    'label' => __('Plus Circle Outline', 'advanced-gutenberg'),
+                                    'value' => 'plusCircleOutline',
+                                ),
+                                array(
+                                    'label' => __('Plus Square Outline', 'advanced-gutenberg'),
+                                    'value' => 'plusBox',
+                                ),
+                                array(
+                                    'label' => __('Unfold Arrow', 'advanced-gutenberg'),
+                                    'value' => 'unfold',
+                                ),
+                                array(
+                                    'label' => __('Horizontal Dots', 'advanced-gutenberg'),
+                                    'value' => 'threeDots',
+                                ),
+                                array(
+                                    'label' => __('Arrow Down', 'advanced-gutenberg'),
+                                    'value' => 'arrowDown',
+                                ),
+                            )
+                        ),
+                        array(
+                            'title' => __('Header Icon Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'headerIconColor',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Body Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'bodyBgColor',
+                        ),
+                        array(
+                            'title' => __('Text Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'bodyTextColor',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Border Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title'   => __('Border Style', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'borderStyle',
+                            'options' => array(
+                                array(
+                                    'label' => __('Solid', 'advanced-gutenberg'),
+                                    'value' => 'solid',
+                                ),
+                                array(
+                                    'label' => __('Dashed', 'advanced-gutenberg'),
+                                    'value' => 'dashed',
+                                ),
+                                array(
+                                    'label' => __('Dotted', 'advanced-gutenberg'),
+                                    'value' => 'dotted',
+                                ),
+                            )
+                        ),
+                        array(
+                            'title' => __('Border Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'borderColor',
+                        ),
+                        array(
+                            'title' => __('Border Width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'borderWidth',
+                            'min'   => 1,
+                            'max'   => 10,
+                        ),
+                        array(
+                            'title' => __('Border Radius', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'borderRadius',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
         $current_block = $block;
+
+        if (!isset($blocks_settings_list[$current_block])) {
+            wp_die('Not setup this block yet');
+            return;
+        }
+
         $current_block_settings = $blocks_settings_list[$current_block];
         $current_block_settings_value = array();
 
