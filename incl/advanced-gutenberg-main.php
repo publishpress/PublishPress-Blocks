@@ -1233,9 +1233,22 @@ float: left;'
             array('jquery')
         );
 
-        $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
+        $blocks_settings_list = array(
 
-        include_once(plugin_dir_path(__FILE__) . 'view/block-config/block-' . $block . '.php');
+        );
+
+        $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
+        $current_block = $block;
+        $current_block_settings = $blocks_settings_list[$current_block];
+        $current_block_settings_value = array();
+
+        if ($advgb_blocks_default_config !== false) {
+            if (isset($advgb_blocks_default_config[$current_block])) {
+                $current_block_settings_value = $advgb_blocks_default_config[$current_block];
+            }
+        }
+
+        require_once(plugin_dir_path(__FILE__) . 'view/advanced-gutenberg-block-config.php');
     }
 
     /**

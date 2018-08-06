@@ -492,7 +492,9 @@ jQuery(document).ready(function ($) {
     $('.blocks-config-list .block-config-item .block-config-button').unbind('click').click(function () {
         var blockName = $(this).data('block');
         blockName = blockName.replace('/', '-');
+        var blockLabel = $(this).closest('.block-config-item').find('.block-title').text().trim();
+        window.blockLabel = blockLabel;
 
-        tb_show('Edit Block Default Config', 'admin.php?page=' + blockName + '&noheader=1&width=550&height=600&TB_iframe=1');
+        tb_show('Edit block ' + blockLabel + ' default config', 'admin.php?page=' + blockName + '&noheader=1&width=550&height=600&TB_iframe=1');
     })
 });
