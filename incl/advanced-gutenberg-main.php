@@ -1504,6 +1504,95 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-image' => array(
+                array(
+                    'label'    => __('Image Size', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Full width', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'fullWidth',
+                        ),
+                        array(
+                            'title' => __('Height', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'height',
+                            'min'   => 100,
+                            'max'   => 1000,
+                        ),
+                        array(
+                            'title' => __('Width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'width',
+                            'min'   => 200,
+                            'max'   => 1300,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Color', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Title Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'titleColor',
+                        ),
+                        array(
+                            'title' => __('Subtitle Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'subtitleColor',
+                        ),
+                        array(
+                            'title' => __('Overlay Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'overlayColor',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Text Alignment', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Vertical Alignment', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'vAlign',
+                            'options' => array(
+                                array(
+                                    'label' => __('Top', 'advanced-gutenberg'),
+                                    'value' => 'flex-start',
+                                ),
+                                array(
+                                    'label' => __('Center', 'advanced-gutenberg'),
+                                    'value' => 'center',
+                                ),
+                                array(
+                                    'label' => __('Bottom', 'advanced-gutenberg'),
+                                    'value' => 'flex-end',
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title' => __('Vertical Alignment', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'hAlign',
+                            'options' => array(
+                                array(
+                                    'label' => __('Left', 'advanced-gutenberg'),
+                                    'value' => 'flex-start',
+                                ),
+                                array(
+                                    'label' => __('Center', 'advanced-gutenberg'),
+                                    'value' => 'center',
+                                ),
+                                array(
+                                    'label' => __('Right', 'advanced-gutenberg'),
+                                    'value' => 'flex-end',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
