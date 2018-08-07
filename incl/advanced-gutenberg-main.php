@@ -540,7 +540,7 @@ float: left;'
         $regexWithSpaces = '/^[\p{L}\p{N}_\- ]+$/u';
 
         if (!wp_verify_nonce($_POST['nonce'], 'advgb_settings_nonce')) {
-            wp_send_json('Invalid nonce token!', 400);
+            wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
         }
 
         $check_exist = get_option('advgb_custom_styles');
