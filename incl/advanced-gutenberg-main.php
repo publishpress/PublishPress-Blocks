@@ -159,6 +159,7 @@ float: left;'
             add_action('wp_ajax_advgb_get_users', array($this, 'getUsers'));
             add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
             add_action('wp_ajax_advgb_delete_profiles', array($this, 'deleteProfiles'));
+            add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
         } else {
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
@@ -691,6 +692,46 @@ float: left;'
 
             wp_send_json(array('deleted' => $deleted), 200);
         }
+    }
+
+    /**
+     * Ajax for saving block default config
+     *
+     * @return boolean,void     Return false if failure, echo json on success
+     */
+    public function saveBlockConfig()
+    {
+        // Check users permissions
+        if (!current_user_can('activate_plugins')) {
+            wp_send_json(__('No permission!', 'advanced-gutenberg'), 403);
+            return false;
+        }
+
+        if (!wp_verify_nonce($_POST['nonce'], 'advgb_block_config_nonce')) {
+            wp_send_json(__('Invalid nonce token!', 'advanced-gutenberg'), 400);
+        }
+
+        $blocks_config_saved = get_option('advgb_blocks_default_config');
+        if ($blocks_config_saved === false) {
+            $blocks_config_saved = array('advgb-accordion' => 1, 'advgb-button' => 323);
+        }
+
+        $blockType = sanitize_text_field($_POST['blockType']);
+        $settings = $_POST['settings'];
+        foreach ($settings as $key => $setting) {
+            foreach ($setting as $k => $option) {
+                $settings[$key][$k] = sanitize_text_field($option);
+            }
+        }
+
+        if (array_key_exists($blockType, $blocks_config_saved)) {
+            $blocks_config_saved[$blockType] = $settings[$blockType];
+        } else {
+            array_push($blocks_config_saved, $settings);
+        }
+
+        update_option('advgb_blocks_default_config', $blocks_config_saved);
+        wp_send_json(true, 200);
     }
 
     /**

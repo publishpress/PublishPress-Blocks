@@ -12,6 +12,20 @@
     background-color: #fff;
     background-repeat: no-repeat;
     background-position: center 200px;
+    opacity: 0.5;
+}
+
+#advgb-config-saved-text {
+    position: fixed;
+    top: 250px;
+    left: 50%;
+    z-index: 1000;
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    transform: translateX(-50%);
+    width: fit-content;
+    text-align: center;
 }
 
 .block-config-modal-wrapper {
