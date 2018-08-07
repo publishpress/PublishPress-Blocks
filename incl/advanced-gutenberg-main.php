@@ -1219,16 +1219,18 @@ float: left;'
             plugins_url('assets/css/style.min.css', ADVANCED_GUTENBERG_PLUGIN)
         );
         wp_enqueue_style(
-            'block-config-css',
+            'block_config_css',
             plugins_url('assets/css/block-config.css', ADVANCED_GUTENBERG_PLUGIN)
         );
+        $loadingImage = plugins_url('assets/images/loading.gif', ADVANCED_GUTENBERG_PLUGIN);
+        wp_add_inline_style('block_config_css', '#advgb-loading-screen-image {background-image: url('. $loadingImage .')}');
 
         wp_enqueue_script(
             'minicolors_js',
             plugins_url('assets/js/jquery.minicolors.min.js', ADVANCED_GUTENBERG_PLUGIN)
         );
         wp_enqueue_script(
-            'block-config-js',
+            'block_config_js',
             plugins_url('assets/js/block-config.js', ADVANCED_GUTENBERG_PLUGIN),
             array('jquery')
         );

@@ -4,7 +4,9 @@ defined('ABSPATH') || die;
 wp_nonce_field('advgb_block_config_nonce', 'advgb_block_config_nonce');
 ?>
 
-<div id="advgb-loading-screen" style="background-image: url(<?php echo esc_attr(plugins_url('assets/images/loading.gif', ADVANCED_GUTENBERG_PLUGIN)) ?>)"></div>
+<div id="advgb-loading-screen">
+    <div id="advgb-loading-screen-image"></div>
+</div>
 <div class="block-config-modal-wrapper" style="display: none">
     <div class="block-config-modal-header clearfix">
         <h2 class="block-config-modal-title"><?php esc_html_e(' block', 'advanced-gutenberg'); ?></h2>
