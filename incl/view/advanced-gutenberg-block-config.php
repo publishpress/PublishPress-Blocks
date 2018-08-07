@@ -1,5 +1,7 @@
 <?php
 defined('ABSPATH') || die;
+
+wp_nonce_field('advgb_block_config_nonce', 'advgb_block_config_nonce');
 ?>
 
 <div id="advgb-loading-screen" style="background-image: url(<?php echo esc_attr(plugins_url('assets/images/loading.gif', ADVANCED_GUTENBERG_PLUGIN)) ?>)"></div>
@@ -9,7 +11,7 @@ defined('ABSPATH') || die;
         <button class="ju-button orange-button block-config-save"><?php esc_html_e('Save', 'advanced-gutenberg') ?></button>
     </div>
     <div class="block-config-settings-wrapper">
-        <input type="hidden" name="block-type" value="<?php echo esc_html($current_block) ?>" class="block-config-input">
+        <input type="hidden" name="block-type" value="<?php echo esc_html($current_block) ?>" class="block-type-input">
         <?php $this->renderBlockConfigFields($current_block_settings, $current_block_settings_value); ?>
     </div>
     <div style="padding: 10px; text-align: center">
