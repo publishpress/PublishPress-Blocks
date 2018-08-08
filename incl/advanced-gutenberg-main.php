@@ -719,7 +719,7 @@ float: left;'
 
         $blocks_config_saved = get_option('advgb_blocks_default_config');
         if ($blocks_config_saved === false) {
-            $blocks_config_saved = array('advgb-accordion' => 1, 'advgb-button' => 323);
+            $blocks_config_saved = array();
         }
 
         $blockType = sanitize_text_field($_POST['blockType']);
