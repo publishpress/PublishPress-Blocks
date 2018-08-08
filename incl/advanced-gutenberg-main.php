@@ -259,9 +259,15 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
         );
 
+        // Set blocks icon color
         $saved_settings = get_option('advgb_settings');
         $blocks_icon_color = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
-        wp_localize_script('summary_blocks', 'advgbBlocks', array('color' => $blocks_icon_color));
+        wp_localize_script('wp-blocks', 'advgbBlocks', array('color' => $blocks_icon_color));
+
+        // Setup default config data for blocks
+        $blocks_config_saved = get_option('advgb_blocks_default_config');
+        $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
+        wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
     }
 
     /**
