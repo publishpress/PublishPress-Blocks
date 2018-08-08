@@ -730,11 +730,7 @@ float: left;'
             }
         }
 
-        if (array_key_exists($blockType, $blocks_config_saved)) {
-            $blocks_config_saved[$blockType] = $settings[$blockType];
-        } else {
-            array_push($blocks_config_saved, $settings);
-        }
+        $blocks_config_saved[$blockType] = $settings[$blockType];
 
         update_option('advgb_blocks_default_config', $blocks_config_saved);
         wp_send_json(true, 200);
