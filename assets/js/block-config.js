@@ -19,8 +19,11 @@ jQuery(document).ready(function ($) {
 
         $('.block-config-input').each(function () {
             var settingName = $(this).attr('name');
+            var settingValue = $(this).val().trim();
 
-            dataSubmit[blockType][settingName] = $(this).val();
+            if (settingValue !== "") {
+                dataSubmit[blockType][settingName] = settingValue;
+            }
         });
 
         $.ajax({
