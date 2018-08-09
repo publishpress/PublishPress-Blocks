@@ -46,8 +46,6 @@
             const { attributes, setAttributes } = this.props;
             const currentBlockConfig = advgbDefaultConfig['advgb-video'];
 
-            console.log(currentBlockConfig);
-
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
                 if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {

@@ -66,8 +66,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var currentBlockConfig = advgbDefaultConfig['advgb-video'];
 
-                console.log(currentBlockConfig);
-
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
