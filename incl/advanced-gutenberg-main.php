@@ -1757,6 +1757,20 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-table' => array(
+                array(
+                    'label'    => __('Table Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Max width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'maxWidth',
+                            'min'   => 0,
+                            'max'   => 1999,
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');

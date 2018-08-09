@@ -35,6 +35,23 @@
             this.handleSetup = this.handleSetup.bind( this );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-table'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true && attributes.changed !== undefined) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         static isTableSelected( editor ) {
             return editor.dom.getParent(
                 editor.selection.getStart( true ),
