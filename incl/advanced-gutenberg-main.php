@@ -1776,6 +1776,90 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-video' => array(
+                array(
+                    'label'    => __('Video Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Open video in lightbox', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'openInLightbox',
+                        ),
+                        array(
+                            'title' => __('Full width', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'videoFullWidth'
+                        ),
+                        array(
+                            'title' => __('Video Width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'videoWidth',
+                            'min'   => 100,
+                            'max'   => 1000,
+                        ),
+                        array(
+                            'title' => __('Video Height', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'videoHeight',
+                            'min'   => 300,
+                            'max'   => 7000,
+                        ),
+                        array(
+                            'title' => __('Overlay color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'overlayColor',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Play Button Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title'   => __('Button Icon', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'playButtonIcon',
+                            'options' => array(
+                                array(
+                                    'label' => __('Normal', 'advanced-gutenberg'),
+                                    'value' => 'normal',
+                                ),
+                                array(
+                                    'label' => __('Filled Circle', 'advanced-gutenberg'),
+                                    'value' => 'circleFill',
+                                ),
+                                array(
+                                    'label' => __('Outline Circle', 'advanced-gutenberg'),
+                                    'value' => 'circleOutline',
+                                ),
+                                array(
+                                    'label' => __('Video Camera', 'advanced-gutenberg'),
+                                    'value' => 'videoCam',
+                                ),
+                                array(
+                                    'label' => __('Filled Square', 'advanced-gutenberg'),
+                                    'value' => 'squareCurved',
+                                ),
+                                array(
+                                    'label' => __('Star Sticker', 'advanced-gutenberg'),
+                                    'value' => 'starSticker',
+                                ),
+                            )
+                        ),
+                        array(
+                            'title' => __('Button Size', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'playButtonSize',
+                            'min'   => 40,
+                            'max'   => 200,
+                        ),
+                        array(
+                            'title' => __('Button Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'playButtonColor',
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
