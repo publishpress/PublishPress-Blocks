@@ -2,6 +2,8 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -44,12 +46,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvList, [{
-            key: 'componentDidMount',
-            value: function componentDidMount() {
+            key: 'componentWillMount',
+            value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    clientId = _props.clientId;
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-list'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true && attributes.changed !== undefined) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
 
 
                 if (!attributes.id) {
@@ -93,15 +116,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'render',
             value: function render() {
                 var listIcons = [{ label: __('None'), value: '' }, { label: __('Pushpin'), value: 'admin-post' }, { label: __('Configuration'), value: 'admin-generic' }, { label: __('Flag'), value: 'flag' }, { label: __('Star'), value: 'star-filled' }, { label: __('Checkmark'), value: 'yes' }, { label: __('Minus'), value: 'minus' }, { label: __('Plus'), value: 'plus' }, { label: __('Play'), value: 'controls-play' }, { label: __('Arrow right'), value: 'arrow-right-alt' }, { label: __('X Cross'), value: 'dismiss' }, { label: __('Warning'), value: 'warning' }, { label: __('Help'), value: 'editor-help' }, { label: __('Info'), value: 'info' }, { label: __('Circle'), value: 'marker' }];
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    isSelected = _props2.isSelected,
-                    insertBlocksAfter = _props2.insertBlocksAfter,
-                    mergeBlocks = _props2.mergeBlocks,
-                    setAttributes = _props2.setAttributes,
-                    onReplace = _props2.onReplace,
-                    className = _props2.className,
-                    blockID = _props2.clientId;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    isSelected = _props3.isSelected,
+                    insertBlocksAfter = _props3.insertBlocksAfter,
+                    mergeBlocks = _props3.mergeBlocks,
+                    setAttributes = _props3.setAttributes,
+                    onReplace = _props3.onReplace,
+                    className = _props3.className,
+                    blockID = _props3.clientId;
                 var id = attributes.id,
                     values = attributes.values,
                     icon = attributes.icon,
@@ -342,6 +365,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 source: 'children',
                 selector: 'ul',
                 default: []
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         transforms: {

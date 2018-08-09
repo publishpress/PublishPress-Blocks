@@ -14,6 +14,23 @@
             this.setNextValues = this.setNextValues.bind( this );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-list'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true && attributes.changed !== undefined) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
 
@@ -295,7 +312,11 @@
                 source: 'children',
                 selector: 'ul',
                 default: [],
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         transforms: {
             from: [
