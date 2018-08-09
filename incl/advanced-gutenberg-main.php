@@ -1638,6 +1638,125 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-list' => array(
+                array(
+                    'label'    => __('Text Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Text Size', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textSize',
+                            'min'   => 10,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Icon Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Icon style', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'icon',
+                            'options' => array(
+                                array(
+                                    'label' => __('None', 'advanced-gutenberg'),
+                                    'value' => '',
+                                ),
+                                array(
+                                    'label' => __('Pushpin', 'advanced-gutenberg'),
+                                    'value' => 'admin-post',
+                                ),
+                                array(
+                                    'label' => __('Configuration', 'advanced-gutenberg'),
+                                    'value' => 'admin-generic',
+                                ),
+                                array(
+                                    'label' => __('Flag', 'advanced-gutenberg'),
+                                    'value' => 'flag',
+                                ),
+                                array(
+                                    'label' => __('Star', 'advanced-gutenberg'),
+                                    'value' => 'star-filled',
+                                ),
+                                array(
+                                    'label' => __('Checkmark', 'advanced-gutenberg'),
+                                    'value' => 'yes',
+                                ),
+                                array(
+                                    'label' => __('Minus', 'advanced-gutenberg'),
+                                    'value' => 'minus',
+                                ),
+                                array(
+                                    'label' => __('Plus', 'advanced-gutenberg'),
+                                    'value' => 'plus',
+                                ),
+                                array(
+                                    'label' => __('Play', 'advanced-gutenberg'),
+                                    'value' => 'controls-play',
+                                ),
+                                array(
+                                    'label' => __('Arrow Right', 'advanced-gutenberg'),
+                                    'value' => 'arrow-right-alt',
+                                ),
+                                array(
+                                    'label' => __('X Cross', 'advanced-gutenberg'),
+                                    'value' => 'dismiss',
+                                ),
+                                array(
+                                    'label' => __('Warning', 'advanced-gutenberg'),
+                                    'value' => 'warning',
+                                ),
+                                array(
+                                    'label' => __('Help', 'advanced-gutenberg'),
+                                    'value' => 'editor-help',
+                                ),
+                                array(
+                                    'label' => __('Info', 'advanced-gutenberg'),
+                                    'value' => 'info',
+                                ),
+                                array(
+                                    'label' => __('Circle', 'advanced-gutenberg'),
+                                    'value' => 'marker',
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title' => __('Icon color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'iconColor',
+                        ),
+                        array(
+                            'title' => __('Icon Size', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconSize',
+                            'min'   => 10,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Line Height', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'lineHeight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'margin',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'padding',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
