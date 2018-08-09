@@ -40,7 +40,7 @@
             const currentBlockConfig = advgbDefaultConfig['advgb-table'];
 
             // No override attributes of blocks inserted before
-            if (attributes.changed !== true && attributes.changed !== undefined) {
+            if (attributes.changed !== true) {
                 if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
                     Object.keys(currentBlockConfig).map((attribute)=>{
                         attributes[attribute] = currentBlockConfig[attribute];
@@ -593,7 +593,11 @@
             maxWidth: {
                 type: 'number',
                 default: 0
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         edit: AdvTable,
         save: function ( { attributes } ) {

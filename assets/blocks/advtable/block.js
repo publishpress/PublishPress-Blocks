@@ -81,7 +81,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var currentBlockConfig = advgbDefaultConfig['advgb-table'];
 
                 // No override attributes of blocks inserted before
-                if (attributes.changed !== true && attributes.changed !== undefined) {
+                if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
                             attributes[attribute] = currentBlockConfig[attribute];
@@ -684,6 +684,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             maxWidth: {
                 type: 'number',
                 default: 0
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvTable,
