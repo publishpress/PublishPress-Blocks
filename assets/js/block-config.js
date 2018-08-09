@@ -21,6 +21,10 @@ jQuery(document).ready(function ($) {
             var settingName = $(this).attr('name');
             var settingValue = $(this).val().trim();
 
+            if ($(this).attr('type') === 'checkbox') {
+                if (!this.checked) settingValue = 0;
+            }
+
             if (settingValue !== "") {
                 dataSubmit[blockType][settingName] = settingValue;
             }

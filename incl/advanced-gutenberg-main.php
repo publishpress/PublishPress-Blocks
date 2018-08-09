@@ -726,7 +726,12 @@ float: left;'
         $settings = $_POST['settings'];
         foreach ($settings as $key => $setting) {
             foreach ($setting as $k => $option) {
-                $settings[$key][$k] = sanitize_text_field($option);
+                $option = sanitize_text_field($option);
+                if (is_numeric($option)) {
+                    $option = (int) $option;
+                }
+
+                $settings[$key][$k] = $option;
             }
         }
 
