@@ -1860,6 +1860,52 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-count-up' => array(
+                array(
+                    'label'    => __('General Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Number of columns', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'columns',
+                            'min'   => 1,
+                            'max'   => 3,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Color Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Header Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'headerTextColor',
+                        ),
+                        array(
+                            'title' => __('Count Up Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'countUpNumberColor',
+                        ),
+                        array(
+                            'title' => __('Description Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'descTextColor',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Count Up Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Count Up Number Size', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'countUpNumberSize',
+                            'min'   => 10,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
