@@ -1906,6 +1906,66 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-map' => array(
+                array(
+                    'label'    => __('Location Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'type'  => 'hidden',
+                            'name'  => 'useLatLng',
+                            'value' => 1,
+                        ),
+                        array(
+                            'title' => __('Latitude', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'lat',
+                            'min'   => 0,
+                            'max'   => 999,
+                        ),
+                        array(
+                            'title' => __('Longitude', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'lng',
+                            'min'   => 0,
+                            'max'   => 999,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Map Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Zoom Level', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'zoom',
+                            'min'   => 0,
+                            'max'   => 25,
+                        ),
+                        array(
+                            'title' => __('Height', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'height',
+                            'min'   => 300,
+                            'max'   => 1000,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Marker Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Marker Title', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'markerTitle',
+                        ),
+                        array(
+                            'title' => __('Marker Description', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'markerDesc',
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
