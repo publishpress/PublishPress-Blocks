@@ -1,7 +1,9 @@
 jQuery(window).on('load', function () {
     // Loading UI
-    jQuery('#advgb-loading-screen').hide();
     jQuery('.block-config-modal-wrapper').show();
+    setTimeout(function () {
+        jQuery('#advgb-loading-screen').hide();
+    }, 1000);
 });
 
 jQuery(document).ready(function ($) {
