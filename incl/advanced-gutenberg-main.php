@@ -2142,6 +2142,12 @@ float: left;'
 
             foreach ($category['settings'] as $setting) {
                 $settingValue = $this->setConfigValue($data, $setting['name']);
+
+                if ($setting['type'] === 'hidden') {
+                    $html .= '<input type="hidden" class="block-config-input" name="'. $setting['name'] .'" value="'. $setting['value'] .'" />';
+                    continue;
+                }
+
                 $html .= '<li class="ju-settings-option full-width block-config-option">';
                 $html .= '<label for="setting-'. $setting['name'] .'" class="ju-setting-label">' . $setting['title'] . '</label>';
                 $html .= '<div class="block-config-input-wrapper">';
