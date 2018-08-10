@@ -100,7 +100,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <div class="settings-option-wrapper clearfix">
                         <label for="gallery_lightbox"
                                class="ju-setting-label advgb_qtip"
-                               alt="<?php esc_attr_e(
+                               data-qtip="<?php esc_attr_e(
                                    'Open gallery images as a lightbox style popup',
                                    'advanced-gutenberg'
                                ) ?>"
@@ -123,7 +123,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <div class="settings-option-wrapper clearfix">
                         <label for="gallery_lightbox_caption"
                                class="ju-setting-label advgb_qtip"
-                               alt="<?php esc_attr_e(
+                               data-qtip="<?php esc_attr_e(
                                    'Show images caption in lightbox.',
                                    'advanced-gutenberg'
                                ) ?>"
@@ -147,7 +147,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         <label for="google_api_key"
                                class="ju-setting-label advgb_qtip"
                                style="float: none; margin-bottom: 10px"
-                               alt="<?php esc_attr_e(
+                               data-qtip="<?php esc_attr_e(
                                    'This API key is required to using Map Block.',
                                    'advanced-gutenberg'
                                ) ?>"
@@ -180,7 +180,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                     <div class="settings-option-wrapper clearfix">
                         <label for="enable_blocks_spacing"
                                class="advgb_qtip ju-setting-label"
-                               alt="<?php esc_attr_e(
+                               data-qtip="<?php esc_attr_e(
                                    'Enable block spacing settings',
                                    'advanced-gutenberg'
                                ) ?>"
@@ -204,7 +204,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         <label for="blocks_spacing"
                                class="ju-setting-label advgb_qtip"
                                style="line-height: 50px"
-                               alt="<?php esc_attr_e(
+                               data-qtip="<?php esc_attr_e(
                                    'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
                                    'advanced-gutenberg'
                                ) ?>"
@@ -229,7 +229,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                         <label for="blocks_icon_color"
                                class="ju-setting-label advgb_qtip"
                                style="line-height: 50px"
-                               alt="<?php esc_attr_e(
+                               data-qtip="<?php esc_attr_e(
                                    'Set color for blocks that added by Advanced Gutenberg',
                                    'advanced-gutenberg'
                                ) ?>"
@@ -297,7 +297,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 <div class="control-label">
                     <label for="advgb-customstyles-identify-color"
                            class="advgb_qtip"
-                           alt="<?php esc_attr_e(
+                           data-qtip="<?php esc_attr_e(
                                'This option help you identify specific custom styles in the list
                                 (usually set this same as the custom style\'s background color)',
                                'advanced-gutenberg'

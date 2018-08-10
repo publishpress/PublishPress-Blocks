@@ -32,7 +32,7 @@ jQuery(document).ready(function ($) {
 
     $('.advgb_qtip').qtip({
         content: {
-            attr: 'alt'
+            attr: 'data-qtip'
         },
         position: {
             my: 'top left',
