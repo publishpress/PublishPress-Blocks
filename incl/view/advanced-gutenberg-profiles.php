@@ -77,12 +77,17 @@ wp_nonce_field('advgb_profiles_nonce', 'advgb_profiles_nonce');
         <tbody>
         <?php if (count($profiles) > 0) : ?>
             <?php foreach ($profiles as $profile) : ?>
+                <?php $profileRolesAccess = get_post_meta($profile->ID, 'roles_access', true); ?>
+                <?php $profileRolesAccess = implode(', ', $profileRolesAccess) ?>
                 <tr class="advgb-profile" data-profile-id="<?php echo esc_html($profile->ID) ?>">
                     <td class="profile-checkbox select-box">
                         <input type="checkbox" class="ju-checkbox" name="advgb_profile[]" value="<?php echo esc_html($profile->ID) ?>">
                     </td>
                     <td class="profile-title">
-                        <a href="<?php echo esc_html(admin_url('admin.php?page=advgb_main&view=profile&id='.$profile->ID)) ?>">
+                        <a href="<?php echo esc_html(admin_url('admin.php?page=advgb_main&view=profile&id='.$profile->ID)) ?>"
+                           class="advgb_qtip"
+                           data-qtip="<?php echo esc_html($profileRolesAccess); ?>"
+                        >
                             <?php echo esc_html($profile->post_title ? $profile->post_title : __('(untitled)', 'advanced-gutenberg')) ?>
                         </a>
                         <i class="mi mi-delete-forever profile-delete"
