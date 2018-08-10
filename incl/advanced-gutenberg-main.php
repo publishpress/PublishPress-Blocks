@@ -2133,6 +2133,38 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-summary' => array(
+                array(
+                    'label'    => __('General Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Load minimized', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'loadMinimized',
+                        ),
+                        array(
+                            'title' => __('Summary header title', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'headerTitle',
+                        ),
+                        array(
+                            'title' => __('Anchor color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'anchorColor',
+                        ),
+                        array(
+                            'title' => __('Summary Alignment', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'align',
+                            'options' => array(
+                                array('label' => __('Left', 'advanced-gutenberg'), 'value' => 'left'),
+                                array('label' => __('Center', 'advanced-gutenberg'), 'value' => 'center'),
+                                array('label' => __('Right', 'advanced-gutenberg'), 'value' => 'right'),
+                            )
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');

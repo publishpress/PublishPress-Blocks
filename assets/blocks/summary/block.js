@@ -1,5 +1,7 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -113,6 +115,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(SummaryBlock, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-summary'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
             key: "componentDidMount",
             value: function componentDidMount() {
                 this.updateSummary();
@@ -155,10 +178,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    isSelected = _props.isSelected,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    isSelected = _props2.isSelected,
+                    setAttributes = _props2.setAttributes;
                 var headings = attributes.headings,
                     loadMinimized = attributes.loadMinimized,
                     anchorColor = attributes.anchorColor,
@@ -304,6 +327,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             headerTitle: {
                 type: 'string'
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         supports: {
