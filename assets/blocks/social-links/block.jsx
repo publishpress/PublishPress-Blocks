@@ -176,6 +176,24 @@
             }
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-social-links'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        if (attribute.indexOf('.') === -1)
+                            attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         render() {
             const { attributes, setAttributes, isSelected } = this.props;
             const { items, align, iconSize, iconSpace } = attributes;
@@ -384,6 +402,10 @@
             iconSpace: {
                 type: 'number',
                 default: 5,
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
             },
         },
         edit: AdvSocialBlock,

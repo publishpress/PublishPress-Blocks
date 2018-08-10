@@ -724,6 +724,7 @@ float: left;'
 
         $blockType = sanitize_text_field($_POST['blockType']);
         $settings = $_POST['settings'];
+
         foreach ($settings as $key => $setting) {
             foreach ($setting as $k => $option) {
                 $option = sanitize_text_field($option);
@@ -732,6 +733,24 @@ float: left;'
                 }
 
                 $settings[$key][$k] = $option;
+            }
+        }
+
+        // Modify settings for social links blocks config
+        if ($blockType === 'advgb-social-links') {
+            $items = array();
+            $settings[$blockType]['items'] = array();
+
+            foreach ($settings[$blockType] as $k => $option) {
+                if (strpos($k, '.')) {
+                    $item = explode('.', $k);
+                    $item[0] = (int) str_replace('icon', '', $item[0]);
+                    $items[$item[0]][$item[1]] = $option;
+                }
+            }
+
+            foreach ($items as $item) {
+                array_push($settings[$blockType]['items'], $item);
             }
         }
 
@@ -1962,6 +1981,154 @@ float: left;'
                             'title' => __('Marker Description', 'advanced-gutenberg'),
                             'type'  => 'text',
                             'name'  => 'markerDesc',
+                        ),
+                    ),
+                ),
+            ),
+            'advgb-social-links' => array(
+                array(
+                    'label'    => __('Icon 1 Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Icon', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'icon1.icon',
+                            'options' => array(
+                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
+                                array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
+                                array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
+                                array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
+                                array('label' => __('Google Plus', 'advanced-gutenberg'), 'value' => 'google'),
+                                array('label' => __('Instagram', 'advanced-gutenberg'), 'value' => 'instagram'),
+                                array('label' => __('LinkedIn', 'advanced-gutenberg'), 'value' => 'linkedin'),
+                                array('label' => __('Email', 'advanced-gutenberg'), 'value' => 'mail'),
+                                array('label' => __('Picasa', 'advanced-gutenberg'), 'value' => 'picasa'),
+                                array('label' => __('Pinterest', 'advanced-gutenberg'), 'value' => 'pinterest'),
+                                array('label' => __('Reddit', 'advanced-gutenberg'), 'value' => 'reddit'),
+                                array('label' => __('Skype', 'advanced-gutenberg'), 'value' => 'skype'),
+                                array('label' => __('Sound Cloud', 'advanced-gutenberg'), 'value' => 'soundcloud'),
+                                array('label' => __('Tumblr', 'advanced-gutenberg'), 'value' => 'tumblr'),
+                                array('label' => __('Twitter', 'advanced-gutenberg'), 'value' => 'twitter'),
+                                array('label' => __('Vimeo', 'advanced-gutenberg'), 'value' => 'vimeo'),
+                                array('label' => __('Youtube', 'advanced-gutenberg'), 'value' => 'youtube'),
+                            )
+                        ),
+                        array(
+                            'title' => __('Icon Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'icon1.iconColor',
+                        ),
+                        array(
+                            'title' => __('Icon Link', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'icon1.link',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Icon 2 Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Icon', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'icon2.icon',
+                            'options' => array(
+                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
+                                array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
+                                array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
+                                array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
+                                array('label' => __('Google Plus', 'advanced-gutenberg'), 'value' => 'google'),
+                                array('label' => __('Instagram', 'advanced-gutenberg'), 'value' => 'instagram'),
+                                array('label' => __('LinkedIn', 'advanced-gutenberg'), 'value' => 'linkedin'),
+                                array('label' => __('Email', 'advanced-gutenberg'), 'value' => 'mail'),
+                                array('label' => __('Picasa', 'advanced-gutenberg'), 'value' => 'picasa'),
+                                array('label' => __('Pinterest', 'advanced-gutenberg'), 'value' => 'pinterest'),
+                                array('label' => __('Reddit', 'advanced-gutenberg'), 'value' => 'reddit'),
+                                array('label' => __('Skype', 'advanced-gutenberg'), 'value' => 'skype'),
+                                array('label' => __('Sound Cloud', 'advanced-gutenberg'), 'value' => 'soundcloud'),
+                                array('label' => __('Tumblr', 'advanced-gutenberg'), 'value' => 'tumblr'),
+                                array('label' => __('Twitter', 'advanced-gutenberg'), 'value' => 'twitter'),
+                                array('label' => __('Vimeo', 'advanced-gutenberg'), 'value' => 'vimeo'),
+                                array('label' => __('Youtube', 'advanced-gutenberg'), 'value' => 'youtube'),
+                            )
+                        ),
+                        array(
+                            'title' => __('Icon Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'icon2.iconColor',
+                        ),
+                        array(
+                            'title' => __('Icon Link', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'icon2.link',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Icon 3 Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Icon', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'icon3.icon',
+                            'options' => array(
+                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
+                                array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
+                                array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
+                                array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
+                                array('label' => __('Google Plus', 'advanced-gutenberg'), 'value' => 'google'),
+                                array('label' => __('Instagram', 'advanced-gutenberg'), 'value' => 'instagram'),
+                                array('label' => __('LinkedIn', 'advanced-gutenberg'), 'value' => 'linkedin'),
+                                array('label' => __('Email', 'advanced-gutenberg'), 'value' => 'mail'),
+                                array('label' => __('Picasa', 'advanced-gutenberg'), 'value' => 'picasa'),
+                                array('label' => __('Pinterest', 'advanced-gutenberg'), 'value' => 'pinterest'),
+                                array('label' => __('Reddit', 'advanced-gutenberg'), 'value' => 'reddit'),
+                                array('label' => __('Skype', 'advanced-gutenberg'), 'value' => 'skype'),
+                                array('label' => __('Sound Cloud', 'advanced-gutenberg'), 'value' => 'soundcloud'),
+                                array('label' => __('Tumblr', 'advanced-gutenberg'), 'value' => 'tumblr'),
+                                array('label' => __('Twitter', 'advanced-gutenberg'), 'value' => 'twitter'),
+                                array('label' => __('Vimeo', 'advanced-gutenberg'), 'value' => 'vimeo'),
+                                array('label' => __('Youtube', 'advanced-gutenberg'), 'value' => 'youtube'),
+                            )
+                        ),
+                        array(
+                            'title' => __('Icon Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'icon3.iconColor',
+                        ),
+                        array(
+                            'title' => __('Icon Link', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'icon3.link',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('General Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Icon Alignment', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'align',
+                            'options' => array(
+                                array('label' => __('Left', 'advanced-gutenberg'), 'value' => 'left'),
+                                array('label' => __('Center', 'advanced-gutenberg'), 'value' => 'center'),
+                                array('label' => __('Right', 'advanced-gutenberg'), 'value' => 'right'),
+                            )
+                        ),
+                        array(
+                            'title' => __('Icon Size', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconSize',
+                            'min'   => 20,
+                            'max'   => 60,
+                        ),
+                        array(
+                            'title' => __('Icon Space', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconSpace',
+                            'min'   => 0,
+                            'max'   => 30,
                         ),
                     ),
                 ),
