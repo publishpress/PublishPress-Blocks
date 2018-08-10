@@ -418,9 +418,9 @@ span.advgb-social-icon.selected:before {
     position: absolute;
     top: -2px;
     left: -2px;
+    right: -2px;
+    bottom: -2px;
     border: 2px solid #fff;
-    height: 100%;
-    width: 100%;
     border-radius: 25%;
 }
 
