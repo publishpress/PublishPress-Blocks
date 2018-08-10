@@ -10,6 +10,23 @@
             super( ...arguments );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-tabs'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         componentDidMount() {
             this.initTabs();
             if (!this.props.attributes.blockID) {
@@ -329,6 +346,10 @@
             },
             activeTabTextColor: {
                 type: 'string',
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
             },
         },
         edit: AdvTabsBlock,
