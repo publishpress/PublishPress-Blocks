@@ -744,7 +744,6 @@ float: left;'
             foreach ($settings[$blockType] as $k => $option) {
                 if (strpos($k, '.')) {
                     $item = explode('.', $k);
-                    $item[0] = (int) str_replace('icon', '', $item[0]);
                     $items[$item[0]][$item[1]] = $option;
                 }
             }
@@ -2242,6 +2241,76 @@ float: left;'
                             'name'  => 'borderRadius',
                             'min'   => 0,
                             'max'   => 100,
+                        ),
+                    ),
+                ),
+            ),
+            'advgb-testimonial' => array(
+                array(
+                    'label'    => __('General Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Columns', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'columns',
+                            'min'   => 1,
+                            'max'   => 3,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Avatar Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'avatarColor',
+                        ),
+                        array(
+                            'title' => __('Border Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'avatarBorderColor',
+                        ),
+                        array(
+                            'title' => __('Border Radius (%)', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'avatarBorderRadius',
+                            'min'   => 0,
+                            'max'   => 50,
+                        ),
+                        array(
+                            'title' => __('Border Width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'avatarBorderWidth',
+                            'min'   => 0,
+                            'max'   => 5,
+                        ),
+                        array(
+                            'title' => __('Avatar Size', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'avatarSize',
+                            'min'   => 50,
+                            'max'   => 130,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Text Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Name Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'nameColor',
+                        ),
+                        array(
+                            'title' => __('Position Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'positionColor',
+                        ),
+                        array(
+                            'title' => __('Description Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'descColor',
                         ),
                     ),
                 ),
