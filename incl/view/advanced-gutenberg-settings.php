@@ -314,7 +314,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                            value="#000000"/>
                 </div>
             </div>
-            <div class="control-group advgb-customstyles-css">
+            <div class="control-group advgb-customstyles-css col-sm-12">
                 <label for="advgb-customstyles-css">
                     <?php esc_html_e('Custom CSS', 'advanced-gutenberg') ?>
                 </label>
