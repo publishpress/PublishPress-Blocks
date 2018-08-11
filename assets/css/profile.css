@@ -58,9 +58,9 @@ ul.blocks-list {
 ul.blocks-list li.block-item {
     margin: 10px 15px;
     margin-left: 0;
-    padding: 5px;
+    padding: 10px;
     background-color: #fff;
-    flex-basis: 230px;
+    flex-basis: 300px;
     transition: background-color .5s ease-out;
     -moz-transition: background-color .5s ease-out;
     -webkit-transition: background-color .5s ease-out;
@@ -139,7 +139,6 @@ ul.blocks-list li.block-item.new-block {
 }
 
 .block-item.ju-settings-option .ju-switch-button {
-    float: left;
     margin-right: 0;
     margin-left: 5px;
 }
