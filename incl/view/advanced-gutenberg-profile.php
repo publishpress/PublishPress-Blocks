@@ -88,7 +88,7 @@ if ($updating) {
                     <?php esc_html_e('Blocks list updated.', 'advanced-gutenberg') ?>
                 </span>
 
-                <a class="ju-button waves-effect waves-dark"
+                <a class="ju-button orange-button waves-effect waves-dark"
                    href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>"
                 >
                     <i class="dashicons dashicons-plus" style="vertical-align: bottom"></i>
