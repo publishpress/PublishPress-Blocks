@@ -59,17 +59,17 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
     <div class="ju-top-tabs-wrapper">
         <ul class="tabs ju-top-tabs">
             <li class="tab">
-                <a href="#config-tab" class="link-tab waves-effect waves-light">
+                <a href="#config-tab" class="link-tab">
                     <?php esc_html_e('Configuration', 'advanced-gutenberg') ?>
                 </a>
             </li>
             <li class="tab">
-                <a href="#customstyles-tab" class="link-tab waves-effect waves-light" id="custom-styles-tab">
+                <a href="#customstyles-tab" class="link-tab" id="custom-styles-tab">
                     <?php esc_html_e('Custom styles', 'advanced-gutenberg') ?>
                 </a>
             </li>
             <li class="tab">
-                <a href="#block-config-tab" class="link-tab waves-effect waves-light">
+                <a href="#block-config-tab" class="link-tab">
                     <?php esc_html_e('Default blocks config', 'advanced-gutenberg') ?>
                 </a>
             </li>
