@@ -320,7 +320,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 </label>
                 <textarea name="customstyles-css" id="advgb-customstyles-css"></textarea>
             </div>
-            <div id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
+            <div class="col-sm-12" id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
                 <small><?php esc_html_e('Hint: Use "Ctrl + Space" for auto completion', 'advanced-gutenberg') ?></small>
             </div>
             <div style="text-align: center; margin-top: 15px; margin-bottom: 15px">
