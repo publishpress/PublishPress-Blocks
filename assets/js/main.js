@@ -101,10 +101,10 @@
 
         // Not show expand icon if this tab has no sub menus
         $('.ju-menu-tabs li.tab').each(function () {
-            if ($(this).find('.ju-submenu-tabs').length < 1) {
-                $(this).find('a.link-tab').addClass('no-submenus');
-            } else {
+            if ($(this).find('.ju-submenu-tabs').length > 0) {
                 var linkTab = $(this).find('a.link-tab');
+
+                linkTab.addClass('with-submenus');
                 if (linkTab.hasClass('active')) {
                     linkTab.addClass('expanded');
                 }

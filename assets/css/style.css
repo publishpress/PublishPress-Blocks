@@ -517,7 +517,7 @@ input.ju-radiobox:focus {
     float: right;
 }
 
-.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab:not(.no-submenus):not(.expanded):after {
+.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.with-submenus:not(.expanded):after {
     content: '\e313';
 }
 
@@ -526,11 +526,11 @@ input.ju-radiobox:focus {
     background-color: #4c79ca;
 }
 
-.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active.expanded:after {
+.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active.with-submenus.expanded:after {
     content: '\e316';
 }
 
-.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active.expanded + .ju-submenu-tabs {
+.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active.with-submenus.expanded + .ju-submenu-tabs {
     max-height: 500px;
 }
 
