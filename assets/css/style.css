@@ -575,6 +575,7 @@ input.ju-radiobox:focus {
     overflow: hidden;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
+    vertical-align: text-bottom;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs .indicator {
