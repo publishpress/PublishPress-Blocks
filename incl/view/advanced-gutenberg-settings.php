@@ -51,8 +51,6 @@ $google_api_key_saved             = isset($saved_settings['google_api_key']) ? $
 $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#000000';
-
-$custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_styles);
 ?>
 
 <div id="advgb-settings-container">
@@ -64,11 +62,6 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 </a>
             </li>
             <li class="tab">
-                <a href="#customstyles-tab" class="link-tab" id="custom-styles-tab">
-                    <?php esc_html_e('Custom styles', 'advanced-gutenberg') ?>
-                </a>
-            </li>
-            <li class="tab">
                 <a href="#block-config-tab" class="link-tab">
                     <?php esc_html_e('Default blocks config', 'advanced-gutenberg') ?>
                 </a>
@@ -76,16 +69,9 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         </ul>
     </div>
 
-    <?php if (isset($_GET['save_settings']) || isset($_GET['save_styles'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
+    <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
         <div class="ju-notice-msg ju-notice-success">
-            <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action
-                esc_html_e('Settings saved successfully', 'advanced-gutenberg');
-            elseif (isset($_GET['save_styles'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action
-                esc_html_e('Your styles have been saved', 'advanced-gutenberg');
-                wp_add_inline_script('settings_js', 'jQuery(document).ready(function($) {
-                    $("#custom-styles-tab").trigger("click");
-                });');
-            endif; ?>
+            <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg'); ?>
             <i class="dashicons dashicons-dismiss ju-notice-close"></i>
         </div>
     <?php endif; ?>
@@ -257,98 +243,6 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 </button>
             </div>
         </form>
-    </div>
-
-    <div id="customstyles-tab" class="tab-content clearfix" style="display: none;">
-        <div class="col-sm-3" id="advgb-customstyles-list">
-            <div id="mybootstrap">
-                <ul class="advgb-customstyles-list">
-                    <?php
-                    $content = '';
-                    foreach ($custom_styles_saved as $customStyles) {
-                        $content .= '<li class="advgb-customstyles-items" data-id-customstyle="' . (int) $customStyles['id'] . '">';
-                        $content .= '<a><i class="title-icon" style="background-color: ' . $customStyles['identifyColor'] . '"></i><span class="advgb-customstyles-items-title">' . esc_html($customStyles['title']) . '</span></a>';
-                        $content .= '<a class="copy" title="' . __('Copy', 'advanced-gutenberg') . '"><i class="mi mi-content-copy"></i></a>';
-                        $content .= '<a class="trash" title="' . __('Delete', 'advanced-gutenberg') . '"><i class="mi mi-delete"></i></a>';
-                        $content .= '<a class="edit" title="' . __('Edit', 'advanced-gutenberg') . '"><i class="mi mi-edit"></i></a>';
-                        $content .= '<ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">(' . esc_html($customStyles['name']) . ')</li></ul>';
-                        $content .= '</li>';
-                    }
-                    $content .= '<li style="text-align: center; margin-top: 20px"><a class="advgb-customstyles-new ju-button"><i class="mi mi-add"></i>' . esc_html__('Add new class', 'advanced-gutenberg') . '</a></li>';
-
-                    echo $content; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
-                    ?>
-                </ul>
-                <span id="savedInfo" style="display:none;">
-                    <?php esc_html_e('All modifications were saved!', 'advanced-gutenberg') ?>
-                </span>
-            </div>
-        </div>
-
-        <div class="col-sm-9" id="advgb-customstyles-info">
-            <div class="control-group col-sm-6">
-                <label for="advgb-customstyles-classname">
-                    <?php esc_html_e('Style class', 'advanced-gutenberg') ?>
-                </label>
-                <input type="text" class="ju-input" name="customstyles-classname" id="advgb-customstyles-classname"
-                       value=""/>
-            </div>
-            <div id="identify-colors" class="control-group clearfix col-sm-6">
-                <div class="control-label">
-                    <label for="advgb-customstyles-identify-color"
-                           class="advgb_qtip"
-                           data-qtip="<?php esc_attr_e(
-                               'This option help you identify specific custom styles in the list
-                                (usually set this same as the custom style\'s background color)',
-                               'advanced-gutenberg'
-                           ) ?>"
-                    >
-                        <?php esc_html_e('Identification color', 'advanced-gutenberg') ?>
-                    </label>
-                </div>
-                <div class="controls">
-                    <input type="text"
-                           name="customstyles-identify-color"
-                           id="advgb-customstyles-identify-color"
-                           class="minicolors minicolors-input ju-input"
-                           value="#000000"/>
-                </div>
-            </div>
-            <div class="control-group advgb-customstyles-css col-sm-12">
-                <label for="advgb-customstyles-css">
-                    <?php esc_html_e('Custom CSS', 'advanced-gutenberg') ?>
-                </label>
-                <textarea name="customstyles-css" id="advgb-customstyles-css"></textarea>
-            </div>
-            <div class="col-sm-12" id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
-                <small><?php esc_html_e('Hint: Use "Ctrl + Space" for auto completion', 'advanced-gutenberg') ?></small>
-            </div>
-            <div style="text-align: center; margin-top: 15px; margin-bottom: 15px">
-                <form method="POST">
-                    <?php wp_nonce_field('advgb_cstyles_nonce', 'advgb_cstyles_nonce_field'); ?>
-                    <button class="ju-button orange-button waves-effect waves-light"
-                            style="margin: 10px auto"
-                            type="submit"
-                            id="save_custom_styles"
-                            name="save_custom_styles"
-                            value="1"
-                    >
-                        <span><?php esc_html_e('Save styles', 'advanced-gutenberg') ?></span>
-                    </button>
-                </form>
-            </div>
-
-            <div id="advgb-customstyles-preview">
-                <p class="preview-title"><?php esc_html_e('Preview', 'advanced-gutenberg'); ?></p>
-                <p class="previous-block" style="margin-bottom: 20px; margin-top: 10px;">
-                    <?php esc_html_e('Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph', 'advanced-gutenberg') ?>
-                </p>
-                <div class="advgb-customstyles-target"><?php esc_html_e('Example of text', 'advanced-gutenberg') ?></div>
-                <p class="follow-block">
-                    <?php esc_html_e('Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph', 'advanced-gutenberg') ?>
-                </p>
-            </div>
-        </div>
     </div>
 
     <div id="block-config-tab" class="tab-content clearfix">

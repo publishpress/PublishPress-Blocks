@@ -323,7 +323,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Fix Codemirror not displayed properly
-    $('#custom-styles-tab').one('click', function () {
+    $('a[href="#custom-styles"]').one('click', function () {
         myEditor.refresh();
         customStylePreview();
     });

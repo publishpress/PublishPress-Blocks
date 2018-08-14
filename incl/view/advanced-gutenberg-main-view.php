@@ -13,6 +13,11 @@ $tabs_data = array(
         'icon' => 'settings',
     ),
     array(
+        'id' => 'custom-styles',
+        'title' => __('Custom Styles', 'advanced-gutenberg'),
+        'icon' => 'code',
+    ),
+    array(
         'id' => 'translation',
         'title' => __('Translation', 'advanced-gutenberg'),
         'icon' => 'text-format',
