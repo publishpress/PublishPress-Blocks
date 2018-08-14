@@ -510,16 +510,20 @@ input.ju-radiobox:focus {
     box-shadow: none;
 }
 
-.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active {
-    opacity: 1;
-    background-color: #4c79ca;
-}
-
-.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active:after {
+.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab:after {
     font-family: 'Material Icons';
     font-size: 24px;
     vertical-align: text-bottom;
     float: right;
+}
+
+.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab:not(.no-submenus):not(.expanded):after {
+    content: '\e313';
+}
+
+.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active {
+    opacity: 1;
+    background-color: #4c79ca;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active.expanded:after {
@@ -532,10 +536,6 @@ input.ju-radiobox:focus {
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active:not(.expanded) {
     background-color: transparent;
-}
-
-.ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active:not(.expanded):not(.no-submenus):after {
-    content: '\e313';
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs {
@@ -570,6 +570,11 @@ input.ju-radiobox:focus {
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .tab-title {
     font-size: 16px;
     margin-left: 5px;
+    display: inline-block;
+    max-width: 75%;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs .indicator {

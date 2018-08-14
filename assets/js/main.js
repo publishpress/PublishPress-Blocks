@@ -58,7 +58,7 @@
             var topTab = $(this);
             var tabClone = $(this).clone();
             var parentHref = $(this).closest('.ju-content-wrapper').attr('id');
-            tabClone.removeClass('ju-top-tabs').addClass('ju-submenu-tabs');
+            tabClone.removeClass('ju-top-tabs').removeClass('tabs').addClass('ju-submenu-tabs');
 
             tabClone.find('li.tab').each(function () {
                 var currentSubMenu = $(this).closest('.ju-submenu-tabs');
@@ -90,11 +90,9 @@
 
         // Collapsed the menu when clicking if it opened
         $('.ju-menu-tabs li.tab a.link-tab').click(function () {
-            $(this).closest('.ju-menu-tabs').find('li.tab a.link-tab').each(function () {
-                if (!$(this).hasClass('active')) {
-                    $(this).removeClass('expanded');
-                }
-            });
+            if (!$(this).hasClass('active')) {
+                $(this).closest('.ju-menu-tabs').find('li.tab a.link-tab').removeClass('expanded');
+            }
 
             if ($(this).closest('li.tab').find('.ju-submenu-tabs').length > 0) {
                 $(this).toggleClass('expanded');
@@ -105,6 +103,11 @@
         $('.ju-menu-tabs li.tab').each(function () {
             if ($(this).find('.ju-submenu-tabs').length < 1) {
                 $(this).find('a.link-tab').addClass('no-submenus');
+            } else {
+                var linkTab = $(this).find('a.link-tab');
+                if (linkTab.hasClass('active')) {
+                    linkTab.addClass('expanded');
+                }
             }
         });
     })
