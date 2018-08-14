@@ -1064,7 +1064,7 @@ float: left;'
             update_option('advgb_settings', $save_config);
 
             if (isset($_REQUEST['_wp_http_referer'])) {
-                wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success#settings'));
+                wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
                 exit;
             }
         }
@@ -1080,7 +1080,7 @@ float: left;'
             }
 
             if (isset($_REQUEST['_wp_http_referer'])) {
-                wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_styles=success#custom-styles'));
+                wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_styles=success'));
                 exit;
             }
         }

@@ -86,6 +86,9 @@
 
             subMenu.find('div.link-tab').removeClass('active');
             subMenu.find('div.link-tab[data-href="'+ tabHref +'"]').addClass('active');
+
+            // Save tab to cookie
+            document.cookie = 'advgbRightTab=' + tabHref;
         });
 
         // Collapsed the menu when clicking if it opened
@@ -96,6 +99,17 @@
 
             if ($(this).closest('li.tab').find('.ju-submenu-tabs').length > 0) {
                 $(this).toggleClass('expanded');
+            }
+
+            // Save tab to cookie
+            var tabHref = $(this).attr('href');
+            document.cookie = 'advgbLeftTab=' + tabHref;
+
+            var rightTabHref = $(tabHref).find('.ju-top-tabs').find('a.link-tab.active').attr('href');
+            if (rightTabHref !== undefined) {
+                setTimeout(function () {
+                    document.cookie = 'advgbRightTab=' + rightTabHref;
+                }, 500)
             }
         });
 
@@ -110,5 +124,34 @@
                 }
             }
         });
+
+        function setTabFromCookie() {
+            var lastLeftTab = getCookie('advgbLeftTab');
+            var lastRightTab = getCookie('advgbRightTab');
+
+            if (lastLeftTab !== '') {
+                var leftTab = $('.ju-menu-tabs a.link-tab[href="'+ lastLeftTab +'"]');
+                if (!leftTab.hasClass('active')) {
+                    leftTab.click();
+                }
+
+                if (lastRightTab !== '') {
+                    $('.ju-top-tabs a.link-tab[href="'+ lastRightTab +'"]').click();
+                }
+            }
+        }
+        setTabFromCookie();
+
+        // Get cookie
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)===' ') c = c.substring(1);
+                if (c.indexOf(name) === 0) return c.substring(name.length,c.length);
+            }
+            return "";
+        }
     })
 })(jQuery);
