@@ -13,6 +13,10 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    if ($('.ju-top-tabs a.link-tab.active').attr('href').indexOf('users') > -1) {
+        $('#update-list-btn').hide();
+    }
+
     // Click update blocks list button
     $('#update-list-btn').unbind('click').click(function () {
         var willUpdate = confirm('Make sure everthing is saved before updating. Continue?');
