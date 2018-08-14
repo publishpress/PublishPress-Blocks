@@ -144,10 +144,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "updateSummary",
             value: function updateSummary() {
                 var headingDatas = [];
+                var headingBlocks = [];
                 var allBlocks = select('core/editor').getBlocks();
-                var headingBlocks = allBlocks.filter(function (block) {
-                    return block.name === 'core/heading';
+                var filteredBlocks = allBlocks.filter(function (block) {
+                    return block.name === 'core/heading' || block.name === 'core/columns';
                 });
+                filteredBlocks.map(function (block) {
+                    if (block.name === 'core/columns') {
+                        SummaryBlock.getHeadingBlocksFromColumns(block, headingBlocks);
+                    } else {
+                        headingBlocks.push(block);
+                    }
+
+                    return block;
+                });
+
                 headingBlocks.map(function (heading) {
                     var thisHead = {};
                     thisHead['level'] = parseInt(heading.attributes.level);
@@ -156,12 +167,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     if (thisHead['level'] > 1) {
                         thisHead['level'] -= 1;
                         thisHead['content'] = heading.attributes.content.length ? getBlockContent(heading).replace(/<(?:.|\n)*?>/gm, '') : '';
-                        thisHead['uid'] = heading.uid;
+                        thisHead['clientId'] = heading.clientId;
                         if (heading.attributes.anchor) {
                             thisHead['anchor'] = heading.attributes.anchor;
                         } else {
                             // Generate a random anchor for headings without it
-                            thisHead['anchor'] = 'advgb-toc-' + heading.uid;
+                            thisHead['anchor'] = 'advgb-toc-' + heading.clientId;
                             heading.attributes.anchor = thisHead['anchor'];
                         }
 
@@ -225,7 +236,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     "a",
                                     { href: '#' + heading.anchor,
                                         onClick: function onClick() {
-                                            return selectBlock(heading.uid);
+                                            return selectBlock(heading.clientId);
                                         }
                                     },
                                     heading.content
@@ -294,6 +305,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ".advgb-toc li a {\n                        color: " + anchorColor + ";\n                    }"
                     )
                 );
+            }
+        }], [{
+            key: "getHeadingBlocksFromColumns",
+
+
+            /**
+             * Function to get heading blocks from columns blocks
+             *
+             * @param block     array Columns block to get data
+             * @param storeData array Data array to store heading blocks
+             *
+             * @returns array   array Heading blocks from block given
+             */
+            value: function getHeadingBlocksFromColumns(block, storeData) {
+                if (block.name === 'core/columns' || block.name === 'core/column') {
+                    block.innerBlocks.map(function (bl) {
+                        SummaryBlock.getHeadingBlocksFromColumns(bl, storeData);
+                        return bl;
+                    });
+                } else if (block.name === 'core/heading') {
+                    storeData.push(block);
+                }
+
+                return storeData;
             }
         }]);
 

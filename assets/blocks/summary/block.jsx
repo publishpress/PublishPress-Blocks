@@ -96,10 +96,44 @@
             this.updateSummary();
         };
 
+
+        /**
+         * Function to get heading blocks from columns blocks
+         *
+         * @param block     array Columns block to get data
+         * @param storeData array Data array to store heading blocks
+         *
+         * @returns array   array Heading blocks from block given
+         */
+        static getHeadingBlocksFromColumns( block, storeData )
+        {
+            if ( block.name === 'core/columns' || block.name === 'core/column' ) {
+                block.innerBlocks.map(function ( bl ) {
+                    SummaryBlock.getHeadingBlocksFromColumns( bl, storeData );
+                    return bl;
+                } )
+            } else if ( block.name === 'core/heading' ) {
+                storeData.push( block );
+            }
+
+            return storeData;
+        }
+
         updateSummary() {
             let headingDatas = [];
+            let headingBlocks = [];
             const allBlocks = select( 'core/editor' ).getBlocks();
-            const headingBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' ) );
+            const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'core/columns' ) );
+            filteredBlocks.map(function ( block ) {
+                if (block.name === 'core/columns') {
+                    SummaryBlock.getHeadingBlocksFromColumns( block, headingBlocks );
+                } else {
+                    headingBlocks.push( block );
+                }
+
+                return block;
+            });
+
             headingBlocks.map( ( heading ) => {
                 let thisHead = {};
                 thisHead[ 'level' ] = parseInt( heading.attributes.level );
@@ -110,12 +144,12 @@
                     thisHead[ 'content' ] = heading.attributes.content.length
                         ? getBlockContent( heading ).replace( /<(?:.|\n)*?>/gm, '' )
                         : '';
-                    thisHead[ 'uid' ] = heading.uid;
+                    thisHead[ 'clientId' ] = heading.clientId;
                     if (heading.attributes.anchor) {
                         thisHead[ 'anchor' ] = heading.attributes.anchor;
                     } else {
                         // Generate a random anchor for headings without it
-                        thisHead[ 'anchor' ] = 'advgb-toc-' + heading.uid;
+                        thisHead[ 'anchor' ] = 'advgb-toc-' + heading.clientId;
                         heading.attributes.anchor = thisHead[ 'anchor' ];
                     }
 
@@ -161,7 +195,7 @@
                                     key={heading.anchor}
                                 >
                                     <a href={'#' + heading.anchor}
-                                       onClick={() => selectBlock( heading.uid )}
+                                       onClick={() => selectBlock( heading.clientId )}
                                     >
                                         {heading.content}
                                     </a>
