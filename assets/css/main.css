@@ -55,3 +55,10 @@
     font-size: 22px;
     vertical-align: text-bottom;
 }
+
+.ju-button i {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    vertical-align: text-top;
+}

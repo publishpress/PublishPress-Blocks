@@ -91,7 +91,7 @@ if ($updating) {
                 <a class="ju-button orange-button waves-effect waves-dark"
                    href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profile&id=new')) ?>"
                 >
-                    <i class="dashicons dashicons-plus" style="vertical-align: bottom"></i>
+                    <i class="dashicons dashicons-plus"></i>
                     <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
                 </a>
 
@@ -100,7 +100,7 @@ if ($updating) {
                     <?php echo esc_attr($disabled) ?>
                         title="<?php esc_attr_e('Update the blocks list', 'advanced-gutenberg') ?>"
                 >
-                    <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>" style="vertical-align: bottom"></i>
+                    <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>"></i>
                     <span><?php echo esc_html($button_text) ?></span>
                 </button>
 
