@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
 
     // Click update blocks list button
     $('#update-list-btn').unbind('click').click(function () {
-        var willUpdate = confirm('Make sure everthing is saved before updating. Continue?');
+        var willUpdate = confirm('Make sure everything is saved before updating. Continue?');
         if (willUpdate) {
             $(this).find('i').addClass('rotating');
             $(this).find('span').text('Refreshing...');
