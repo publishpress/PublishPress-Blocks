@@ -19,20 +19,38 @@
 
             var searchResult = $('.ju-right-panel li.ju-settings-option label:contains("'+searchKey+'")').closest('li.ju-settings-option');
             var searchParent = searchResult.closest('.ju-content-wrapper');
-            var tabID = [];
+            var searchSub = searchResult.closest('.tab-content');
+            var tabID = [], subID = [];
 
-            searchResult.each(function () {
-                $(this).addClass('search-result');
-            });
+            searchResult.addClass('search-result');
 
             searchParent.each(function () {
                 tabID.push($(this).attr('id'));
             });
 
-            $('.ju-menu-tabs .tab a').each(function () {
-                var href = $(this).attr('href').replace(/#/g, '');
-                if (tabID.indexOf(href) < 0) {
+            searchSub.each(function () {
+                subID.push($(this).attr('id'));
+            });
+
+            $('.ju-menu-tabs .tab .link-tab').each(function () {
+                var href = $(this).attr('href');
+                var text = $(this).text().trim().toLowerCase();
+                var dataHref = $(this).data('href');
+
+                if (href !== undefined) {
+                    href = href.replace(/#/g, '');
+                }
+
+                if (dataHref !== undefined) {
+                    dataHref = dataHref.replace(/#/, '');
+                }
+
+                if (tabID.indexOf(href) < 0 && text.indexOf(searchKey) < 0 && subID.indexOf(dataHref) < 0) {
                     $(this).closest('li.tab').hide();
+                } else {
+                    if ($(this).closest('.ju-submenu-tabs').length > 0) {
+                        $(this).closest('.ju-submenu-tabs').closest('li.tab').show();
+                    }
                 }
             });
         });
