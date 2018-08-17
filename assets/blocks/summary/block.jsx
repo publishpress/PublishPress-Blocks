@@ -7,8 +7,9 @@
     const { select, dispatch } = wpData;
     const { addFilter } = wpHooks;
 
+    const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     const summaryBlockIcon = (
-        <svg fill="#000000" height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
+        <svg fill={ blockColor } height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
             <path d="M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
@@ -74,14 +75,65 @@
             this.updateSummary = this.updateSummary.bind( this );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-summary'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         componentDidMount() {
             this.updateSummary();
         };
 
+
+        /**
+         * Function to get heading blocks from columns blocks
+         *
+         * @param block     array Columns block to get data
+         * @param storeData array Data array to store heading blocks
+         *
+         * @returns array   array Heading blocks from block given
+         */
+        static getHeadingBlocksFromColumns( block, storeData )
+        {
+            if ( block.name === 'core/columns' || block.name === 'core/column' ) {
+                block.innerBlocks.map(function ( bl ) {
+                    SummaryBlock.getHeadingBlocksFromColumns( bl, storeData );
+                    return bl;
+                } )
+            } else if ( block.name === 'core/heading' ) {
+                storeData.push( block );
+            }
+
+            return storeData;
+        }
+
         updateSummary() {
             let headingDatas = [];
+            let headingBlocks = [];
             const allBlocks = select( 'core/editor' ).getBlocks();
-            const headingBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' ) );
+            const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'core/columns' ) );
+            filteredBlocks.map(function ( block ) {
+                if (block.name === 'core/columns') {
+                    SummaryBlock.getHeadingBlocksFromColumns( block, headingBlocks );
+                } else {
+                    headingBlocks.push( block );
+                }
+
+                return block;
+            });
+
             headingBlocks.map( ( heading ) => {
                 let thisHead = {};
                 thisHead[ 'level' ] = parseInt( heading.attributes.level );
@@ -92,12 +144,12 @@
                     thisHead[ 'content' ] = heading.attributes.content.length
                         ? getBlockContent( heading ).replace( /<(?:.|\n)*?>/gm, '' )
                         : '';
-                    thisHead[ 'uid' ] = heading.uid;
+                    thisHead[ 'clientId' ] = heading.clientId;
                     if (heading.attributes.anchor) {
                         thisHead[ 'anchor' ] = heading.attributes.anchor;
                     } else {
                         // Generate a random anchor for headings without it
-                        thisHead[ 'anchor' ] = 'advgb-toc-' + heading.uid;
+                        thisHead[ 'anchor' ] = 'advgb-toc-' + heading.clientId;
                         heading.attributes.anchor = thisHead[ 'anchor' ];
                     }
 
@@ -143,7 +195,7 @@
                                     key={heading.anchor}
                                 >
                                     <a href={'#' + heading.anchor}
-                                       onClick={() => selectBlock( heading.uid )}
+                                       onClick={() => selectBlock( heading.clientId )}
                                     >
                                         {heading.content}
                                     </a>
@@ -231,7 +283,11 @@
             },
             headerTitle: {
                 type: 'string',
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         supports: {
             multiple: false,

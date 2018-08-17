@@ -2,6 +2,8 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -90,6 +92,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvAccordion, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-accordion'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
             key: "componentDidMount",
             value: function componentDidMount() {
                 this.initAccordion();
@@ -100,6 +123,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (prevProps.attributes.items.length < this.props.attributes.items.length) {
                     this.initAccordion(true);
                 }
+
+                if (this.props.attributes.items.length === 0) {
+                    this.props.setAttributes({
+                        items: [{
+                            header: 'Header 1',
+                            body: 'At least one accordion must remaining, to remove block use "Remove Block" button from right menu.'
+                        }]
+                    });
+                }
             }
         }, {
             key: "initAccordion",
@@ -108,15 +140,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 if (typeof jQuery !== "undefined") {
                     if (!refresh) {
-                        jQuery("#block-" + this.props.id + " .advgb-accordion-block").accordion({
+                        jQuery("#block-" + this.props.clientId + " .advgb-accordion-block").accordion({
                             header: ".advgb-accordion-header",
                             heightStyle: "content"
                         });
                     } else {
-                        jQuery("#block-" + this.props.id + " .advgb-accordion-block").accordion('refresh');
+                        jQuery("#block-" + this.props.clientId + " .advgb-accordion-block").accordion('refresh');
                     }
 
-                    jQuery("#block-" + this.props.id + " .advgb-accordion-block h4").on('keydown', function (e) {
+                    jQuery("#block-" + this.props.clientId + " .advgb-accordion-block h4").on('keydown', function (e) {
                         e.stopPropagation();
                     });
                 }
@@ -126,9 +158,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function updateAccordion(value, index) {
                 var _this2 = this;
 
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var items = attributes.items;
 
 
@@ -153,10 +185,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this3 = this;
 
-                var _props2 = this.props,
-                    isSelected = _props2.isSelected,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    isSelected = _props3.isSelected,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var items = attributes.items,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
@@ -406,9 +438,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvAccordion;
     }(Component);
 
+    var blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     var accordionBlockIcon = React.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22", fill: blockColor },
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
         React.createElement("rect", { x: "3", y: "17", width: "18", height: "2" }),
         React.createElement("path", { d: "M19,12v1H5v-1H19 M21,10H3v5h18V10L21,10z" }),
@@ -471,6 +504,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             borderRadius: {
                 type: 'number',
                 default: 2
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvAccordion,

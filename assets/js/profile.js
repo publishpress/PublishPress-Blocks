@@ -1,18 +1,72 @@
 jQuery(document).ready(function ($) {
-    // Click save settings button
-    $('#save-advgb-profile').unbind('click').click(function (e) {
-        e.preventDefault();
-        $('#publish').click();
+    // Switch top tab we will change title text and hide unneeded buttons
+    $('#profiles-container .ju-top-tabs .tab a').unbind('click').click(function () {
+        var currentText = $(this).text().trim();
+        var currentHref = $(this).attr('href');
+
+        $('.profile-header .header-title').text(currentText);
+
+        if (currentHref.indexOf('users') > -1) {
+            $('#update-list-btn').hide();
+        } else {
+            $('#update-list-btn').show();
+        }
     });
+
+    if ($('.ju-top-tabs a.link-tab.active').attr('href').indexOf('users') > -1) {
+        $('#update-list-btn').hide();
+    }
 
     // Click update blocks list button
     $('#update-list-btn').unbind('click').click(function () {
-        var willUpdate = confirm('Make sure everthing is saved before updating. Continue?');
+        var willUpdate = confirm('Make sure everything is saved before updating. Continue?');
         if (willUpdate) {
             $(this).find('i').addClass('rotating');
-            $(this).find('span').text('Updating...');
+            $(this).find('span').text('Refreshing...');
             window.location.href += '&update_blocks_list=true';
         }
+    });
+
+    // Toggle blocks list in category when click category title
+    $('.category-block .category-name').unbind('click').click(function () {
+        var categoryWrapper = $(this).closest('.category-block');
+
+        if (categoryWrapper.hasClass('collapsed')) {
+            categoryWrapper.removeClass('collapsed');
+        } else {
+            categoryWrapper.addClass('collapsed');
+        }
+    });
+
+    if (typeof advgb !== undefined) {
+        if (advgb.onProfileView) {
+            $('.ju-menu-tabs a.link-tab[href="#profiles"]').click(function () {
+                if ($(this).hasClass('active') && $(this).hasClass('expanded')) {
+                    window.location = advgb.toProfilesList;
+                    return false;
+                }
+            });
+        }
+    }
+
+    $('.users-search-toggle').unbind('click').click(function () {
+        $(this).closest('.users-search').find('#user-search-input').animate({width: 'toggle'});
+    });
+
+    // Search blocks function
+    $('.blocks-search-input').on('input', function () {
+        var searchKey = $(this).val().trim().toLowerCase();
+
+        $('.block-item .block-title').each(function () {
+            var blockTitle = $(this).text().toLowerCase().trim(),
+                blockItem = $(this).closest('.block-item');
+
+            if (blockTitle.indexOf(searchKey) > -1) {
+                blockItem.show();
+            } else {
+                blockItem.hide();
+            }
+        })
     });
 
     // Ajax for displaying users list
@@ -82,11 +136,6 @@ jQuery(document).ready(function ($) {
                 switchPage();
             }
         })
-    });
-
-    // Check all buttons
-    $('#advgb-users-checkall').click(function () {
-        $('#advgb-users-body').find(':checkbox').attr('checked', this.checked);
     });
 
     // Switch page

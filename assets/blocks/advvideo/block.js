@@ -1,5 +1,7 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,7 +28,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Button = wpComponents.Button,
         IconButton = wpComponents.IconButton,
         Dashicon = wpComponents.Dashicon,
-        Spinner = wpComponents.Spinner;
+        Spinner = wpComponents.Spinner,
+        Toolbar = wpComponents.Toolbar;
 
 
     var PLAY_BUTTON_STYLE = {
@@ -55,13 +58,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvVideo, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-video'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
             key: "fetchVideoInfo",
             value: function fetchVideoInfo() {
                 var _this2 = this;
 
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var videoID = attributes.videoID,
                     poster = attributes.poster;
 
@@ -91,7 +115,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     if (realID.indexOf('&') > -1) realID = realID.substring(0, realID.indexOf('&'));
 
-                    wp.apiRequest({ path: "/oembed/1.0/proxy?url=" + JSON.stringify(url) }).then(function (obj) {
+                    wp.apiRequest({ path: "/oembed/1.0/proxy&url=" + encodeURIComponent(url) }).then(function (obj) {
                         _this2.setState({ fetching: false });
                         if (!!obj.title && !!obj.provider_name) {
                             setAttributes({
@@ -127,10 +151,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _props2 = this.props,
-                    isSelected = _props2.isSelected,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    isSelected = _props3.isSelected,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var videoURL = attributes.videoURL,
                     videoID = attributes.videoID,
                     videoSourceType = attributes.videoSourceType,
@@ -187,30 +211,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     (!!poster && openInLightbox || !openInLightbox && videoSourceType === 'local') && React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(MediaUpload, {
-                            type: 'image',
-                            value: posterID,
-                            onSelect: function onSelect(image) {
-                                return setAttributes({ poster: image.url, posterID: image.id });
-                            },
-                            render: function render(_ref) {
-                                var open = _ref.open;
-                                return React.createElement(IconButton, {
-                                    className: "components-toolbar__control",
-                                    label: __('Change image preview'),
-                                    icon: 'edit',
-                                    onClick: open
-                                });
-                            }
-                        }),
-                        React.createElement(IconButton, {
-                            className: "components-toolbar__control",
-                            label: __('Remove image preview'),
-                            icon: 'no',
-                            onClick: function onClick() {
-                                return setAttributes({ poster: undefined, posterID: undefined });
-                            }
-                        })
+                        React.createElement(
+                            Toolbar,
+                            null,
+                            React.createElement(MediaUpload, {
+                                type: 'image',
+                                value: posterID,
+                                onSelect: function onSelect(image) {
+                                    return setAttributes({ poster: image.url, posterID: image.id });
+                                },
+                                render: function render(_ref) {
+                                    var open = _ref.open;
+                                    return React.createElement(IconButton, {
+                                        className: "components-toolbar__control",
+                                        label: __('Change image preview'),
+                                        icon: 'edit',
+                                        onClick: open
+                                    });
+                                }
+                            }),
+                            React.createElement(IconButton, {
+                                className: "components-toolbar__control",
+                                label: __('Remove image preview'),
+                                icon: 'no',
+                                onClick: function onClick() {
+                                    return setAttributes({ poster: undefined, posterID: undefined });
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         InspectorControls,
@@ -460,9 +488,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvVideo;
     }(Component);
 
+    var blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     var advVideoBlockIcon = React.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22", fill: blockColor },
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
         React.createElement("path", { d: "M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" })
     );
@@ -522,6 +551,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             openInLightbox: {
                 type: 'boolean',
                 default: true
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvVideo,

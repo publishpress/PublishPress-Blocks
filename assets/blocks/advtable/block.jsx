@@ -5,8 +5,9 @@
     const { InspectorControls, BlockControls, RichText, MediaUpload, BlockAlignmentToolbar, ColorPalette } = wpEditor;
     const { PanelBody, PanelColor, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu, Tooltip } = wpComponents;
 
+    const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     const tableBlockIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22" fill={ blockColor }>
             <path d="M3 3v18h18V3H3zm8 16H5v-6h6v6zm0-8H5V5h6v6zm8 8h-6v-6h6v6zm0-8h-6V5h6v6z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
@@ -32,6 +33,23 @@
             };
 
             this.handleSetup = this.handleSetup.bind( this );
+        }
+
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-table'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
         }
 
         static isTableSelected( editor ) {
@@ -575,7 +593,11 @@
             maxWidth: {
                 type: 'number',
                 default: 0
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         edit: AdvTable,
         save: function ( { attributes } ) {

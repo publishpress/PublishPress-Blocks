@@ -28,7 +28,7 @@
     addFilter( 'editor.BlockEdit', 'advgb/editColumnsAttrs', function ( BlockEdit ) {
         return ( props ) => {
             if (props.name === "core/text-columns" || props.name === "core/columns") {
-                const { isSelected, attributes, setAttributes, id } = props;
+                const { isSelected, attributes, setAttributes, clientId } = props;
                 const { colMargin, colPadding, blockID } = attributes;
 
                 return ( [
@@ -41,7 +41,7 @@
                             min={ 0 }
                             max={ 200 }
                             onChange={ (value) => {
-                                if (!blockID) setAttributes( { blockID: 'columns-' + id } );
+                                if (!blockID) setAttributes( { blockID: 'columns-' + clientId } );
                                 return setAttributes( { colMargin: value } );
                             } }
                         />
@@ -51,20 +51,20 @@
                             min={ 0 }
                             max={ 100 }
                             onChange={ (value) => {
-                                if (!blockID) setAttributes( { blockID: 'columns-' + id } );
+                                if (!blockID) setAttributes( { blockID: 'columns-' + clientId } );
                                 return setAttributes( { colPadding: value } );
                             } }
                         />
                     </InspectorControls>,
                     props.name === 'core/columns' && (!!colMargin || !!colPadding) &&
                     <style key="custom-columns-styles">
-                        {`#block-${id} .wp-block-columns .editor-block-list__block:not(:first-child) {margin-left: ${colMargin}px;}`}
-                        {`#block-${id} .wp-block-columns .editor-block-list__block-edit {padding: ${colPadding}px;}`}
+                        {`#block-${clientId} .wp-block-columns .editor-block-list__block:not(:first-child) {margin-left: ${colMargin}px;}`}
+                        {`#block-${clientId} .wp-block-columns .editor-block-list__block-edit {padding: ${colPadding}px;}`}
                     </style>,
                     props.name === 'core/text-columns' && (!!colMargin || !!colPadding) &&
                     <style key="custom-text-columns-styles">
-                        {`#block-${id} .wp-block-column:not(:first-child) {margin-left: ${colMargin}px;}`}
-                        {`#block-${id} .wp-block-column {padding: ${colPadding}px;}`}
+                        {`#block-${clientId} .wp-block-column:not(:first-child) {margin-left: ${colMargin}px;}`}
+                        {`#block-${clientId} .wp-block-column {padding: ${colPadding}px;}`}
                     </style>
                 ] )
             }

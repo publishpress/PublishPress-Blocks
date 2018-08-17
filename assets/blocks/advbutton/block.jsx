@@ -3,18 +3,35 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl, IconButton } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
 
     class AdvButton extends Component {
         constructor() {
             super( ...arguments );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-button'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         componentDidMount() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
 
             if ( !attributes.id ) {
-                setAttributes( { id: 'advgbbtn-' + id } );
+                setAttributes( { id: 'advgbbtn-' + clientId } );
             }
         }
 
@@ -35,7 +52,7 @@
                 setAttributes,
                 isSelected,
                 className,
-                id: blockID,
+                clientId: blockID,
             } = this.props;
             const {
                 id,
@@ -69,27 +86,27 @@
                 <Fragment>
                     <BlockControls>
                         <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
-                        <div className="components-toolbar">
+                        <Toolbar>
                             <IconButton
                                 label={ __( 'Refresh this button when it conflict with other buttons styles' ) }
                                 icon="update"
                                 className="components-toolbar__control"
                                 onClick={ () => setAttributes( { id: 'advgbbutton-' + blockID } ) }
                             />
-                        </div>
+                        </Toolbar>
                     </BlockControls>
                     <span style={ { display: 'inline-block' } } >
-                    <RichText
-                        tagName="span"
-                        placeholder={ __( 'Add text…' ) }
-                        value={ text }
-                        onChange={ ( value ) => setAttributes( { text: value } ) }
-                        formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-                        isSelected={ isSelected }
-                        className={ `wp-block-advgb-button_link ${id}` }
-                        keepPlaceholderOnFocus
-                    />
-                </span>
+                        <RichText
+                            tagName="span"
+                            placeholder={ __( 'Add text…' ) }
+                            value={ text }
+                            onChange={ ( value ) => setAttributes( { text: value } ) }
+                            formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+                            isSelected={ isSelected }
+                            className={ `wp-block-advgb-button_link ${id}` }
+                            keepPlaceholderOnFocus
+                        />
+                    </span>
                     <style>
                         {`.${id} {
                         font-size: ${textSize}px;
@@ -284,8 +301,9 @@
         }
     }
 
+    const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     const buttonBlockIcon = (
-        <svg fill="#000000" height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
+        <svg fill={ blockColor } height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0h24v24H0V0z" fill="none"/>
             <path d="M5 14.5h14v-6H5v6zM11 .55V3.5h2V.55h-2zm8.04 2.5l-1.79 1.79 1.41 1.41 1.8-1.79-1.42-1.41zM13 22.45V19.5h-2v2.95h2zm7.45-3.91l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM3.55 4.46l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zm1.41 15.49l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42z"/>
         </svg>
@@ -395,7 +413,11 @@
             align: {
                 type: 'string',
                 default: 'none',
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         transforms: {
             from: [

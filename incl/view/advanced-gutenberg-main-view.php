@@ -1,0 +1,70 @@
+<?php
+defined('ABSPATH') || die;
+
+$tabs_data = array(
+    array(
+        'id' => 'profiles',
+        'title' => __('Profiles', 'advanced-gutenberg'),
+        'icon' => 'account-circle',
+    ),
+    array(
+        'id' => 'settings',
+        'title' => __('Configuration', 'advanced-gutenberg'),
+        'icon' => 'settings',
+    ),
+    array(
+        'id' => 'custom-styles',
+        'title' => __('Custom Styles', 'advanced-gutenberg'),
+        'icon' => 'code',
+    ),
+    array(
+        'id' => 'translation',
+        'title' => __('Translation', 'advanced-gutenberg'),
+        'icon' => 'text-format',
+    ),
+);
+?>
+
+<div class="ju-main-wrapper">
+    <div class="ju-left-panel">
+        <div class="ju-logo">
+            <a href="https://www.joomunited.com/" target="_blank">
+                <img src="<?php echo esc_url(plugins_url('assets/images/logo-joomUnited-white.png', dirname(dirname(__FILE__)))) ?>"
+                     alt="<?php esc_html_e('JoomUnited logo', 'advanced-gutenberg') ?>">
+            </a>
+        </div>
+        <div class="ju-menu-search">
+            <i class="mi mi-search ju-menu-search-icon"></i>
+            <input type="text" class="ju-menu-search-input"
+                   placeholder="<?php esc_html_e('Search settings', 'advanced-gutenberg') ?>"
+            >
+        </div>
+        <ul class="tabs ju-menu-tabs">
+            <?php foreach ($tabs_data as $tab) : ?>
+                <li class="tab" data-tab-title="<?php echo esc_attr($tab['title']) ?>">
+                    <a href="#<?php echo esc_attr($tab['id']) ?>"
+                       class="link-tab white-text waves-effect waves-light"
+                    >
+                        <i class="mi mi-<?php echo esc_attr($tab['icon']) ?> menu-tab-icon"></i>
+                        <span class="tab-title"><?php echo esc_html($tab['title']) ?></span>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <div class="ju-right-panel">
+        <?php foreach ($tabs_data as $tab) : ?>
+            <?php if ($tab['id'] === 'translation') continue; // phpcs:ignore Generic.ControlStructures.InlineControlStructure.NotAllowed -- inline is ok ?>
+            <div class="ju-content-wrapper" id="<?php echo esc_attr($tab['id']) ?>" style="display: none">
+                <?php $this->loadView($tab['id']) ?>
+            </div>
+        <?php endforeach; ?>
+
+        <div class="ju-content-wrapper" id="translation" style="display: none">
+            <div class="advgb-header" style="padding-top: 40px">
+                <h1 class="header-title"><?php esc_html_e('Translation', 'advanced-gutenberg') ?></h1>
+            </div>
+            <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped ?>
+        </div>
+    </div>
+</div>

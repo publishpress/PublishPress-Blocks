@@ -12,6 +12,7 @@ jQuery(document).ready(function ($) {
         $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
     }
 
+    // Show/hide blocks spacing option
     $('#enable_blocks_spacing').on('change', function () {
         if (this.checked) {
             $('#blocks_spacing_wrapper').removeClass('hidden-item');
@@ -24,13 +25,14 @@ jQuery(document).ready(function ($) {
         $('#blocks_spacing_wrapper').removeClass('hidden-item');
     }
 
-    $('#advgb-config-close').click(function () {
-        $('#advgb-config-success').slideUp();
+    $('#settings .ju-top-tabs .tab a').click(function () {
+        var currentText = $(this).text().trim();
+        $('#settings .advgb-settings-header').text(currentText);
     });
 
     $('.advgb_qtip').qtip({
         content: {
-            attr: 'alt'
+            attr: 'data-qtip'
         },
         position: {
             my: 'top left',
@@ -79,7 +81,7 @@ jQuery(document).ready(function ($) {
                     },
                     success: function (res, stt) {
                         if (stt === 'success') {
-                            $(that).parent().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="advgbicon-quill"></i> <span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><i class="advgbicon-copy"></i></a><a class="trash"><i class="advgbicon-trash"></i></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('+ res.name +')</li></ul></li>');
+                            $(that).parent().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="title-icon"></i> <span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><i class="mi mi-content-copy"></i></a><a class="trash"><i class="mi mi-delete"></i></a><a class="edit"><i class="mi mi-edit"></i></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('+ res.name +')</li></ul></li>');
                             initCustomStyleMenu();
                         } else {
                             alert(stt);
@@ -152,7 +154,7 @@ jQuery(document).ready(function ($) {
                     },
                     success: function (res, stt) {
                         if (stt === 'success') {
-                            $(that).parents('.advgb-customstyles-list').find('li').last().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="advgbicon-quill"></i> <span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><i class="advgbicon-copy"></i></a><a class="trash"><i class="advgbicon-trash"></i></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('+ res.name +')</li></ul></li>');
+                            $(that).parents('.advgb-customstyles-list').find('li').last().before('<li class="advgb-customstyles-items" data-id-customstyle="' + res.id + '"><a><i class="title-icon" style="background-color: '+res.identifyColor+'"></i> <span class="advgb-customstyles-items-title">' + res.title + '</span></a><a class="copy"><i class="mi mi-content-copy"></i></a><a class="trash"><i class="mi mi-delete"></i></a><a class="edit"><i class="mi mi-edit"></i></a><ul style="margin-left: 30px"><li class="advgb-customstyles-items-class">('+ res.name +')</li></ul></li>');
                             initCustomStyleMenu();
                         } else {
                             alert(stt);
@@ -163,6 +165,111 @@ jQuery(document).ready(function ($) {
                     }
                 });
                 return false;
+            })
+        })();
+
+        (initCustomStyleEdit = function () {
+            $('#mybootstrap .advgb-customstyles-items a.edit').unbind('click').click(function (e) {
+                e.stopPropagation();
+                $this = this;
+                link = $(this).parent().find('a span.advgb-customstyles-items-title');
+                oldTitle = link.text().trim();
+                $(link).attr('contentEditable', true);
+                $(link).addClass('editable');
+                $(link).selectText();
+
+                $('#mybootstrap a span.editable').bind('click.mm', hstop);  // Click on the editable objects
+                $(link).bind('keypress.mm', hpress);                        // Press enter to validate name
+                $('*').not($(link)).bind('click.mm', houtside);             // Click outside the editable objects
+                $(link).keyup(function (e) {
+                    // Press ESC key will cancel renaming action
+                    if (e.which === 27) {
+                        e.preventDefault();
+                        unbindall();
+                        $(link).text(oldTitle);
+                        $(link).removeAttr('contentEditable');
+                        $(link).removeClass('editable');
+                    }
+                });
+
+                function unbindall() {
+                    $('#mybootstrap a span.editable').unbind('click.mm', hstop);       // Click on the editable objects
+                    $(link).unbind('keypress.mm', hpress);                    // Press enter to validate name
+                    $('*').not($(link)).unbind('click.mm', houtside);         // Click outside the editable objects
+                }
+
+                // Click on the editable objects
+                function hstop(e) {
+                    e.stopPropagation();
+                    return false;
+                }
+
+                // Press enter to validate name
+                function hpress(e) {
+                    if (e.which === 13) {
+                        e.preventDefault();
+                        unbindall();
+                        updateName($(link).text());
+                        $(link).removeAttr('contentEditable');
+                        $(link).removeClass('editable');
+                    }
+                }
+
+                // Click outside the editable objects
+                function houtside(e) {
+                    unbindall();
+                    updateName($(link).text());
+                    $(link).removeAttr('contentEditable');
+                    $(link).removeClass('editable');
+                }
+
+                function updateName(title) {
+                    var nonce_val = $('#advgb_settings_nonce_field').val();
+                    var id = $(link).parents('li').data('id-customstyle');
+                    title = title.trim();
+                    if (title !== '') {
+                        $.ajax({
+                            url: ajaxurl,
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                action: 'advgb_custom_styles_ajax',
+                                nonce: nonce_val,
+                                id: id,
+                                task: 'edit',
+                                title: title
+                            },
+                            success: function (res, stt) {
+                                if (stt === 'success') {
+                                    $(link).text(res.title);
+
+                                    if (typeof autosaveNotification !== "undefined") {
+                                        clearTimeout(autosaveNotification);
+                                    }
+
+                                    autosaveNotification = setTimeout(function() {
+                                        $('#savedInfo').fadeIn(200).delay(2000).fadeOut(1000);
+                                    }, 500);
+                                } else {
+                                    $(link).text(oldTitle);
+                                    alert(stt);
+                                }
+                            },
+                            error: function(jqxhr, textStatus, error) {
+                                $(link).text(oldTitle);
+                                alert(textStatus + " : " + error);
+                            }
+                        })
+                    } else {
+                        $(link).text(oldTitle);
+                        return false;
+                    }
+
+                    $(link).parent().css('white-space', 'normal');
+                    setTimeout(function() {
+                        $(link).parent().css('white-space', '');
+                    }, 200);
+                }
             })
         })();
 
@@ -216,7 +323,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Fix Codemirror not displayed properly
-    $('#custom-styles-tab').one('click', function () {
+    $('a[href="#custom-styles"]').one('click', function () {
         myEditor.refresh();
         customStylePreview();
     });
@@ -331,7 +438,6 @@ jQuery(document).ready(function ($) {
 
     // Save custome style
     function saveCustomStyleChanges() {
-        var myTitle =  $('#advgb-customstyles-title').val().trim();
         var myClassname =  $('#advgb-customstyles-classname').val().trim();
         var myIdentifyColor =  $('#advgb-customstyles-identify-color').val().trim();
         var nonce_val = $('#advgb_settings_nonce_field').val();
@@ -342,7 +448,6 @@ jQuery(document).ready(function ($) {
             data: {
                 action: 'advgb_custom_styles_ajax',
                 id: myStyleId,
-                title: myTitle,
                 name: myClassname,
                 mycss: myCustomCss,
                 mycolor: myIdentifyColor,
@@ -353,7 +458,6 @@ jQuery(document).ready(function ($) {
                 if (stt === 'success') {
                     // Update list items
                     thisStyle = $('.advgb-customstyles-list').find('li[data-id-customstyle='+myStyleId+']');
-                    thisStyle.find('.advgb-customstyles-items-title').text(myTitle);
                     thisStyle.find('.advgb-customstyles-items-class').text('('+myClassname+')');
 
                     autosaveNotification = setTimeout(function() {
@@ -368,4 +472,29 @@ jQuery(document).ready(function ($) {
             }
         })
     }
+
+    // Search block in blocks config tab
+    $('.blocks-config-search').on('input', function () {
+        var searchKey = $(this).val().trim().toLowerCase();
+
+        $('.blocks-config-list .block-config-item .block-title').each(function () {
+            var blockTitle = $(this).text().trim().toLowerCase();
+
+            if (blockTitle.indexOf(searchKey) > -1) {
+                $(this).closest('.block-config-item').show();
+            } else {
+                $(this).closest('.block-config-item').hide();
+            }
+        })
+    });
+
+    // Open the block config modal
+    $('.blocks-config-list .block-config-item .block-config-button').unbind('click').click(function () {
+        var blockName = $(this).data('block');
+        blockName = blockName.replace('/', '-');
+        var blockLabel = $(this).closest('.block-config-item').find('.block-title').text().trim();
+        window.blockLabel = blockLabel;
+
+        tb_show('Edit block ' + blockLabel + ' default config', 'admin.php?page=' + blockName + '&noheader=1&width=550&height=600&TB_iframe=1');
+    })
 });

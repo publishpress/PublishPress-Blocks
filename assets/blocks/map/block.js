@@ -1,5 +1,7 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,9 +27,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Spinner = wpComponents.Spinner;
 
 
+    var blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
+
     var mapBlockIcon = React.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22", fill: blockColor },
         React.createElement("path", { d: "M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z" }),
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
@@ -56,16 +60,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvMap, [{
-            key: "componentDidMount",
-            value: function componentDidMount() {
+            key: "componentWillMount",
+            value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    id = _props.id;
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-map'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
 
 
                 if (!attributes.mapID) {
-                    setAttributes({ mapID: 'advgbmap-' + id });
+                    setAttributes({ mapID: 'advgbmap-' + clientId });
                 }
 
                 this.initMap();
@@ -177,9 +202,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function fetchLocation() {
                 if (typeof google === "undefined") return null;
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var address = attributes.address;
 
                 var geoCoder = new google.maps.Geocoder();
@@ -215,9 +240,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "render",
             value: function render() {
                 var fetching = this.state.fetching;
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var mapID = attributes.mapID,
                     useLatLng = attributes.useLatLng,
                     address = attributes.address,
@@ -406,7 +431,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "a",
                             { target: "_blank",
                                 className: "button button-large",
-                                href: wpApiSettings.schema.home + '/wp-admin/options-general.php?page=advgb_settings'
+                                href: wpApiSettings.schema.home + '/wp-admin/admin.php?page=advgb_main'
                             },
                             __('Add Google API Key')
                         )
@@ -468,6 +493,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             markerDesc: {
                 type: 'string',
                 default: ''
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvMap,

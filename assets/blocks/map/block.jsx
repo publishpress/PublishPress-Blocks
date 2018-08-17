@@ -5,8 +5,10 @@
     const { InspectorControls, MediaUpload } = wpEditor;
     const { PanelBody, TextControl, TextareaControl, RangeControl, BaseControl, Button, Placeholder, Spinner } = wpComponents;
 
+    const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
+
     const mapBlockIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22" fill={ blockColor }>
             <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
@@ -29,11 +31,28 @@
             this.fetchLocation = this.fetchLocation.bind(this);
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-map'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         componentDidMount() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
 
             if (!attributes.mapID) {
-                setAttributes( { mapID: 'advgbmap-' + id } );
+                setAttributes( { mapID: 'advgbmap-' + clientId } );
             }
 
             this.initMap();
@@ -319,7 +338,7 @@
                         >
                             <a target="_blank"
                                className="button button-large"
-                               href={wpApiSettings.schema.home + '/wp-admin/options-general.php?page=advgb_settings'}
+                               href={wpApiSettings.schema.home + '/wp-admin/admin.php?page=advgb_main'}
                             >
                                 { __( 'Add Google API Key' ) }
                             </a>
@@ -380,6 +399,10 @@
             markerDesc: {
                 type: 'string',
                 default: '',
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
             },
         },
         edit: AdvMap,

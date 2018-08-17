@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, ColorPalette, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, ToggleControl, BaseControl, TextControl, Button, IconButton, Dashicon, Spinner } = wpComponents;
+    const { RangeControl, PanelBody, PanelColor, ToggleControl, BaseControl, TextControl, Button, IconButton, Dashicon, Spinner, Toolbar } = wpComponents;
 
     const PLAY_BUTTON_STYLE = {
         normal: [
@@ -42,6 +42,23 @@
             this.fetchVideoInfo = this.fetchVideoInfo.bind( this );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-video'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         fetchVideoInfo() {
             const { attributes, setAttributes } = this.props;
             const { videoID, poster } = attributes;
@@ -72,7 +89,7 @@
                 if (realID.indexOf( '&' ) > -1)
                     realID = realID.substring( 0, realID.indexOf( '&' ) );
 
-                wp.apiRequest( { path: `/oembed/1.0/proxy?url=${ JSON.stringify( url ) }` } ).then(
+                wp.apiRequest( { path: `/oembed/1.0/proxy&url=${ encodeURIComponent( url ) }` } ).then(
                     (obj) => {
                         this.setState( { fetching: false } );
                         if (!!obj.title && !!obj.provider_name) {
@@ -163,25 +180,27 @@
                 <Fragment>
                     { ( (!!poster && openInLightbox) || ( !openInLightbox && videoSourceType === 'local' ) ) &&
                     <BlockControls>
-                        <MediaUpload
-                            type={ 'image' }
-                            value={ posterID }
-                            onSelect={ (image) => setAttributes( { poster: image.url, posterID: image.id } ) }
-                            render={ ( { open } ) => (
-                                <IconButton
-                                    className="components-toolbar__control"
-                                    label={ __( 'Change image preview' ) }
-                                    icon={ 'edit' }
-                                    onClick={ open }
-                                />
-                            ) }
-                        />
-                        <IconButton
-                            className="components-toolbar__control"
-                            label={ __( 'Remove image preview' ) }
-                            icon={ 'no' }
-                            onClick={ () => setAttributes( { poster: undefined, posterID: undefined } ) }
-                        />
+                        <Toolbar>
+                            <MediaUpload
+                                type={ 'image' }
+                                value={ posterID }
+                                onSelect={ (image) => setAttributes( { poster: image.url, posterID: image.id } ) }
+                                render={ ( { open } ) => (
+                                    <IconButton
+                                        className="components-toolbar__control"
+                                        label={ __( 'Change image preview' ) }
+                                        icon={ 'edit' }
+                                        onClick={ open }
+                                    />
+                                ) }
+                            />
+                            <IconButton
+                                className="components-toolbar__control"
+                                label={ __( 'Remove image preview' ) }
+                                icon={ 'no' }
+                                onClick={ () => setAttributes( { poster: undefined, posterID: undefined } ) }
+                            />
+                        </Toolbar>
                     </BlockControls>
                     }
                     <InspectorControls>
@@ -371,8 +390,9 @@
         }
     }
 
+    const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     const advVideoBlockIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22" fill={ blockColor }>
             <path d="M0 0h24v24H0z" fill="none"/>
             <path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
         </svg>
@@ -433,7 +453,11 @@
             openInLightbox: {
                 type: 'boolean',
                 default: true,
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         edit: AdvVideo,
         save: function ( { attributes } ) {
