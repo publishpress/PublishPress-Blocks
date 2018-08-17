@@ -126,7 +126,7 @@ class Jutranslation
     /**
      * Return the main html content for jutranslation
      *
-     * @return void
+     * @return mixed
      */
     public static function getInput()
     {
