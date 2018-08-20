@@ -11,7 +11,7 @@ wp_localize_script('profile_js', 'advgb', array(
 $all_blocks_list     = get_option('advgb_blocks_list');
 $all_categories_list = get_option('advgb_categories_list');
 
-$postid              = $_GET['id']; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- view only
+$postid              = $_GET['id']; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- view only
 $post_title          = get_the_title($postid);
 $active_blocks_saved = get_post_meta($postid, 'active_blocks', true);
 $active_blocks_saved = $active_blocks_saved ? $active_blocks_saved : self::$default_active_blocks;
@@ -33,7 +33,7 @@ if ($postid === 'new') {
 $disabled = '';
 $rotating = '';
 $button_text = __('Refresh', 'advanced-gutenberg');
-$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === 'true'); // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- begin to enqueue update blocks list, we have nonce later
+$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === 'true'); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- begin to enqueue update blocks list, we have nonce later
 if ($updating) {
     $disabled = 'disabled';
     $rotating = 'rotating';
@@ -71,7 +71,7 @@ if ($updating) {
             </ul>
         </div>
 
-        <?php if (isset($_GET['save_profile'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
+        <?php if (isset($_GET['save_profile'])) : // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- display message, no action ?>
             <div class="ju-notice-msg ju-notice-success">
                 <?php esc_html_e('Profile saved successfully!', 'advanced-gutenberg') ?>
                 <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profiles')) ?>" target="_self">
@@ -153,7 +153,7 @@ if ($updating) {
                                     <label for="block-<?php echo esc_attr($block['name']) ?>" class="ju-setting-label">
                                         <span class="block-icon" <?php echo esc_attr($iconColor) ?>>
                                             <?php if (strpos($block['icon'], '<svg') !== false) :
-                                                echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
+                                                echo $block['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped
                                             else : ?>
                                                 <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
                                             <?php endif; ?>
@@ -237,7 +237,7 @@ if ($updating) {
                     <tbody id="advgb-users-body">
                     <?php
                     $users_per_page = 20;
-                    $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- View request, no action
+                    $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- View request, no action
                     $paged          = max(1, $pagenum);
                     $args           = array(
                         'number'  => $users_per_page,

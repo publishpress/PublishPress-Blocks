@@ -377,7 +377,7 @@ float: left;'
             return false;
         }
 
-        // phpcs:disable WordPress.CSRF.NonceVerification.NoNonceVerification -- View request, no action
+        // phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification -- View request, no action
         $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim($_REQUEST['search'])) : '';
         $role           = isset($_REQUEST['role']) ? $_REQUEST['role'] : '';
         $users_per_page = 20;
@@ -1014,13 +1014,13 @@ float: left;'
      */
     public function saveAdvgbData()
     {
-        if (isset($_GET['view']) && $_GET['view'] === 'profile' && !isset($_GET['id'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- redirect only
+        if (isset($_GET['view']) && $_GET['view'] === 'profile' && !isset($_GET['id'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- redirect only
             wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profiles'));
         }
 
-        if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- we check nonce below
+        if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveAdvgbProfile();
-        } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- we check nonce below
+        } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveSettings();
         }
 
@@ -1272,7 +1272,7 @@ float: left;'
     public function loadBlockConfigView($block = '')
     {
         if (!$block) {
-            $block = $_GET['page']; // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- view only
+            $block = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- view only
         }
 
         wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
@@ -2605,7 +2605,7 @@ float: left;'
             $html .= '</div>';
         }
 
-        echo $html; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
+        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped
         return true;
     }
 

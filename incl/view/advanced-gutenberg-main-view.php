@@ -64,7 +64,7 @@ $tabs_data = array(
             <div class="advgb-header" style="padding-top: 40px">
                 <h1 class="header-title"><?php esc_html_e('Translation', 'advanced-gutenberg') ?></h1>
             </div>
-            <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped ?>
+            <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
         </div>
     </div>
 </div>

@@ -69,7 +69,7 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
         </ul>
     </div>
 
-    <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.CSRF.NonceVerification.NoNonceVerification -- display message, no action ?>
+    <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- display message, no action ?>
         <div class="ju-notice-msg ju-notice-success">
             <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg'); ?>
             <i class="dashicons dashicons-dismiss ju-notice-close"></i>
@@ -256,7 +256,7 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
         <ul class="blocks-config-list clearfix">
             <?php foreach ($advgb_blocks as $block) : ?>
             <li class="block-config-item ju-settings-option">
-                <?php echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped ?>
+                <?php echo $block['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 <span class="block-title"><?php echo esc_html($block['title']); ?></span>
                 <i class="mi mi-settings block-config-button"
                    title="<?php esc_html_e('Edit', 'advanced-gutenberg') ?>"
