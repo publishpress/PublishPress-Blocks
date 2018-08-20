@@ -22,6 +22,8 @@ window.onload = function () {
 
             var savedIcon = !!block.icon.src ? block.icon.src : block.icon;
 
+            if (block.icon.foreground !== undefined) blockItem.iconColor = block.icon.foreground;
+
             if (typeof savedIcon === 'function') {
                 blockItem.icon = wp.element.renderToString(savedIcon());
                 blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
@@ -108,19 +110,29 @@ window.onload = function () {
                             theBlock.find('label').find('i').remove();
                             theBlock.find('label').find('svg').remove();
                             if (block.icon.indexOf('<svg') > -1) {
-                                theBlock.find('.ju-setting-label').prepend(block.icon);
+                                theBlock.find('.ju-setting-label').find('.block-icon').prepend(block.icon);
                             } else {
-                                theBlock.find('.ju-setting-label').prepend('<i class="dashicons dashicons-'+ block.icon +'"></i>');
+                                theBlock.find('.ju-setting-label').find('.block-icon').prepend('<i class="dashicons dashicons-'+ block.icon +'"></i>');
+                            }
+
+                            if (block.iconColor) {
+                                theBlock.find('.ju-setting-label').find('.block-icon').css('color', block.iconColor);
                             }
                         } else {
                             var blockHTML = '';
                             blockHTML += '<li class="block-item ju-settings-option new-block" data-type="'+ block.name +'">';
                             blockHTML +=    '<label for="'+ block.name +'" class="ju-setting-label">';
+                            blockHTML +=        '<span class="block-icon"';
+                            if (block.iconColor) {
+                                blockHTML += ' style="color:'+ block.iconColor +'"';
+                            }
+                            blockHTML += '>';
                             if (block.icon.indexOf('<svg') > -1) {
                                 blockHTML +=    block.icon;
                             } else {
                                 blockHTML +=    '<i class="dashicons dashicons-'+ block.icon +'"></i>';
                             }
+                            blockHTML +=        '</span>';
                             blockHTML +=        '<span class="block-title">'+ block.title +'</span>';
                             blockHTML +=    '</label>';
                             blockHTML +=    '<div class="ju-switch-button">';

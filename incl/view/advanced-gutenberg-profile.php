@@ -145,13 +145,19 @@ if ($updating) {
                                 <?php if ($block['category'] !== $category['slug']) :
                                     continue;
                                 endif; ?>
+                                <?php $iconColor = '';
+                                if (isset($block['iconColor'])) :
+                                    $iconColor = 'style=color:' . $block['iconColor'];
+                                endif; ?>
                                 <li class="block-item ju-settings-option" data-type="<?php echo esc_attr($block['name']) ?>">
                                     <label for="block-<?php echo esc_attr($block['name']) ?>" class="ju-setting-label">
-                                        <?php if (strpos($block['icon'], '<svg') !== false) :
-                                            echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
-                                        else : ?>
-                                            <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
-                                        <?php endif; ?>
+                                        <span class="block-icon" <?php echo esc_attr($iconColor) ?>>
+                                            <?php if (strpos($block['icon'], '<svg') !== false) :
+                                                echo $block['icon']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped -- already escaped
+                                            else : ?>
+                                                <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
+                                            <?php endif; ?>
+                                        </span>
                                         <span class="block-title" title="<?php echo esc_html($block['title']) ?>">
                                             <?php echo esc_html($block['title']) ?>
                                         </span>
