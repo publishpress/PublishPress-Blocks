@@ -262,9 +262,8 @@
         }
     }
 
-    const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     const listBlockIcon = (
-        <svg fill={ blockColor } height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
+        <svg height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
@@ -273,7 +272,10 @@
     registerBlockType( 'advgb/list', {
         title: __( 'Advanced List' ),
         description: __( 'List block with custom icons and styles.' ),
-        icon: listBlockIcon,
+        icon: {
+            src: listBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: 'common',
         keywords: [ __( 'list' ), __( 'icon' ) ],
         attributes: {

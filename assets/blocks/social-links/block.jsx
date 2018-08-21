@@ -17,8 +17,7 @@
         </Fragment>
     );
 
-    const blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
-    const socialBlockIcon = <svg width="20" height="20" viewBox="0 0 24 24" fill={blockColor}>{socialBlockIconContent}</svg>;
+    const socialBlockIcon = <svg width="20" height="20" viewBox="0 0 24 24">{socialBlockIconContent}</svg>;
 
     const ICONS_SET = {
         blogger: (
@@ -380,7 +379,10 @@
     registerBlockType( 'advgb/social-links', {
         title: __( 'Social Links' ),
         description: __( 'Insert your social link with icon.' ),
-        icon: socialBlockIcon,
+        icon: {
+            src: socialBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: 'common',
         keywords: [ __( 'social icons' ), __( 'shares' ), __( 'icon link' ) ],
         attributes: {

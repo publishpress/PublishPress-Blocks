@@ -613,10 +613,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         );
     }
 
-    var blockColor = typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined;
     var testimonialBlockIcon = React.createElement(
         'svg',
-        { fill: blockColor, height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
+        { height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
         React.createElement('path', { d: 'M19 2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h4l3 3 3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 3.3c1.49 0 2.7 1.21 2.7 2.7 0 1.49-1.21 2.7-2.7 2.7-1.49 0-2.7-1.21-2.7-2.7 0-1.49 1.21-2.7 2.7-2.7zM18 16H6v-.9c0-2 4-3.1 6-3.1s6 1.1 6 3.1v.9z' }),
         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
     );
@@ -624,7 +623,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     registerBlockType('advgb/testimonial', {
         title: __('Testimonial'),
         description: __('Block for creating personal or team/group information.'),
-        icon: testimonialBlockIcon,
+        icon: {
+            src: testimonialBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
         category: 'common',
         keywords: [__('testimonial'), __('personal'), __('about')],
         attributes: {
