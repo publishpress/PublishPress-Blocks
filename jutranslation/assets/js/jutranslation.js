@@ -384,10 +384,10 @@ jQuery(document).ready(function($){
         e.preventDefault();
         if(typeof SqueezeBox !== 'undefined' ){
             //Open Joomla lightbox
-            SqueezeBox.open(jutranslation.base_url + 'action=&task=jutranslation.showViewForm&language=' +  $(this).closest('tr').attr('data-lang'), {handler: 'iframe'});
+            SqueezeBox.open(jutranslation.base_url + 'action=&task=jutranslation.showViewForm&wp_nonce='+jutranslation.token+'&language=' +  $(this).closest('tr').attr('data-lang'), {handler: 'iframe'});
         }else{
             //Open Wordpress lightbox
-            tb_show('Share with Joomunited',jutranslation.base_url + 'action=' + jutranslation.ajax_action + '&task=jutranslation.showViewForm&slug=' +  $(this).closest('tr').attr('data-slug') + '&language=' +  $(this).closest('tr').attr('data-lang') + '&TB_iframe=true');
+            tb_show('Share with Joomunited',jutranslation.base_url + 'action=' + jutranslation.ajax_action + '&task=jutranslation.showViewForm&wp_nonce='+jutranslation.token+'&slug=' +  $(this).closest('tr').attr('data-slug') + '&language=' +  $(this).closest('tr').attr('data-lang') + '&TB_iframe=true');
         }
     });
 
