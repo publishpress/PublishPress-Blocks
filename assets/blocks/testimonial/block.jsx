@@ -13,6 +13,23 @@
             }
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-testimonial'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         handleSetup( editor, area ) {
             editor.on( 'focus', () => this.setState( { currentEdit: area } ) );
         }
@@ -417,7 +434,7 @@
     }
 
     const testimonialBlockIcon = (
-        <svg fill="#000000" height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
+        <svg height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h4l3 3 3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 3.3c1.49 0 2.7 1.21 2.7 2.7 0 1.49-1.21 2.7-2.7 2.7-1.49 0-2.7-1.21-2.7-2.7 0-1.49 1.21-2.7 2.7-2.7zM18 16H6v-.9c0-2 4-3.1 6-3.1s6 1.1 6 3.1v.9z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
@@ -426,7 +443,10 @@
     registerBlockType( 'advgb/testimonial', {
         title: __( 'Testimonial' ),
         description: __( 'Block for creating personal or team/group information.' ),
-        icon: testimonialBlockIcon,
+        icon: {
+            src: testimonialBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: 'common',
         keywords: [ __( 'testimonial' ), __( 'personal' ), __( 'about' ) ],
         attributes: {
@@ -516,7 +536,11 @@
             columns: {
                 type: 'number',
                 default: 1,
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         edit: AdvTestimonial,
         save: AdvTestimonialSave,

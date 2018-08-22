@@ -59,6 +59,23 @@
             }
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-accordion'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         componentDidMount() {
             this.initAccordion();
         }
@@ -67,20 +84,31 @@
             if ( prevProps.attributes.items.length < this.props.attributes.items.length ) {
                 this.initAccordion( true );
             }
+
+            if (this.props.attributes.items.length === 0) {
+                this.props.setAttributes( {
+                    items: [
+                        {
+                            header: 'Header 1',
+                            body: 'At least one accordion must remaining, to remove block use "Remove Block" button from right menu.',
+                        },
+                    ],
+                } );
+            }
         }
 
         initAccordion( refresh = false ) {
             if (typeof jQuery !== "undefined") {
                 if (!refresh) {
-                    jQuery( `#block-${this.props.id} .advgb-accordion-block` ).accordion( {
+                    jQuery( `#block-${this.props.clientId} .advgb-accordion-block` ).accordion( {
                         header: ".advgb-accordion-header",
                         heightStyle: "content",
                     } );
                 } else {
-                    jQuery(`#block-${this.props.id} .advgb-accordion-block`).accordion('refresh');
+                    jQuery(`#block-${this.props.clientId} .advgb-accordion-block`).accordion('refresh');
                 }
 
-                jQuery(`#block-${this.props.id} .advgb-accordion-block h4`).on( 'keydown', function ( e ) {
+                jQuery(`#block-${this.props.clientId} .advgb-accordion-block h4`).on( 'keydown', function ( e ) {
                     e.stopPropagation();
                 } )
             }
@@ -293,7 +321,10 @@
     registerBlockType( 'advgb/accordion', {
         title: __( 'Accordion' ),
         description: __( 'Easy to create an accordion for your post/page.' ),
-        icon: accordionBlockIcon,
+        icon: {
+            src: accordionBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: 'formatting',
         keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
         attributes: {
@@ -350,6 +381,10 @@
             borderRadius: {
                 type: 'number',
                 default: 2,
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
             }
         },
         edit: AdvAccordion,

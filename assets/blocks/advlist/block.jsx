@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, ColorPalette, BlockControls } = wpEditor;
-    const { BaseControl, RangeControl, PanelBody, IconButton, Dashicon } = wpComponents;
+    const { BaseControl, RangeControl, PanelBody, IconButton, Dashicon, Toolbar } = wpComponents;
 
     class AdvList extends Component {
         constructor() {
@@ -15,11 +15,28 @@
         }
 
         componentWillMount() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-list'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
+        componentDidMount() {
+            const { attributes, setAttributes, clientId } = this.props;
 
             if ( !attributes.id ) {
                 setAttributes( {
-                    id: 'advgblist-' + id
+                    id: 'advgblist-' + clientId
                 } )
             }
         }
@@ -79,7 +96,7 @@
                 setAttributes,
                 onReplace,
                 className,
-                id: blockID,
+                clientId: blockID,
             } = this.props;
             const {
                 id,
@@ -102,14 +119,14 @@
             return (
                 <Fragment>
                     <BlockControls>
-                        <div className="components-toolbar">
+                        <Toolbar>
                             <IconButton
                                 label={ __( 'Refresh this list when it conflict with other lists styles' ) }
                                 icon="update"
                                 className="components-toolbar__control"
                                 onClick={ () => setAttributes( { id: 'advgblist-' + blockID } ) }
                             />
-                        </div>
+                        </Toolbar>
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Text Settings' ) } initialOpen={false}>
@@ -246,7 +263,7 @@
     }
 
     const listBlockIcon = (
-        <svg fill="#000000" height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
+        <svg height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
             <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
@@ -255,7 +272,10 @@
     registerBlockType( 'advgb/list', {
         title: __( 'Advanced List' ),
         description: __( 'List block with custom icons and styles.' ),
-        icon: listBlockIcon,
+        icon: {
+            src: listBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: 'common',
         keywords: [ __( 'list' ), __( 'icon' ) ],
         attributes: {
@@ -294,7 +314,11 @@
                 source: 'children',
                 selector: 'ul',
                 default: [],
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         transforms: {
             from: [

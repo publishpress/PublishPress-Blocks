@@ -30,13 +30,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     });
 
     // Add options to edit in backend
-    addFilter('blocks.BlockEdit', 'advgb/editColumnsAttrs', function (BlockEdit) {
+    addFilter('editor.BlockEdit', 'advgb/editColumnsAttrs', function (BlockEdit) {
         return function (props) {
             if (props.name === "core/text-columns" || props.name === "core/columns") {
                 var isSelected = props.isSelected,
                     attributes = props.attributes,
                     setAttributes = props.setAttributes,
-                    id = props.id;
+                    clientId = props.clientId;
                 var colMargin = attributes.colMargin,
                     colPadding = attributes.colPadding,
                     blockID = attributes.blockID;
@@ -51,7 +51,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         min: 0,
                         max: 200,
                         onChange: function onChange(value) {
-                            if (!blockID) setAttributes({ blockID: 'columns-' + id });
+                            if (!blockID) setAttributes({ blockID: 'columns-' + clientId });
                             return setAttributes({ colMargin: value });
                         }
                     }),
@@ -61,20 +61,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         min: 0,
                         max: 100,
                         onChange: function onChange(value) {
-                            if (!blockID) setAttributes({ blockID: 'columns-' + id });
+                            if (!blockID) setAttributes({ blockID: 'columns-' + clientId });
                             return setAttributes({ colPadding: value });
                         }
                     })
                 ), props.name === 'core/columns' && (!!colMargin || !!colPadding) && React.createElement(
                     'style',
                     { key: 'custom-columns-styles' },
-                    '#block-' + id + ' .wp-block-columns {grid-gap: ' + colMargin + 'px;}',
-                    '#block-' + id + ' .wp-block-columns .editor-block-list__block-edit {padding: ' + colPadding + 'px;}'
+                    '#block-' + clientId + ' .wp-block-columns .editor-block-list__block:not(:first-child) {margin-left: ' + colMargin + 'px;}',
+                    '#block-' + clientId + ' .wp-block-columns .editor-block-list__block-edit {padding: ' + colPadding + 'px;}'
                 ), props.name === 'core/text-columns' && (!!colMargin || !!colPadding) && React.createElement(
                     'style',
                     { key: 'custom-text-columns-styles' },
-                    '#block-' + id + ' .wp-block-column:not(:first-child) {margin-left: ' + colMargin + 'px;}',
-                    '#block-' + id + ' .wp-block-column {padding: ' + colPadding + 'px;}'
+                    '#block-' + clientId + ' .wp-block-column:not(:first-child) {margin-left: ' + colMargin + 'px;}',
+                    '#block-' + clientId + ' .wp-block-column {padding: ' + colPadding + 'px;}'
                 )];
             }
 
@@ -84,18 +84,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     // Save options to show in frontend
     addFilter('blocks.getSaveContent.extraProps', 'advgb/saveColumnsAttrs', function (extraProps, blockType, attributes) {
-        var colMargin = attributes.colMargin,
-            blockID = attributes.blockID;
+        var blockID = attributes.blockID;
 
 
-        if (blockType.name === 'core/text-columns') {
+        if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
             extraProps = _extends(extraProps, {
                 id: blockID
-            });
-        } else if (blockType.name === 'core/columns') {
-            extraProps = _extends(extraProps, {
-                id: blockID,
-                style: { gridGap: !!colMargin ? colMargin + 'px' : undefined }
             });
         }
 
@@ -104,7 +98,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     // Save option to show in frontend
     addFilter('blocks.getSaveElement', 'advgb/saveTextColumnsElm', function (SaveElm, blockType, attributes) {
-        if (blockType.name === 'core/text-columns') {
+        if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
             var colMargin = attributes.colMargin,
                 colPadding = attributes.colPadding,
                 blockID = attributes.blockID;
@@ -118,21 +112,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     'style',
                     null,
                     '#' + blockID + ' .wp-block-column:not(:first-child) {\n                        margin-left: ' + colMargin + 'px;\n                    }\n                    #' + blockID + ' .wp-block-column {\n                        padding: ' + colPadding + 'px;\n                    }'
-                )
-            );
-        } else if (blockType.name === 'core/columns') {
-            var _colPadding = attributes.colPadding,
-                _blockID = attributes.blockID;
-
-
-            return React.createElement(
-                Fragment,
-                null,
-                SaveElm,
-                _blockID && !!_colPadding && React.createElement(
-                    'style',
-                    null,
-                    '#' + _blockID + ' [class^=\'layout-column-\'] {\n                        padding: ' + _colPadding + 'px;\n                    }'
                 )
             );
         }

@@ -16,6 +16,7 @@
                 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z"/>
         </Fragment>
     );
+
     const socialBlockIcon = <svg width="20" height="20" viewBox="0 0 24 24">{socialBlockIconContent}</svg>;
 
     const ICONS_SET = {
@@ -171,6 +172,24 @@
             this.state = {
                 currentSelected: 0,
                 searchedText: '',
+            }
+        }
+
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-social-links'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        if (attribute.indexOf('.') === -1)
+                            attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
             }
         }
 
@@ -360,7 +379,10 @@
     registerBlockType( 'advgb/social-links', {
         title: __( 'Social Links' ),
         description: __( 'Insert your social link with icon.' ),
-        icon: socialBlockIcon,
+        icon: {
+            src: socialBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: 'common',
         keywords: [ __( 'social icons' ), __( 'shares' ), __( 'icon link' ) ],
         attributes: {
@@ -382,6 +404,10 @@
             iconSpace: {
                 type: 'number',
                 default: 5,
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
             },
         },
         edit: AdvSocialBlock,

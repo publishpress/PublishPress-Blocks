@@ -10,10 +10,27 @@
             super( ...arguments );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-tabs'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         componentDidMount() {
             this.initTabs();
             if (!this.props.attributes.blockID) {
-                this.props.setAttributes( { blockID: this.props.id } );
+                this.props.setAttributes( { blockID: this.props.clientId } );
             }
         }
 
@@ -24,17 +41,28 @@
             if (prevItems !== tabItems) {
                 this.initTabs( true );
             }
+
+            if (tabItems.length === 0) {
+                this.props.setAttributes( {
+                    tabItems: [
+                        {
+                            header: 'Tab 1',
+                            body: 'At least one tab must remaining, to remove block use "Remove Block" button from right menu.',
+                        },
+                    ],
+                } );
+            }
         }
 
         initTabs( refresh = false ) {
             if (typeof jQuery !== "undefined") {
                 if (!refresh) {
-                    jQuery(`#block-${this.props.id} .advgb-tabs-block`).tabs();
+                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs();
                 } else {
-                    jQuery(`#block-${this.props.id} .advgb-tabs-block`).tabs('refresh');
+                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs('refresh');
                 }
 
-                jQuery(`#block-${this.props.id} .advgb-tabs-block a`).on( 'keydown', function ( e ) {
+                jQuery(`#block-${this.props.clientId} .advgb-tabs-block a`).on( 'keydown', function ( e ) {
                     e.stopPropagation();
                 } )
             }
@@ -52,11 +80,11 @@
                 return item;
             } );
 
-            setAttributes( { tabItems: newItems } )
+            setAttributes( { tabItems: newItems } );
         }
 
         render() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
             const {
                 tabItems,
                 headerBgColor,
@@ -235,10 +263,10 @@
                     </div>
                     {!!blockID &&
                         <style>
-                            {activeTabBgColor && `#block-${id} li.advgb-tab.ui-tabs-active {
+                            {activeTabBgColor && `#block-${clientId} li.advgb-tab.ui-tabs-active {
                                 background-color: ${activeTabBgColor} !important;
                             }`}
-                            {activeTabTextColor && `#block-${id} li.advgb-tab.ui-tabs-active a {
+                            {activeTabTextColor && `#block-${clientId} li.advgb-tab.ui-tabs-active a {
                                 color: ${activeTabTextColor} !important;
                             }`}
                         </style>
@@ -259,7 +287,10 @@
     registerBlockType( 'advgb/tabs', {
         title: __( 'Tabs' ),
         description: __( 'Create your own tabs never easy like this.' ),
-        icon: tabsBlockIcon,
+        icon: {
+            src: tabsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: "formatting",
         keywords: [ __( 'tabs' ), __( 'cards' ) ],
         attributes: {
@@ -317,6 +348,10 @@
             },
             activeTabTextColor: {
                 type: 'string',
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
             },
         },
         edit: AdvTabsBlock,

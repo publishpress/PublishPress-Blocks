@@ -1,5 +1,7 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60,17 +62,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    id = _props.id;
+                    setAttributes = _props.setAttributes;
 
+                var currentBlockConfig = advgbDefaultConfig['advgb-map'];
 
-                if (!attributes.mapID) {
-                    setAttributes({ mapID: 'advgbmap-' + id });
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
                 }
             }
         }, {
             key: "componentDidMount",
             value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+
+
+                if (!attributes.mapID) {
+                    setAttributes({ mapID: 'advgbmap-' + clientId });
+                }
+
                 this.initMap();
             }
         }, {
@@ -180,9 +200,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function fetchLocation() {
                 if (typeof google === "undefined") return null;
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var address = attributes.address;
 
                 var geoCoder = new google.maps.Geocoder();
@@ -218,9 +238,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "render",
             value: function render() {
                 var fetching = this.state.fetching;
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var mapID = attributes.mapID,
                     useLatLng = attributes.useLatLng,
                     address = attributes.address,
@@ -409,7 +429,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "a",
                             { target: "_blank",
                                 className: "button button-large",
-                                href: wpApiSettings.schema.home + '/wp-admin/options-general.php?page=advgb_settings'
+                                href: wpApiSettings.schema.home + '/wp-admin/admin.php?page=advgb_main'
                             },
                             __('Add Google API Key')
                         )
@@ -424,7 +444,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     registerBlockType('advgb/map', {
         title: __('Map'),
         description: __('Block for inserting location map.'),
-        icon: mapBlockIcon,
+        icon: {
+            src: mapBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
         category: 'common',
         keywords: [__('google map'), __('location'), __('address')],
         attributes: {
@@ -471,6 +494,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             markerDesc: {
                 type: 'string',
                 default: ''
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvMap,

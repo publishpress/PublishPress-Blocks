@@ -25,10 +25,10 @@
     } );
 
     // Add options to edit in backend
-    addFilter( 'blocks.BlockEdit', 'advgb/editColumnsAttrs', function ( BlockEdit ) {
+    addFilter( 'editor.BlockEdit', 'advgb/editColumnsAttrs', function ( BlockEdit ) {
         return ( props ) => {
             if (props.name === "core/text-columns" || props.name === "core/columns") {
-                const { isSelected, attributes, setAttributes, id } = props;
+                const { isSelected, attributes, setAttributes, clientId } = props;
                 const { colMargin, colPadding, blockID } = attributes;
 
                 return ( [
@@ -41,7 +41,7 @@
                             min={ 0 }
                             max={ 200 }
                             onChange={ (value) => {
-                                if (!blockID) setAttributes( { blockID: 'columns-' + id } );
+                                if (!blockID) setAttributes( { blockID: 'columns-' + clientId } );
                                 return setAttributes( { colMargin: value } );
                             } }
                         />
@@ -51,20 +51,20 @@
                             min={ 0 }
                             max={ 100 }
                             onChange={ (value) => {
-                                if (!blockID) setAttributes( { blockID: 'columns-' + id } );
+                                if (!blockID) setAttributes( { blockID: 'columns-' + clientId } );
                                 return setAttributes( { colPadding: value } );
                             } }
                         />
                     </InspectorControls>,
                     props.name === 'core/columns' && (!!colMargin || !!colPadding) &&
                     <style key="custom-columns-styles">
-                        {`#block-${id} .wp-block-columns {grid-gap: ${colMargin}px;}`}
-                        {`#block-${id} .wp-block-columns .editor-block-list__block-edit {padding: ${colPadding}px;}`}
+                        {`#block-${clientId} .wp-block-columns .editor-block-list__block:not(:first-child) {margin-left: ${colMargin}px;}`}
+                        {`#block-${clientId} .wp-block-columns .editor-block-list__block-edit {padding: ${colPadding}px;}`}
                     </style>,
                     props.name === 'core/text-columns' && (!!colMargin || !!colPadding) &&
                     <style key="custom-text-columns-styles">
-                        {`#block-${id} .wp-block-column:not(:first-child) {margin-left: ${colMargin}px;}`}
-                        {`#block-${id} .wp-block-column {padding: ${colPadding}px;}`}
+                        {`#block-${clientId} .wp-block-column:not(:first-child) {margin-left: ${colMargin}px;}`}
+                        {`#block-${clientId} .wp-block-column {padding: ${colPadding}px;}`}
                     </style>
                 ] )
             }
@@ -75,16 +75,11 @@
 
     // Save options to show in frontend
     addFilter( 'blocks.getSaveContent.extraProps', 'advgb/saveColumnsAttrs', function ( extraProps, blockType, attributes ) {
-        const { colMargin, blockID } = attributes;
+        const { blockID } = attributes;
 
-        if (blockType.name === 'core/text-columns') {
+        if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
             extraProps = Object.assign( extraProps, {
                 id: blockID,
-            } )
-        } else if (blockType.name === 'core/columns') {
-            extraProps = Object.assign( extraProps, {
-                id: blockID,
-                style: { gridGap: !!colMargin ? colMargin + 'px' : undefined },
             } )
         }
 
@@ -93,7 +88,7 @@
 
     // Save option to show in frontend
     addFilter( 'blocks.getSaveElement', 'advgb/saveTextColumnsElm', function ( SaveElm, blockType, attributes ) {
-        if (blockType.name === 'core/text-columns') {
+        if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
             const { colMargin, colPadding, blockID } = attributes;
 
             return (
@@ -105,20 +100,6 @@
                         margin-left: ${colMargin}px;
                     }
                     #${blockID} .wp-block-column {
-                        padding: ${colPadding}px;
-                    }`}
-                    </style>}
-                </Fragment>
-            )
-        } else if ( blockType.name === 'core/columns' ) {
-            const { colPadding, blockID } = attributes;
-
-            return (
-                <Fragment>
-                    {SaveElm}
-                    {blockID && !!colPadding &&
-                    <style>
-                        {`#${blockID} [class^='layout-column-'] {
                         padding: ${colPadding}px;
                     }`}
                     </style>}

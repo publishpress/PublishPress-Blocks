@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,7 +27,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
-        Button = wpComponents.Button;
+        Button = wpComponents.Button,
+        Toolbar = wpComponents.Toolbar;
 
     var AdvImage = function (_Component) {
         _inherits(AdvImage, _Component);
@@ -42,6 +45,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvImage, [{
+            key: 'componentWillMount',
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-image'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
             key: 'handleSetup',
             value: function handleSetup(editor, area) {
                 var _this2 = this;
@@ -56,10 +80,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _this3 = this;
 
                 var currentEdit = this.state.currentEdit;
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    isSelected = _props.isSelected;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    isSelected = _props2.isSelected;
                 var openOnClick = attributes.openOnClick,
                     openUrl = attributes.openUrl,
                     imageUrl = attributes.imageUrl,
@@ -83,30 +107,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     imageID && React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(MediaUpload, {
-                            type: 'image',
-                            value: imageID,
-                            onSelect: function onSelect(image) {
-                                return setAttributes({ imageUrl: image.url, imageID: image.id });
-                            },
-                            render: function render(_ref) {
-                                var open = _ref.open;
-                                return React.createElement(IconButton, {
-                                    className: 'components-toolbar__control',
-                                    label: __('Change image'),
-                                    icon: 'edit',
-                                    onClick: open
-                                });
-                            }
-                        }),
-                        React.createElement(IconButton, {
-                            className: 'components-toolbar__control',
-                            label: __('Remove image'),
-                            icon: 'no',
-                            onClick: function onClick() {
-                                return setAttributes({ imageUrl: undefined, imageID: undefined });
-                            }
-                        })
+                        React.createElement(
+                            Toolbar,
+                            null,
+                            React.createElement(MediaUpload, {
+                                type: 'image',
+                                value: imageID,
+                                onSelect: function onSelect(image) {
+                                    return setAttributes({ imageUrl: image.url, imageID: image.id });
+                                },
+                                render: function render(_ref) {
+                                    var open = _ref.open;
+                                    return React.createElement(IconButton, {
+                                        className: 'components-toolbar__control',
+                                        label: __('Change image'),
+                                        icon: 'edit',
+                                        onClick: open
+                                    });
+                                }
+                            }),
+                            React.createElement(IconButton, {
+                                className: 'components-toolbar__control',
+                                label: __('Remove image'),
+                                icon: 'no',
+                                onClick: function onClick() {
+                                    return setAttributes({ imageUrl: undefined, imageID: undefined });
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         InspectorControls,
@@ -283,7 +311,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var advImageBlockIcon = React.createElement(
         'svg',
-        { fill: '#000000', height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
+        { height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
         React.createElement('path', { d: 'M0 0h24v24H0V0z', fill: 'none' }),
         React.createElement('path', { d: 'M1 5h2v14H1zm4 0h2v14H5zm17 0H10c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1zM11 17l2.5-3.15L15.29 16l2.5-3.22L21 17H11z' })
     );
@@ -291,7 +319,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     registerBlockType('advgb/image', {
         title: __('Advanced Image'),
         description: __('Advanced image/photo block with more options and styles.'),
-        icon: advImageBlockIcon,
+        icon: {
+            src: advImageBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
         category: 'common',
         keywords: [__('image'), __('photo'), __('box')],
         attributes: {
@@ -347,6 +378,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             hAlign: {
                 type: 'string',
                 default: 'center'
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvImage,

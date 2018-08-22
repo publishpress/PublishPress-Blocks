@@ -34,6 +34,23 @@
             this.handleSetup = this.handleSetup.bind( this );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-table'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         static isTableSelected( editor ) {
             return editor.dom.getParent(
                 editor.selection.getStart( true ),
@@ -554,7 +571,10 @@
     registerBlockType( 'advgb/table', {
         title: __( 'Advanced Table' ),
         description: __( 'Advanced table block with more styles and functions.' ),
-        icon: tableBlockIcon,
+        icon: {
+            src: tableBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: 'formatting',
         keywords: [ __( 'table' ), __( 'cell' ), __( 'data' ) ],
         attributes: {
@@ -575,7 +595,11 @@
             maxWidth: {
                 type: 'number',
                 default: 0
-            }
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
+            },
         },
         edit: AdvTable,
         save: function ( { attributes } ) {

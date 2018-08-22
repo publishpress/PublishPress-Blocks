@@ -1,5 +1,7 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -37,7 +39,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var summaryBlockIcon = React.createElement(
         "svg",
-        { fill: "#000000", height: "20", viewBox: "2 2 22 22", width: "20", xmlns: "http://www.w3.org/2000/svg" },
+        { height: "20", viewBox: "2 2 22 22", width: "20", xmlns: "http://www.w3.org/2000/svg" },
         React.createElement("path", { d: "M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z" }),
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
@@ -80,7 +82,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     })();
 
     // Add notice for user to refresh summary if manually change heading anchor
-    addFilter('blocks.BlockEdit', 'advgb/addHeadingNotice', function (BlockEdit) {
+    addFilter('editor.BlockEdit', 'advgb/addHeadingNotice', function (BlockEdit) {
         return function (props) {
             var isSelected = props.isSelected,
                 blockType = props.name,
@@ -114,30 +116,62 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(SummaryBlock, [{
             key: "componentWillMount",
             value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-summary'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
                 this.updateSummary();
             }
         }, {
             key: "updateSummary",
             value: function updateSummary() {
                 var headingDatas = [];
+                var headingBlocks = [];
                 var allBlocks = select('core/editor').getBlocks();
-                var headingBlocks = allBlocks.filter(function (block) {
-                    return block.name === 'core/heading';
+                var filteredBlocks = allBlocks.filter(function (block) {
+                    return block.name === 'core/heading' || block.name === 'core/columns';
                 });
+                filteredBlocks.map(function (block) {
+                    if (block.name === 'core/columns') {
+                        SummaryBlock.getHeadingBlocksFromColumns(block, headingBlocks);
+                    } else {
+                        headingBlocks.push(block);
+                    }
+
+                    return block;
+                });
+
                 headingBlocks.map(function (heading) {
                     var thisHead = {};
-                    thisHead['level'] = parseInt(heading.attributes.nodeName.replace(/h/gi, ''));
+                    thisHead['level'] = parseInt(heading.attributes.level);
 
                     // We only get heading from h2
                     if (thisHead['level'] > 1) {
                         thisHead['level'] -= 1;
                         thisHead['content'] = heading.attributes.content.length ? getBlockContent(heading).replace(/<(?:.|\n)*?>/gm, '') : '';
-                        thisHead['uid'] = heading.uid;
+                        thisHead['clientId'] = heading.clientId;
                         if (heading.attributes.anchor) {
                             thisHead['anchor'] = heading.attributes.anchor;
                         } else {
                             // Generate a random anchor for headings without it
-                            thisHead['anchor'] = 'advgb-toc-' + heading.uid;
+                            thisHead['anchor'] = 'advgb-toc-' + heading.clientId;
                             heading.attributes.anchor = thisHead['anchor'];
                         }
 
@@ -154,10 +188,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    isSelected = _props.isSelected,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    isSelected = _props2.isSelected,
+                    setAttributes = _props2.setAttributes;
                 var headings = attributes.headings,
                     loadMinimized = attributes.loadMinimized,
                     anchorColor = attributes.anchorColor,
@@ -201,7 +235,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     "a",
                                     { href: '#' + heading.anchor,
                                         onClick: function onClick() {
-                                            return selectBlock(heading.uid);
+                                            return selectBlock(heading.clientId);
                                         }
                                     },
                                     heading.content
@@ -271,6 +305,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 );
             }
+        }], [{
+            key: "getHeadingBlocksFromColumns",
+
+
+            /**
+             * Function to get heading blocks from columns blocks
+             *
+             * @param block     array Columns block to get data
+             * @param storeData array Data array to store heading blocks
+             *
+             * @returns array   array Heading blocks from block given
+             */
+            value: function getHeadingBlocksFromColumns(block, storeData) {
+                if (block.name === 'core/columns' || block.name === 'core/column') {
+                    block.innerBlocks.map(function (bl) {
+                        SummaryBlock.getHeadingBlocksFromColumns(bl, storeData);
+                        return bl;
+                    });
+                } else if (block.name === 'core/heading') {
+                    storeData.push(block);
+                }
+
+                return storeData;
+            }
         }]);
 
         return SummaryBlock;
@@ -279,7 +337,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     registerBlockType('advgb/summary', {
         title: summaryBlockTitle,
         description: __('Show the table of content of current post/page.'),
-        icon: summaryBlockIcon,
+        icon: {
+            src: summaryBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
         category: 'formatting',
         keywords: [__('summary'), __('table of content'), __('list')],
         attributes: {
@@ -303,9 +364,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             headerTitle: {
                 type: 'string'
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
-        useOnce: true,
+        supports: {
+            multiple: false
+        },
         edit: SummaryBlock,
         save: function save(_ref) {
             var attributes = _ref.attributes;

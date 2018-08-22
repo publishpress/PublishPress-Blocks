@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37,6 +39,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvTestimonial, [{
+            key: 'componentWillMount',
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-testimonial'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
             key: 'handleSetup',
             value: function handleSetup(editor, area) {
                 var _this2 = this;
@@ -51,10 +74,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _this3 = this;
 
                 var currentEdit = this.state.currentEdit;
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    isSelected = _props.isSelected;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    isSelected = _props2.isSelected;
                 var avatarUrl = attributes.avatarUrl,
                     avatarID = attributes.avatarID,
                     avatarUrl2 = attributes.avatarUrl2,
@@ -592,7 +615,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var testimonialBlockIcon = React.createElement(
         'svg',
-        { fill: '#000000', height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
+        { height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
         React.createElement('path', { d: 'M19 2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h4l3 3 3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 3.3c1.49 0 2.7 1.21 2.7 2.7 0 1.49-1.21 2.7-2.7 2.7-1.49 0-2.7-1.21-2.7-2.7 0-1.49 1.21-2.7 2.7-2.7zM18 16H6v-.9c0-2 4-3.1 6-3.1s6 1.1 6 3.1v.9z' }),
         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
     );
@@ -600,7 +623,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     registerBlockType('advgb/testimonial', {
         title: __('Testimonial'),
         description: __('Block for creating personal or team/group information.'),
-        icon: testimonialBlockIcon,
+        icon: {
+            src: testimonialBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
         category: 'common',
         keywords: [__('testimonial'), __('personal'), __('about')],
         attributes: {
@@ -690,6 +716,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             columns: {
                 type: 'number',
                 default: 1
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvTestimonial,
