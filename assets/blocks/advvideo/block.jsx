@@ -340,7 +340,7 @@
                                 <Button
                                     className="button button-large"
                                     disabled={ !videoID || videoSourceType === 'local' }
-                                    style={ { height: '31px', margin: '1px 0' } }
+                                    style={ { height: '31px' } }
                                     onClick={ this.fetchVideoInfo }
                                 >
                                     { __( 'Fetch' ) }
@@ -352,7 +352,7 @@
                                     onSelect={ (video) => setAttributes( { videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' } ) }
                                     render={ ( { open } ) => (
                                         <Button
-                                            className="button button-large"
+                                            className="button button-large is-primary"
                                             onClick={ open }
                                         >
                                             { __( 'Local video' ) }

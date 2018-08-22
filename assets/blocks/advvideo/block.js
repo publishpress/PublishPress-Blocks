@@ -417,7 +417,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     {
                                         className: "button button-large",
                                         disabled: !videoID || videoSourceType === 'local',
-                                        style: { height: '31px', margin: '1px 0' },
+                                        style: { height: '31px' },
                                         onClick: this.fetchVideoInfo
                                     },
                                     __('Fetch')
@@ -438,7 +438,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return React.createElement(
                                             Button,
                                             {
-                                                className: "button button-large",
+                                                className: "button button-large is-primary",
                                                 onClick: open
                                             },
                                             __('Local video')
