@@ -10,13 +10,29 @@
         "type": "feature",
         "title": "New fresh designed backend UI/UX"
       },
-      {
+       {
         "type": "feature",
-        "title": "Default config for AG blocks"
+        "title": "Implement AJAX admin search engine in plugin settings"
       },
       {
         "type": "feature",
-        "title": "New option to define AG blocks icon color"
+        "title": "Default config for Advanced Gutenberg blocks"
+      },
+      {
+        "type": "feature",
+        "title": "New option to define Advanced Gutenberg blocks icon color"
+      },
+      {
+        "type": "feature",
+        "title": "New custom CSS style edition interface"
+      },
+      {
+        "type": "feature",
+        "title": "Add a search engine to filter blocks in profile block attribution"
+      },
+       {
+        "type": "feature",
+        "title": "Add a dedicated left menu for all the configuration named Adv. Gutenberg"
       },
       {
         "type": "fix",
@@ -152,7 +168,7 @@
       },
        {
         "type": "feature",
-        "title": "Identify CSS property wity with: name, class and color"
+        "title": "Identify CSS property by: name, class and color"
       },
       {
         "type": "feature",
