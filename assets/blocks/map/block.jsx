@@ -29,11 +29,28 @@
             this.fetchLocation = this.fetchLocation.bind(this);
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-map'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                    Object.keys(currentBlockConfig).map((attribute)=>{
+                        attributes[attribute] = currentBlockConfig[attribute];
+                    });
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
         componentDidMount() {
-            const { attributes, setAttributes, id } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
 
             if (!attributes.mapID) {
-                setAttributes( { mapID: 'advgbmap-' + id } );
+                setAttributes( { mapID: 'advgbmap-' + clientId } );
             }
 
             this.initMap();
@@ -319,7 +336,7 @@
                         >
                             <a target="_blank"
                                className="button button-large"
-                               href={wpApiSettings.schema.home + '/wp-admin/options-general.php?page=advgb_settings'}
+                               href={wpApiSettings.schema.home + '/wp-admin/admin.php?page=advgb_main'}
                             >
                                 { __( 'Add Google API Key' ) }
                             </a>
@@ -333,7 +350,10 @@
     registerBlockType( 'advgb/map', {
         title: __( 'Map' ),
         description: __( 'Block for inserting location map.' ),
-        icon: mapBlockIcon,
+        icon: {
+            src: mapBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
         category: 'common',
         keywords: [ __( 'google map' ), __( 'location' ), __( 'address' ) ],
         attributes: {
@@ -380,6 +400,10 @@
             markerDesc: {
                 type: 'string',
                 default: '',
+            },
+            changed: {
+                type: 'boolean',
+                default: false,
             },
         },
         edit: AdvMap,

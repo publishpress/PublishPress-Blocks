@@ -42,7 +42,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 var isSelected = props.isSelected,
                     attributes = props.attributes,
                     setAttributes = props.setAttributes,
-                    id = props.id;
+                    clientId = props.clientId;
                 var borderColor = attributes.borderColor,
                     borderSize = attributes.borderSize,
                     borderStyle = attributes.borderStyle,
@@ -95,7 +95,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 ), React.createElement(
                     'style',
                     { key: 'custom-separator-styles' },
-                    '#block-' + id + ' hr {\n                        border-bottom-color: ' + borderColor + ';\n                        border-bottom-style: ' + borderStyle + ';\n                        border-bottom-width: ' + borderWidth + 'px;\n                        max-width: ' + borderSize + 'px;\n                    }'
+                    '#block-' + clientId + ' hr {\n                        border-bottom-color: ' + borderColor + ';\n                        border-bottom-style: ' + borderStyle + ';\n                        border-bottom-width: ' + borderWidth + 'px;\n                        max-width: ' + borderSize + 'px;\n                    }'
                 )];
             }
 

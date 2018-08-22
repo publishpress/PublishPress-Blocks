@@ -8,42 +8,64 @@ Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
+
+
 Supercharge WordPress Gutenberg editor plugin with 20+ new blocks. Create custom Gutenberg block profiles by user or user roles
 
 == Description ==
 
-This plugin comes over the Gutenberg plugin with an enhancement of the native block system or by adding new blocks. Gutenberg is the future of WordPress, start building with it today and get ready for tomorrow!
+Advanced Gutenberg adds the missing blocks and configuration you need to build profesional websites. Take the control of the new Gutenberg ediotr with user edition profile configuration and 20+ new blocks and options.
 
-Additional features added to Gutenberg plugin:
+## GUTENBERG ADVANCED BLOCK CONTROL
+
 - Create edition profiles and assign user or user group to the profile
-- Select each edition tool per profile
+- Select each edition block per profile
+- Default block configuration (Advanced Gutenberg blocks)
+- Define Advanced Gutenberg block color
 - Activate lightbox effect in Gutenberg galleries
 - Display alt information as lightbox caption in galleries
-- Create your custom CSS styles from the configuration and apply on paragraph blocks
-- Insert the Gutenberg post summary based on content headers
-- Advanced Button block: create button with more styles (hover, border, padding...)
+- Custom CSS styles: create and apply on paragraph blocks
+
+
+## ADVANCED GUTENBERG SPECIAL BLOCKS
+
+- Gutenberg post summary based on content headers
+- Advanced Button block: create button with tons of styles
 - Advanced List block: create list with list icon, icon color
 - Map block: load a Google map position with zoom, icon, tooltip, title...
-- Advanced Table block: create table with style! color, border, cell size and more
+- Advanced Table block: create tables with style like color, border
 - Accordion block: display content in a fully configurable accordion
 - Tabs block: display content in a fully tabbed UX
 - Testimonial block: define avatar, title, text, colors...
 - Counter block: display numbers in a dynamic, fun and engaging way
-- Advanced Image block: a new image block with hover text, overlay, colors, link, advanced size definition
+- Advanced Image block: hover text, overlay, colors, link and more
 - Advanced Image block: load and display local and remote video
 - Advanced Video block: load and display local and remote video
 - Supercharge the separator tool with size, color, spaces
-- Social links block: add predefined or custom icon/link to your favorite social networks
+- Social links block: custom icon and links to your favorite social networks
 
-> <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
+
+## ADVANCED GUTENBERG DEMO
+
+[vimeo https://vimeo.com/113695156]
+
+
+## OUR PLUGINS
+
+** <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
+
+
+Yes we do plugins and we've got some popular ones :)
 
 Main plugins from JoomUnited:
 
-* WP Media Folder: <a href="https://www.joomunited.com/wordpress-products/wp-media-folder" rel="friend"> https://www.joomunited.com/wordpress-products/wp-media-folder</a>
-* WP File Download: <a href="https://www.joomunited.com/wordpress-products/wp-table-manager" rel="friend"> https://www.joomunited.com/wordpress-products/wp-table-manager</a>
-* WP Table Manager: <a href="https://www.joomunited.com/wordpress-products/wp-file-download" rel="friend">https://www.joomunited.com/wordpress-products/wp-file-download</a>
-* WP Speed of Light: <a href="https://www.joomunited.com/wordpress-products/wp-speed-of-light" rel="friend">https://www.joomunited.com/wordpress-products/wp-speed-of-light</a>
-* WP Latest Posts: <a href="https://www.joomunited.com/wordpress-products/wp-latest-posts" rel="friend">https://www.joomunited.com/wordpress-products/wp-latest-posts</a>
+* <a href="https://www.joomunited.com/wordpress-products/wp-media-folder" rel="friend">WP Media Folder:</a>  Supercharge your media library with folders
+* <a href="https://www.joomunited.com/wordpress-products/wp-file-download" rel="friend">WP File Download: </a>  Best in class file and document manager
+* <a href="https://www.joomunited.com/wordpress-products/wp-meta-seo" rel="friend">WP Meta SEO: </a>  Search Engine Optimization made easy
+* <a href="https://www.joomunited.com/wordpress-products/wp-speed-of-light" rel="friend">WP Speed of Light: </a>  Speedup your website in an easy way
+* <a href="https://www.joomunited.com/wordpress-products/wp-latest-posts" rel="friend">WP Latest Posts: </a>  Super flexible latest posts and content
+* <a href="https://www.joomunited.com/wordpress-products/wp-table-manager" rel="friend"> WP Table Manager: </a>  Create and manage tables with style
+
 
 = Support =
 
@@ -99,14 +121,13 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 == Screenshots ==
 
-1. Profile edition with edition tool selection
-1. Attribute profiles to user or user roles
+1. Amazing blocks with new ones each month!
+1. Profiles attribution with block selection
 1. Testimonial and counter blocks
-1. Custom CSS applied to Gutenberg paragraph blocks
 1. Build fully custom accordions and tabs from Gutenberg
-1. Google Maps Gutenberg Block
 1. Advanced Video block including remote video (Youtube...) and local video (.mp4...)
 1. Advanced table manager: manage tables in Gutenberg with several styling options
+1. Google Maps Gutenberg Block
 
 == Changelog ==
 

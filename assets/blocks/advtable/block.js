@@ -2,6 +2,8 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69,6 +71,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvTable, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-table'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
             key: "handleSetup",
             value: function handleSetup(editor, isSelected) {
                 var _this2 = this;
@@ -121,11 +144,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this3 = this;
 
-                var _props = this.props,
-                    isSelected = _props.isSelected,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    className = _props.className;
+                var _props2 = this.props,
+                    isSelected = _props2.isSelected,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    className = _props2.className;
                 var content = attributes.content,
                     align = attributes.align,
                     maxWidth = attributes.maxWidth;
@@ -613,7 +636,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     registerBlockType('advgb/table', {
         title: __('Advanced Table'),
         description: __('Advanced table block with more styles and functions.'),
-        icon: tableBlockIcon,
+        icon: {
+            src: tableBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
         category: 'formatting',
         keywords: [__('table'), __('cell'), __('data')],
         attributes: {
@@ -660,6 +686,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             maxWidth: {
                 type: 'number',
                 default: 0
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvTable,

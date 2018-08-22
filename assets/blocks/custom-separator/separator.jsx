@@ -30,7 +30,7 @@
     addFilter( 'editor.BlockEdit', 'advgb/customSeparatorStyles', function ( BlockEdit ) {
         return ( props ) => {
             if (props.name === "core/separator") {
-                const { isSelected, attributes, setAttributes, id } = props;
+                const { isSelected, attributes, setAttributes, clientId } = props;
                 const { borderColor, borderSize, borderStyle, borderWidth } = attributes;
 
                 return ( [
@@ -72,7 +72,7 @@
                         </PanelBody>
                     </InspectorControls>,
                     <style key="custom-separator-styles">
-                        {`#block-${id} hr {
+                        {`#block-${clientId} hr {
                         border-bottom-color: ${borderColor};
                         border-bottom-style: ${borderStyle};
                         border-bottom-width: ${borderWidth}px;

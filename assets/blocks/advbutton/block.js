@@ -2,6 +2,8 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27,7 +29,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         TextControl = wpComponents.TextControl,
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
-        IconButton = wpComponents.IconButton;
+        IconButton = wpComponents.IconButton,
+        Toolbar = wpComponents.Toolbar;
 
     var AdvButton = function (_Component) {
         _inherits(AdvButton, _Component);
@@ -39,28 +42,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvButton, [{
-            key: 'componentDidMount',
-            value: function componentDidMount() {
+            key: 'componentWillMount',
+            value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    id = _props.id;
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-button'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        });
+
+                        // Finally set changed attribute to true, so we don't modify anything again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
 
 
                 if (!attributes.id) {
-                    setAttributes({ id: 'advgbbtn-' + id });
+                    setAttributes({ id: 'advgbbtn-' + clientId });
                 }
             }
         }, {
             key: 'render',
             value: function render() {
                 var listBorderStyles = [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }];
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    isSelected = _props2.isSelected,
-                    className = _props2.className,
-                    blockID = _props2.id;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    isSelected = _props3.isSelected,
+                    className = _props3.className,
+                    blockID = _props3.clientId;
                 var id = attributes.id,
                     align = attributes.align,
                     url = attributes.url,
@@ -98,8 +122,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ align: align });
                             } }),
                         React.createElement(
-                            'div',
-                            { className: 'components-toolbar' },
+                            Toolbar,
+                            null,
                             React.createElement(IconButton, {
                                 label: __('Refresh this button when it conflict with other buttons styles'),
                                 icon: 'update',
@@ -373,7 +397,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var buttonBlockIcon = React.createElement(
         'svg',
-        { fill: '#000000', height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
+        { height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
         React.createElement('path', { d: 'M0 0h24v24H0V0z', fill: 'none' }),
         React.createElement('path', { d: 'M5 14.5h14v-6H5v6zM11 .55V3.5h2V.55h-2zm8.04 2.5l-1.79 1.79 1.41 1.41 1.8-1.79-1.42-1.41zM13 22.45V19.5h-2v2.95h2zm7.45-3.91l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM3.55 4.46l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zm1.41 15.49l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42z' })
     );
@@ -381,7 +405,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     registerBlockType('advgb/button', {
         title: __('Advanced Button'),
         description: __('New button with more styles.'),
-        icon: buttonBlockIcon,
+        icon: {
+            src: buttonBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
         category: 'layout',
         keywords: [__('button'), __('link')],
         attributes: {
@@ -482,6 +509,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             align: {
                 type: 'string',
                 default: 'none'
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         transforms: {

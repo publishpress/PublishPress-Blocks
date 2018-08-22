@@ -61,21 +61,21 @@ class Jutranslation
     public static function init($main_plugin_file, $extension_slug, $extension_name, $text_domain, $language_file)
     {
         self::$main_plugin_file = $main_plugin_file;
-        self::$extension_slug = $extension_slug;
-        self::$extension_name = $extension_name;
-        self::$text_domain = $text_domain;
-        self::$language_file = plugin_dir_path(self::$main_plugin_file) . $language_file;
+        self::$extension_slug   = $extension_slug;
+        self::$extension_name   = $extension_name;
+        self::$text_domain      = $text_domain;
+        self::$language_file    = plugin_dir_path(self::$main_plugin_file) . $language_file;
 
         //Load override file
         add_action('load_textdomain', array(__CLASS__, 'overrideLanguage'), 1, 2);
 
         add_filter(self::$extension_slug . '_get_addons', function ($addons) {
-            $addon = new \stdClass();
-            $addon->main_plugin_file = Jutranslation::$main_plugin_file;
-            $addon->extension_name = Jutranslation::$extension_name;
-            $addon->extension_slug = Jutranslation::$extension_slug;
-            $addon->text_domain = Jutranslation::$text_domain;
-            $addon->language_file = Jutranslation::$language_file;
+            $addon                          = new \stdClass();
+            $addon->main_plugin_file        = Jutranslation::$main_plugin_file;
+            $addon->extension_name          = Jutranslation::$extension_name;
+            $addon->extension_slug          = Jutranslation::$extension_slug;
+            $addon->text_domain             = Jutranslation::$text_domain;
+            $addon->language_file           = Jutranslation::$language_file;
             $addons[$addon->extension_slug] = $addon;
             return $addons;
         });
@@ -126,7 +126,7 @@ class Jutranslation
     /**
      * Return the main html content for jutranslation
      *
-     * @return void
+     * @return mixed
      */
     public static function getInput()
     {
@@ -143,9 +143,9 @@ class Jutranslation
             plugin_dir_url(self::$main_plugin_file) . 'jutranslation/assets/css/jutranslation.css'
         );
         wp_localize_script('jutranslation', 'jutranslation', array(
-            'token' => wp_create_nonce('jutranslation'),
-            'ajax_action' => 'jutranslation_' . self::$extension_slug ,
-            'base_url' => admin_url('admin-ajax.php').'?'
+            'token'       => wp_create_nonce('jutranslation'),
+            'ajax_action' => 'jutranslation_' . self::$extension_slug,
+            'base_url'    => admin_url('admin-ajax.php') . '?'
         ));
 
         add_thickbox();
@@ -154,7 +154,7 @@ class Jutranslation
         $installed_languages = array();
         foreach (wp_get_installed_translations('core') as $type) {
             foreach ($type as $lang => $value) {
-                $lang = str_replace('_', '-', $lang);
+                $lang                  = str_replace('_', '-', $lang);
                 $installed_languages[] = $lang;
             }
         }
@@ -162,7 +162,7 @@ class Jutranslation
         //Add Polylang languages
         if (function_exists('pll_languages_list')) {
             foreach (pll_languages_list(array('fields' => 'locale')) as $pll_language) {
-                $lang = str_replace('_', '-', $pll_language);
+                $lang                  = str_replace('_', '-', $pll_language);
                 $installed_languages[] = $lang;
             }
         }
@@ -170,7 +170,7 @@ class Jutranslation
         //Add WPML languages
         if (!function_exists('pll_languages_list') && function_exists('icl_get_languages')) {
             foreach (icl_get_languages() as $wpml_language) {
-                $lang = str_replace('_', '-', $wpml_language['default_locale']);
+                $lang                  = str_replace('_', '-', $wpml_language['default_locale']);
                 $installed_languages[] = $lang;
             }
         }
@@ -186,17 +186,33 @@ class Jutranslation
         $addons = apply_filters(self::$extension_slug . '_get_addons', array());
         ksort($addons);
 
+        if (PHP_VERSION_ID < 70300) {
+            if (!function_exists('is_countable')) {
+                /**
+                 * Check countable variables from php version 7.0.3
+                 *
+                 * @param mixed $var Variable to check
+                 *
+                 * @return boolean
+                 */
+                function is_countable($var) // phpcs:ignore
+                {
+                    return is_array($var) || $var instanceof Countable || $var instanceof ResourceBundle || $var instanceof SimpleXmlElement;
+                }
+            }
+        }
+
         $languages = array();
         foreach ($installed_languages as $installed_language) {
             foreach ($addons as $addon) {
-                $langObject = new \stdClass();
-                $langObject->extension = $addon;
-                $langObject->installed = false;
+                $langObject                    = new \stdClass();
+                $langObject->extension         = $addon;
+                $langObject->installed         = false;
                 $langObject->extension_version = '';
-                $langObject->language_version = '';
-                $langObject->revision = '1';
-                $langObject->languageCode = $installed_language;
-                $langObject->modified = '0';
+                $langObject->language_version  = '';
+                $langObject->revision          = '1';
+                $langObject->languageCode      = $installed_language;
+                $langObject->modified          = '0';
 
                 $languages[] = $langObject;
             }
@@ -236,9 +252,9 @@ class Jutranslation
 
             //Check for language override
             $language->overrided = 0;
-            $file = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR . 'plugins';
-            $file .= DIRECTORY_SEPARATOR . $language->extension->text_domain . '-';
-            $file .= str_replace('-', '_', $language->languageCode) . '.override.mo';
+            $file                = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR . 'plugins';
+            $file                .= DIRECTORY_SEPARATOR . $language->extension->text_domain . '-';
+            $file                .= str_replace('-', '_', $language->languageCode) . '.override.mo';
             if (file_exists($file)) {
                 // Load language file
                 $mo = new \MO();
@@ -248,8 +264,10 @@ class Jutranslation
 
                 //Check if a translation exists for each entry
                 foreach ($mo->entries as $entry) {
-                    if (count($entry->translations[0])) {
-                        $language->overrided++;
+                    if (is_countable($entry->translations[0])) { // phpcs:ignore -- We created it in line 198
+                        if (count($entry->translations[0])) {
+                            $language->overrided++;
+                        }
                     }
                 }
             }
@@ -264,7 +282,7 @@ class Jutranslation
         echo '<p>';
         foreach ($addons as $addon) {
             //Get extension version
-            $plugin_data = get_plugin_data($addon->main_plugin_file);
+            $plugin_data       = get_plugin_data($addon->main_plugin_file);
             $extension_version = $plugin_data['Version'];
 
             echo 'Current ' . esc_html($addon->extension_name) . ' version is ' . esc_html($extension_version) . '<br/>';
@@ -286,30 +304,30 @@ class Jutranslation
 
         foreach ($languages as $language) {
             echo '<tr data-slug="' . esc_attr($language->extension->extension_slug) . '" data-lang="' . esc_attr($language->languageCode) .
-                '" data-installed="' . esc_attr($language->installed) . '" data-version="' . esc_attr($language->extension_version) . '">';
+                 '" data-installed="' . esc_attr($language->installed) . '" data-version="' . esc_attr($language->extension_version) . '">';
             echo '<td ' . (count($addons) > 1 ? '' : 'style="display:none;"') . '>' .
-                esc_html($language->extension->extension_name) . '</td>';
+                 esc_html($language->extension->extension_name) . '</td>';
             echo '<td>' . esc_html($language->languageCode) . '</td>';
             echo '<td class="current_version">' .
-            esc_html($language->installed ? ($language->language_version ? ($language->revision ? esc_html($language->language_version .
-            ' rev' . $language->revision) : $language->language_version . ' rev' .
-            $language->revision) : 'Unknown') : 'Not installed') . '</td>';
+                 esc_html($language->installed ? ($language->language_version ? ($language->revision ? esc_html($language->language_version .
+                                                                                                                ' rev' . $language->revision) : $language->language_version . ' rev' .
+                                                                                                                                                $language->revision) : 'Unknown') : 'Not installed') . '</td>';
             echo '<td><div class="original_content">';
             echo '<span class="latest_version"><img src="' .
-                esc_attr(plugin_dir_url(self::$main_plugin_file) . 'jutranslation/assets/images/radio.svg') .
-            '" alt="loading"/></span><br/>';
+                 esc_attr(plugin_dir_url(self::$main_plugin_file) . 'jutranslation/assets/images/radio.svg') .
+                 '" alt="loading"/></span><br/>';
             echo '<a class="jutranslation-override" href="#" data-language="' . esc_attr($language->languageCode) .
-            '">Override (<span class="jutranslation-override-count">' . esc_html($language->overrided) . '</span>)</a> ';
+                 '">Override (<span class="jutranslation-override-count">' . esc_html($language->overrided) . '</span>)</a> ';
             if ($language->languageCode !== 'en-US') {
                 //Reference en-US file can't be modified
                 echo '<a class="jutranslation-edition" href="#" data-language="' .
-                    esc_attr($language->languageCode) . '">Edit original file</a>';
+                     esc_attr($language->languageCode) . '">Edit original file</a>';
             }
 
             //No sharing for en-US
             if ($language->languageCode !== 'en-US') {
                 echo ' <a class="jutranslation-share" style="' . (($language->modified === '0') ? 'display:none' : '') .
-                    '" href="#" data-language="' . esc_attr($language->languageCode) . '">Share with Joomunited</a>';
+                     '" href="#" data-language="' . esc_attr($language->languageCode) . '">Share with Joomunited</a>';
             }
             echo '</div><div class="temporary_content"></div></td>';
             echo '</tr>';
@@ -317,21 +335,17 @@ class Jutranslation
             if (!isset($julanguages[$language->extension->extension_slug])) {
                 $plugin_data = get_plugin_data($language->extension->main_plugin_file);
 
-                $julanguages[$language->extension->extension_slug] = array();
-                $julanguages[$language->extension->extension_slug]['extension'] = $language->extension->extension_slug;
+                $julanguages[$language->extension->extension_slug]                      = array();
+                $julanguages[$language->extension->extension_slug]['extension']         = $language->extension->extension_slug;
                 $julanguages[$language->extension->extension_slug]['extension_version'] = $plugin_data['Version'];
-                $julanguages[$language->extension->extension_slug]['language_version'] = $language->language_version;
-                $julanguages[$language->extension->extension_slug]['languages'] = array();
-                $julanguages[$language->extension->extension_slug]['versions'] = array();
-                $julanguages[$language->extension->extension_slug]['revisions'] = array();
+                $julanguages[$language->extension->extension_slug]['language_version']  = $language->language_version;
+                $julanguages[$language->extension->extension_slug]['languages']         = array();
+                $julanguages[$language->extension->extension_slug]['versions']          = array();
+                $julanguages[$language->extension->extension_slug]['revisions']         = array();
             }
-            $julanguages[$language->extension->extension_slug]['languages'][] = $language->languageCode;
-            $julanguages[
-                $language->extension->extension_slug]['versions'][$language->languageCode
-            ] = $language->language_version;
-            $julanguages[
-                $language->extension->extension_slug]['revisions'][$language->languageCode
-            ] = $language->revision;
+            $julanguages[$language->extension->extension_slug]['languages'][]                        = $language->languageCode;
+            $julanguages[$language->extension->extension_slug]['versions'][$language->languageCode]  = $language->language_version;
+            $julanguages[$language->extension->extension_slug]['revisions'][$language->languageCode] = $language->revision;
         }
         echo '</tbody>
                   </table>';
@@ -382,11 +396,11 @@ class Jutranslation
         }
 
         //Get the file to write to
-        $destination = $_POST['destination'];
-        $file = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR . 'plugins';
-        $file .= DIRECTORY_SEPARATOR . $addons[$plugin]->text_domain . '-' . str_replace('-', '_', $language);
+        $destination       = $_POST['destination'];
+        $file              = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR . 'plugins';
+        $file              .= DIRECTORY_SEPARATOR . $addons[$plugin]->text_domain . '-' . str_replace('-', '_', $language);
         $extension_version = '';
-        $revision = '';
+        $revision          = '';
         switch ($destination) {
             case 'override':
                 $file .= '.override.mo';
@@ -412,7 +426,7 @@ class Jutranslation
                     $extension_version = $mo->headers['Version'];
                 } else {
                     //Use the current extension version
-                    $plugin_data = get_plugin_data($addons[$plugin]->main_plugin_file);
+                    $plugin_data       = get_plugin_data($addons[$plugin]->main_plugin_file);
                     $extension_version = $plugin_data['Version'];
                 }
 
@@ -421,7 +435,7 @@ class Jutranslation
                     $revision = $mo->headers['Revision'];
                 } else {
                     //Use the current extension version
-                    $revision = (int)$_POST['revision'];
+                    $revision = (int) $_POST['revision'];
                 }
                 break;
             default: //Case new language version installation from Joomunited
@@ -433,7 +447,7 @@ class Jutranslation
                 }
 
                 //Get revision
-                $revision = (int)$_POST['revision'];
+                $revision = (int) $_POST['revision'];
 
                 $file .= '.mo';
                 break;
@@ -455,7 +469,7 @@ class Jutranslation
 
         //Check if strings is a valid array
         $strings = json_decode($strings);
-        if ($strings === false || !is_object($strings) || !count((array)$strings)) {
+        if ($strings === false || !is_object($strings) || !count((array) $strings)) {
             $strings = new \stdClass();
         }
 
@@ -464,15 +478,15 @@ class Jutranslation
 
         //Generate the file header
         if ($destination !== 'override') {
-            $mo->headers['Version'] = $extension_version;
+            $mo->headers['Version']  = $extension_version;
             $mo->headers['Revision'] = $revision;
-            $mo->headers['Modified'] = (int)$modified;
+            $mo->headers['Modified'] = (int) $modified;
         }
 
         foreach ($strings as $code => $string) {
             //Only save reference language empty strings
             if ($string !== '' || $language === 'en-US') {
-                $entry = &$mo->make_entry($code, $string);
+                $entry              = &$mo->make_entry($code, $string);
                 $mo->entries[$code] = &$entry;
             }
         }
@@ -528,7 +542,7 @@ class Jutranslation
 
         //Get the language file for reference language en-US
         $file = $addons[$plugin]->language_file;
-        $mo = new \MO();
+        $mo   = new \MO();
         $mo->import_from_file($file);
 
         //Retrieve reference the strings
@@ -541,7 +555,7 @@ class Jutranslation
         $file = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR . 'plugins';
         $file .= DIRECTORY_SEPARATOR . $addons[$plugin]->text_domain . '-';
         $file .= str_replace('-', '_', $language) . '.mo';
-        $mo = new \MO();
+        $mo   = new \MO();
         $mo->import_from_file($file);
 
         //Retrieve default strings
@@ -569,17 +583,20 @@ class Jutranslation
 
         //Generate the final variable cotaining all strings
         $final_result = array();
-        foreach (array(
+        $override_array = array(
             'reference_strings' => $reference_strings,
-            'language_strings' => $language_strings,
-            'override_strings' => $override_strings) as $variable => $strings) {
+            'language_strings'  => $language_strings,
+            'override_strings'  => $override_strings
+        );
+
+        foreach ($override_array as $variable => $strings) {
             foreach ($strings as $constant => $value) {
                 if (empty($final_result[$constant])) {
-                    $obj = new \stdClass();
-                    $obj->key = $constant;
-                    $obj->reference = '';
-                    $obj->language = '';
-                    $obj->override = '';
+                    $obj                     = new \stdClass();
+                    $obj->key                = $constant;
+                    $obj->reference          = '';
+                    $obj->language           = '';
+                    $obj->override           = '';
                     $final_result[$constant] = $obj;
                 }
                 switch ($variable) {
@@ -603,8 +620,6 @@ class Jutranslation
 
     /**
      * Show submit form to share translation
-     *
-     * @throws Exception If language or code invalid
      *
      * @return void
      */
@@ -669,18 +684,18 @@ class Jutranslation
 
         //Get the current extension version
         $plugin_data = get_plugin_data($addons[$plugin]->main_plugin_file);
-        $version = $plugin_data['Version'];
+        $version     = $plugin_data['Version'];
 
-        echo '<form method="POST" '.
-            ' action="https://www.joomunited.com/index.php?option=com_jutranslation&task=contribution.share">';
+        echo '<form method="POST" ' .
+             ' action="https://www.joomunited.com/index.php?option=com_jutranslation&task=contribution.share">';
         echo '<input type="hidden" name="extension" value="' . esc_attr($addons[$plugin]->extension_slug) . '" />';
         echo '<input type="hidden" name="extension_language" value="' . esc_attr($language) . '" />';
         echo '<input type="hidden" name="extension_version" value="' . esc_attr($version) . '" />';
-        echo '<textarea style="display: none" name="strings">' . esc_html($strings) . '</textarea>';
+        echo '<textarea style="display: none" name="strings">' . htmlentities($strings) . '</textarea>'; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
         echo '</form>';
         //Add waiting image
         echo '<div style="text-align:center"><img src="' .
-            esc_attr(plugin_dir_url(self::$main_plugin_file) . 'jutranslation/assets/images/preview_loader.gif"') .'</div>';
+             esc_attr(plugin_dir_url(self::$main_plugin_file)) . 'jutranslation/assets/images/preview_loader.gif"></div>';
 
         //Submit automatically the form on page loading
         echo '<script type="text/javascript">document.forms[0].submit();</script>';
@@ -705,8 +720,8 @@ class Jutranslation
 
         foreach ($addons as $addon) {
             if ($text_domain === $addon->text_domain) {
-                $path_parts = explode(DIRECTORY_SEPARATOR, $mofile);
-                $filename = $path_parts[count($path_parts) - 1];
+                $path_parts     = explode(DIRECTORY_SEPARATOR, $mofile);
+                $filename       = $path_parts[count($path_parts) - 1];
                 $filename_parts = explode('.', $filename);
 
                 //Return if it's action already for overrode file
