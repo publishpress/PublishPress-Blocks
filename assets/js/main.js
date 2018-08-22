@@ -158,7 +158,10 @@
                 }
             }
         }
-        setTabFromCookie();
+
+        if (!window.location.hash) {
+            setTabFromCookie();
+        }
 
         // Get cookie
         function getCookie(cname) {
