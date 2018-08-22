@@ -45,6 +45,11 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Social links block: custom icon and links to your favorite social networks
 
 
+## ADVANCED GUTENBERG DEMO
+
+[vimeo https://vimeo.com/113695156]
+
+
 ## OUR PLUGINS
 
 ** <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
@@ -116,14 +121,13 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 == Screenshots ==
 
-1. Profile edition with edition tool selection
-1. Attribute profiles to user or user roles
+1. Amazing blocks with new ones each month!
+1. Profiles attribution with block selection
 1. Testimonial and counter blocks
-1. Custom CSS applied to Gutenberg paragraph blocks
 1. Build fully custom accordions and tabs from Gutenberg
-1. Google Maps Gutenberg Block
 1. Advanced Video block including remote video (Youtube...) and local video (.mp4...)
 1. Advanced table manager: manage tables in Gutenberg with several styling options
+1. Google Maps Gutenberg Block
 
 == Changelog ==
 
