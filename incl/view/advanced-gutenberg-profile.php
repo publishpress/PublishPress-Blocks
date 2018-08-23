@@ -43,6 +43,7 @@ if ($updating) {
     wp_enqueue_script('wp-element');
     wp_enqueue_script('wp-data');
     wp_enqueue_script('wp-components');
+    wp_enqueue_script('wp-block-library');
     wp_enqueue_script('wp-core-blocks');
     wp_enqueue_script('wp-editor');
     do_action('enqueue_block_editor_assets');

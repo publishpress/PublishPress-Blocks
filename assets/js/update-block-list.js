@@ -1,9 +1,9 @@
 window.onload = function () {
     if (typeof wp.blocks !== 'undefined') {
-        if (typeof wp.blocks.registerCoreBlocks === 'function') {
-            wp.blocks.registerCoreBlocks();
-        } else if (typeof wp.coreBlocks.registerCoreBlocks === 'function') {
+        if (typeof wp.coreBlocks.registerCoreBlocks === 'function') {
             wp.coreBlocks.registerCoreBlocks();
+        } else if (typeof wp.blockLibrary.registerCoreBlocks === 'function') {
+            wp.blockLibrary.registerCoreBlocks();
         }
 
         var allBlocks = wp.blocks.getBlockTypes();
