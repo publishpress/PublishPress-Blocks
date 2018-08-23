@@ -116,7 +116,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     if (realID.indexOf('&') > -1) realID = realID.substring(0, realID.indexOf('&'));
 
-                    wp.apiRequest({ path: "/oembed/1.0/proxy&url=" + encodeURIComponent(url) }).then(function (obj) {
+                    wp.apiFetch({ path: wp.url.addQueryArgs("/oembed/1.0/proxy?url=" + encodeURIComponent(url)) }).then(function (obj) {
                         _this2.setState({ fetching: false });
                         if (!!obj.title && !!obj.provider_name) {
                             setAttributes({
