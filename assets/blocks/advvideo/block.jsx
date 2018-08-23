@@ -146,8 +146,12 @@
 
             const blockClassName = [
                 'advgb-video-block',
-                !!videoFullWidth && 'full-width',
                 !!openInLightbox && !!videoURL && 'advgb-video-lightbox',
+            ].filter( Boolean ).join( ' ' );
+
+            const videoWrapperClass = [
+                'advgb-video-wrapper',
+                !!videoFullWidth && 'full-width',
             ].filter( Boolean ).join( ' ' );
 
             const videoHostIcon = {
@@ -273,9 +277,9 @@
                             }
                         </PanelBody>
                     </InspectorControls>
-                    <div className={ blockClassName } style={ { width: videoWidth } }>
+                    <div className={ blockClassName }>
                         {!!openInLightbox &&
-                        <div className={ 'advgb-video-wrapper' } style={ { backgroundColor: overlayColor } }>
+                        <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor,  width: videoWidth } }>
                             <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
                             <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
                                 {!poster &&
@@ -444,7 +448,7 @@
             },
             overlayColor: {
                 type: 'string',
-                default: '#2196f3',
+                default: '#EEEEEE',
             },
             poster: {
                 type: 'string',
@@ -484,9 +488,13 @@
                 !!openInLightbox && !!videoURL && 'advgb-video-lightbox',
             ].filter( Boolean ).join( ' ' );
 
+            const videoWrapperClass = [
+                'advgb-video-wrapper',
+                !!videoFullWidth && 'full-width',
+            ].filter( Boolean ).join( ' ' );
+
             return (
                 <div className={ blockClassName }
-                     style={ { width: videoWidth } }
                      data-video={ videoURL }
                      data-source={ videoSourceType }
                 >
@@ -512,7 +520,7 @@
                         || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />
                     ) }
                     {!!openInLightbox &&
-                    <div className={ 'advgb-video-wrapper' } style={ { backgroundColor: overlayColor } }>
+                    <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor, width: videoWidth } }>
                         <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
                         <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
                             <div className={ 'advgb-play-button' }>
