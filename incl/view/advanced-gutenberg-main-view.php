@@ -1,6 +1,11 @@
 <?php
 defined('ABSPATH') || die;
 
+if (!defined('GUTENBERG_VERSION')) {
+    echo '<div class="ju-notice-error">'. esc_html__('You need to activate Gutenberg to use our plugin!', 'advanced-gutenberg') .'</div>';
+    return false;
+}
+
 $tabs_data = array(
     array(
         'id' => 'profiles',

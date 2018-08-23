@@ -429,7 +429,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "a",
                             { target: "_blank",
                                 className: "button button-large",
-                                href: wpApiSettings.schema.home + '/wp-admin/admin.php?page=advgb_main'
+                                href: wpApiSettings.schema.home + '/wp-admin/admin.php?page=advgb_main#settings'
                             },
                             __('Add Google API Key')
                         )

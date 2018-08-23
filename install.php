@@ -5,7 +5,21 @@ defined('ABSPATH') || die;
 register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
     // Check if Gutenberg is activated
     if (!function_exists('register_block_type')) {
-        wp_die(esc_html__('Gutenberg not activated!', 'advanced-gutenberg'));
+        $gutenbergInstallUrl = wp_nonce_url(
+            add_query_arg(
+                array(
+                    'action' => 'install-plugin',
+                    'plugin' => 'gutenberg'
+                ),
+                admin_url('update.php')
+            ),
+            'install-plugin_gutenberg'
+        );
+
+        wp_die(
+            esc_html__('Gutenberg is not detected! Activate it or', 'advanced-gutenberg')
+            . ': <a href="'. esc_attr($gutenbergInstallUrl) .'">'. esc_html__('Install Gutenberg Now!', 'advanced-gutenberg') .'</a>'
+        );
         exit;
     }
 
@@ -14,8 +28,8 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
         if (version_compare(GUTENBERG_VERSION, $versionRequired, 'lt')) {
             wp_die(
                 esc_html__('We require at least Gutenberg version ', 'advanced-gutenberg')
-                . esc_html($versionRequired) .
-                esc_html__('. Please update Gutenberg then comeback later!', 'advanced-gutenberg')
+                . esc_html($versionRequired) . '. '.
+                esc_html__('Please update Gutenberg then comeback later!', 'advanced-gutenberg')
             );
             exit;
         }

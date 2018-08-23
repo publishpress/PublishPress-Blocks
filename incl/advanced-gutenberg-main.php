@@ -144,7 +144,7 @@ float: left;'
 
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbProfile'));
-            add_action('admin_init', array($this, 'initBlocksList'));
+            add_action('admin_footer', array($this, 'initBlocksList'));
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
             add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
@@ -772,6 +772,7 @@ float: left;'
             wp_enqueue_script('wp-element');
             wp_enqueue_script('wp-data');
             wp_enqueue_script('wp-components');
+            wp_enqueue_script('wp-block-library');
             wp_enqueue_script('wp-core-blocks');
             wp_enqueue_script('wp-editor');
             do_action('enqueue_block_editor_assets');

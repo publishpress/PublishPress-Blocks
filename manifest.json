@@ -2,9 +2,23 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "wp_version": "4.9.8",
   "changelog": {
+    "1.6.1": [
+      {
+        "type": "fix",
+        "title": "PHP warning when install plugin for the first time"
+      },
+      {
+        "type": "fix",
+        "title": "Blocks with custom category not showing in Profile"
+      },
+      {
+        "type": "fix",
+        "title": "Poster not change after fetching video from remote host (Adv Video block)"
+      }
+    ],
     "1.6.0": [
       {
         "type": "feature",
