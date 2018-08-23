@@ -17,8 +17,8 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
         );
 
         wp_die(
-            esc_html__('Gutenberg not activated!', 'advanced-gutenberg')
-            . ' <a href="'. esc_attr($gutenbergInstallUrl) .'">'. esc_html__('Install Gutenberg Now!', 'advanced-gutenberg') .'</a>'
+            esc_html__('Gutenberg is not detected! Activate it or', 'advanced-gutenberg')
+            . ': <a href="'. esc_attr($gutenbergInstallUrl) .'">'. esc_html__('Install Gutenberg Now!', 'advanced-gutenberg') .'</a>'
         );
         exit;
     }
