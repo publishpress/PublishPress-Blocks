@@ -87,7 +87,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
                 var videoID = attributes.videoID,
-                    poster = attributes.poster;
+                    poster = attributes.poster,
+                    posterID = attributes.posterID;
 
                 var realID = videoID;
 
@@ -120,7 +121,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         if (!!obj.title && !!obj.provider_name) {
                             setAttributes({
                                 videoTitle: obj.title,
-                                poster: poster ? poster : obj.thumbnail_url
+                                poster: !!posterID ? poster : obj.thumbnail_url
                             });
 
                             switch (obj.provider_name) {

@@ -61,7 +61,7 @@
 
         fetchVideoInfo() {
             const { attributes, setAttributes } = this.props;
-            const { videoID, poster } = attributes;
+            const { videoID, poster, posterID } = attributes;
             let realID = videoID;
 
             if (!!videoID) {
@@ -95,7 +95,7 @@
                         if (!!obj.title && !!obj.provider_name) {
                             setAttributes( {
                                 videoTitle: obj.title,
-                                poster: poster ? poster : obj.thumbnail_url,
+                                poster: !!posterID ? poster : obj.thumbnail_url,
                             } );
 
                             switch (obj.provider_name) {
