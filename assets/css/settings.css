@@ -198,10 +198,11 @@ li.block-config-item {
     padding: 20px 10px;
 }
 
-li.block-config-item svg {
+li.block-config-item .block-icon svg {
     vertical-align: middle;
     width: auto;
     height: 30px;
+    fill: currentColor;
 }
 
 li.block-config-item .block-config-button {

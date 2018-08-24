@@ -255,8 +255,14 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
         </div>
         <ul class="blocks-config-list clearfix">
             <?php foreach ($advgb_blocks as $block) : ?>
+            <?php $iconColor = '';
+            if (isset($block['iconColor'])) :
+                $iconColor = 'style=color:' . $block['iconColor'];
+            endif; ?>
             <li class="block-config-item ju-settings-option">
-                <?php echo $block['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
+                <span class="block-icon" <?php echo esc_attr($iconColor) ?>>
+                    <?php echo $block['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
+                </span>
                 <span class="block-title"><?php echo esc_html($block['title']); ?></span>
                 <i class="mi mi-settings block-config-button"
                    title="<?php esc_html_e('Edit', 'advanced-gutenberg') ?>"

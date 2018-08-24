@@ -77,7 +77,7 @@ ul.blocks-list li.block-item .ju-setting-label i {
     width: auto;
 }
 
-ul.blocks-list li.block-item[data-type*="core"] .ju-setting-label .block-icon svg {
+ul.blocks-list li.block-item .ju-setting-label .block-icon svg {
     fill: currentColor;
 }
 
