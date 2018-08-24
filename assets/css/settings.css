@@ -98,6 +98,7 @@
 
 .advgb-customstyles-items {
     margin-bottom: 3px;
+    cursor: pointer;
 }
 
 .advgb-customstyles-items a.copy,
