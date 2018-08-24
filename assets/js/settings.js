@@ -442,6 +442,8 @@ jQuery(document).ready(function ($) {
         var myIdentifyColor =  $('#advgb-customstyles-identify-color').val().trim();
         var nonce_val = $('#advgb_settings_nonce_field').val();
 
+        $('#save_custom_styles').prop('disabled', true).removeClass('waves-effect');
+
         $.ajax({
             url: ajaxurl,
             type: 'POST',
@@ -466,9 +468,12 @@ jQuery(document).ready(function ($) {
                 } else {
                     alert(stt)
                 }
+
+                $('#save_custom_styles').prop('disabled', false).addClass('waves-effect');
             },
             error: function(jqxhr, textStatus, error) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
+                $('#save_custom_styles').prop('disabled', false).addClass('waves-effect');
             }
         })
     }
