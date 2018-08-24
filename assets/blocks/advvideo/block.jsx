@@ -61,7 +61,7 @@
 
         fetchVideoInfo() {
             const { attributes, setAttributes } = this.props;
-            const { videoID, poster } = attributes;
+            const { videoID, poster, posterID } = attributes;
             let realID = videoID;
 
             if (!!videoID) {
@@ -89,13 +89,13 @@
                 if (realID.indexOf( '&' ) > -1)
                     realID = realID.substring( 0, realID.indexOf( '&' ) );
 
-                wp.apiRequest( { path: `/oembed/1.0/proxy&url=${ encodeURIComponent( url ) }` } ).then(
+                wp.apiFetch( { path: wp.url.addQueryArgs(`/oembed/1.0/proxy?url=${ encodeURIComponent( url ) }`) } ).then(
                     (obj) => {
                         this.setState( { fetching: false } );
                         if (!!obj.title && !!obj.provider_name) {
                             setAttributes( {
                                 videoTitle: obj.title,
-                                poster: poster ? poster : obj.thumbnail_url,
+                                poster: !!posterID ? poster : obj.thumbnail_url,
                             } );
 
                             switch (obj.provider_name) {
@@ -146,8 +146,12 @@
 
             const blockClassName = [
                 'advgb-video-block',
-                !!videoFullWidth && 'full-width',
                 !!openInLightbox && !!videoURL && 'advgb-video-lightbox',
+            ].filter( Boolean ).join( ' ' );
+
+            const videoWrapperClass = [
+                'advgb-video-wrapper',
+                !!videoFullWidth && 'full-width',
             ].filter( Boolean ).join( ' ' );
 
             const videoHostIcon = {
@@ -273,9 +277,9 @@
                             }
                         </PanelBody>
                     </InspectorControls>
-                    <div className={ blockClassName } style={ { width: videoWidth } }>
+                    <div className={ blockClassName }>
                         {!!openInLightbox &&
-                        <div className={ 'advgb-video-wrapper' } style={ { backgroundColor: overlayColor } }>
+                        <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor,  width: videoWidth } }>
                             <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
                             <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
                                 {!poster &&
@@ -340,7 +344,7 @@
                                 <Button
                                     className="button button-large"
                                     disabled={ !videoID || videoSourceType === 'local' }
-                                    style={ { height: '31px', margin: '1px 0' } }
+                                    style={ { height: '31px' } }
                                     onClick={ this.fetchVideoInfo }
                                 >
                                     { __( 'Fetch' ) }
@@ -352,7 +356,7 @@
                                     onSelect={ (video) => setAttributes( { videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' } ) }
                                     render={ ( { open } ) => (
                                         <Button
-                                            className="button button-large"
+                                            className="button button-large is-primary"
                                             onClick={ open }
                                         >
                                             { __( 'Local video' ) }
@@ -444,7 +448,7 @@
             },
             overlayColor: {
                 type: 'string',
-                default: '#2196f3',
+                default: '#EEEEEE',
             },
             poster: {
                 type: 'string',
@@ -484,9 +488,13 @@
                 !!openInLightbox && !!videoURL && 'advgb-video-lightbox',
             ].filter( Boolean ).join( ' ' );
 
+            const videoWrapperClass = [
+                'advgb-video-wrapper',
+                !!videoFullWidth && 'full-width',
+            ].filter( Boolean ).join( ' ' );
+
             return (
                 <div className={ blockClassName }
-                     style={ { width: videoWidth } }
                      data-video={ videoURL }
                      data-source={ videoSourceType }
                 >
@@ -512,7 +520,7 @@
                         || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />
                     ) }
                     {!!openInLightbox &&
-                    <div className={ 'advgb-video-wrapper' } style={ { backgroundColor: overlayColor } }>
+                    <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor, width: videoWidth } }>
                         <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
                         <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
                             <div className={ 'advgb-play-button' }>

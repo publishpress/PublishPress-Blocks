@@ -285,9 +285,9 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 }
 
 /*Advanced Video styles*/
-.advgb-video-block.full-width,
-.advgb-video-block.full-width video,
-.advgb-video-block.full-width iframe {
+.advgb-video-wrapper.full-width,
+.advgb-video-wrapper.full-width video,
+.advgb-video-wrapper.full-width iframe {
     width: 100% !important;
 }
 
@@ -306,8 +306,9 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
     right: 0;
     z-index: 2;
     opacity: 0.5;
-    background-size: cover;
+    background-size: auto;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 .advgb-button-wrapper {

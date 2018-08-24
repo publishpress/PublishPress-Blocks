@@ -275,10 +275,10 @@ jQuery(document).ready(function ($) {
 
         // Choose custom style
         (initTableLinks = function () {
-            $('#mybootstrap .advgb-customstyles-items a:not(".copy, .edit, .trash, .advgb-customstyles-new"), #mybootstrap .advgb-customstyles-items ul').unbind('click').click(function (e) {
-                id = $(this).parent().data('id-customstyle');
+            $('#mybootstrap .advgb-customstyles-items').unbind('click').click(function (e) {
+                id = $(this).data('id-customstyle');
                 $('#mybootstrap .advgb-customstyles-list li').removeClass('active');
-                $(this).parent().addClass('active');
+                $(this).addClass('active');
                 customStylePreview(id);
 
                 return false;
@@ -401,6 +401,8 @@ jQuery(document).ready(function ($) {
                 cssString = cssString.replaceAll("  ", "");
                 myCustomCss = cssString;
 
+                previewTarget.removeAttr('style');
+
                 var attributes = cssString.split(';');
                 for(var i=0; i<attributes.length; i++) {
                     if( attributes[i].indexOf(":") > -1) {
@@ -442,6 +444,8 @@ jQuery(document).ready(function ($) {
         var myIdentifyColor =  $('#advgb-customstyles-identify-color').val().trim();
         var nonce_val = $('#advgb_settings_nonce_field').val();
 
+        $('#save_custom_styles').prop('disabled', true).removeClass('waves-effect');
+
         $.ajax({
             url: ajaxurl,
             type: 'POST',
@@ -466,9 +470,12 @@ jQuery(document).ready(function ($) {
                 } else {
                     alert(stt)
                 }
+
+                $('#save_custom_styles').prop('disabled', false).addClass('waves-effect');
             },
             error: function(jqxhr, textStatus, error) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
+                $('#save_custom_styles').prop('disabled', false).addClass('waves-effect');
             }
         })
     }

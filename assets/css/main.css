@@ -62,3 +62,8 @@
     font-size: 18px;
     vertical-align: text-top;
 }
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

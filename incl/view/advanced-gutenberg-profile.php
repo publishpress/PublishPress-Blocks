@@ -43,11 +43,17 @@ if ($updating) {
     wp_enqueue_script('wp-element');
     wp_enqueue_script('wp-data');
     wp_enqueue_script('wp-components');
+    wp_enqueue_script('wp-block-library');
     wp_enqueue_script('wp-core-blocks');
     wp_enqueue_script('wp-editor');
     do_action('enqueue_block_editor_assets');
     wp_enqueue_script('update_list');
     wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
+    wp_add_inline_script(
+        'wp-blocks',
+        sprintf('wp.blocks.setCategories( %s );', wp_json_encode(get_block_categories(get_post()))),
+        'after'
+    );
 }
 ?>
 

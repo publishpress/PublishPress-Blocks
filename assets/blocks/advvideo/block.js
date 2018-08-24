@@ -87,7 +87,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
                 var videoID = attributes.videoID,
-                    poster = attributes.poster;
+                    poster = attributes.poster,
+                    posterID = attributes.posterID;
 
                 var realID = videoID;
 
@@ -115,12 +116,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     if (realID.indexOf('&') > -1) realID = realID.substring(0, realID.indexOf('&'));
 
-                    wp.apiRequest({ path: "/oembed/1.0/proxy&url=" + encodeURIComponent(url) }).then(function (obj) {
+                    wp.apiFetch({ path: wp.url.addQueryArgs("/oembed/1.0/proxy?url=" + encodeURIComponent(url)) }).then(function (obj) {
                         _this2.setState({ fetching: false });
                         if (!!obj.title && !!obj.provider_name) {
                             setAttributes({
                                 videoTitle: obj.title,
-                                poster: poster ? poster : obj.thumbnail_url
+                                poster: !!posterID ? poster : obj.thumbnail_url
                             });
 
                             switch (obj.provider_name) {
@@ -171,7 +172,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     openInLightbox = attributes.openInLightbox;
 
 
-                var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-video-block', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
+
+                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
 
                 var videoHostIcon = {
                     youtube: React.createElement(
@@ -342,10 +345,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: blockClassName, style: { width: videoWidth } },
+                        { className: blockClassName },
                         !!openInLightbox && React.createElement(
                             "div",
-                            { className: 'advgb-video-wrapper', style: { backgroundColor: overlayColor } },
+                            { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
                             React.createElement("div", { className: 'advgb-video-poster', style: { backgroundImage: "url(" + poster + ")" } }),
                             React.createElement(
                                 "div",
@@ -417,7 +420,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     {
                                         className: "button button-large",
                                         disabled: !videoID || videoSourceType === 'local',
-                                        style: { height: '31px', margin: '1px 0' },
+                                        style: { height: '31px' },
                                         onClick: this.fetchVideoInfo
                                     },
                                     __('Fetch')
@@ -438,7 +441,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return React.createElement(
                                             Button,
                                             {
-                                                className: "button button-large",
+                                                className: "button button-large is-primary",
                                                 onClick: open
                                             },
                                             __('Local video')
@@ -542,7 +545,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             overlayColor: {
                 type: 'string',
-                default: '#2196f3'
+                default: '#EEEEEE'
             },
             poster: {
                 type: 'string'
@@ -578,10 +581,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
 
+            var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
+
             return React.createElement(
                 "div",
                 { className: blockClassName,
-                    style: { width: videoWidth },
                     "data-video": videoURL,
                     "data-source": videoSourceType
                 },
@@ -602,7 +606,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
                 !!openInLightbox && React.createElement(
                     "div",
-                    { className: 'advgb-video-wrapper', style: { backgroundColor: overlayColor } },
+                    { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
                     React.createElement("div", { className: 'advgb-video-poster', style: { backgroundImage: "url(" + poster + ")" } }),
                     React.createElement(
                         "div",
