@@ -275,10 +275,10 @@ jQuery(document).ready(function ($) {
 
         // Choose custom style
         (initTableLinks = function () {
-            $('#mybootstrap .advgb-customstyles-items a:not(".copy, .edit, .trash, .advgb-customstyles-new"), #mybootstrap .advgb-customstyles-items ul').unbind('click').click(function (e) {
-                id = $(this).parent().data('id-customstyle');
+            $('#mybootstrap .advgb-customstyles-items').unbind('click').click(function (e) {
+                id = $(this).data('id-customstyle');
                 $('#mybootstrap .advgb-customstyles-list li').removeClass('active');
-                $(this).parent().addClass('active');
+                $(this).addClass('active');
                 customStylePreview(id);
 
                 return false;
