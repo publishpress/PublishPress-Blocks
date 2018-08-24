@@ -401,6 +401,8 @@ jQuery(document).ready(function ($) {
                 cssString = cssString.replaceAll("  ", "");
                 myCustomCss = cssString;
 
+                previewTarget.removeAttr('style');
+
                 var attributes = cssString.split(';');
                 for(var i=0; i<attributes.length; i++) {
                     if( attributes[i].indexOf(":") > -1) {
