@@ -210,6 +210,7 @@
                             style={ { color: titleColor } }
                             isSelected={ isSelected && currentEdit === 'title' }
                             onSetup={ ( editor ) => this.handleSetup( editor, 'title' ) }
+                            placeholder={ __( 'Enter title…' ) }
                         />
                         <RichText
                             tagName={ 'p' }
@@ -219,6 +220,7 @@
                             style={ { color: subtitleColor } }
                             isSelected={ isSelected && currentEdit === 'subtitle' }
                             onSetup={ ( editor ) => this.handleSetup( editor, 'subtitle' ) }
+                            placeholder={ __( 'Enter subtitle…' ) }
                         />
                     </div>
                 </Fragment>
