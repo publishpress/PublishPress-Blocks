@@ -261,7 +261,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'name');
                                 },
-                                style: { color: nameColor }
+                                style: { color: nameColor },
+                                placeholder: __('Text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -274,7 +275,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'position');
                                 },
-                                style: { color: positionColor }
+                                style: { color: positionColor },
+                                placeholder: __('Text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -287,7 +289,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc');
                                 },
-                                style: { color: descColor }
+                                style: { color: descColor },
+                                placeholder: __('Text…')
                             })
                         ),
                         React.createElement(
@@ -343,7 +346,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'name2');
                                 },
-                                style: { color: nameColor }
+                                style: { color: nameColor },
+                                placeholder: __('Text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -356,7 +360,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'position2');
                                 },
-                                style: { color: positionColor }
+                                style: { color: positionColor },
+                                placeholder: __('Text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -369,7 +374,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc2');
                                 },
-                                style: { color: descColor }
+                                style: { color: descColor },
+                                placeholder: __('Text…')
                             })
                         ),
                         React.createElement(
@@ -425,7 +431,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'name3');
                                 },
-                                style: { color: nameColor }
+                                style: { color: nameColor },
+                                placeholder: __('Text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -438,7 +445,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'position3');
                                 },
-                                style: { color: positionColor }
+                                style: { color: positionColor },
+                                placeholder: __('Text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -451,7 +459,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc3');
                                 },
-                                style: { color: descColor }
+                                style: { color: descColor },
+                                placeholder: __('Text…')
                             })
                         )
                     )

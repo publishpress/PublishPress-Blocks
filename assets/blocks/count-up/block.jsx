@@ -150,6 +150,7 @@
                                 isSelected={ isSelected && currentEdit === 'header' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'header' ) }
                                 style={ { color: headerTextColor } }
+                                placeholder={ __( 'Enter text…' ) }
                             />
                             <RichText
                                 tagName={ 'div' }
@@ -166,6 +167,7 @@
                                 isSelected={ isSelected && currentEdit === 'desc' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
                                 style={ { color: descTextColor } }
+                                placeholder={ __( 'Enter text…' ) }
                             />
                         </div>
                         <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
@@ -176,6 +178,7 @@
                                 isSelected={ isSelected && currentEdit === 'header2' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'header2' ) }
                                 style={ { color: headerTextColor } }
+                                placeholder={ __( 'Enter text…' ) }
                             />
                             <RichText
                                 tagName={ 'div' }
@@ -192,6 +195,7 @@
                                 isSelected={ isSelected && currentEdit === 'desc2' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
                                 style={ { color: descTextColor } }
+                                placeholder={ __( 'Enter text…' ) }
                             />
                         </div>
                         <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
@@ -202,6 +206,7 @@
                                 isSelected={ isSelected && currentEdit === 'header3' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'header3' ) }
                                 style={ { color: headerTextColor } }
+                                placeholder={ __( 'Enter text…' ) }
                             />
                             <RichText
                                 tagName={ 'div' }
@@ -218,6 +223,7 @@
                                 isSelected={ isSelected && currentEdit === 'desc3' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
                                 style={ { color: descTextColor } }
+                                placeholder={ __( 'Enter text…' ) }
                             />
                         </div>
                     </div>
