@@ -320,7 +320,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(RangeControl, {
                                 label: __('Border width'),
                                 value: borderWidth,
-                                min: 1,
+                                min: 0,
                                 max: 10,
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderWidth: value });
@@ -476,11 +476,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             headerTextColor: {
                 type: 'string',
-                default: '#fff'
+                default: '#eee'
             },
             headerIcon: {
                 type: 'string',
-                default: 'plusCircleOutline'
+                default: 'unfold'
             },
             headerIconColor: {
                 type: 'string',
@@ -498,7 +498,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             borderWidth: {
                 type: 'number',
-                default: 1
+                default: 0
             },
             borderColor: {
                 type: 'string'
