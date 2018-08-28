@@ -224,7 +224,7 @@
                             <RangeControl
                                 label={ __( 'Border width' ) }
                                 value={ borderWidth }
-                                min={ 1 }
+                                min={ 0 }
                                 max={ 10 }
                                 onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
                             />
@@ -351,11 +351,11 @@
             },
             headerTextColor: {
                 type: 'string',
-                default: '#fff',
+                default: '#eee',
             },
             headerIcon: {
                 type: 'string',
-                default: 'plusCircleOutline',
+                default: 'unfold',
             },
             headerIconColor: {
                 type: 'string',
@@ -373,7 +373,7 @@
             },
             borderWidth: {
                 type: 'number',
-                default: 1,
+                default: 0,
             },
             borderColor: {
                 type: 'string',

@@ -79,7 +79,7 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         <div class="col-sm-12" id="css-tips" style="border-top: 1px solid #ccc; margin-top: -25px;">
             <small><?php esc_html_e('Hint: Use "Ctrl + Space" for auto completion', 'advanced-gutenberg') ?></small>
         </div>
-        <div style="text-align: center; margin-top: 15px; margin-bottom: 15px">
+        <div style="text-align: center; margin-top: 15px; margin-bottom: 15px; clear: both;">
             <form method="POST">
                 <?php wp_nonce_field('advgb_cstyles_nonce', 'advgb_cstyles_nonce_field'); ?>
                 <button class="ju-button orange-button waves-effect waves-light"

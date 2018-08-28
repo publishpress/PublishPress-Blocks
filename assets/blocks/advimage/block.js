@@ -286,7 +286,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             isSelected: isSelected && currentEdit === 'title',
                             onSetup: function onSetup(editor) {
                                 return _this3.handleSetup(editor, 'title');
-                            }
+                            },
+                            placeholder: __('Enter title…')
                         }),
                         React.createElement(RichText, {
                             tagName: 'p',
@@ -299,7 +300,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             isSelected: isSelected && currentEdit === 'subtitle',
                             onSetup: function onSetup(editor) {
                                 return _this3.handleSetup(editor, 'subtitle');
-                            }
+                            },
+                            placeholder: __('Enter subtitle…')
                         })
                     )
                 );

@@ -2,9 +2,19 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "wp_version": "4.9.8",
   "changelog": {
+    "1.6.2": [
+      {
+        "type": "fix",
+        "title": "Cannot change menu on Firefox"
+      },
+      {
+        "type": "fix",
+        "title": "Cannot re-edit title and subtitle when its empty (Adv Image block)"
+      }
+    ],
     "1.6.1": [
       {
         "type": "fix",

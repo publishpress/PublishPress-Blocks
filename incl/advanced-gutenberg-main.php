@@ -834,6 +834,10 @@ float: left;'
             plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
         );
         wp_register_style(
+            'waves_styles',
+            plugins_url('assets/css/waves.min.css', dirname(__FILE__))
+        );
+        wp_register_style(
             'material_icon_font',
             plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
         );
@@ -861,7 +865,7 @@ float: left;'
         );
         wp_register_script(
             'waves_js',
-            plugins_url('assets/js/waves.js', dirname(__FILE__))
+            plugins_url('assets/js/waves.min.js', dirname(__FILE__))
         );
         wp_register_script(
             'tabs_js',
@@ -953,6 +957,7 @@ float: left;'
         wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
         wp_enqueue_style('material_icon_font');
         wp_enqueue_style('advgb_quirk');
+        wp_enqueue_style('waves_styles');
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
             wp_enqueue_style('ju_framework_styles');
         } else {

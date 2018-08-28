@@ -89,56 +89,6 @@
     background-color: #ff8726;
 }
 
-.waves-effect {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    vertical-align: middle;
-    z-index: 1;
-    will-change: opacity, transform;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-}
-
-.waves-effect .waves-ripple {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    margin-top: 10px;
-    margin-left: -10px;
-    opacity: 0;
-    background: rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    -webkit-transition: all 0.7s ease-out;
-    -moz-transition: all 0.7s ease-out;
-    -ms-transition: all 0.7s ease-out;
-    -o-transition: all 0.7s ease-out;
-    transition: all 0.7s ease-out;
-    -webkit-transform: scale(0);
-    -moz-transform: scale(0);
-    -ms-transform: scale(0);
-    -o-transform: scale(0);
-    transform: scale(0);
-}
-
-.waves-effect.waves-light .waves-ripple {
-    background-color: rgba(255, 255, 255, 0.45);
-}
-
-.waves-effect.waves-dark .waves-ripple {
-    background-color: rgba(140, 140, 140, 0.45);
-}
-
 .ju-button {
     background-color: transparent;
     color: #000;
@@ -514,7 +464,8 @@ input.ju-radiobox:focus {
     font-family: 'Material Icons';
     font-size: 24px;
     vertical-align: text-bottom;
-    float: right;
+    position: absolute;
+    right: 15px;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.with-submenus:not(.expanded):after {
@@ -542,11 +493,11 @@ input.ju-radiobox:focus {
     display: block;
     max-height: 0;
     background-color: #4c79ca;
-    -webkit-transition: max-height cubic-bezier(0.3, 1.1, 0.1, 1.1) 1s;
-    -moz-transition: max-height cubic-bezier(0.3, 1.1, 0.1, 1.1) 1s;
-    -ms-transition: max-height cubic-bezier(0.3, 1.1, 0.1, 1.1) 1s;
-    -o-transition: max-height cubic-bezier(0.3, 1.1, 0.1, 1.1) 1s;
-    transition: max-height cubic-bezier(0.3, 1.1, 0.1, 1.1) 1s;
+    -webkit-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
+    -moz-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
+    -ms-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
+    -o-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
+    transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs div.link-tab {
