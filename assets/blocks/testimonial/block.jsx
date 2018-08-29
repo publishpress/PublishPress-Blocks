@@ -168,6 +168,7 @@
                                 isSelected={ isSelected && currentEdit === 'name' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'name' ) }
                                 style={ { color: nameColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                             <RichText
                                 tagName={ 'p' }
@@ -177,6 +178,7 @@
                                 isSelected={ isSelected && currentEdit === 'position' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'position' ) }
                                 style={ { color: positionColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                             <RichText
                                 tagName={ 'p' }
@@ -186,6 +188,7 @@
                                 isSelected={ isSelected && currentEdit === 'desc' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
                                 style={ { color: descColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                         </div>
                         <div className="advgb-testimonial-columns-two">
@@ -225,6 +228,7 @@
                                 isSelected={ isSelected && currentEdit === 'name2' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'name2' ) }
                                 style={ { color: nameColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                             <RichText
                                 tagName={ 'p' }
@@ -234,6 +238,7 @@
                                 isSelected={ isSelected && currentEdit === 'position2' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'position2' ) }
                                 style={ { color: positionColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                             <RichText
                                 tagName={ 'p' }
@@ -243,6 +248,7 @@
                                 isSelected={ isSelected && currentEdit === 'desc2' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
                                 style={ { color: descColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                         </div>
                         <div className="advgb-testimonial-columns-three">
@@ -282,6 +288,7 @@
                                 isSelected={ isSelected && currentEdit === 'name3' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'name3' ) }
                                 style={ { color: nameColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                             <RichText
                                 tagName={ 'p' }
@@ -291,6 +298,7 @@
                                 isSelected={ isSelected && currentEdit === 'position3' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'position3' ) }
                                 style={ { color: positionColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                             <RichText
                                 tagName={ 'p' }
@@ -300,6 +308,7 @@
                                 isSelected={ isSelected && currentEdit === 'desc3' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
                                 style={ { color: descColor } }
+                                placeholder={ __( 'Text…' ) }
                             />
                         </div>
                     </div>

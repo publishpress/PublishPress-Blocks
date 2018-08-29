@@ -174,5 +174,8 @@
             }
             return "";
         }
+
+        Waves.attach('.waves-effect');
+        Waves.init();
     })
 })(jQuery);

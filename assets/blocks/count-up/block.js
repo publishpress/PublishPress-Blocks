@@ -236,7 +236,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'header');
                                 },
-                                style: { color: headerTextColor }
+                                style: { color: headerTextColor },
+                                placeholder: __('Enter text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'div',
@@ -260,7 +261,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc');
                                 },
-                                style: { color: descTextColor }
+                                style: { color: descTextColor },
+                                placeholder: __('Enter text…')
                             })
                         ),
                         React.createElement(
@@ -276,7 +278,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'header2');
                                 },
-                                style: { color: headerTextColor }
+                                style: { color: headerTextColor },
+                                placeholder: __('Enter text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'div',
@@ -300,7 +303,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc2');
                                 },
-                                style: { color: descTextColor }
+                                style: { color: descTextColor },
+                                placeholder: __('Enter text…')
                             })
                         ),
                         React.createElement(
@@ -316,7 +320,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'header3');
                                 },
-                                style: { color: headerTextColor }
+                                style: { color: headerTextColor },
+                                placeholder: __('Enter text…')
                             }),
                             React.createElement(RichText, {
                                 tagName: 'div',
@@ -340,7 +345,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSetup: function onSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc3');
                                 },
-                                style: { color: descTextColor }
+                                style: { color: descTextColor },
+                                placeholder: __('Enter text…')
                             })
                         )
                     )
