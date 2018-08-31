@@ -241,6 +241,12 @@ float: left;'
         wp_localize_script('testimonial_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
 
         wp_enqueue_script(
+            'recent_posts_block',
+            plugins_url('assets/blocks/recent-posts/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
+        );
+
+        wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
@@ -2517,6 +2523,8 @@ float: left;'
             'advgb/accordion',
             'advgb/tabs',
             'advgb/social-links',
+            'advgb/recent-posts',
+            'advgb/woo-products',
         );
 
         // Avoid default value (string 'all')
