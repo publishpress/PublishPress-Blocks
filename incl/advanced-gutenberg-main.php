@@ -144,6 +144,7 @@ float: left;'
 
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbProfile'));
+            add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
             add_action('admin_footer', array($this, 'initBlocksList'));
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
@@ -326,6 +327,17 @@ float: left;'
                 return str_replace(' src', ' defer src', $tag);
             }
         }
+    }
+
+    /**
+     * Load block that required server side render
+     *
+     * @return void
+     */
+    public function advgbBlockLoader()
+    {
+        // Block Recent Posts
+        require_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/recent-posts/block.php');
     }
 
     /**
