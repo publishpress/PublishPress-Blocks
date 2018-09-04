@@ -595,14 +595,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(RichText, {
                         tagName: "table",
                         wrapperClassName: className,
-                        getSettings: function getSettings(settings) {
+                        unstableGetSettings: function unstableGetSettings(settings) {
                             return _extends({}, settings, {
-                                plugins: (settings.plugins || []).concat('table'),
-                                table_tab_navigation: false
+                                plugins: (settings.plugins || []).concat('table')
                             });
                         },
                         value: content,
-                        onSetup: function onSetup(editor) {
+                        unstableOnSetup: function unstableOnSetup(editor) {
                             return _this3.handleSetup(editor, isSelected);
                         },
                         onChange: function onChange(value) {

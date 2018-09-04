@@ -565,13 +565,12 @@
                     <RichText
                         tagName="table"
                         wrapperClassName={ className }
-                        getSettings={ (settings) => ( {
+                        unstableGetSettings={ (settings) => ( {
                             ...settings,
                             plugins: (settings.plugins || [] ).concat( 'table' ),
-                            table_tab_navigation: false,
                         } ) }
                         value={ content }
-                        onSetup={ ( editor ) => this.handleSetup( editor, isSelected ) }
+                        unstableOnSetup={ ( editor ) => this.handleSetup( editor, isSelected ) }
                         onChange={ ( value ) => setAttributes( { content: value } ) }
                         style={ { maxWidth: !!maxWidth && maxWidth + 'px' } }
                     />

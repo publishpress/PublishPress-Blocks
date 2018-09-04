@@ -233,7 +233,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ headerText: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'header',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'header');
                                 },
                                 style: { color: headerTextColor },
@@ -246,7 +246,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ countUpNumber: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'countUp',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'countUp');
                                 },
                                 style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
@@ -258,7 +258,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ descText: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'desc',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc');
                                 },
                                 style: { color: descTextColor },
@@ -275,7 +275,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ headerText2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'header2',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'header2');
                                 },
                                 style: { color: headerTextColor },
@@ -288,7 +288,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ countUpNumber2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'countUp2',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'countUp2');
                                 },
                                 style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
@@ -300,7 +300,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ descText2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'desc2',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc2');
                                 },
                                 style: { color: descTextColor },
@@ -317,7 +317,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ headerText3: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'header3',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'header3');
                                 },
                                 style: { color: headerTextColor },
@@ -330,7 +330,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ countUpNumber3: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'countUp3',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'countUp3');
                                 },
                                 style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
@@ -342,7 +342,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ descText3: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'desc3',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc3');
                                 },
                                 style: { color: descTextColor },

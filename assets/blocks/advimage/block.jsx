@@ -209,7 +209,7 @@
                             onChange={ (value) => setAttributes( { title: value } ) }
                             style={ { color: titleColor } }
                             isSelected={ isSelected && currentEdit === 'title' }
-                            onSetup={ ( editor ) => this.handleSetup( editor, 'title' ) }
+                            unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'title' ) }
                             placeholder={ __( 'Enter title…' ) }
                         />
                         <RichText
@@ -219,7 +219,7 @@
                             onChange={ (value) => setAttributes( { subtitle: value } ) }
                             style={ { color: subtitleColor } }
                             isSelected={ isSelected && currentEdit === 'subtitle' }
-                            onSetup={ ( editor ) => this.handleSetup( editor, 'subtitle' ) }
+                            unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'subtitle' ) }
                             placeholder={ __( 'Enter subtitle…' ) }
                         />
                     </div>
