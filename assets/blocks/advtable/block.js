@@ -195,9 +195,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }, {
                     icon: React.createElement(
                         "svg",
-                        { xmlns: "http://www.w3.org/2000/svg", className: "dashicon", width: "20", height: "20", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
-                        React.createElement("path", { d: "M15 21h2v-2h-2v2zm4-12h2V7h-2v2zM3 5v14c0 1.1.9 2 2 2h4v-2H5V5h4V3H5c-1.1 0-2 .9-2 2zm16-2v2h2c0-1.1-.9-2-2-2zm-8 20h2V1h-2v22zm8-6h2v-2h-2v2zM15 5h2V3h-2v2zm4 8h2v-2h-2v2zm0 8c1.1 0 2-.9 2-2h-2v2z" })
+                        { width: "20", height: "20", viewBox: "4 2 18 18", className: "dashicon" },
+                        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+                        React.createElement("path", { d: "M4,5v13h17V5H4z M14,7v9h-3V7H14z M6,7h3v9H6V7z M19,16h-3V7h3V16z" })
+                    ),
+                    title: __('Split Merged Cells'),
+                    onClick: AdvTable.execCommand('mceTableSplitCells')
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { width: "20", height: "20", className: "dashicon", viewBox: "2 2 22 22" },
+                        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+                        React.createElement("polygon", { points: "21,18 2,18 2,20 21,20 21,18" }),
+                        React.createElement("path", { d: "M19,10v4H4v-4H19 M20,8H3C2.45,8,2,8.45,2,9v6c0,0.55,0.45,1,1,1h17c0.55,0,1-0.45,1-1V9C21,8.45,20.55,8,20,8L20,8z" }),
+                        React.createElement("polygon", { points: "21,4 2,4 2,6 21,6 21,4" })
                     ),
                     title: __('Merge Cells'),
                     onClick: AdvTable.execCommand('mceTableMergeCells')
