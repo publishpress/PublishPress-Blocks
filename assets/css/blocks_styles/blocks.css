@@ -249,6 +249,10 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     padding: .5em;
 }
 
+.wp-block-advgb-table td[data-mce-selected="1"] {
+    outline: 1px solid #2196f3;
+}
+
 .advgb-border-item-wrapper {
     display: flex;
     flex: auto;
