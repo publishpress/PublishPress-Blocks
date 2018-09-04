@@ -40,7 +40,7 @@
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
-                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                if (currentBlockConfig && typeof currentBlockConfig === 'object') {
                     Object.keys(currentBlockConfig).map((attribute)=>{
                         attributes[attribute] = currentBlockConfig[attribute];
                     });
