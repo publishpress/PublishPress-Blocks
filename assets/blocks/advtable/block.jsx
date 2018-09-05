@@ -630,16 +630,5 @@
                 return { 'data-align': align };
             }
         },
-        transforms: {
-            from: [
-                {
-                    type: 'block',
-                    blocks: [ 'core/table' ],
-                    transform: ( blockAttributes ) => {
-                        return createBlock( 'advgb/table', { ...blockAttributes } );
-                    },
-                },
-            ],
-        }
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );

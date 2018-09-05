@@ -722,16 +722,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             if ('left' === align || 'right' === align || 'wide' === align || 'full' === align) {
                 return { 'data-align': align };
             }
-        },
-
-        transforms: {
-            from: [{
-                type: 'block',
-                blocks: ['core/table'],
-                transform: function transform(blockAttributes) {
-                    return createBlock('advgb/table', _extends({}, blockAttributes));
-                }
-            }]
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
