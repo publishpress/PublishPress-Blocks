@@ -47,7 +47,7 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 
 ## ADVANCED GUTENBERG DEMO
 
-[vimeo https://vimeo.com/113695156]
+[vimeo https://vimeo.com/264060718]
 
 
 ## OUR PLUGINS

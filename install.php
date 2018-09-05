@@ -24,11 +24,10 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
     }
 
     if (defined('GUTENBERG_VERSION')) {
-        $versionRequired = '3.5.0';
-        if (version_compare(GUTENBERG_VERSION, $versionRequired, 'lt')) {
+        if (version_compare(GUTENBERG_VERSION, GUTENBERG_VERSION_REQUIRED, 'lt')) {
             wp_die(
                 esc_html__('We require at least Gutenberg version ', 'advanced-gutenberg')
-                . esc_html($versionRequired) . '. '.
+                . esc_html(GUTENBERG_VERSION_REQUIRED) . '. '.
                 esc_html__('Please update Gutenberg then comeback later!', 'advanced-gutenberg')
             );
             exit;

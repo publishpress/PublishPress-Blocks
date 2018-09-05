@@ -270,18 +270,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: 'advgb-tabs-block', style: { border: 'none' } },
                         React.createElement(
                             'ul',
-                            { className: 'advgb-tabs-panel',
-                                style: {
-                                    borderStyle: borderStyle,
-                                    borderWidth: borderWidth + 'px',
-                                    borderColor: borderColor,
-                                    borderRadius: borderRadius + 'px'
-                                }
-                            },
+                            { className: 'advgb-tabs-panel' },
                             tabItems.map(function (item, index) {
                                 return React.createElement(
                                     'li',
-                                    { key: index, className: 'advgb-tab',
+                                    { key: index,
+                                        className: 'advgb-tab',
                                         style: {
                                             backgroundColor: headerBgColor,
                                             borderStyle: borderStyle,
@@ -398,6 +392,64 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M21,3H3C1.9,3,1,3.9,1,5v14c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V5C23,3.9,22.1,3,21,3z M21,19H3V5h10v4h8V19z' })
     );
 
+    var tabBlockAttrs = {
+        tabItems: {
+            type: "array",
+            default: [{
+                header: __('Tab 1'),
+                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+            }, {
+                header: __('Tab 2'),
+                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+            }, {
+                header: __('Tab 3'),
+                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+            }]
+        },
+        headerBgColor: {
+            type: 'string',
+            default: '#000'
+        },
+        headerTextColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        bodyBgColor: {
+            type: 'string'
+        },
+        bodyTextColor: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid'
+        },
+        borderWidth: {
+            type: 'number',
+            default: 1
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderRadius: {
+            type: 'number',
+            default: 2
+        },
+        blockID: {
+            type: 'string'
+        },
+        activeTabBgColor: {
+            type: 'string'
+        },
+        activeTabTextColor: {
+            type: 'string'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/tabs', {
         title: __('Tabs'),
         description: __('Create your own tabs never easy like this.'),
@@ -407,63 +459,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: "formatting",
         keywords: [__('tabs'), __('cards')],
-        attributes: {
-            tabItems: {
-                type: "array",
-                default: [{
-                    header: __('Tab 1'),
-                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
-                }, {
-                    header: __('Tab 2'),
-                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
-                }, {
-                    header: __('Tab 3'),
-                    body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
-                }]
-            },
-            headerBgColor: {
-                type: 'string',
-                default: '#000'
-            },
-            headerTextColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            bodyBgColor: {
-                type: 'string'
-            },
-            bodyTextColor: {
-                type: 'string'
-            },
-            borderStyle: {
-                type: 'string',
-                default: 'solid'
-            },
-            borderWidth: {
-                type: 'number',
-                default: 1
-            },
-            borderColor: {
-                type: 'string'
-            },
-            borderRadius: {
-                type: 'number',
-                default: 2
-            },
-            blockID: {
-                type: 'string'
-            },
-            activeTabBgColor: {
-                type: 'string'
-            },
-            activeTabTextColor: {
-                type: 'string'
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: tabBlockAttrs,
         edit: AdvTabsBlock,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -486,14 +482,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { id: 'advgb-tabs-' + blockID, className: 'advgb-tabs-block', style: { border: 'none' } },
                 React.createElement(
                     'ul',
-                    { className: 'advgb-tabs-panel',
-                        style: {
-                            borderStyle: borderStyle,
-                            borderWidth: borderWidth + 'px',
-                            borderColor: borderColor,
-                            borderRadius: borderRadius + 'px'
-                        }
-                    },
+                    { className: 'advgb-tabs-panel' },
                     tabItems.map(function (item, index) {
                         return React.createElement(
                             'li',
@@ -542,6 +531,87 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: tabBlockAttrs,
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var tabItems = attributes.tabItems,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    blockID = attributes.blockID,
+                    activeTabBgColor = attributes.activeTabBgColor,
+                    activeTabTextColor = attributes.activeTabTextColor;
+
+
+                return React.createElement(
+                    'div',
+                    { id: 'advgb-tabs-' + blockID, className: 'advgb-tabs-block', style: { border: 'none' } },
+                    React.createElement(
+                        'ul',
+                        { className: 'advgb-tabs-panel',
+                            style: {
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        tabItems.map(function (item, index) {
+                            return React.createElement(
+                                'li',
+                                { key: index, className: 'advgb-tab',
+                                    style: {
+                                        backgroundColor: headerBgColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth + 'px',
+                                        borderColor: borderColor,
+                                        borderRadius: borderRadius + 'px',
+                                        margin: '-' + borderWidth + 'px 0 -' + borderWidth + 'px -' + borderWidth + 'px'
+                                    }
+                                },
+                                React.createElement(
+                                    'a',
+                                    { href: '#' + item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
+                                        style: { color: headerTextColor }
+                                    },
+                                    React.createElement(RichText.Content, { tagName: 'span', value: item.header })
+                                )
+                            );
+                        })
+                    ),
+                    tabItems.map(function (item, index) {
+                        return React.createElement(
+                            'div',
+                            { key: index,
+                                id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
+                                className: 'advgb-tab-body',
+                                style: {
+                                    backgroundColor: bodyBgColor,
+                                    color: bodyTextColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
+                                }
+                            },
+                            React.createElement(RichText.Content, { tagName: 'p', value: item.body })
+                        );
+                    }),
+                    !!blockID && React.createElement(
+                        'style',
+                        null,
+                        activeTabBgColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }\n                            ',
+                        activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);

@@ -215,6 +215,11 @@ float: left;'
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
         wp_enqueue_script(
+            'advTable_plugin',
+            plugins_url('assets/blocks/advtable/table-plugin.min.js', dirname(__FILE__)),
+            array( 'wp-blocks' )
+        );
+        wp_enqueue_script(
             'accordion_blocks',
             plugins_url('assets/blocks/accordion/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
