@@ -262,8 +262,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(RichText, {
                         multiline: 'li',
                         tagName: 'ul',
-                        getSettings: this.getEditorSettings,
-                        onSetup: this.setupEditor,
+                        unstableGetSettings: this.getEditorSettings,
+                        unstableOnSetup: this.setupEditor,
                         onChange: this.setNextValues,
                         value: values,
                         wrapperClassName: 'advgb-list-item',

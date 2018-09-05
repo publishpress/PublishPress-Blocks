@@ -166,7 +166,7 @@
                                 value={ name }
                                 onChange={ (value) => setAttributes( { name: value } ) }
                                 isSelected={ isSelected && currentEdit === 'name' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'name' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'name' ) }
                                 style={ { color: nameColor } }
                                 placeholder={ __( 'Text…' ) }
                             />
@@ -176,7 +176,7 @@
                                 value={ position }
                                 onChange={ (value) => setAttributes( { position: value } ) }
                                 isSelected={ isSelected && currentEdit === 'position' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'position' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'position' ) }
                                 style={ { color: positionColor } }
                                 placeholder={ __( 'Text…' ) }
                             />
@@ -186,7 +186,7 @@
                                 value={ desc }
                                 onChange={ (value) => setAttributes( { desc: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
                                 style={ { color: descColor } }
                                 placeholder={ __( 'Text…' ) }
                             />
@@ -226,7 +226,7 @@
                                 value={ name2 }
                                 onChange={ (value) => setAttributes( { name2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'name2' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'name2' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'name2' ) }
                                 style={ { color: nameColor } }
                                 placeholder={ __( 'Text…' ) }
                             />
@@ -236,7 +236,7 @@
                                 value={ position2 }
                                 onChange={ (value) => setAttributes( { position2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'position2' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'position2' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'position2' ) }
                                 style={ { color: positionColor } }
                                 placeholder={ __( 'Text…' ) }
                             />
@@ -246,7 +246,7 @@
                                 value={ desc2 }
                                 onChange={ (value) => setAttributes( { desc2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc2' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
                                 style={ { color: descColor } }
                                 placeholder={ __( 'Text…' ) }
                             />

@@ -258,7 +258,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ name: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'name',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'name');
                                 },
                                 style: { color: nameColor },
@@ -272,7 +272,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ position: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'position',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'position');
                                 },
                                 style: { color: positionColor },
@@ -286,7 +286,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ desc: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'desc',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc');
                                 },
                                 style: { color: descColor },
@@ -343,7 +343,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ name2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'name2',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'name2');
                                 },
                                 style: { color: nameColor },
@@ -357,7 +357,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ position2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'position2',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'position2');
                                 },
                                 style: { color: positionColor },
@@ -371,7 +371,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ desc2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'desc2',
-                                onSetup: function onSetup(editor) {
+                                unstableOnSetup: function unstableOnSetup(editor) {
                                     return _this3.handleSetup(editor, 'desc2');
                                 },
                                 style: { color: descColor },

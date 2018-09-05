@@ -2,9 +2,35 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "wp_version": "4.9.8",
   "changelog": {
+    "1.6.3": [
+    {
+        "type": "feature",
+        "title": "Adv Table block: Add ability to split merged cells to normal cells"
+      },
+      {
+        "type": "feature",
+        "title": "Adv Table block: Add styles indicator for multi-selected cells"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Table block: Compatible with Gutenberg version 3.7.0"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Table block: No longer can transform from core Table block"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Table block: Add styles indicator for multi-selected cells"
+      },
+      {
+        "type": "fix",
+        "title": "Remove top border in Advanced Tab block"
+      }
+    ],
     "1.6.2": [
       {
         "type": "fix",

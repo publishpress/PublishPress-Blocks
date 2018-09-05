@@ -77,6 +77,10 @@ if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
     define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
 }
 
+if (!defined('GUTENBERG_VERSION_REQUIRED')) {
+    define('GUTENBERG_VERSION_REQUIRED', '3.7.0');
+}
+
 require_once(plugin_dir_path(__FILE__) . '/install.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/advanced-gutenberg-main.php');
 new AdvancedGutenbergMain();

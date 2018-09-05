@@ -2,7 +2,7 @@
 defined('ABSPATH') || die;
 
 if (!defined('GUTENBERG_VERSION')) {
-    echo '<div class="ju-notice-error">'. esc_html__('You need to activate Gutenberg to use our plugin!', 'advanced-gutenberg') .'</div>';
+    echo '<div class="ju-notice-msg ju-notice-error">'. esc_html__('You need to activate Gutenberg to use our plugin!', 'advanced-gutenberg') .'</div>';
     return false;
 }
 
@@ -58,6 +58,30 @@ $tabs_data = array(
         </ul>
     </div>
     <div class="ju-right-panel">
+        <?php
+        if (version_compare(GUTENBERG_VERSION, GUTENBERG_VERSION_REQUIRED, 'lt')) {
+            $gutenbergUpdateUrl = wp_nonce_url(
+                add_query_arg(
+                    array(
+                        'action' => 'upgrade-plugin',
+                        'plugin' => 'gutenberg'
+                    ),
+                    admin_url('update.php')
+                ),
+                'upgrade-plugin_gutenberg'
+            );
+
+            echo '<div class="ju-notice-msg ju-notice-error">'
+                 . esc_html__('Our plugin works great with Gutenberg version', 'advanced-gutenberg')
+                 . ' <b>' . esc_html(GUTENBERG_VERSION_REQUIRED). '</b> '
+                 . esc_html__('and above', 'advanced-gutenberg') . '. '
+                 . esc_html__('Your current version is', 'advanced-gutenberg')
+                 . ' <b>' . esc_html(GUTENBERG_VERSION) . '</b>. '
+                 . '<a href="' . esc_attr($gutenbergUpdateUrl) . '">' . esc_html__('Update now', 'advanced-gutenberg') . '</a>'
+                 . '<i class="dashicons dashicons-dismiss ju-notice-close"></i>'
+             . '</div>';
+        } ?>
+
         <?php foreach ($tabs_data as $tab) : ?>
             <?php if ($tab['id'] === 'translation') continue; // phpcs:ignore Generic.ControlStructures.InlineControlStructure.NotAllowed -- inline is ok ?>
             <div class="ju-content-wrapper" id="<?php echo esc_attr($tab['id']) ?>" style="display: none">

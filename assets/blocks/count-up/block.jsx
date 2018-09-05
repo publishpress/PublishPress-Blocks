@@ -148,7 +148,7 @@
                                 value={ headerText }
                                 onChange={ (value) => setAttributes( { headerText: value } ) }
                                 isSelected={ isSelected && currentEdit === 'header' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'header' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'header' ) }
                                 style={ { color: headerTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
                             />
@@ -157,7 +157,7 @@
                                 value={ countUpNumber }
                                 onChange={ (value) => setAttributes( { countUpNumber: value } ) }
                                 isSelected={ isSelected && currentEdit === 'countUp' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'countUp' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'countUp' ) }
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                             />
                             <RichText
@@ -165,7 +165,7 @@
                                 value={ descText }
                                 onChange={ (value) => setAttributes( { descText: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
                                 style={ { color: descTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
                             />
@@ -176,7 +176,7 @@
                                 value={ headerText2 }
                                 onChange={ (value) => setAttributes( { headerText2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'header2' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'header2' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'header2' ) }
                                 style={ { color: headerTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
                             />
@@ -185,7 +185,7 @@
                                 value={ countUpNumber2 }
                                 onChange={ (value) => setAttributes( { countUpNumber2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'countUp2' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'countUp2' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'countUp2' ) }
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                             />
                             <RichText
@@ -193,7 +193,7 @@
                                 value={ descText2 }
                                 onChange={ (value) => setAttributes( { descText2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc2' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
                                 style={ { color: descTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
                             />
@@ -204,7 +204,7 @@
                                 value={ headerText3 }
                                 onChange={ (value) => setAttributes( { headerText3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'header3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'header3' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'header3' ) }
                                 style={ { color: headerTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
                             />
@@ -213,7 +213,7 @@
                                 value={ countUpNumber3 }
                                 onChange={ (value) => setAttributes( { countUpNumber3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'countUp3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'countUp3' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'countUp3' ) }
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                             />
                             <RichText
@@ -221,7 +221,7 @@
                                 value={ descText3 }
                                 onChange={ (value) => setAttributes( { descText3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
+                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
                                 style={ { color: descTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
                             />
