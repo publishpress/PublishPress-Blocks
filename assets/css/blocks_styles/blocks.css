@@ -537,8 +537,7 @@ span.advgb-social-icon.selected:before {
 
 ul.advgb-tabs-panel {
     list-style-type: none !important;
-    border: 1px solid #ccc;
-    border-bottom: none !important;
+    border: none;
     margin: 0 !important;
     padding: 0 !important;
     background: none;
@@ -557,6 +556,10 @@ li.advgb-tab, li.advgb-tab.ui-state-default {
     border: 1px solid #ccc;
     position: relative;
     background: none;
+}
+
+li.advgb-tab:first-child {
+    margin-left: 0 !important;
 }
 
 li.advgb-tab > a, li.advgb-add-tab > span {

@@ -179,16 +179,10 @@
                         </PanelBody>
                     </InspectorControls>
                     <div className="advgb-tabs-block" style={ { border: 'none' } }>
-                        <ul className="advgb-tabs-panel"
-                            style={ {
-                                borderStyle: borderStyle,
-                                borderWidth: borderWidth + 'px',
-                                borderColor: borderColor,
-                                borderRadius: borderRadius + 'px',
-                            } }
-                        >
+                        <ul className="advgb-tabs-panel">
                             {tabItems.map( ( item, index ) => (
-                                <li key={ index } className="advgb-tab"
+                                <li key={ index }
+                                    className="advgb-tab"
                                     style={ {
                                         backgroundColor: headerBgColor,
                                         borderStyle: borderStyle,
@@ -373,14 +367,7 @@
 
             return (
                 <div id={`advgb-tabs-${blockID}`} className="advgb-tabs-block" style={ { border: 'none' } }>
-                    <ul className="advgb-tabs-panel"
-                        style={ {
-                            borderStyle: borderStyle,
-                            borderWidth: borderWidth + 'px',
-                            borderColor: borderColor,
-                            borderRadius: borderRadius + 'px',
-                        } }
-                    >
+                    <ul className="advgb-tabs-panel">
                         {tabItems.map( ( item, index ) => (
                             <li key={ index } className="advgb-tab"
                                 style={ {

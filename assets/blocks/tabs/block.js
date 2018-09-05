@@ -270,18 +270,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: 'advgb-tabs-block', style: { border: 'none' } },
                         React.createElement(
                             'ul',
-                            { className: 'advgb-tabs-panel',
-                                style: {
-                                    borderStyle: borderStyle,
-                                    borderWidth: borderWidth + 'px',
-                                    borderColor: borderColor,
-                                    borderRadius: borderRadius + 'px'
-                                }
-                            },
+                            { className: 'advgb-tabs-panel' },
                             tabItems.map(function (item, index) {
                                 return React.createElement(
                                     'li',
-                                    { key: index, className: 'advgb-tab',
+                                    { key: index,
+                                        className: 'advgb-tab',
                                         style: {
                                             backgroundColor: headerBgColor,
                                             borderStyle: borderStyle,
@@ -486,14 +480,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { id: 'advgb-tabs-' + blockID, className: 'advgb-tabs-block', style: { border: 'none' } },
                 React.createElement(
                     'ul',
-                    { className: 'advgb-tabs-panel',
-                        style: {
-                            borderStyle: borderStyle,
-                            borderWidth: borderWidth + 'px',
-                            borderColor: borderColor,
-                            borderRadius: borderRadius + 'px'
-                        }
-                    },
+                    { className: 'advgb-tabs-panel' },
                     tabItems.map(function (item, index) {
                         return React.createElement(
                             'li',
