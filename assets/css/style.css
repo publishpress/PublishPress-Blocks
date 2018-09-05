@@ -102,6 +102,7 @@
     text-align: center;
     letter-spacing: 2px;
     transition: all ease 0.5s;
+    vertical-align: middle;
     -webkit-border-radius: 40px;
     -moz-border-radius: 40px;
     border-radius: 40px;
@@ -539,6 +540,13 @@ input.ju-radiobox:focus {
     font-size: 14px;
     margin-left: 300px;
     background-color: #f3f6fa;
+}
+
+.ju-main-wrapper .ju-right-panel:before {
+    content: '';
+    display: block;
+    clear: both;
+    padding: 1px 0 0 0;
 }
 
 .ju-main-wrapper .ju-right-panel .ju-top-tabs-wrapper {

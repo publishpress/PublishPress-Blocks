@@ -284,7 +284,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             style: { color: titleColor },
                             isSelected: isSelected && currentEdit === 'title',
-                            onSetup: function onSetup(editor) {
+                            unstableOnSetup: function unstableOnSetup(editor) {
                                 return _this3.handleSetup(editor, 'title');
                             },
                             placeholder: __('Enter title…')
@@ -298,7 +298,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             style: { color: subtitleColor },
                             isSelected: isSelected && currentEdit === 'subtitle',
-                            onSetup: function onSetup(editor) {
+                            unstableOnSetup: function unstableOnSetup(editor) {
                                 return _this3.handleSetup(editor, 'subtitle');
                             },
                             placeholder: __('Enter subtitle…')
