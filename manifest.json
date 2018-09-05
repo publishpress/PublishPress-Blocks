@@ -29,7 +29,7 @@
       {
         "type": "fix",
         "title": "Remove top border in Advanced Tab block"
-      },
+      }
     ],
     "1.6.2": [
       {
