@@ -710,6 +710,18 @@ hr.wp-block-separator {
     grid-gap: 20px;
 }
 
+.advgb-recent-posts-block.grid-view.columns-1 .advgb-recent-posts {
+    grid-template-columns: 1fr;
+}
+
+.advgb-recent-posts-block.grid-view.columns-3 .advgb-recent-posts {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.advgb-recent-posts-block.grid-view.columns-4 .advgb-recent-posts {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
 .advgb-recent-posts-block.list-view .advgb-recent-posts .advgb-recent-post {
     display: grid;
     grid-template-columns: 1fr 1fr;
