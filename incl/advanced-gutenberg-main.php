@@ -251,6 +251,9 @@ float: left;'
             plugins_url('assets/blocks/recent-posts/block.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
         );
+        wp_enqueue_style('slick_style');
+        wp_enqueue_style('slick_theme_style');
+        wp_enqueue_script('slick_js');
 
         wp_enqueue_script(
             'custom_styles',
@@ -864,6 +867,14 @@ float: left;'
             'material_icon_font',
             plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
         );
+        wp_register_style(
+            'slick_style',
+            plugins_url('assets/css/slick.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'slick_theme_style',
+            plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+        );
 
         // Register JS
         wp_register_script(
@@ -922,6 +933,11 @@ float: left;'
             'minicolors_js',
             plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__))
         );
+        wp_register_script(
+            'slick_js',
+            plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
+            array('jquery')
+        );
     }
 
     /**
@@ -935,10 +951,19 @@ float: left;'
             'colorbox_style',
             plugins_url('assets/css/colorbox.css', dirname(__FILE__))
         );
+        wp_register_style(
+            'slick_style',
+            plugins_url('assets/css/slick.css', dirname(__FILE__))
+        );
 
         wp_register_script(
             'colorbox_js',
             plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__)),
+            array('jquery')
+        );
+        wp_register_script(
+            'slick_js',
+            plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
             array('jquery')
         );
 
