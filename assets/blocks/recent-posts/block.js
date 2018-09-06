@@ -10,7 +10,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents, wpData, lodash) {
+(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
@@ -27,6 +27,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var withSelect = wpData.withSelect;
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
+    var decodeEntities = wpHtmlEntities.decodeEntities;
+    var moment = wpDate.moment;
 
 
     var advRecentPostsBlockIcon = React.createElement(
@@ -182,6 +184,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'slider'
                 }];
 
+                var blockClassName = ['advgb-recent-posts', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+
                 return React.createElement(
                     Fragment,
                     null,
@@ -193,8 +197,66 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: 'advgb-recent-posts' },
-                        "123"
+                        { className: blockClassName },
+                        recentPosts.map(function (post, index) {
+                            return React.createElement(
+                                "article",
+                                { key: index, className: "advgb-recent-post" },
+                                displayFeaturedImage && post.featured_image_src && React.createElement(
+                                    "div",
+                                    { className: "advgb-post-thumbnail" },
+                                    React.createElement(
+                                        "a",
+                                        { href: post.link, target: "_blank" },
+                                        React.createElement("img", { src: post.featured_image_src, alt: __('Post Image') })
+                                    )
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { className: 'advgb-post-wrapper' },
+                                    React.createElement(
+                                        "h2",
+                                        { className: "advgb-post-title" },
+                                        React.createElement(
+                                            "a",
+                                            { href: post.link, target: "_blank" },
+                                            decodeEntities(post.title.rendered)
+                                        )
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-post-info" },
+                                        displayAuthor && React.createElement(
+                                            "a",
+                                            { href: post.author_info.author_link,
+                                                target: "_blank",
+                                                className: "advgb-post-author"
+                                            },
+                                            post.author_info.display_name
+                                        ),
+                                        displayDate && React.createElement(
+                                            "span",
+                                            { className: "advgb-post-date" },
+                                            moment(post.date_gmt).local().format('DD MMMM, Y')
+                                        )
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-post-content" },
+                                        displayExcerpt && React.createElement("div", { className: "advgb-post-excerpt", dangerouslySetInnerHTML: { __html: post.excerpt.rendered } }),
+                                        displayReadMore && React.createElement(
+                                            "div",
+                                            { className: "advgb-post-readmore" },
+                                            React.createElement(
+                                                "a",
+                                                { href: post.link, target: "_blank" },
+                                                __('Read More')
+                                            )
+                                        )
+                                    )
+                                )
+                            );
+                        })
                     )
                 );
             }
@@ -233,7 +295,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             });
 
             var categoriesListQuery = {
-                per_page: 100
+                per_page: 99
             };
 
             return {
@@ -246,4 +308,4 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return null;
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components, wp.data, lodash);
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date);

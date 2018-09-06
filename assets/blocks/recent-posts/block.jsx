@@ -1,4 +1,4 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents, wpData, lodash ) {
+(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
@@ -6,6 +6,8 @@
     const { PanelBody, RangeControl, ToggleControl, QueryControls, Spinner, Toolbar, Placeholder } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
+    const { decodeEntities } = wpHtmlEntities;
+    const { moment } = wpDate;
 
     const advRecentPostsBlockIcon = (
         <svg width="20" height="20" viewBox="2 2 22 22">
@@ -53,13 +55,13 @@
                             onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
                         />
                         {postView === 'grid' &&
-                            <RangeControl
-                                label={ __( 'Columns' ) }
-                                value={ columns }
-                                min={ 1 }
-                                max={ 4 }
-                                onChange={ (value) => setAttributes( { columns: value } ) }
-                            />
+                        <RangeControl
+                            label={ __( 'Columns' ) }
+                            value={ columns }
+                            min={ 1 }
+                            max={ 4 }
+                            onChange={ (value) => setAttributes( { columns: value } ) }
+                        />
                         }
                         <ToggleControl
                             label={ __( 'Display Featured Image' ) }
@@ -131,14 +133,62 @@
                 },
             ];
 
+            const blockClassName = [
+                'advgb-recent-posts',
+                postView === 'grid' && 'columns-' + columns,
+                postView === 'grid' && 'grid-view',
+                postView === 'list' && 'list-view',
+                postView === 'slider' && 'slider-view',
+            ].filter( Boolean ).join( ' ' );
+
             return (
                 <Fragment>
                     { inspectorControls }
                     <BlockControls>
                         <Toolbar controls={ postViewControls } />
                     </BlockControls>
-                    <div className={ 'advgb-recent-posts' }>
-                        123
+                    <div className={ blockClassName }>
+                        {recentPosts.map( ( post, index ) => (
+                            <article key={ index } className="advgb-recent-post" >
+                                {displayFeaturedImage && post.featured_image_src && (
+                                    <div className="advgb-post-thumbnail">
+                                        <a href={ post.link } target="_blank">
+                                            <img src={ post.featured_image_src } alt={ __( 'Post Image' ) } />
+                                        </a>
+                                    </div>
+                                ) }
+                                <div className={ 'advgb-post-wrapper' }>
+                                    <h2 className="advgb-post-title">
+                                        <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
+                                    </h2>
+                                    <div className="advgb-post-info">
+                                        {displayAuthor && (
+                                            <a href={ post.author_info.author_link }
+                                               target="_blank"
+                                               className="advgb-post-author"
+                                            >
+                                                { post.author_info.display_name }
+                                            </a>
+                                        ) }
+                                        {displayDate && (
+                                            <span className="advgb-post-date" >
+                                                { moment( post.date_gmt ).local().format( 'DD MMMM, Y' ) }
+                                            </span>
+                                        ) }
+                                    </div>
+                                    <div className="advgb-post-content">
+                                        {displayExcerpt && (
+                                            <div className="advgb-post-excerpt" dangerouslySetInnerHTML={ { __html: post.excerpt.rendered } } />
+                                        ) }
+                                        {displayReadMore && (
+                                            <div className="advgb-post-readmore">
+                                                <a href={ post.link } target="_blank">{ __( 'Read More' ) }</a>
+                                            </div>
+                                        ) }
+                                    </div>
+                                </div>
+                            </article>
+                        ) ) }
                     </div>
                 </Fragment>
             )
@@ -166,7 +216,7 @@
             }, ( value ) => !isUndefined( value ) );
 
             const categoriesListQuery = {
-                per_page: 100,
+                per_page: 99,
             };
 
             return {
@@ -178,4 +228,4 @@
             return null;
         },
     } )
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components, wp.data, lodash );
+})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date );
