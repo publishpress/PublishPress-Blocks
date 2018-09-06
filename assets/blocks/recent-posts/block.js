@@ -184,7 +184,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'slider'
                 }];
 
-                var blockClassName = ['advgb-recent-posts', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 
                 return React.createElement(
                     Fragment,
@@ -198,65 +198,69 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "div",
                         { className: blockClassName },
-                        recentPosts.map(function (post, index) {
-                            return React.createElement(
-                                "article",
-                                { key: index, className: "advgb-recent-post" },
-                                displayFeaturedImage && post.featured_image_src && React.createElement(
-                                    "div",
-                                    { className: "advgb-post-thumbnail" },
-                                    React.createElement(
-                                        "a",
-                                        { href: post.link, target: "_blank" },
-                                        React.createElement("img", { src: post.featured_image_src, alt: __('Post Image') })
-                                    )
-                                ),
-                                React.createElement(
-                                    "div",
-                                    { className: 'advgb-post-wrapper' },
-                                    React.createElement(
-                                        "h2",
-                                        { className: "advgb-post-title" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-recent-posts" },
+                            recentPosts.map(function (post, index) {
+                                return React.createElement(
+                                    "article",
+                                    { key: index, className: "advgb-recent-post" },
+                                    displayFeaturedImage && post.featured_image_src && React.createElement(
+                                        "div",
+                                        { className: "advgb-post-thumbnail" },
                                         React.createElement(
                                             "a",
                                             { href: post.link, target: "_blank" },
-                                            decodeEntities(post.title.rendered)
+                                            React.createElement("img", { src: post.featured_image_src, alt: __('Post Image') })
                                         )
                                     ),
                                     React.createElement(
                                         "div",
-                                        { className: "advgb-post-info" },
-                                        displayAuthor && React.createElement(
-                                            "a",
-                                            { href: post.author_info.author_link,
-                                                target: "_blank",
-                                                className: "advgb-post-author"
-                                            },
-                                            post.author_info.display_name
-                                        ),
-                                        displayDate && React.createElement(
-                                            "span",
-                                            { className: "advgb-post-date" },
-                                            moment(post.date_gmt).local().format('DD MMMM, Y')
-                                        )
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-post-content" },
-                                        displayExcerpt && React.createElement("div", { className: "advgb-post-excerpt", dangerouslySetInnerHTML: { __html: post.excerpt.rendered } }),
-                                        displayReadMore && React.createElement(
-                                            "div",
-                                            { className: "advgb-post-readmore" },
+                                        { className: 'advgb-post-wrapper' },
+                                        React.createElement(
+                                            "h2",
+                                            { className: "advgb-post-title" },
                                             React.createElement(
                                                 "a",
                                                 { href: post.link, target: "_blank" },
-                                                __('Read More')
+                                                decodeEntities(post.title.rendered)
+                                            )
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-post-info" },
+                                            displayAuthor && React.createElement(
+                                                "a",
+                                                { href: post.author_info.author_link,
+                                                    target: "_blank",
+                                                    className: "advgb-post-author"
+                                                },
+                                                post.author_info.display_name
+                                            ),
+                                            displayDate && React.createElement(
+                                                "span",
+                                                { className: "advgb-post-date" },
+                                                moment(post.date_gmt).local().format('DD MMMM, Y')
+                                            )
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-post-content" },
+                                            displayExcerpt && React.createElement("div", { className: "advgb-post-excerpt", dangerouslySetInnerHTML: { __html: post.excerpt.rendered } }),
+                                            displayReadMore && React.createElement(
+                                                "div",
+                                                { className: "advgb-post-readmore" },
+                                                React.createElement(
+                                                    "a",
+                                                    { href: post.link, target: "_blank" },
+                                                    __('Read More')
+                                                )
                                             )
                                         )
                                     )
-                                )
-                            );
-                        })
+                                );
+                            })
+                        )
                     )
                 );
             }

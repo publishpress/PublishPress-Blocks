@@ -16,9 +16,8 @@
     top: 50%;
 
     display: block;
+    z-index: 9;
 
-    width: 20px;
-    height: 20px;
     padding: 0;
     -webkit-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
@@ -32,18 +31,14 @@
     background: transparent;
 }
 .slick-prev:hover,
-.slick-prev:focus,
-.slick-next:hover,
-.slick-next:focus
+.slick-next:hover
 {
     color: transparent;
     outline: none;
     background: transparent;
 }
 .slick-prev:hover:before,
-.slick-prev:focus:before,
-.slick-next:hover:before,
-.slick-next:focus:before
+.slick-next:hover:before
 {
     opacity: 1;
 }
