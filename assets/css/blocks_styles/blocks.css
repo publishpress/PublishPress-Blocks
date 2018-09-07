@@ -754,7 +754,7 @@ hr.wp-block-separator {
     grid-column: 1 / span 2;
 }
 
-.advgb-recent-posts-block.grid-view .advgb-recent-post .advgb-post-wrapper:last-child {
+.advgb-recent-posts-block.grid-view .advgb-recent-post .advgb-post-wrapper:not(:first-child) {
     margin-top: 10px;
 }
 
