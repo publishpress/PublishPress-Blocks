@@ -734,16 +734,28 @@ hr.wp-block-separator {
     border-bottom: 1px solid #ccc;
 }
 
+.advgb-recent-posts .advgb-recent-post {
+    position: relative;
+}
+
+.advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail a {
+    display: inline-block;
+}
+
+.advgb-recent-posts .advgb-recent-post .advgb-post-thumbnail img {
+    vertical-align: middle;
+}
+
 .advgb-recent-post .advgb-post-title {
     margin: 0;
 }
 
-.advgb-recent-post .advgb-post-thumbnail a {
-    display: inline-block;
+.advgb-recent-posts-block.list-view .advgb-recent-post .advgb-post-wrapper:first-child {
+    grid-column: 1 / span 2;
 }
 
-.advgb-recent-post .advgb-post-wrapper:first-child {
-    grid-column: 1 / span 2;
+.advgb-recent-posts-block.grid-view .advgb-recent-post .advgb-post-wrapper:last-child {
+    margin-top: 10px;
 }
 
 .advgb-recent-post .advgb-post-date:not(:first-child):before {
