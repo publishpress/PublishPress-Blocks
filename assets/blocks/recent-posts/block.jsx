@@ -43,7 +43,7 @@
                     .removeAttr('role')
                     .removeAttr('aria-describedby');
 
-                if (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                if (nextView === 'slider' && (nextPosts && recentPosts && nextPosts.length !== recentPosts.length)) {
                     if (!this.state.updating) {
                         this.setState( { updating: true } );
                     }

@@ -74,7 +74,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
                     $("#block-" + clientId + " .advgb-recent-post").removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
 
-                    if (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                    if (nextView === 'slider' && nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
                         if (!this.state.updating) {
                             this.setState({ updating: true });
                         }
