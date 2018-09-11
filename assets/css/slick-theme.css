@@ -51,7 +51,7 @@
 .slick-prev:before,
 .slick-next:before
 {
-    font-family: 'Material Icons';
+    font-family: 'dashicons';
     font-size: 20px;
     line-height: 1;
 
@@ -73,11 +73,11 @@
 }
 .slick-prev:before
 {
-    content: '\e408';
+    content: '\f341';
 }
 [dir='rtl'] .slick-prev:before
 {
-    content: '\e409';
+    content: '\f345';
 }
 
 .slick-next
@@ -91,11 +91,11 @@
 }
 .slick-next:before
 {
-    content: '\e409';
+    content: '\f345';
 }
 [dir='rtl'] .slick-next:before
 {
-    content: '\e408';
+    content: '\f341';
 }
 
 /* Dots */
@@ -162,7 +162,7 @@
 }
 .slick-dots li button:before
 {
-    font-family: 'Material Icons';
+    font-family: 'dashicons';
     font-size: 6px;
     line-height: 20px;
 
@@ -173,7 +173,7 @@
     width: 20px;
     height: 20px;
 
-    content: '\e061';
+    content: '\f159';
     text-align: center;
 
     opacity: .25;
