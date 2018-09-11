@@ -2,11 +2,17 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "wp_version": "4.9.8",
   "changelog": {
+    "1.6.4": [
+      {
+        "type": "fix",
+        "title": "Cannot change tab on front-end in some rare cases (Tabs block)"
+      }
+    ],
     "1.6.3": [
-    {
+      {
         "type": "feature",
         "title": "Adv Table block: Add ability to split merged cells to normal cells"
       },
