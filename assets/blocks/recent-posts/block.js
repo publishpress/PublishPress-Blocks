@@ -42,6 +42,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M11,13H6v5h5V13z M10,17H7v-3h3V17z" })
     );
 
+    var initSlider = null;
+
     var RecentPostsEdit = function (_Component) {
         _inherits(RecentPostsEdit, _Component);
 
@@ -52,13 +54,55 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(RecentPostsEdit, [{
-            key: "render",
-            value: function render() {
+            key: "componentWillUpdate",
+            value: function componentWillUpdate(nextProps) {
+                var nextPosts = nextProps.recentPosts;
+                var nextView = nextProps.attributes.postView;
                 var _props = this.props,
                     attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    recentPosts = _props.recentPosts,
-                    categoriesList = _props.categoriesList;
+                    clientId = _props.clientId,
+                    recentPosts = _props.recentPosts;
+
+                var $ = jQuery;
+
+                if (nextView !== 'slider' || nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                    $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
+                    $("#block-" + clientId + " .advgb-recent-post").removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+
+                    if (initSlider) {
+                        clearTimeout(initSlider);
+                    }
+                }
+            }
+        }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate(prevProps) {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    clientId = _props2.clientId;
+                var postView = attributes.postView;
+
+                var $ = jQuery;
+
+                if (postView === 'slider') {
+                    initSlider = setTimeout(function () {
+                        $("#block-" + clientId + " .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)").slick({
+                            dots: true,
+                            adaptiveHeight: true
+                        });
+                    }, 100);
+                } else {
+                    $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    recentPosts = _props3.recentPosts,
+                    categoriesList = _props3.categoriesList;
                 var postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,

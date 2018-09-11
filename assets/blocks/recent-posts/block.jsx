@@ -20,9 +20,47 @@
         </svg>
     );
 
+    let initSlider = null;
+
     class RecentPostsEdit extends Component {
         constructor() {
             super( ...arguments );
+        }
+
+        componentWillUpdate( nextProps ) {
+            const { recentPosts: nextPosts } = nextProps;
+            const { postView: nextView } = nextProps.attributes;
+            const { attributes, clientId, recentPosts } = this.props;
+            const $ = jQuery;
+
+            if (nextView !== 'slider' || (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) ) {
+                $(`#block-${clientId} .advgb-recent-posts.slick-initialized`).slick('unslick');
+                $(`#block-${clientId} .advgb-recent-post`)
+                    .removeAttr('tabindex')
+                    .removeAttr('role')
+                    .removeAttr('aria-describedby');
+
+                if (initSlider) {
+                    clearTimeout(initSlider);
+                }
+            }
+        }
+
+        componentDidUpdate( prevProps ) {
+            const { attributes, clientId } = this.props;
+            const { postView } = attributes;
+            const $ = jQuery;
+
+            if (postView === 'slider') {
+                initSlider = setTimeout(function () {
+                    $(`#block-${clientId} .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)`).slick( {
+                        dots: true,
+                        adaptiveHeight: true,
+                    } );
+                }, 100 );
+            } else {
+                $(`#block-${clientId} .advgb-recent-posts.slick-initialized`).slick('unslick');
+            }
         }
 
         render() {
