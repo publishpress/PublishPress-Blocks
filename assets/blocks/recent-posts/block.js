@@ -50,7 +50,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function RecentPostsEdit() {
             _classCallCheck(this, RecentPostsEdit);
 
-            return _possibleConstructorReturn(this, (RecentPostsEdit.__proto__ || Object.getPrototypeOf(RecentPostsEdit)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (RecentPostsEdit.__proto__ || Object.getPrototypeOf(RecentPostsEdit)).apply(this, arguments));
+
+            _this.state = {
+                updating: false
+            };
+            return _this;
         }
 
         _createClass(RecentPostsEdit, [{
@@ -69,6 +74,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
                     $("#block-" + clientId + " .advgb-recent-post").removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
 
+                    if (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                        if (!this.state.updating) {
+                            this.setState({ updating: true });
+                        }
+                    }
+
                     if (initSlider) {
                         clearTimeout(initSlider);
                     }
@@ -77,6 +88,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate(prevProps) {
+                var that = this;
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     clientId = _props2.clientId;
@@ -90,6 +102,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             dots: true,
                             adaptiveHeight: true
                         });
+
+                        if (that.state.updating) {
+                            that.setState({ updating: false });
+                        }
                     }, 100);
                 } else {
                     $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
@@ -228,7 +244,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: postView === 'slider'
                 }];
 
-                var blockClassName = ['advgb-recent-posts-block', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 
                 return React.createElement(
                     Fragment,
@@ -242,6 +258,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "div",
                         { className: blockClassName },
+                        this.state.updating && React.createElement("div", { className: "advgb-recent-posts-loading" }),
                         React.createElement(
                             "div",
                             { className: "advgb-recent-posts" },

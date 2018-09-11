@@ -25,6 +25,9 @@
     class RecentPostsEdit extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                updating: false,
+            }
         }
 
         componentWillUpdate( nextProps ) {
@@ -40,6 +43,12 @@
                     .removeAttr('role')
                     .removeAttr('aria-describedby');
 
+                if (nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                    if (!this.state.updating) {
+                        this.setState( { updating: true } );
+                    }
+                }
+
                 if (initSlider) {
                     clearTimeout(initSlider);
                 }
@@ -47,6 +56,7 @@
         }
 
         componentDidUpdate( prevProps ) {
+            const that = this;
             const { attributes, clientId } = this.props;
             const { postView } = attributes;
             const $ = jQuery;
@@ -57,6 +67,10 @@
                         dots: true,
                         adaptiveHeight: true,
                     } );
+
+                    if (that.state.updating) {
+                        that.setState( { updating: false } );
+                    }
                 }, 100 );
             } else {
                 $(`#block-${clientId} .advgb-recent-posts.slick-initialized`).slick('unslick');
@@ -173,6 +187,7 @@
 
             const blockClassName = [
                 'advgb-recent-posts-block',
+                this.state.updating && 'loading',
                 postView === 'grid' && 'columns-' + columns,
                 postView === 'grid' && 'grid-view',
                 postView === 'list' && 'list-view',
@@ -186,6 +201,7 @@
                         <Toolbar controls={ postViewControls } />
                     </BlockControls>
                     <div className={ blockClassName }>
+                        {this.state.updating && <div className="advgb-recent-posts-loading" />}
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index } className="advgb-recent-post" >
