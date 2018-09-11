@@ -226,7 +226,7 @@
                                                 </a>
                                             ) }
                                             {displayDate && (
-                                                <span className="advgb-post-date" >
+                                            <span className="advgb-post-date" >
                                                 { moment( post.date_gmt ).local().format( 'DD MMMM, Y' ) }
                                             </span>
                                             ) }
