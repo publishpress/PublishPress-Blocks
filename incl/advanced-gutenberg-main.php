@@ -141,10 +141,10 @@ float: left;'
         add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
         add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
+        add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
 
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbProfile'));
-            add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
             add_action('admin_footer', array($this, 'initBlocksList'));
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
@@ -954,6 +954,10 @@ float: left;'
         wp_register_style(
             'slick_style',
             plugins_url('assets/css/slick.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'slick_theme_style',
+            plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
         );
 
         wp_register_script(
@@ -2497,6 +2501,18 @@ float: left;'
             wp_add_inline_script('jquery-ui-tabs', 'jQuery(document).ready(function($){
                 $(".advgb-tab a:not(.ui-tabs-anchor)").unbind("click");
                 $(".advgb-tabs-block").tabs();
+            });');
+        }
+
+        if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
+            wp_enqueue_style('slick_style');
+            wp_enqueue_style('slick_theme_style');
+            wp_enqueue_script('slick_js');
+            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                $(".advgb-recent-posts-block.slider-view .advgb-recent-posts").slick({
+                    dots: true,
+                    adaptiveHeight: true,
+                })
             });');
         }
 

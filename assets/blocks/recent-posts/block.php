@@ -10,9 +10,100 @@ defined('ABSPATH') || die;
  */
 function advgbRenderBlockRecentPosts($attributes)
 {
-    $html = '';
+    $recent_posts = wp_get_recent_posts(
+        array(
+            'numberposts' => $attributes['numberOfPosts'],
+            'post_status' => 'publish',
+            'order' => $attributes['order'],
+            'orderby' => $attributes['orderBy'],
+            'category' => $attributes['category'],
+        ),
+        'OBJECT'
+    );
 
-    return null;
+    $postHtml = '';
+
+    foreach ($recent_posts as $post) {
+        $postThumbID = get_post_thumbnail_id($post->ID);
+
+        $postHtml .= '<article class="advgb-recent-post">';
+
+        if (isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage'] && $postThumbID) {
+            $postHtml .= sprintf(
+                '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s</a></div>',
+                get_permalink($post->ID),
+                wp_get_attachment_image($postThumbID, 'medium')
+            );
+        }
+
+        $postHtml .= '<div class="advgb-post-wrapper">';
+
+        $postHtml .= sprintf(
+            '<h2 class="advgb-post-title"><a href="%1$s">%2$s</a></h2>',
+            get_permalink($post->ID),
+            get_the_title($post->ID)
+        );
+
+        $postHtml .= '<div class="advgb-post-info">';
+
+        if (isset($attributes['displayAuthor']) && $attributes['displayAuthor']) {
+            $postHtml .= sprintf(
+                '<a href="%1$s" class="advgb-post-author" target="_blank">%2$s</a>',
+                get_author_posts_url($post->post_author),
+                get_the_author_meta('display_name', $post->post_author)
+            );
+        }
+
+        if (isset($attributes['displayDate']) && $attributes['displayDate']) {
+            $postHtml .= sprintf(
+                '<span class="advgb-post-date">%1$s</span>',
+                get_the_date('', $post->ID)
+            );
+        }
+
+        $postHtml .= '</div>'; // end advgb-post-info
+
+        $postHtml .= '<div class="advgb-post-content">';
+
+        if (isset($attributes['displayExcerpt']) && $attributes['displayExcerpt']) {
+            $postHtml .= sprintf(
+                '<div class="advgb-post-excerpt">%1$s</div>',
+                get_the_excerpt($post->ID)
+            );
+        }
+
+        if (isset($attributes['displayReadMore']) && $attributes['displayReadMore']) {
+            $postHtml .= sprintf(
+                '<div class="advgb-post-readmore"><a href="%1$s">%2$s</a></div>',
+                get_permalink($post->ID),
+                __('Read More', 'advanced-gutenberg')
+            );
+        }
+
+        $postHtml .= '</div>'; // end advgb-post-content
+
+        $postHtml .= '</div>'; // end advgb-post-wrapper
+
+        $postHtml .= '</article>';
+    }
+
+    $blockClass = '';
+
+    if ($attributes['postView'] === 'grid') {
+        $blockClass = 'grid-view columns-' . $attributes['columns'];
+    } elseif ($attributes['postView'] === 'list') {
+        $blockClass = 'list-view';
+    } elseif ($attributes['postView'] === 'slider') {
+        $blockClass = 'slider-view';
+    }
+
+    $blockHtml = sprintf(
+        '<div class="advgb-recent-posts-block %2$s"><div class="advgb-recent-posts">%1$s</div></div>',
+        $postHtml,
+        esc_attr($blockClass)
+    );
+
+    return $blockHtml;
 }
 
 /**
