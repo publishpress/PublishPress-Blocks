@@ -224,7 +224,7 @@
                             <ToggleControl
                                 label={ __( 'Load minimized' ) }
                                 checked={ !!loadMinimized }
-                                onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() } ) }
+                                onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/editor').getEditedPostAttribute('title') } ) }
                             />
                             {loadMinimized &&
                             <TextControl
