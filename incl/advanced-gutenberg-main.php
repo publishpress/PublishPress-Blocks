@@ -1049,7 +1049,7 @@ float: left;'
         register_post_type('advgb_profiles', array(
             'labels'       => $labels,
             'public'       => false,
-            'show_ui'      => true,
+            'show_ui'      => false,
             'supports'     => array('title', 'author'),
             'capabilities' => array(
                 'edit_posts'          => 'edit_advgb_profiles',
