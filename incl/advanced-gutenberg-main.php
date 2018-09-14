@@ -298,6 +298,7 @@ float: left;'
             'custom_styles',
             $custom_styles_url . 'custom_styles.css'
         );
+        wp_enqueue_style('dashicons');
 
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
             wp_enqueue_style(
