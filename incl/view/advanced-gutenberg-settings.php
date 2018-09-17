@@ -21,11 +21,13 @@ $saved_settings    = get_option('advgb_settings');
 $blocks_list_saved = get_option('advgb_blocks_list');
 $advgb_blocks = array();
 
-foreach ($blocks_list_saved as $block) {
-    if (strpos($block['name'], 'advgb/') === false) {
-        continue;
-    } else {
-        array_push($advgb_blocks, $block);
+if (gettype($blocks_list_saved) === 'array') {
+    foreach ($blocks_list_saved as $block) {
+        if (strpos($block['name'], 'advgb/') === false) {
+            continue;
+        } else {
+            array_push($advgb_blocks, $block);
+        }
     }
 }
 
