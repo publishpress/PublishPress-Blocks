@@ -256,6 +256,12 @@ float: left;'
         wp_enqueue_script('slick_js');
 
         wp_enqueue_script(
+            'woo_products_block',
+            plugins_url('assets/blocks/woo-products/block.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
+        );
+
+        wp_enqueue_script(
             'custom_styles',
             plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
