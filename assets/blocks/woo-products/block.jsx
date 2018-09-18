@@ -105,6 +105,33 @@
                                 max={ 4 }
                                 onChange={ ( value ) => setAttributes( { columns: value } ) }
                             />
+                            <RangeControl
+                                label={ __( 'Number of Products' ) }
+                                value={ numberOfProducts }
+                                min={ 1 }
+                                max={ 48 }
+                                onChange={ (value) => setAttributes( { numberOfPosts: value } ) }
+                            />
+                            <SelectControl
+                                label={ __( 'Order' ) }
+                                value={ `${orderBy}-${order}` }
+                                options={ [
+                                    { label: __( 'Newest to oldest' ), value: 'date-desc' },
+                                    { label: __( 'Price: high to low' ), value: 'price-desc' },
+                                    { label: __( 'Price: low to high' ), value: 'price-asc' },
+                                    { label: __( 'Highest Rating first' ), value: 'rating-desc' },
+                                    { label: __( 'Most sale first' ), value: 'popularity-desc' },
+                                    { label: __( 'Title: Alphabetical' ), value: 'title-asc' },
+                                    { label: __( 'Title: Alphabetical reversed' ), value: 'title-desc' },
+                                ] }
+                                onChange={ (value) => {
+                                    const splitedVal = value.split('-');
+                                    return setAttributes( {
+                                        orderBy: splitedVal[0],
+                                        order: splitedVal[1],
+                                    } )
+                                } }
+                            />
                         </PanelBody>
                     </InspectorControls>
                     <div>123</div>
@@ -144,7 +171,7 @@
             },
             order: {
                 type: 'string',
-                default: 'DESC',
+                default: 'desc',
             },
             orderBy: {
                 type: 'string',

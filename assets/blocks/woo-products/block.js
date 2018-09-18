@@ -78,7 +78,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'render',
             value: function render() {
-                var _this3 = this;
+                var _this4 = this;
 
                 var categoriesList = this.state.categoriesList;
                 var _props2 = this.props,
@@ -133,7 +133,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         )],
                                         checked: jQuery.inArray(cat.id, categories) > -1,
                                         onChange: function onChange(checked) {
-                                            return _this3.setCategories(cat.id, checked);
+                                            return _this4.setCategories(cat.id, checked);
                                         }
                                     });
                                 })
@@ -149,6 +149,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 4,
                                 onChange: function onChange(value) {
                                     return setAttributes({ columns: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Number of Products'),
+                                value: numberOfProducts,
+                                min: 1,
+                                max: 48,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ numberOfPosts: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Order'),
+                                value: orderBy + '-' + order,
+                                options: [{ label: __('Newest to oldest'), value: 'date-desc' }, { label: __('Price: high to low'), value: 'price-desc' }, { label: __('Price: low to high'), value: 'price-asc' }, { label: __('Highest Rating first'), value: 'rating-desc' }, { label: __('Most sale first'), value: 'popularity-desc' }, { label: __('Title: Alphabetical'), value: 'title-asc' }, { label: __('Title: Alphabetical reversed'), value: 'title-desc' }],
+                                onChange: function onChange(value) {
+                                    var splitedVal = value.split('-');
+                                    return setAttributes({
+                                        orderBy: splitedVal[0],
+                                        order: splitedVal[1]
+                                    });
                                 }
                             })
                         )
@@ -196,7 +217,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             order: {
                 type: 'string',
-                default: 'DESC'
+                default: 'desc'
             },
             orderBy: {
                 type: 'string',
