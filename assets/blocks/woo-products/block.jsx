@@ -10,7 +10,15 @@
             super( ...arguments );
             this.state = {
                 categoriesList: [],
-            }
+                productsList: [],
+                loading: true,
+            };
+
+            this.fetchProducts = this.fetchProducts.bind(this);
+        }
+
+        componentWillMount() {
+            this.fetchProducts();
         }
 
         componentDidUpdate( prevProps ) {
@@ -25,6 +33,59 @@
                     }
                 );
             }
+
+            if (this.checkAttrChanged( prevProps.attributes, attributes )) {
+                this.fetchProducts();
+            }
+        }
+
+        checkAttrChanged( prevAttrs, curAttrs ) {
+            const {
+                category: prevCat,
+                categories: prevCats,
+                status: prevStatus,
+                order: prevOrder,
+                orderBy: prevOrderBy,
+                numberOfProducts: prevLength
+            } = prevAttrs;
+            const { category, categories, status, order, orderBy, numberOfProducts } = curAttrs;
+
+            return (
+                category !== prevCat
+                || categories !== prevCats
+                || status !== prevStatus
+                || order !== prevOrder
+                || orderBy !== prevOrderBy
+                || numberOfProducts !== prevLength
+            )
+        }
+
+        fetchProducts() {
+            const {
+                category,
+                categories,
+                status,
+                order,
+                orderBy,
+                numberOfProducts,
+            } = this.props.attributes;
+
+            const { addQueryArgs } = wp.url;
+            const query = addQueryArgs(
+                '/wgbp/v3/products',
+                {
+                    order: order || undefined,
+                    orderby: orderBy || undefined,
+                    per_page: numberOfProducts,
+                    category: category === 'selected' && categories.length > 0 ? categories.join(',') : undefined,
+                    featured: status === 'featured' ? 1 : undefined,
+                    on_sale: status === 'on_sale' ? 1 : undefined,
+                }
+            );
+
+            wp.apiFetch( { path: query } ).then( (obj) => {
+                this.setState( { productsList: obj } )
+            } )
         }
 
         setCategories( catID, willAdd ) {
@@ -41,10 +102,11 @@
 
             setAttributes( { categories } );
             this.setState( { categoriesList: this.state.categoriesList } );
+            this.fetchProducts();
         }
 
         render() {
-            const { categoriesList } = this.state;
+            const { categoriesList, productsList } = this.state;
             const { attributes, setAttributes } = this.props;
             const {
                 category,
@@ -134,7 +196,16 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div>123</div>
+                    <div className="advgb-products-block">
+                        {productsList.length > 0 ?
+                            productsList.map( (product, idx) => (
+                                <div key={idx}>{product.name}</div>
+                            ) )
+                            : (
+                                <div>none</div>
+                            )
+                        }
+                    </div>
                 </Fragment>
             )
         }

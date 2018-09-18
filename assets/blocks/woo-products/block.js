@@ -34,12 +34,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (AdvProductsEdit.__proto__ || Object.getPrototypeOf(AdvProductsEdit)).apply(this, arguments));
 
             _this.state = {
-                categoriesList: []
+                categoriesList: [],
+                productsList: [],
+                loading: true
             };
+
+            _this.fetchProducts = _this.fetchProducts.bind(_this);
             return _this;
         }
 
         _createClass(AdvProductsEdit, [{
+            key: 'componentWillMount',
+            value: function componentWillMount() {
+                this.fetchProducts();
+            }
+        }, {
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
                 var _this2 = this;
@@ -54,6 +63,56 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         _this2.setState({ categoriesList: obj });
                     });
                 }
+
+                if (this.checkAttrChanged(prevProps.attributes, attributes)) {
+                    this.fetchProducts();
+                }
+            }
+        }, {
+            key: 'checkAttrChanged',
+            value: function checkAttrChanged(prevAttrs, curAttrs) {
+                var prevCat = prevAttrs.category,
+                    prevCats = prevAttrs.categories,
+                    prevStatus = prevAttrs.status,
+                    prevOrder = prevAttrs.order,
+                    prevOrderBy = prevAttrs.orderBy,
+                    prevLength = prevAttrs.numberOfProducts;
+                var category = curAttrs.category,
+                    categories = curAttrs.categories,
+                    status = curAttrs.status,
+                    order = curAttrs.order,
+                    orderBy = curAttrs.orderBy,
+                    numberOfProducts = curAttrs.numberOfProducts;
+
+
+                return category !== prevCat || categories !== prevCats || status !== prevStatus || order !== prevOrder || orderBy !== prevOrderBy || numberOfProducts !== prevLength;
+            }
+        }, {
+            key: 'fetchProducts',
+            value: function fetchProducts() {
+                var _this3 = this;
+
+                var _props$attributes = this.props.attributes,
+                    category = _props$attributes.category,
+                    categories = _props$attributes.categories,
+                    status = _props$attributes.status,
+                    order = _props$attributes.order,
+                    orderBy = _props$attributes.orderBy,
+                    numberOfProducts = _props$attributes.numberOfProducts;
+                var addQueryArgs = wp.url.addQueryArgs;
+
+                var query = addQueryArgs('/wgbp/v3/products', {
+                    order: order || undefined,
+                    orderby: orderBy || undefined,
+                    per_page: numberOfProducts,
+                    category: category === 'selected' && categories.length > 0 ? categories.join(',') : undefined,
+                    featured: status === 'featured' ? 1 : undefined,
+                    on_sale: status === 'on_sale' ? 1 : undefined
+                });
+
+                wp.apiFetch({ path: query }).then(function (obj) {
+                    _this3.setState({ productsList: obj });
+                });
             }
         }, {
             key: 'setCategories',
@@ -74,13 +133,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 setAttributes({ categories: categories });
                 this.setState({ categoriesList: this.state.categoriesList });
+                this.fetchProducts();
             }
         }, {
             key: 'render',
             value: function render() {
                 var _this4 = this;
 
-                var categoriesList = this.state.categoriesList;
+                var _state = this.state,
+                    categoriesList = _state.categoriesList,
+                    productsList = _state.productsList;
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
@@ -176,8 +238,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         'div',
-                        null,
-                        '123'
+                        { className: 'advgb-products-block' },
+                        productsList.length > 0 ? productsList.map(function (product, idx) {
+                            return React.createElement(
+                                'div',
+                                { key: idx },
+                                product.name
+                            );
+                        }) : React.createElement(
+                            'div',
+                            null,
+                            'none'
+                        )
                     )
                 );
             }
