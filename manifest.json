@@ -2,9 +2,19 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "wp_version": "4.9.8",
   "changelog": {
+    "1.6.5": [
+      {
+        "type": "fix",
+        "title": "Apply default color for block icon on first install"
+      },
+      {
+        "type": "fix",
+        "title": "Cannot update blocks list on Gutenberg ver 3.8"
+      }
+    ],
     "1.6.4": [
       {
         "type": "fix",
