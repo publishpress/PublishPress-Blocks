@@ -1,8 +1,6 @@
 window.onload = function () {
     if (typeof wp.blocks !== 'undefined') {
-        if (typeof wp.coreBlocks.registerCoreBlocks === 'function') {
-            wp.coreBlocks.registerCoreBlocks();
-        } else if (typeof wp.blockLibrary.registerCoreBlocks === 'function') {
+        if (wp.blockLibrary && typeof wp.blockLibrary.registerCoreBlocks === 'function') {
             wp.blockLibrary.registerCoreBlocks();
         }
 
