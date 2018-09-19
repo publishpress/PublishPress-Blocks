@@ -13,17 +13,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls;
+    var InspectorControls = wpEditor.InspectorControls;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         CheckboxControl = wpComponents.CheckboxControl,
         SelectControl = wpComponents.SelectControl,
-        Button = wpComponents.Button,
-        IconButton = wpComponents.IconButton,
-        Dashicon = wpComponents.Dashicon,
-        Spinner = wpComponents.Spinner,
-        Toolbar = wpComponents.Toolbar;
+        Spinner = wpComponents.Spinner;
+
+
+    var fetchingQueue = null;
 
     var AdvProductsEdit = function (_Component) {
         _inherits(AdvProductsEdit, _Component);
@@ -90,8 +88,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'fetchProducts',
             value: function fetchProducts() {
-                var _this3 = this;
-
+                var self = this;
                 var _props$attributes = this.props.attributes,
                     category = _props$attributes.category,
                     categories = _props$attributes.categories,
@@ -105,14 +102,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     order: order || undefined,
                     orderby: orderBy || undefined,
                     per_page: numberOfProducts,
-                    category: category === 'selected' && categories.length > 0 ? categories.join(',') : undefined,
+                    category: category === 'selected' ? categories.join(',') : undefined,
                     featured: status === 'featured' ? 1 : undefined,
                     on_sale: status === 'on_sale' ? 1 : undefined
                 });
 
-                wp.apiFetch({ path: query }).then(function (obj) {
-                    _this3.setState({ productsList: obj });
-                });
+                if (fetchingQueue) {
+                    clearTimeout(fetchingQueue);
+                }
+
+                fetchingQueue = setTimeout(function () {
+                    self.setState({ loading: true });
+                    wp.apiFetch({ path: query }).then(function (obj) {
+                        self.setState({
+                            productsList: obj,
+                            loading: false
+                        });
+                    });
+                }, 500);
             }
         }, {
             key: 'setCategories',
@@ -138,11 +145,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'render',
             value: function render() {
-                var _this4 = this;
+                var _this3 = this;
 
                 var _state = this.state,
                     categoriesList = _state.categoriesList,
-                    productsList = _state.productsList;
+                    productsList = _state.productsList,
+                    loading = _state.loading;
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
@@ -195,7 +203,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         )],
                                         checked: jQuery.inArray(cat.id, categories) > -1,
                                         onChange: function onChange(checked) {
-                                            return _this4.setCategories(cat.id, checked);
+                                            return _this3.setCategories(cat.id, checked);
                                         }
                                     });
                                 })
@@ -219,7 +227,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 min: 1,
                                 max: 48,
                                 onChange: function onChange(value) {
-                                    return setAttributes({ numberOfPosts: value });
+                                    return setAttributes({ numberOfProducts: value });
                                 }
                             }),
                             React.createElement(SelectControl, {
@@ -239,16 +247,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'div',
                         { className: 'advgb-products-block' },
-                        productsList.length > 0 ? productsList.map(function (product, idx) {
-                            return React.createElement(
-                                'div',
-                                { key: idx },
-                                product.name
-                            );
-                        }) : React.createElement(
+                        !loading ? productsList.length > 0 ? React.createElement(
+                            'div',
+                            { className: 'advgb-products-wrapper' },
+                            productsList.map(function (product, idx) {
+                                return React.createElement(
+                                    'div',
+                                    { key: idx },
+                                    product.name
+                                );
+                            })
+                        ) : // When we found no products
+                        React.createElement(
                             'div',
                             null,
-                            'none'
+                            __('No products found.')
+                        ) : // When products is fetching
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'span',
+                                null,
+                                __('Loading')
+                            ),
+                            React.createElement(Spinner, null)
                         )
                     )
                 );

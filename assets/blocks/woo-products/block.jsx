@@ -2,8 +2,10 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls } = wpEditor;
-    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Button, IconButton, Dashicon, Spinner, Toolbar } = wpComponents;
+    const { InspectorControls } = wpEditor;
+    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner } = wpComponents;
+
+    let fetchingQueue = null;
 
     class AdvProductsEdit extends Component {
         constructor() {
@@ -61,6 +63,7 @@
         }
 
         fetchProducts() {
+            const self = this;
             const {
                 category,
                 categories,
@@ -77,15 +80,25 @@
                     order: order || undefined,
                     orderby: orderBy || undefined,
                     per_page: numberOfProducts,
-                    category: category === 'selected' && categories.length > 0 ? categories.join(',') : undefined,
+                    category: category === 'selected' ? categories.join(',') : undefined,
                     featured: status === 'featured' ? 1 : undefined,
                     on_sale: status === 'on_sale' ? 1 : undefined,
                 }
             );
 
-            wp.apiFetch( { path: query } ).then( (obj) => {
-                this.setState( { productsList: obj } )
-            } )
+            if (fetchingQueue) {
+                clearTimeout(fetchingQueue);
+            }
+
+            fetchingQueue = setTimeout(function () {
+                self.setState( { loading: true } );
+                wp.apiFetch( { path: query } ).then( (obj) => {
+                    self.setState( {
+                        productsList: obj,
+                        loading: false,
+                    } )
+                } )
+            }, 500 );
         }
 
         setCategories( catID, willAdd ) {
@@ -106,7 +119,7 @@
         }
 
         render() {
-            const { categoriesList, productsList } = this.state;
+            const { categoriesList, productsList, loading } = this.state;
             const { attributes, setAttributes } = this.props;
             const {
                 category,
@@ -172,7 +185,7 @@
                                 value={ numberOfProducts }
                                 min={ 1 }
                                 max={ 48 }
-                                onChange={ (value) => setAttributes( { numberOfPosts: value } ) }
+                                onChange={ (value) => setAttributes( { numberOfProducts: value } ) }
                             />
                             <SelectControl
                                 label={ __( 'Order' ) }
@@ -197,12 +210,20 @@
                         </PanelBody>
                     </InspectorControls>
                     <div className="advgb-products-block">
-                        {productsList.length > 0 ?
-                            productsList.map( (product, idx) => (
-                                <div key={idx}>{product.name}</div>
-                            ) )
-                            : (
-                                <div>none</div>
+                        {!loading ? productsList.length > 0 ?
+                            <div className="advgb-products-wrapper">
+                                {productsList.map( (product, idx) => (
+                                    <div key={idx}>{product.name}</div>
+                                ) ) }
+                            </div>
+                            : ( // When we found no products
+                                <div>{ __( 'No products found.' ) }</div>
+                            )
+                            : ( // When products is fetching
+                                <div>
+                                    <span>{ __( 'Loading' ) }</span>
+                                    <Spinner/>
+                                </div>
                             )
                         }
                     </div>
