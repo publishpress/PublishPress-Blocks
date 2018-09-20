@@ -123,12 +123,10 @@
             var tabHref = $(this).attr('href');
             document.cookie = 'advgbLeftTab=' + tabHref;
 
-            var rightTabHref = $(tabHref).find('.ju-top-tabs').find('a.link-tab.active').attr('href');
-            if (rightTabHref !== undefined) {
-                setTimeout(function () {
-                    document.cookie = 'advgbRightTab=' + rightTabHref;
-                }, 500)
-            }
+            setTimeout(function () {
+                var rightTabHref = $(tabHref).find('.ju-top-tabs').find('a.link-tab.active').attr('href');
+                document.cookie = 'advgbRightTab=' + rightTabHref;
+            }, 500);
         });
 
         // Not show expand icon if this tab has no sub menus
