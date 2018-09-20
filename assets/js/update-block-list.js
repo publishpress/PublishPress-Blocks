@@ -155,6 +155,14 @@ window.onload = function () {
                         .parent().find('i').removeClass('rotating');
 
                     $('#block-update-notice').fadeIn(500).delay(2000).fadeOut(500);
+                } else if (typeof updateListNonce !== 'undefined') {
+                    var loadingBlocksSection = jQuery('.blocks-not-loaded');
+                    if (loadingBlocksSection.length > 0) {
+                        loadingBlocksSection.find('p').text('Blocks list loaded, please reload the page.');
+                        loadingBlocksSection.find('button').prop('disabled', false).click(function () {
+                            window.location.reload();
+                        });
+                    }
                 }
             },
             error: function () {
