@@ -156,12 +156,33 @@ window.onload = function () {
 
                     $('#block-update-notice').fadeIn(500).delay(2000).fadeOut(500);
                 } else if (typeof updateListNonce !== 'undefined') {
-                    var loadingBlocksSection = jQuery('.blocks-not-loaded');
+                    $ = jQuery;
+                    var loadingBlocksSection = $('.blocks-not-loaded');
                     if (loadingBlocksSection.length > 0) {
-                        loadingBlocksSection.find('p').text('Blocks list loaded, please reload the page.');
-                        loadingBlocksSection.find('button').prop('disabled', false).click(function () {
-                            window.location.reload();
-                        });
+                        loadingBlocksSection.remove();
+                        var listBlockWrapper = $('.blocks-config-list');
+                        var advgbBlocks = res.blocks_list.filter( function ( block ) {
+                            return block.name.indexOf( 'advgb/' ) > -1;
+                        } );
+
+                        advgbBlocks.forEach( function ( block ) {
+                            var blockHTML = '';
+
+                            blockHTML += '<li class="block-config-item ju-settings-option">';
+                            blockHTML +=   '<span class="block-icon" style="color: '+ block.iconColor +'">';
+                            blockHTML +=      block.icon;
+                            blockHTML +=   '</span>';
+                            blockHTML +=   '<span class="block-title">';
+                            blockHTML +=      block.title;
+                            blockHTML +=   '</span>';
+                            blockHTML +=   '<i class="mi mi-settings block-config-button" title="Edit" data-block="'+ block.name +'">';
+                            blockHTML +=   '</i>';
+                            blockHTML += '</li>';
+
+                            listBlockWrapper.append( blockHTML );
+                        } );
+
+                        initBlockConfigButton();
                     }
                 }
             },

@@ -276,8 +276,7 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
 
         <?php if (count($advgb_blocks) === 0) : ?>
             <div class="blocks-not-loaded" style="text-align: center">
-                <p><?php esc_html_e('We are updating blocks list. We a bit then reload the page!', 'advanced-gutenberg'); ?></p>
-                <button class="ju-rect-button" disabled><?php esc_html_e('Reload', 'advanced-gutenberg'); ?></button>
+                <p><?php esc_html_e('We are updating blocks list...', 'advanced-gutenberg'); ?></p>
             </div>
         <?php endif; ?>
     </div>
