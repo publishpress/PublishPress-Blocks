@@ -21,11 +21,13 @@ $saved_settings    = get_option('advgb_settings');
 $blocks_list_saved = get_option('advgb_blocks_list');
 $advgb_blocks = array();
 
-foreach ($blocks_list_saved as $block) {
-    if (strpos($block['name'], 'advgb/') === false) {
-        continue;
-    } else {
-        array_push($advgb_blocks, $block);
+if (gettype($blocks_list_saved) === 'array') {
+    foreach ($blocks_list_saved as $block) {
+        if (strpos($block['name'], 'advgb/') === false) {
+            continue;
+        } else {
+            array_push($advgb_blocks, $block);
+        }
     }
 }
 
@@ -50,7 +52,7 @@ $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] 
 $google_api_key_saved             = isset($saved_settings['google_api_key']) ? $saved_settings['google_api_key'] : '';
 $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
-$blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#000000';
+$blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
 ?>
 
 <div id="advgb-settings-container">
