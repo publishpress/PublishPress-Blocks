@@ -158,8 +158,8 @@
                                             label={ [
                                                 cat.name,
                                                 <span key="cat-count" style={ { fontSize: 'small', color: '#999', marginLeft: 5 } }>
-                                                ({cat.count})
-                                            </span>
+                                                    ({cat.count})
+                                                </span>
                                             ] }
                                             checked={ jQuery.inArray(cat.id, categories) > -1 }
                                             onChange={ (checked) => this.setCategories( cat.id, checked ) }
