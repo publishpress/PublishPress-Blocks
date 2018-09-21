@@ -106,15 +106,11 @@
             const { categories } = attributes;
 
             if (willAdd) {
-                categories.push( catID );
+                setAttributes( { categories: [ ...categories, catID ] } );
             } else {
-                if (categories.indexOf(catID) > -1) {
-                    categories.splice( categories.indexOf(catID), 1 );
-                }
+                setAttributes( { categories: categories.filter( (cat) => cat !== catID ) } )
             }
 
-            setAttributes( { categories } );
-            this.setState( { categoriesList: this.state.categoriesList } );
             this.fetchProducts();
         }
 

@@ -133,15 +133,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 if (willAdd) {
-                    categories.push(catID);
+                    setAttributes({ categories: [].concat(_toConsumableArray(categories), [catID]) });
                 } else {
-                    if (categories.indexOf(catID) > -1) {
-                        categories.splice(categories.indexOf(catID), 1);
-                    }
+                    setAttributes({ categories: categories.filter(function (cat) {
+                            return cat !== catID;
+                        }) });
                 }
 
-                setAttributes({ categories: categories });
-                this.setState({ categoriesList: this.state.categoriesList });
                 this.fetchProducts();
             }
         }, {
