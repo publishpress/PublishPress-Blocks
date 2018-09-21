@@ -266,13 +266,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "article",
                                     { key: index, className: "advgb-recent-post" },
-                                    displayFeaturedImage && post.featured_image_src && React.createElement(
+                                    displayFeaturedImage && post.featured_img && React.createElement(
                                         "div",
                                         { className: "advgb-post-thumbnail" },
                                         React.createElement(
                                             "a",
                                             { href: post.link, target: "_blank" },
-                                            React.createElement("img", { src: post.featured_image_src, alt: __('Post Image') })
+                                            React.createElement("img", { src: post.featured_img, alt: __('Post Image') })
                                         )
                                     ),
                                     React.createElement(
@@ -292,11 +292,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: "advgb-post-info" },
                                             displayAuthor && React.createElement(
                                                 "a",
-                                                { href: post.author_info.author_link,
+                                                { href: post.author_meta.author_link,
                                                     target: "_blank",
                                                     className: "advgb-post-author"
                                                 },
-                                                post.author_info.display_name
+                                                post.author_meta.display_name
                                             ),
                                             displayDate && React.createElement(
                                                 "span",

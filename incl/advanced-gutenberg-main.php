@@ -142,6 +142,7 @@ float: left;'
         add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
         add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
+        add_action('rest_api_init', array($this, 'registerRestAPI'));
 
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbProfile'));
@@ -353,6 +354,73 @@ float: left;'
     {
         // Block Recent Posts
         require_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/recent-posts/block.php');
+    }
+
+    /**
+     * Register REST API
+     *
+     * @return void
+     */
+    public function registerRestAPI()
+    {
+        // Add author info
+        register_rest_field(
+            'post',
+            'author_meta',
+            array(
+                'get_callback' => array($this, 'getAuthorInfo'),
+                'update_callback' => null,
+                'schema' => null,
+            )
+        );
+
+        // Add post featured img
+        register_rest_field(
+            'post',
+            'featured_img',
+            array(
+                'get_callback' => array($this, 'getFeaturedImg'),
+                'update_callback' => null,
+                'schema' => null,
+            )
+        );
+    }
+
+    /**
+     * Get post author info for REST API
+     *
+     * @param array $object API Object
+     *
+     * @return mixed
+     */
+    public function getAuthorInfo($object)
+    {
+        // Get the author name
+        $author['display_name'] = get_the_author_meta('display_name', $object['author']);
+
+        // Get the author link
+        $author['author_link'] = get_author_posts_url($object['author']);
+
+        // Return the author data
+        return $author;
+    }
+
+    /**
+     * Get featured image link for REST API
+     *
+     * @param array $object API Object
+     *
+     * @return mixed
+     */
+    public function getFeaturedImg($object)
+    {
+        $featured_img = wp_get_attachment_image_src(
+            $object['featured_media'],
+            'medium',
+            false
+        );
+
+        return $featured_img[0];
     }
 
     /**

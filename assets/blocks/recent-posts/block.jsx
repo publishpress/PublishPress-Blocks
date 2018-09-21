@@ -205,10 +205,10 @@
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index } className="advgb-recent-post" >
-                                    {displayFeaturedImage && post.featured_image_src && (
+                                    {displayFeaturedImage && post.featured_img && (
                                         <div className="advgb-post-thumbnail">
                                             <a href={ post.link } target="_blank">
-                                                <img src={ post.featured_image_src } alt={ __( 'Post Image' ) } />
+                                                <img src={ post.featured_img } alt={ __( 'Post Image' ) } />
                                             </a>
                                         </div>
                                     ) }
@@ -218,11 +218,11 @@
                                         </h2>
                                         <div className="advgb-post-info">
                                             {displayAuthor && (
-                                                <a href={ post.author_info.author_link }
+                                                <a href={ post.author_meta.author_link }
                                                    target="_blank"
                                                    className="advgb-post-author"
                                                 >
-                                                    { post.author_info.display_name }
+                                                    { post.author_meta.display_name }
                                                 </a>
                                             ) }
                                             {displayDate && (
