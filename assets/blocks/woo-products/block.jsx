@@ -75,7 +75,7 @@
 
             const { addQueryArgs } = wp.url;
             const query = addQueryArgs(
-                '/wgbp/v3/products',
+                '/wc/v2/products',
                 {
                     order: order || undefined,
                     orderby: orderBy || undefined,

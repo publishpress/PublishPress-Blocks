@@ -100,7 +100,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberOfProducts = _props$attributes.numberOfProducts;
                 var addQueryArgs = wp.url.addQueryArgs;
 
-                var query = addQueryArgs('/wgbp/v3/products', {
+                var query = addQueryArgs('/wc/v2/products', {
                     order: order || undefined,
                     orderby: orderBy || undefined,
                     per_page: numberOfProducts,
