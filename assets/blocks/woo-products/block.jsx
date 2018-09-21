@@ -293,7 +293,34 @@
         },
         edit: AdvProductsEdit,
         save: function ( { attributes } ) {
-            return null;
+            const {
+                category,
+                categories,
+                status,
+                order,
+                orderBy,
+                numberOfProducts,
+                columns,
+            } = attributes;
+
+            const listCats = categories.join(',');
+            const shortCode = [
+                '[products',
+                `limit="${numberOfProducts}"`,
+                `columns="${columns}"`,
+                `orderby="${orderBy}"`,
+                `order="${order}"`,
+                category === 'selected' && `category="${listCats}"`,
+                status === 'featured' && 'featured="1"',
+                status === 'on_sale' && 'on_sale="1"',
+                ']',
+            ].filter( Boolean ).join( ' ' );
+
+            return (
+                <div className="advgb-woo-products">
+                    {shortCode}
+                </div>
+            );
         }
     } )
 } )( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
