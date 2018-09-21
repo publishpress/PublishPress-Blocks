@@ -211,12 +211,21 @@
                     </InspectorControls>
                     <div className="advgb-products-block">
                         {!loading ? productsList.length > 0 ?
-                            <div className="advgb-products-wrapper">
+                            <div className={`advgb-products-wrapper columns-${columns}`}>
                                 {productsList.map( (product, idx) => (
-                                    <div key={idx}>{product.name}</div>
+                                    <div key={idx} className="advgb-product">
+                                        <div className="advgb-product-img">
+                                            <img src={product.images[0].src} alt={product.name} />
+                                        </div>
+                                        <div className="advgb-product-title">{ product.name }</div>
+                                        <div className="advgb-product-price" dangerouslySetInnerHTML={ { __html: product.price_html } } />
+                                        <div className="advgb-product-add-to-cart">
+                                            <span>{ __( 'Add to cart' ) }</span>
+                                        </div>
+                                    </div>
                                 ) ) }
                             </div>
-                            : ( // When we found no products
+                            : ( // When no products found
                                 <div>{ __( 'No products found.' ) }</div>
                             )
                             : ( // When products is fetching

@@ -249,15 +249,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: 'advgb-products-block' },
                         !loading ? productsList.length > 0 ? React.createElement(
                             'div',
-                            { className: 'advgb-products-wrapper' },
+                            { className: 'advgb-products-wrapper columns-' + columns },
                             productsList.map(function (product, idx) {
                                 return React.createElement(
                                     'div',
-                                    { key: idx },
-                                    product.name
+                                    { key: idx, className: 'advgb-product' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-product-img' },
+                                        React.createElement('img', { src: product.images[0].src, alt: product.name })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-product-title' },
+                                        product.name
+                                    ),
+                                    React.createElement('div', { className: 'advgb-product-price', dangerouslySetInnerHTML: { __html: product.price_html } }),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-product-add-to-cart' },
+                                        React.createElement(
+                                            'span',
+                                            null,
+                                            __('Add to cart')
+                                        )
+                                    )
                                 );
                             })
-                        ) : // When we found no products
+                        ) : // When no products found
                         React.createElement(
                             'div',
                             null,
