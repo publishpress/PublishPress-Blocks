@@ -495,6 +495,11 @@ jQuery(document).ready(function ($) {
         })
     });
 
+    initBlockConfigButton();
+});
+
+function initBlockConfigButton() {
+    var $ = jQuery;
     // Open the block config modal
     $('.blocks-config-list .block-config-item .block-config-button').unbind('click').click(function () {
         var blockName = $(this).data('block');
@@ -504,4 +509,4 @@ jQuery(document).ready(function ($) {
 
         tb_show('Edit block ' + blockLabel + ' default config', 'admin.php?page=' + blockName + '&noheader=1&width=550&height=600&TB_iframe=1');
     })
-});
+}

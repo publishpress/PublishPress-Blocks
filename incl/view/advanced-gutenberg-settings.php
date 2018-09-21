@@ -21,11 +21,13 @@ $saved_settings    = get_option('advgb_settings');
 $blocks_list_saved = get_option('advgb_blocks_list');
 $advgb_blocks = array();
 
-foreach ($blocks_list_saved as $block) {
-    if (strpos($block['name'], 'advgb/') === false) {
-        continue;
-    } else {
-        array_push($advgb_blocks, $block);
+if (gettype($blocks_list_saved) === 'array') {
+    foreach ($blocks_list_saved as $block) {
+        if (strpos($block['name'], 'advgb/') === false) {
+            continue;
+        } else {
+            array_push($advgb_blocks, $block);
+        }
     }
 }
 
@@ -271,5 +273,11 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
             </li>
             <?php endforeach; ?>
         </ul>
+
+        <?php if (count($advgb_blocks) === 0) : ?>
+            <div class="blocks-not-loaded" style="text-align: center">
+                <p><?php esc_html_e('We are updating blocks list...', 'advanced-gutenberg'); ?></p>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
