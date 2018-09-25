@@ -15,12 +15,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls;
+    var InspectorControls = wpEditor.InspectorControls,
+        BlockControls = wpEditor.BlockControls;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         CheckboxControl = wpComponents.CheckboxControl,
         SelectControl = wpComponents.SelectControl,
-        Spinner = wpComponents.Spinner;
+        Spinner = wpComponents.Spinner,
+        Toolbar = wpComponents.Toolbar;
 
 
     var fetchingQueue = null;
@@ -49,6 +51,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.fetchProducts();
             }
         }, {
+            key: 'componentWillUpdate',
+            value: function componentWillUpdate(nextProps, nextState) {
+                var clientId = this.props.clientId;
+
+                var $ = jQuery;
+
+                if (this.checkAttrChanged(nextProps.attributes, this.props.attributes)) {
+                    $('#block-' + clientId + ' .advgb-products-wrapper.slick-initialized').slick('unslick');
+                    $('#block-' + clientId + ' .advgb-product').removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+                }
+            }
+        }, {
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
                 var _this2 = this;
@@ -71,13 +85,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'checkAttrChanged',
             value: function checkAttrChanged(prevAttrs, curAttrs) {
-                var prevCat = prevAttrs.category,
+                var prevView = prevAttrs.viewType,
+                    prevCat = prevAttrs.category,
                     prevCats = prevAttrs.categories,
                     prevStatus = prevAttrs.status,
                     prevOrder = prevAttrs.order,
                     prevOrderBy = prevAttrs.orderBy,
                     prevLength = prevAttrs.numberOfProducts;
-                var category = curAttrs.category,
+                var viewType = curAttrs.viewType,
+                    category = curAttrs.category,
                     categories = curAttrs.categories,
                     status = curAttrs.status,
                     order = curAttrs.order,
@@ -85,13 +101,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberOfProducts = curAttrs.numberOfProducts;
 
 
-                return category !== prevCat || categories !== prevCats || status !== prevStatus || order !== prevOrder || orderBy !== prevOrderBy || numberOfProducts !== prevLength;
+                return category !== prevCat || categories !== prevCats || status !== prevStatus || order !== prevOrder || orderBy !== prevOrderBy || numberOfProducts !== prevLength || prevView !== viewType;
             }
         }, {
             key: 'fetchProducts',
             value: function fetchProducts() {
                 var self = this;
                 var _props$attributes = this.props.attributes,
+                    viewType = _props$attributes.viewType,
                     category = _props$attributes.category,
                     categories = _props$attributes.categories,
                     status = _props$attributes.status,
@@ -114,12 +131,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 fetchingQueue = setTimeout(function () {
-                    self.setState({ loading: true });
+                    if (!self.state.loading) {
+                        self.setState({ loading: true });
+                    }
                     wp.apiFetch({ path: query }).then(function (obj) {
                         self.setState({
                             productsList: obj,
                             loading: false
                         });
+                    }).then(function () {
+                        if (viewType === 'slider') {
+                            $('#block-' + self.props.clientId + ' .advgb-products-block.slider-view .advgb-products-wrapper:not(.slick-initialized)').slick({
+                                dots: true,
+                                adaptiveHeight: true
+                            });
+                        }
                     });
                 }, 500);
             }
@@ -154,7 +180,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
-                var category = attributes.category,
+                var viewType = attributes.viewType,
+                    category = attributes.category,
                     categories = attributes.categories,
                     status = attributes.status,
                     order = attributes.order,
@@ -163,9 +190,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columns = attributes.columns;
 
 
+                var viewControls = [{
+                    icon: 'grid-view',
+                    title: __('Normal View'),
+                    onClick: function onClick() {
+                        return setAttributes({ viewType: 'normal' });
+                    },
+                    isActive: viewType === 'normal'
+                }, {
+                    icon: 'slides',
+                    title: __('Slider View'),
+                    onClick: function onClick() {
+                        return setAttributes({ viewType: 'slider' });
+                    },
+                    isActive: viewType === 'slider'
+                }];
+
+                var blockClassName = ["advgb-products-block", viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+
+                var blockWrapperClassName = ["advgb-products-wrapper", viewType === 'normal' && 'columns-' + columns].filter(Boolean).join(' ');
+
                 return React.createElement(
                     Fragment,
                     null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(Toolbar, { controls: viewControls })
+                    ),
                     React.createElement(
                         InspectorControls,
                         null,
@@ -246,10 +298,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         'div',
-                        { className: 'advgb-products-block' },
+                        { className: blockClassName },
                         !loading ? productsList.length > 0 ? React.createElement(
                             'div',
-                            { className: 'advgb-products-wrapper columns-' + columns },
+                            { className: blockWrapperClassName },
                             productsList.map(function (product, idx) {
                                 return React.createElement(
                                     'div',
@@ -319,6 +371,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'widgets',
         keywords: [__('woo commerce'), __('products list'), __('price list')],
         attributes: {
+            viewType: {
+                type: 'string',
+                default: 'normal'
+            },
             category: {
                 type: 'string'
             },

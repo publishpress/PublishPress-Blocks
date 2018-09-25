@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls } = wpEditor;
-    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner } = wpComponents;
+    const { InspectorControls, BlockControls } = wpEditor;
+    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner, Toolbar } = wpComponents;
 
     let fetchingQueue = null;
 
@@ -23,6 +23,19 @@
             this.fetchProducts();
         }
 
+        componentWillUpdate( nextProps, nextState ) {
+            const { clientId } = this.props;
+            const $ = jQuery;
+
+            if (this.checkAttrChanged(nextProps.attributes, this.props.attributes)) {
+                $(`#block-${clientId} .advgb-products-wrapper.slick-initialized`).slick('unslick');
+                $(`#block-${clientId} .advgb-product`)
+                    .removeAttr('tabindex')
+                    .removeAttr('role')
+                    .removeAttr('aria-describedby');
+            }
+        }
+
         componentDidUpdate( prevProps ) {
             const { categoriesList } = this.state;
             const { attributes } = this.props;
@@ -31,7 +44,7 @@
             if (category === 'selected' && categoriesList.length === 0) {
                 wp.apiFetch( { path: '/wc/v2/products/categories' } ).then(
                     (obj) => {
-                        this.setState( { categoriesList: obj } )
+                        this.setState( { categoriesList: obj } );
                     }
                 );
             }
@@ -43,6 +56,7 @@
 
         checkAttrChanged( prevAttrs, curAttrs ) {
             const {
+                viewType: prevView,
                 category: prevCat,
                 categories: prevCats,
                 status: prevStatus,
@@ -50,7 +64,7 @@
                 orderBy: prevOrderBy,
                 numberOfProducts: prevLength
             } = prevAttrs;
-            const { category, categories, status, order, orderBy, numberOfProducts } = curAttrs;
+            const { viewType, category, categories, status, order, orderBy, numberOfProducts } = curAttrs;
 
             return (
                 category !== prevCat
@@ -59,12 +73,14 @@
                 || order !== prevOrder
                 || orderBy !== prevOrderBy
                 || numberOfProducts !== prevLength
+                || prevView !== viewType
             )
         }
 
         fetchProducts() {
             const self = this;
             const {
+                viewType,
                 category,
                 categories,
                 status,
@@ -91,12 +107,21 @@
             }
 
             fetchingQueue = setTimeout(function () {
-                self.setState( { loading: true } );
+                if (!self.state.loading) {
+                    self.setState( { loading: true } );
+                }
                 wp.apiFetch( { path: query } ).then( (obj) => {
                     self.setState( {
                         productsList: obj,
                         loading: false,
                     } )
+                } ).then( () => {
+                    if (viewType === 'slider') {
+                        $(`#block-${self.props.clientId} .advgb-products-block.slider-view .advgb-products-wrapper:not(.slick-initialized)`).slick( {
+                            dots: true,
+                            adaptiveHeight: true,
+                        } );
+                    }
                 } )
             }, 500 );
         }
@@ -118,6 +143,7 @@
             const { categoriesList, productsList, loading } = this.state;
             const { attributes, setAttributes } = this.props;
             const {
+                viewType,
                 category,
                 categories,
                 status,
@@ -127,8 +153,36 @@
                 columns,
             } = attributes;
 
+            const viewControls = [
+                {
+                    icon: 'grid-view',
+                    title: __( 'Normal View' ),
+                    onClick: () => setAttributes( { viewType: 'normal' } ),
+                    isActive: viewType === 'normal',
+                },
+                {
+                    icon: 'slides',
+                    title: __( 'Slider View' ),
+                    onClick: () => setAttributes( { viewType: 'slider' } ),
+                    isActive: viewType === 'slider',
+                },
+            ];
+
+            const blockClassName = [
+                "advgb-products-block",
+                viewType === 'slider' && 'slider-view',
+            ].filter( Boolean ).join( ' ' );
+
+            const blockWrapperClassName = [
+                "advgb-products-wrapper",
+                viewType === 'normal' && `columns-${columns}`,
+            ].filter( Boolean ).join( ' ' );
+
             return (
                 <Fragment>
+                    <BlockControls>
+                        <Toolbar controls={ viewControls } />
+                    </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Products Settings' ) }>
                             <SelectControl
@@ -205,9 +259,9 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className="advgb-products-block">
+                    <div className={ blockClassName }>
                         {!loading ? productsList.length > 0 ?
-                            <div className={`advgb-products-wrapper columns-${columns}`}>
+                            <div className={ blockWrapperClassName }>
                                 {productsList.map( (product, idx) => (
                                     <div key={idx} className="advgb-product">
                                         <div className="advgb-product-img">
@@ -256,6 +310,10 @@
         category: 'widgets',
         keywords: [ __( 'woo commerce' ), __( 'products list' ), __( 'price list' ) ],
         attributes: {
+            viewType: {
+                type: 'string',
+                default: 'normal',
+            },
             category: {
                 type: 'string',
             },
