@@ -264,7 +264,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Layout Settings') },
-                            React.createElement(RangeControl, {
+                            viewType !== 'slider' && React.createElement(RangeControl, {
                                 label: __('Columns'),
                                 value: columns,
                                 min: 1,
@@ -409,7 +409,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvProductsEdit,
         save: function save(_ref) {
             var attributes = _ref.attributes;
-            var category = attributes.category,
+            var viewType = attributes.viewType,
+                category = attributes.category,
                 categories = attributes.categories,
                 status = attributes.status,
                 order = attributes.order,
@@ -421,9 +422,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var listCats = categories.join(',');
             var shortCode = ['[products', 'limit="' + numberOfProducts + '"', 'columns="' + columns + '"', 'orderby="' + orderBy + '"', 'order="' + order + '"', category === 'selected' && 'category="' + listCats + '"', status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
 
+            var blockClassName = ['advgb-woo-products', viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+
             return React.createElement(
                 'div',
-                { className: 'advgb-woo-products' },
+                { className: blockClassName },
                 shortCode
             );
         }

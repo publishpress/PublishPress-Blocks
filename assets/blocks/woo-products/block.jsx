@@ -223,13 +223,15 @@
                             }
                         </PanelBody>
                         <PanelBody title={ __( 'Layout Settings' ) }>
-                            <RangeControl
-                                label={ __( 'Columns' ) }
-                                value={ columns }
-                                min={ 1 }
-                                max={ 4 }
-                                onChange={ ( value ) => setAttributes( { columns: value } ) }
-                            />
+                            {viewType !== 'slider' &&
+                                <RangeControl
+                                    label={ __( 'Columns' ) }
+                                    value={ columns }
+                                    min={ 1 }
+                                    max={ 4 }
+                                    onChange={ ( value ) => setAttributes( { columns: value } ) }
+                                />
+                            }
                             <RangeControl
                                 label={ __( 'Number of Products' ) }
                                 value={ numberOfProducts }
@@ -348,6 +350,7 @@
         edit: AdvProductsEdit,
         save: function ( { attributes } ) {
             const {
+                viewType,
                 category,
                 categories,
                 status,
@@ -370,8 +373,13 @@
                 ']',
             ].filter( Boolean ).join( ' ' );
 
+            const blockClassName = [
+                'advgb-woo-products',
+                viewType === 'slider' && 'slider-view',
+            ].filter( Boolean ).join( ' ' );
+
             return (
-                <div className="advgb-woo-products">
+                <div className={ blockClassName }>
                     {shortCode}
                 </div>
             );
