@@ -2591,7 +2591,19 @@ float: left;'
             wp_enqueue_style('slick_theme_style');
             wp_enqueue_script('slick_js');
             wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
-                $(".advgb-recent-posts-block.slider-view .advgb-recent-posts").slick({
+                $(".advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)").slick({
+                    dots: true,
+                    adaptiveHeight: true,
+                })
+            });');
+        }
+
+        if (strpos($content, 'advgb-woo-products slider-view') !== false) {
+            wp_enqueue_style('slick_style');
+            wp_enqueue_style('slick_theme_style');
+            wp_enqueue_script('slick_js');
+            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                $(".advgb-woo-products.slider-view .products:not(.slick-initialized)").slick({
                     dots: true,
                     adaptiveHeight: true,
                 })

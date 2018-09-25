@@ -783,6 +783,10 @@ hr.wp-block-separator {
 }
 
 /*Woo Products styles*/
+.advgb-products-block {
+    padding-bottom: 1px;
+}
+
 .advgb-products-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -829,4 +833,24 @@ hr.wp-block-separator {
     cursor: pointer;
     font-weight: 600;
     font-size: 14px;
+}
+
+.advgb-products-block.slider-view .advgb-product .advgb-product-img img {
+    display: block;
+    margin: auto;
+}
+
+.advgb-woo-products.slider-view .woocommerce ul.products li.first,
+.advgb-woo-products.slider-view .woocommerce-page ul.products li.first {
+    clear: none !important;
+}
+
+.advgb-woo-products.slider-view .woocommerce ul.products li.product,
+.advgb-woo-products.slider-view .woocommerce-page ul.products li.product {
+    margin: 10px;
+}
+
+.advgb-woo-products.slider-view .woocommerce ul.products li.product a img {
+    max-height: 400px;
+    width: auto;
 }
