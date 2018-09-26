@@ -215,7 +215,7 @@
                         editor.dom.setStyles( selectedCell, {
                             'border-top-color': selectedCellBorderColor,
                         } );
-                        editor.undoManager.add();
+                        editor.fire('change');
                     },
                 },
                 {
@@ -230,7 +230,7 @@
                         editor.dom.setStyles( selectedCell, {
                             'border-right-color': selectedCellBorderColor,
                         } );
-                        editor.undoManager.add();
+                        editor.fire('change');
                     },
                 },
                 {
@@ -245,7 +245,7 @@
                         editor.dom.setStyles( selectedCell, {
                             'border-bottom-color': selectedCellBorderColor,
                         } );
-                        editor.undoManager.add();
+                        editor.fire('change');
                     },
                 },
                 {
@@ -260,7 +260,7 @@
                         editor.dom.setStyles( selectedCell, {
                             'border-left-color': selectedCellBorderColor,
                         } );
-                        editor.undoManager.add();
+                        editor.fire('change');
                     },
                 },
                 {
@@ -278,7 +278,7 @@
                             'border-bottom-color': selectedCellBorderColor,
                             'border-left-color': selectedCellBorderColor,
                         } );
-                        editor.undoManager.add();
+                        editor.fire('change');
                     },
                 },
                 {
@@ -296,7 +296,7 @@
                             'border-bottom-color': '',
                             'border-left-color': '',
                         } );
-                        editor.undoManager.add();
+                        editor.fire('change');
                     },
                 },
             ];
@@ -410,7 +410,7 @@
                                     value={ selectedCellBgColor }
                                     onChange={ ( value ) => {
                                         editor.dom.setStyle( selectedCell, 'background-color', value || '' );
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         this.setState( { selectedCellBgColor: value } );
                                     } }
                                 />
@@ -420,7 +420,7 @@
                                     value={ selectedCellTextColor }
                                     onChange={ ( value ) => {
                                         editor.dom.setStyle( selectedCell, 'color', value || '' );
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         this.setState( { selectedCellTextColor: value } );
                                     } }
                                 />
@@ -437,7 +437,7 @@
                                     ] }
                                     onChange={ ( value ) => {
                                         editor.dom.setStyle( selectedCell, 'border-style', value );
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         this.setState( { selectedCellBorderStyle: value } );
                                     } }
                                 />
@@ -450,7 +450,7 @@
                                                 if (editor.dom.getStyle( selectedCell, `border-${pos}-color` ))
                                                     editor.dom.setStyle( selectedCell, `border-${pos}-color`, value || '' );
                                             } );
-                                            editor.undoManager.add();
+                                            editor.fire('change');
                                             this.setState( { selectedCellBorderColor: value } );
                                         } }
                                     />
@@ -462,7 +462,7 @@
                                     max={ 10 }
                                     onChange={ ( value ) => {
                                         editor.dom.setStyle( selectedCell, 'border-width', value );
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         this.setState( { selectedCellBorderWidth: value } );
                                     } }
                                 />
@@ -484,7 +484,7 @@
                                     value={ selectedCellPaddingTop }
                                     onChange={ ( value ) => {
                                         editor.dom.setStyle( selectedCell, 'padding-top', value || '' );
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         this.setState( { selectedCellPaddingTop: value || '' } );
                                     } }
                                     allowReset
@@ -496,7 +496,7 @@
                                     value={ selectedCellPaddingBottom }
                                     onChange={ ( value ) => {
                                         editor.dom.setStyle( selectedCell, 'padding-bottom', value || '' );
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         this.setState( { selectedCellPaddingBottom: value || '' } );
                                     } }
                                     allowReset
@@ -508,7 +508,7 @@
                                     value={ selectedCellPaddingLeft }
                                     onChange={ ( value ) => {
                                         editor.dom.setStyle( selectedCell, 'padding-left', value || '' );
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         this.setState( { selectedCellPaddingLeft: value || '' } );
                                     } }
                                     allowReset
@@ -520,7 +520,7 @@
                                     value={ selectedCellPaddingRight }
                                     onChange={ ( value ) => {
                                         editor.dom.setStyle( selectedCell, 'padding-right', value || '' );
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         this.setState( { selectedCellPaddingRight: value || '' } );
                                     } }
                                     allowReset
@@ -537,7 +537,7 @@
                                                 isActive,
                                                 onClick: () => {
                                                     editor.dom.setStyle( selectedCell, 'text-align', isActive ? '' : control.align );
-                                                    editor.undoManager.add();
+                                                    editor.fire('change');
                                                 },
                                             };
                                         } ) }
@@ -553,7 +553,7 @@
                                                 isActive,
                                                 onClick: () => {
                                                     editor.dom.setStyle( selectedCell, 'vertical-align', isActive ? '' : control.align );
-                                                    editor.undoManager.add();
+                                                    editor.fire('change');
                                                 },
                                             };
                                         } ) }
