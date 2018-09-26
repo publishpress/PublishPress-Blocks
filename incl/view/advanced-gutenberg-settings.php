@@ -273,5 +273,11 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
             </li>
             <?php endforeach; ?>
         </ul>
+
+        <?php if (count($advgb_blocks) === 0) : ?>
+            <div class="blocks-not-loaded" style="text-align: center">
+                <p><?php esc_html_e('We are updating blocks list...', 'advanced-gutenberg'); ?></p>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
