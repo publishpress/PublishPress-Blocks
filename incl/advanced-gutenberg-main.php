@@ -1388,6 +1388,7 @@ float: left;'
             'accordion', 'button', 'image', 'list',
             'table', 'video', 'count-up', 'map',
             'social-links', 'summary', 'tabs', 'testimonial',
+            'recent-posts', 'woo-products',
         );
 
         foreach ($advgb_block as $block) {
