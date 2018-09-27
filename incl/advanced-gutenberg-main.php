@@ -328,6 +328,39 @@ float: left;'
     }
 
     /**
+     * Update the blocks list for first time install
+     *
+     * @return void
+     */
+    public function initBlocksList()
+    {
+        if (get_option('advgb_blocks_list') === false
+            || (defined('GUTENBERG_VERSION') && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))) {
+            $advgb_nonce = wp_create_nonce('advgb_update_blocks_list');
+            wp_enqueue_script('wp-blocks');
+            wp_enqueue_script('wp-element');
+            wp_enqueue_script('wp-data');
+            wp_enqueue_script('wp-components');
+            wp_enqueue_script('wp-block-library');
+            wp_enqueue_script('wp-editor');
+            do_action('enqueue_block_editor_assets');
+            wp_enqueue_script(
+                'update_list',
+                plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
+                array()
+            );
+
+            wp_add_inline_script(
+                'wp-blocks',
+                sprintf('wp.blocks.setCategories( %s );', wp_json_encode(get_block_categories(get_post()))),
+                'after'
+            );
+
+            wp_localize_script('update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
+        }
+    }
+
+    /**
      * Ajax to update blocks list
      *
      * @return mixed
@@ -762,39 +795,6 @@ float: left;'
 
         update_option('advgb_blocks_default_config', $blocks_config_saved);
         wp_send_json(true, 200);
-    }
-
-    /**
-     * Update the blocks list for first time install
-     *
-     * @return void
-     */
-    public function initBlocksList()
-    {
-        if (get_option('advgb_blocks_list') === false) {
-            $advgb_nonce = wp_create_nonce('advgb_update_blocks_list');
-            wp_enqueue_script('wp-blocks');
-            wp_enqueue_script('wp-element');
-            wp_enqueue_script('wp-data');
-            wp_enqueue_script('wp-components');
-            wp_enqueue_script('wp-block-library');
-            wp_enqueue_script('wp-core-blocks');
-            wp_enqueue_script('wp-editor');
-            do_action('enqueue_block_editor_assets');
-            wp_enqueue_script(
-                'update_list',
-                plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-                array()
-            );
-
-            wp_add_inline_script(
-                'wp-blocks',
-                sprintf('wp.blocks.setCategories( %s );', wp_json_encode(get_block_categories(get_post()))),
-                'after'
-            );
-
-            wp_localize_script('update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
-        }
     }
 
     /**
