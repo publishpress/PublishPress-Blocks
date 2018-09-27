@@ -390,8 +390,51 @@ float: left;'
             return $block;
         }
 
-        $blocksList     = array_map('removeSlashes', $_POST['blocksList']);
-        $categoriesList = $_POST['categoriesList'];
+        $blocksList      = array_map('removeSlashes', $_POST['blocksList']);
+        $categoriesList  = $_POST['categoriesList'];
+        $savedBlocksList = get_option('advgb_blocks_list');
+
+        $blocksListName = array();
+        $savedBlocksListName = array();
+
+        foreach ($blocksList as $block) {
+            $blocksListName[] = $block['name'];
+        }
+
+        foreach ($savedBlocksList as $block) {
+            $savedBlocksListName[] = $block['name'];
+        }
+
+        // Check if we have new blocks installed
+        $newBlocks = array_diff($blocksListName, $savedBlocksListName);
+
+        // If we have new blocks, they will be activated by default
+        if (count($newBlocks)) {
+            $args     = array(
+                'fields'    => 'ids',
+                'post_type' => 'advgb_profiles',
+                'publish'   => true
+            );
+
+            $postIDs = get_posts($args);
+
+            foreach ($postIDs as $postID) {
+                $savedAllowedBlocks = get_post_meta($postID, 'active_blocks', true);
+
+                if (is_array($savedAllowedBlocks)) {
+                    $newAllowedBlocks = array_merge($savedAllowedBlocks, $newBlocks);
+                    $newAllowedBlocks = array_unique($newAllowedBlocks);
+
+                    update_post_meta($postID, 'active_blocks', $newAllowedBlocks);
+                }
+            }
+        }
+
+        if ((defined('GUTENBERG_VERSION')
+             && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
+        ) {
+            update_option('advgb_gutenberg_version', GUTENBERG_VERSION);
+        }
 
         update_option('advgb_blocks_list', $blocksList);
         update_option('advgb_categories_list', $categoriesList);
