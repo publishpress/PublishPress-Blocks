@@ -1744,10 +1744,6 @@ float: left;'
                             'name'  => 'icon',
                             'options' => array(
                                 array(
-                                    'label' => __('None', 'advanced-gutenberg'),
-                                    'value' => '',
-                                ),
-                                array(
                                     'label' => __('Pushpin', 'advanced-gutenberg'),
                                     'value' => 'admin-post',
                                 ),
@@ -2054,7 +2050,6 @@ float: left;'
                             'type'  => 'select',
                             'name'  => 'icon1.icon',
                             'options' => array(
-                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
                                 array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
                                 array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
                                 array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
@@ -2093,7 +2088,6 @@ float: left;'
                             'type'  => 'select',
                             'name'  => 'icon2.icon',
                             'options' => array(
-                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
                                 array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
                                 array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
                                 array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
@@ -2132,7 +2126,6 @@ float: left;'
                             'type'  => 'select',
                             'name'  => 'icon3.icon',
                             'options' => array(
-                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
                                 array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
                                 array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
                                 array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
@@ -2636,6 +2629,7 @@ float: left;'
                         break;
                     case 'select':
                         $html .= '<select class="block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
+                        $html .= '<option value="">'. __('Default', 'advanced-gutenberg') .'</option>';
 
                         foreach ($setting['options'] as $option) {
                             $selected = $option['value'] === $settingValue ? 'selected' : '';
