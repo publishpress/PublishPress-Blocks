@@ -73,6 +73,10 @@ if (version_compare(PHP_VERSION, '5.3', '<')) {
     return;
 }
 
+if (! defined('ADVANCED_GUTENBERG_VERSION')) {
+    define('ADVANCED_GUTENBERG_VERSION', '{{version}}');
+}
+
 if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
     define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
 }

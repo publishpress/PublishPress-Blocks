@@ -148,11 +148,9 @@ float: left;'
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
             add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
-            add_filter('allowed_block_types', array($this, 'initActiveBlocksForGutenberg'));
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
             add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
-            add_filter('active_new_blocks_by_default', array($this, 'activeNewInstalledBlocks'));
 
             // Ajax
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -174,95 +172,80 @@ float: left;'
     public function addEditorAssets()
     {
         wp_enqueue_script(
-            'summary_blocks',
-            plugins_url('assets/blocks/summary/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'advList_blocks',
-            plugins_url('assets/blocks/advlist/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'advButton_blocks',
-            plugins_url('assets/blocks/advbutton/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'countUp_blocks',
-            plugins_url('assets/blocks/count-up/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'advImage_blocks',
-            plugins_url('assets/blocks/advimage/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'advVideo_blocks',
-            plugins_url('assets/blocks/advvideo/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'map_blocks',
-            plugins_url('assets/blocks/map/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'advTable_blocks',
-            plugins_url('assets/blocks/advtable/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'advTable_plugin',
-            plugins_url('assets/blocks/advtable/table-plugin.min.js', dirname(__FILE__)),
-            array( 'wp-blocks' )
-        );
-        wp_enqueue_script(
-            'accordion_blocks',
-            plugins_url('assets/blocks/accordion/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script('jquery-ui-accordion');
-        wp_enqueue_script(
-            'tabs_blocks',
-            plugins_url('assets/blocks/tabs/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-        wp_enqueue_script('jquery-ui-tabs');
-
-        wp_enqueue_script(
-            'social_blocks',
-            plugins_url('assets/blocks/social-links/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
-        );
-
-        wp_enqueue_script(
-            'testimonial_blocks',
-            plugins_url('assets/blocks/testimonial/block.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' )
+            'advg_blocks',
+            plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
+            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' ),
+            ADVANCED_GUTENBERG_VERSION,
+            true
         );
         $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
-        wp_localize_script('testimonial_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
+        wp_localize_script('advg_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
 
-        wp_enqueue_script(
-            'custom_styles',
-            plugins_url('assets/blocks/customstyles/custom-styles.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
-        );
+        $advgb_blocks_vars = array();
+        $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+
+        // Retrieve original editor settings from the enqueued js script
+        // as this variable is not reachable in our js script and we need it to reload the Gutenberg editor
+        global $wp_scripts;
+        $datas = $wp_scripts->get_data('wp-edit-post', 'after');
+        if ($datas) {
+            foreach ($wp_scripts->registered['wp-edit-post']->extra['after'] as &$data) {
+                $matches = array();
+                if (preg_match('/var editorSettings = ({.*})/', $data, $matches)) {
+                    if (!count($matches)) {
+                        break;
+                    }
+
+                    $json = json_decode($matches[1]);
+                    if (!$json) {
+                        break;
+                    }
+
+                    $advgb_blocks_vars['original_settings'] = clone($json);
+
+                    $replace_in_script = false;
+                    if (is_array($json->allowedBlockTypes)) {
+                        // Remove blocks from the list that are not allowed
+                        // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
+                        foreach ($json->allowedBlockTypes as $key => $type) {
+                            if (in_array($type, $advgb_blocks_vars['blocks']['inactive_blocks'])) {
+                                unset($json->allowedBlockTypes[$key]);
+                                $replace_in_script = true;
+                            }
+                        }
+                    } elseif ($json->allowedBlockTypes === true) {
+                        // All was allowed, only return what the profile allows
+                        $json->allowedBlockTypes = $advgb_blocks_vars['blocks']['active_blocks'];
+                        $replace_in_script = true;
+                    }
+
+                    // We have done some changes, let's update the script generated by Gutenberg
+                    if ($replace_in_script) {
+                        // Make sure $json->allowedBlockTypes will be converted to array by json_encode
+                        $json->allowedBlockTypes = array_values($json->allowedBlockTypes);
+                        $result = preg_replace('/var editorSettings = {(.*)}/', 'var editorSettings = '.json_encode($json), $data);
+                        if ($result !== null) {
+                            $data = $result;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        global $post;
+        if ($post) {
+            $advgb_blocks_vars['post_id'] = $post->ID;
+            $advgb_blocks_vars['post_type'] = $post->post_type;
+        }
+
+        $advgb_blocks_vars['ajaxurl'] = admin_url('admin-ajax.php');
+        $advgb_blocks_vars['nonce'] = wp_create_nonce('advgb_update_blocks_list');
+
+        wp_localize_script('advg_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
+
         $custom_styles_data = get_option('advgb_custom_styles');
         wp_localize_script('custom_styles', 'advGb_CS', $custom_styles_data);
-
-        wp_enqueue_script(
-            'custom_separator',
-            plugins_url('assets/blocks/custom-separator/separator.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
-        );
-        wp_enqueue_script(
-            'custom_columns',
-            plugins_url('assets/blocks/custom-columns/columns.js', dirname(__FILE__)),
-            array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-date', 'wp-editor' )
-        );
 
         // Set blocks icon color
         $saved_settings = get_option('advgb_settings');
@@ -347,7 +330,8 @@ float: left;'
             wp_enqueue_script(
                 'update_list',
                 plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-                array()
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
             );
 
             wp_add_inline_script(
@@ -377,56 +361,49 @@ float: left;'
             wp_send_json('', 400);
         }
 
-        /**
-         * Remove slashes on svg icon
-         *
-         * @param array $block Block to remove slashes
-         *
-         * @return mixed
-         */
-        function removeSlashes(array $block)
-        {
-            $block['icon'] = stripslashes($block['icon']);
-            return $block;
-        }
-
-        $blocksList      = array_map('removeSlashes', $_POST['blocksList']);
-        $categoriesList  = $_POST['categoriesList'];
+        $blocksList      = json_decode(stripslashes($_POST['blocksList']));
         $savedBlocksList = get_option('advgb_blocks_list');
 
         $blocksListName = array();
         $savedBlocksListName = array();
 
-        foreach ($blocksList as $block) {
+        foreach ($blocksList as &$block) {
+            // Convert object to array
+            $block = (array)$block;
             $blocksListName[] = $block['name'];
         }
 
         foreach ($savedBlocksList as $block) {
+            // Convert object to array
+            $block = (array)$block;
             $savedBlocksListName[] = $block['name'];
         }
 
         // Check if we have new blocks installed
         $newBlocks = array_diff($blocksListName, $savedBlocksListName);
-
-        // If we have new blocks, they will be activated by default
         if (count($newBlocks)) {
-            $args     = array(
-                'fields'    => 'ids',
-                'post_type' => 'advgb_profiles',
-                'publish'   => true
-            );
+            update_option('advgb_blocks_list', $blocksList);
+        }
 
-            $postIDs = get_posts($args);
+        // Check that profile blocks are up to date
+        $args     = array(
+            'fields'    => 'ids',
+            'post_type' => 'advgb_profiles',
+            'publish'   => true
+        );
 
-            foreach ($postIDs as $postID) {
-                $savedAllowedBlocks = get_post_meta($postID, 'active_blocks', true);
+        $postIDs = get_posts($args);
 
-                if (is_array($savedAllowedBlocks)) {
-                    $newAllowedBlocks = array_merge($savedAllowedBlocks, $newBlocks);
-                    $newAllowedBlocks = array_unique($newAllowedBlocks);
+        foreach ($postIDs as $postID) {
+            $allBlocksMeta = get_post_meta($postID, 'blocks', true);
+            if (is_array($allBlocksMeta) && is_array($allBlocksMeta['active_blocks']) && is_array($allBlocksMeta['inactive_blocks'])) {
+                $allProfileBlocks = array_merge($allBlocksMeta['active_blocks'], $allBlocksMeta['inactive_blocks']);
 
-                    update_post_meta($postID, 'active_blocks', $newAllowedBlocks);
-                }
+                $newAllowedBlocks = array_diff($blocksListName, $allProfileBlocks);
+                $newAllowedBlocks = array_unique($newAllowedBlocks);
+
+                $allBlocksMeta['active_blocks'] = array_merge($allBlocksMeta['active_blocks'], $newAllowedBlocks);
+                update_post_meta($postID, 'blocks', $allBlocksMeta);
             }
         }
 
@@ -436,12 +413,9 @@ float: left;'
             update_option('advgb_gutenberg_version', GUTENBERG_VERSION);
         }
 
-        update_option('advgb_blocks_list', $blocksList);
-        update_option('advgb_categories_list', $categoriesList);
 
         wp_send_json(array(
-            'blocks_list' => $blocksList,
-            'categories_list' => $categoriesList
+            'blocks_list' => $blocksList
         ), 200);
     }
 
@@ -847,6 +821,7 @@ float: left;'
      */
     public function registerStylesScripts()
     {
+        // Todo: shouldn't we use plugin related names like advgb_main_style in case other plugins uses main_style handle?
         // Register CSS
         wp_register_style(
             'ju_framework_styles',
@@ -900,59 +875,87 @@ float: left;'
         // Register JS
         wp_register_script(
             'main_js',
-            plugins_url('assets/js/main.js', dirname(__FILE__))
+            plugins_url('assets/js/main.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'update_list',
-            plugins_url('assets/js/update-block-list.js', dirname(__FILE__))
+            plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
+            array('jquery'),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'profile_js',
-            plugins_url('assets/js/profile.js', dirname(__FILE__))
+            plugins_url('assets/js/profile.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'settings_js',
-            plugins_url('assets/js/settings.js', dirname(__FILE__))
+            plugins_url('assets/js/settings.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'velocity_js',
-            plugins_url('assets/js/velocity.min.js', dirname(__FILE__))
+            plugins_url('assets/js/velocity.min.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'waves_js',
-            plugins_url('assets/js/waves.min.js', dirname(__FILE__))
+            plugins_url('assets/js/waves.min.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'tabs_js',
-            plugins_url('assets/js/tabs.js', dirname(__FILE__))
+            plugins_url('assets/js/tabs.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'qtip_js',
-            plugins_url('assets/js/jquery.qtip.min.js', dirname(__FILE__))
+            plugins_url('assets/js/jquery.qtip.min.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'codemirror_js',
-            plugins_url('assets/js/codemirror/lib/codemirror.js', dirname(__FILE__))
+            plugins_url('assets/js/codemirror/lib/codemirror.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'codemirror_hint',
-            plugins_url('assets/js/codemirror/addon/hint/show-hint.js', dirname(__FILE__))
+            plugins_url('assets/js/codemirror/addon/hint/show-hint.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'codemirror_mode_css',
-            plugins_url('assets/js/codemirror/mode/css/css.js', dirname(__FILE__))
+            plugins_url('assets/js/codemirror/mode/css/css.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'codemirror_hint_css',
-            plugins_url('assets/js/codemirror/addon/hint/css-hint.js', dirname(__FILE__))
+            plugins_url('assets/js/codemirror/addon/hint/css-hint.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'less_js',
-            plugins_url('assets/js/less.js', dirname(__FILE__))
+            plugins_url('assets/js/less.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
             'minicolors_js',
-            plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__))
+            plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
     }
 
@@ -965,13 +968,16 @@ float: left;'
     {
         wp_register_style(
             'colorbox_style',
-            plugins_url('assets/css/colorbox.css', dirname(__FILE__))
+            plugins_url('assets/css/colorbox.css', dirname(__FILE__)),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
 
         wp_register_script(
             'colorbox_js',
             plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__)),
-            array('jquery')
+            array('jquery'),
+            ADVANCED_GUTENBERG_VERSION
         );
 
         $saved_settings = get_option('advgb_settings');
@@ -1203,8 +1209,11 @@ float: left;'
         if (current_user_can('publish_posts')) {
             // Get list of active blocks
             $active_blocks = array();
+            $inactive_blocks = array();
             if (isset($_POST['active_blocks'])) {
+                $blocks_list = json_decode(stripslashes($_POST['blocks_list']));
                 $active_blocks = $_POST['active_blocks'];
+                $inactive_blocks = array_values(array_diff($blocks_list, $active_blocks));
             }
 
             // Get users permission
@@ -1227,7 +1236,7 @@ float: left;'
                     return false;
                 }
 
-                update_post_meta($postID, 'active_blocks', $active_blocks);
+                update_post_meta($postID, 'blocks', array('active_blocks'=>$active_blocks, 'inactive_blocks'=>$inactive_blocks));
                 update_post_meta($postID, 'users_access', $users_access);
                 update_post_meta($postID, 'roles_access', $roles_access);
                 wp_update_post(array(
@@ -1240,7 +1249,7 @@ float: left;'
                     'post_type'   => 'advgb_profiles',
                     'post_status' => 'publish',
                     'meta_input'  => array(
-                        'active_blocks' => $active_blocks,
+                        'blocks' => array('active_blocks'=>$active_blocks, 'inactive_blocks'=>$inactive_blocks),
                         'roles_access'  => $roles_access,
                         'users_access'  => $users_access,
                     )
@@ -1254,11 +1263,11 @@ float: left;'
     }
 
     /**
-     * Set the active blocks for users regard to Advanced Gutenberg profiles
+     * Retrieve the active and inactive blocks for users regard to Advanced Gutenberg profiles
      *
-     * @return boolean|mixed
+     * @return array
      */
-    public function initActiveBlocksForGutenberg()
+    public function getUserBlocksForGutenberg()
     {
         // Get user info
         $current_user      = wp_get_current_user();
@@ -1283,19 +1292,21 @@ float: left;'
                         || in_array($current_user_role, $user_role_access)) {
                         // Populate the ID
                         $this->active_profile = $postID;
-                        $active_blocks_saved  = get_post_meta($this->active_profile, 'active_blocks', true);
+                        $blocks_saved  = get_post_meta($this->active_profile, 'blocks', true);
 
-                        $active_blocks_filtered = apply_filters('active_new_blocks_by_default', $active_blocks_saved);
+                        if (!is_array($blocks_saved)) {
+                            return array('active_blocks'=>array(), 'inactive_blocks'=>array());
+                        }
 
                         // Return allowed blocks
-                        return $active_blocks_filtered;
+                        return $blocks_saved;
                     }
                 }
             }
         }
 
         // If users have no permission, remove all blocks
-        return false;
+        return array('active_blocks'=>array(), 'inactive_blocks'=>array());
     }
 
     /**
@@ -1354,12 +1365,15 @@ float: left;'
 
         wp_enqueue_script(
             'minicolors_js',
-            plugins_url('assets/js/jquery.minicolors.min.js', ADVANCED_GUTENBERG_PLUGIN)
+            plugins_url('assets/js/jquery.minicolors.min.js', ADVANCED_GUTENBERG_PLUGIN),
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_enqueue_script(
             'block_config_js',
             plugins_url('assets/js/block-config.js', ADVANCED_GUTENBERG_PLUGIN),
-            array('jquery')
+            array('jquery'),
+            ADVANCED_GUTENBERG_VERSION
         );
 
         $blocks_settings_list = array(
@@ -2421,7 +2435,9 @@ float: left;'
 
                 wp_enqueue_script(
                     'gallery_lightbox_js',
-                    plugins_url('assets/js/gallery.colorbox.init.js', dirname(__FILE__))
+                    plugins_url('assets/js/gallery.colorbox.init.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
                 );
 
                 wp_localize_script('gallery_lightbox_js', 'advgb', array(
@@ -2446,11 +2462,15 @@ float: left;'
             );
             wp_enqueue_script(
                 'countup_lib_js',
-                plugins_url('assets/blocks/count-up/jquery.counterup.min.js', dirname(__FILE__))
+                plugins_url('assets/blocks/count-up/jquery.counterup.min.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
             );
             wp_enqueue_script(
                 'countup_js',
-                plugins_url('assets/blocks/count-up/countUp.js', dirname(__FILE__))
+                plugins_url('assets/blocks/count-up/countUp.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
             );
         }
 
@@ -2460,7 +2480,9 @@ float: left;'
 
             wp_enqueue_script(
                 'advgbImageLightbox_js',
-                plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__))
+                plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
             );
         }
 
@@ -2470,7 +2492,9 @@ float: left;'
 
             wp_enqueue_script(
                 'advgbVideoLightbox_js',
-                plugins_url('assets/blocks/advvideo/lightbox.js', dirname(__FILE__))
+                plugins_url('assets/blocks/advvideo/lightbox.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
             );
         }
 
@@ -2541,50 +2565,6 @@ float: left;'
         array_push($buttons, 'customstyles');
 
         return $buttons;
-    }
-
-    /**
-     * Active newly installed blocks by default
-     *
-     * @param array|string $current_activated_blocks Current activated block list
-     *
-     * @return mixed    Array of activated blocks
-     */
-    public function activeNewInstalledBlocks($current_activated_blocks)
-    {
-        $new_blocks = array(
-            'advgb/summary',
-            'advgb/button',
-            'advgb/list',
-            'advgb/count-up',
-            'advgb/testimonial',
-            'advgb/image',
-            'advgb/video',
-            'advgb/map',
-            'advgb/table',
-            'advgb/accordion',
-            'advgb/tabs',
-            'advgb/social-links',
-        );
-
-        // Avoid default value (string 'all')
-        if (is_array($current_activated_blocks)) {
-            $all_blocks_saved = get_option('advgb_blocks_list');
-            $all_blocks_saved_name = array();
-            foreach ($all_blocks_saved as $saved_block) {
-                array_push($all_blocks_saved_name, $saved_block['name']);
-            }
-
-            foreach ($new_blocks as $block) {
-                if (!in_array($block, $all_blocks_saved_name)) {
-                    if (!in_array($block, $current_activated_blocks)) {
-                        array_push($current_activated_blocks, $block);
-                    }
-                }
-            }
-        }
-
-        return $current_activated_blocks;
     }
 
     /**

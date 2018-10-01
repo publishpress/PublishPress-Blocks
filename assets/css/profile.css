@@ -137,10 +137,6 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
     display: none;
 }
 
-ul.blocks-list li.block-item.new-block {
-    background-color: #FF8855;
-}
-
 .block-item > * {
     float: left;
     line-height: 50px;

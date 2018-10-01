@@ -9,12 +9,9 @@ wp_localize_script('profile_js', 'advgb', array(
 ));
 
 $all_blocks_list     = get_option('advgb_blocks_list');
-$all_categories_list = get_option('advgb_categories_list');
 
 $postid              = $_GET['id']; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- view only
 $post_title          = get_the_title($postid);
-$active_blocks_saved = get_post_meta($postid, 'active_blocks', true);
-$active_blocks_saved = $active_blocks_saved ? $active_blocks_saved : self::$default_active_blocks;
 
 $roles_access_saved = get_post_meta($postid, 'roles_access', true);
 if ($roles_access_saved === '') {
@@ -25,35 +22,26 @@ $users_access_saved = get_post_meta($postid, 'users_access', true);
 $users_access_saved = $users_access_saved ? $users_access_saved : array();
 
 if ($postid === 'new') {
-    $active_blocks_saved = self::$default_active_blocks;
     $roles_access_saved = self::$default_roles_access;
     $users_access_saved = array();
 }
 
-$disabled = '';
-$rotating = '';
-$button_text = __('Refresh', 'advanced-gutenberg');
-$updating = (isset($_GET['update_blocks_list']) && $_GET['update_blocks_list'] === 'true'); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- begin to enqueue update blocks list, we have nonce later
-if ($updating) {
-    $disabled = 'disabled';
-    $rotating = 'rotating';
-    $button_text = __('Refreshing...', 'advanced-gutenberg');
+// In profile page we load gutenberg files to retrieve all blocks, including new ones
+wp_enqueue_script('wp-blocks');
+wp_enqueue_script('wp-element');
+wp_enqueue_script('wp-data');
+wp_enqueue_script('wp-components');
+wp_enqueue_script('wp-block-library');
+wp_enqueue_script('wp-editor');
+do_action('enqueue_block_editor_assets');
+wp_enqueue_script('update_list');
+wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
+wp_add_inline_script(
+    'wp-blocks',
+    sprintf('wp.blocks.setCategories( %s );', wp_json_encode(get_block_categories(get_post()))),
+    'after'
+);
 
-    wp_enqueue_script('wp-blocks');
-    wp_enqueue_script('wp-element');
-    wp_enqueue_script('wp-data');
-    wp_enqueue_script('wp-components');
-    wp_enqueue_script('wp-block-library');
-    wp_enqueue_script('wp-editor');
-    do_action('enqueue_block_editor_assets');
-    wp_enqueue_script('update_list');
-    wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
-    wp_add_inline_script(
-        'wp-blocks',
-        sprintf('wp.blocks.setCategories( %s );', wp_json_encode(get_block_categories(get_post()))),
-        'after'
-    );
-}
 ?>
 
 <form method="post">
@@ -100,15 +88,6 @@ if ($updating) {
                     <span><?php esc_html_e('New Profile', 'advanced-gutenberg') ?></span>
                 </a>
 
-                <button type="button" id="update-list-btn"
-                        class="ju-button orange-outline-button waves-effect waves-dark"
-                    <?php echo esc_attr($disabled) ?>
-                        title="<?php esc_attr_e('Update the blocks list', 'advanced-gutenberg') ?>"
-                >
-                    <i class="dashicons dashicons-update <?php echo esc_attr($rotating) ?>"></i>
-                    <span><?php echo esc_html($button_text) ?></span>
-                </button>
-
                 <button class="ju-button orange-button waves-effect waves-light save-profile-button"
                         type="submit"
                         name="advgb_profile_save"
@@ -139,51 +118,7 @@ if ($updating) {
             </div>
 
             <div class="blocks-section">
-                <?php foreach ($all_categories_list as $category) : ?>
-                    <div class="category-block clearfix" data-category="<?php echo esc_attr($category['slug']) ?>">
-                        <h3 class="category-name">
-                            <span><?php echo esc_html($category['title']) ?></span>
-                            <i class="mi"></i>
-                        </h3>
-                        <ul class="blocks-list">
-                            <?php foreach ($all_blocks_list as $block) : ?>
-                                <?php if ($block['category'] !== $category['slug']) :
-                                    continue;
-                                endif; ?>
-                                <?php $iconColor = '';
-                                if (isset($block['iconColor'])) :
-                                    $iconColor = 'style=color:' . $block['iconColor'];
-                                endif; ?>
-                                <li class="block-item ju-settings-option" data-type="<?php echo esc_attr($block['name']) ?>">
-                                    <label for="block-<?php echo esc_attr($block['name']) ?>" class="ju-setting-label">
-                                        <span class="block-icon" <?php echo esc_attr($iconColor) ?>>
-                                            <?php if (strpos($block['icon'], '<svg') !== false) :
-                                                echo $block['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped
-                                            else : ?>
-                                                <i class="dashicons dashicons-<?php echo esc_attr($block['icon']) ?>"></i>
-                                            <?php endif; ?>
-                                        </span>
-                                        <span class="block-title" title="<?php echo esc_html($block['title']) ?>">
-                                            <?php echo esc_html($block['title']) ?>
-                                        </span>
-                                    </label>
-                                    <div class="ju-switch-button">
-                                        <label class="switch">
-                                            <input type="checkbox" name="active_blocks[]"
-                                                   id="block-<?php echo esc_attr($block['name']) ?>"
-                                                   value="<?php echo esc_attr($block['name']) ?>"
-                                                <?php if ($active_blocks_saved === 'all' || in_array($block['name'], $active_blocks_saved)) :
-                                                    echo 'checked';
-                                                endif; ?>
-                                            />
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                <?php endforeach; ?>
+                <input type="hidden" name="blocks_list" id="blocks_list" />
             </div>
         </div>
 

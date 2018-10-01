@@ -22,7 +22,7 @@
     } );
 
     // Add option to return to default style
-    if (advGb_CS) {
+    if (typeof advGb_CS !== 'undefined' && advGb_CS) {
         advGb_CS.unshift( {
             id: 0,
             label: __( 'Paragraph' ),
