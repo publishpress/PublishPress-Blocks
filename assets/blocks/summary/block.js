@@ -274,7 +274,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Load minimized'),
                                 checked: !!loadMinimized,
                                 onChange: function onChange() {
-                                    return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() });
+                                    return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getEditedPostAttribute('title') });
                                 }
                             }),
                             loadMinimized && React.createElement(TextControl, {
