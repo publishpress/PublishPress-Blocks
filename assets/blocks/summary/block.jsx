@@ -302,8 +302,11 @@
                 return null;
             }
 
+            let blockStyle = null;
+            if (loadMinimized) blockStyle = { display: 'none' };
+
             const summary = (
-                <ul className={`advgb-toc align${align}`} style={ loadMinimized && { display: 'none' } }>
+                <ul className={`advgb-toc align${align}`} style={ blockStyle }>
                     {headings.map( ( heading, index ) => {
                         return (
                             <li className={'toc-level-' + heading.level}
