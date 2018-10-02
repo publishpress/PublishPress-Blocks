@@ -14,16 +14,14 @@ Supercharge WordPress Gutenberg editor plugin with 20+ new blocks. Create custom
 
 == Description ==
 
-Advanced Gutenberg adds the missing blocks and configuration you need to build profesional websites. Take the control of the new Gutenberg ediotr with user edition profile configuration and 20+ new blocks and options.
+Advanced Gutenberg adds the missing blocks and configuration you need to build professional websites. Take the control of the new Gutenberg editor with user edition profile configuration and 20+ new blocks and options.
 
 ## GUTENBERG ADVANCED BLOCK CONTROL
 
 - Create edition profiles and assign user or user group to the profile
-- Select each edition block per profile
+- Select each block activation per user profile
 - Default block configuration (Advanced Gutenberg blocks)
-- Define Advanced Gutenberg block color
-- Activate lightbox effect in Gutenberg galleries
-- Display alt information as lightbox caption in galleries
+- Define Advanced Gutenberg icons block color
 - Custom CSS styles: create and apply on paragraph blocks
 
 
@@ -43,6 +41,8 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Advanced Video block: load and display local and remote video
 - Supercharge the separator tool with size, color, spaces
 - Social links block: custom icon and links to your favorite social networks
+- Activate lightbox effect in Gutenberg image galleries
+- Display image information as lightbox caption in galleries
 
 
 ## ADVANCED GUTENBERG DEMO
@@ -50,7 +50,7 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 [vimeo https://vimeo.com/264060718]
 
 
-## OUR PLUGINS
+## OTHERS PLUGINS
 
 ** <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
 
@@ -89,34 +89,35 @@ We also have a forum on www.joomunited.com for feature requests.
 
 == Frequently Asked Questions ==
 
+= I don't see the new buttons or new tools in Advanced Gutenberg =
+1. Make sure the plugin is activated :)
+2. All right, that could be because the new blocks are not activated to your account, please reach the menu Adv. Gutenberg > Profiles > Setup the blocks to activate
+3. Advanced Gutenberg is pretty well integrated with native Gutenberg, some blocks are new some other are original Gutenberg blocks but supercharged by new features
+4. You can define a custom color for the new blocks, it helps to find them
+
 = Can I get support for the editor use? =
 We reply to every question about the editor on the forum here, just ask :) We also have an online documentation here: https://www.joomunited.com/documentation/advanced-gutenberg
 
 = Does Advanced Gutenberg slowing down my website? =
 The plugin has almost NO impact on page load, it's only loaded during the edition process.
 
-= What is the Gutenberg version version resuired to run Advanced Gutenberg plugin properly? =
+= What is the Gutenberg version required to run Advanced Gutenberg plugin properly? =
 The latest one, always! We're testing it with previous versions but the latest version of Gutenberg brings new features for developer and allow better content edition. 
 
 = Is Advanced Gutenberg free? =
 Yes, totally free of charge.
 
 = Where can I see Advanced Gutenberg in my WordPress admin panel? =
-In different places: in Gutenberg itself adding some options to blocks, adding new blocks, as a new menus under Settings and under Gutenberg
+In different places: in Gutenberg itself by adding some options to existing blocks, by adding new blocks, as new menu named Adv. Gutenberg
 
 = Can I setup an edition profile per user? =
-Yes this is possible, from the Gutenberg profile management, select some blocks, then you can give the profile to a single user or a user role
+Yes, this is possible, from the Gutenberg profile management, select some blocks, then you can give the profile to a single user or a user role
 
 = Can I translate Advanced Gutenberg plugin? =
 Yes, and that's really easy! JU Translation is a translation tool included in all our WordPress plugins: get, share and manage your extensions translations from a visual and easy to use interface! You'll find it in the Advanced Gutenberg settings menu
 
-= I don't see the new buttons or new tools in Advanced Gutenberg =
-1. Make sure the plugin is activated
-2. Make sure that an edition profile is linked to your account for example if you're in admin user role make sure that an edition profile is setup to be loaded for admins
-3. Advanced Gutenberg is pretty well integrated with native Gutenberg, some blocks are new some other are original Gutenberg blocks but supercharged by new features
-
 = Does the Advanced Gutenberg custom styles works with the Gutenberg CSS block class? =
-Both are loaded from a separated stylesheet file and ofeer 2 ways to style your blocks. The Gutenberg default CSS class apply a CSS class on a single block then you can cretate your CSS on an external file. 
+Both are loaded from a separated stylesheet file and offer 2 ways to style your blocks. The Gutenberg default CSS class apply a CSS class on a single block then you can create your CSS on an external file. 
 The Advanced Gutenberg Custom CSS can be created from the plugin configuration and applied from a dropdown list to any block.
 
 == Screenshots ==
@@ -125,7 +126,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Profiles attribution with block selection
 1. Testimonial and counter blocks
 1. Build fully custom accordions and tabs from Gutenberg
-1. Advanced Video block including remote video (Youtube...) and local video (.mp4...)
+1. Advanced Video block including remote video (YouTube...) and local video (.mp4...)
 1. Advanced table manager: manage tables in Gutenberg with several styling options
 1. Google Maps Gutenberg Block
 
