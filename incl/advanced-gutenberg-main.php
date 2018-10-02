@@ -1285,6 +1285,18 @@ float: left;'
         $current_user_id   = $current_user->ID;
         $current_user_role = $current_user->roles[0];
 
+        // Check if we are in profile view
+        if (isset($_GET['page']) && isset($_GET['view']) && $_GET['page'] === 'advgb_main' && $_GET['view'] === 'profile' ) { // phpcs:ignore -- WordPress.Security.NonceVerification.NoNonceVerification - view only
+            $postID = $_GET['id']; // phpcs:ignore -- WordPress.Security.NonceVerification.NoNonceVerification - view only
+            $blocks_saved  = get_post_meta($postID, 'blocks', true);
+            if (!is_array($blocks_saved)) {
+                return array('active_blocks'=>array(), 'inactive_blocks'=>array());
+            }
+
+            // Return allowed blocks
+            return $blocks_saved;
+        }
+
         // Get all GB-ADV active profiles
         global $wpdb;
         $profiles = $wpdb->get_results('SELECT * FROM '. $wpdb->prefix. 'posts
