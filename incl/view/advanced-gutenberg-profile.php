@@ -135,10 +135,10 @@ wp_add_inline_script(
                     <select name="advgb-roles-filter" id="advgb-roles-filter">
                         <option value=""><?php esc_html_e('Use role filter', 'advanced-gutenberg') ?></option>
                         <?php
-                        $wp_roles   = wp_roles();
+                        global $wp_roles;
                         $roles_list = $wp_roles->get_names();
-                        foreach ($roles_list as $role => $role_name) {
-                            echo '<option value="' . esc_attr($role) . '">' . esc_html($role_name) . '</option>';
+                        foreach ($roles_list as $roles => $role_name) {
+                            echo '<option value="' . esc_attr($roles) . '">' . esc_html($role_name) . '</option>';
                         }
                         ?>
                     </select>
@@ -178,10 +178,10 @@ wp_add_inline_script(
                     <?php
                     $users_per_page = 20;
                     $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- View request, no action
-                    $paged          = max(1, $pagenum);
+                    $pagedd         = max(1, $pagenum);
                     $args           = array(
                         'number'  => $users_per_page,
-                        'offset'  => ($paged - 1) * $users_per_page,
+                        'offset'  => ($pagedd - 1) * $users_per_page,
                         'include' => wp_get_users_with_no_role(),
                         'fields'  => 'all_with_meta'
                     );
@@ -207,9 +207,9 @@ wp_add_inline_script(
 
                             $role_list = array();
                             global $wp_roles;
-                            foreach ($user_object->roles as $role) {
-                                if (isset($wp_roles->role_names[ $role ])) {
-                                    $role_list[ $role ] = translate_user_role($wp_roles->role_names[ $role ]);
+                            foreach ($user_object->roles as $roles) {
+                                if (isset($wp_roles->role_names[ $roles ])) {
+                                    $role_list[ $roles ] = translate_user_role($wp_roles->role_names[ $roles ]);
                                 }
                             }
 
@@ -292,17 +292,17 @@ wp_add_inline_script(
                 <ul class="advgb-groups-list clearfix">
                     <?php
                     $roles_list = $wp_roles->get_names();
-                    foreach ($roles_list as $role => $role_name) :?>
+                    foreach ($roles_list as $roles => $role_name) :?>
                         <li class="clearfix ju-settings-option">
-                            <label for="<?php echo esc_attr($role) ?>" class="ju-setting-label"
+                            <label for="<?php echo esc_attr($roles) ?>" class="ju-setting-label"
                                    style="vertical-align: middle;"><?php echo esc_html($role_name) ?></label>
                             <div class="ju-switch-button">
                                 <label class="switch">
                                     <input type="checkbox" class="extra-btn"
                                            name="advgb-roles[]"
-                                           id="<?php echo esc_attr($role) ?>"
-                                           value="<?php echo esc_attr($role) ?>"
-                                            <?php if (in_array($role, $roles_access_saved)) :
+                                           id="<?php echo esc_attr($roles) ?>"
+                                           value="<?php echo esc_attr($roles) ?>"
+                                            <?php if (in_array($roles, $roles_access_saved)) :
                                                     echo 'checked';
                                             endif; ?>
                                     />
