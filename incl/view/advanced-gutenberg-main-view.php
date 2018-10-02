@@ -30,7 +30,7 @@ $tabs_data = array(
 );
 ?>
 
-<div class="ju-main-wrapper">
+<div class="ju-main-wrapper" style="display: none">
     <div class="ju-left-panel">
         <div class="ju-logo">
             <a href="https://www.joomunited.com/" target="_blank">

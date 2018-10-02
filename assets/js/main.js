@@ -6,6 +6,8 @@
     });
 
     $(document).ready(function ( $ ) {
+        $('.ju-main-wrapper').show();
+
         // Function for searching menus
         $('.ju-menu-search-input').on('input', function () {
             $('.ju-right-panel li.ju-settings-option').removeClass('search-result');
