@@ -178,11 +178,18 @@ float: left;'
             ADVANCED_GUTENBERG_VERSION,
             true
         );
+
+        // Plugin for TinyMCE table
         wp_enqueue_script(
             'advTable_plugin',
             plugins_url('assets/blocks/advtable/table-plugin.min.js', dirname(__FILE__)),
             array( 'wp-blocks' )
         );
+
+        // Include jQuery Tabs and Accordion
+        wp_enqueue_script('jquery-ui-accordion');
+        wp_enqueue_script('jquery-ui-tabs');
+
         $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
         wp_localize_script('advgb_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
 
