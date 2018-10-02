@@ -172,14 +172,19 @@ float: left;'
     public function addEditorAssets()
     {
         wp_enqueue_script(
-            'advg_blocks',
+            'advgb_blocks',
             plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-data', 'wp-editor' ),
             ADVANCED_GUTENBERG_VERSION,
             true
         );
+        wp_enqueue_script(
+            'advTable_plugin',
+            plugins_url('assets/blocks/advtable/table-plugin.min.js', dirname(__FILE__)),
+            array( 'wp-blocks' )
+        );
         $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
-        wp_localize_script('advg_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
+        wp_localize_script('advgb_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
 
         $advgb_blocks_vars = array();
         $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
@@ -242,10 +247,10 @@ float: left;'
         $advgb_blocks_vars['ajaxurl'] = admin_url('admin-ajax.php');
         $advgb_blocks_vars['nonce'] = wp_create_nonce('advgb_update_blocks_list');
 
-        wp_localize_script('advg_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
+        wp_localize_script('advgb_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
 
         $custom_styles_data = get_option('advgb_custom_styles');
-        wp_localize_script('custom_styles', 'advGb_CS', $custom_styles_data);
+        wp_localize_script('advgb_blocks', 'advGb_CS', $custom_styles_data);
 
         // Set blocks icon color
         $saved_settings = get_option('advgb_settings');
