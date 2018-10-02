@@ -48,7 +48,7 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
             'post_type'   => 'advgb_profiles',
             'post_status' => 'publish',
             'meta_input'  => array(
-                'active_blocks' => AdvancedGutenbergMain::$default_active_blocks,
+                'blocks' => array('active_blocks'=>array(), 'inactive_blocks'=>array()),
                 'roles_access'  => AdvancedGutenbergMain::$default_roles_access,
                 'users_access'  => array(),
             )
@@ -110,11 +110,6 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
 // Run the updates from here
 $advgb_current_version = get_option('advgb_version', '0.0.0');
 global $wpdb;
-
-// For development process purpose
-if ($advgb_current_version === '{{version}}') {
-    return;
-}
 
 if (version_compare($advgb_current_version, '1.6.6', 'lt')) {
     $all_blocks_list = get_option('advgb_blocks_list');
