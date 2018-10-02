@@ -7,8 +7,20 @@
   "changelog": {
     "1.6.6": [
       {
+        "type": "feature",
+        "title": "List automatically new installed blocks in profiles and in edition modes"
+      },
+      {
         "type": "fix",
-        "title": "List automatically new installed blocks"
+        "title": "PHP Warning in block listing"
+      },
+      {
+        "type": "fix",
+        "title": "Table block styling not rendered on frontend"
+      },
+      {
+        "type": "fix",
+        "title": "Summary block not rendred inside Gutenberg column"
       }
     ],
     "1.6.5": [
