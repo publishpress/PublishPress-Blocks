@@ -45,13 +45,13 @@ $tabs_data = array(
             >
         </div>
         <ul class="tabs ju-menu-tabs">
-            <?php foreach ($tabs_data as $tab) : ?>
-                <li class="tab" data-tab-title="<?php echo esc_attr($tab['title']) ?>">
-                    <a href="#<?php echo esc_attr($tab['id']) ?>"
+            <?php foreach ($tabs_data as $thisTab) : ?>
+                <li class="tab" data-tab-title="<?php echo esc_attr($thisTab['title']) ?>">
+                    <a href="#<?php echo esc_attr($thisTab['id']) ?>"
                        class="link-tab white-text waves-effect waves-light"
                     >
-                        <i class="mi mi-<?php echo esc_attr($tab['icon']) ?> menu-tab-icon"></i>
-                        <span class="tab-title"><?php echo esc_html($tab['title']) ?></span>
+                        <i class="mi mi-<?php echo esc_attr($thisTab['icon']) ?> menu-tab-icon"></i>
+                        <span class="tab-title"><?php echo esc_html($thisTab['title']) ?></span>
                     </a>
                 </li>
             <?php endforeach; ?>
@@ -82,10 +82,10 @@ $tabs_data = array(
              . '</div>';
         } ?>
 
-        <?php foreach ($tabs_data as $tab) : ?>
-            <?php if ($tab['id'] === 'translation') continue; // phpcs:ignore Generic.ControlStructures.InlineControlStructure.NotAllowed -- inline is ok ?>
-            <div class="ju-content-wrapper" id="<?php echo esc_attr($tab['id']) ?>" style="display: none">
-                <?php $this->loadView($tab['id']) ?>
+        <?php foreach ($tabs_data as $thisTab) : ?>
+            <?php if ($thisTab['id'] === 'translation') continue; // phpcs:ignore Generic.ControlStructures.InlineControlStructure.NotAllowed -- inline is ok ?>
+            <div class="ju-content-wrapper" id="<?php echo esc_attr($thisTab['id']) ?>" style="display: none">
+                <?php $this->loadView($thisTab['id']) ?>
             </div>
         <?php endforeach; ?>
 
