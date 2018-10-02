@@ -2,9 +2,27 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "wp_version": "4.9.8",
   "changelog": {
+    "1.6.6": [
+      {
+        "type": "feature",
+        "title": "List automatically new installed blocks in profiles and in edition modes"
+      },
+      {
+        "type": "fix",
+        "title": "PHP Warning in block listing"
+      },
+      {
+        "type": "fix",
+        "title": "Table block styling not rendered on frontend"
+      },
+      {
+        "type": "fix",
+        "title": "Summary block not rendred inside Gutenberg column"
+      }
+    ],
     "1.6.5": [
       {
         "type": "fix",

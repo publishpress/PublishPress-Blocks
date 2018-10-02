@@ -73,12 +73,16 @@ if (version_compare(PHP_VERSION, '5.3', '<')) {
     return;
 }
 
+if (! defined('ADVANCED_GUTENBERG_VERSION')) {
+    define('ADVANCED_GUTENBERG_VERSION', '{{version}}');
+}
+
 if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
     define('ADVANCED_GUTENBERG_PLUGIN', __FILE__);
 }
 
 if (!defined('GUTENBERG_VERSION_REQUIRED')) {
-    define('GUTENBERG_VERSION_REQUIRED', '3.7.0');
+    define('GUTENBERG_VERSION_REQUIRED', '3.9.0');
 }
 
 require_once(plugin_dir_path(__FILE__) . '/install.php');

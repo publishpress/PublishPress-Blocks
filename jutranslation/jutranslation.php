@@ -136,7 +136,9 @@ class Jutranslation
         //Declare all js and css to include
         wp_enqueue_script(
             'jutranslation',
-            plugin_dir_url(self::$main_plugin_file) . 'jutranslation/assets/js/jutranslation.js'
+            plugin_dir_url(self::$main_plugin_file) . 'jutranslation/assets/js/jutranslation.js',
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_enqueue_style(
             'jutranslation',

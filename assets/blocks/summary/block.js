@@ -274,7 +274,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Load minimized'),
                                 checked: !!loadMinimized,
                                 onChange: function onChange() {
-                                    return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() });
+                                    return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getEditedPostAttribute('title') });
                                 }
                             }),
                             loadMinimized && React.createElement(TextControl, {
@@ -389,9 +389,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return null;
             }
 
+            var blockStyle = null;
+            if (loadMinimized) blockStyle = { display: 'none' };
+
             var summary = React.createElement(
                 "ul",
-                { className: "advgb-toc align" + align, style: loadMinimized && { display: 'none' } },
+                { className: "advgb-toc align" + align, style: blockStyle },
                 headings.map(function (heading, index) {
                     return React.createElement(
                         "li",
