@@ -333,7 +333,7 @@ float: left;'
             wp_enqueue_script('wp-editor');
             do_action('enqueue_block_editor_assets');
             wp_enqueue_script(
-                'update_list',
+                'advgb_update_list',
                 plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
                 array('jquery'),
                 ADVANCED_GUTENBERG_VERSION
@@ -345,7 +345,7 @@ float: left;'
                 'after'
             );
 
-            wp_localize_script('update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
+            wp_localize_script('advgb_update_list', 'updateListNonce', array('nonce' => $advgb_nonce));
         }
     }
 
@@ -826,7 +826,6 @@ float: left;'
      */
     public function registerStylesScripts()
     {
-        // Todo: shouldn't we use plugin related names like advgb_main_style in case other plugins uses main_style handle?
         // Register CSS
         wp_register_style(
             'ju_framework_styles',
@@ -837,15 +836,15 @@ float: left;'
             plugins_url('assets/css/style.min.css', dirname(__FILE__))
         );
         wp_register_style(
-            'main_style',
+            'advgb_main_style',
             plugins_url('assets/css/main.css', dirname(__FILE__))
         );
         wp_register_style(
-            'profile_style',
+            'advgb_profile_style',
             plugins_url('assets/css/profile.css', dirname(__FILE__))
         );
         wp_register_style(
-            'settings_style',
+            'advgb_settings_style',
             plugins_url('assets/css/settings.css', dirname(__FILE__))
         );
         wp_register_style(
@@ -879,25 +878,25 @@ float: left;'
 
         // Register JS
         wp_register_script(
-            'main_js',
+            'advgb_main_js',
             plugins_url('assets/js/main.js', dirname(__FILE__)),
             array(),
             ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
-            'update_list',
+            'advgb_update_list',
             plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
             array('jquery'),
             ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
-            'profile_js',
+            'advgb_profile_js',
             plugins_url('assets/js/profile.js', dirname(__FILE__)),
             array(),
             ADVANCED_GUTENBERG_VERSION
         );
         wp_register_script(
-            'settings_js',
+            'advgb_settings_js',
             plugins_url('assets/js/settings.js', dirname(__FILE__)),
             array(),
             ADVANCED_GUTENBERG_VERSION
@@ -1029,12 +1028,12 @@ float: left;'
         } else {
             wp_enqueue_style('ju_framework_styles_min');
         }
-        wp_enqueue_style('main_style');
+        wp_enqueue_style('advgb_main_style');
 
         wp_enqueue_script('waves_js');
         wp_enqueue_script('velocity_js');
         wp_enqueue_script('tabs_js');
-        wp_enqueue_script('main_js');
+        wp_enqueue_script('advgb_main_js');
 
         $this->loadView('main-view');
     }

@@ -1,9 +1,9 @@
 <?php
 defined('ABSPATH') || die;
 
-wp_enqueue_style('profile_style');
-wp_enqueue_script('profile_js');
-wp_localize_script('profile_js', 'advgb', array(
+wp_enqueue_style('advgb_profile_style');
+wp_enqueue_script('advgb_profile_js');
+wp_localize_script('advgb_profile_js', 'advgb', array(
     'onProfileView' => true,
     'toProfilesList' => admin_url('admin.php?page=advgb_main&view=profiles'),
 ));
@@ -34,8 +34,8 @@ wp_enqueue_script('wp-components');
 wp_enqueue_script('wp-block-library');
 wp_enqueue_script('wp-editor');
 do_action('enqueue_block_editor_assets');
-wp_enqueue_script('update_list');
-wp_localize_script('update_list', 'advgbUpdate', array('onProfile' => true));
+wp_enqueue_script('advgb_update_list');
+wp_localize_script('advgb_update_list', 'advgbUpdate', array('onProfile' => true));
 wp_add_inline_script(
     'wp-blocks',
     sprintf('wp.blocks.setCategories( %s );', wp_json_encode(get_block_categories(get_post()))),
