@@ -224,7 +224,7 @@
                             <ToggleControl
                                 label={ __( 'Load minimized' ) }
                                 checked={ !!loadMinimized }
-                                onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/editor').getDocumentTitle() } ) }
+                                onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/editor').getEditedPostAttribute('title') } ) }
                             />
                             {loadMinimized &&
                             <TextControl
@@ -302,8 +302,11 @@
                 return null;
             }
 
+            let blockStyle = null;
+            if (loadMinimized) blockStyle = { display: 'none' };
+
             const summary = (
-                <ul className={`advgb-toc align${align}`} style={ loadMinimized && { display: 'none' } }>
+                <ul className={`advgb-toc align${align}`} style={ blockStyle }>
                     {headings.map( ( heading, index ) => {
                         return (
                             <li className={'toc-level-' + heading.level}

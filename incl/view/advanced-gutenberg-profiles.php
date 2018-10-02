@@ -8,11 +8,15 @@ if (isset($_GET['view']) && $_GET['view'] === 'profile') { // phpcs:ignore WordP
 
 wp_enqueue_style(
     'profiles_styles',
-    plugins_url('assets/css/profiles.css', ADVANCED_GUTENBERG_PLUGIN)
+    plugins_url('assets/css/profiles.css', ADVANCED_GUTENBERG_PLUGIN),
+    array(),
+    ADVANCED_GUTENBERG_VERSION
 );
 wp_enqueue_script(
     'profiles_js',
-    plugins_url('assets/js/profiles.js', ADVANCED_GUTENBERG_PLUGIN)
+    plugins_url('assets/js/profiles.js', ADVANCED_GUTENBERG_PLUGIN),
+    array(),
+    ADVANCED_GUTENBERG_VERSION
 );
 
 $args     = array(
