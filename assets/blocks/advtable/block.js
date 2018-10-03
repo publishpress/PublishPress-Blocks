@@ -226,7 +226,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         editor.dom.setStyles(selectedCell, {
                             'border-top-color': selectedCellBorderColor
                         });
-                        editor.undoManager.add();
+                        editor.fire('change');
                     }
                 }, {
                     title: __('Border Right'),
@@ -240,7 +240,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         editor.dom.setStyles(selectedCell, {
                             'border-right-color': selectedCellBorderColor
                         });
-                        editor.undoManager.add();
+                        editor.fire('change');
                     }
                 }, {
                     title: __('Border Bottom'),
@@ -254,7 +254,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         editor.dom.setStyles(selectedCell, {
                             'border-bottom-color': selectedCellBorderColor
                         });
-                        editor.undoManager.add();
+                        editor.fire('change');
                     }
                 }, {
                     title: __('Border Left'),
@@ -268,7 +268,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         editor.dom.setStyles(selectedCell, {
                             'border-left-color': selectedCellBorderColor
                         });
-                        editor.undoManager.add();
+                        editor.fire('change');
                     }
                 }, {
                     title: __('Border All'),
@@ -285,7 +285,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             'border-bottom-color': selectedCellBorderColor,
                             'border-left-color': selectedCellBorderColor
                         });
-                        editor.undoManager.add();
+                        editor.fire('change');
                     }
                 }, {
                     title: __('Border None'),
@@ -302,7 +302,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             'border-bottom-color': '',
                             'border-left-color': ''
                         });
-                        editor.undoManager.add();
+                        editor.fire('change');
                     }
                 }];
 
@@ -424,7 +424,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     value: selectedCellBgColor,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'background-color', value || '');
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         _this3.setState({ selectedCellBgColor: value });
                                     }
                                 })
@@ -436,7 +436,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     value: selectedCellTextColor,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'color', value || '');
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         _this3.setState({ selectedCellTextColor: value });
                                     }
                                 })
@@ -450,7 +450,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }, { label: __('None'), value: 'none' }],
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'border-style', value);
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         _this3.setState({ selectedCellBorderStyle: value });
                                     }
                                 }),
@@ -464,7 +464,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             ['top', 'right', 'bottom', 'left'].map(function (pos) {
                                                 if (editor.dom.getStyle(selectedCell, "border-" + pos + "-color")) editor.dom.setStyle(selectedCell, "border-" + pos + "-color", value || '');
                                             });
-                                            editor.undoManager.add();
+                                            editor.fire('change');
                                             _this3.setState({ selectedCellBorderColor: value });
                                         }
                                     })
@@ -476,7 +476,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 10,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'border-width', value);
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         _this3.setState({ selectedCellBorderWidth: value });
                                     }
                                 }),
@@ -510,7 +510,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     value: selectedCellPaddingTop,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'padding-top', value || '');
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         _this3.setState({ selectedCellPaddingTop: value || '' });
                                     },
                                     allowReset: true
@@ -522,7 +522,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     value: selectedCellPaddingBottom,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'padding-bottom', value || '');
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         _this3.setState({ selectedCellPaddingBottom: value || '' });
                                     },
                                     allowReset: true
@@ -534,7 +534,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     value: selectedCellPaddingLeft,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'padding-left', value || '');
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         _this3.setState({ selectedCellPaddingLeft: value || '' });
                                     },
                                     allowReset: true
@@ -546,7 +546,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     value: selectedCellPaddingRight,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'padding-right', value || '');
-                                        editor.undoManager.add();
+                                        editor.fire('change');
                                         _this3.setState({ selectedCellPaddingRight: value || '' });
                                     },
                                     allowReset: true
@@ -566,7 +566,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 isActive: isActive,
                                                 onClick: function onClick() {
                                                     editor.dom.setStyle(selectedCell, 'text-align', isActive ? '' : control.align);
-                                                    editor.undoManager.add();
+                                                    editor.fire('change');
                                                 }
                                             });
                                         })
@@ -583,7 +583,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 isActive: isActive,
                                                 onClick: function onClick() {
                                                     editor.dom.setStyle(selectedCell, 'vertical-align', isActive ? '' : control.align);
-                                                    editor.undoManager.add();
+                                                    editor.fire('change');
                                                 }
                                             });
                                         })

@@ -6,6 +6,8 @@
     });
 
     $(document).ready(function ( $ ) {
+        $('.ju-main-wrapper').show();
+
         // Function for searching menus
         $('.ju-menu-search-input').on('input', function () {
             $('.ju-right-panel li.ju-settings-option').removeClass('search-result');
@@ -126,7 +128,7 @@
             setTimeout(function () {
                 var rightTabHref = $(tabHref).find('.ju-top-tabs').find('a.link-tab.active').attr('href');
                 document.cookie = 'advgbRightTab=' + rightTabHref;
-            }, 500);
+            }, 500)
         });
 
         // Not show expand icon if this tab has no sub menus

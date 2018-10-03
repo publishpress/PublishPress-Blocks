@@ -5,7 +5,7 @@ wp_enqueue_style('minicolors_css');
 wp_enqueue_style('qtip_style');
 wp_enqueue_style('codemirror_css');
 wp_enqueue_style('codemirror_hint_style');
-wp_enqueue_style('settings_style');
+wp_enqueue_style('advgb_settings_style');
 
 wp_enqueue_script('qtip_js');
 wp_enqueue_script('less_js');
@@ -15,7 +15,7 @@ wp_enqueue_script('codemirror_hint');
 wp_enqueue_script('codemirror_mode_css');
 wp_enqueue_script('codemirror_hint_css');
 wp_enqueue_script('thickbox');
-wp_enqueue_script('settings_js');
+wp_enqueue_script('advgb_settings_js');
 
 $saved_settings    = get_option('advgb_settings');
 $blocks_list_saved = get_option('advgb_blocks_list');

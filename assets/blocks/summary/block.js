@@ -389,9 +389,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return null;
             }
 
+            var blockStyle = null;
+            if (loadMinimized) blockStyle = { display: 'none' };
+
             var summary = React.createElement(
                 "ul",
-                { className: "advgb-toc align" + align, style: loadMinimized && { display: 'none' } },
+                { className: "advgb-toc align" + align, style: blockStyle },
                 headings.map(function (heading, index) {
                     return React.createElement(
                         "li",
