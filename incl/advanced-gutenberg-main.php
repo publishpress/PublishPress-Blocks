@@ -227,6 +227,12 @@ float: left;'
                         }
                     } elseif ($json->allowedBlockTypes === true) {
                         // All was allowed, only return what the profile allows
+
+                        if (!count($advgb_blocks_vars['blocks']['active_blocks']) && !count($advgb_blocks_vars['blocks']['inactive_blocks'])) {
+                            // Profile not initialized yet
+                            break;
+                        }
+
                         $json->allowedBlockTypes = $advgb_blocks_vars['blocks']['active_blocks'];
                         $replace_in_script = true;
                     }
@@ -373,8 +379,16 @@ float: left;'
             wp_send_json('', 400);
         }
 
-        $blocksList      = json_decode(stripslashes($_POST['blocksList']));
+        if (is_array($_POST['blocksList'])) {
+            $blocksList      = $_POST['blocksList'];
+        } else {
+            $blocksList      = json_decode(stripslashes($_POST['blocksList']));
+        }
+
         $savedBlocksList = get_option('advgb_blocks_list');
+        if (!is_array($savedBlocksList)) {
+            $savedBlocksList = array();
+        }
 
         $blocksListName = array();
         $savedBlocksListName = array();
@@ -414,8 +428,10 @@ float: left;'
                 $newAllowedBlocks = array_diff($blocksListName, $allProfileBlocks);
                 $newAllowedBlocks = array_unique($newAllowedBlocks);
 
-                $allBlocksMeta['active_blocks'] = array_merge($allBlocksMeta['active_blocks'], $newAllowedBlocks);
-                update_post_meta($postID, 'blocks', $allBlocksMeta);
+                if ($newAllowedBlocks) {
+                    $allBlocksMeta['active_blocks'] = array_merge($allBlocksMeta['active_blocks'], $newAllowedBlocks);
+                    update_post_meta($postID, 'blocks', $allBlocksMeta);
+                }
             }
         }
 
@@ -1069,7 +1085,7 @@ float: left;'
         register_post_type('advgb_profiles', array(
             'labels'       => $labels,
             'public'       => false,
-            'show_ui'      => true,
+            'show_ui'      => false,
             'supports'     => array('title', 'author'),
             'capabilities' => array(
                 'edit_posts'          => 'edit_advgb_profiles',
@@ -1328,8 +1344,16 @@ float: left;'
             }
         }
 
-        // If users have no permission, remove all blocks
-        return array('active_blocks'=>array(), 'inactive_blocks'=>array());
+        // If user is not in any block then allow all blocks
+        $all_blocks = get_option('advgb_blocks_list');
+        if (!is_array($all_blocks)) {
+            $all_blocks = array();
+        } else {
+            foreach ($all_blocks as $block_key => $block_value) {
+                $all_blocks[$block_key] = $all_blocks[$block_key]['name'];
+            }
+        }
+        return array('active_blocks'=>$all_blocks, 'inactive_blocks'=>array());
     }
 
     /**

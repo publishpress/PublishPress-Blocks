@@ -2,8 +2,8 @@ var glob = require("glob");
 var path = require("path");
 
 module.exports = {
-
     entry: glob.sync("./assets/**/*.jsx"),
+    devtool: 'source-map',
     output: {
         path: path.join(__dirname, "assets", "blocks"),
         filename: "blocks.js"
