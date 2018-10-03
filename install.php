@@ -111,7 +111,7 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
 $advgb_current_version = get_option('advgb_version', '0.0.0');
 global $wpdb;
 
-if (version_compare($advgb_current_version, '1.6.6', 'lt')) {
+if (version_compare($advgb_current_version, '1.6.7', 'lt')) {
     $all_blocks_list = get_option('advgb_blocks_list');
     if (!is_array($all_blocks_list)) {
         $all_blocks_list     = array();
@@ -132,6 +132,9 @@ if (version_compare($advgb_current_version, '1.6.6', 'lt')) {
             $active_blocks_saved = get_post_meta($profile->ID, 'active_blocks', true);
             if (!is_array($active_blocks_saved)) {
                 $active_blocks_saved     = array();
+                update_post_meta($profile->ID, 'blocks', array('active_blocks'=>array(), 'inactive_blocks'=>array()));
+                delete_post_meta($profile->ID, 'active_blocks');
+                continue;
             }
             // Rewrite the $all_block_list array to a simple index array with only block name
             $all_blocks = array();
