@@ -130,11 +130,14 @@ if (version_compare($advgb_current_version, '1.6.7', 'lt')) {
             }
 
             $active_blocks_saved = get_post_meta($profile->ID, 'active_blocks', true);
-            if (!is_array($active_blocks_saved)) {
-                $active_blocks_saved     = array();
+            if ($active_blocks_saved === 'all') {
                 update_post_meta($profile->ID, 'blocks', array('active_blocks'=>array(), 'inactive_blocks'=>array()));
                 delete_post_meta($profile->ID, 'active_blocks');
                 continue;
+            }
+
+            if (!is_array($active_blocks_saved)) {
+                $active_blocks_saved     = array();
             }
             // Rewrite the $all_block_list array to a simple index array with only block name
             $all_blocks = array();
