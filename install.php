@@ -127,9 +127,10 @@ if (version_compare($advgb_current_version, '1.6.7', 'lt')) {
             $isNewProfile = get_post_meta($profile->ID, 'blocks', true);
 
             // Active all blocks from default profiles
-            if (!is_array($active_blocks_saved) && $isNewProfile && isset($isNewProfile['active_blocks'])) {
-                if (count($isNewProfile['active_blocks']) < 1) {
-                    update_post_meta($profile->ID, 'blocks', array('active_blocks'=>array(), 'inactive_blocks'=>array()));
+            if (!is_array($active_blocks_saved)) {
+                if ($active_blocks_saved === 'all' ||
+                    $isNewProfile && isset($isNewProfile['active_blocks']) && count($isNewProfile['active_blocks']) < 1) {
+                    update_post_meta($profile->ID, 'blocks', array('active_blocks'   => array(), 'inactive_blocks' => array()));
                     delete_post_meta($profile->ID, 'active_blocks');
                     continue;
                 }
