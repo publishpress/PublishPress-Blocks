@@ -77,15 +77,13 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                                 action: 'advgb_update_blocks_list',
                                 blocksList: JSON.stringify(list_blocks),
                                 categoriesList: JSON.stringify(list_categories),
-                                nonce: advgb_blocks_vars.nonce,
-                                forceUpdateProfile: 'true'
+                                nonce: advgb_blocks_vars.nonce
                             },
                             success: function (data) {
                                 console.log(data);
                             }
                         });
                     } catch (e) {
-                        console.error(e);
                     }
                 }
             });
