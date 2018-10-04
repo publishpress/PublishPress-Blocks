@@ -2223,7 +2223,6 @@ float: left;'
                             'type'  => 'select',
                             'name'  => 'icon1.icon',
                             'options' => array(
-                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
                                 array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
                                 array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
                                 array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
@@ -2262,7 +2261,6 @@ float: left;'
                             'type'  => 'select',
                             'name'  => 'icon2.icon',
                             'options' => array(
-                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
                                 array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
                                 array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
                                 array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
@@ -2301,7 +2299,6 @@ float: left;'
                             'type'  => 'select',
                             'name'  => 'icon3.icon',
                             'options' => array(
-                                array('label' => __('Default', 'advanced-gutenberg'), 'value' => ''),
                                 array('label' => __('Blogger', 'advanced-gutenberg'), 'value' => 'blogger'),
                                 array('label' => __('Facebook', 'advanced-gutenberg'), 'value' => 'facebook'),
                                 array('label' => __('Flickr', 'advanced-gutenberg'), 'value' => 'flickr'),
