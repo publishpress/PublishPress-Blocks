@@ -790,6 +790,10 @@ hr.wp-block-separator {
     overflow: hidden;
 }
 
+.advgb-recent-posts-block.slider-view .advgb-recent-post {
+    text-align: center;
+}
+
 /*Woo Products styles*/
 .advgb-products-block {
     padding-bottom: 1px;
@@ -856,6 +860,7 @@ hr.wp-block-separator {
 .advgb-woo-products.slider-view .woocommerce ul.products li.product,
 .advgb-woo-products.slider-view .woocommerce-page ul.products li.product {
     margin: 10px;
+    text-align: center;
 }
 
 .advgb-woo-products.slider-view .woocommerce ul.products li.product a img {
