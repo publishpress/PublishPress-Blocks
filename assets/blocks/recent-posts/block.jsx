@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpEditor;
-    const { PanelBody, RangeControl, ToggleControl, QueryControls, Spinner, Toolbar, Placeholder } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, QueryControls, Spinner, Toolbar, Placeholder, IconButton } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -199,6 +199,13 @@
                     { inspectorControls }
                     <BlockControls>
                         <Toolbar controls={ postViewControls } />
+                        <Toolbar>
+                            <IconButton
+                                label={ __( 'Refresh' ) }
+                                icon="update"
+                                onClick={ () => setAttributes( { myToken: Math.floor(Math.random() * Math.floor(999)) } ) }
+                            />
+                        </Toolbar>
                     </BlockControls>
                     <div className={ blockClassName }>
                         {this.state.updating && <div className="advgb-recent-posts-loading" />}
@@ -262,13 +269,14 @@
         keywords: [ __( 'latest posts' ), __( 'posts slide' ), __( 'posts grid' ) ],
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { category, order, orderBy, numberOfPosts } = props.attributes;
+            const { category, order, orderBy, numberOfPosts, myToken } = props.attributes;
 
             const recentPostsQuery = pickBy( {
                 categories: category,
                 order,
                 orderby: orderBy,
                 per_page: numberOfPosts,
+                token: myToken,
             }, ( value ) => !isUndefined( value ) );
 
             const categoriesListQuery = {

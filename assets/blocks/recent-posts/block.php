@@ -162,6 +162,9 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'boolean',
                 'default' => true,
             ),
+            'myToken' => array(
+                'type' => 'number',
+            )
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',
     ));

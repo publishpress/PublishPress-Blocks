@@ -4997,7 +4997,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "a",
                             { target: "_blank",
                                 className: "button button-large",
-                                href: wpApiSettings.schema.home + '/wp-admin/admin.php?page=advgb_main#settings'
+                                href: advgbSettings.config_url + '#settings'
                             },
                             __('Add Google API Key')
                         )
@@ -5135,7 +5135,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         QueryControls = wpComponents.QueryControls,
         Spinner = wpComponents.Spinner,
         Toolbar = wpComponents.Toolbar,
-        Placeholder = wpComponents.Placeholder;
+        Placeholder = wpComponents.Placeholder,
+        IconButton = wpComponents.IconButton;
     var withSelect = wpData.withSelect;
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
@@ -5365,7 +5366,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(Toolbar, { controls: postViewControls })
+                        React.createElement(Toolbar, { controls: postViewControls }),
+                        React.createElement(
+                            Toolbar,
+                            null,
+                            React.createElement(IconButton, {
+                                label: __('Refresh'),
+                                icon: "update",
+                                onClick: function onClick() {
+                                    return setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         "div",
@@ -5459,14 +5471,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 category = _props$attributes.category,
                 order = _props$attributes.order,
                 orderBy = _props$attributes.orderBy,
-                numberOfPosts = _props$attributes.numberOfPosts;
+                numberOfPosts = _props$attributes.numberOfPosts,
+                myToken = _props$attributes.myToken;
 
 
             var recentPostsQuery = pickBy({
                 categories: category,
                 order: order,
                 orderby: orderBy,
-                per_page: numberOfPosts
+                per_page: numberOfPosts,
+                token: myToken
             }, function (value) {
                 return !isUndefined(value);
             });
