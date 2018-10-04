@@ -188,9 +188,14 @@ float: left;'
             array( 'wp-blocks' )
         );
 
-        // Include jQuery Tabs and Accordion
+        // Include needed JS libraries
         wp_enqueue_script('jquery-ui-accordion');
         wp_enqueue_script('jquery-ui-tabs');
+        wp_enqueue_script('slick_js');
+
+        // Include needed CSS styles
+        wp_enqueue_style('slick_style');
+        wp_enqueue_style('slick_theme_style');
 
         $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
         wp_localize_script('advgb_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
