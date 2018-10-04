@@ -758,6 +758,14 @@ hr.wp-block-separator {
     margin-top: 10px;
 }
 
+.advgb-post-wrapper > * {
+    margin: 10px 0;
+}
+
+.advgb-post-readmore {
+    margin-top: 10px;
+}
+
 .advgb-recent-post .advgb-post-date:not(:first-child):before {
     content: "-";
     display: inline-block;
