@@ -148,11 +148,11 @@ function advgbRegisterBlockRecentPosts()
             ),
             'displayAuthor' => array(
                 'type' => 'boolean',
-                'default' => true,
+                'default' => false,
             ),
             'displayDate' => array(
                 'type' => 'boolean',
-                'default' => true,
+                'default' => false,
             ),
             'displayExcerpt' => array(
                 'type' => 'boolean',
