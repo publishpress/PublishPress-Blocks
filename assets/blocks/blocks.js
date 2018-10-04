@@ -6879,14 +6879,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement(
                                         'a',
-                                        { href: '#' + item.header.toLowerCase().replace(/\s/g, '').trim() + '-' + index,
+                                        { href: '#advgb-tab-' + blockID + '-' + index,
                                             style: { color: headerTextColor }
                                         },
                                         React.createElement(RichText, {
                                             tagName: 'p',
                                             value: item.header,
                                             onChange: function onChange(value) {
-                                                return _this2.updateTabs({ header: value[0] || '' }, index);
+                                                return _this2.updateTabs({ header: value || '' }, index);
                                             },
                                             onSplit: function onSplit() {
                                                 return null;
@@ -6941,7 +6941,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return React.createElement(
                                 'div',
                                 { key: index,
-                                    id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
+                                    id: 'advgb-tab-' + blockID + '-' + index,
                                     className: 'advgb-tab-body',
                                     style: {
                                         backgroundColor: bodyBgColor,
@@ -7090,7 +7090,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             React.createElement(
                                 'a',
-                                { href: '#' + item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
+                                { href: '#advgb-tab-' + blockID + '-' + index,
                                     style: { color: headerTextColor }
                                 },
                                 React.createElement(RichText.Content, { tagName: 'span', value: item.header })
@@ -7102,7 +7102,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return React.createElement(
                         'div',
                         { key: index,
-                            id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
+                            id: 'advgb-tab-' + blockID + '-' + index,
                             className: 'advgb-tab-body',
                             style: {
                                 backgroundColor: bodyBgColor,
@@ -7147,14 +7147,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { id: 'advgb-tabs-' + blockID, className: 'advgb-tabs-block', style: { border: 'none' } },
                     React.createElement(
                         'ul',
-                        { className: 'advgb-tabs-panel',
-                            style: {
-                                borderStyle: borderStyle,
-                                borderWidth: borderWidth + 'px',
-                                borderColor: borderColor,
-                                borderRadius: borderRadius + 'px'
-                            }
-                        },
+                        { className: 'advgb-tabs-panel' },
                         tabItems.map(function (item, index) {
                             return React.createElement(
                                 'li',
