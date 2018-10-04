@@ -5102,6 +5102,393 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/blocks/recent-posts/block.jsx":
+/*!**********************************************!*\
+  !*** ./assets/blocks/recent-posts/block.jsx ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpEditor.InspectorControls,
+        BlockControls = wpEditor.BlockControls;
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        ToggleControl = wpComponents.ToggleControl,
+        QueryControls = wpComponents.QueryControls,
+        Spinner = wpComponents.Spinner,
+        Toolbar = wpComponents.Toolbar,
+        Placeholder = wpComponents.Placeholder;
+    var withSelect = wpData.withSelect;
+    var pickBy = lodash.pickBy,
+        isUndefined = lodash.isUndefined;
+    var decodeEntities = wpHtmlEntities.decodeEntities;
+    var moment = wpDate.moment;
+
+
+    var advRecentPostsBlockIcon = React.createElement(
+        "svg",
+        { width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("rect", { x: "13", y: "7.5", width: "5", height: "2" }),
+        React.createElement("rect", { x: "13", y: "14.5", width: "5", height: "2" }),
+        React.createElement("path", { d: "M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z" }),
+        React.createElement("path", { d: "M11,6H6v5h5V6z M10,10H7V7h3V10z" }),
+        React.createElement("path", { d: "M11,13H6v5h5V13z M10,17H7v-3h3V17z" })
+    );
+
+    var initSlider = null;
+
+    var RecentPostsEdit = function (_Component) {
+        _inherits(RecentPostsEdit, _Component);
+
+        function RecentPostsEdit() {
+            _classCallCheck(this, RecentPostsEdit);
+
+            var _this = _possibleConstructorReturn(this, (RecentPostsEdit.__proto__ || Object.getPrototypeOf(RecentPostsEdit)).apply(this, arguments));
+
+            _this.state = {
+                updating: false
+            };
+            return _this;
+        }
+
+        _createClass(RecentPostsEdit, [{
+            key: "componentWillUpdate",
+            value: function componentWillUpdate(nextProps) {
+                var nextPosts = nextProps.recentPosts;
+                var nextView = nextProps.attributes.postView;
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    clientId = _props.clientId,
+                    recentPosts = _props.recentPosts;
+
+                var $ = jQuery;
+
+                if (nextView !== 'slider' || nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                    $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
+                    $("#block-" + clientId + " .advgb-recent-post").removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+
+                    if (nextView === 'slider' && nextPosts && recentPosts && nextPosts.length !== recentPosts.length) {
+                        if (!this.state.updating) {
+                            this.setState({ updating: true });
+                        }
+                    }
+
+                    if (initSlider) {
+                        clearTimeout(initSlider);
+                    }
+                }
+            }
+        }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate(prevProps) {
+                var that = this;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    clientId = _props2.clientId;
+                var postView = attributes.postView;
+
+                var $ = jQuery;
+
+                if (postView === 'slider') {
+                    initSlider = setTimeout(function () {
+                        $("#block-" + clientId + " .advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)").slick({
+                            dots: true,
+                            adaptiveHeight: true
+                        });
+
+                        if (that.state.updating) {
+                            that.setState({ updating: false });
+                        }
+                    }, 100);
+                } else {
+                    $("#block-" + clientId + " .advgb-recent-posts.slick-initialized").slick('unslick');
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    recentPosts = _props3.recentPosts,
+                    categoriesList = _props3.categoriesList;
+                var postView = attributes.postView,
+                    order = attributes.order,
+                    orderBy = attributes.orderBy,
+                    category = attributes.category,
+                    numberOfPosts = attributes.numberOfPosts,
+                    columns = attributes.columns,
+                    displayFeaturedImage = attributes.displayFeaturedImage,
+                    displayAuthor = attributes.displayAuthor,
+                    displayDate = attributes.displayDate,
+                    displayExcerpt = attributes.displayExcerpt,
+                    displayReadMore = attributes.displayReadMore;
+
+
+                var inspectorControls = React.createElement(
+                    InspectorControls,
+                    null,
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Block Settings') },
+                        React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
+                            categoriesList: categoriesList,
+                            selectedCategoryId: category,
+                            numberOfItems: numberOfPosts,
+                            onOrderChange: function onOrderChange(value) {
+                                return setAttributes({ order: value });
+                            },
+                            onOrderByChange: function onOrderByChange(value) {
+                                return setAttributes({ orderBy: value });
+                            },
+                            onCategoryChange: function onCategoryChange(value) {
+                                return setAttributes({ category: value !== '' ? value : undefined });
+                            },
+                            onNumberOfItemsChange: function onNumberOfItemsChange(value) {
+                                return setAttributes({ numberOfPosts: value });
+                            }
+                        })),
+                        postView === 'grid' && React.createElement(RangeControl, {
+                            label: __('Columns'),
+                            value: columns,
+                            min: 1,
+                            max: 4,
+                            onChange: function onChange(value) {
+                                return setAttributes({ columns: value });
+                            }
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Display Featured Image'),
+                            checked: displayFeaturedImage,
+                            onChange: function onChange() {
+                                return setAttributes({ displayFeaturedImage: !displayFeaturedImage });
+                            }
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Display Post Author'),
+                            checked: displayAuthor,
+                            onChange: function onChange() {
+                                return setAttributes({ displayAuthor: !displayAuthor });
+                            }
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Display Post Date'),
+                            checked: displayDate,
+                            onChange: function onChange() {
+                                return setAttributes({ displayDate: !displayDate });
+                            }
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Display Post Excerpt'),
+                            checked: displayExcerpt,
+                            onChange: function onChange() {
+                                return setAttributes({ displayExcerpt: !displayExcerpt });
+                            }
+                        }),
+                        React.createElement(ToggleControl, {
+                            label: __('Display Read More Link'),
+                            checked: displayReadMore,
+                            onChange: function onChange() {
+                                return setAttributes({ displayReadMore: !displayReadMore });
+                            }
+                        })
+                    )
+                );
+
+                var hasPosts = Array.isArray(recentPosts) && recentPosts.length;
+
+                // If no posts found we show this notice
+                if (!hasPosts) {
+                    return React.createElement(
+                        Fragment,
+                        null,
+                        inspectorControls,
+                        React.createElement(
+                            Placeholder,
+                            {
+                                icon: advRecentPostsBlockIcon,
+                                label: __('ADVGB Recent Posts Block')
+                            },
+                            !Array.isArray(recentPosts) ? React.createElement(Spinner, null) : __('No posts found! Try to change category or publish posts.')
+                        )
+                    );
+                }
+
+                var postViewControls = [{
+                    icon: 'grid-view',
+                    title: __('Grid View'),
+                    onClick: function onClick() {
+                        return setAttributes({ postView: 'grid' });
+                    },
+                    isActive: postView === 'grid'
+                }, {
+                    icon: 'list-view',
+                    title: __('List View'),
+                    onClick: function onClick() {
+                        return setAttributes({ postView: 'list' });
+                    },
+                    isActive: postView === 'list'
+                }, {
+                    icon: 'slides',
+                    title: __('Slider View'),
+                    onClick: function onClick() {
+                        return setAttributes({ postView: 'slider' });
+                    },
+                    isActive: postView === 'slider'
+                }];
+
+                var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    inspectorControls,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(Toolbar, { controls: postViewControls })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: blockClassName },
+                        this.state.updating && React.createElement("div", { className: "advgb-recent-posts-loading" }),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-recent-posts" },
+                            recentPosts.map(function (post, index) {
+                                return React.createElement(
+                                    "article",
+                                    { key: index, className: "advgb-recent-post" },
+                                    displayFeaturedImage && post.featured_img && React.createElement(
+                                        "div",
+                                        { className: "advgb-post-thumbnail" },
+                                        React.createElement(
+                                            "a",
+                                            { href: post.link, target: "_blank" },
+                                            React.createElement("img", { src: post.featured_img, alt: __('Post Image') })
+                                        )
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: 'advgb-post-wrapper' },
+                                        React.createElement(
+                                            "h2",
+                                            { className: "advgb-post-title" },
+                                            React.createElement(
+                                                "a",
+                                                { href: post.link, target: "_blank" },
+                                                decodeEntities(post.title.rendered)
+                                            )
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-post-info" },
+                                            displayAuthor && React.createElement(
+                                                "a",
+                                                { href: post.author_meta.author_link,
+                                                    target: "_blank",
+                                                    className: "advgb-post-author"
+                                                },
+                                                post.author_meta.display_name
+                                            ),
+                                            displayDate && React.createElement(
+                                                "span",
+                                                { className: "advgb-post-date" },
+                                                moment(post.date_gmt).local().format('DD MMMM, Y')
+                                            )
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-post-content" },
+                                            displayExcerpt && React.createElement("div", { className: "advgb-post-excerpt", dangerouslySetInnerHTML: { __html: post.excerpt.rendered } }),
+                                            displayReadMore && React.createElement(
+                                                "div",
+                                                { className: "advgb-post-readmore" },
+                                                React.createElement(
+                                                    "a",
+                                                    { href: post.link, target: "_blank" },
+                                                    __('Read More')
+                                                )
+                                            )
+                                        )
+                                    )
+                                );
+                            })
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return RecentPostsEdit;
+    }(Component);
+
+    registerBlockType('advgb/recent-posts', {
+        title: __('Recent Posts'),
+        description: __('Display your recent posts in slider or grid view with beautiful styles.'),
+        icon: {
+            src: advRecentPostsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'widgets',
+        keywords: [__('latest posts'), __('posts slide'), __('posts grid')],
+        edit: withSelect(function (select, props) {
+            var _select = select('core'),
+                getEntityRecords = _select.getEntityRecords;
+
+            var _props$attributes = props.attributes,
+                category = _props$attributes.category,
+                order = _props$attributes.order,
+                orderBy = _props$attributes.orderBy,
+                numberOfPosts = _props$attributes.numberOfPosts;
+
+
+            var recentPostsQuery = pickBy({
+                categories: category,
+                order: order,
+                orderby: orderBy,
+                per_page: numberOfPosts
+            }, function (value) {
+                return !isUndefined(value);
+            });
+
+            var categoriesListQuery = {
+                per_page: 99
+            };
+
+            return {
+                recentPosts: getEntityRecords('postType', 'post', recentPostsQuery),
+                categoriesList: getEntityRecords('taxonomy', 'category', categoriesListQuery)
+            };
+        })(RecentPostsEdit),
+        save: function save() {
+            // Render in PHP
+            return null;
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date);
+
+/***/ }),
+
 /***/ "./assets/blocks/social-links/block.jsx":
 /*!**********************************************!*\
   !*** ./assets/blocks/social-links/block.jsx ***!
@@ -5151,7 +5538,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment,
         null,
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11 C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81 C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65 c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1 s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
+        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
     );
 
     var socialBlockIcon = React.createElement(
@@ -7571,6 +7958,451 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/blocks/woo-products/block.jsx":
+/*!**********************************************!*\
+  !*** ./assets/blocks/woo-products/block.jsx ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpEditor.InspectorControls,
+        BlockControls = wpEditor.BlockControls;
+    var RangeControl = wpComponents.RangeControl,
+        PanelBody = wpComponents.PanelBody,
+        CheckboxControl = wpComponents.CheckboxControl,
+        SelectControl = wpComponents.SelectControl,
+        Spinner = wpComponents.Spinner,
+        Toolbar = wpComponents.Toolbar;
+
+
+    var fetchingQueue = null;
+
+    var AdvProductsEdit = function (_Component) {
+        _inherits(AdvProductsEdit, _Component);
+
+        function AdvProductsEdit() {
+            _classCallCheck(this, AdvProductsEdit);
+
+            var _this = _possibleConstructorReturn(this, (AdvProductsEdit.__proto__ || Object.getPrototypeOf(AdvProductsEdit)).apply(this, arguments));
+
+            _this.state = {
+                categoriesList: [],
+                productsList: [],
+                loading: true
+            };
+
+            _this.fetchProducts = _this.fetchProducts.bind(_this);
+            return _this;
+        }
+
+        _createClass(AdvProductsEdit, [{
+            key: 'componentWillMount',
+            value: function componentWillMount() {
+                this.fetchProducts();
+            }
+        }, {
+            key: 'componentWillUpdate',
+            value: function componentWillUpdate(nextProps, nextState) {
+                var clientId = this.props.clientId;
+
+                var $ = jQuery;
+
+                if (this.checkAttrChanged(nextProps.attributes, this.props.attributes)) {
+                    $('#block-' + clientId + ' .advgb-products-wrapper.slick-initialized').slick('unslick');
+                    $('#block-' + clientId + ' .advgb-product').removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+                }
+            }
+        }, {
+            key: 'componentDidUpdate',
+            value: function componentDidUpdate(prevProps) {
+                var _this2 = this;
+
+                var categoriesList = this.state.categoriesList;
+                var attributes = this.props.attributes;
+                var category = attributes.category;
+
+
+                if (category === 'selected' && categoriesList.length === 0) {
+                    wp.apiFetch({ path: '/wc/v2/products/categories' }).then(function (obj) {
+                        _this2.setState({ categoriesList: obj });
+                    });
+                }
+
+                if (this.checkAttrChanged(prevProps.attributes, attributes)) {
+                    this.fetchProducts();
+                }
+            }
+        }, {
+            key: 'checkAttrChanged',
+            value: function checkAttrChanged(prevAttrs, curAttrs) {
+                var prevView = prevAttrs.viewType,
+                    prevCat = prevAttrs.category,
+                    prevCats = prevAttrs.categories,
+                    prevStatus = prevAttrs.status,
+                    prevOrder = prevAttrs.order,
+                    prevOrderBy = prevAttrs.orderBy,
+                    prevLength = prevAttrs.numberOfProducts;
+                var viewType = curAttrs.viewType,
+                    category = curAttrs.category,
+                    categories = curAttrs.categories,
+                    status = curAttrs.status,
+                    order = curAttrs.order,
+                    orderBy = curAttrs.orderBy,
+                    numberOfProducts = curAttrs.numberOfProducts;
+
+
+                return category !== prevCat || categories !== prevCats || status !== prevStatus || order !== prevOrder || orderBy !== prevOrderBy || numberOfProducts !== prevLength || prevView !== viewType;
+            }
+        }, {
+            key: 'fetchProducts',
+            value: function fetchProducts() {
+                var self = this;
+                var _props$attributes = this.props.attributes,
+                    viewType = _props$attributes.viewType,
+                    category = _props$attributes.category,
+                    categories = _props$attributes.categories,
+                    status = _props$attributes.status,
+                    order = _props$attributes.order,
+                    orderBy = _props$attributes.orderBy,
+                    numberOfProducts = _props$attributes.numberOfProducts;
+                var addQueryArgs = wp.url.addQueryArgs;
+
+                var query = addQueryArgs('/wc/v2/products', {
+                    order: order || undefined,
+                    orderby: orderBy || undefined,
+                    per_page: numberOfProducts,
+                    category: category === 'selected' ? categories.join(',') : undefined,
+                    featured: status === 'featured' ? 1 : undefined,
+                    on_sale: status === 'on_sale' ? 1 : undefined
+                });
+
+                if (fetchingQueue) {
+                    clearTimeout(fetchingQueue);
+                }
+
+                fetchingQueue = setTimeout(function () {
+                    if (!self.state.loading) {
+                        self.setState({ loading: true });
+                    }
+                    wp.apiFetch({ path: query }).then(function (obj) {
+                        self.setState({
+                            productsList: obj,
+                            loading: false
+                        });
+                    }).then(function () {
+                        if (viewType === 'slider') {
+                            $('#block-' + self.props.clientId + ' .advgb-products-block.slider-view .advgb-products-wrapper:not(.slick-initialized)').slick({
+                                dots: true,
+                                adaptiveHeight: true
+                            });
+                        }
+                    });
+                }, 500);
+            }
+        }, {
+            key: 'setCategories',
+            value: function setCategories(catID, willAdd) {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+                var categories = attributes.categories;
+
+
+                if (willAdd) {
+                    setAttributes({ categories: [].concat(_toConsumableArray(categories), [catID]) });
+                } else {
+                    setAttributes({ categories: categories.filter(function (cat) {
+                            return cat !== catID;
+                        }) });
+                }
+
+                this.fetchProducts();
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                var _this3 = this;
+
+                var _state = this.state,
+                    categoriesList = _state.categoriesList,
+                    productsList = _state.productsList,
+                    loading = _state.loading;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var viewType = attributes.viewType,
+                    category = attributes.category,
+                    categories = attributes.categories,
+                    status = attributes.status,
+                    order = attributes.order,
+                    orderBy = attributes.orderBy,
+                    numberOfProducts = attributes.numberOfProducts,
+                    columns = attributes.columns;
+
+
+                var viewControls = [{
+                    icon: 'grid-view',
+                    title: __('Normal View'),
+                    onClick: function onClick() {
+                        return setAttributes({ viewType: 'normal' });
+                    },
+                    isActive: viewType === 'normal'
+                }, {
+                    icon: 'slides',
+                    title: __('Slider View'),
+                    onClick: function onClick() {
+                        return setAttributes({ viewType: 'slider' });
+                    },
+                    isActive: viewType === 'slider'
+                }];
+
+                var blockClassName = ["advgb-products-block", viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+
+                var blockWrapperClassName = ["advgb-products-wrapper", viewType === 'normal' && 'columns-' + columns].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(Toolbar, { controls: viewControls })
+                    ),
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Products Settings') },
+                            React.createElement(SelectControl, {
+                                label: __('Product Status'),
+                                value: status,
+                                options: [{ label: __('All'), value: '' }, { label: __('Featured'), value: 'featured' }, { label: __('On Sale'), value: 'on_sale' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ status: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Category'),
+                                value: category,
+                                options: [{ label: __('All'), value: '' }, { label: __('Selected'), value: 'selected' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ category: value });
+                                }
+                            }),
+                            category === 'selected' && React.createElement(
+                                'div',
+                                { className: 'advgb-categories-list' },
+                                categoriesList.map(function (cat, index) {
+                                    return React.createElement(CheckboxControl, {
+                                        key: index,
+                                        label: [cat.name, React.createElement(
+                                            'span',
+                                            { key: 'cat-count', style: { fontSize: 'small', color: '#999', marginLeft: 5 } },
+                                            '(',
+                                            cat.count,
+                                            ')'
+                                        )],
+                                        checked: jQuery.inArray(cat.id, categories) > -1,
+                                        onChange: function onChange(checked) {
+                                            return _this3.setCategories(cat.id, checked);
+                                        }
+                                    });
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Layout Settings') },
+                            viewType !== 'slider' && React.createElement(RangeControl, {
+                                label: __('Columns'),
+                                value: columns,
+                                min: 1,
+                                max: 4,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ columns: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Number of Products'),
+                                value: numberOfProducts,
+                                min: 1,
+                                max: 48,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ numberOfProducts: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Order'),
+                                value: orderBy + '-' + order,
+                                options: [{ label: __('Newest to oldest'), value: 'date-desc' }, { label: __('Price: high to low'), value: 'price-desc' }, { label: __('Price: low to high'), value: 'price-asc' }, { label: __('Highest Rating first'), value: 'rating-desc' }, { label: __('Most sale first'), value: 'popularity-desc' }, { label: __('Title: Alphabetical'), value: 'title-asc' }, { label: __('Title: Alphabetical reversed'), value: 'title-desc' }],
+                                onChange: function onChange(value) {
+                                    var splitedVal = value.split('-');
+                                    return setAttributes({
+                                        orderBy: splitedVal[0],
+                                        order: splitedVal[1]
+                                    });
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: blockClassName },
+                        !loading ? productsList.length > 0 ? React.createElement(
+                            'div',
+                            { className: blockWrapperClassName },
+                            productsList.map(function (product, idx) {
+                                return React.createElement(
+                                    'div',
+                                    { key: idx, className: 'advgb-product' },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-product-img' },
+                                        React.createElement('img', { src: product.images[0].src, alt: product.name })
+                                    ),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-product-title' },
+                                        product.name
+                                    ),
+                                    React.createElement('div', { className: 'advgb-product-price', dangerouslySetInnerHTML: { __html: product.price_html } }),
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-product-add-to-cart' },
+                                        React.createElement(
+                                            'span',
+                                            null,
+                                            __('Add to cart')
+                                        )
+                                    )
+                                );
+                            })
+                        ) : // When no products found
+                        React.createElement(
+                            'div',
+                            null,
+                            __('No products found.')
+                        ) : // When products is fetching
+                        React.createElement(
+                            'div',
+                            null,
+                            React.createElement(
+                                'span',
+                                null,
+                                __('Loading')
+                            ),
+                            React.createElement(Spinner, null)
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return AdvProductsEdit;
+    }(Component);
+
+    var advProductsBlockIcon = React.createElement(
+        'svg',
+        { width: '20', height: '20', viewBox: '0 0 24 24' },
+        React.createElement('path', { fill: 'none', d: 'M0,0h24v24H0V0z' }),
+        React.createElement('path', { d: 'M15.55,13c0.75,0,1.41-0.41,1.75-1.03l3.58-6.49C21.25,4.82,20.77,4,20.01,4H5.21L4.27,2H1v2h2l3.6,7.59l-1.35,2.44 C4.52,15.37,5.48,17,7,17h12v-2H7l1.1-2H15.55z M6.16,6h12.15l-2.76,5H8.53L6.16,6z' }),
+        React.createElement('path', { d: 'M7,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C9,18.9,8.1,18,7,18z' }),
+        React.createElement('path', { d: 'M17,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C19,18.9,18.1,18,17,18z' })
+    );
+
+    registerBlockType('advgb/woo-products', {
+        title: __('Woo Products'),
+        description: __('Listing your products in a easy way.'),
+        icon: {
+            src: advProductsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'widgets',
+        keywords: [__('woo commerce'), __('products list'), __('price list')],
+        attributes: {
+            viewType: {
+                type: 'string',
+                default: 'normal'
+            },
+            category: {
+                type: 'string'
+            },
+            categories: {
+                type: 'array',
+                default: []
+            },
+            status: {
+                type: 'string'
+            },
+            order: {
+                type: 'string',
+                default: 'desc'
+            },
+            orderBy: {
+                type: 'string',
+                default: 'date'
+            },
+            numberOfProducts: {
+                type: 'number',
+                default: 6
+            },
+            columns: {
+                type: 'number',
+                default: 3
+            },
+            changed: {
+                type: 'boolean',
+                default: false
+            }
+        },
+        edit: AdvProductsEdit,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var viewType = attributes.viewType,
+                category = attributes.category,
+                categories = attributes.categories,
+                status = attributes.status,
+                order = attributes.order,
+                orderBy = attributes.orderBy,
+                numberOfProducts = attributes.numberOfProducts,
+                columns = attributes.columns;
+
+
+            var listCats = categories.join(',');
+            var shortCode = ['[products', 'limit="' + numberOfProducts + '"', 'columns="' + columns + '"', 'orderby="' + orderBy + '"', 'order="' + order + '"', category === 'selected' && 'category="' + listCats + '"', status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
+
+            var blockClassName = ['advgb-woo-products', viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
+
+            return React.createElement(
+                'div',
+                { className: blockClassName },
+                shortCode
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/js/editor.jsx":
 /*!******************************!*\
   !*** ./assets/js/editor.jsx ***!
@@ -7677,9 +8509,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/map/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/js/editor.jsx ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7694,10 +8526,12 @@ __webpack_require__(/*! ./assets/blocks/custom-columns/columns.jsx */"./assets/b
 __webpack_require__(/*! ./assets/blocks/custom-separator/separator.jsx */"./assets/blocks/custom-separator/separator.jsx");
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
+__webpack_require__(/*! ./assets/blocks/recent-posts/block.jsx */"./assets/blocks/recent-posts/block.jsx");
 __webpack_require__(/*! ./assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");
 __webpack_require__(/*! ./assets/blocks/summary/block.jsx */"./assets/blocks/summary/block.jsx");
 __webpack_require__(/*! ./assets/blocks/tabs/block.jsx */"./assets/blocks/tabs/block.jsx");
 __webpack_require__(/*! ./assets/blocks/testimonial/block.jsx */"./assets/blocks/testimonial/block.jsx");
+__webpack_require__(/*! ./assets/blocks/woo-products/block.jsx */"./assets/blocks/woo-products/block.jsx");
 module.exports = __webpack_require__(/*! ./assets/js/editor.jsx */"./assets/js/editor.jsx");
 
 
