@@ -199,6 +199,7 @@ float: left;'
 
         $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
         wp_localize_script('advgb_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
+        wp_localize_script('advgb_blocks', 'advgbSettings', array('config_url' => admin_url('admin.php?page=advgb_main')));
 
         $advgb_blocks_vars = array();
         $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();

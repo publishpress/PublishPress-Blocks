@@ -336,7 +336,7 @@
                         >
                             <a target="_blank"
                                className="button button-large"
-                               href={wpApiSettings.schema.home + '/wp-admin/admin.php?page=advgb_main#settings'}
+                               href={advgbSettings.config_url + '#settings'}
                             >
                                 { __( 'Add Google API Key' ) }
                             </a>
