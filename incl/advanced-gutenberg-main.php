@@ -466,10 +466,23 @@ float: left;'
             wp_send_json('', 400);
         }
 
+        /**
+         * Remove slashes on svg icon
+         *
+         * @param array $block Block to remove slashes
+         *
+         * @return mixed
+         */
+        function removeSlashes(array $block)
+        {
+            $block['icon'] = htmlentities(stripslashes($block['icon']), ENT_QUOTES);
+            return $block;
+        }
+
         if (is_array($_POST['blocksList'])) {
-            $blocksList      = $_POST['blocksList'];
+            $blocksList  = array_map('removeSlashes', $_POST['blocksList']);
         } else {
-            $blocksList      = json_decode(stripslashes($_POST['blocksList']));
+            $blocksList  = json_decode(stripslashes($_POST['blocksList']));
         }
 
         $savedBlocksList = get_option('advgb_blocks_list');
