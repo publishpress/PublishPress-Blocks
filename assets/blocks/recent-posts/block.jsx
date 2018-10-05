@@ -77,6 +77,40 @@
             }
         }
 
+        static extractContent(html, length) {
+            const span= document.createElement('span');
+            span.innerHTML= html;
+
+            // Remove script tag
+            const scripts = span.getElementsByTagName('script');
+            let j = scripts.length;
+            while (j--) {
+                scripts[j].parentNode.removeChild(scripts[j]);
+            }
+
+            // Remove style tag
+            const styles = span.getElementsByTagName('style');
+            let k = styles.length;
+            while (k--) {
+                styles[k].parentNode.removeChild(styles[k]);
+            }
+
+            const children= span.querySelectorAll('*');
+            for(let i = 0 ; i < children.length ; i++) {
+                if(children[i].textContent)
+                    children[i].textContent += ' ';
+                else
+                    children[i].innerText += ' ';
+            }
+
+            let text = [span.textContent || span.innerText].toString().replace(/\s\s+/g,' ');
+            text = text.slice(0, length).trim();
+            
+            if (text.length) text += '…' ;
+
+            return text;
+        };
+
         render() {
             const { attributes, setAttributes, recentPosts, categoriesList } = this.props;
             const {
@@ -90,6 +124,8 @@
                 displayAuthor,
                 displayDate,
                 displayExcerpt,
+                postTextAsExcerpt,
+                postTextExcerptLength,
                 displayReadMore,
             } = attributes;
 
@@ -131,15 +167,32 @@
                             onChange={ () => setAttributes( { displayDate: !displayDate } ) }
                         />
                         <ToggleControl
-                            label={ __( 'Display Post Excerpt' ) }
-                            checked={ displayExcerpt }
-                            onChange={ () => setAttributes( { displayExcerpt: !displayExcerpt } ) }
-                        />
-                        <ToggleControl
                             label={ __( 'Display Read More Link' ) }
                             checked={ displayReadMore }
                             onChange={ () => setAttributes( { displayReadMore: !displayReadMore } ) }
                         />
+                        <ToggleControl
+                            label={ __( 'Display Post Excerpt' ) }
+                            checked={ displayExcerpt }
+                            onChange={ () => setAttributes( { displayExcerpt: !displayExcerpt } ) }
+                        />
+                        {displayExcerpt &&
+                            <ToggleControl
+                                label={ __( 'First Post text as Excerpt' ) }
+                                help={ __( 'Display some part of first text found in post as excerpt.' ) }
+                                checked={ postTextAsExcerpt }
+                                onChange={ () => setAttributes( { postTextAsExcerpt: !postTextAsExcerpt } ) }
+                            />
+                        }
+                        {displayExcerpt && postTextAsExcerpt &&
+                            <RangeControl
+                                label={ __( 'Post Text Excerpt length' ) }
+                                min={ 50 }
+                                max={ 300 }
+                                value={ postTextExcerptLength }
+                                onChange={ ( value ) => setAttributes( { postTextExcerptLength: value } ) }
+                            />
+                        }
                     </PanelBody>
                 </InspectorControls>
             );
@@ -240,7 +293,10 @@
                                         </div>
                                         <div className="advgb-post-content">
                                             {displayExcerpt && (
-                                                <div className="advgb-post-excerpt" dangerouslySetInnerHTML={ { __html: post.excerpt.rendered } } />
+                                                <div className="advgb-post-excerpt"
+                                                     dangerouslySetInnerHTML={ {
+                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.rendered
+                                                     } } />
                                             ) }
                                             {displayReadMore && (
                                                 <div className="advgb-post-readmore">

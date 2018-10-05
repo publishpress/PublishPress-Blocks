@@ -2,6 +2,58 @@
 defined('ABSPATH') || die;
 
 /**
+ * Extract text from html string
+ *
+ * @param string  $html   HTML string to extract
+ * @param integer $length Length of the string will return
+ *
+ * @return string Text that has been extracted
+ */
+function advgbExtractHtml($html, $length)
+{
+    if (!trim($html)) {
+        return '';
+    }
+
+    $html = <<<HTML
+$html
+HTML;
+
+    $dom = new DOMDocument();
+
+    libxml_use_internal_errors(true);
+    $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+
+    $scripts = $dom->getElementsByTagName('script');
+    $styles = $dom->getElementsByTagName('style');
+    $remove = array();
+
+    foreach ($scripts as $item) {
+        $remove[] = $item;
+    }
+
+    foreach ($styles as $item) {
+        $remove[] = $item;
+    }
+
+    foreach ($remove as $item) {
+        $item->parentNode->removeChild($item);
+    }
+
+    $html = $dom->saveHTML();
+    $text = strip_tags($html);
+    $text = trim(preg_replace('/\s\s+/', ' ', $text));
+
+    if (!$text) {
+        return '';
+    }
+
+    $text = substr($text, 0, $length);
+
+    return $text;
+}
+
+/**
  * Render content for Recent Posts block
  *
  * @param array $attributes Attributes of the block
@@ -66,9 +118,16 @@ function advgbRenderBlockRecentPosts($attributes)
         $postHtml .= '<div class="advgb-post-content">';
 
         if (isset($attributes['displayExcerpt']) && $attributes['displayExcerpt']) {
+            $introText = get_the_excerpt($post->ID);
+            $postContent = apply_filters('the_content', get_post_field('post_content', $post->ID));
+
+            if (isset($attributes['displayExcerpt']) && $attributes['postTextAsExcerpt']) {
+                $introText = advgbExtractHtml($postContent, $attributes['postTextExcerptLength']);
+            }
+
             $postHtml .= sprintf(
                 '<div class="advgb-post-excerpt">%1$s</div>',
-                get_the_excerpt($post->ID)
+                $introText
             );
         }
 
@@ -157,6 +216,14 @@ function advgbRegisterBlockRecentPosts()
             'displayExcerpt' => array(
                 'type' => 'boolean',
                 'default' => true,
+            ),
+            'postTextAsExcerpt' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'postTextExcerptLength' => array(
+                'type' => 'number',
+                'default' => 150,
             ),
             'displayReadMore' => array(
                 'type' => 'boolean',

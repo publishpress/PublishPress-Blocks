@@ -5242,6 +5242,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayAuthor = attributes.displayAuthor,
                     displayDate = attributes.displayDate,
                     displayExcerpt = attributes.displayExcerpt,
+                    postTextAsExcerpt = attributes.postTextAsExcerpt,
+                    postTextExcerptLength = attributes.postTextExcerptLength,
                     displayReadMore = attributes.displayReadMore;
 
 
@@ -5299,17 +5301,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }
                         }),
                         React.createElement(ToggleControl, {
+                            label: __('Display Read More Link'),
+                            checked: displayReadMore,
+                            onChange: function onChange() {
+                                return setAttributes({ displayReadMore: !displayReadMore });
+                            }
+                        }),
+                        React.createElement(ToggleControl, {
                             label: __('Display Post Excerpt'),
                             checked: displayExcerpt,
                             onChange: function onChange() {
                                 return setAttributes({ displayExcerpt: !displayExcerpt });
                             }
                         }),
-                        React.createElement(ToggleControl, {
-                            label: __('Display Read More Link'),
-                            checked: displayReadMore,
+                        displayExcerpt && React.createElement(ToggleControl, {
+                            label: __('First Post text as Excerpt'),
+                            help: __('Display some part of first text found in post as excerpt.'),
+                            checked: postTextAsExcerpt,
                             onChange: function onChange() {
-                                return setAttributes({ displayReadMore: !displayReadMore });
+                                return setAttributes({ postTextAsExcerpt: !postTextAsExcerpt });
+                            }
+                        }),
+                        displayExcerpt && postTextAsExcerpt && React.createElement(RangeControl, {
+                            label: __('Post Text Excerpt length'),
+                            min: 50,
+                            max: 300,
+                            value: postTextExcerptLength,
+                            onChange: function onChange(value) {
+                                return setAttributes({ postTextExcerptLength: value });
                             }
                         })
                     )
@@ -5431,7 +5450,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "div",
                                             { className: "advgb-post-content" },
-                                            displayExcerpt && React.createElement("div", { className: "advgb-post-excerpt", dangerouslySetInnerHTML: { __html: post.excerpt.rendered } }),
+                                            displayExcerpt && React.createElement("div", { className: "advgb-post-excerpt",
+                                                dangerouslySetInnerHTML: {
+                                                    __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.rendered
+                                                } }),
                                             displayReadMore && React.createElement(
                                                 "div",
                                                 { className: "advgb-post-readmore" },
@@ -5448,6 +5470,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         )
                     )
                 );
+            }
+        }], [{
+            key: "extractContent",
+            value: function extractContent(html, length) {
+                var span = document.createElement('span');
+                span.innerHTML = html;
+
+                // Remove script tag
+                var scripts = span.getElementsByTagName('script');
+                var j = scripts.length;
+                while (j--) {
+                    scripts[j].parentNode.removeChild(scripts[j]);
+                }
+
+                // Remove style tag
+                var styles = span.getElementsByTagName('style');
+                var k = styles.length;
+                while (k--) {
+                    styles[k].parentNode.removeChild(styles[k]);
+                }
+
+                var children = span.querySelectorAll('*');
+                for (var i = 0; i < children.length; i++) {
+                    if (children[i].textContent) children[i].textContent += ' ';else children[i].innerText += ' ';
+                }
+
+                var text = [span.textContent || span.innerText].toString().replace(/\s\s+/g, ' ');
+                text = text.slice(0, length).trim();
+
+                if (text.length) text += '…';
+
+                return text;
             }
         }]);
 
