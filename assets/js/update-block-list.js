@@ -4,6 +4,7 @@ window.onload = function () {
             wp.blockLibrary.registerCoreBlocks();
         }
 
+        var $ = jQuery;
         var allBlocks = wp.blocks.getBlockTypes();
         var allCategories = wp.blocks.getCategories();
         var listBlocks = [];
@@ -42,7 +43,7 @@ window.onload = function () {
         if (typeof updateListNonce !== 'undefined') {
             nonce = updateListNonce.nonce;
         } else {
-            nonce = jQuery('#advgb_nonce_field').val();
+            nonce = $('#advgb_nonce_field').val();
         }
 
         // Update categories
@@ -109,7 +110,7 @@ window.onload = function () {
         $('#blocks_list').val(JSON.stringify(list_blocks_names));
 
         // Use this ajax query to update the block list in db
-        jQuery.ajax({
+        $.ajax({
             url: ajaxurl,
             method: 'POST',
             data: {
