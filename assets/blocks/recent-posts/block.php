@@ -119,10 +119,12 @@ function advgbRenderBlockRecentPosts($attributes)
 
         if (isset($attributes['displayExcerpt']) && $attributes['displayExcerpt']) {
             $introText = get_the_excerpt($post->ID);
-            $postContent = apply_filters('the_content', get_post_field('post_content', $post->ID));
 
             if (isset($attributes['displayExcerpt']) && $attributes['postTextAsExcerpt']) {
-                $introText = advgbExtractHtml($postContent, $attributes['postTextExcerptLength']);
+                if (!is_admin()) {
+                    $postContent = apply_filters('the_content', get_post_field('post_content', $post->ID));
+                    $introText = advgbExtractHtml($postContent, $attributes['postTextExcerptLength']);
+                }
             }
 
             $postHtml .= sprintf(
