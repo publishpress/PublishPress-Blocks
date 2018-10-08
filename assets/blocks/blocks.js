@@ -6592,7 +6592,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return null;
             }
 
-            var blockStyle = null;
+            var blockStyle = undefined;
             if (loadMinimized) blockStyle = { display: 'none' };
 
             var summary = React.createElement(
