@@ -871,4 +871,6 @@ hr.wp-block-separator {
 .advgb-woo-products.slider-view .woocommerce ul.products li.product a img {
     height: 400px;
     width: auto;
+    display: block;
+    margin: 0 auto 1.5em;
 }
