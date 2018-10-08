@@ -129,6 +129,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Advanced Video block including remote video (YouTube...) and local video (.mp4...)
 1. Advanced table manager: manage tables in Gutenberg with several styling options
 1. Google Maps Gutenberg Block
+1. Latest posts and WooCommerce products blocks
 
 == Changelog ==
 
