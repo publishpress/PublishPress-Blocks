@@ -20,10 +20,6 @@
       },
       {
         "type": "fix",
-        "title": "Cannot set styles for Header text (Tab blocks)"
-      },
-      {
-        "type": "fix",
         "title": "Error on Map block if no Google API provided"
       },
       {
