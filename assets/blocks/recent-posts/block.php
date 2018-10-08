@@ -84,7 +84,7 @@ function advgbRenderBlockRecentPosts($attributes)
             $postHtml .= sprintf(
                 '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s</a></div>',
                 get_permalink($post->ID),
-                wp_get_attachment_image($postThumbID, 'medium')
+                wp_get_attachment_image($postThumbID, 'large')
             );
         }
 
