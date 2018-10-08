@@ -70,7 +70,7 @@ function advgbRenderBlockRecentPosts($attributes)
             'orderby' => $attributes['orderBy'],
             'category' => $attributes['category'],
         ),
-        'OBJECT'
+        OBJECT
     );
 
     $postHtml = '';
