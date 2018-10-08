@@ -8051,10 +8051,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         CheckboxControl = wpComponents.CheckboxControl,
         SelectControl = wpComponents.SelectControl,
         Spinner = wpComponents.Spinner,
-        Toolbar = wpComponents.Toolbar;
+        Toolbar = wpComponents.Toolbar,
+        Placeholder = wpComponents.Placeholder;
 
 
     var fetchingQueue = null;
+
+    var advProductsBlockIcon = React.createElement(
+        "svg",
+        { width: "20", height: "20", viewBox: "0 0 24 24" },
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("path", { d: "M15.55,13c0.75,0,1.41-0.41,1.75-1.03l3.58-6.49C21.25,4.82,20.77,4,20.01,4H5.21L4.27,2H1v2h2l3.6,7.59l-1.35,2.44 C4.52,15.37,5.48,17,7,17h12v-2H7l1.1-2H15.55z M6.16,6h12.15l-2.76,5H8.53L6.16,6z" }),
+        React.createElement("path", { d: "M7,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C9,18.9,8.1,18,7,18z" }),
+        React.createElement("path", { d: "M17,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C19,18.9,18.1,18,17,18z" })
+    );
 
     var AdvProductsEdit = function (_Component) {
         _inherits(AdvProductsEdit, _Component);
@@ -8067,7 +8077,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this.state = {
                 categoriesList: [],
                 productsList: [],
-                loading: true
+                loading: true,
+                error: false
             };
 
             _this.fetchProducts = _this.fetchProducts.bind(_this);
@@ -8075,24 +8086,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvProductsEdit, [{
-            key: 'componentWillMount',
+            key: "componentWillMount",
             value: function componentWillMount() {
                 this.fetchProducts();
             }
         }, {
-            key: 'componentWillUpdate',
+            key: "componentWillUpdate",
             value: function componentWillUpdate(nextProps, nextState) {
                 var clientId = this.props.clientId;
 
                 var $ = jQuery;
 
                 if (this.checkAttrChanged(nextProps.attributes, this.props.attributes)) {
-                    $('#block-' + clientId + ' .advgb-products-wrapper.slick-initialized').slick('unslick');
-                    $('#block-' + clientId + ' .advgb-product').removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+                    $("#block-" + clientId + " .advgb-products-wrapper.slick-initialized").slick('unslick');
+                    $("#block-" + clientId + " .advgb-product").removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
                 }
             }
         }, {
-            key: 'componentDidUpdate',
+            key: "componentDidUpdate",
             value: function componentDidUpdate(prevProps) {
                 var _this2 = this;
 
@@ -8112,7 +8123,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: 'checkAttrChanged',
+            key: "checkAttrChanged",
             value: function checkAttrChanged(prevAttrs, curAttrs) {
                 var prevView = prevAttrs.viewType,
                     prevCat = prevAttrs.category,
@@ -8133,7 +8144,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return category !== prevCat || categories !== prevCats || status !== prevStatus || order !== prevOrder || orderBy !== prevOrderBy || numberOfProducts !== prevLength || prevView !== viewType;
             }
         }, {
-            key: 'fetchProducts',
+            key: "fetchProducts",
             value: function fetchProducts() {
                 var self = this;
                 var _props$attributes = this.props.attributes,
@@ -8168,9 +8179,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             productsList: obj,
                             loading: false
                         });
+                    }).catch(function (error) {
+                        self.setState({
+                            loading: false,
+                            error: true
+                        });
                     }).then(function () {
                         if (viewType === 'slider') {
-                            $('#block-' + self.props.clientId + ' .advgb-products-block.slider-view .advgb-products-wrapper:not(.slick-initialized)').slick({
+                            $("#block-" + self.props.clientId + " .advgb-products-block.slider-view .advgb-products-wrapper:not(.slick-initialized)").slick({
                                 dots: true,
                                 adaptiveHeight: true
                             });
@@ -8179,7 +8195,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }, 500);
             }
         }, {
-            key: 'setCategories',
+            key: "setCategories",
             value: function setCategories(catID, willAdd) {
                 var _props = this.props,
                     attributes = _props.attributes,
@@ -8198,14 +8214,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.fetchProducts();
             }
         }, {
-            key: 'render',
+            key: "render",
             value: function render() {
                 var _this3 = this;
 
                 var _state = this.state,
                     categoriesList = _state.categoriesList,
                     productsList = _state.productsList,
-                    loading = _state.loading;
+                    loading = _state.loading,
+                    error = _state.error;
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
@@ -8237,7 +8254,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockClassName = ["advgb-products-block", viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 
-                var blockWrapperClassName = ["advgb-products-wrapper", viewType === 'normal' && 'columns-' + columns].filter(Boolean).join(' ');
+                var blockWrapperClassName = ["advgb-products-wrapper", viewType === 'normal' && "columns-" + columns].filter(Boolean).join(' ');
 
                 return React.createElement(
                     Fragment,
@@ -8270,17 +8287,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             category === 'selected' && React.createElement(
-                                'div',
-                                { className: 'advgb-categories-list' },
+                                "div",
+                                { className: "advgb-categories-list" },
                                 categoriesList.map(function (cat, index) {
                                     return React.createElement(CheckboxControl, {
                                         key: index,
                                         label: [cat.name, React.createElement(
-                                            'span',
-                                            { key: 'cat-count', style: { fontSize: 'small', color: '#999', marginLeft: 5 } },
-                                            '(',
+                                            "span",
+                                            { key: "cat-count", style: { fontSize: 'small', color: '#999', marginLeft: 5 } },
+                                            "(",
                                             cat.count,
-                                            ')'
+                                            ")"
                                         )],
                                         checked: jQuery.inArray(cat.id, categories) > -1,
                                         onChange: function onChange(checked) {
@@ -8313,7 +8330,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(SelectControl, {
                                 label: __('Order'),
-                                value: orderBy + '-' + order,
+                                value: orderBy + "-" + order,
                                 options: [{ label: __('Newest to oldest'), value: 'date-desc' }, { label: __('Price: high to low'), value: 'price-desc' }, { label: __('Price: low to high'), value: 'price-asc' }, { label: __('Highest Rating first'), value: 'rating-desc' }, { label: __('Most sale first'), value: 'popularity-desc' }, { label: __('Title: Alphabetical'), value: 'title-asc' }, { label: __('Title: Alphabetical reversed'), value: 'title-desc' }],
                                 onChange: function onChange(value) {
                                     var splitedVal = value.split('-');
@@ -8326,31 +8343,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         )
                     ),
                     React.createElement(
-                        'div',
+                        "div",
                         { className: blockClassName },
-                        !loading ? productsList.length > 0 ? React.createElement(
-                            'div',
+                        !error ? !loading ? productsList.length > 0 ? React.createElement(
+                            "div",
                             { className: blockWrapperClassName },
                             productsList.map(function (product, idx) {
                                 return React.createElement(
-                                    'div',
-                                    { key: idx, className: 'advgb-product' },
+                                    "div",
+                                    { key: idx, className: "advgb-product" },
                                     React.createElement(
-                                        'div',
-                                        { className: 'advgb-product-img' },
-                                        React.createElement('img', { src: product.images[0].src, alt: product.name })
+                                        "div",
+                                        { className: "advgb-product-img" },
+                                        React.createElement("img", { src: product.images[0].src, alt: product.name })
                                     ),
                                     React.createElement(
-                                        'div',
-                                        { className: 'advgb-product-title' },
+                                        "div",
+                                        { className: "advgb-product-title" },
                                         product.name
                                     ),
-                                    React.createElement('div', { className: 'advgb-product-price', dangerouslySetInnerHTML: { __html: product.price_html } }),
+                                    React.createElement("div", { className: "advgb-product-price", dangerouslySetInnerHTML: { __html: product.price_html } }),
                                     React.createElement(
-                                        'div',
-                                        { className: 'advgb-product-add-to-cart' },
+                                        "div",
+                                        { className: "advgb-product-add-to-cart" },
                                         React.createElement(
-                                            'span',
+                                            "span",
                                             null,
                                             __('Add to cart')
                                         )
@@ -8359,19 +8376,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ) : // When no products found
                         React.createElement(
-                            'div',
+                            "div",
                             null,
                             __('No products found.')
                         ) : // When products is fetching
                         React.createElement(
-                            'div',
+                            "div",
                             null,
                             React.createElement(
-                                'span',
+                                "span",
                                 null,
                                 __('Loading')
                             ),
                             React.createElement(Spinner, null)
+                        ) : // When error
+                        React.createElement(
+                            Placeholder,
+                            {
+                                icon: advProductsBlockIcon,
+                                label: __('ADVGB Woo Products Block')
+                            },
+                            __('WooCommerce has not been detected, make sure WooCommerce is installed and activated')
                         )
                     )
                 );
@@ -8380,15 +8405,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         return AdvProductsEdit;
     }(Component);
-
-    var advProductsBlockIcon = React.createElement(
-        'svg',
-        { width: '20', height: '20', viewBox: '0 0 24 24' },
-        React.createElement('path', { fill: 'none', d: 'M0,0h24v24H0V0z' }),
-        React.createElement('path', { d: 'M15.55,13c0.75,0,1.41-0.41,1.75-1.03l3.58-6.49C21.25,4.82,20.77,4,20.01,4H5.21L4.27,2H1v2h2l3.6,7.59l-1.35,2.44 C4.52,15.37,5.48,17,7,17h12v-2H7l1.1-2H15.55z M6.16,6h12.15l-2.76,5H8.53L6.16,6z' }),
-        React.createElement('path', { d: 'M7,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C9,18.9,8.1,18,7,18z' }),
-        React.createElement('path', { d: 'M17,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C19,18.9,18.1,18,17,18z' })
-    );
 
     registerBlockType('advgb/woo-products', {
         title: __('Woo Products'),
@@ -8449,12 +8465,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
             var listCats = categories.join(',');
-            var shortCode = ['[products', 'limit="' + numberOfProducts + '"', 'columns="' + columns + '"', 'orderby="' + orderBy + '"', 'order="' + order + '"', category === 'selected' && 'category="' + listCats + '"', status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
+            var shortCode = ['[products', "limit=\"" + numberOfProducts + "\"", "columns=\"" + columns + "\"", "orderby=\"" + orderBy + "\"", "order=\"" + order + "\"", category === 'selected' && "category=\"" + listCats + "\"", status === 'featured' && 'featured="1"', status === 'on_sale' && 'on_sale="1"', ']'].filter(Boolean).join(' ');
 
             var blockClassName = ['advgb-woo-products', viewType === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 
             return React.createElement(
-                'div',
+                "div",
                 { className: blockClassName },
                 shortCode
             );

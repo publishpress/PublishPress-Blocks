@@ -3,9 +3,18 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpEditor;
-    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner, Toolbar } = wpComponents;
+    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner, Toolbar, Placeholder } = wpComponents;
 
     let fetchingQueue = null;
+
+    const advProductsBlockIcon = (
+        <svg width="20" height="20" viewBox="0 0 24 24">
+            <path fill="none" d="M0,0h24v24H0V0z"/>
+            <path d="M15.55,13c0.75,0,1.41-0.41,1.75-1.03l3.58-6.49C21.25,4.82,20.77,4,20.01,4H5.21L4.27,2H1v2h2l3.6,7.59l-1.35,2.44 C4.52,15.37,5.48,17,7,17h12v-2H7l1.1-2H15.55z M6.16,6h12.15l-2.76,5H8.53L6.16,6z"/>
+            <path d="M7,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C9,18.9,8.1,18,7,18z"/>
+            <path d="M17,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C19,18.9,18.1,18,17,18z"/>
+        </svg>
+    );
 
     class AdvProductsEdit extends Component {
         constructor() {
@@ -14,6 +23,7 @@
                 categoriesList: [],
                 productsList: [],
                 loading: true,
+                error: false,
             };
 
             this.fetchProducts = this.fetchProducts.bind(this);
@@ -115,6 +125,11 @@
                         productsList: obj,
                         loading: false,
                     } )
+                } ).catch( (error) => {
+                    self.setState( {
+                        loading: false,
+                        error: true,
+                    } )
                 } ).then( () => {
                     if (viewType === 'slider') {
                         $(`#block-${self.props.clientId} .advgb-products-block.slider-view .advgb-products-wrapper:not(.slick-initialized)`).slick( {
@@ -140,7 +155,7 @@
         }
 
         render() {
-            const { categoriesList, productsList, loading } = this.state;
+            const { categoriesList, productsList, loading, error } = this.state;
             const { attributes, setAttributes } = this.props;
             const {
                 viewType,
@@ -262,7 +277,7 @@
                         </PanelBody>
                     </InspectorControls>
                     <div className={ blockClassName }>
-                        {!loading ? productsList.length > 0 ?
+                        {!error ? !loading ? productsList.length > 0 ?
                             <div className={ blockWrapperClassName }>
                                 {productsList.map( (product, idx) => (
                                     <div key={idx} className="advgb-product">
@@ -286,21 +301,20 @@
                                     <Spinner/>
                                 </div>
                             )
+                            : ( // When error
+                                <Placeholder
+                                    icon={ advProductsBlockIcon }
+                                    label={ __( 'ADVGB Woo Products Block' ) }
+                                >
+                                    { __( 'WooCommerce has not been detected, make sure WooCommerce is installed and activated' ) }
+                                </Placeholder>
+                            )
                         }
                     </div>
                 </Fragment>
             )
         }
     }
-
-    const advProductsBlockIcon = (
-        <svg width="20" height="20" viewBox="0 0 24 24">
-            <path fill="none" d="M0,0h24v24H0V0z"/>
-            <path d="M15.55,13c0.75,0,1.41-0.41,1.75-1.03l3.58-6.49C21.25,4.82,20.77,4,20.01,4H5.21L4.27,2H1v2h2l3.6,7.59l-1.35,2.44 C4.52,15.37,5.48,17,7,17h12v-2H7l1.1-2H15.55z M6.16,6h12.15l-2.76,5H8.53L6.16,6z"/>
-            <path d="M7,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C9,18.9,8.1,18,7,18z"/>
-            <path d="M17,18c-1.1,0-1.99,0.9-1.99,2c0,1.1,0.89,2,1.99,2c1.1,0,2-0.9,2-2C19,18.9,18.1,18,17,18z"/>
-        </svg>
-    );
 
     registerBlockType( 'advgb/woo-products', {
         title: __( 'Woo Products' ),
