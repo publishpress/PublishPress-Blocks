@@ -27,7 +27,8 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 
 ## ADVANCED GUTENBERG SPECIAL BLOCKS
 
-- Gutenberg post summary based on content headers
+- Latest post slider and latest post slider
+- Latest WooCommerce product slider and latest product slider
 - Advanced Button block: create button with tons of styles
 - Advanced List block: create list with list icon, icon color
 - Map block: load a Google map position with zoom, icon, tooltip, title...
@@ -40,20 +41,19 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Advanced Image block: load and display local and remote video
 - Advanced Video block: load and display local and remote video
 - Supercharge the separator tool with size, color, spaces
-- Social links block: custom icon and links to your favorite social networks
+- Social links block: custom icon and links to any social networks
 - Activate lightbox effect in Gutenberg image galleries
 - Display image information as lightbox caption in galleries
+- Gutenberg post summary based on content headers
 
 
 ## ADVANCED GUTENBERG DEMO
 
 [vimeo https://vimeo.com/264060718]
 
+<a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
 
 ## OTHERS PLUGINS
-
-** <a href="https://www.joomunited.com/wordpress-products/advanced-gutenberg" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
-
 
 Yes we do plugins and we've got some popular ones :)
 
