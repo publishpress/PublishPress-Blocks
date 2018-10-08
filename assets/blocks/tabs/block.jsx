@@ -192,13 +192,13 @@
                                         margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
                                     } }
                                 >
-                                    <a href={`#${item.header.toLowerCase().replace(/\s/g, '').trim()}-${index}`}
+                                    <a href={`#advgb-tab-${blockID}-${index}`}
                                        style={ { color: headerTextColor } }
                                     >
                                         <RichText
                                             tagName="p"
                                             value={ item.header }
-                                            onChange={ ( value ) => this.updateTabs( { header: value[0] || '' }, index ) }
+                                            onChange={ ( value ) => this.updateTabs( { header: value || '' }, index ) }
                                             onSplit={ () => null }
                                             placeholder={ __( 'Title…' ) }
                                         />
@@ -235,7 +235,7 @@
                         </ul>
                         {tabItems.map( ( item, index ) => (
                             <div key={ index }
-                                 id={`${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
+                                 id={`advgb-tab-${blockID}-${index}`}
                                  className="advgb-tab-body"
                                  style={ {
                                      backgroundColor: bodyBgColor,
@@ -381,7 +381,7 @@
                                     margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
                                 } }
                             >
-                                <a href={`#${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
+                                <a href={`#advgb-tab-${blockID}-${index}`}
                                    style={ { color: headerTextColor } }
                                 >
                                     <RichText.Content tagName="span" value={ item.header }/>
@@ -391,7 +391,7 @@
                     </ul>
                     {tabItems.map( ( item, index ) => (
                         <div key={ index }
-                             id={`${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
+                             id={`advgb-tab-${blockID}-${index}`}
                              className="advgb-tab-body"
                              style={ {
                                  backgroundColor: bodyBgColor,
@@ -440,14 +440,7 @@
 
                     return (
                         <div id={`advgb-tabs-${blockID}`} className="advgb-tabs-block" style={ { border: 'none' } }>
-                            <ul className="advgb-tabs-panel"
-                                style={ {
-                                    borderStyle: borderStyle,
-                                    borderWidth: borderWidth + 'px',
-                                    borderColor: borderColor,
-                                    borderRadius: borderRadius + 'px',
-                                } }
-                            >
+                            <ul className="advgb-tabs-panel">
                                 {tabItems.map( ( item, index ) => (
                                     <li key={ index } className="advgb-tab"
                                         style={ {
@@ -495,7 +488,7 @@
                             </style>
                             }
                         </div>
-                    )
+                    );
                 }
             }
         ]

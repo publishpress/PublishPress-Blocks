@@ -302,7 +302,7 @@
                 return null;
             }
 
-            let blockStyle = null;
+            let blockStyle = undefined;
             if (loadMinimized) blockStyle = { display: 'none' };
 
             const summary = (
