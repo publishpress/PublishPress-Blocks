@@ -8,11 +8,11 @@
     "1.7.0": [
       {
         "type": "features",
-        "title": "New Recent Posts block: with 3 layouts Grid, List and Slide"
+        "title": "New Recent Posts block with 3 layouts Grid, List and Slide"
       },
       {
         "type": "features",
-        "title": "New Woo Products block: with 2 layouts Normal and Slide"
+        "title": "WooCommerce Products block with 2 layouts Normal and Slide"
       },
       {
         "type": "fix",
