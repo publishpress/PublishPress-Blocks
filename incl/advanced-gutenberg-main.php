@@ -141,6 +141,8 @@ float: left;'
         add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
         add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
+        add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
+        add_action('rest_api_init', array($this, 'registerRestAPI'));
 
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbProfile'));
@@ -186,12 +188,18 @@ float: left;'
             array( 'wp-blocks' )
         );
 
-        // Include jQuery Tabs and Accordion
+        // Include needed JS libraries
         wp_enqueue_script('jquery-ui-accordion');
         wp_enqueue_script('jquery-ui-tabs');
+        wp_enqueue_script('slick_js');
+
+        // Include needed CSS styles
+        wp_enqueue_style('slick_style');
+        wp_enqueue_style('slick_theme_style');
 
         $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
         wp_localize_script('advgb_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
+        wp_localize_script('advgb_blocks', 'advgbSettings', array('config_url' => admin_url('admin.php?page=advgb_main')));
 
         $advgb_blocks_vars = array();
         $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
@@ -289,6 +297,7 @@ float: left;'
             'custom_styles',
             $custom_styles_url . 'custom_styles.css'
         );
+        wp_enqueue_style('dashicons');
 
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
             wp_enqueue_style(
@@ -363,6 +372,84 @@ float: left;'
     }
 
     /**
+     * Load block that required server side render
+     *
+     * @return void
+     */
+    public function advgbBlockLoader()
+    {
+        // Block Recent Posts
+        require_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/recent-posts/block.php');
+    }
+
+    /**
+     * Register REST API
+     *
+     * @return void
+     */
+    public function registerRestAPI()
+    {
+        // Add author info
+        register_rest_field(
+            'post',
+            'author_meta',
+            array(
+                'get_callback' => array($this, 'getAuthorInfo'),
+                'update_callback' => null,
+                'schema' => null,
+            )
+        );
+
+        // Add post featured img
+        register_rest_field(
+            'post',
+            'featured_img',
+            array(
+                'get_callback' => array($this, 'getFeaturedImg'),
+                'update_callback' => null,
+                'schema' => null,
+            )
+        );
+    }
+
+    /**
+     * Get post author info for REST API
+     *
+     * @param array $object API Object
+     *
+     * @return mixed
+     */
+    public function getAuthorInfo($object)
+    {
+        // Get the author name
+        $author['display_name'] = get_the_author_meta('display_name', $object['author']);
+
+        // Get the author link
+        $author['author_link'] = get_author_posts_url($object['author']);
+
+        // Return the author data
+        return $author;
+    }
+
+    /**
+     * Get featured image link for REST API
+     *
+     * @param array $object API Object
+     *
+     * @return mixed
+     */
+    public function getFeaturedImg($object)
+    {
+        $featured_img = wp_get_attachment_image_src(
+            $object['featured_media'],
+            'medium',
+            false
+        );
+
+        return $featured_img[0];
+    }
+
+    /**
      * Ajax to update blocks list
      *
      * @return mixed
@@ -379,10 +466,23 @@ float: left;'
             wp_send_json('', 400);
         }
 
+        /**
+         * Remove slashes on svg icon
+         *
+         * @param array $block Block to remove slashes
+         *
+         * @return mixed
+         */
+        function removeSlashes(array $block)
+        {
+            $block['icon'] = htmlentities(stripslashes($block['icon']), ENT_QUOTES);
+            return $block;
+        }
+
         if (is_array($_POST['blocksList'])) {
-            $blocksList      = $_POST['blocksList'];
+            $blocksList  = array_map('removeSlashes', $_POST['blocksList']);
         } else {
-            $blocksList      = json_decode(stripslashes($_POST['blocksList']));
+            $blocksList  = json_decode(stripslashes($_POST['blocksList']));
         }
 
         $savedBlocksList = get_option('advgb_blocks_list');
@@ -898,6 +998,14 @@ float: left;'
             'material_icon_font',
             plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
         );
+        wp_register_style(
+            'slick_style',
+            plugins_url('assets/css/slick.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'slick_theme_style',
+            plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+        );
 
         // Register JS
         wp_register_script(
@@ -984,6 +1092,11 @@ float: left;'
             array(),
             ADVANCED_GUTENBERG_VERSION
         );
+        wp_register_script(
+            'slick_js',
+            plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
+            array('jquery')
+        );
     }
 
     /**
@@ -999,12 +1112,25 @@ float: left;'
             array(),
             ADVANCED_GUTENBERG_VERSION
         );
+        wp_register_style(
+            'slick_style',
+            plugins_url('assets/css/slick.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'slick_theme_style',
+            plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+        );
 
         wp_register_script(
             'colorbox_js',
             plugins_url('assets/js/jquery.colorbox.min.js', dirname(__FILE__)),
             array('jquery'),
             ADVANCED_GUTENBERG_VERSION
+        );
+        wp_register_script(
+            'slick_js',
+            plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
+            array('jquery')
         );
 
         $saved_settings = get_option('advgb_settings');
@@ -1367,6 +1493,7 @@ float: left;'
             'accordion', 'button', 'image', 'list',
             'table', 'video', 'count-up', 'map',
             'social-links', 'summary', 'tabs', 'testimonial',
+            'recent-posts', 'woo-products',
         );
 
         foreach ($advgb_block as $block) {
@@ -1804,6 +1931,10 @@ float: left;'
                             'type'  => 'select',
                             'name'  => 'icon',
                             'options' => array(
+                                array(
+                                    'label' => __('None', 'advanced-gutenberg'),
+                                    'value' => '',
+                                ),
                                 array(
                                     'label' => __('Pushpin', 'advanced-gutenberg'),
                                     'value' => 'admin-post',
@@ -2568,6 +2699,30 @@ float: left;'
             wp_add_inline_script('jquery-ui-tabs', 'jQuery(document).ready(function($){
                 $(".advgb-tab a:not(.ui-tabs-anchor)").unbind("click");
                 $(".advgb-tabs-block").tabs();
+            });');
+        }
+
+        if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
+            wp_enqueue_style('slick_style');
+            wp_enqueue_style('slick_theme_style');
+            wp_enqueue_script('slick_js');
+            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                $(".advgb-recent-posts-block.slider-view .advgb-recent-posts:not(.slick-initialized)").slick({
+                    dots: true,
+                    adaptiveHeight: true,
+                })
+            });');
+        }
+
+        if (strpos($content, 'advgb-woo-products slider-view') !== false) {
+            wp_enqueue_style('slick_style');
+            wp_enqueue_style('slick_theme_style');
+            wp_enqueue_script('slick_js');
+            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                $(".advgb-woo-products.slider-view .products:not(.slick-initialized)").slick({
+                    dots: true,
+                    adaptiveHeight: true,
+                })
             });');
         }
 
