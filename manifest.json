@@ -2,9 +2,35 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.6.7",
+  "version": "1.7.0",
   "wp_version": "4.9.8",
   "changelog": {
+    "1.7.0": [
+      {
+        "type": "features",
+        "title": "New Recent Posts block: with 3 layouts Grid, List and Slide"
+      },
+      {
+        "type": "features",
+        "title": "New Woo Products block: with 2 layouts Normal and Slide"
+      },
+      {
+        "type": "fix",
+        "title": "Cannot set styles for Header text (Tab blocks)"
+      },
+      {
+        "type": "fix",
+        "title": "Cannot set styles for Header text (Tab blocks)"
+      },
+      {
+        "type": "fix",
+        "title": "Error on Map block if no Google API provided"
+      },
+      {
+        "type": "fix",
+        "title": "Add default select option on Blocks Config"
+      }
+    ],
     "1.6.7": [
       {
         "type": "fix",
@@ -26,7 +52,7 @@
       },
       {
         "type": "fix",
-        "title": "Summary block not rendred inside Gutenberg column"
+        "title": "Summary block not rendered inside Gutenberg column"
       }
     ],
     "1.6.5": [
