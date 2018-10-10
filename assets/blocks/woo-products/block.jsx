@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpEditor;
-    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner, Toolbar, Placeholder } = wpComponents;
+    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner, Toolbar, Placeholder, Button } = wpComponents;
 
     let fetchingQueue = null;
 
@@ -101,7 +101,7 @@
 
             const { addQueryArgs } = wp.url;
             const query = addQueryArgs(
-                '/wc/v2/products',
+                '/agwc/v1/products',
                 {
                     order: order || undefined,
                     orderby: orderBy || undefined,
@@ -114,6 +114,10 @@
 
             if (fetchingQueue) {
                 clearTimeout(fetchingQueue);
+            }
+
+            if (this.state.error) {
+                this.setState( { error: false } );
             }
 
             fetchingQueue = setTimeout(function () {
@@ -306,7 +310,15 @@
                                     icon={ advProductsBlockIcon }
                                     label={ __( 'ADVGB Woo Products Block' ) }
                                 >
-                                    { __( 'WooCommerce has not been detected, make sure WooCommerce is installed and activated' ) }
+                                    <div style={ { marginBottom: 10 } }>
+                                        { __( 'WooCommerce has not been detected, make sure WooCommerce is installed and activated.' ) }
+                                    </div>
+                                    <Button
+                                        className="button button-large"
+                                        onClick={ () => this.fetchProducts() }
+                                    >
+                                        { __( 'Try again' ) }
+                                    </Button>
                                 </Placeholder>
                             )
                         }
