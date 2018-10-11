@@ -2,9 +2,15 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "wp_version": "4.9.8",
   "changelog": {
+    "1.7.1": [
+      {
+        "type": "fix",
+        "title": "Cannot show products with some filter on backend (Products Block)"
+      }
+    ],
     "1.7.0": [
       {
         "type": "features",
