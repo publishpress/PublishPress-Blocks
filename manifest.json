@@ -7,11 +7,11 @@
   "changelog": {
     "1.7.0": [
       {
-        "type": "features",
+        "type": "feature",
         "title": "New Recent Posts block with 3 layouts Grid, List and Slide"
       },
       {
-        "type": "features",
+        "type": "feature",
         "title": "WooCommerce Products block with 2 layouts Normal and Slide"
       },
       {
