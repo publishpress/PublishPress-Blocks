@@ -412,9 +412,11 @@ float: left;'
         );
 
         // Register router to get data for Woo Products block
-        include_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/woo-products/controller.php');
-        $controller = new AdvgbProductsController();
-        $controller->register_routes();
+        if (class_exists('WC_REST_Products_Controller')) {
+            include_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/woo-products/controller.php');
+            $controller = new AdvgbProductsController();
+            $controller->register_routes();
+        }
     }
 
     /**
