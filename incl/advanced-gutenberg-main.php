@@ -127,6 +127,13 @@ float: left;'
     );
 
     /**
+     * Store original editor settings value, before we modify it to allow/hide blocks based on profiles
+     *
+     * @var string Original settings
+     */
+    protected static $original_block_editor_settings;
+
+    /**
      * Activated profile to get activated blocks array
      *
      * @var null    ID profiles
@@ -150,6 +157,7 @@ float: left;'
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
             add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
+            add_filter('block_editor_settings', array($this, 'replaceEditorSettings'), 9999);
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
             add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
@@ -164,6 +172,42 @@ float: left;'
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
         }
+    }
+
+    /**
+     * Replaces if needed editor settings to allow/hide blocks
+     *
+     * @param array $settings Editor settings
+     *
+     * @return array
+     */
+    public function replaceEditorSettings($settings)
+    {
+        self::$original_block_editor_settings = $settings;
+
+        $advgb_blocks_vars = array();
+        $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+
+        $replace_in_script = false;
+        if (is_array($settings[allowedBlockTypes])) {
+            // Remove blocks from the list that are not allowed
+            // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
+            foreach ($settings[allowedBlockTypes] as $key => $type) {
+                if (in_array($type, $advgb_blocks_vars['blocks']['inactive_blocks'])) {
+                    unset($settings[allowedBlockTypes]);
+                    $replace_in_script = true;
+                }
+            }
+        } elseif ($settings[allowedBlockTypes] === true) {
+            // All was allowed, only return what the profile allows
+
+            if (count($advgb_blocks_vars['blocks']['active_blocks']) || count($advgb_blocks_vars['blocks']['inactive_blocks'])) {
+                $settings[allowedBlockTypes] = $advgb_blocks_vars['blocks']['active_blocks'];
+                $replace_in_script = true;
+            }
+        }
+
+        return $settings;
     }
 
     /**
