@@ -8052,7 +8052,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         Spinner = wpComponents.Spinner,
         Toolbar = wpComponents.Toolbar,
-        Placeholder = wpComponents.Placeholder;
+        Placeholder = wpComponents.Placeholder,
+        Button = wpComponents.Button;
 
 
     var fetchingQueue = null;
@@ -8157,7 +8158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberOfProducts = _props$attributes.numberOfProducts;
                 var addQueryArgs = wp.url.addQueryArgs;
 
-                var query = addQueryArgs('/wc/v2/products', {
+                var query = addQueryArgs('/agwc/v1/products', {
                     order: order || undefined,
                     orderby: orderBy || undefined,
                     per_page: numberOfProducts,
@@ -8168,6 +8169,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 if (fetchingQueue) {
                     clearTimeout(fetchingQueue);
+                }
+
+                if (this.state.error) {
+                    this.setState({ error: false });
                 }
 
                 fetchingQueue = setTimeout(function () {
@@ -8396,7 +8401,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 icon: advProductsBlockIcon,
                                 label: __('ADVGB Woo Products Block')
                             },
-                            __('WooCommerce has not been detected, make sure WooCommerce is installed and activated')
+                            React.createElement(
+                                "div",
+                                { style: { marginBottom: 10 } },
+                                __('WooCommerce has not been detected, make sure WooCommerce is installed and activated.')
+                            ),
+                            React.createElement(
+                                Button,
+                                {
+                                    className: "button button-large",
+                                    onClick: function onClick() {
+                                        return _this3.fetchProducts();
+                                    }
+                                },
+                                __('Try again')
+                            )
                         )
                     )
                 );
