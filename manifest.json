@@ -8,7 +8,7 @@
     "1.7.1": [
       {
         "type": "fix",
-        "title": "Cannot show products with some filter on backend (Products Block)"
+        "title": "Cannot show products with some filter on backend (WooCommerce Block)"
       }
     ],
     "1.7.0": [
