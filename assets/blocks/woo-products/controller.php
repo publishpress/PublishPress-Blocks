@@ -1,6 +1,10 @@
 <?php
 defined('ABSPATH') || die;
 
+if(!class_exists('WC_REST_Products_Controller')) {
+    return;
+}
+
 /**
  * Controller for getting Woo Products info
  */
