@@ -211,12 +211,13 @@ float: left;'
         if ($datas) {
             foreach ($wp_scripts->registered['wp-edit-post']->extra['after'] as &$data) {
                 $matches = array();
-                if (preg_match('/var editorSettings = ({.*})/', $data, $matches)) {
+                if (preg_match('/initializeEditor\( (.*) \)/', $data, $matches)) {
                     if (!count($matches)) {
                         break;
                     }
 
-                    $json = json_decode($matches[1]);
+                    $settingsArr = explode(', ', $matches[1]);
+                    $json = json_decode($settingsArr[3]);
                     if (!$json) {
                         break;
                     }
