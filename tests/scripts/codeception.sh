@@ -12,7 +12,7 @@ sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHo
 sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 "$( pwd )"/tests/_data/block root@$WWW_IP:/var/www/html/wp-content/plugins/
 
 echo -e '\n\e[34m\e[1m##### Run tests on php 5.2 #####\e[0m\n'
-codecept run functional -g php5.2 --env local --fail-fast
+codecept run functional -g php5.2 --fail-fast
 
 function do_tests () {
     echo -e "\n\e[34m\e[1m##### Run tests on php $1 #####\e[0m\n"
