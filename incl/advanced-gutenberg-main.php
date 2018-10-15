@@ -127,6 +127,13 @@ float: left;'
     );
 
     /**
+     * Store original editor settings value, before we modify it to allow/hide blocks based on profiles
+     *
+     * @var string Original settings
+     */
+    protected static $original_block_editor_settings;
+
+    /**
      * Activated profile to get activated blocks array
      *
      * @var null    ID profiles
@@ -150,6 +157,7 @@ float: left;'
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
             add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
+            add_filter('block_editor_settings', array($this, 'replaceEditorSettings'), 9999);
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
             add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
@@ -164,6 +172,42 @@ float: left;'
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
         }
+    }
+
+    /**
+     * Replaces if needed editor settings to allow/hide blocks
+     *
+     * @param array $settings Editor settings
+     *
+     * @return array
+     */
+    public function replaceEditorSettings($settings)
+    {
+        self::$original_block_editor_settings = $settings;
+
+        $advgb_blocks_vars = array();
+        $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
+
+        $replace_in_script = false;
+        if (is_array($settings['allowedBlockTypes'])) {
+            // Remove blocks from the list that are not allowed
+            // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
+            foreach ($settings['allowedBlockTypes'] as $key => $type) {
+                if (in_array($type, $advgb_blocks_vars['blocks']['inactive_blocks'])) {
+                    unset($settings['allowedBlockTypes']);
+                    $replace_in_script = true;
+                }
+            }
+        } elseif ($settings['allowedBlockTypes'] === true) {
+            // All was allowed, only return what the profile allows
+
+            if (count($advgb_blocks_vars['blocks']['active_blocks']) || count($advgb_blocks_vars['blocks']['inactive_blocks'])) {
+                $settings['allowedBlockTypes'] = $advgb_blocks_vars['blocks']['active_blocks'];
+                $replace_in_script = true;
+            }
+        }
+
+        return $settings;
     }
 
     /**
@@ -204,71 +248,15 @@ float: left;'
         $advgb_blocks_vars = array();
         $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
 
-        // Retrieve original editor settings from the enqueued js script
-        // as this variable is not reachable in our js script and we need it to reload the Gutenberg editor
-        global $wp_scripts;
-        $datas = $wp_scripts->get_data('wp-edit-post', 'after');
-        if ($datas) {
-            foreach ($wp_scripts->registered['wp-edit-post']->extra['after'] as &$data) {
-                $matches = array();
-                if (preg_match('/initializeEditor\( (.*) \)/', $data, $matches)) {
-                    if (!count($matches)) {
-                        break;
-                    }
-
-                    $settingsArr = explode(', ', $matches[1]);
-                    $json = json_decode($settingsArr[3]);
-                    if (!$json) {
-                        break;
-                    }
-
-                    $advgb_blocks_vars['original_settings'] = clone($json);
-
-                    $replace_in_script = false;
-                    if (is_array($json->allowedBlockTypes)) {
-                        // Remove blocks from the list that are not allowed
-                        // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
-                        foreach ($json->allowedBlockTypes as $key => $type) {
-                            if (in_array($type, $advgb_blocks_vars['blocks']['inactive_blocks'])) {
-                                unset($json->allowedBlockTypes[$key]);
-                                $replace_in_script = true;
-                            }
-                        }
-                    } elseif ($json->allowedBlockTypes === true) {
-                        // All was allowed, only return what the profile allows
-
-                        if (!count($advgb_blocks_vars['blocks']['active_blocks']) && !count($advgb_blocks_vars['blocks']['inactive_blocks'])) {
-                            // Profile not initialized yet
-                            break;
-                        }
-
-                        $json->allowedBlockTypes = $advgb_blocks_vars['blocks']['active_blocks'];
-                        $replace_in_script = true;
-                    }
-
-                    // We have done some changes, let's update the script generated by Gutenberg
-                    if ($replace_in_script) {
-                        // Make sure $json->allowedBlockTypes will be converted to array by json_encode
-                        $json->allowedBlockTypes = array_values($json->allowedBlockTypes);
-                        $result = preg_replace('/var editorSettings = {(.*)}/', 'var editorSettings = '.json_encode($json), $data);
-                        if ($result !== null) {
-                            $data = $result;
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-
         global $post;
         if ($post) {
             $advgb_blocks_vars['post_id'] = $post->ID;
             $advgb_blocks_vars['post_type'] = $post->post_type;
         }
 
+        $advgb_blocks_vars['original_settings'] = self::$original_block_editor_settings;
         $advgb_blocks_vars['ajaxurl'] = admin_url('admin-ajax.php');
         $advgb_blocks_vars['nonce'] = wp_create_nonce('advgb_update_blocks_list');
-
         wp_localize_script('advgb_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
 
         $custom_styles_data = get_option('advgb_custom_styles');
@@ -411,13 +399,6 @@ float: left;'
                 'schema' => null,
             )
         );
-
-        // Register router to get data for Woo Products block
-        if (class_exists('WC_REST_Products_Controller')) {
-            include_once(plugin_dir_path(dirname(__FILE__)) . 'assets/blocks/woo-products/controller.php');
-            $controller = new AdvgbProductsController();
-            $controller->register_routes();
-        }
     }
 
     /**

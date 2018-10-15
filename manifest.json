@@ -4,6 +4,21 @@
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
   "version": "1.7.2",
   "wp_version": "4.9.8",
+  "ignore_files" : [
+    "manifest.json",
+    "README.md",
+    "bitbucket-pipelines.yml",
+    "composer.json",
+    "composer.lock",
+    ".gitignore",
+    "vendor",
+    ".git",
+    "phpcs.xml",
+    "tests",
+    "codeception.yml",
+    "node_modules",
+    "babel.rc"
+  ],
   "changelog": {
     "1.7.2": [
       {
