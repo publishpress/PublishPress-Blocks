@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || die;
 
-if(!class_exists('WC_REST_Products_Controller')) {
+if (!class_exists('WC_REST_Products_Controller')) {
     return;
 }
 

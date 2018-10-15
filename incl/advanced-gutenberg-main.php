@@ -188,14 +188,12 @@ float: left;'
         $advgb_blocks_vars = array();
         $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
 
-        $replace_in_script = false;
         if (is_array($settings['allowedBlockTypes'])) {
             // Remove blocks from the list that are not allowed
             // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
             foreach ($settings['allowedBlockTypes'] as $key => $type) {
                 if (in_array($type, $advgb_blocks_vars['blocks']['inactive_blocks'])) {
                     unset($settings['allowedBlockTypes']);
-                    $replace_in_script = true;
                 }
             }
         } elseif ($settings['allowedBlockTypes'] === true) {
@@ -203,7 +201,6 @@ float: left;'
 
             if (count($advgb_blocks_vars['blocks']['active_blocks']) || count($advgb_blocks_vars['blocks']['inactive_blocks'])) {
                 $settings['allowedBlockTypes'] = $advgb_blocks_vars['blocks']['active_blocks'];
-                $replace_in_script = true;
             }
         }
 
