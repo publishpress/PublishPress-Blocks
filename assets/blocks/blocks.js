@@ -4112,16 +4112,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string'
             },
             countUpNumber: {
-                type: 'float',
-                default: 56789
+                type: 'string',
+                default: '56789'
             },
             countUpNumber2: {
-                type: 'float',
-                default: 56789
+                type: 'string',
+                default: '56789'
             },
             countUpNumber3: {
-                type: 'float',
-                default: 56789
+                type: 'string',
+                default: '56789'
             },
             countUpNumberColor: {
                 type: 'string'
