@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || die;
 
-if (!defined('GUTENBERG_VERSION')) {
+if (!defined('GUTENBERG_VERSION') && !defined('GUTENBERG_DEVELOPMENT_MODE')) {
     echo '<div class="ju-notice-msg ju-notice-error">'. esc_html__('You need to activate Gutenberg to use our plugin!', 'advanced-gutenberg') .'</div>';
     return false;
 }

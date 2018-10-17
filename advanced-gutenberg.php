@@ -61,7 +61,7 @@ if (version_compare(PHP_VERSION, '5.3', '<')) {
          */
         function advgb_show_error()
         {
-            echo '<div class="error"><p><strong>Advanced Gutenberg</strong> need at least PHP 5.3 version, please update php before installing the plugin.</p></div>';
+            echo '<div class="error"><p><strong>Advanced Gutenberg</strong> needs at least PHP 5.3 version, please update php before installing the plugin.</p></div>';
         }
     }
 
