@@ -104,6 +104,7 @@
 
             this.setState( { editor } );
 
+            editor.off('keydown');
             editor.on( 'nodeChange', () => {
                 const selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
                 const selectedCellBgColor = editor.dom.getStyle( selectedCell, 'background-color' );

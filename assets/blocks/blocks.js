@@ -2335,6 +2335,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 this.setState({ editor: editor });
 
+                editor.off('keydown');
                 editor.on('nodeChange', function () {
                     var selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
                     var selectedCellBgColor = editor.dom.getStyle(selectedCell, 'background-color');
