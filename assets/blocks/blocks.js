@@ -2229,8 +2229,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
-    var registerBlockType = wpBlocks.registerBlockType,
-        createBlock = wpBlocks.createBlock;
+    var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         BlockControls = wpEditor.BlockControls,
         RichText = wpEditor.RichText,
@@ -2305,6 +2304,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate() {
+                var _state = this.state,
+                    editor = _state.editor,
+                    selectedCell = _state.selectedCell;
+
+                if (editor && selectedCell) {
+                    var rows = editor.dom.select('tr');
+                    rows.forEach(function (row) {
+                        var rowIndex = row.rowIndex;
+                        var cells = row.getElementsByTagName('td');
+                        for (var i = 0; i < cells.length; i++) {
+                            var cellIndex = cells[i].cellIndex;
+                            editor.dom.setAttrib(cells[i], 'class', "r" + rowIndex + "c" + cellIndex);
+                        }
+                    });
+                }
+            }
+        }, {
             key: "handleSetup",
             value: function handleSetup(editor, isSelected) {
                 var _this2 = this;
@@ -2365,20 +2383,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var content = attributes.content,
                     align = attributes.align,
                     maxWidth = attributes.maxWidth;
-                var _state = this.state,
-                    editor = _state.editor,
-                    selectedCell = _state.selectedCell,
-                    selectedCellBgColor = _state.selectedCellBgColor,
-                    selectedCellTextColor = _state.selectedCellTextColor,
-                    selectedCellBorderColor = _state.selectedCellBorderColor,
-                    selectedCellBorderStyle = _state.selectedCellBorderStyle,
-                    selectedCellBorderWidth = _state.selectedCellBorderWidth,
-                    selectedCellPaddingTop = _state.selectedCellPaddingTop,
-                    selectedCellPaddingRight = _state.selectedCellPaddingRight,
-                    selectedCellPaddingBottom = _state.selectedCellPaddingBottom,
-                    selectedCellPaddingLeft = _state.selectedCellPaddingLeft,
-                    selectedCellTextAlign = _state.selectedCellTextAlign,
-                    selectedCellVerticalAlign = _state.selectedCellVerticalAlign;
+                var _state2 = this.state,
+                    editor = _state2.editor,
+                    selectedCell = _state2.selectedCell,
+                    selectedCellBgColor = _state2.selectedCellBgColor,
+                    selectedCellTextColor = _state2.selectedCellTextColor,
+                    selectedCellBorderColor = _state2.selectedCellBorderColor,
+                    selectedCellBorderStyle = _state2.selectedCellBorderStyle,
+                    selectedCellBorderWidth = _state2.selectedCellBorderWidth,
+                    selectedCellPaddingTop = _state2.selectedCellPaddingTop,
+                    selectedCellPaddingRight = _state2.selectedCellPaddingRight,
+                    selectedCellPaddingBottom = _state2.selectedCellPaddingBottom,
+                    selectedCellPaddingLeft = _state2.selectedCellPaddingLeft,
+                    selectedCellTextAlign = _state2.selectedCellTextAlign,
+                    selectedCellVerticalAlign = _state2.selectedCellVerticalAlign;
 
 
                 var TABLE_CONTROLS = [{
@@ -2848,6 +2866,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             AdvTable.selectFirstCell(editor);
                         }
                         editor.execCommand(command);
+                        editor.fire('change');
                     }
                 };
             }
@@ -5606,7 +5625,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment,
         null,
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11 C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81 C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65 c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1 s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
+        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
     );
 
     var socialBlockIcon = React.createElement(

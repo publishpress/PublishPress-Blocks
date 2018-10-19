@@ -1,7 +1,7 @@
 (function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
-    const { registerBlockType, createBlock } = wpBlocks;
+    const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, MediaUpload, BlockAlignmentToolbar, ColorPalette } = wpEditor;
     const { PanelBody, PanelColor, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu, Tooltip } = wpComponents;
 
@@ -51,6 +51,21 @@
             }
         }
 
+        componentDidUpdate() {
+            const { editor, selectedCell } = this.state;
+            if ( editor && selectedCell ) {
+                const rows = editor.dom.select( 'tr' );
+                rows.forEach(function ( row ) {
+                    const rowIndex = row.rowIndex;
+                    const cells = row.getElementsByTagName( 'td' );
+                    for (let i = 0; i < cells.length; i++) {
+                        const cellIndex = cells[i].cellIndex;
+                        editor.dom.setAttrib( cells[i], 'class', `r${rowIndex}c${cellIndex}` );
+                    }
+                });
+            }
+        }
+
         static isTableSelected( editor ) {
             return editor.dom.getParent(
                 editor.selection.getStart( true ),
@@ -75,6 +90,7 @@
                         AdvTable.selectFirstCell( editor );
                     }
                     editor.execCommand( command );
+                    editor.fire('change');
                 }
             };
         }
