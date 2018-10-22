@@ -264,7 +264,7 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
                 endif; ?>
             <li class="block-config-item ju-settings-option">
                 <span class="block-icon" <?php echo esc_attr($iconColor) ?>>
-                    <?php echo html_entity_decode(stripslashes($block['icon'])); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
+                    <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
                 <span class="block-title"><?php echo esc_html($block['title']); ?></span>
                 <i class="mi mi-settings block-config-button"
