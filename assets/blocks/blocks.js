@@ -3583,10 +3583,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         TextControl = wpComponents.TextControl,
         FormToggle = wpComponents.FormToggle;
 
@@ -3675,6 +3674,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Count Up Settings') },
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Header Color'),
+                                    value: headerTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ headerTextColor: value });
+                                    }
+                                }, {
+                                    label: __('Count Up Color'),
+                                    value: countUpNumberColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ countUpNumberColor: value });
+                                    }
+                                }, {
+                                    label: __('Description Color'),
+                                    value: descTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ descTextColor: value });
+                                    }
+                                }]
+                            }),
                             React.createElement(RangeControl, {
                                 label: __('Columns'),
                                 min: 1,
@@ -3684,36 +3706,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ columns: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Header Color'), colorValue: headerTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: headerTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ headerTextColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Count Up Color'), colorValue: countUpNumberColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: countUpNumberColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ countUpNumberColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Description Color'), colorValue: descTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: descTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ descTextColor: value });
-                                    }
-                                })
-                            ),
                             React.createElement(RangeControl, {
                                 label: __('Counter Number Size'),
                                 min: 10,
