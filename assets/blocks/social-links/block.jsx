@@ -264,7 +264,7 @@
                                 ) ) }
                                 <BaseControl label={ __( 'Custom icon' ) }>
                                     <MediaUpload
-                                        type="image"
+                                        allowedTypes={ ["image"] }
                                         value={ items[currentSelected].iconID }
                                         onSelect={ (media) => {
                                             let newItems = items.map( (item, index) => {

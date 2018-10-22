@@ -133,9 +133,9 @@
                     <div className={`advgb-testimonial advgb-column-${columns}`}>
                         <div className="advgb-testimonial-columns-one">
                             <MediaUpload
+                                allowedTypes={ ["image"] }
                                 onSelect={ (media) => setAttributes( { avatarUrl: media.sizes.thumbnail.url, avatarID: media.id } ) }
                                 value={ avatarID }
-                                type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
                                         <Tooltip text={ __( 'Click to change avatar' ) }>
@@ -193,9 +193,9 @@
                         </div>
                         <div className="advgb-testimonial-columns-two">
                             <MediaUpload
+                                allowedTypes={ ["image"] }
                                 onSelect={ (media) => setAttributes( { avatarUrl2: media.sizes.thumbnail.url, avatarID2: media.id } ) }
                                 value={ avatarID2 }
-                                type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
                                         <Tooltip text={ __( 'Click to change avatar' ) }>
@@ -253,9 +253,9 @@
                         </div>
                         <div className="advgb-testimonial-columns-three">
                             <MediaUpload
+                                allowedTypes={ ["image"] }
                                 onSelect={ (media) => setAttributes( { avatarUrl3: media.sizes.thumbnail.url, avatarID3: media.id } ) }
                                 value={ avatarID3 }
-                                type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
                                         <Tooltip text={ __( 'Click to change avatar' ) }>

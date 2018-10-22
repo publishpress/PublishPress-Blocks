@@ -64,7 +64,7 @@
                         <BlockControls>
                             <Toolbar>
                                 <MediaUpload
-                                    type={ 'image' }
+                                    allowedTypes={ ['image'] }
                                     value={ imageID }
                                     onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id } ) }
                                     render={ ( { open } ) => (
@@ -189,7 +189,7 @@
                     />
                         {!imageID &&
                         <MediaUpload
-                            type={ 'image' }
+                            allowedTypes={ ['image'] }
                             value={ imageID }
                             onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id } ) }
                             render={ ( { open } ) => (

@@ -1411,7 +1411,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(MediaUpload, {
-                                type: 'image',
+                                allowedTypes: ['image'],
                                 value: imageID,
                                 onSelect: function onSelect(image) {
                                     return setAttributes({ imageUrl: image.url, imageID: image.id });
@@ -1558,7 +1558,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             style: { backgroundColor: overlayColor }
                         }),
                         !imageID && React.createElement(MediaUpload, {
-                            type: 'image',
+                            allowedTypes: ['image'],
                             value: imageID,
                             onSelect: function onSelect(image) {
                                 return setAttributes({ imageUrl: image.url, imageID: image.id });
@@ -2612,7 +2612,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             }),
                             React.createElement(MediaUpload, {
-                                type: "image",
+                                allowedTypes: ["image"],
                                 onSelect: function onSelect(media) {
                                     return editor.execCommand('mceInsertContent', false, "<img src=\"" + media.url + "\" alt=\"" + (media.alt || media.filename) + "\" />");
                                 },
@@ -3189,7 +3189,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(MediaUpload, {
-                                type: 'image',
+                                allowedTypes: ["image"],
                                 value: posterID,
                                 onSelect: function onSelect(image) {
                                     return setAttributes({ poster: image.url, posterID: image.id });
@@ -3325,11 +3325,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "div",
                                 { className: 'advgb-button-wrapper', style: { height: videoHeight } },
                                 !poster && React.createElement(MediaUpload, {
+                                    allowedTypes: ["image"],
                                     onSelect: function onSelect(media) {
                                         return setAttributes({ poster: media.url, posterID: media.id });
                                     },
                                     value: posterID,
-                                    type: "image",
                                     render: function render(_ref2) {
                                         var open = _ref2.open;
                                         return React.createElement(
@@ -3402,7 +3402,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     __('or use')
                                 ),
                                 React.createElement(MediaUpload, {
-                                    type: 'video',
+                                    allowedTypes: ["video"],
                                     value: videoID,
                                     onSelect: function onSelect(video) {
                                         return setAttributes({ videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' });
@@ -4947,7 +4947,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(MediaUpload, {
-                                type: "image",
+                                allowedTypes: ["image"],
                                 value: markerIconID,
                                 onSelect: function onSelect(image) {
                                     return setAttributes({ markerIcon: image.sizes.thumbnail.url, markerIconID: image.id });
@@ -5996,7 +5996,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     BaseControl,
                                     { label: __('Custom icon') },
                                     React.createElement(MediaUpload, {
-                                        type: "image",
+                                        allowedTypes: ["image"],
                                         value: items[currentSelected].iconID,
                                         onSelect: function onSelect(media) {
                                             var newItems = items.map(function (item, index) {
@@ -7513,11 +7513,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             'div',
                             { className: 'advgb-testimonial-columns-one' },
                             React.createElement(MediaUpload, {
+                                allowedTypes: ["image"],
                                 onSelect: function onSelect(media) {
                                     return setAttributes({ avatarUrl: media.sizes.thumbnail.url, avatarID: media.id });
                                 },
                                 value: avatarID,
-                                type: 'image',
                                 render: function render(_ref) {
                                     var open = _ref.open;
                                     return React.createElement(
@@ -7598,11 +7598,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             'div',
                             { className: 'advgb-testimonial-columns-two' },
                             React.createElement(MediaUpload, {
+                                allowedTypes: ["image"],
                                 onSelect: function onSelect(media) {
                                     return setAttributes({ avatarUrl2: media.sizes.thumbnail.url, avatarID2: media.id });
                                 },
                                 value: avatarID2,
-                                type: 'image',
                                 render: function render(_ref2) {
                                     var open = _ref2.open;
                                     return React.createElement(
@@ -7683,11 +7683,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             'div',
                             { className: 'advgb-testimonial-columns-three' },
                             React.createElement(MediaUpload, {
+                                allowedTypes: ["image"],
                                 onSelect: function onSelect(media) {
                                     return setAttributes({ avatarUrl3: media.sizes.thumbnail.url, avatarID3: media.id });
                                 },
                                 value: avatarID3,
-                                type: 'image',
                                 render: function render(_ref3) {
                                     var open = _ref3.open;
                                     return React.createElement(

@@ -273,7 +273,7 @@
                                 onChange={ (value) => setAttributes( { height: value } ) }
                             />
                             <MediaUpload
-                                type="image"
+                                allowedTypes={ ["image"] }
                                 value={ markerIconID }
                                 onSelect={ (image) => setAttributes( { markerIcon: image.sizes.thumbnail.url, markerIconID: image.id } ) }
                                 render={ ( { open } ) => {

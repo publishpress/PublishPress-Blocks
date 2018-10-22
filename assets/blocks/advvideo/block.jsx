@@ -186,7 +186,7 @@
                     <BlockControls>
                         <Toolbar>
                             <MediaUpload
-                                type={ 'image' }
+                                allowedTypes={ ["image"] }
                                 value={ posterID }
                                 onSelect={ (image) => setAttributes( { poster: image.url, posterID: image.id } ) }
                                 render={ ( { open } ) => (
@@ -284,9 +284,9 @@
                             <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
                                 {!poster &&
                                 <MediaUpload
+                                    allowedTypes={ ["image"] }
                                     onSelect={ (media) => setAttributes( { poster: media.url, posterID: media.id } ) }
                                     value={ posterID }
-                                    type="image"
                                     render={ ( { open } ) => (
                                         <Button
                                             className={ 'button button-large' }
@@ -351,7 +351,7 @@
                                 </Button>
                                 <span style={ { margin: 'auto 10px' } }>{ __( 'or use' ) }</span>
                                 <MediaUpload
-                                    type={ 'video' }
+                                    allowedTypes={ ["video"] }
                                     value={ videoID }
                                     onSelect={ (video) => setAttributes( { videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' } ) }
                                     render={ ( { open } ) => (

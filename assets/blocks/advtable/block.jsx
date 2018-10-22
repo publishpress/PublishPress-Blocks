@@ -391,7 +391,7 @@
                                 } ) ) }
                             />
                             <MediaUpload
-                                type="image"
+                                allowedTypes={ ["image"] }
                                 onSelect={ ( media ) => editor.execCommand(
                                     'mceInsertContent',
                                     false,
