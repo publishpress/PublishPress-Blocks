@@ -334,7 +334,6 @@
                 type: 'string',
             },
             text: {
-                type: 'string',
                 source: 'children',
                 selector: 'a',
             },
@@ -481,12 +480,14 @@
 
             return (
                 <div className={ `align${align}` }>
-                    <a className={ `wp-block-advgb-button_link ${id}` }
-                       href={ url || '#' } title={ title }
-                       target={ !urlOpenNewTab ? '_self' : '_blank' }
-                    >
-                        { text }
-                    </a>
+                    <RichText.Content
+                        tagName="a"
+                        className={ `wp-block-advgb-button_link ${id}` }
+                        href={ url || '#' }
+                        title={ title }
+                        target={ !urlOpenNewTab ? '_self' : '_blank' }
+                        value={ text }
+                    />
                     <style>
                         {`.${id} {
                         font-size: ${textSize}px;

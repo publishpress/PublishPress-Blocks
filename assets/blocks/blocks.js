@@ -1084,7 +1084,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string'
             },
             text: {
-                type: 'string',
                 source: 'children',
                 selector: 'a'
             },
@@ -1226,14 +1225,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return React.createElement(
                 'div',
                 { className: 'align' + align },
-                React.createElement(
-                    'a',
-                    { className: 'wp-block-advgb-button_link ' + id,
-                        href: url || '#', title: title,
-                        target: !urlOpenNewTab ? '_self' : '_blank'
-                    },
-                    text
-                ),
+                React.createElement(RichText.Content, {
+                    tagName: 'a',
+                    className: 'wp-block-advgb-button_link ' + id,
+                    href: url || '#',
+                    title: title,
+                    target: !urlOpenNewTab ? '_self' : '_blank',
+                    value: text
+                }),
                 React.createElement(
                     'style',
                     null,
