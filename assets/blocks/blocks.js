@@ -6188,7 +6188,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var BlockControls = wpEditor.BlockControls,
         InspectorControls = wpEditor.InspectorControls,
         InspectorAdvancedControls = wpEditor.InspectorAdvancedControls,
-        ColorPalette = wpEditor.ColorPalette,
+        PanelColorSettings = wpEditor.PanelColorSettings,
         BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar;
     var IconButton = wpComponents.IconButton,
         Placeholder = wpComponents.Placeholder,
@@ -6196,8 +6196,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Toolbar = wpComponents.Toolbar,
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
-        PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor;
+        PanelBody = wpComponents.PanelBody;
     var select = wpData.select,
         dispatch = wpData.dispatch;
     var addFilter = wpHooks.addFilter;
@@ -6451,16 +6450,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ headerTitle: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Anchor color'), colorValue: anchorColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Anchor Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Anchor Color'),
                                     value: anchorColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ anchorColor: value });
                                     }
-                                })
-                            )
+                                }]
+                            })
                         )
                     ),
                     summaryContent,
