@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, RichText, ColorPalette, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, ToggleControl, SelectControl, TextControl, IconButton, Button, Toolbar } = wpComponents;
+    const { InspectorControls, BlockControls, RichText, PanelColorSettings, MediaUpload } = wpEditor;
+    const { RangeControl, PanelBody, ToggleControl, SelectControl, TextControl, IconButton, Button, Toolbar } = wpComponents;
 
     class AdvImage extends Component {
         constructor() {
@@ -133,24 +133,27 @@
                                 />
                                 }
                             </PanelBody>
-                            <PanelColor title={ __( 'Title Color' ) } colorValue={titleColor} initialOpen={false}>
-                                <ColorPalette
-                                    value={titleColor}
-                                    onChange={ (value) => setAttributes( { titleColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Subtitle Color' ) } colorValue={subtitleColor} initialOpen={false}>
-                                <ColorPalette
-                                    value={subtitleColor}
-                                    onChange={ (value) => setAttributes( { subtitleColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Overlay Color' ) } colorValue={overlayColor} initialOpen={false}>
-                                <ColorPalette
-                                    value={overlayColor}
-                                    onChange={ (value) => setAttributes( { overlayColor: value } ) }
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Color Settings' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Title Color' ),
+                                        value: titleColor,
+                                        onChange: ( value ) => setAttributes( { titleColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Subtitle Color' ),
+                                        value: subtitleColor,
+                                        onChange: ( value ) => setAttributes( { subtitleColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Overlay Color' ),
+                                        value: overlayColor,
+                                        onChange: ( value ) => setAttributes( { overlayColor: value } ),
+                                    },
+                                ] }
+                            />
                             <PanelBody title={ __( 'Text Alignment' ) } initialOpen={false}>
                                 <SelectControl
                                     label={ __( 'Vertical Alignment' ) }

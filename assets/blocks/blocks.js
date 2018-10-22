@@ -1285,11 +1285,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var InspectorControls = wpEditor.InspectorControls,
         BlockControls = wpEditor.BlockControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette,
+        PanelColorSettings = wpEditor.PanelColorSettings,
         MediaUpload = wpEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
@@ -1458,36 +1457,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 })
                             ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Title Color'), colorValue: titleColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Title Color'),
                                     value: titleColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ titleColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Subtitle Color'), colorValue: subtitleColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Subtitle Color'),
                                     value: subtitleColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ subtitleColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Overlay Color'), colorValue: overlayColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Overlay Color'),
                                     value: overlayColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ overlayColor: value });
                                     }
-                                })
-                            ),
+                                }]
+                            }),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Text Alignment'), initialOpen: false },
