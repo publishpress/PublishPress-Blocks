@@ -5553,11 +5553,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BlockControls = wpEditor.BlockControls,
         MediaUpload = wpEditor.MediaUpload,
         AlignmentToolbar = wpEditor.AlignmentToolbar,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         BaseControl = wpComponents.BaseControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
         Button = wpComponents.Button,
@@ -5967,15 +5966,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         }
                                     })
                                 )
-                            )
-                        ),
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Icons settings') },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Preset Icon Color'), colorValue: items[currentSelected].iconColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            ),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Preset Icon Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Preset Icon Color'),
                                     value: items[currentSelected].iconColor,
                                     onChange: function onChange(value) {
                                         var newItems = items.map(function (item, index) {
@@ -5989,8 +5985,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                         setAttributes({ items: newItems });
                                     }
-                                })
-                            ),
+                                }]
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Icons settings') },
                             React.createElement(RangeControl, {
                                 label: __('Icon size'),
                                 value: iconSize,
