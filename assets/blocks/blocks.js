@@ -117,10 +117,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
         Dashicon = wpComponents.Dashicon,
@@ -308,90 +307,72 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             PanelBody,
                             { title: __('Header Settings') },
                             React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: headerBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                BaseControl,
+                                { label: __('Header Icon Style') },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper" },
+                                    Object.keys(HEADER_ICONS).map(function (key, index) {
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: index },
+                                            React.createElement(
+                                                "span",
+                                                { className: key === headerIcon ? 'active' : '',
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ headerIcon: key });
+                                                    } },
+                                                React.createElement(
+                                                    "svg",
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    HEADER_ICONS[key]
+                                                )
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
                                     value: headerBgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerBgColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: headerTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Text Color'),
                                     value: headerTextColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerTextColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Header Icon') },
-                                React.createElement(
-                                    BaseControl,
-                                    { label: __('Icon Style') },
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-icon-items-wrapper" },
-                                        Object.keys(HEADER_ICONS).map(function (key, index) {
-                                            return React.createElement(
-                                                "div",
-                                                { className: "advgb-icon-item", key: index },
-                                                React.createElement(
-                                                    "span",
-                                                    { className: key === headerIcon ? 'active' : '',
-                                                        onClick: function onClick() {
-                                                            return setAttributes({ headerIcon: key });
-                                                        } },
-                                                    React.createElement(
-                                                        "svg",
-                                                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                                                        HEADER_ICONS[key]
-                                                    )
-                                                )
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Icon Color'), colorValue: headerIconColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: headerIconColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ headerIconColor: value });
-                                        }
-                                    })
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Body Settings'), initialOpen: false },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: bodyBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: bodyBgColor,
+                                }, {
+                                    label: __('Icon Color'),
+                                    value: headerIconColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ bodyBgColor: value });
+                                        return setAttributes({ headerIconColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: bodyTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: bodyTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ bodyTextColor: value });
-                                    }
-                                })
-                            )
+                                }]
+                            })
                         ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Body Color Settings'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color'),
+                                value: bodyBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: bodyTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyTextColor: value });
+                                }
+                            }]
+                        }),
                         React.createElement(
                             PanelBody,
                             { title: __('Border Settings'), initialOpen: false },
@@ -403,16 +384,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Border Color'), colorValue: borderColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border Color'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderColor: value });
                                     }
-                                })
-                            ),
+                                }]
+                            }),
                             React.createElement(RangeControl, {
                                 label: __('Border width'),
                                 value: borderWidth,
