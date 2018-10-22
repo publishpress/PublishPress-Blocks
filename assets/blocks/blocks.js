@@ -695,10 +695,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BlockControls = wpEditor.BlockControls,
         BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         TextControl = wpComponents.TextControl,
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
@@ -811,7 +810,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         'span',
                         { style: { display: 'inline-block' } },
                         React.createElement(RichText, {
-                            tagName: 'span',
                             placeholder: __('Add text…'),
                             value: text,
                             onChange: function onChange(value) {
@@ -868,34 +866,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 beforeIcon: 'editor-textcolor',
                                 allowReset: true
                             }),
-                            React.createElement(
-                                PanelColor,
-                                {
-                                    title: __('Text color'),
-                                    colorValue: textColor,
-                                    initialOpen: false
-                                },
-                                React.createElement(ColorPalette, {
-                                    value: textColor,
-                                    onChange: function onChange(color) {
-                                        return setAttributes({ textColor: color });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                {
-                                    title: __('Background color'),
-                                    colorValue: bgColor,
-                                    initialOpen: false
-                                },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
                                     value: bgColor,
-                                    onChange: function onChange(color) {
-                                        return setAttributes({ bgColor: color });
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ bgColor: value });
                                     }
-                                })
-                            )
+                                }, {
+                                    label: __('Text Color'),
+                                    value: textColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ textColor: value });
+                                    }
+                                }]
+                            })
                         ),
                         React.createElement(
                             PanelBody,
@@ -917,25 +904,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
-                            borderStyle !== 'none' && [React.createElement(
-                                PanelColor,
-                                { key: 'border-color', title: __('Border color'), colorValue: borderColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: borderColor,
+                            borderStyle !== 'none' && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Border Color'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Border Color'),
+                                        value: borderColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderColor: value });
+                                        }
+                                    }]
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Border width'),
+                                    value: borderWidth || '',
                                     onChange: function onChange(value) {
-                                        return setAttributes({ borderColor: value });
-                                    }
+                                        return setAttributes({ borderWidth: value });
+                                    },
+                                    min: 0,
+                                    max: 100
                                 })
-                            ), React.createElement(RangeControl, {
-                                key: 'border-width',
-                                label: __('Border width'),
-                                value: borderWidth || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ borderWidth: value });
-                                },
-                                min: 0,
-                                max: 100
-                            })]
+                            )
                         ),
                         React.createElement(
                             PanelBody,
@@ -980,39 +972,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Hover'), initialOpen: false },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text color'), colorValue: hoverTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: hoverTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ hoverTextColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background color'), colorValue: hoverBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
                                     value: hoverBgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ hoverBgColor: value });
                                     }
-                                })
-                            ),
+                                }, {
+                                    label: __('Text Color'),
+                                    value: hoverTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ hoverTextColor: value });
+                                    }
+                                }, {
+                                    label: __('Shadow Color'),
+                                    value: hoverShadowColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ hoverShadowColor: value });
+                                    }
+                                }]
+                            }),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Shadow'), initialOpen: false },
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Shadow color'), colorValue: hoverShadowColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: hoverShadowColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ hoverShadowColor: value });
-                                        }
-                                    })
-                                ),
                                 React.createElement(RangeControl, {
                                     label: __('Shadow H offset'),
                                     value: hoverShadowH || '',
