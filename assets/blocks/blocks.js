@@ -4293,9 +4293,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var addFilter = wpHooks.addFilter;
     var __ = wpI18n.__;
     var InspectorControls = wpEditor.InspectorControls,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var SelectControl = wpComponents.SelectControl,
-        PanelColor = wpComponents.PanelColor,
         PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl;
 
@@ -4342,16 +4341,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     React.createElement(
                         PanelBody,
                         { title: __('Separator Settings') },
-                        React.createElement(
-                            PanelColor,
-                            { title: __('Color'), colorValue: borderColor, initialOpen: false },
-                            React.createElement(ColorPalette, {
+                        React.createElement(PanelColorSettings, {
+                            title: __('Color Settings'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Color'),
                                 value: borderColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderColor: value });
                                 }
-                            })
-                        ),
+                            }]
+                        }),
                         React.createElement(SelectControl, {
                             label: __('Styles'),
                             value: borderStyle,
