@@ -6644,11 +6644,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var Dashicon = wpComponents.Dashicon,
         Tooltip = wpComponents.Tooltip,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl;
 
@@ -6775,78 +6774,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         InspectorControls,
                         null,
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Tab Settings') },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: headerBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: headerBgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ headerBgColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: headerTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: headerTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ headerTextColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Active Tab Settings') },
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Background Color'), colorValue: activeTabBgColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: activeTabBgColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ activeTabBgColor: value });
-                                        }
-                                    })
-                                ),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Text Color'), colorValue: activeTabTextColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: activeTabTextColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ activeTabTextColor: value });
-                                        }
-                                    })
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Body Settings'), initialOpen: false },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: bodyBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: bodyBgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ bodyBgColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: bodyTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: bodyTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ bodyTextColor: value });
-                                    }
-                                })
-                            )
-                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Tab Colors'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color'),
+                                value: headerBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ headerBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: headerTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ headerTextColor: value });
+                                }
+                            }, {
+                                label: __('Active Tab Background Color'),
+                                value: activeTabBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ activeTabBgColor: value });
+                                }
+                            }, {
+                                label: __('Active Tab Text Color'),
+                                value: activeTabTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ activeTabTextColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Body Colors'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color'),
+                                value: bodyBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: bodyTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyTextColor: value });
+                                }
+                            }]
+                        }),
                         React.createElement(
                             PanelBody,
                             { title: __('Border Settings'), initialOpen: false },
@@ -6858,16 +6831,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Border Color'), colorValue: borderColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Border Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border Color'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderColor: value });
                                     }
-                                })
-                            ),
+                                }]
+                            }),
                             React.createElement(RangeControl, {
                                 label: __('Border width'),
                                 value: borderWidth,
