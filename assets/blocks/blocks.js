@@ -7235,11 +7235,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette,
+        PanelColorSettings = wpEditor.PanelColorSettings,
         MediaUpload = wpEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         Tooltip = wpComponents.Tooltip;
 
     var AdvTestimonial = function (_Component) {
@@ -7343,26 +7342,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 PanelBody,
                                 { title: __('Avatar'), initialOpen: false },
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Background Color'), colorValue: avatarColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Avatar Colors'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Background Color'),
                                         value: avatarColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ avatarColor: value });
                                         }
-                                    })
-                                ),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Border Color'), colorValue: avatarBorderColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
+                                    }, {
+                                        label: __('Border Color'),
                                         value: avatarBorderColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ avatarBorderColor: value });
                                         }
-                                    })
-                                ),
+                                    }]
+                                }),
                                 React.createElement(RangeControl, {
                                     label: __('Border Radius (%)'),
                                     min: 0,
@@ -7391,36 +7387,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 })
                             ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Name Color'), colorValue: nameColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Text Colors'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Name Color'),
                                     value: nameColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ nameColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Position Color'), colorValue: positionColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Position Color'),
                                     value: positionColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ positionColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Description Color'), colorValue: descColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Description Color'),
                                     value: descColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ descColor: value });
                                     }
-                                })
-                            )
+                                }]
+                            })
                         )
                     ),
                     React.createElement(
