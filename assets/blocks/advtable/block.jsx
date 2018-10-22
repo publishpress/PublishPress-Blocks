@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, RichText, MediaUpload, BlockAlignmentToolbar, ColorPalette } = wpEditor;
-    const { PanelBody, PanelColor, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu, Tooltip } = wpComponents;
+    const { InspectorControls, BlockControls, RichText, MediaUpload, BlockAlignmentToolbar, PanelColorSettings } = wpEditor;
+    const { PanelBody, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu, Tooltip } = wpComponents;
 
     const tableBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
@@ -422,26 +422,43 @@
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Single Cell Settings' ) }>
-                            <PanelColor title={ __( 'Background Color' ) } colorValue={ selectedCellBgColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ selectedCellBgColor }
-                                    onChange={ ( value ) => {
-                                        editor.dom.setStyle( selectedCell, 'background-color', value || '' );
-                                        editor.fire('change');
-                                        this.setState( { selectedCellBgColor: value } );
-                                    } }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Text Color' ) } colorValue={ selectedCellTextColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ selectedCellTextColor }
-                                    onChange={ ( value ) => {
-                                        editor.dom.setStyle( selectedCell, 'color', value || '' );
-                                        editor.fire('change');
-                                        this.setState( { selectedCellTextColor: value } );
-                                    } }
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Color Settings' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Background Color' ),
+                                        value: selectedCellBgColor,
+                                        onChange: ( value ) => {
+                                            editor.dom.setStyle( selectedCell, 'background-color', value || '' );
+                                            editor.fire('change');
+                                            this.setState( { selectedCellBgColor: value } );
+                                        },
+                                    },
+                                    {
+                                        label: __( 'Text Color' ),
+                                        value: selectedCellTextColor,
+                                        onChange: ( value ) => {
+                                            editor.dom.setStyle( selectedCell, 'color', value || '' );
+                                            editor.fire('change');
+                                            this.setState( { selectedCellTextColor: value } );
+                                        },
+                                    },
+                                    {
+                                        label: __( 'Border Color' ),
+                                        value: selectedCellBorderColor,
+                                        onChange: (value) => {
+                                            editor.dom.setAttrib( selectedCell, 'data-border-color', value || '' );
+                                            [ 'top', 'right', 'bottom', 'left' ].map( function ( pos ) {
+                                                if (editor.dom.getStyle( selectedCell, `border-${pos}-color` ))
+                                                    editor.dom.setStyle( selectedCell, `border-${pos}-color`, value || '' );
+                                            } );
+                                            editor.fire('change');
+                                            this.setState( { selectedCellBorderColor: value } );
+                                        },
+                                    },
+                                ] }
+                            />
                             <PanelBody title={ __( 'Border' ) } initialOpen={ false }>
                                 <SelectControl
                                     label={ __( 'Border Style' ) }
@@ -458,20 +475,6 @@
                                         this.setState( { selectedCellBorderStyle: value } );
                                     } }
                                 />
-                                <PanelColor title={ __( 'Border Color' ) } colorValue={ selectedCellBorderColor } initialOpen={ false }>
-                                    <ColorPalette
-                                        value={ selectedCellBorderColor }
-                                        onChange={ (value) => {
-                                            editor.dom.setAttrib( selectedCell, 'data-border-color', value || '' );
-                                            [ 'top', 'right', 'bottom', 'left' ].map( function ( pos ) {
-                                                if (editor.dom.getStyle( selectedCell, `border-${pos}-color` ))
-                                                    editor.dom.setStyle( selectedCell, `border-${pos}-color`, value || '' );
-                                            } );
-                                            editor.fire('change');
-                                            this.setState( { selectedCellBorderColor: value } );
-                                        } }
-                                    />
-                                </PanelColor>
                                 <RangeControl
                                     label={ __( 'Border width' ) }
                                     value={ selectedCellBorderWidth }

@@ -2194,9 +2194,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RichText = wpEditor.RichText,
         MediaUpload = wpEditor.MediaUpload,
         BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
@@ -2608,30 +2607,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Single Cell Settings') },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: selectedCellBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
                                     value: selectedCellBgColor,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'background-color', value || '');
                                         editor.fire('change');
                                         _this3.setState({ selectedCellBgColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: selectedCellTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Text Color'),
                                     value: selectedCellTextColor,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'color', value || '');
                                         editor.fire('change');
                                         _this3.setState({ selectedCellTextColor: value });
                                     }
-                                })
-                            ),
+                                }, {
+                                    label: __('Border Color'),
+                                    value: selectedCellBorderColor,
+                                    onChange: function onChange(value) {
+                                        editor.dom.setAttrib(selectedCell, 'data-border-color', value || '');
+                                        ['top', 'right', 'bottom', 'left'].map(function (pos) {
+                                            if (editor.dom.getStyle(selectedCell, "border-" + pos + "-color")) editor.dom.setStyle(selectedCell, "border-" + pos + "-color", value || '');
+                                        });
+                                        editor.fire('change');
+                                        _this3.setState({ selectedCellBorderColor: value });
+                                    }
+                                }]
+                            }),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Border'), initialOpen: false },
@@ -2645,21 +2652,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         _this3.setState({ selectedCellBorderStyle: value });
                                     }
                                 }),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Border Color'), colorValue: selectedCellBorderColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: selectedCellBorderColor,
-                                        onChange: function onChange(value) {
-                                            editor.dom.setAttrib(selectedCell, 'data-border-color', value || '');
-                                            ['top', 'right', 'bottom', 'left'].map(function (pos) {
-                                                if (editor.dom.getStyle(selectedCell, "border-" + pos + "-color")) editor.dom.setStyle(selectedCell, "border-" + pos + "-color", value || '');
-                                            });
-                                            editor.fire('change');
-                                            _this3.setState({ selectedCellBorderColor: value });
-                                        }
-                                    })
-                                ),
                                 React.createElement(RangeControl, {
                                     label: __('Border width'),
                                     value: selectedCellBorderWidth,
