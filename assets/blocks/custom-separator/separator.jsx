@@ -1,8 +1,8 @@
 (function ( wpI18n, wpHooks, wpEditor, wpComponents ) {
     const { addFilter } = wpHooks;
     const { __ } = wpI18n;
-    const { InspectorControls, ColorPalette } = wpEditor;
-    const { SelectControl, PanelColor, PanelBody, RangeControl } = wpComponents;
+    const { InspectorControls, PanelColorSettings } = wpEditor;
+    const { SelectControl, PanelBody, RangeControl } = wpComponents;
 
     // Register extra attributes to separator blocks
     addFilter( 'blocks.registerBlockType', 'advgb/registerExtraSeparatorAttrs', function ( settings ) {
@@ -38,12 +38,17 @@
                     isSelected &&
                     <InspectorControls key="inspector-custom-separator">
                         <PanelBody title={__( 'Separator Settings' )}>
-                            <PanelColor title={__( 'Color' )} colorValue={borderColor} initialOpen={false}>
-                                <ColorPalette
-                                    value={borderColor}
-                                    onChange={( value ) => setAttributes( { borderColor: value } )}
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Color Settings' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Color' ),
+                                        value: borderColor,
+                                        onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                    },
+                                ] }
+                            />
                             <SelectControl
                                 label={__( 'Styles' )}
                                 value={borderStyle}

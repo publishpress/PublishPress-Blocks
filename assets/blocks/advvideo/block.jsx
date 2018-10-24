@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, ColorPalette, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, ToggleControl, BaseControl, TextControl, Button, IconButton, Dashicon, Spinner, Toolbar } = wpComponents;
+    const { InspectorControls, BlockControls, PanelColorSettings, MediaUpload } = wpEditor;
+    const { RangeControl, PanelBody, ToggleControl, BaseControl, TextControl, Button, IconButton, Dashicon, Spinner, Toolbar } = wpComponents;
 
     const PLAY_BUTTON_STYLE = {
         normal: [
@@ -186,7 +186,7 @@
                     <BlockControls>
                         <Toolbar>
                             <MediaUpload
-                                type={ 'image' }
+                                allowedTypes={ ["image"] }
                                 value={ posterID }
                                 onSelect={ (image) => setAttributes( { poster: image.url, posterID: image.id } ) }
                                 render={ ( { open } ) => (
@@ -237,43 +237,47 @@
                                 onChange={ (value) => setAttributes( { videoHeight: value } ) }
                             />
                             {!!openInLightbox &&
-                            <PanelColor title={ __( 'Overlay Color' ) } colorValue={ overlayColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ overlayColor }
-                                    onChange={ (value) => setAttributes( { overlayColor: value } ) }
+                            <Fragment>
+                                <PanelColorSettings
+                                    title={ __( 'Color Settings' ) }
+                                    initialOpen={ false }
+                                    colorSettings={ [
+                                        {
+                                            label: __( 'Overlay Color' ),
+                                            value: overlayColor,
+                                            onChange: ( value ) => setAttributes( { overlayColor: value } ),
+                                        },
+                                        {
+                                            label: __( 'Play Button Color' ),
+                                            value: playButtonColor,
+                                            onChange: ( value ) => setAttributes( { playButtonColor: value } ),
+                                        },
+                                    ] }
                                 />
-                            </PanelColor>
-                            }
-                            {!!openInLightbox &&
-                            <PanelBody title={ __( 'Play Button' ) }>
-                                <BaseControl label={ __( 'Icon Style' ) }>
-                                    <div className="advgb-icon-items-wrapper">
-                                        {Object.keys( PLAY_BUTTON_STYLE ).map( ( key, index ) => (
-                                            <div className="advgb-icon-item" key={ index }>
-                                                <span className={ key === playButtonIcon ? 'active' : '' }
-                                                      onClick={ () => setAttributes( { playButtonIcon: key } ) }>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                                        { PLAY_BUTTON_STYLE[key] }
-                                                    </svg>
-                                                </span>
-                                            </div>
-                                        ) ) }
-                                    </div>
-                                </BaseControl>
-                                <RangeControl
-                                    label={ __( 'Play Button Size' ) }
-                                    value={ playButtonSize }
-                                    min={ 40 }
-                                    max={ 200 }
-                                    onChange={ (value) => setAttributes( { playButtonSize: value } ) }
-                                />
-                                <PanelColor title={ __( 'Play Button Color' ) } colorValue={ playButtonColor } initialOpen={ false }>
-                                    <ColorPalette
-                                        value={ playButtonColor }
-                                        onChange={ (value) => setAttributes( { playButtonColor: value } ) }
+                                <PanelBody title={ __( 'Play Button' ) }>
+                                    <BaseControl label={ __( 'Icon Style' ) }>
+                                        <div className="advgb-icon-items-wrapper">
+                                            {Object.keys( PLAY_BUTTON_STYLE ).map( ( key, index ) => (
+                                                <div className="advgb-icon-item" key={ index }>
+                                            <span className={ key === playButtonIcon ? 'active' : '' }
+                                                  onClick={ () => setAttributes( { playButtonIcon: key } ) }>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    { PLAY_BUTTON_STYLE[key] }
+                                                </svg>
+                                            </span>
+                                                </div>
+                                            ) ) }
+                                        </div>
+                                    </BaseControl>
+                                    <RangeControl
+                                        label={ __( 'Play Button Size' ) }
+                                        value={ playButtonSize }
+                                        min={ 40 }
+                                        max={ 200 }
+                                        onChange={ (value) => setAttributes( { playButtonSize: value } ) }
                                     />
-                                </PanelColor>
-                            </PanelBody>
+                                </PanelBody>
+                            </Fragment>
                             }
                         </PanelBody>
                     </InspectorControls>
@@ -284,9 +288,9 @@
                             <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
                                 {!poster &&
                                 <MediaUpload
+                                    allowedTypes={ ["image"] }
                                     onSelect={ (media) => setAttributes( { poster: media.url, posterID: media.id } ) }
                                     value={ posterID }
-                                    type="image"
                                     render={ ( { open } ) => (
                                         <Button
                                             className={ 'button button-large' }
@@ -351,7 +355,7 @@
                                 </Button>
                                 <span style={ { margin: 'auto 10px' } }>{ __( 'or use' ) }</span>
                                 <MediaUpload
-                                    type={ 'video' }
+                                    allowedTypes={ ["video"] }
                                     value={ videoID }
                                     onSelect={ (video) => setAttributes( { videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' } ) }
                                     render={ ( { open } ) => (
