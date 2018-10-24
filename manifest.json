@@ -23,7 +23,7 @@
     "1.7.4": [
       {
         "type": "fix",
-        "title": "Category on Recent Posts not saved"
+        "title": "Category on Recent Posts block is not saved"
       },
       {
         "type": "fix",
