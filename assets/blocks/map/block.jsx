@@ -273,7 +273,7 @@
                                 onChange={ (value) => setAttributes( { height: value } ) }
                             />
                             <MediaUpload
-                                type="image"
+                                allowedTypes={ ["image"] }
                                 value={ markerIconID }
                                 onSelect={ (image) => setAttributes( { markerIcon: image.sizes.thumbnail.url, markerIconID: image.id } ) }
                                 render={ ( { open } ) => {
@@ -427,24 +427,21 @@
             return (
                 <div className={ 'advgb-map-block' } style={ { margin: '10px auto' } }>
                     <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
-                    <script typeof="text/javascript">
+                    <script type="text/javascript">
                         {`window.addEventListener('load', function() {
                         if (typeof google === "undefined") return null;
                         var location = {
                             lat: parseFloat(${lat}),
                             lng: parseFloat(${lng})
                         };
-
                         var map = new google.maps.Map(document.getElementById('${mapID}'), {
                             zoom: ${zoom},
                             center: location,
                             gestureHandling: 'cooperative',
                         });
-
                         var infoWindow = new google.maps.InfoWindow({
                             content: '${infoWindowHtml}'
                         });
-
                         var marker = new google.maps.Marker({
                             position: location,
                             map: map,
@@ -455,7 +452,6 @@
                                 scaledSize: new google.maps.Size(27, 43),
                             },
                         });
-
                         ${markerTitle &&
                         `marker.addListener('click', function() {
                             infoWindow.open(map, marker);

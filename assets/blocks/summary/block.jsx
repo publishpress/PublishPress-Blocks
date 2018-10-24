@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, getBlockContent, createBlock } = wpBlocks;
-    const { BlockControls, InspectorControls, InspectorAdvancedControls, ColorPalette, BlockAlignmentToolbar } = wpEditor;
-    const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody, PanelColor } = wpComponents;
+    const { BlockControls, InspectorControls, InspectorAdvancedControls, PanelColorSettings, BlockAlignmentToolbar } = wpEditor;
+    const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody } = wpComponents;
     const { select, dispatch } = wpData;
     const { addFilter } = wpHooks;
 
@@ -234,12 +234,17 @@
                                 onChange={ (value) => setAttributes( { headerTitle: value } ) }
                             />
                             }
-                            <PanelColor title={ __('Anchor color') } colorValue={anchorColor} initialOpen={false} >
-                                <ColorPalette
-                                    value={anchorColor}
-                                    onChange={ (value) => setAttributes( { anchorColor: value } ) }
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Anchor Color' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Anchor Color' ),
+                                        value: anchorColor,
+                                        onChange: ( value ) => setAttributes( { anchorColor: value } ),
+                                    },
+                                ] }
+                            />
                         </PanelBody>
                     </InspectorControls>
                     {summaryContent}

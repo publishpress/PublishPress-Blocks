@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, MediaUpload, AlignmentToolbar, ColorPalette } = wpEditor;
-    const { RangeControl, BaseControl, PanelBody, PanelColor, TextControl, IconButton, Button, Toolbar, Tooltip } = wpComponents;
+    const { InspectorControls, BlockControls, MediaUpload, AlignmentToolbar, PanelColorSettings } = wpEditor;
+    const { RangeControl, BaseControl, PanelBody, TextControl, IconButton, Button, Toolbar, Tooltip } = wpComponents;
 
     const socialBlockIconContent = (
         <Fragment>
@@ -264,7 +264,7 @@
                                 ) ) }
                                 <BaseControl label={ __( 'Custom icon' ) }>
                                     <MediaUpload
-                                        type="image"
+                                        allowedTypes={ ["image"] }
                                         value={ items[currentSelected].iconID }
                                         onSelect={ (media) => {
                                             let newItems = items.map( (item, index) => {
@@ -291,26 +291,31 @@
                                     />
                                 </BaseControl>
                             </div>
+                            <PanelColorSettings
+                                title={ __( 'Preset Icon Color' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Preset Icon Color' ),
+                                        value: items[currentSelected].iconColor,
+                                        onChange: (value) => {
+                                            let newItems = items.map( (item, index) => {
+                                                if (index === currentSelected) {
+                                                    item = {
+                                                        ...item,
+                                                        iconColor: value,
+                                                    };
+                                                }
+                                                return item;
+                                            } );
+
+                                            setAttributes( { items: newItems } )
+                                        },
+                                    },
+                                ] }
+                            />
                         </PanelBody>
                         <PanelBody title={ __( 'Icons settings' ) }>
-                            <PanelColor title={ __( 'Preset Icon Color' ) } colorValue={ items[currentSelected].iconColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ items[currentSelected].iconColor }
-                                    onChange={ (value) => {
-                                        let newItems = items.map( (item, index) => {
-                                            if (index === currentSelected) {
-                                                item = {
-                                                    ...item,
-                                                    iconColor: value,
-                                                };
-                                            }
-                                            return item;
-                                        } );
-
-                                        setAttributes( { items: newItems } )
-                                    } }
-                                />
-                            </PanelColor>
                             <RangeControl
                                 label={ __( 'Icon size' ) }
                                 value={ iconSize }

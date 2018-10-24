@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
-    const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, ColorPalette } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, TextControl, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
+    const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, PanelColorSettings } = wpEditor;
+    const { RangeControl, PanelBody, TextControl, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
 
     class AdvButton extends Component {
         constructor() {
@@ -97,7 +97,6 @@
                     </BlockControls>
                     <span style={ { display: 'inline-block' } } >
                         <RichText
-                            tagName="span"
                             placeholder={ __( 'Add text…' ) }
                             value={ text }
                             onChange={ ( value ) => setAttributes( { text: value } ) }
@@ -154,26 +153,22 @@
                                 beforeIcon="editor-textcolor"
                                 allowReset
                             />
-                            <PanelColor
-                                title={ __( 'Text color' ) }
-                                colorValue={ textColor }
+                            <PanelColorSettings
+                                title={ __( 'Color Settings' ) }
                                 initialOpen={ false }
-                            >
-                                <ColorPalette
-                                    value={ textColor }
-                                    onChange={ ( color ) => setAttributes( { textColor: color } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor
-                                title={ __( 'Background color' ) }
-                                colorValue={ bgColor }
-                                initialOpen={ false }
-                            >
-                                <ColorPalette
-                                    value={ bgColor }
-                                    onChange={ ( color ) => setAttributes( { bgColor: color } ) }
-                                />
-                            </PanelColor>
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Background Color' ),
+                                        value: bgColor,
+                                        onChange: ( value ) => setAttributes( { bgColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Text Color' ),
+                                        value: textColor,
+                                        onChange: ( value ) => setAttributes( { textColor: value } ),
+                                    },
+                                ] }
+                            />
                         </PanelBody>
                         <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
                             <RangeControl
@@ -189,24 +184,28 @@
                                 options={ listBorderStyles }
                                 onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
                             />
-                            {borderStyle !== 'none' &&
-                            [
-                                <PanelColor key="border-color" title={ __( 'Border color' ) } colorValue={ borderColor } initialOpen={ false } >
-                                    <ColorPalette
-                                        value={ borderColor }
-                                        onChange={ ( value ) => setAttributes( { borderColor: value } ) }
+                            {borderStyle !== 'none' && (
+                                <Fragment>
+                                    <PanelColorSettings
+                                        title={ __( 'Border Color' ) }
+                                        initialOpen={ false }
+                                        colorSettings={ [
+                                            {
+                                                label: __( 'Border Color' ),
+                                                value: borderColor,
+                                                onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                            },
+                                        ] }
                                     />
-                                </PanelColor>,
-                                <RangeControl
-                                    key="border-width"
-                                    label={ __( 'Border width' ) }
-                                    value={ borderWidth || '' }
-                                    onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
-                                    min={ 0 }
-                                    max={ 100 }
-                                />
-                            ]
-                            }
+                                    <RangeControl
+                                        label={ __( 'Border width' ) }
+                                        value={ borderWidth || '' }
+                                        onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+                                        min={ 0 }
+                                        max={ 100 }
+                                    />
+                                </Fragment>
+                            ) }
                         </PanelBody>
                         <PanelBody title={ __( 'Padding' ) } initialOpen={ false } >
                             <RangeControl
@@ -239,25 +238,28 @@
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Hover' ) } initialOpen={ false } >
-                            <PanelColor title={ __( 'Text color' ) } colorValue={ hoverTextColor } initialOpen={ false } >
-                                <ColorPalette
-                                    value={ hoverTextColor }
-                                    onChange={ ( value ) => setAttributes( { hoverTextColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Background color' ) } colorValue={ hoverBgColor } initialOpen={ false } >
-                                <ColorPalette
-                                    value={ hoverBgColor }
-                                    onChange={ ( value ) => setAttributes( { hoverBgColor: value } ) }
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Color Settings' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Background Color' ),
+                                        value: hoverBgColor,
+                                        onChange: ( value ) => setAttributes( { hoverBgColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Text Color' ),
+                                        value: hoverTextColor,
+                                        onChange: ( value ) => setAttributes( { hoverTextColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Shadow Color' ),
+                                        value: hoverShadowColor,
+                                        onChange: ( value ) => setAttributes( { hoverShadowColor: value } ),
+                                    },
+                                ] }
+                            />
                             <PanelBody title={ __( 'Shadow' ) } initialOpen={ false }  >
-                                <PanelColor title={ __( 'Shadow color' ) } colorValue={ hoverShadowColor } initialOpen={ false } >
-                                    <ColorPalette
-                                        value={ hoverShadowColor }
-                                        onChange={ ( value ) => setAttributes( { hoverShadowColor: value } ) }
-                                    />
-                                </PanelColor>
                                 <RangeControl
                                     label={ __( 'Shadow H offset' ) }
                                     value={ hoverShadowH || '' }
@@ -332,7 +334,6 @@
                 type: 'string',
             },
             text: {
-                type: 'string',
                 source: 'children',
                 selector: 'a',
             },
@@ -479,12 +480,14 @@
 
             return (
                 <div className={ `align${align}` }>
-                    <a className={ `wp-block-advgb-button_link ${id}` }
-                       href={ url || '#' } title={ title }
-                       target={ !urlOpenNewTab ? '_self' : '_blank' }
-                    >
-                        { text }
-                    </a>
+                    <RichText.Content
+                        tagName="a"
+                        className={ `wp-block-advgb-button_link ${id}` }
+                        href={ url || '#' }
+                        title={ title }
+                        target={ !urlOpenNewTab ? '_self' : '_blank' }
+                        value={ text }
+                    />
                     <style>
                         {`.${id} {
                         font-size: ${textSize}px;

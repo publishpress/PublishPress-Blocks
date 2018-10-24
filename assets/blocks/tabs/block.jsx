@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, ColorPalette } = wpEditor;
-    const { Dashicon, Tooltip, PanelBody, PanelColor, RangeControl, SelectControl } = wpComponents;
+    const { InspectorControls, RichText, PanelColorSettings } = wpEditor;
+    const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl } = wpComponents;
 
     class AdvTabsBlock extends Component {
         constructor() {
@@ -103,48 +103,48 @@
             return (
                 <Fragment>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Tab Settings' ) }>
-                            <PanelColor title={ __( 'Background Color' ) } colorValue={ headerBgColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ headerBgColor }
-                                    onChange={ ( value ) => setAttributes( { headerBgColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Text Color' ) } colorValue={ headerTextColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ headerTextColor }
-                                    onChange={ ( value ) => setAttributes( { headerTextColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelBody title={ __( 'Active Tab Settings' ) }>
-                                <PanelColor title={ __( 'Background Color' ) } colorValue={ activeTabBgColor } initialOpen={ false }>
-                                    <ColorPalette
-                                        value={ activeTabBgColor }
-                                        onChange={ ( value ) => setAttributes( { activeTabBgColor: value } ) }
-                                    />
-                                </PanelColor>
-                                <PanelColor title={ __( 'Text Color' ) } colorValue={ activeTabTextColor } initialOpen={ false }>
-                                    <ColorPalette
-                                        value={ activeTabTextColor }
-                                        onChange={ ( value ) => setAttributes( { activeTabTextColor: value } ) }
-                                    />
-                                </PanelColor>
-                            </PanelBody>
-                        </PanelBody>
-                        <PanelBody title={ __( 'Body Settings' ) } initialOpen={ false }>
-                            <PanelColor title={ __( 'Background Color' ) } colorValue={ bodyBgColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ bodyBgColor }
-                                    onChange={ ( value ) => setAttributes( { bodyBgColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Text Color' ) } colorValue={ bodyTextColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ bodyTextColor }
-                                    onChange={ ( value ) => setAttributes( { bodyTextColor: value } ) }
-                                />
-                            </PanelColor>
-                        </PanelBody>
+                        <PanelColorSettings
+                            title={ __( 'Tab Colors' ) }
+                            initialOpen={ false }
+                            colorSettings={ [
+                                {
+                                    label: __( 'Background Color' ),
+                                    value: headerBgColor,
+                                    onChange: ( value ) => setAttributes( { headerBgColor: value } ),
+                                },
+                                {
+                                    label: __( 'Text Color' ),
+                                    value: headerTextColor,
+                                    onChange: ( value ) => setAttributes( { headerTextColor: value } ),
+                                },
+                                {
+                                    label: __( 'Active Tab Background Color' ),
+                                    value: activeTabBgColor,
+                                    onChange: ( value ) => setAttributes( { activeTabBgColor: value } ),
+                                },
+                                {
+                                    label: __( 'Active Tab Text Color' ),
+                                    value: activeTabTextColor,
+                                    onChange: ( value ) => setAttributes( { activeTabTextColor: value } ),
+                                },
+                            ] }
+                        />
+                        <PanelColorSettings
+                            title={ __( 'Body Colors' ) }
+                            initialOpen={ false }
+                            colorSettings={ [
+                                {
+                                    label: __( 'Background Color' ),
+                                    value: bodyBgColor,
+                                    onChange: ( value ) => setAttributes( { bodyBgColor: value } ),
+                                },
+                                {
+                                    label: __( 'Text Color' ),
+                                    value: bodyTextColor,
+                                    onChange: ( value ) => setAttributes( { bodyTextColor: value } ),
+                                },
+                            ] }
+                        />
                         <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
                             <SelectControl
                                 label={ __( 'Border Style' ) }
@@ -156,12 +156,17 @@
                                 ] }
                                 onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
                             />
-                            <PanelColor title={ __( 'Border Color' ) } colorValue={ borderColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ borderColor }
-                                    onChange={ ( value ) => setAttributes( { borderColor: value } ) }
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Border Color' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Border Color' ),
+                                        value: borderColor,
+                                        onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                    },
+                                ] }
+                            />
                             <RangeControl
                                 label={ __( 'Border width' ) }
                                 value={ borderWidth }
