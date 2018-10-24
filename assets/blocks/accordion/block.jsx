@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, ColorPalette } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, BaseControl , SelectControl, Dashicon, Tooltip } = wpComponents;
+    const { InspectorControls, RichText, PanelColorSettings } = wpEditor;
+    const { RangeControl, PanelBody, BaseControl , SelectControl, Dashicon, Tooltip } = wpComponents;
 
     const HEADER_ICONS = {
         plus: (
@@ -155,55 +155,58 @@
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Header Settings' ) }>
-                            <PanelColor title={ __( 'Background Color' ) } colorValue={ headerBgColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ headerBgColor }
-                                    onChange={ ( value ) => setAttributes( { headerBgColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Text Color' ) } colorValue={ headerTextColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ headerTextColor }
-                                    onChange={ ( value ) => setAttributes( { headerTextColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelBody title={ __( 'Header Icon' ) }>
-                                <BaseControl label={ __( 'Icon Style' ) }>
-                                    <div className="advgb-icon-items-wrapper">
-                                        {Object.keys( HEADER_ICONS ).map( ( key, index ) => (
-                                            <div className="advgb-icon-item" key={ index }>
+                            <BaseControl label={ __( 'Header Icon Style' ) }>
+                                <div className="advgb-icon-items-wrapper">
+                                    {Object.keys( HEADER_ICONS ).map( ( key, index ) => (
+                                        <div className="advgb-icon-item" key={ index }>
                                                 <span className={ key === headerIcon ? 'active' : '' }
                                                       onClick={ () => setAttributes( { headerIcon: key } ) }>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                                         { HEADER_ICONS[key] }
                                                     </svg>
                                                 </span>
-                                            </div>
-                                        ) ) }
-                                    </div>
-                                </BaseControl>
-                                <PanelColor title={ __( 'Icon Color' ) } colorValue={ headerIconColor } initialOpen={ false }>
-                                    <ColorPalette
-                                        value={ headerIconColor }
-                                        onChange={ ( value ) => setAttributes( { headerIconColor: value } ) }
-                                    />
-                                </PanelColor>
-                            </PanelBody>
+                                        </div>
+                                    ) ) }
+                                </div>
+                            </BaseControl>
+                            <PanelColorSettings
+                                title={ __( 'Color Settings' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Background Color' ),
+                                        value: headerBgColor,
+                                        onChange: ( value ) => setAttributes( { headerBgColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Text Color' ),
+                                        value: headerTextColor,
+                                        onChange: ( value ) => setAttributes( { headerTextColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Icon Color' ),
+                                        value: headerIconColor,
+                                        onChange: ( value ) => setAttributes( { headerIconColor: value } ),
+                                    },
+                                ] }
+                            />
                         </PanelBody>
-                        <PanelBody title={ __( 'Body Settings' ) } initialOpen={ false }>
-                            <PanelColor title={ __( 'Background Color' ) } colorValue={ bodyBgColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ bodyBgColor }
-                                    onChange={ ( value ) => setAttributes( { bodyBgColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Text Color' ) } colorValue={ bodyTextColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ bodyTextColor }
-                                    onChange={ ( value ) => setAttributes( { bodyTextColor: value } ) }
-                                />
-                            </PanelColor>
-                        </PanelBody>
+                        <PanelColorSettings
+                            title={ __( 'Body Color Settings' ) }
+                            initialOpen={ false }
+                            colorSettings={ [
+                                {
+                                    label: __( 'Background Color' ),
+                                    value: bodyBgColor,
+                                    onChange: ( value ) => setAttributes( { bodyBgColor: value } ),
+                                },
+                                {
+                                    label: __( 'Text Color' ),
+                                    value: bodyTextColor,
+                                    onChange: ( value ) => setAttributes( { bodyTextColor: value } ),
+                                },
+                            ] }
+                        />
                         <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
                             <SelectControl
                                 label={ __( 'Border Style' ) }
@@ -215,12 +218,17 @@
                                 ] }
                                 onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
                             />
-                            <PanelColor title={ __( 'Border Color' ) } colorValue={ borderColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ borderColor }
-                                    onChange={ ( value ) => setAttributes( { borderColor: value } ) }
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Color Settings' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Border Color' ),
+                                        value: borderColor,
+                                        onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                    },
+                                ] }
+                            />
                             <RangeControl
                                 label={ __( 'Border width' ) }
                                 value={ borderWidth }

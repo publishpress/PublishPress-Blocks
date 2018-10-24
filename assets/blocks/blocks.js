@@ -117,10 +117,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
         Dashicon = wpComponents.Dashicon,
@@ -308,90 +307,72 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             PanelBody,
                             { title: __('Header Settings') },
                             React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: headerBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                BaseControl,
+                                { label: __('Header Icon Style') },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper" },
+                                    Object.keys(HEADER_ICONS).map(function (key, index) {
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: index },
+                                            React.createElement(
+                                                "span",
+                                                { className: key === headerIcon ? 'active' : '',
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ headerIcon: key });
+                                                    } },
+                                                React.createElement(
+                                                    "svg",
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    HEADER_ICONS[key]
+                                                )
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
                                     value: headerBgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerBgColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: headerTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Text Color'),
                                     value: headerTextColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerTextColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Header Icon') },
-                                React.createElement(
-                                    BaseControl,
-                                    { label: __('Icon Style') },
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-icon-items-wrapper" },
-                                        Object.keys(HEADER_ICONS).map(function (key, index) {
-                                            return React.createElement(
-                                                "div",
-                                                { className: "advgb-icon-item", key: index },
-                                                React.createElement(
-                                                    "span",
-                                                    { className: key === headerIcon ? 'active' : '',
-                                                        onClick: function onClick() {
-                                                            return setAttributes({ headerIcon: key });
-                                                        } },
-                                                    React.createElement(
-                                                        "svg",
-                                                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                                                        HEADER_ICONS[key]
-                                                    )
-                                                )
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Icon Color'), colorValue: headerIconColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: headerIconColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ headerIconColor: value });
-                                        }
-                                    })
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Body Settings'), initialOpen: false },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: bodyBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: bodyBgColor,
+                                }, {
+                                    label: __('Icon Color'),
+                                    value: headerIconColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ bodyBgColor: value });
+                                        return setAttributes({ headerIconColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: bodyTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: bodyTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ bodyTextColor: value });
-                                    }
-                                })
-                            )
+                                }]
+                            })
                         ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Body Color Settings'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color'),
+                                value: bodyBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: bodyTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyTextColor: value });
+                                }
+                            }]
+                        }),
                         React.createElement(
                             PanelBody,
                             { title: __('Border Settings'), initialOpen: false },
@@ -403,16 +384,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Border Color'), colorValue: borderColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border Color'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderColor: value });
                                     }
-                                })
-                            ),
+                                }]
+                            }),
                             React.createElement(RangeControl, {
                                 label: __('Border width'),
                                 value: borderWidth,
@@ -713,10 +695,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BlockControls = wpEditor.BlockControls,
         BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         TextControl = wpComponents.TextControl,
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
@@ -829,7 +810,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         'span',
                         { style: { display: 'inline-block' } },
                         React.createElement(RichText, {
-                            tagName: 'span',
                             placeholder: __('Add text…'),
                             value: text,
                             onChange: function onChange(value) {
@@ -886,34 +866,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 beforeIcon: 'editor-textcolor',
                                 allowReset: true
                             }),
-                            React.createElement(
-                                PanelColor,
-                                {
-                                    title: __('Text color'),
-                                    colorValue: textColor,
-                                    initialOpen: false
-                                },
-                                React.createElement(ColorPalette, {
-                                    value: textColor,
-                                    onChange: function onChange(color) {
-                                        return setAttributes({ textColor: color });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                {
-                                    title: __('Background color'),
-                                    colorValue: bgColor,
-                                    initialOpen: false
-                                },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
                                     value: bgColor,
-                                    onChange: function onChange(color) {
-                                        return setAttributes({ bgColor: color });
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ bgColor: value });
                                     }
-                                })
-                            )
+                                }, {
+                                    label: __('Text Color'),
+                                    value: textColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ textColor: value });
+                                    }
+                                }]
+                            })
                         ),
                         React.createElement(
                             PanelBody,
@@ -935,25 +904,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
-                            borderStyle !== 'none' && [React.createElement(
-                                PanelColor,
-                                { key: 'border-color', title: __('Border color'), colorValue: borderColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: borderColor,
+                            borderStyle !== 'none' && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Border Color'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Border Color'),
+                                        value: borderColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderColor: value });
+                                        }
+                                    }]
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Border width'),
+                                    value: borderWidth || '',
                                     onChange: function onChange(value) {
-                                        return setAttributes({ borderColor: value });
-                                    }
+                                        return setAttributes({ borderWidth: value });
+                                    },
+                                    min: 0,
+                                    max: 100
                                 })
-                            ), React.createElement(RangeControl, {
-                                key: 'border-width',
-                                label: __('Border width'),
-                                value: borderWidth || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ borderWidth: value });
-                                },
-                                min: 0,
-                                max: 100
-                            })]
+                            )
                         ),
                         React.createElement(
                             PanelBody,
@@ -998,39 +972,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Hover'), initialOpen: false },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text color'), colorValue: hoverTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: hoverTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ hoverTextColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background color'), colorValue: hoverBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
                                     value: hoverBgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ hoverBgColor: value });
                                     }
-                                })
-                            ),
+                                }, {
+                                    label: __('Text Color'),
+                                    value: hoverTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ hoverTextColor: value });
+                                    }
+                                }, {
+                                    label: __('Shadow Color'),
+                                    value: hoverShadowColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ hoverShadowColor: value });
+                                    }
+                                }]
+                            }),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Shadow'), initialOpen: false },
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Shadow color'), colorValue: hoverShadowColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: hoverShadowColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ hoverShadowColor: value });
-                                        }
-                                    })
-                                ),
                                 React.createElement(RangeControl, {
                                     label: __('Shadow H offset'),
                                     value: hoverShadowH || '',
@@ -1117,7 +1084,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string'
             },
             text: {
-                type: 'string',
                 source: 'children',
                 selector: 'a'
             },
@@ -1259,14 +1225,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return React.createElement(
                 'div',
                 { className: 'align' + align },
-                React.createElement(
-                    'a',
-                    { className: 'wp-block-advgb-button_link ' + id,
-                        href: url || '#', title: title,
-                        target: !urlOpenNewTab ? '_self' : '_blank'
-                    },
-                    text
-                ),
+                React.createElement(RichText.Content, {
+                    tagName: 'a',
+                    className: 'wp-block-advgb-button_link ' + id,
+                    href: url || '#',
+                    title: title,
+                    target: !urlOpenNewTab ? '_self' : '_blank',
+                    value: text
+                }),
                 React.createElement(
                     'style',
                     null,
@@ -1318,11 +1284,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var InspectorControls = wpEditor.InspectorControls,
         BlockControls = wpEditor.BlockControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette,
+        PanelColorSettings = wpEditor.PanelColorSettings,
         MediaUpload = wpEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
@@ -1411,7 +1376,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(MediaUpload, {
-                                type: 'image',
+                                allowedTypes: ['image'],
                                 value: imageID,
                                 onSelect: function onSelect(image) {
                                     return setAttributes({ imageUrl: image.url, imageID: image.id });
@@ -1491,36 +1456,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 })
                             ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Title Color'), colorValue: titleColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Title Color'),
                                     value: titleColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ titleColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Subtitle Color'), colorValue: subtitleColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Subtitle Color'),
                                     value: subtitleColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ subtitleColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Overlay Color'), colorValue: overlayColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Overlay Color'),
                                     value: overlayColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ overlayColor: value });
                                     }
-                                })
-                            ),
+                                }]
+                            }),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Text Alignment'), initialOpen: false },
@@ -1558,7 +1516,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             style: { backgroundColor: overlayColor }
                         }),
                         !imageID && React.createElement(MediaUpload, {
-                            type: 'image',
+                            allowedTypes: ['image'],
                             value: imageID,
                             onSelect: function onSelect(image) {
                                 return setAttributes({ imageUrl: image.url, imageID: image.id });
@@ -2229,16 +2187,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
-    var registerBlockType = wpBlocks.registerBlockType,
-        createBlock = wpBlocks.createBlock;
+    var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         BlockControls = wpEditor.BlockControls,
         RichText = wpEditor.RichText,
         MediaUpload = wpEditor.MediaUpload,
         BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
@@ -2305,6 +2261,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate() {
+                var _state = this.state,
+                    editor = _state.editor,
+                    selectedCell = _state.selectedCell;
+
+                if (editor && selectedCell) {
+                    var rows = editor.dom.select('tr');
+                    rows.forEach(function (row) {
+                        var rowIndex = row.rowIndex;
+                        var cells = row.getElementsByTagName('td');
+                        for (var i = 0; i < cells.length; i++) {
+                            var cellIndex = cells[i].cellIndex;
+                            editor.dom.setAttrib(cells[i], 'class', "r" + rowIndex + "c" + cellIndex);
+                        }
+                    });
+                }
+            }
+        }, {
             key: "handleSetup",
             value: function handleSetup(editor, isSelected) {
                 var _this2 = this;
@@ -2317,6 +2292,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 this.setState({ editor: editor });
 
+                editor.off('keydown');
                 editor.on('nodeChange', function () {
                     var selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
                     var selectedCellBgColor = editor.dom.getStyle(selectedCell, 'background-color');
@@ -2365,20 +2341,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var content = attributes.content,
                     align = attributes.align,
                     maxWidth = attributes.maxWidth;
-                var _state = this.state,
-                    editor = _state.editor,
-                    selectedCell = _state.selectedCell,
-                    selectedCellBgColor = _state.selectedCellBgColor,
-                    selectedCellTextColor = _state.selectedCellTextColor,
-                    selectedCellBorderColor = _state.selectedCellBorderColor,
-                    selectedCellBorderStyle = _state.selectedCellBorderStyle,
-                    selectedCellBorderWidth = _state.selectedCellBorderWidth,
-                    selectedCellPaddingTop = _state.selectedCellPaddingTop,
-                    selectedCellPaddingRight = _state.selectedCellPaddingRight,
-                    selectedCellPaddingBottom = _state.selectedCellPaddingBottom,
-                    selectedCellPaddingLeft = _state.selectedCellPaddingLeft,
-                    selectedCellTextAlign = _state.selectedCellTextAlign,
-                    selectedCellVerticalAlign = _state.selectedCellVerticalAlign;
+                var _state2 = this.state,
+                    editor = _state2.editor,
+                    selectedCell = _state2.selectedCell,
+                    selectedCellBgColor = _state2.selectedCellBgColor,
+                    selectedCellTextColor = _state2.selectedCellTextColor,
+                    selectedCellBorderColor = _state2.selectedCellBorderColor,
+                    selectedCellBorderStyle = _state2.selectedCellBorderStyle,
+                    selectedCellBorderWidth = _state2.selectedCellBorderWidth,
+                    selectedCellPaddingTop = _state2.selectedCellPaddingTop,
+                    selectedCellPaddingRight = _state2.selectedCellPaddingRight,
+                    selectedCellPaddingBottom = _state2.selectedCellPaddingBottom,
+                    selectedCellPaddingLeft = _state2.selectedCellPaddingLeft,
+                    selectedCellTextAlign = _state2.selectedCellTextAlign,
+                    selectedCellVerticalAlign = _state2.selectedCellVerticalAlign;
 
 
                 var TABLE_CONTROLS = [{
@@ -2593,7 +2569,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             }),
                             React.createElement(MediaUpload, {
-                                type: "image",
+                                allowedTypes: ["image"],
                                 onSelect: function onSelect(media) {
                                     return editor.execCommand('mceInsertContent', false, "<img src=\"" + media.url + "\" alt=\"" + (media.alt || media.filename) + "\" />");
                                 },
@@ -2630,30 +2606,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Single Cell Settings') },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: selectedCellBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
                                     value: selectedCellBgColor,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'background-color', value || '');
                                         editor.fire('change');
                                         _this3.setState({ selectedCellBgColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: selectedCellTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Text Color'),
                                     value: selectedCellTextColor,
                                     onChange: function onChange(value) {
                                         editor.dom.setStyle(selectedCell, 'color', value || '');
                                         editor.fire('change');
                                         _this3.setState({ selectedCellTextColor: value });
                                     }
-                                })
-                            ),
+                                }, {
+                                    label: __('Border Color'),
+                                    value: selectedCellBorderColor,
+                                    onChange: function onChange(value) {
+                                        editor.dom.setAttrib(selectedCell, 'data-border-color', value || '');
+                                        ['top', 'right', 'bottom', 'left'].map(function (pos) {
+                                            if (editor.dom.getStyle(selectedCell, "border-" + pos + "-color")) editor.dom.setStyle(selectedCell, "border-" + pos + "-color", value || '');
+                                        });
+                                        editor.fire('change');
+                                        _this3.setState({ selectedCellBorderColor: value });
+                                    }
+                                }]
+                            }),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Border'), initialOpen: false },
@@ -2667,21 +2651,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         _this3.setState({ selectedCellBorderStyle: value });
                                     }
                                 }),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Border Color'), colorValue: selectedCellBorderColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: selectedCellBorderColor,
-                                        onChange: function onChange(value) {
-                                            editor.dom.setAttrib(selectedCell, 'data-border-color', value || '');
-                                            ['top', 'right', 'bottom', 'left'].map(function (pos) {
-                                                if (editor.dom.getStyle(selectedCell, "border-" + pos + "-color")) editor.dom.setStyle(selectedCell, "border-" + pos + "-color", value || '');
-                                            });
-                                            editor.fire('change');
-                                            _this3.setState({ selectedCellBorderColor: value });
-                                        }
-                                    })
-                                ),
                                 React.createElement(RangeControl, {
                                     label: __('Border width'),
                                     value: selectedCellBorderWidth,
@@ -2848,6 +2817,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             AdvTable.selectFirstCell(editor);
                         }
                         editor.execCommand(command);
+                        editor.fire('change');
                     }
                 };
             }
@@ -2968,11 +2938,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         BlockControls = wpEditor.BlockControls,
-        ColorPalette = wpEditor.ColorPalette,
+        PanelColorSettings = wpEditor.PanelColorSettings,
         MediaUpload = wpEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         ToggleControl = wpComponents.ToggleControl,
         BaseControl = wpComponents.BaseControl,
         TextControl = wpComponents.TextControl,
@@ -3169,7 +3138,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(MediaUpload, {
-                                type: 'image',
+                                allowedTypes: ["image"],
                                 value: posterID,
                                 onSelect: function onSelect(image) {
                                     return setAttributes({ poster: image.url, posterID: image.id });
@@ -3234,60 +3203,61 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             !!openInLightbox && React.createElement(
-                                PanelColor,
-                                { title: __('Overlay Color'), colorValue: overlayColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: overlayColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ overlayColor: value });
-                                    }
-                                })
-                            ),
-                            !!openInLightbox && React.createElement(
-                                PanelBody,
-                                { title: __('Play Button') },
-                                React.createElement(
-                                    BaseControl,
-                                    { label: __('Icon Style') },
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-icon-items-wrapper" },
-                                        Object.keys(PLAY_BUTTON_STYLE).map(function (key, index) {
-                                            return React.createElement(
-                                                "div",
-                                                { className: "advgb-icon-item", key: index },
-                                                React.createElement(
-                                                    "span",
-                                                    { className: key === playButtonIcon ? 'active' : '',
-                                                        onClick: function onClick() {
-                                                            return setAttributes({ playButtonIcon: key });
-                                                        } },
-                                                    React.createElement(
-                                                        "svg",
-                                                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                                                        PLAY_BUTTON_STYLE[key]
-                                                    )
-                                                )
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    label: __('Play Button Size'),
-                                    value: playButtonSize,
-                                    min: 40,
-                                    max: 200,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ playButtonSize: value });
-                                    }
-                                }),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Play Button Color'), colorValue: playButtonColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
+                                Fragment,
+                                null,
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Color Settings'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Overlay Color'),
+                                        value: overlayColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ overlayColor: value });
+                                        }
+                                    }, {
+                                        label: __('Play Button Color'),
                                         value: playButtonColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ playButtonColor: value });
+                                        }
+                                    }]
+                                }),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: __('Play Button') },
+                                    React.createElement(
+                                        BaseControl,
+                                        { label: __('Icon Style') },
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-items-wrapper" },
+                                            Object.keys(PLAY_BUTTON_STYLE).map(function (key, index) {
+                                                return React.createElement(
+                                                    "div",
+                                                    { className: "advgb-icon-item", key: index },
+                                                    React.createElement(
+                                                        "span",
+                                                        { className: key === playButtonIcon ? 'active' : '',
+                                                            onClick: function onClick() {
+                                                                return setAttributes({ playButtonIcon: key });
+                                                            } },
+                                                        React.createElement(
+                                                            "svg",
+                                                            { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                            PLAY_BUTTON_STYLE[key]
+                                                        )
+                                                    )
+                                                );
+                                            })
+                                        )
+                                    ),
+                                    React.createElement(RangeControl, {
+                                        label: __('Play Button Size'),
+                                        value: playButtonSize,
+                                        min: 40,
+                                        max: 200,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ playButtonSize: value });
                                         }
                                     })
                                 )
@@ -3305,11 +3275,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "div",
                                 { className: 'advgb-button-wrapper', style: { height: videoHeight } },
                                 !poster && React.createElement(MediaUpload, {
+                                    allowedTypes: ["image"],
                                     onSelect: function onSelect(media) {
                                         return setAttributes({ poster: media.url, posterID: media.id });
                                     },
                                     value: posterID,
-                                    type: "image",
                                     render: function render(_ref2) {
                                         var open = _ref2.open;
                                         return React.createElement(
@@ -3382,7 +3352,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     __('or use')
                                 ),
                                 React.createElement(MediaUpload, {
-                                    type: 'video',
+                                    allowedTypes: ["video"],
                                     value: videoID,
                                     onSelect: function onSelect(video) {
                                         return setAttributes({ videoURL: video.url, videoID: video.id, videoTitle: video.title, videoSourceType: 'local' });
@@ -3612,10 +3582,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         TextControl = wpComponents.TextControl,
         FormToggle = wpComponents.FormToggle;
 
@@ -3704,6 +3673,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Count Up Settings') },
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Header Color'),
+                                    value: headerTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ headerTextColor: value });
+                                    }
+                                }, {
+                                    label: __('Count Up Color'),
+                                    value: countUpNumberColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ countUpNumberColor: value });
+                                    }
+                                }, {
+                                    label: __('Description Color'),
+                                    value: descTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ descTextColor: value });
+                                    }
+                                }]
+                            }),
                             React.createElement(RangeControl, {
                                 label: __('Columns'),
                                 min: 1,
@@ -3713,36 +3705,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ columns: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Header Color'), colorValue: headerTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: headerTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ headerTextColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Count Up Color'), colorValue: countUpNumberColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: countUpNumberColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ countUpNumberColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Description Color'), colorValue: descTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: descTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ descTextColor: value });
-                                    }
-                                })
-                            ),
                             React.createElement(RangeControl, {
                                 label: __('Counter Number Size'),
                                 min: 10,
@@ -4330,9 +4292,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var addFilter = wpHooks.addFilter;
     var __ = wpI18n.__;
     var InspectorControls = wpEditor.InspectorControls,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var SelectControl = wpComponents.SelectControl,
-        PanelColor = wpComponents.PanelColor,
         PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl;
 
@@ -4379,16 +4340,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     React.createElement(
                         PanelBody,
                         { title: __('Separator Settings') },
-                        React.createElement(
-                            PanelColor,
-                            { title: __('Color'), colorValue: borderColor, initialOpen: false },
-                            React.createElement(ColorPalette, {
+                        React.createElement(PanelColorSettings, {
+                            title: __('Color Settings'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Color'),
                                 value: borderColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderColor: value });
                                 }
-                            })
-                        ),
+                            }]
+                        }),
                         React.createElement(SelectControl, {
                             label: __('Styles'),
                             value: borderStyle,
@@ -4927,7 +4889,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(MediaUpload, {
-                                type: "image",
+                                allowedTypes: ["image"],
                                 value: markerIconID,
                                 onSelect: function onSelect(image) {
                                     return setAttributes({ markerIcon: image.sizes.thumbnail.url, markerIconID: image.id });
@@ -5092,8 +5054,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement("div", { className: 'advgb-map-content', id: mapID, style: { height: height } }),
                 React.createElement(
                     "script",
-                    { "typeof": "text/javascript" },
-                    "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            gestureHandling: 'cooperative',\n                        });\n\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: '" + infoWindowHtml + "'\n                        });\n\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
+                    { type: "text/javascript" },
+                    "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: '" + infoWindowHtml + "'\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
                 )
             );
         }
@@ -5590,11 +5552,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BlockControls = wpEditor.BlockControls,
         MediaUpload = wpEditor.MediaUpload,
         AlignmentToolbar = wpEditor.AlignmentToolbar,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         BaseControl = wpComponents.BaseControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
         Button = wpComponents.Button,
@@ -5606,7 +5567,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment,
         null,
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11 C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81 C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65 c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1 s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
+        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
     );
 
     var socialBlockIcon = React.createElement(
@@ -5976,7 +5937,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     BaseControl,
                                     { label: __('Custom icon') },
                                     React.createElement(MediaUpload, {
-                                        type: "image",
+                                        allowedTypes: ["image"],
                                         value: items[currentSelected].iconID,
                                         onSelect: function onSelect(media) {
                                             var newItems = items.map(function (item, index) {
@@ -6004,15 +5965,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         }
                                     })
                                 )
-                            )
-                        ),
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Icons settings') },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Preset Icon Color'), colorValue: items[currentSelected].iconColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            ),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Preset Icon Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Preset Icon Color'),
                                     value: items[currentSelected].iconColor,
                                     onChange: function onChange(value) {
                                         var newItems = items.map(function (item, index) {
@@ -6026,8 +5984,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                         setAttributes({ items: newItems });
                                     }
-                                })
-                            ),
+                                }]
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Icons settings') },
                             React.createElement(RangeControl, {
                                 label: __('Icon size'),
                                 value: iconSize,
@@ -6225,7 +6187,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var BlockControls = wpEditor.BlockControls,
         InspectorControls = wpEditor.InspectorControls,
         InspectorAdvancedControls = wpEditor.InspectorAdvancedControls,
-        ColorPalette = wpEditor.ColorPalette,
+        PanelColorSettings = wpEditor.PanelColorSettings,
         BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar;
     var IconButton = wpComponents.IconButton,
         Placeholder = wpComponents.Placeholder,
@@ -6233,8 +6195,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Toolbar = wpComponents.Toolbar,
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
-        PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor;
+        PanelBody = wpComponents.PanelBody;
     var select = wpData.select,
         dispatch = wpData.dispatch;
     var addFilter = wpHooks.addFilter;
@@ -6488,16 +6449,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ headerTitle: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Anchor color'), colorValue: anchorColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Anchor Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Anchor Color'),
                                     value: anchorColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ anchorColor: value });
                                     }
-                                })
-                            )
+                                }]
+                            })
                         )
                     ),
                     summaryContent,
@@ -6681,11 +6643,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette;
+        PanelColorSettings = wpEditor.PanelColorSettings;
     var Dashicon = wpComponents.Dashicon,
         Tooltip = wpComponents.Tooltip,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl;
 
@@ -6812,78 +6773,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         InspectorControls,
                         null,
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Tab Settings') },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: headerBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: headerBgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ headerBgColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: headerTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: headerTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ headerTextColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Active Tab Settings') },
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Background Color'), colorValue: activeTabBgColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: activeTabBgColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ activeTabBgColor: value });
-                                        }
-                                    })
-                                ),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Text Color'), colorValue: activeTabTextColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
-                                        value: activeTabTextColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ activeTabTextColor: value });
-                                        }
-                                    })
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Body Settings'), initialOpen: false },
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Background Color'), colorValue: bodyBgColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: bodyBgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ bodyBgColor: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Text Color'), colorValue: bodyTextColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
-                                    value: bodyTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ bodyTextColor: value });
-                                    }
-                                })
-                            )
-                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Tab Colors'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color'),
+                                value: headerBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ headerBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: headerTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ headerTextColor: value });
+                                }
+                            }, {
+                                label: __('Active Tab Background Color'),
+                                value: activeTabBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ activeTabBgColor: value });
+                                }
+                            }, {
+                                label: __('Active Tab Text Color'),
+                                value: activeTabTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ activeTabTextColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Body Colors'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color'),
+                                value: bodyBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: bodyTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyTextColor: value });
+                                }
+                            }]
+                        }),
                         React.createElement(
                             PanelBody,
                             { title: __('Border Settings'), initialOpen: false },
@@ -6895,16 +6830,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Border Color'), colorValue: borderColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Border Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border Color'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderColor: value });
                                     }
-                                })
-                            ),
+                                }]
+                            }),
                             React.createElement(RangeControl, {
                                 label: __('Border width'),
                                 value: borderWidth,
@@ -7298,11 +7234,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette,
+        PanelColorSettings = wpEditor.PanelColorSettings,
         MediaUpload = wpEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        PanelColor = wpComponents.PanelColor,
         Tooltip = wpComponents.Tooltip;
 
     var AdvTestimonial = function (_Component) {
@@ -7406,26 +7341,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 PanelBody,
                                 { title: __('Avatar'), initialOpen: false },
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Background Color'), colorValue: avatarColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Avatar Colors'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Background Color'),
                                         value: avatarColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ avatarColor: value });
                                         }
-                                    })
-                                ),
-                                React.createElement(
-                                    PanelColor,
-                                    { title: __('Border Color'), colorValue: avatarBorderColor, initialOpen: false },
-                                    React.createElement(ColorPalette, {
+                                    }, {
+                                        label: __('Border Color'),
                                         value: avatarBorderColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ avatarBorderColor: value });
                                         }
-                                    })
-                                ),
+                                    }]
+                                }),
                                 React.createElement(RangeControl, {
                                     label: __('Border Radius (%)'),
                                     min: 0,
@@ -7454,36 +7386,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 })
                             ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Name Color'), colorValue: nameColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                            React.createElement(PanelColorSettings, {
+                                title: __('Text Colors'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Name Color'),
                                     value: nameColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ nameColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Position Color'), colorValue: positionColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Position Color'),
                                     value: positionColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ positionColor: value });
                                     }
-                                })
-                            ),
-                            React.createElement(
-                                PanelColor,
-                                { title: __('Description Color'), colorValue: descColor, initialOpen: false },
-                                React.createElement(ColorPalette, {
+                                }, {
+                                    label: __('Description Color'),
                                     value: descColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ descColor: value });
                                     }
-                                })
-                            )
+                                }]
+                            })
                         )
                     ),
                     React.createElement(
@@ -7493,11 +7418,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             'div',
                             { className: 'advgb-testimonial-columns-one' },
                             React.createElement(MediaUpload, {
+                                allowedTypes: ["image"],
                                 onSelect: function onSelect(media) {
                                     return setAttributes({ avatarUrl: media.sizes.thumbnail.url, avatarID: media.id });
                                 },
                                 value: avatarID,
-                                type: 'image',
                                 render: function render(_ref) {
                                     var open = _ref.open;
                                     return React.createElement(
@@ -7578,11 +7503,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             'div',
                             { className: 'advgb-testimonial-columns-two' },
                             React.createElement(MediaUpload, {
+                                allowedTypes: ["image"],
                                 onSelect: function onSelect(media) {
                                     return setAttributes({ avatarUrl2: media.sizes.thumbnail.url, avatarID2: media.id });
                                 },
                                 value: avatarID2,
-                                type: 'image',
                                 render: function render(_ref2) {
                                     var open = _ref2.open;
                                     return React.createElement(
@@ -7663,11 +7588,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             'div',
                             { className: 'advgb-testimonial-columns-three' },
                             React.createElement(MediaUpload, {
+                                allowedTypes: ["image"],
                                 onSelect: function onSelect(media) {
                                     return setAttributes({ avatarUrl3: media.sizes.thumbnail.url, avatarID3: media.id });
                                 },
                                 value: avatarID3,
-                                type: 'image',
                                 render: function render(_ref3) {
                                     var open = _ref3.open;
                                     return React.createElement(

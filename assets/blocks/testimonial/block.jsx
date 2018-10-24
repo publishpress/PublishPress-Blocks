@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, ColorPalette, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, Tooltip } = wpComponents;
+    const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpEditor;
+    const { RangeControl, PanelBody, Tooltip } = wpComponents;
 
     class AdvTestimonial extends Component {
         constructor() {
@@ -76,18 +76,22 @@
                                 onChange={ (value) => setAttributes( { columns: value } ) }
                             />
                             <PanelBody title={ __( 'Avatar' ) } initialOpen={ false }>
-                                <PanelColor title={ __( 'Background Color' ) } colorValue={ avatarColor } initialOpen={ false }>
-                                    <ColorPalette
-                                        value={ avatarColor }
-                                        onChange={ (value) => setAttributes( { avatarColor: value } ) }
-                                    />
-                                </PanelColor>
-                                <PanelColor title={ __( 'Border Color' ) } colorValue={ avatarBorderColor } initialOpen={ false }>
-                                    <ColorPalette
-                                        value={ avatarBorderColor }
-                                        onChange={ (value) => setAttributes( { avatarBorderColor: value } ) }
-                                    />
-                                </PanelColor>
+                                <PanelColorSettings
+                                    title={ __( 'Avatar Colors' ) }
+                                    initialOpen={ false }
+                                    colorSettings={ [
+                                        {
+                                            label: __( 'Background Color' ),
+                                            value: avatarColor,
+                                            onChange: ( value ) => setAttributes( { avatarColor: value } ),
+                                        },
+                                        {
+                                            label: __( 'Border Color' ),
+                                            value: avatarBorderColor,
+                                            onChange: ( value ) => setAttributes( { avatarBorderColor: value } ),
+                                        },
+                                    ] }
+                                />
                                 <RangeControl
                                     label={ __( 'Border Radius (%)' ) }
                                     min={ 0 }
@@ -110,32 +114,35 @@
                                     onChange={ (value) => setAttributes( { avatarSize: value } ) }
                                 />
                             </PanelBody>
-                            <PanelColor title={ __( 'Name Color' ) } colorValue={ nameColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ nameColor }
-                                    onChange={ (value) => setAttributes( { nameColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Position Color' ) } colorValue={ positionColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ positionColor }
-                                    onChange={ (value) => setAttributes( { positionColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Description Color' ) } colorValue={ descColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ descColor }
-                                    onChange={ (value) => setAttributes( { descColor: value } ) }
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Text Colors' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Name Color' ),
+                                        value: nameColor,
+                                        onChange: ( value ) => setAttributes( { nameColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Position Color' ),
+                                        value: positionColor,
+                                        onChange: ( value ) => setAttributes( { positionColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Description Color' ),
+                                        value: descColor,
+                                        onChange: ( value ) => setAttributes( { descColor: value } ),
+                                    },
+                                ] }
+                            />
                         </PanelBody>
                     </InspectorControls>
                     <div className={`advgb-testimonial advgb-column-${columns}`}>
                         <div className="advgb-testimonial-columns-one">
                             <MediaUpload
+                                allowedTypes={ ["image"] }
                                 onSelect={ (media) => setAttributes( { avatarUrl: media.sizes.thumbnail.url, avatarID: media.id } ) }
                                 value={ avatarID }
-                                type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
                                         <Tooltip text={ __( 'Click to change avatar' ) }>
@@ -193,9 +200,9 @@
                         </div>
                         <div className="advgb-testimonial-columns-two">
                             <MediaUpload
+                                allowedTypes={ ["image"] }
                                 onSelect={ (media) => setAttributes( { avatarUrl2: media.sizes.thumbnail.url, avatarID2: media.id } ) }
                                 value={ avatarID2 }
-                                type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
                                         <Tooltip text={ __( 'Click to change avatar' ) }>
@@ -253,9 +260,9 @@
                         </div>
                         <div className="advgb-testimonial-columns-three">
                             <MediaUpload
+                                allowedTypes={ ["image"] }
                                 onSelect={ (media) => setAttributes( { avatarUrl3: media.sizes.thumbnail.url, avatarID3: media.id } ) }
                                 value={ avatarID3 }
-                                type="image"
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
                                         <Tooltip text={ __( 'Click to change avatar' ) }>

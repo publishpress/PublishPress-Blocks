@@ -905,7 +905,9 @@ float: left;'
             foreach ($setting as $k => $option) {
                 $option = sanitize_text_field($option);
                 if (is_numeric($option)) {
-                    $option = floatval($option);
+                    if ($k !== 'lat' && $k !== 'lng') {
+                        $option = floatval($option);
+                    }
                 }
 
                 $settings[$key][$k] = $option;
