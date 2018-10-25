@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "wp_version": "4.9.8",
   "ignore_files" : [
     "manifest.json",
@@ -20,10 +20,16 @@
     "babel.rc"
   ],
   "changelog": {
+    "1.7.5": [
+      {
+        "type": "fix",
+        "title": "Compatibility with Gutenberg ver 4.1.0"
+      }
+    ],
     "1.7.4": [
       {
         "type": "fix",
-        "title": "Category on Recent Posts not saved"
+        "title": "Category on Recent Posts block is not saved"
       },
       {
         "type": "fix",

@@ -349,7 +349,7 @@ float: left;'
 
             wp_add_inline_script(
                 'wp-blocks',
-                sprintf('wp.blocks.setCategories( %s );', wp_json_encode(get_block_categories(get_post()))),
+                sprintf('wp.blocks.setCategories( %s );', wp_json_encode(gutenberg_get_block_categories(get_post()))),
                 'after'
             );
 
