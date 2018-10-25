@@ -38,7 +38,7 @@ wp_enqueue_script('advgb_update_list');
 wp_localize_script('advgb_update_list', 'advgbUpdate', array('onProfile' => true));
 wp_add_inline_script(
     'wp-blocks',
-    sprintf('wp.blocks.setCategories( %s );', wp_json_encode(get_block_categories(get_post()))),
+    sprintf('wp.blocks.setCategories( %s );', wp_json_encode(gutenberg_get_block_categories(get_post()))),
     'after'
 );
 
