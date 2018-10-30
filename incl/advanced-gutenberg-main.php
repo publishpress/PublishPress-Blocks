@@ -280,19 +280,19 @@ float: left;'
         $custom_styles_url = wp_upload_dir();
         $custom_styles_url = $custom_styles_url['baseurl'] . '/advgb/';
         wp_enqueue_style(
-            'custom_styles',
+            'advgb_custom_styles',
             $custom_styles_url . 'custom_styles.css'
         );
         wp_enqueue_style('dashicons');
 
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
             wp_enqueue_style(
-                'blocks_styles',
+                'advgb_blocks_styles',
                 plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
             );
         } else {
             wp_enqueue_style(
-                'blocks_styles_min',
+                'advgb_blocks_styles_min',
                 plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
             );
         }
@@ -300,7 +300,7 @@ float: left;'
         $saved_settings = get_option('advgb_settings');
         if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
             wp_enqueue_script(
-                'map_api',
+                'advgb_map_api',
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
             );
             add_filter('script_loader_tag', 'addScriptAttributes', 10, 2);
@@ -966,7 +966,7 @@ float: left;'
             plugins_url('assets/css/settings.css', dirname(__FILE__))
         );
         wp_register_style(
-            'qtip_style',
+            'advgb_qtip_style',
             plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
         );
         wp_register_style(
