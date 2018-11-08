@@ -2173,6 +2173,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2225,7 +2227,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             _this.state = {
                 selectedCell: null,
-                rangeSelected: {}
+                rangeSelected: null
             };
             return _this;
         }
@@ -2369,9 +2371,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     })
                 });
             }
+
+            // Parse styles from HTML form to React styles object
+
+        }, {
+            key: "getCellStyles",
+            value: function getCellStyles(style) {
+                var selectedCell = this.state.selectedCell;
+                var body = this.props.attributes.body;
+
+
+                if (!selectedCell) return null;
+
+                var rowIndex = selectedCell.rowIndex,
+                    colIndex = selectedCell.colIndex;
+
+
+                if (style === 'borderColor') {
+                    return body[rowIndex].cells[colIndex].borderColorSaved;
+                }
+                var styles = AdvTable.parseStyles(body[rowIndex].cells[colIndex].styles);
+
+                if ((typeof styles === "undefined" ? "undefined" : _typeof(styles)) === 'object') {
+                    var _convertedStyles = styles[style];
+
+                    if (_convertedStyles && typeof _convertedStyles !== 'number' && _convertedStyles.indexOf('px')) {
+                        _convertedStyles = styles[style].replace(/px/g, '');
+                    }
+
+                    return typeof _convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : _convertedStyles;
+                } else {
+                    return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : null;
+                }
+            }
         }, {
             key: "updateCellsStyles",
-            value: function updateCellsStyles(styles) {
+            value: function updateCellsStyles(style) {
                 var cells = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state.selectedCell;
 
                 if (!cells) {
@@ -2395,7 +2430,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         cells: row.cells.map(function (cell, curColIndex) {
                             if (curColIndex === colIndex) {
                                 cell.styles = AdvTable.parseStyles(cell.styles);
-                                cell.styles = _extends({}, cell.styles, styles);
+
+                                if (style.borderColor) {
+                                    if (cell.styles.borderTopColor) {
+                                        cell.styles = _extends({}, cell.styles, { borderTopColor: style.borderColor });
+                                    }
+                                    if (cell.styles.borderRightColor) {
+                                        cell.styles = _extends({}, cell.styles, { borderRightColor: style.borderColor });
+                                    }
+                                    if (cell.styles.borderBottomColor) {
+                                        cell.styles = _extends({}, cell.styles, { borderBottomColor: style.borderColor });
+                                    }
+                                    if (cell.styles.borderLeftColor) {
+                                        cell.styles = _extends({}, cell.styles, { borderLeftColor: style.borderColor });
+                                    }
+
+                                    cell.borderColorSaved = style.borderColor;
+                                } else {
+                                    cell.styles = _extends({}, cell.styles, style);
+                                }
                             }
 
                             return cell;
@@ -2535,6 +2588,131 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     }
                 }];
 
+                var BORDER_SELECT = [{
+                    title: __('Border Top'),
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M7 21h2v-2H7v2zm0-8h2v-2H7v2zm4 0h2v-2h-2v2zm0 8h2v-2h-2v2zm-8-4h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2v-2H3v2zm0-4h2V7H3v2zm8 8h2v-2h-2v2zm8-8h2V7h-2v2zm0 4h2v-2h-2v2zM3 3v2h18V3H3zm16 14h2v-2h-2v2zm-4 4h2v-2h-2v2zM11 9h2V7h-2v2zm8 12h2v-2h-2v2zm-4-8h2v-2h-2v2z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    onClick: function onClick() {
+                        return _this2.updateCellsStyles({ borderTopColor: _this2.getCellStyles('borderColor') });
+                    }
+                }, {
+                    title: __('Border Right'),
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M7 21h2v-2H7v2zM3 5h2V3H3v2zm4 0h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2v-2H3v2zm8 0h2v-2h-2v2zm-8-8h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm8 8h2v-2h-2v2zm4-4h2v-2h-2v2zm4-10v18h2V3h-2zm-4 18h2v-2h-2v2zm0-16h2V3h-2v2zm-4 8h2v-2h-2v2zm0-8h2V3h-2v2zm0 4h2V7h-2v2z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    onClick: function onClick() {
+                        return _this2.updateCellsStyles({ borderRightColor: _this2.getCellStyles('borderColor') });
+                    }
+                }, {
+                    title: __('Border Bottom'),
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M9 11H7v2h2v-2zm4 4h-2v2h2v-2zM9 3H7v2h2V3zm4 8h-2v2h2v-2zM5 3H3v2h2V3zm8 4h-2v2h2V7zm4 4h-2v2h2v-2zm-4-8h-2v2h2V3zm4 0h-2v2h2V3zm2 10h2v-2h-2v2zm0 4h2v-2h-2v2zM5 7H3v2h2V7zm14-4v2h2V3h-2zm0 6h2V7h-2v2zM5 11H3v2h2v-2zM3 21h18v-2H3v2zm2-6H3v2h2v-2z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    onClick: function onClick() {
+                        return _this2.updateCellsStyles({ borderBottomColor: _this2.getCellStyles('borderColor') });
+                    }
+                }, {
+                    title: __('Border Left'),
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M11 21h2v-2h-2v2zm0-4h2v-2h-2v2zm0-12h2V3h-2v2zm0 4h2V7h-2v2zm0 4h2v-2h-2v2zm-4 8h2v-2H7v2zM7 5h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2V3H3v18zM19 9h2V7h-2v2zm-4 12h2v-2h-2v2zm4-4h2v-2h-2v2zm0-14v2h2V3h-2zm0 10h2v-2h-2v2zm0 8h2v-2h-2v2zm-4-8h2v-2h-2v2zm0-8h2V3h-2v2z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    onClick: function onClick() {
+                        return _this2.updateCellsStyles({ borderLeftColor: _this2.getCellStyles('borderColor') });
+                    }
+                }, {
+                    title: __('Border All'),
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    onClick: function onClick() {
+                        return _this2.updateCellsStyles({
+                            borderTopColor: _this2.getCellStyles('borderColor'),
+                            borderRightColor: _this2.getCellStyles('borderColor'),
+                            borderBottomColor: _this2.getCellStyles('borderColor'),
+                            borderLeftColor: _this2.getCellStyles('borderColor')
+                        }, selectedCell);
+                    }
+                }, {
+                    title: __('Border None'),
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M7 5h2V3H7v2zm0 8h2v-2H7v2zm0 8h2v-2H7v2zm4-4h2v-2h-2v2zm0 4h2v-2h-2v2zm-8 0h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2V7H3v2zm0-4h2V3H3v2zm8 8h2v-2h-2v2zm8 4h2v-2h-2v2zm0-4h2v-2h-2v2zm0 8h2v-2h-2v2zm0-12h2V7h-2v2zm-8 0h2V7h-2v2zm8-6v2h2V3h-2zm-8 2h2V3h-2v2zm4 16h2v-2h-2v2zm0-8h2v-2h-2v2zm0-8h2V3h-2v2z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    onClick: function onClick() {
+                        return _this2.updateCellsStyles({
+                            borderTopColor: undefined,
+                            borderRightColor: undefined,
+                            borderBottomColor: undefined,
+                            borderLeftColor: undefined
+                        }, selectedCell);
+                    }
+                }];
+
+                var HORZ_ALIGNMENT_CONTROLS = [{
+                    icon: 'editor-alignleft',
+                    title: __('Align left'),
+                    align: 'left'
+                }, {
+                    icon: 'editor-aligncenter',
+                    title: __('Align center'),
+                    align: 'center'
+                }, {
+                    icon: 'editor-alignright',
+                    title: __('Align right'),
+                    align: 'right'
+                }, {
+                    icon: 'editor-justify',
+                    title: __('Align justify'),
+                    align: 'justify'
+                }];
+
+                var VERT_ALIGNMENT_CONTROLS = [{
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Align top'),
+                    align: 'top'
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Align middle'),
+                    align: 'middle'
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Align bottom'),
+                    align: 'bottom'
+                }];
+
                 return React.createElement(
                     Fragment,
                     null,
@@ -2561,22 +2739,100 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 title: __('Color Settings'),
                                 colorSettings: [{
                                     label: __('Background Color'),
-                                    value: function value() {
-                                        if (!selectedCell) return null;
-
-                                        var styles = AdvTable.parseStyles(body[selectedCell.rowIndex].cells[selectedCell.colIndex].styles);
-                                        console.log(styles);
-                                        if (styles) {
-                                            return styles.backgroundColor;
-                                        } else {
-                                            return null;
-                                        }
-                                    },
+                                    value: this.getCellStyles('backgroundColor'),
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ backgroundColor: value }, selectedCell);
+                                        return _this2.updateCellsStyles({ backgroundColor: value });
+                                    }
+                                }, {
+                                    label: __('Text Color'),
+                                    value: this.getCellStyles('color'),
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ color: value });
+                                    }
+                                }, {
+                                    label: __('Border Color'),
+                                    value: this.getCellStyles('borderColor'),
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ borderColor: value });
                                     }
                                 }]
-                            })
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Border'), initialOpen: false },
+                                React.createElement(SelectControl, {
+                                    label: __('Border Style'),
+                                    value: this.getCellStyles('borderStyle'),
+                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }, { label: __('None'), value: 'none' }],
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ borderStyle: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Border width'),
+                                    value: this.getCellStyles('borderWidth'),
+                                    min: 1,
+                                    max: 10,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ borderWidth: value });
+                                    }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: 'advgb-border-item-wrapper' },
+                                    BORDER_SELECT.map(function (item, index) {
+                                        return React.createElement(
+                                            "div",
+                                            { className: 'advgb-border-item', key: index },
+                                            React.createElement(
+                                                Tooltip,
+                                                { text: item.title },
+                                                React.createElement(
+                                                    "span",
+                                                    { onClick: item.onClick },
+                                                    item.icon
+                                                )
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Text Alignment'), initialOpen: false },
+                                React.createElement(
+                                    BaseControl,
+                                    { label: __('Horizontal Align') },
+                                    React.createElement(Toolbar, {
+                                        controls: HORZ_ALIGNMENT_CONTROLS.map(function (control) {
+                                            var isActive = _this2.getCellStyles('textAlign') === control.align;
+
+                                            return _extends({}, control, {
+                                                isActive: isActive,
+                                                onClick: function onClick() {
+                                                    return _this2.updateCellsStyles({ textAlign: isActive ? undefined : control.align });
+                                                }
+                                            });
+                                        })
+                                    })
+                                ),
+                                React.createElement(
+                                    BaseControl,
+                                    { label: __('Vertical Align') },
+                                    React.createElement(Toolbar, {
+                                        controls: VERT_ALIGNMENT_CONTROLS.map(function (control) {
+                                            var isActive = _this2.getCellStyles('verticalAlign') === control.align;
+
+                                            return _extends({}, control, {
+                                                isActive: isActive,
+                                                onClick: function onClick() {
+                                                    return _this2.updateCellsStyles({ verticalAlign: isActive ? undefined : control.align });
+                                                }
+                                            });
+                                        })
+                                    })
+                                )
+                            )
                         )
                     ),
                     React.createElement(
@@ -2690,6 +2946,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 type: 'string',
                                 source: 'attribute',
                                 attribute: 'rowspan'
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color'
                             }
                         }
                     }
@@ -2727,14 +2988,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             cells.map(function (_ref5, colIndex) {
                                 var content = _ref5.content,
                                     styles = _ref5.styles,
-                                    colSpan = _ref5.colSpan;
+                                    colSpan = _ref5.colSpan,
+                                    rowSpan = _ref5.rowSpan,
+                                    borderColorSaved = _ref5.borderColorSaved;
                                 return React.createElement(RichText.Content, {
                                     tagName: "td",
                                     value: content,
                                     key: colIndex,
                                     style: styles,
                                     colSpan: colSpan,
-                                    "data-styles": console.log(styles)
+                                    "data-border-color": borderColorSaved
                                 });
                             })
                         );

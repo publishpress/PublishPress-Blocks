@@ -18,7 +18,7 @@
             super( ...arguments );
             this.state = {
                 selectedCell: null,
-                rangeSelected: {},
+                rangeSelected: null,
             };
         }
 
@@ -131,6 +131,7 @@
             } )
         }
 
+        // Parse styles from HTML form to React styles object
         static parseStyles( styles ) {
             if (typeof styles !== 'string') {
                 return styles;
@@ -149,7 +150,33 @@
                 }), {});
         }
 
-        updateCellsStyles( styles, cells = this.state.selectedCell ) {
+        getCellStyles( style ) {
+            const { selectedCell } = this.state;
+            const { body } = this.props.attributes;
+
+            if (!selectedCell) return null;
+
+            const { rowIndex, colIndex } = selectedCell;
+
+            if (style === 'borderColor') {
+                return body[rowIndex].cells[colIndex].borderColorSaved;
+            }
+            const styles = AdvTable.parseStyles(body[rowIndex].cells[colIndex].styles);
+
+            if (typeof styles === 'object') {
+                let convertedStyles = styles[style];
+
+                if (convertedStyles && typeof convertedStyles !== 'number' && convertedStyles.indexOf( 'px' )) {
+                    convertedStyles = styles[style].replace( /px/g, '' );
+                }
+
+                return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : convertedStyles;
+            } else {
+                return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : null;
+            }
+        }
+
+        updateCellsStyles( style, cells = this.state.selectedCell ) {
             if (!cells) {
                 return null;
             }
@@ -167,7 +194,25 @@
                     cells: row.cells.map( ( cell, curColIndex ) => {
                         if (curColIndex === colIndex) {
                             cell.styles = AdvTable.parseStyles( cell.styles );
-                            cell.styles = { ...cell.styles, ...styles };
+
+                            if (style.borderColor) {
+                                if (cell.styles.borderTopColor) {
+                                    cell.styles = { ...cell.styles, borderTopColor: style.borderColor };
+                                }
+                                if (cell.styles.borderRightColor) {
+                                    cell.styles = { ...cell.styles, borderRightColor: style.borderColor };
+                                }
+                                if (cell.styles.borderBottomColor) {
+                                    cell.styles = { ...cell.styles, borderBottomColor: style.borderColor };
+                                }
+                                if (cell.styles.borderLeftColor) {
+                                    cell.styles = { ...cell.styles, borderLeftColor: style.borderColor };
+                                }
+
+                                cell.borderColorSaved = style.borderColor;
+                            } else {
+                                cell.styles = { ...cell.styles, ...style };
+                            }
                         }
 
                         return cell;
@@ -284,6 +329,135 @@
                 },
             ];
 
+            const BORDER_SELECT = [
+                {
+                    title: __( 'Border Top' ),
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M7 21h2v-2H7v2zm0-8h2v-2H7v2zm4 0h2v-2h-2v2zm0 8h2v-2h-2v2zm-8-4h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2v-2H3v2zm0-4h2V7H3v2zm8 8h2v-2h-2v2zm8-8h2V7h-2v2zm0 4h2v-2h-2v2zM3 3v2h18V3H3zm16 14h2v-2h-2v2zm-4 4h2v-2h-2v2zM11 9h2V7h-2v2zm8 12h2v-2h-2v2zm-4-8h2v-2h-2v2z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    onClick: () => this.updateCellsStyles( { borderTopColor: this.getCellStyles( 'borderColor' ) } ),
+                },
+                {
+                    title: __( 'Border Right' ),
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M7 21h2v-2H7v2zM3 5h2V3H3v2zm4 0h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2v-2H3v2zm8 0h2v-2h-2v2zm-8-8h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm8 8h2v-2h-2v2zm4-4h2v-2h-2v2zm4-10v18h2V3h-2zm-4 18h2v-2h-2v2zm0-16h2V3h-2v2zm-4 8h2v-2h-2v2zm0-8h2V3h-2v2zm0 4h2V7h-2v2z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    onClick: () => this.updateCellsStyles( { borderRightColor: this.getCellStyles( 'borderColor' ) } ),
+                },
+                {
+                    title: __( 'Border Bottom' ),
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M9 11H7v2h2v-2zm4 4h-2v2h2v-2zM9 3H7v2h2V3zm4 8h-2v2h2v-2zM5 3H3v2h2V3zm8 4h-2v2h2V7zm4 4h-2v2h2v-2zm-4-8h-2v2h2V3zm4 0h-2v2h2V3zm2 10h2v-2h-2v2zm0 4h2v-2h-2v2zM5 7H3v2h2V7zm14-4v2h2V3h-2zm0 6h2V7h-2v2zM5 11H3v2h2v-2zM3 21h18v-2H3v2zm2-6H3v2h2v-2z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    onClick: () => this.updateCellsStyles( { borderBottomColor: this.getCellStyles( 'borderColor' ) } ),
+                },
+                {
+                    title: __( 'Border Left' ),
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M11 21h2v-2h-2v2zm0-4h2v-2h-2v2zm0-12h2V3h-2v2zm0 4h2V7h-2v2zm0 4h2v-2h-2v2zm-4 8h2v-2H7v2zM7 5h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2V3H3v18zM19 9h2V7h-2v2zm-4 12h2v-2h-2v2zm4-4h2v-2h-2v2zm0-14v2h2V3h-2zm0 10h2v-2h-2v2zm0 8h2v-2h-2v2zm-4-8h2v-2h-2v2zm0-8h2V3h-2v2z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    onClick: () => this.updateCellsStyles( { borderLeftColor: this.getCellStyles( 'borderColor' ) } ),
+                },
+                {
+                    title: __( 'Border All' ),
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    onClick: () => this.updateCellsStyles( {
+                        borderTopColor: this.getCellStyles( 'borderColor' ),
+                        borderRightColor: this.getCellStyles( 'borderColor' ),
+                        borderBottomColor: this.getCellStyles( 'borderColor' ),
+                        borderLeftColor: this.getCellStyles( 'borderColor' ),
+                    }, selectedCell ),
+                },
+                {
+                    title: __( 'Border None' ),
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M7 5h2V3H7v2zm0 8h2v-2H7v2zm0 8h2v-2H7v2zm4-4h2v-2h-2v2zm0 4h2v-2h-2v2zm-8 0h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2V7H3v2zm0-4h2V3H3v2zm8 8h2v-2h-2v2zm8 4h2v-2h-2v2zm0-4h2v-2h-2v2zm0 8h2v-2h-2v2zm0-12h2V7h-2v2zm-8 0h2V7h-2v2zm8-6v2h2V3h-2zm-8 2h2V3h-2v2zm4 16h2v-2h-2v2zm0-8h2v-2h-2v2zm0-8h2V3h-2v2z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    onClick: () => this.updateCellsStyles( {
+                        borderTopColor: undefined,
+                        borderRightColor: undefined,
+                        borderBottomColor: undefined,
+                        borderLeftColor: undefined,
+                    }, selectedCell ),
+                },
+            ];
+
+            const HORZ_ALIGNMENT_CONTROLS = [
+                {
+                    icon: 'editor-alignleft',
+                    title: __( 'Align left' ),
+                    align: 'left',
+                },
+                {
+                    icon: 'editor-aligncenter',
+                    title: __( 'Align center' ),
+                    align: 'center',
+                },
+                {
+                    icon: 'editor-alignright',
+                    title: __( 'Align right' ),
+                    align: 'right',
+                },
+                {
+                    icon: 'editor-justify',
+                    title: __( 'Align justify' ),
+                    align: 'justify',
+                },
+            ];
+
+            const VERT_ALIGNMENT_CONTROLS = [
+                {
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    title: __( 'Align top' ),
+                    align: 'top',
+                },
+                {
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    title: __( 'Align middle' ),
+                    align: 'middle',
+                },
+                {
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z"/>
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                        </svg>
+                    ),
+                    title: __( 'Align bottom' ),
+                    align: 'bottom',
+                },
+            ];
+
             return (
                 <Fragment>
                     <BlockControls>
@@ -302,21 +476,78 @@
                                 colorSettings={ [
                                     {
                                         label: __( 'Background Color' ),
-                                        value: () => {
-                                            if (!selectedCell) return null;
-
-                                            const styles = AdvTable.parseStyles(body[selectedCell.rowIndex].cells[selectedCell.colIndex].styles);
-                                            console.log(styles);
-                                            if (styles) {
-                                                return styles.backgroundColor;
-                                            } else {
-                                                return null;
-                                            }
-                                        },
-                                        onChange: ( value ) => this.updateCellsStyles( { backgroundColor: value }, selectedCell ),
+                                        value: this.getCellStyles( 'backgroundColor' ),
+                                        onChange: ( value ) => this.updateCellsStyles( { backgroundColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Text Color' ),
+                                        value: this.getCellStyles( 'color' ),
+                                        onChange: ( value ) => this.updateCellsStyles( { color: value } ),
+                                    },
+                                    {
+                                        label: __( 'Border Color' ),
+                                        value: this.getCellStyles( 'borderColor' ),
+                                        onChange: ( value ) => this.updateCellsStyles( { borderColor: value } ),
                                     },
                                 ] }
                             />
+                            <PanelBody title={ __( 'Border' ) } initialOpen={ false }>
+                                <SelectControl
+                                    label={ __( 'Border Style' ) }
+                                    value={ this.getCellStyles( 'borderStyle' ) }
+                                    options={ [
+                                        { label: __( 'Solid' ), value: 'solid' },
+                                        { label: __( 'Dashed' ), value: 'dashed' },
+                                        { label: __( 'Dotted' ), value: 'dotted' },
+                                        { label: __( 'None' ), value: 'none' },
+                                    ] }
+                                    onChange={ ( value ) => this.updateCellsStyles( { borderStyle: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Border width' ) }
+                                    value={ this.getCellStyles( 'borderWidth' ) }
+                                    min={ 1 }
+                                    max={ 10 }
+                                    onChange={ ( value ) => this.updateCellsStyles( { borderWidth: value } ) }
+                                />
+                                <div className={ 'advgb-border-item-wrapper' }>
+                                    {BORDER_SELECT.map( ( item, index ) => (
+                                        <div className={ 'advgb-border-item' } key={ index }>
+                                            <Tooltip text={ item.title }>
+                                                <span onClick={ item.onClick }>{ item.icon }</span>
+                                            </Tooltip>
+                                        </div>
+                                    ) ) }
+                                </div>
+                            </PanelBody>
+                            <PanelBody title={ __( 'Text Alignment' ) } initialOpen={ false }>
+                                <BaseControl label={ __( 'Horizontal Align' ) }>
+                                    <Toolbar
+                                        controls={ HORZ_ALIGNMENT_CONTROLS.map( ( control ) => {
+                                            const isActive = ( this.getCellStyles( 'textAlign' ) === control.align );
+
+                                            return {
+                                                ...control,
+                                                isActive,
+                                                onClick: () => this.updateCellsStyles( { textAlign: isActive ? undefined : control.align } ),
+                                            };
+                                        } ) }
+                                    />
+                                </BaseControl>
+                                <BaseControl label={ __( 'Vertical Align' ) }>
+                                    <Toolbar
+                                        controls={ VERT_ALIGNMENT_CONTROLS.map( ( control ) => {
+                                            const isActive = ( this.getCellStyles( 'verticalAlign' ) === control.align );
+
+                                            return {
+                                                ...control,
+                                                isActive,
+                                                onClick: () => this.updateCellsStyles( { verticalAlign: isActive ? undefined : control.align } ),
+                                            };
+                                        } ) }
+                                    />
+                                </BaseControl>
+                            </PanelBody>
                         </PanelBody>
                     </InspectorControls>
                     <table className={ className }>
@@ -400,6 +631,11 @@
                                 source: 'attribute',
                                 attribute: 'rowspan',
                             },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color',
+                            }
                         },
                     },
                 },
@@ -425,14 +661,14 @@
                     <tbody>
                     { body.map( ( { cells }, rowIndex ) => (
                         <tr key={ rowIndex }>
-                            { cells.map( ( { content, styles, colSpan }, colIndex ) => (
+                            { cells.map( ( { content, styles, colSpan, rowSpan, borderColorSaved }, colIndex ) => (
                                 <RichText.Content
                                     tagName="td"
                                     value={ content }
                                     key={ colIndex }
                                     style={ styles }
                                     colSpan={ colSpan }
-                                    data-styles={console.log(styles)}
+                                    data-border-color={ borderColorSaved }
                                 />
                             ) ) }
                         </tr>
