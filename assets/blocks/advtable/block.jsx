@@ -41,7 +41,10 @@
             const { selectedCell } = this.state;
 
             if ( ! isSelected && selectedCell ) {
-                this.setState( { selectedCell: null } );
+                this.setState( {
+                    selectedCell: null,
+                    rangeSelected: null,
+                } );
             }
         }
 
@@ -129,6 +132,52 @@
                     cells: row.cells.filter( ( cell, index ) => index !== colIndex ),
                 } ) ),
             } )
+        }
+
+        mergeCells() {
+            const { rangeSelected } = this.state;
+
+            if (!rangeSelected) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { fromCell, toCell } = rangeSelected;
+            const { body } = attributes;
+
+            const newBody = body.map( ( row, curRowIndex ) => {
+                if (curRowIndex < Math.min(fromCell.rowIdx, toCell.rowIdx)
+                    || curRowIndex > Math.max(fromCell.rowIdx, toCell.rowIdx)
+                ) {
+                    return row;
+                }
+
+                return {
+                    cells: row.cells.map( ( cell, curColIndex ) => {
+                        if (curColIndex === Math.min(fromCell.colIdx, toCell.colIdx)
+                            && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx)
+                        ) {
+                            const rowSpan = Math.abs(fromCell.rowIdx - toCell.rowIdx) + 1;
+                            const colSpan = Math.abs(fromCell.colIdx - toCell.colIdx) + 1;
+
+                            return {
+                                ...cell,
+                                rowSpan: rowSpan > 1 ? rowSpan : undefined,
+                                colSpan: colSpan > 1 ? colSpan : undefined,
+                            }
+                        }
+
+                        return cell;
+                    } ).filter( (cell, cCol) =>
+                        cCol < Math.min(fromCell.colIdx, toCell.colIdx)
+                        || ( cCol === Math.min(fromCell.colIdx, toCell.colIdx) && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx) )
+                        || cCol > Math.max(fromCell.colIdx, toCell.colIdx)
+                    )
+                }
+            } );
+
+            setAttributes( { body: newBody } );
+            this.setState( { selectedCell: null, rangeSelected: null } );
         }
 
         // Parse styles from HTML form to React styles object
@@ -223,37 +272,6 @@
             setAttributes( { body: newBody } );
         }
 
-        updateCellsSpan( spanType, value, selectedCell = this.state.selectedCell ) {
-            if (!selectedCell) {
-                return null;
-            }
-
-            const { attributes, setAttributes } = this.props;
-            const { rowIndex, colIndex } = selectedCell;
-            const { body } = attributes;
-
-            const newBody = body.map( ( row, curRowIndex ) => {
-                if (curRowIndex !== rowIndex) {
-                    return row;
-                }
-
-                return {
-                    cells: row.cells.map( ( cell, curColIndex ) => {
-                        if (curColIndex !== colIndex) {
-                            return cell;
-                        }
-
-                        return {
-                            ...cell,
-                            [ spanType ] : value,
-                        }
-                    } )
-                }
-            } );
-
-            setAttributes( { body: newBody } );
-        }
-
         updateCellContent( content, selectedCell = this.state.selectedCell ) {
             if (!selectedCell) {
                 return null;
@@ -288,7 +306,7 @@
         render() {
             const { attributes, setAttributes, className } = this.props;
             const { body, maxWidth } = attributes;
-            const { selectedCell } = this.state;
+            const { selectedCell, rangeSelected } = this.state;
 
             const TABLE_CONTROLS = [
                 {
@@ -326,6 +344,30 @@
                     title: __( 'Delete Column' ),
                     isDisabled: ! selectedCell,
                     onClick: () => this.deleteColumn(),
+                },
+                {
+                    icon: (
+                        <svg width="20" height="20" viewBox="4 2 18 18" className="dashicon">
+                            <path fill="none" d="M0,0h24v24H0V0z"/>
+                            <path d="M4,5v13h17V5H4z M14,7v9h-3V7H14z M6,7h3v9H6V7z M19,16h-3V7h3V16z"/>
+                        </svg>
+                    ),
+                    title: __( 'Split Merged Cells' ),
+                    isDisabled: ! selectedCell,
+                    onClick: null,
+                },
+                {
+                    icon: (
+                        <svg width="20" height="20" className="dashicon" viewBox="2 2 22 22">
+                            <path fill="none" d="M0,0h24v24H0V0z"/>
+                            <polygon points="21,18 2,18 2,20 21,20 21,18"/>
+                            <path d="M19,10v4H4v-4H19 M20,8H3C2.45,8,2,8.45,2,9v6c0,0.55,0.45,1,1,1h17c0.55,0,1-0.45,1-1V9C21,8.45,20.55,8,20,8L20,8z"/>
+                            <polygon points="21,4 2,4 2,6 21,6 21,4"/>
+                        </svg>
+                    ),
+                    title: __( 'Merge Cells' ),
+                    isDisabled: ! rangeSelected,
+                    onClick: () => this.mergeCells(),
                 },
             ];
 
@@ -555,10 +597,16 @@
                             {body.map( ( { cells }, rowIndex ) => (
                                 <tr key={ rowIndex }>
                                     {cells.map( ( { content, styles, colSpan, rowSpan }, colIndex ) => {
-                                        const isSelected = selectedCell
+                                        const cell = { rowIndex, colIndex };
+                                        let isSelected = selectedCell
                                             && selectedCell.rowIndex === rowIndex
                                             && selectedCell.colIndex === colIndex;
-                                        const cell = { rowIndex, colIndex };
+                                        if (rangeSelected) {
+                                            isSelected = rowIndex >= Math.min(rangeSelected.fromCell.rowIdx, rangeSelected.toCell.rowIdx)
+                                                && rowIndex <= Math.max(rangeSelected.fromCell.rowIdx, rangeSelected.toCell.rowIdx)
+                                                && colIndex >= Math.min(rangeSelected.fromCell.colIdx, rangeSelected.toCell.colIdx)
+                                                && colIndex <= Math.max(rangeSelected.fromCell.colIdx, rangeSelected.toCell.colIdx)
+                                        }
 
                                         const cellClassName = [
                                             isSelected && 'cell-selected',
@@ -572,12 +620,27 @@
                                                 style={ styles }
                                                 colSpan={ colSpan }
                                                 rowSpan={ rowSpan }
+                                                onClick={ (e) => {
+                                                    if (e.shiftKey && selectedCell) {
+                                                        const fromCell = {
+                                                            rowIdx: selectedCell.rowIndex,
+                                                            colIdx: selectedCell.colIndex,
+                                                        };
+
+                                                        const toCell = {
+                                                            rowIdx: rowIndex,
+                                                            colIdx: colIndex,
+                                                        };
+
+                                                        this.setState( { rangeSelected: { fromCell, toCell } } );
+                                                    }
+                                                } }
                                             >
                                                 <RichText
                                                     className="wp-block-table__cell-content"
                                                     value={ content }
                                                     onChange={ ( value ) => this.updateCellContent( value ) }
-                                                    unstableOnFocus={ () => this.setState( { selectedCell: cell } ) }
+                                                    unstableOnFocus={ () => this.setState( { selectedCell: cell, rangeSelected: null } ) }
                                                 />
                                             </td>
                                         )
@@ -668,6 +731,7 @@
                                     key={ colIndex }
                                     style={ styles }
                                     colSpan={ colSpan }
+                                    rowSpan={ rowSpan }
                                     data-border-color={ borderColorSaved }
                                 />
                             ) ) }
