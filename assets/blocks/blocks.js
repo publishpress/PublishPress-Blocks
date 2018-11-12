@@ -2562,42 +2562,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var TABLE_CONTROLS = [{
                     icon: 'table-row-before',
                     title: __('Add Row Before'),
-                    isDisabled: !selectedCell,
+                    isDisabled: !selectedCell || rangeSelected,
                     onClick: function onClick() {
                         return _this2.insertRow(0);
                     }
                 }, {
                     icon: 'table-row-after',
                     title: __('Add Row After'),
-                    isDisabled: !selectedCell,
+                    isDisabled: !selectedCell || rangeSelected,
                     onClick: function onClick() {
                         return _this2.insertRow(1);
                     }
                 }, {
                     icon: 'table-row-delete',
                     title: __('Delete Row'),
-                    isDisabled: !selectedCell,
+                    isDisabled: !selectedCell || rangeSelected,
                     onClick: function onClick() {
                         return _this2.deleteRow();
                     }
                 }, {
                     icon: 'table-col-before',
                     title: __('Add Column Before'),
-                    isDisabled: !selectedCell,
+                    isDisabled: !selectedCell || rangeSelected,
                     onClick: function onClick() {
                         return _this2.insertColumn(0);
                     }
                 }, {
                     icon: 'table-col-after',
                     title: __('Add Column After'),
-                    isDisabled: !selectedCell,
+                    isDisabled: !selectedCell || rangeSelected,
                     onClick: function onClick() {
                         return _this2.insertColumn(1);
                     }
                 }, {
                     icon: 'table-col-delete',
                     title: __('Delete Column'),
-                    isDisabled: !selectedCell,
+                    isDisabled: !selectedCell || rangeSelected,
                     onClick: function onClick() {
                         return _this2.deleteColumn();
                     }
@@ -2609,7 +2609,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M4,5v13h17V5H4z M14,7v9h-3V7H14z M6,7h3v9H6V7z M19,16h-3V7h3V16z" })
                     ),
                     title: __('Split Merged Cells'),
-                    isDisabled: !selectedCell,
+                    isDisabled: !selectedCell || rangeSelected,
                     onClick: null
                 }, {
                     icon: React.createElement(
