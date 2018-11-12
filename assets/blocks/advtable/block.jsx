@@ -64,12 +64,22 @@
 
                 return cell;
             } );
+            newRow.cells = newRow.cells.filter( ( cCell ) => !cCell.rowSpan );
 
             const newBody = [
                 ...body.slice( 0, rowIndex + offset ),
                 newRow,
                 ...body.slice( rowIndex + offset ),
-            ];
+            ].map( ( row, rowIdx ) => ( {
+                cells: row.cells.map( ( cell ) => {
+                    if (cell.rowSpan) {
+                        if (rowIdx <= rowIndex && ( (rowIdx + cell.rowSpan - 1) >= rowIndex) ) {
+                            cell.rowSpan += 1;
+                        }
+                    }
+                    return cell;
+                } )
+            } ) );
 
             this.setState( { selectedCell: null } );
             setAttributes( { body: newBody } );

@@ -2290,8 +2290,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     return cell;
                 });
+                newRow.cells = newRow.cells.filter(function (cCell) {
+                    return !cCell.rowSpan;
+                });
 
-                var newBody = [].concat(_toConsumableArray(body.slice(0, rowIndex + offset)), [newRow], _toConsumableArray(body.slice(rowIndex + offset)));
+                var newBody = [].concat(_toConsumableArray(body.slice(0, rowIndex + offset)), [newRow], _toConsumableArray(body.slice(rowIndex + offset))).map(function (row, rowIdx) {
+                    return {
+                        cells: row.cells.map(function (cell) {
+                            if (cell.rowSpan) {
+                                if (rowIdx <= rowIndex && rowIdx + cell.rowSpan - 1 >= rowIndex) {
+                                    cell.rowSpan += 1;
+                                }
+                            }
+                            return cell;
+                        })
+                    };
+                });
 
                 this.setState({ selectedCell: null });
                 setAttributes({ body: newBody });
