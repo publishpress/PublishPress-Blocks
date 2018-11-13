@@ -190,6 +190,48 @@
             this.setState( { selectedCell: null, rangeSelected: null } );
         }
 
+        splitMergedCells() {
+            const { selectedCell } = this.state;
+
+            if (!selectedCell) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
+            const { colIndex, rowIndex } = selectedCell;
+
+            const cellColSpan = parseInt(body[rowIndex].cells[colIndex].colSpan);
+            const cellRowSpan = parseInt(body[rowIndex].cells[colIndex].rowSpan);
+            body[rowIndex].cells[colIndex].colSpan = undefined;
+            body[rowIndex].cells[colIndex].rowSpan = undefined;
+
+            const newBody = body.map( (row, curRowIndex) => {
+                if (curRowIndex === rowIndex) {
+                    return {
+                        cells: [
+                            ...row.cells.slice( 0, colIndex + 1 ),
+                            ...times( cellColSpan - 1, () => ( { content: '' } ) ),
+                            ...row.cells.slice( colIndex + 1 ),
+                        ],
+                    }
+                } else if (curRowIndex > rowIndex && curRowIndex < (rowIndex + cellRowSpan) ) {
+                    return {
+                        cells: [
+                            ...row.cells.slice( 0, colIndex ),
+                            ...times( cellColSpan, () => ( { content: '' } ) ),
+                            ...row.cells.slice( colIndex ),
+                        ],
+                    }
+                }
+
+                return row;
+            } );
+
+            setAttributes( { body: newBody } );
+            this.setState( { selectedCell: null, rangeSelected: null } );
+        }
+
         // Parse styles from HTML form to React styles object
         static parseStyles( styles ) {
             if (typeof styles !== 'string') {
@@ -364,7 +406,7 @@
                     ),
                     title: __( 'Split Merged Cells' ),
                     isDisabled: ! selectedCell || rangeSelected,
-                    onClick: null,
+                    onClick: () => this.splitMergedCells(),
                 },
                 {
                     icon: (

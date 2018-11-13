@@ -2433,6 +2433,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({ body: newBody });
                 this.setState({ selectedCell: null, rangeSelected: null });
             }
+        }, {
+            key: "splitMergedCells",
+            value: function splitMergedCells() {
+                var selectedCell = this.state.selectedCell;
+
+
+                if (!selectedCell) {
+                    return null;
+                }
+
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes;
+                var body = attributes.body;
+                var colIndex = selectedCell.colIndex,
+                    rowIndex = selectedCell.rowIndex;
+
+
+                var cellColSpan = parseInt(body[rowIndex].cells[colIndex].colSpan);
+                var cellRowSpan = parseInt(body[rowIndex].cells[colIndex].rowSpan);
+                body[rowIndex].cells[colIndex].colSpan = undefined;
+                body[rowIndex].cells[colIndex].rowSpan = undefined;
+
+                var newBody = body.map(function (row, curRowIndex) {
+                    if (curRowIndex === rowIndex) {
+                        return {
+                            cells: [].concat(_toConsumableArray(row.cells.slice(0, colIndex + 1)), _toConsumableArray(times(cellColSpan - 1, function () {
+                                return { content: '' };
+                            })), _toConsumableArray(row.cells.slice(colIndex + 1)))
+                        };
+                    } else if (curRowIndex > rowIndex && curRowIndex < rowIndex + cellRowSpan) {
+                        return {
+                            cells: [].concat(_toConsumableArray(row.cells.slice(0, colIndex)), _toConsumableArray(times(cellColSpan, function () {
+                                return { content: '' };
+                            })), _toConsumableArray(row.cells.slice(colIndex)))
+                        };
+                    }
+
+                    return row;
+                });
+
+                setAttributes({ body: newBody });
+                this.setState({ selectedCell: null, rangeSelected: null });
+            }
 
             // Parse styles from HTML form to React styles object
 
@@ -2475,9 +2519,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes;
+                var _props8 = this.props,
+                    attributes = _props8.attributes,
+                    setAttributes = _props8.setAttributes;
                 var rowIndex = cells.rowIndex,
                     colIndex = cells.colIndex;
                 var body = attributes.body;
@@ -2529,9 +2573,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props8 = this.props,
-                    attributes = _props8.attributes,
-                    setAttributes = _props8.setAttributes;
+                var _props9 = this.props,
+                    attributes = _props9.attributes,
+                    setAttributes = _props9.setAttributes;
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
                 var body = attributes.body;
@@ -2562,10 +2606,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props9 = this.props,
-                    attributes = _props9.attributes,
-                    setAttributes = _props9.setAttributes,
-                    className = _props9.className;
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes,
+                    className = _props10.className;
                 var body = attributes.body,
                     maxWidth = attributes.maxWidth;
                 var _state = this.state,
@@ -2624,7 +2668,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     title: __('Split Merged Cells'),
                     isDisabled: !selectedCell || rangeSelected,
-                    onClick: null
+                    onClick: function onClick() {
+                        return _this2.splitMergedCells();
+                    }
                 }, {
                     icon: React.createElement(
                         "svg",
