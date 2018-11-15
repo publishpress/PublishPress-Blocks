@@ -110,12 +110,12 @@
                                 {
                                     label: __( 'Background Color' ),
                                     value: headerBgColor,
-                                    onChange: ( value ) => setAttributes( { headerBgColor: value } ),
+                                    onChange: ( value ) => setAttributes( { headerBgColor: value === undefined ? '#000' : value } ),
                                 },
                                 {
                                     label: __( 'Text Color' ),
                                     value: headerTextColor,
-                                    onChange: ( value ) => setAttributes( { headerTextColor: value } ),
+                                    onChange: ( value ) => setAttributes( { headerTextColor: value === undefined ? '#fff' : value } ),
                                 },
                                 {
                                     label: __( 'Active Tab Background Color' ),
