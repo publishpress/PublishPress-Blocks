@@ -2227,7 +2227,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             _this.state = {
                 selectedCell: null,
-                rangeSelected: null
+                rangeSelected: null,
+                updated: false
             };
 
             _this.calculateRealColIndex = _this.calculateRealColIndex.bind(_this);
@@ -2260,7 +2261,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "componentDidUpdate",
             value: function componentDidUpdate() {
                 var isSelected = this.props.isSelected;
-                var selectedCell = this.state.selectedCell;
+                var _state = this.state,
+                    selectedCell = _state.selectedCell,
+                    updated = _state.updated;
 
 
                 if (!isSelected && selectedCell) {
@@ -2268,6 +2271,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         selectedCell: null,
                         rangeSelected: null
                     });
+                }
+
+                if (updated) {
+                    this.calculateRealColIndex();
+                    this.setState({ updated: false });
                 }
             }
         }, {
@@ -2349,9 +2357,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     };
                 });
 
-                this.setState({ selectedCell: null });
+                this.setState({ selectedCell: null, updated: true });
                 setAttributes({ body: newBody });
-                this.calculateRealColIndex();
             }
         }, {
             key: "deleteRow",
@@ -2370,11 +2377,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var rowIndex = selectedCell.rowIndex;
 
 
-                this.setState({ selectedCell: null });
-                setAttributes({ body: body.filter(function (row, index) {
+                var newBody = body.map(function (row, cRowIdx) {
+                    return {
+                        cells: row.cells.map(function (cell) {
+                            if (cell.rowSpan) {
+                                if (parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
+                                    cell.rowSpan = parseInt(cell.rowSpan) - 1;
+                                }
+                            }
+
+                            return cell;
+                        })
+                    };
+                });
+
+                this.setState({ selectedCell: null, updated: true });
+                setAttributes({ body: newBody.filter(function (row, index) {
                         return index !== rowIndex;
                     }) });
-                this.calculateRealColIndex();
             }
         }, {
             key: "insertColumn",
@@ -2393,7 +2413,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var colIndex = selectedCell.colIndex;
 
 
-                this.setState({ selectedCell: null });
+                this.setState({ selectedCell: null, updated: true });
                 setAttributes({
                     body: body.map(function (row) {
                         return {
@@ -2403,7 +2423,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         };
                     })
                 });
-                this.calculateRealColIndex();
             }
         }, {
             key: "deleteColumn",
@@ -2422,7 +2441,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var colIndex = selectedCell.colIndex;
 
 
-                this.setState({ selectedCell: null });
+                this.setState({ selectedCell: null, updated: true });
                 setAttributes({
                     body: body.map(function (row) {
                         return {
@@ -2432,7 +2451,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         };
                     })
                 });
-                this.calculateRealColIndex();
             }
         }, {
             key: "mergeCells",
@@ -2477,8 +2495,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 setAttributes({ body: newBody });
-                this.setState({ selectedCell: null, rangeSelected: null });
-                this.calculateRealColIndex();
+                this.setState({ selectedCell: null, rangeSelected: null, updated: true });
             }
         }, {
             key: "splitMergedCells",
@@ -2522,8 +2539,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 setAttributes({ body: newBody });
-                this.setState({ selectedCell: null, rangeSelected: null });
-                this.calculateRealColIndex();
+                this.setState({ selectedCell: null, updated: true });
             }
 
             // Parse styles from HTML form to React styles object
@@ -2660,9 +2676,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     className = _props11.className;
                 var body = attributes.body,
                     maxWidth = attributes.maxWidth;
-                var _state = this.state,
-                    selectedCell = _state.selectedCell,
-                    rangeSelected = _state.rangeSelected;
+                var _state2 = this.state,
+                    selectedCell = _state2.selectedCell,
+                    rangeSelected = _state2.rangeSelected;
 
 
                 var TABLE_CONTROLS = [{

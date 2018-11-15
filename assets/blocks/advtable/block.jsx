@@ -19,6 +19,7 @@
             this.state = {
                 selectedCell: null,
                 rangeSelected: null,
+                updated: false,
             };
 
             this.calculateRealColIndex = this.calculateRealColIndex.bind( this );
@@ -40,13 +41,18 @@
 
         componentDidUpdate() {
             const { isSelected } = this.props;
-            const { selectedCell } = this.state;
+            const { selectedCell, updated } = this.state;
 
             if ( ! isSelected && selectedCell ) {
                 this.setState( {
                     selectedCell: null,
                     rangeSelected: null,
                 } );
+            }
+
+            if (updated) {
+                this.calculateRealColIndex();
+                this.setState( { updated: false } );
             }
         }
 
@@ -119,9 +125,8 @@
                 } )
             } ) );
 
-            this.setState( { selectedCell: null } );
+            this.setState( { selectedCell: null, updated: true } );
             setAttributes( { body: newBody } );
-            this.calculateRealColIndex();
         }
 
         deleteRow() {
@@ -135,9 +140,20 @@
             const { body } = attributes;
             const { rowIndex } = selectedCell;
 
-            this.setState( { selectedCell: null } );
-            setAttributes( { body: body.filter( (row, index) => index !== rowIndex ) } );
-            this.calculateRealColIndex();
+            const newBody = body.map( (row, cRowIdx) => ( {
+                cells: row.cells.map( (cell) => {
+                    if (cell.rowSpan) {
+                        if (parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
+                            cell.rowSpan = parseInt(cell.rowSpan) - 1;
+                        }
+                    }
+
+                    return cell;
+                } )
+            } ) );
+
+            this.setState( { selectedCell: null, updated: true } );
+            setAttributes( { body: newBody.filter( (row, index) => index !== rowIndex ) } );
         }
 
         insertColumn( offset ) {
@@ -151,7 +167,7 @@
             const { body } = attributes;
             const { colIndex } = selectedCell;
 
-            this.setState( { selectedCell: null } );
+            this.setState( { selectedCell: null, updated: true } );
             setAttributes( {
                 body: body.map( ( row ) => ( {
                     cells: [
@@ -163,7 +179,6 @@
                     ],
                 } ) ),
             } );
-            this.calculateRealColIndex();
         }
 
         deleteColumn() {
@@ -177,13 +192,12 @@
             const { body } = attributes;
             const { colIndex } = selectedCell;
 
-            this.setState( { selectedCell: null } );
+            this.setState( { selectedCell: null, updated: true } );
             setAttributes( {
                 body: body.map( ( row ) => ( {
                     cells: row.cells.filter( ( cell, index ) => index !== colIndex ),
                 } ) ),
             } );
-            this.calculateRealColIndex();
         }
 
         mergeCells() {
@@ -229,8 +243,7 @@
             } );
 
             setAttributes( { body: newBody } );
-            this.setState( { selectedCell: null, rangeSelected: null } );
-            this.calculateRealColIndex();
+            this.setState( { selectedCell: null, rangeSelected: null, updated: true } );
         }
 
         splitMergedCells() {
@@ -272,8 +285,7 @@
             } );
 
             setAttributes( { body: newBody } );
-            this.setState( { selectedCell: null, rangeSelected: null } );
-            this.calculateRealColIndex();
+            this.setState( { selectedCell: null, updated: true } );
         }
 
         // Parse styles from HTML form to React styles object
