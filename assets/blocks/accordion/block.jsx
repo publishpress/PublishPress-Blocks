@@ -176,17 +176,17 @@
                                     {
                                         label: __( 'Background Color' ),
                                         value: headerBgColor,
-                                        onChange: ( value ) => setAttributes( { headerBgColor: value } ),
+                                        onChange: ( value ) => setAttributes( { headerBgColor: value === undefined ? '#000' : value } ),
                                     },
                                     {
                                         label: __( 'Text Color' ),
                                         value: headerTextColor,
-                                        onChange: ( value ) => setAttributes( { headerTextColor: value } ),
+                                        onChange: ( value ) => setAttributes( { headerTextColor: value === undefined ? '#eee' : value } ),
                                     },
                                     {
                                         label: __( 'Icon Color' ),
                                         value: headerIconColor,
-                                        onChange: ( value ) => setAttributes( { headerIconColor: value } ),
+                                        onChange: ( value ) => setAttributes( { headerIconColor: value === undefined ? '#fff' : value } ),
                                     },
                                 ] }
                             />

@@ -339,19 +339,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Background Color'),
                                     value: headerBgColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ headerBgColor: value });
+                                        return setAttributes({ headerBgColor: value === undefined ? '#000' : value });
                                     }
                                 }, {
                                     label: __('Text Color'),
                                     value: headerTextColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ headerTextColor: value });
+                                        return setAttributes({ headerTextColor: value === undefined ? '#eee' : value });
                                     }
                                 }, {
                                     label: __('Icon Color'),
                                     value: headerIconColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ headerIconColor: value });
+                                        return setAttributes({ headerIconColor: value === undefined ? '#fff' : value });
                                     }
                                 }]
                             })
