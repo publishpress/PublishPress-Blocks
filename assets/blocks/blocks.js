@@ -2229,6 +2229,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 selectedCell: null,
                 rangeSelected: null
             };
+
+            _this.calculateRealColIndex = _this.calculateRealColIndex.bind(_this);
             return _this;
         }
 
@@ -2349,6 +2351,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 this.setState({ selectedCell: null });
                 setAttributes({ body: newBody });
+                this.calculateRealColIndex();
             }
         }, {
             key: "deleteRow",
@@ -2371,6 +2374,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({ body: body.filter(function (row, index) {
                         return index !== rowIndex;
                     }) });
+                this.calculateRealColIndex();
             }
         }, {
             key: "insertColumn",
@@ -2399,6 +2403,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         };
                     })
                 });
+                this.calculateRealColIndex();
             }
         }, {
             key: "deleteColumn",
@@ -2427,6 +2432,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         };
                     })
                 });
+                this.calculateRealColIndex();
             }
         }, {
             key: "mergeCells",
@@ -2472,6 +2478,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 setAttributes({ body: newBody });
                 this.setState({ selectedCell: null, rangeSelected: null });
+                this.calculateRealColIndex();
             }
         }, {
             key: "splitMergedCells",
@@ -2516,6 +2523,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 setAttributes({ body: newBody });
                 this.setState({ selectedCell: null, rangeSelected: null });
+                this.calculateRealColIndex();
             }
 
             // Parse styles from HTML form to React styles object
@@ -2865,12 +2873,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 icon: "editor-table",
                                 label: __('Edit Table'),
                                 controls: TABLE_CONTROLS
-                            }),
-                            React.createElement(IconButton, {
-                                icon: 'no',
-                                onClick: function onClick() {
-                                    return _this2.calculateRealColIndex();
-                                }
                             })
                         )
                     ),
@@ -3027,6 +3029,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         };
 
                                                         _this2.setState({ rangeSelected: { fromCell: fromCell, toCell: toCell } });
+                                                    } else {
+                                                        _this2.setState({ rangeSelected: null });
                                                     }
                                                 }
                                             },
@@ -3037,7 +3041,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     return _this2.updateCellContent(value);
                                                 },
                                                 unstableOnFocus: function unstableOnFocus() {
-                                                    return _this2.setState({ selectedCell: cell, rangeSelected: null });
+                                                    return _this2.setState({ selectedCell: cell });
                                                 }
                                             })
                                         );

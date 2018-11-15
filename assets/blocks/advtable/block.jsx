@@ -20,6 +20,8 @@
                 selectedCell: null,
                 rangeSelected: null,
             };
+
+            this.calculateRealColIndex = this.calculateRealColIndex.bind( this );
         }
 
         componentWillMount() {
@@ -119,6 +121,7 @@
 
             this.setState( { selectedCell: null } );
             setAttributes( { body: newBody } );
+            this.calculateRealColIndex();
         }
 
         deleteRow() {
@@ -134,6 +137,7 @@
 
             this.setState( { selectedCell: null } );
             setAttributes( { body: body.filter( (row, index) => index !== rowIndex ) } );
+            this.calculateRealColIndex();
         }
 
         insertColumn( offset ) {
@@ -159,6 +163,7 @@
                     ],
                 } ) ),
             } );
+            this.calculateRealColIndex();
         }
 
         deleteColumn() {
@@ -177,7 +182,8 @@
                 body: body.map( ( row ) => ( {
                     cells: row.cells.filter( ( cell, index ) => index !== colIndex ),
                 } ) ),
-            } )
+            } );
+            this.calculateRealColIndex();
         }
 
         mergeCells() {
@@ -224,6 +230,7 @@
 
             setAttributes( { body: newBody } );
             this.setState( { selectedCell: null, rangeSelected: null } );
+            this.calculateRealColIndex();
         }
 
         splitMergedCells() {
@@ -266,6 +273,7 @@
 
             setAttributes( { body: newBody } );
             this.setState( { selectedCell: null, rangeSelected: null } );
+            this.calculateRealColIndex();
         }
 
         // Parse styles from HTML form to React styles object
@@ -597,10 +605,6 @@
                                 label={ __( 'Edit Table' ) }
                                 controls={ TABLE_CONTROLS }
                             />
-                            <IconButton
-                                icon={'no'}
-                                onClick={ () => this.calculateRealColIndex() }
-                            />
                         </Toolbar>
                     </BlockControls>
                     <InspectorControls>
@@ -725,6 +729,8 @@
                                                         };
 
                                                         this.setState( { rangeSelected: { fromCell, toCell } } );
+                                                    } else {
+                                                        this.setState( { rangeSelected: null } );
                                                     }
                                                 } }
                                             >
@@ -732,7 +738,7 @@
                                                     className="wp-block-table__cell-content"
                                                     value={ content }
                                                     onChange={ ( value ) => this.updateCellContent( value ) }
-                                                    unstableOnFocus={ () => this.setState( { selectedCell: cell, rangeSelected: null } ) }
+                                                    unstableOnFocus={ () => this.setState( { selectedCell: cell } ) }
                                                 />
                                             </td>
                                         )
