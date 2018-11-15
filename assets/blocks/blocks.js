@@ -2269,6 +2269,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "calculateRealColIndex",
+            value: function calculateRealColIndex() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var body = attributes.body;
+
+
+                var newBody = body.map(function (row, cRow) {
+                    return {
+                        cells: row.cells.map(function (cell, cCol) {
+                            cell.cI = cCol;
+                            for (var i = 0; i < cRow; i++) {
+                                for (var j = 0; j <= cCol; j++) {
+                                    if (body[i].cells[j] && body[i].cells[j].cI <= cCol) {
+                                        if (body[i].cells[j].colSpan) {
+                                            if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
+                                                cell.cI += parseInt(body[i].cells[j].colSpan);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            for (var _j = 0; _j < cCol; _j++) {
+                                if (row.cells[_j]) {
+                                    if (row.cells[_j].colSpan) {
+                                        cell.cI += parseInt(row.cells[_j].colSpan) - 1;
+                                    }
+                                }
+                            }
+
+                            return cell;
+                        })
+                    };
+                });
+
+                setAttributes({ body: newBody });
+            }
+        }, {
             key: "insertRow",
             value: function insertRow(offset) {
                 var selectedCell = this.state.selectedCell;
@@ -2278,9 +2318,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var body = attributes.body;
                 var rowIndex = selectedCell.rowIndex;
 
@@ -2298,8 +2338,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return {
                         cells: row.cells.map(function (cell) {
                             if (cell.rowSpan) {
-                                if (rowIdx <= rowIndex && rowIdx + cell.rowSpan - 1 >= rowIndex) {
-                                    cell.rowSpan += 1;
+                                if (rowIdx <= rowIndex && rowIdx + parseInt(cell.rowSpan) - 1 >= rowIndex) {
+                                    cell.rowSpan = parseInt(cell.rowSpan) + 1;
                                 }
                             }
                             return cell;
@@ -2320,9 +2360,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var body = attributes.body;
                 var rowIndex = selectedCell.rowIndex;
 
@@ -2342,9 +2382,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var body = attributes.body;
                 var colIndex = selectedCell.colIndex;
 
@@ -2370,9 +2410,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes;
                 var body = attributes.body;
                 var colIndex = selectedCell.colIndex;
 
@@ -2398,9 +2438,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes;
                 var fromCell = rangeSelected.fromCell,
                     toCell = rangeSelected.toCell;
                 var body = attributes.body;
@@ -2443,9 +2483,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes;
+                var _props8 = this.props,
+                    attributes = _props8.attributes,
+                    setAttributes = _props8.setAttributes;
                 var body = attributes.body;
                 var colIndex = selectedCell.colIndex,
                     rowIndex = selectedCell.rowIndex;
@@ -2519,9 +2559,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props8 = this.props,
-                    attributes = _props8.attributes,
-                    setAttributes = _props8.setAttributes;
+                var _props9 = this.props,
+                    attributes = _props9.attributes,
+                    setAttributes = _props9.setAttributes;
                 var rowIndex = cells.rowIndex,
                     colIndex = cells.colIndex;
                 var body = attributes.body;
@@ -2573,9 +2613,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props9 = this.props,
-                    attributes = _props9.attributes,
-                    setAttributes = _props9.setAttributes;
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes;
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
                 var body = attributes.body;
@@ -2606,10 +2646,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props10 = this.props,
-                    attributes = _props10.attributes,
-                    setAttributes = _props10.setAttributes,
-                    className = _props10.className;
+                var _props11 = this.props,
+                    attributes = _props11.attributes,
+                    setAttributes = _props11.setAttributes,
+                    className = _props11.className;
                 var body = attributes.body,
                     maxWidth = attributes.maxWidth;
                 var _state = this.state,
@@ -2825,6 +2865,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 icon: "editor-table",
                                 label: __('Edit Table'),
                                 controls: TABLE_CONTROLS
+                            }),
+                            React.createElement(IconButton, {
+                                icon: 'no',
+                                onClick: function onClick() {
+                                    return _this2.calculateRealColIndex();
+                                }
                             })
                         )
                     ),

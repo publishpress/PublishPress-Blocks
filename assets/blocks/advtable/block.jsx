@@ -48,6 +48,42 @@
             }
         }
 
+        calculateRealColIndex() {
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
+
+            const newBody = body.map( (row, cRow) => {
+                return {
+                    cells: row.cells.map( (cell, cCol) => {
+                        cell.cI = cCol;
+                        for (let i=0;i < cRow; i++) {
+                            for (let j=0; j <= cCol; j++) {
+                                if (body[i].cells[j] && body[i].cells[j].cI <= cCol) {
+                                    if (body[i].cells[j].colSpan) {
+                                        if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
+                                            cell.cI += parseInt( body[ i ].cells[ j ].colSpan );
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        for (let j=0; j < cCol; j++) {
+                            if (row.cells[j]) {
+                                if (row.cells[j].colSpan) {
+                                    cell.cI += parseInt( row.cells[j].colSpan ) - 1;
+                                }
+                            }
+                        }
+
+                        return cell;
+                    } )
+                }
+            } );
+
+            setAttributes( { body: newBody } );
+        }
+
         insertRow( offset ) {
             const { selectedCell } = this.state;
 
@@ -73,8 +109,8 @@
             ].map( ( row, rowIdx ) => ( {
                 cells: row.cells.map( ( cell ) => {
                     if (cell.rowSpan) {
-                        if (rowIdx <= rowIndex && ( (rowIdx + cell.rowSpan - 1) >= rowIndex) ) {
-                            cell.rowSpan += 1;
+                        if (rowIdx <= rowIndex && ( (rowIdx + parseInt(cell.rowSpan) - 1) >= rowIndex) ) {
+                            cell.rowSpan = parseInt(cell.rowSpan) + 1;
                         }
                     }
                     return cell;
@@ -560,6 +596,10 @@
                                 icon="editor-table"
                                 label={ __( 'Edit Table' ) }
                                 controls={ TABLE_CONTROLS }
+                            />
+                            <IconButton
+                                icon={'no'}
+                                onClick={ () => this.calculateRealColIndex() }
                             />
                         </Toolbar>
                     </BlockControls>
