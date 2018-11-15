@@ -2258,6 +2258,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                this.calculateRealColIndex();
+            }
+        }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate() {
                 var isSelected = this.props.isSelected;
@@ -2379,12 +2384,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var newBody = body.map(function (row, cRowIdx) {
                     return {
-                        cells: row.cells.map(function (cell, cColIdx) {
+                        cells: row.cells.map(function (cell) {
                             if (cell.rowSpan) {
                                 if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
                                     cell.rowSpan = parseInt(cell.rowSpan) - 1;
                                     if (cRowIdx === rowIndex) {
-                                        body[cRowIdx + 1].cells.splice(cColIdx, 0, cell);
+                                        var findColIdx = body[cRowIdx + 1].cells.findIndex(function (elm) {
+                                            return elm.cI === cell.cI || elm.cI > cell.cI;
+                                        });
+                                        body[cRowIdx + 1].cells.splice(findColIdx, 0, cell);
                                     }
                                 }
                             }

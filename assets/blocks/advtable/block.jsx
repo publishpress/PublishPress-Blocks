@@ -39,6 +39,10 @@
             }
         }
 
+        componentDidMount() {
+            this.calculateRealColIndex();
+        }
+
         componentDidUpdate() {
             const { isSelected } = this.props;
             const { selectedCell, updated } = this.state;
@@ -141,12 +145,13 @@
             const { rowIndex } = selectedCell;
 
             const newBody = body.map( (row, cRowIdx) => ( {
-                cells: row.cells.map( (cell, cColIdx) => {
+                cells: row.cells.map( (cell) => {
                     if (cell.rowSpan) {
                         if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
                             cell.rowSpan = parseInt(cell.rowSpan) - 1;
                             if (cRowIdx === rowIndex) {
-                                body[cRowIdx + 1].cells.splice( cColIdx, 0, cell );
+                                const findColIdx = body[cRowIdx + 1].cells.findIndex( (elm) => elm.cI === cell.cI || elm.cI > cell.cI );
+                                body[cRowIdx + 1].cells.splice( findColIdx, 0, cell );
                             }
                         }
                     }
