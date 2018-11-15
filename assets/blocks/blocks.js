@@ -3429,13 +3429,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         label: __('Overlay Color'),
                                         value: overlayColor,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ overlayColor: value });
+                                            return setAttributes({ overlayColor: value === undefined ? '#EEEEEE' : value });
                                         }
                                     }, {
                                         label: __('Play Button Color'),
                                         value: playButtonColor,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ playButtonColor: value });
+                                            return setAttributes({ playButtonColor: value === undefined ? '#fff' : value });
                                         }
                                     }]
                                 }),
