@@ -1463,19 +1463,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Title Color'),
                                     value: titleColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ titleColor: value });
+                                        return setAttributes({ titleColor: value === undefined ? '#fff' : value });
                                     }
                                 }, {
                                     label: __('Subtitle Color'),
                                     value: subtitleColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ subtitleColor: value });
+                                        return setAttributes({ subtitleColor: value === undefined ? '#fff' : value });
                                     }
                                 }, {
                                     label: __('Overlay Color'),
                                     value: overlayColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ overlayColor: value });
+                                        return setAttributes({ overlayColor: value === undefined ? '#2196f3' : value });
                                     }
                                 }]
                             }),
@@ -1919,8 +1919,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement(ColorPalette, {
                                         value: iconColor,
-                                        onChange: function onChange(color) {
-                                            return setAttributes({ iconColor: color });
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ iconColor: value === undefined ? '#000' : value });
                                         }
                                     })
                                 ),

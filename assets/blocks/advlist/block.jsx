@@ -168,7 +168,7 @@
                                     >
                                         <ColorPalette
                                             value={ iconColor }
-                                            onChange={ ( color ) => setAttributes( { iconColor: color } ) }
+                                            onChange={ ( value ) => setAttributes( { iconColor: value === undefined ? '#000' : value } ) }
                                         />
                                     </PanelBody>
                                     <RangeControl
