@@ -2379,10 +2379,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var newBody = body.map(function (row, cRowIdx) {
                     return {
-                        cells: row.cells.map(function (cell) {
+                        cells: row.cells.map(function (cell, cColIdx) {
                             if (cell.rowSpan) {
-                                if (parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
+                                if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
                                     cell.rowSpan = parseInt(cell.rowSpan) - 1;
+                                    if (cRowIdx === rowIndex) {
+                                        body[cRowIdx + 1].cells.splice(cColIdx, 0, cell);
+                                    }
                                 }
                             }
 

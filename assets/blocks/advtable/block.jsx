@@ -69,7 +69,7 @@
                                 if (body[i].cells[j] && body[i].cells[j].cI <= cCol) {
                                     if (body[i].cells[j].colSpan) {
                                         if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
-                                            cell.cI += parseInt( body[ i ].cells[ j ].colSpan );
+                                            cell.cI += parseInt( body[i].cells[j].colSpan );
                                         }
                                     }
                                 }
@@ -141,10 +141,13 @@
             const { rowIndex } = selectedCell;
 
             const newBody = body.map( (row, cRowIdx) => ( {
-                cells: row.cells.map( (cell) => {
+                cells: row.cells.map( (cell, cColIdx) => {
                     if (cell.rowSpan) {
-                        if (parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
+                        if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
                             cell.rowSpan = parseInt(cell.rowSpan) - 1;
+                            if (cRowIdx === rowIndex) {
+                                body[cRowIdx + 1].cells.splice( cColIdx, 0, cell );
+                            }
                         }
                     }
 
