@@ -873,13 +873,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Background Color'),
                                     value: bgColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ bgColor: value });
+                                        return setAttributes({ bgColor: value === undefined ? '#2196f3' : value });
                                     }
                                 }, {
                                     label: __('Text Color'),
                                     value: textColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ textColor: value });
+                                        return setAttributes({ textColor: value === undefined ? '#fff' : value });
                                     }
                                 }]
                             })
@@ -914,7 +914,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         label: __('Border Color'),
                                         value: borderColor,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ borderColor: value });
+                                            return setAttributes({ borderColor: value === undefined ? '#2196f3' : value });
                                         }
                                     }]
                                 }),
@@ -979,19 +979,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Background Color'),
                                     value: hoverBgColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ hoverBgColor: value });
+                                        return setAttributes({ hoverBgColor: value === undefined ? '#2196f3' : value });
                                     }
                                 }, {
                                     label: __('Text Color'),
                                     value: hoverTextColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ hoverTextColor: value });
+                                        return setAttributes({ hoverTextColor: value === undefined ? '#fff' : value });
                                     }
                                 }, {
                                     label: __('Shadow Color'),
                                     value: hoverShadowColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ hoverShadowColor: value });
+                                        return setAttributes({ hoverShadowColor: value === undefined ? '#ccc' : value });
                                     }
                                 }]
                             }),
