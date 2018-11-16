@@ -2428,17 +2428,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes;
                 var body = attributes.body;
-                var colIndex = selectedCell.colIndex;
+                var cI = selectedCell.cI;
 
+                var countRowSpan = 0;
 
                 this.setState({ selectedCell: null, updated: true });
                 setAttributes({
                     body: body.map(function (row) {
-                        return {
-                            cells: [].concat(_toConsumableArray(row.cells.slice(0, colIndex + offset)), [{
-                                content: ''
-                            }], _toConsumableArray(row.cells.slice(colIndex + offset)))
-                        };
+                        if (countRowSpan > 0) {
+                            // Skip if previous cell has row span
+                            countRowSpan--;
+                            return row;
+                        }
+
+                        var findColIdx = row.cells.findIndex(function (cell, idx) {
+                            return cell.cI === cI || row.cells[idx + 1] && row.cells[idx + 1].cI > cI;
+                        });
+                        if (row.cells[findColIdx].colSpan && row.cells[findColIdx].cI < cI + offset && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset) {
+                            row.cells[findColIdx].colSpan++;
+
+                            if (row.cells[findColIdx].rowSpan) countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+
+                            return row;
+                        } else {
+                            var realOffset = offset;
+                            if (row.cells[findColIdx].cI > cI && offset === 1) {
+                                realOffset = 0;
+                            } else if (row.cells[findColIdx].cI < cI && offset === 0) {
+                                realOffset = 1;
+                            }
+
+                            return {
+                                cells: [].concat(_toConsumableArray(row.cells.slice(0, findColIdx + realOffset)), [{ content: '' }], _toConsumableArray(row.cells.slice(findColIdx + realOffset)))
+                            };
+                        }
                     })
                 });
             }
@@ -3031,9 +3054,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         var content = _ref2.content,
                                             styles = _ref2.styles,
                                             colSpan = _ref2.colSpan,
-                                            rowSpan = _ref2.rowSpan;
+                                            rowSpan = _ref2.rowSpan,
+                                            cI = _ref2.cI;
 
-                                        var cell = { rowIndex: rowIndex, colIndex: colIndex };
+                                        var cell = { rowIndex: rowIndex, colIndex: colIndex, cI: cI };
                                         var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex;
                                         if (rangeSelected) {
                                             isSelected = rowIndex >= Math.min(rangeSelected.fromCell.rowIdx, rangeSelected.toCell.rowIdx) && rowIndex <= Math.max(rangeSelected.fromCell.rowIdx, rangeSelected.toCell.rowIdx) && colIndex >= Math.min(rangeSelected.fromCell.colIdx, rangeSelected.toCell.colIdx) && colIndex <= Math.max(rangeSelected.fromCell.colIdx, rangeSelected.toCell.colIdx);

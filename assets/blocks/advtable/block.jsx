@@ -182,19 +182,44 @@
 
             const { attributes, setAttributes } = this.props;
             const { body } = attributes;
-            const { colIndex } = selectedCell;
+            const { cI } = selectedCell;
+            let countRowSpan = 0;
 
             this.setState( { selectedCell: null, updated: true } );
             setAttributes( {
-                body: body.map( ( row ) => ( {
-                    cells: [
-                        ...row.cells.slice( 0, colIndex + offset ),
-                        {
-                            content: '',
-                        },
-                        ...row.cells.slice( colIndex + offset ),
-                    ],
-                } ) ),
+                body: body.map( ( row ) => {
+                    if (countRowSpan > 0) { // Skip if previous cell has row span
+                        countRowSpan--;
+                        return row;
+                    }
+
+                    const findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
+                    if (row.cells[findColIdx].colSpan
+                        && row.cells[findColIdx].cI < cI + offset
+                        && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset
+                    ) {
+                        row.cells[findColIdx].colSpan++;
+
+                        if (row.cells[findColIdx].rowSpan) countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+
+                        return row;
+                    } else {
+                        let realOffset = offset;
+                        if (row.cells[findColIdx].cI > cI && offset === 1) {
+                            realOffset = 0;
+                        } else if (row.cells[findColIdx].cI < cI && offset === 0) {
+                            realOffset = 1;
+                        }
+
+                        return {
+                            cells: [
+                                ...row.cells.slice( 0, findColIdx + realOffset ),
+                                { content: '' },
+                                ...row.cells.slice( findColIdx + realOffset ),
+                            ],
+                        }
+                    }
+                } ),
             } );
         }
 
@@ -721,8 +746,8 @@
                         <tbody>
                             {body.map( ( { cells }, rowIndex ) => (
                                 <tr key={ rowIndex }>
-                                    {cells.map( ( { content, styles, colSpan, rowSpan }, colIndex ) => {
-                                        const cell = { rowIndex, colIndex };
+                                    {cells.map( ( { content, styles, colSpan, rowSpan, cI }, colIndex ) => {
+                                        const cell = { rowIndex, colIndex, cI };
                                         let isSelected = selectedCell
                                             && selectedCell.rowIndex === rowIndex
                                             && selectedCell.colIndex === colIndex;
