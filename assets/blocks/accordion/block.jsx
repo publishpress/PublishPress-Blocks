@@ -274,7 +274,7 @@
                                         tagName="h4"
                                         value={ item.header }
                                         onChange={ ( value ) => this.updateAccordion( { header: value }, index ) }
-                                        onSplit={ () => null }
+                                        unstableOnSplit={ () => null }
                                         placeholder={ __( 'Enter header…' ) }
                                     />
                                 </div>

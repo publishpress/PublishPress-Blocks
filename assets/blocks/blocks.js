@@ -464,7 +464,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         onChange: function onChange(value) {
                                             return _this3.updateAccordion({ header: value }, index);
                                         },
-                                        onSplit: function onSplit() {
+                                        unstableOnSplit: function unstableOnSplit() {
                                             return null;
                                         },
                                         placeholder: __('Enter header…')
@@ -1978,7 +1978,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         className: listClassName,
                         placeholder: __('Write advanced list…'),
                         onMerge: mergeBlocks,
-                        onSplit: insertBlocksAfter ? function (before, after) {
+                        unstableOnSplit: insertBlocksAfter ? function (before, after) {
                             for (var _len = arguments.length, blocks = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
                                 blocks[_key - 2] = arguments[_key];
                             }
@@ -7217,7 +7217,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             onChange: function onChange(value) {
                                                 return _this2.updateTabs({ header: value || '' }, index);
                                             },
-                                            onSplit: function onSplit() {
+                                            unstableOnSplit: function unstableOnSplit() {
                                                 return null;
                                             },
                                             placeholder: __('Title…')

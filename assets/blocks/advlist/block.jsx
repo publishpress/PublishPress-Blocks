@@ -218,7 +218,7 @@
                         className={ listClassName }
                         placeholder={__('Write advanced list…')}
                         onMerge={ mergeBlocks }
-                        onSplit={
+                        unstableOnSplit={
                             insertBlocksAfter ?
                                 ( before, after, ...blocks ) => {
                                     if ( ! blocks.length ) {

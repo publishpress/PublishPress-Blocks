@@ -204,7 +204,7 @@
                                             tagName="p"
                                             value={ item.header }
                                             onChange={ ( value ) => this.updateTabs( { header: value || '' }, index ) }
-                                            onSplit={ () => null }
+                                            unstableOnSplit={ () => null }
                                             placeholder={ __( 'Title…' ) }
                                         />
                                     </a>
