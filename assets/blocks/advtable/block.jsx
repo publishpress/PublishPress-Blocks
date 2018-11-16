@@ -69,11 +69,20 @@
                     cells: row.cells.map( (cell, cCol) => {
                         cell.cI = cCol;
                         for (let i=0;i < cRow; i++) {
-                            for (let j=0; j <= cCol; j++) {
-                                if (body[i].cells[j] && body[i].cells[j].cI <= cCol) {
-                                    if (body[i].cells[j].colSpan) {
-                                        if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
-                                            cell.cI += parseInt( body[i].cells[j].colSpan );
+                            for (let j=0; j < body[i].cells.length; j++) {
+                                if (body[i].cells[j] && body[i].cells[j].colSpan) {
+                                    if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
+                                        if (cCol === 0) {
+                                            if (body[i].cells[j].cI <= cell.cI) {
+                                                cell.cI += parseInt( body[i].cells[j].colSpan );
+                                            }
+                                        } else {
+                                            const lastColSpan = !isNaN(parseInt(row.cells[cCol-1].colSpan)) ? parseInt(row.cells[cCol-1].colSpan) : 0;
+                                            if (body[i].cells[j].cI === row.cells[cCol - 1].cI + 1
+                                                || body[i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan
+                                            ) {
+                                                cell.cI += parseInt( body[i].cells[j].colSpan );
+                                            }
                                         }
                                     }
                                 }

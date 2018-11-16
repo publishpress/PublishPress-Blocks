@@ -2297,11 +2297,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         cells: row.cells.map(function (cell, cCol) {
                             cell.cI = cCol;
                             for (var i = 0; i < cRow; i++) {
-                                for (var j = 0; j <= cCol; j++) {
-                                    if (body[i].cells[j] && body[i].cells[j].cI <= cCol) {
-                                        if (body[i].cells[j].colSpan) {
-                                            if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
-                                                cell.cI += parseInt(body[i].cells[j].colSpan);
+                                for (var j = 0; j < body[i].cells.length; j++) {
+                                    if (body[i].cells[j] && body[i].cells[j].colSpan) {
+                                        if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
+                                            if (cCol === 0) {
+                                                if (body[i].cells[j].cI <= cell.cI) {
+                                                    cell.cI += parseInt(body[i].cells[j].colSpan);
+                                                }
+                                            } else {
+                                                var lastColSpan = !isNaN(parseInt(row.cells[cCol - 1].colSpan)) ? parseInt(row.cells[cCol - 1].colSpan) : 0;
+                                                if (body[i].cells[j].cI === row.cells[cCol - 1].cI + 1 || body[i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan) {
+                                                    cell.cI += parseInt(body[i].cells[j].colSpan);
+                                                }
                                             }
                                         }
                                     }
