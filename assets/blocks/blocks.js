@@ -2447,7 +2447,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         if (row.cells[findColIdx].colSpan && row.cells[findColIdx].cI < cI + offset && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset) {
                             row.cells[findColIdx].colSpan++;
 
-                            if (row.cells[findColIdx].rowSpan) countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                            if (row.cells[findColIdx].rowSpan) {
+                                countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                            }
 
                             return row;
                         } else {
@@ -2479,15 +2481,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props6.attributes,
                     setAttributes = _props6.setAttributes;
                 var body = attributes.body;
-                var colIndex = selectedCell.colIndex;
+                var cI = selectedCell.cI;
 
+                var countRowSpan = 0;
 
                 this.setState({ selectedCell: null, updated: true });
                 setAttributes({
                     body: body.map(function (row) {
+                        if (countRowSpan > 0) {
+                            countRowSpan--;
+                            return row;
+                        }
+
+                        var findColIdx = row.cells.findIndex(function (cell, idx) {
+                            return cell.cI === cI || row.cells[idx + 1] && row.cells[idx + 1].cI > cI;
+                        });
+
+                        if (row.cells[findColIdx].rowSpan) {
+                            countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                        }
+
+                        if (row.cells[findColIdx].colSpan) {
+                            row.cells[findColIdx].colSpan--;
+                            if (row.cells[findColIdx].colSpan <= 1) {
+                                delete row.cells[findColIdx].colSpan;
+                            }
+
+                            return row;
+                        }
+
                         return {
                             cells: row.cells.filter(function (cell, index) {
-                                return index !== colIndex;
+                                return index !== findColIdx;
                             })
                         };
                     })

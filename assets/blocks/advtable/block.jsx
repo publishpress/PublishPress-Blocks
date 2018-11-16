@@ -200,7 +200,9 @@
                     ) {
                         row.cells[findColIdx].colSpan++;
 
-                        if (row.cells[findColIdx].rowSpan) countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                        if (row.cells[findColIdx].rowSpan) {
+                            countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                        }
 
                         return row;
                     } else {
@@ -232,13 +234,36 @@
 
             const { attributes, setAttributes } = this.props;
             const { body } = attributes;
-            const { colIndex } = selectedCell;
+            const { cI } = selectedCell;
+            let countRowSpan = 0;
 
             this.setState( { selectedCell: null, updated: true } );
             setAttributes( {
-                body: body.map( ( row ) => ( {
-                    cells: row.cells.filter( ( cell, index ) => index !== colIndex ),
-                } ) ),
+                body: body.map( ( row ) => {
+                    if (countRowSpan > 0) {
+                        countRowSpan--;
+                        return row;
+                    }
+
+                    const findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
+
+                    if (row.cells[findColIdx].rowSpan) {
+                        countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                    }
+
+                    if (row.cells[findColIdx].colSpan) {
+                        row.cells[findColIdx].colSpan--;
+                        if (row.cells[findColIdx].colSpan <= 1) {
+                            delete row.cells[findColIdx].colSpan;
+                        }
+
+                        return row;
+                    }
+
+                    return {
+                        cells: row.cells.filter( ( cell, index ) => index !== findColIdx ),
+                    }
+                } ),
             } );
         }
 
