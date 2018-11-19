@@ -23,7 +23,7 @@
     "1.7.6": [
       {
         "type": "feature",
-        "title": "Adv Table block: Reformat block structure and allow to style for multi cells"
+        "title": "Adv Table block: Reformat block structure and allow to style for multi cells, allow to transform from core Table block"
       },
       {
         "type": "fix",
