@@ -693,6 +693,11 @@
                                 controls={ TABLE_CONTROLS }
                             />
                         </Toolbar>
+                        <IconButton
+                            icon="update"
+                            label={ __( 'Refresh table (Use this after using undo or redo)' ) }
+                            onClick={ () => this.calculateRealColIndex() }
+                        />
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Cell Settings' ) }>
