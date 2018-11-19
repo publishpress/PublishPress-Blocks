@@ -222,13 +222,6 @@ float: left;'
             true
         );
 
-        // Plugin for TinyMCE table
-        wp_enqueue_script(
-            'advTable_plugin',
-            plugins_url('assets/blocks/advtable/table-plugin.min.js', dirname(__FILE__)),
-            array( 'wp-blocks' )
-        );
-
         // Include needed JS libraries
         wp_enqueue_script('jquery-ui-accordion');
         wp_enqueue_script('jquery-ui-tabs');
