@@ -277,11 +277,19 @@
             const { attributes, setAttributes } = this.props;
             const { fromCell, toCell } = rangeSelected;
             const { body } = attributes;
+            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+            const minRowIdx = Math.min(fromCell.rowIdx, toCell.rowIdx);
+            const maxRowIdx = Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan);
+            const minColIdx = Math.min(fromCell.RCI, toCell.RCI);
+            const maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
 
             const newBody = body.map( ( row, curRowIndex ) => {
-                if (curRowIndex < Math.min(fromCell.rowIdx, toCell.rowIdx)
-                    || curRowIndex > Math.max(fromCell.rowIdx, toCell.rowIdx)
-                ) {
+                if (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) {
                     return row;
                 }
 
@@ -290,8 +298,8 @@
                         if (curColIndex === Math.min(fromCell.colIdx, toCell.colIdx)
                             && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx)
                         ) {
-                            const rowSpan = Math.abs(fromCell.rowIdx - toCell.rowIdx) + 1;
-                            const colSpan = Math.abs(fromCell.colIdx - toCell.colIdx) + 1;
+                            const rowSpan = Math.abs(maxRowIdx - minRowIdx) + 1;
+                            const colSpan = Math.abs(maxColIdx - minColIdx) + 1;
 
                             return {
                                 ...cell,
@@ -302,9 +310,9 @@
 
                         return cell;
                     } ).filter( (cell, cCol) =>
-                        cCol < Math.min(fromCell.colIdx, toCell.colIdx)
+                        cell.cI < minColIdx
                         || ( cCol === Math.min(fromCell.colIdx, toCell.colIdx) && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx) )
-                        || cCol > Math.max(fromCell.colIdx, toCell.colIdx)
+                        || cell.cI > maxColIdx
                     )
                 }
             } );
@@ -773,14 +781,23 @@
                                 <tr key={ rowIndex }>
                                     {cells.map( ( { content, styles, colSpan, rowSpan, cI }, colIndex ) => {
                                         const cell = { rowIndex, colIndex, cI };
+
                                         let isSelected = selectedCell
                                             && selectedCell.rowIndex === rowIndex
                                             && selectedCell.colIndex === colIndex;
                                         if (rangeSelected) {
-                                            isSelected = rowIndex >= Math.min(rangeSelected.fromCell.rowIdx, rangeSelected.toCell.rowIdx)
-                                                && rowIndex <= Math.max(rangeSelected.fromCell.rowIdx, rangeSelected.toCell.rowIdx)
-                                                && colIndex >= Math.min(rangeSelected.fromCell.colIdx, rangeSelected.toCell.colIdx)
-                                                && colIndex <= Math.max(rangeSelected.fromCell.colIdx, rangeSelected.toCell.colIdx)
+                                            const { fromCell, toCell } = rangeSelected;
+                                            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                                            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                                            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                                            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                                            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                                            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+
+                                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx)
+                                                && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
+                                                && cI >= Math.min(fromCell.RCI, toCell.RCI)
+                                                && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
                                         }
 
                                         const cellClassName = [
@@ -800,16 +817,21 @@
                                                         const fromCell = {
                                                             rowIdx: selectedCell.rowIndex,
                                                             colIdx: selectedCell.colIndex,
+                                                            RCI: selectedCell.cI,
                                                         };
 
                                                         const toCell = {
                                                             rowIdx: rowIndex,
                                                             colIdx: colIndex,
+                                                            RCI: cI,
                                                         };
 
                                                         this.setState( { rangeSelected: { fromCell, toCell } } );
                                                     } else {
-                                                        this.setState( { rangeSelected: null } );
+                                                        this.setState( {
+                                                            selectedCell: cell,
+                                                            rangeSelected: null,
+                                                        } );
                                                     }
                                                 } }
                                             >
@@ -817,7 +839,6 @@
                                                     className="wp-block-table__cell-content"
                                                     value={ content }
                                                     onChange={ ( value ) => this.updateCellContent( value ) }
-                                                    unstableOnFocus={ () => this.setState( { selectedCell: cell } ) }
                                                 />
                                             </td>
                                         )

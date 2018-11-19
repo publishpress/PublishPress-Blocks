@@ -2535,17 +2535,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     toCell = rangeSelected.toCell;
                 var body = attributes.body;
 
+                var fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                var tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                var minRowIdx = Math.min(fromCell.rowIdx, toCell.rowIdx);
+                var maxRowIdx = Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan);
+                var minColIdx = Math.min(fromCell.RCI, toCell.RCI);
+                var maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
 
                 var newBody = body.map(function (row, curRowIndex) {
-                    if (curRowIndex < Math.min(fromCell.rowIdx, toCell.rowIdx) || curRowIndex > Math.max(fromCell.rowIdx, toCell.rowIdx)) {
+                    if (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) {
                         return row;
                     }
 
                     return {
                         cells: row.cells.map(function (cell, curColIndex) {
                             if (curColIndex === Math.min(fromCell.colIdx, toCell.colIdx) && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx)) {
-                                var rowSpan = Math.abs(fromCell.rowIdx - toCell.rowIdx) + 1;
-                                var colSpan = Math.abs(fromCell.colIdx - toCell.colIdx) + 1;
+                                var rowSpan = Math.abs(maxRowIdx - minRowIdx) + 1;
+                                var colSpan = Math.abs(maxColIdx - minColIdx) + 1;
 
                                 return _extends({}, cell, {
                                     rowSpan: rowSpan > 1 ? rowSpan : undefined,
@@ -2555,7 +2565,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                             return cell;
                         }).filter(function (cell, cCol) {
-                            return cCol < Math.min(fromCell.colIdx, toCell.colIdx) || cCol === Math.min(fromCell.colIdx, toCell.colIdx) && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx) || cCol > Math.max(fromCell.colIdx, toCell.colIdx);
+                            return cell.cI < minColIdx || cCol === Math.min(fromCell.colIdx, toCell.colIdx) && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx) || cell.cI > maxColIdx;
                         })
                     };
                 });
@@ -3083,9 +3093,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             cI = _ref2.cI;
 
                                         var cell = { rowIndex: rowIndex, colIndex: colIndex, cI: cI };
+
                                         var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex;
                                         if (rangeSelected) {
-                                            isSelected = rowIndex >= Math.min(rangeSelected.fromCell.rowIdx, rangeSelected.toCell.rowIdx) && rowIndex <= Math.max(rangeSelected.fromCell.rowIdx, rangeSelected.toCell.rowIdx) && colIndex >= Math.min(rangeSelected.fromCell.colIdx, rangeSelected.toCell.colIdx) && colIndex <= Math.max(rangeSelected.fromCell.colIdx, rangeSelected.toCell.colIdx);
+                                            var fromCell = rangeSelected.fromCell,
+                                                toCell = rangeSelected.toCell;
+
+                                            var fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                                            var tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                                            var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                                            var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                                            var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                                            var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+
+                                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
                                         }
 
                                         var cellClassName = [isSelected && 'cell-selected'].filter(Boolean).join(' ');
@@ -3101,19 +3122,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 rowSpan: rowSpan,
                                                 onClick: function onClick(e) {
                                                     if (e.shiftKey && selectedCell) {
-                                                        var fromCell = {
+                                                        var _fromCell = {
                                                             rowIdx: selectedCell.rowIndex,
-                                                            colIdx: selectedCell.colIndex
+                                                            colIdx: selectedCell.colIndex,
+                                                            RCI: selectedCell.cI
                                                         };
 
-                                                        var toCell = {
+                                                        var _toCell = {
                                                             rowIdx: rowIndex,
-                                                            colIdx: colIndex
+                                                            colIdx: colIndex,
+                                                            RCI: cI
                                                         };
 
-                                                        _this2.setState({ rangeSelected: { fromCell: fromCell, toCell: toCell } });
+                                                        _this2.setState({ rangeSelected: { fromCell: _fromCell, toCell: _toCell } });
                                                     } else {
-                                                        _this2.setState({ rangeSelected: null });
+                                                        _this2.setState({
+                                                            selectedCell: cell,
+                                                            rangeSelected: null
+                                                        });
                                                     }
                                                 }
                                             },
@@ -3122,9 +3148,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 value: content,
                                                 onChange: function onChange(value) {
                                                     return _this2.updateCellContent(value);
-                                                },
-                                                unstableOnFocus: function unstableOnFocus() {
-                                                    return _this2.setState({ selectedCell: cell });
                                                 }
                                             })
                                         );
