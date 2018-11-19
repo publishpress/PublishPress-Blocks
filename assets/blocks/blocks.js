@@ -2226,8 +2226,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (AdvTable.__proto__ || Object.getPrototypeOf(AdvTable)).apply(this, arguments));
 
             _this.state = {
-                initRow: 0,
-                initCol: 0,
+                initRow: 3,
+                initCol: 3,
                 selectedCell: null,
                 rangeSelected: null,
                 updated: false
@@ -2528,7 +2528,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var rangeSelected = this.state.rangeSelected;
 
 
-                if (!rangeSelected) {
+                if (!rangeSelected.toCell) {
                     return null;
                 }
 
@@ -2664,7 +2664,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     selectedCell = _state3.selectedCell,
                     rangeSelected = _state3.rangeSelected;
 
-                if (!selectedCell && !rangeSelected) {
+                if (!selectedCell && !rangeSelected.toCell) {
                     return null;
                 }
 
@@ -2680,7 +2680,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     minColIdx = void 0,
                     maxColIdx = void 0;
 
-                if (rangeSelected) {
+                if (rangeSelected && rangeSelected.toCell) {
                     var fromCell = rangeSelected.fromCell,
                         toCell = rangeSelected.toCell;
 
@@ -2697,13 +2697,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 var newBody = body.map(function (row, curRowIndex) {
-                    if (!rangeSelected && curRowIndex !== rowIndex || rangeSelected && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx)) {
+                    if (!rangeSelected.toCell && curRowIndex !== rowIndex || rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx)) {
                         return row;
                     }
 
                     return {
                         cells: row.cells.map(function (cell, curColIndex) {
-                            if (!rangeSelected && curColIndex === colIndex || rangeSelected && cell.cI >= minColIdx && cell.cI <= maxColIdx) {
+                            if (!rangeSelected.toCell && curColIndex === colIndex || rangeSelected && rangeSelected.toCell && cell.cI >= minColIdx && cell.cI <= maxColIdx) {
                                 cell.styles = AdvTable.parseStyles(cell.styles);
 
                                 if (style.borderColor) {
@@ -2788,6 +2788,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     rangeSelected = _state4.rangeSelected;
 
                 var maxWidthVal = !!maxWidth ? maxWidth : undefined;
+                var currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
 
                 if (!body.length) {
                     return React.createElement(
@@ -2828,42 +2829,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var TABLE_CONTROLS = [{
                     icon: 'table-row-before',
                     title: __('Add Row Before'),
-                    isDisabled: !selectedCell || rangeSelected,
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell,
                     onClick: function onClick() {
                         return _this2.insertRow(0);
                     }
                 }, {
                     icon: 'table-row-after',
                     title: __('Add Row After'),
-                    isDisabled: !selectedCell || rangeSelected,
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell,
                     onClick: function onClick() {
                         return _this2.insertRow(1);
                     }
                 }, {
                     icon: 'table-row-delete',
                     title: __('Delete Row'),
-                    isDisabled: !selectedCell || rangeSelected,
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell,
                     onClick: function onClick() {
                         return _this2.deleteRow();
                     }
                 }, {
                     icon: 'table-col-before',
                     title: __('Add Column Before'),
-                    isDisabled: !selectedCell || rangeSelected,
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell,
                     onClick: function onClick() {
                         return _this2.insertColumn(0);
                     }
                 }, {
                     icon: 'table-col-after',
                     title: __('Add Column After'),
-                    isDisabled: !selectedCell || rangeSelected,
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell,
                     onClick: function onClick() {
                         return _this2.insertColumn(1);
                     }
                 }, {
                     icon: 'table-col-delete',
                     title: __('Delete Column'),
-                    isDisabled: !selectedCell || rangeSelected,
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell,
                     onClick: function onClick() {
                         return _this2.deleteColumn();
                     }
@@ -2875,7 +2876,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M4,5v13h17V5H4z M14,7v9h-3V7H14z M6,7h3v9H6V7z M19,16h-3V7h3V16z" })
                     ),
                     title: __('Split Merged Cells'),
-                    isDisabled: !selectedCell || rangeSelected,
+                    isDisabled: !selectedCell || currentCell && !currentCell.rowSpan && !currentCell.colSpan || rangeSelected && rangeSelected.toCell,
                     onClick: function onClick() {
                         return _this2.splitMergedCells();
                     }
@@ -2889,7 +2890,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("polygon", { points: "21,4 2,4 2,6 21,6 21,4" })
                     ),
                     title: __('Merge Cells'),
-                    isDisabled: !rangeSelected,
+                    isDisabled: !rangeSelected || rangeSelected && !rangeSelected.toCell,
                     onClick: function onClick() {
                         return _this2.mergeCells();
                     }
@@ -3184,7 +3185,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         var cell = { rowIndex: rowIndex, colIndex: colIndex, cI: cI };
 
                                         var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex;
-                                        if (rangeSelected) {
+                                        if (rangeSelected && rangeSelected.toCell) {
                                             var fromCell = rangeSelected.fromCell,
                                                 toCell = rangeSelected.toCell;
 
@@ -3211,11 +3212,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 rowSpan: rowSpan,
                                                 onClick: function onClick(e) {
                                                     if (e.shiftKey && selectedCell) {
-                                                        var _fromCell = {
-                                                            rowIdx: selectedCell.rowIndex,
-                                                            colIdx: selectedCell.colIndex,
-                                                            RCI: selectedCell.cI
-                                                        };
+                                                        var _fromCell = rangeSelected.fromCell;
 
                                                         var _toCell = {
                                                             rowIdx: rowIndex,
@@ -3226,8 +3223,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         _this2.setState({ rangeSelected: { fromCell: _fromCell, toCell: _toCell } });
                                                     } else {
                                                         _this2.setState({
-                                                            selectedCell: cell,
-                                                            rangeSelected: null
+                                                            rangeSelected: {
+                                                                fromCell: {
+                                                                    rowIdx: rowIndex,
+                                                                    colIdx: colIndex,
+                                                                    RCI: cI
+                                                                }
+                                                            }
                                                         });
                                                     }
                                                 }
@@ -3237,6 +3239,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 value: content,
                                                 onChange: function onChange(value) {
                                                     return _this2.updateCellContent(value);
+                                                },
+                                                unstableOnFocus: function unstableOnFocus() {
+                                                    return _this2.setState({ selectedCell: cell });
                                                 }
                                             })
                                         );

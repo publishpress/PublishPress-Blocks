@@ -17,8 +17,8 @@
         constructor() {
             super( ...arguments );
             this.state = {
-                initRow: 0,
-                initCol: 0,
+                initRow: 3,
+                initCol: 3,
                 selectedCell: null,
                 rangeSelected: null,
                 updated: false,
@@ -274,7 +274,7 @@
         mergeCells() {
             const { rangeSelected } = this.state;
 
-            if (!rangeSelected) {
+            if (!rangeSelected.toCell) {
                 return null;
             }
 
@@ -412,7 +412,7 @@
 
         updateCellsStyles( style ) {
             const { selectedCell, rangeSelected } = this.state;
-            if (!selectedCell && !rangeSelected ) {
+            if (!selectedCell && !rangeSelected.toCell ) {
                 return null;
             }
 
@@ -421,7 +421,7 @@
             const { body } = attributes;
             let minRowIdx, maxRowIdx, minColIdx, maxColIdx;
 
-            if (rangeSelected) {
+            if (rangeSelected && rangeSelected.toCell) {
                 const { fromCell, toCell } = rangeSelected;
                 const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
                 const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
@@ -436,16 +436,16 @@
             }
 
             const newBody = body.map( ( row, curRowIndex ) => {
-                if (!rangeSelected && curRowIndex !== rowIndex
-                    || (rangeSelected && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
+                if (!rangeSelected.toCell && curRowIndex !== rowIndex
+                    || (rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
                 ) {
                     return row;
                 }
 
                 return {
                     cells: row.cells.map( ( cell, curColIndex ) => {
-                        if (!rangeSelected && curColIndex === colIndex
-                            || (rangeSelected && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
+                        if (!rangeSelected.toCell && curColIndex === colIndex
+                            || (rangeSelected && rangeSelected.toCell && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
                         ) {
                             cell.styles = AdvTable.parseStyles( cell.styles );
 
@@ -514,6 +514,7 @@
             const { body, maxWidth } = attributes;
             const { initRow, initCol, selectedCell, rangeSelected } = this.state;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
+            const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
 
             if (!body.length) {
                 return (
@@ -543,37 +544,37 @@
                 {
                     icon: 'table-row-before',
                     title: __( 'Add Row Before' ),
-                    isDisabled: ! selectedCell || rangeSelected,
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
                     onClick: () => this.insertRow( 0 ),
                 },
                 {
                     icon: 'table-row-after',
                     title: __( 'Add Row After' ),
-                    isDisabled: ! selectedCell || rangeSelected,
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
                     onClick: () => this.insertRow( 1 ),
                 },
                 {
                     icon: 'table-row-delete',
                     title: __( 'Delete Row' ),
-                    isDisabled: ! selectedCell || rangeSelected,
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
                     onClick: () => this.deleteRow(),
                 },
                 {
                     icon: 'table-col-before',
                     title: __( 'Add Column Before' ),
-                    isDisabled: ! selectedCell || rangeSelected,
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
                     onClick: () => this.insertColumn( 0 ),
                 },
                 {
                     icon: 'table-col-after',
                     title: __( 'Add Column After' ),
-                    isDisabled: ! selectedCell || rangeSelected,
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
                     onClick: () => this.insertColumn( 1 ),
                 },
                 {
                     icon: 'table-col-delete',
                     title: __( 'Delete Column' ),
-                    isDisabled: ! selectedCell || rangeSelected,
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
                     onClick: () => this.deleteColumn(),
                 },
                 {
@@ -584,7 +585,9 @@
                         </svg>
                     ),
                     title: __( 'Split Merged Cells' ),
-                    isDisabled: ! selectedCell || rangeSelected,
+                    isDisabled: ! selectedCell
+                        || (currentCell && !currentCell.rowSpan && !currentCell.colSpan)
+                        || (rangeSelected && rangeSelected.toCell),
                     onClick: () => this.splitMergedCells(),
                 },
                 {
@@ -597,7 +600,7 @@
                         </svg>
                     ),
                     title: __( 'Merge Cells' ),
-                    isDisabled: ! rangeSelected,
+                    isDisabled: !rangeSelected || (rangeSelected && ! rangeSelected.toCell),
                     onClick: () => this.mergeCells(),
                 },
             ];
@@ -848,7 +851,7 @@
                                         let isSelected = selectedCell
                                             && selectedCell.rowIndex === rowIndex
                                             && selectedCell.colIndex === colIndex;
-                                        if (rangeSelected) {
+                                        if (rangeSelected && rangeSelected.toCell) {
                                             const { fromCell, toCell } = rangeSelected;
                                             const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
                                             const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
@@ -877,12 +880,7 @@
                                                 rowSpan={ rowSpan }
                                                 onClick={ (e) => {
                                                     if (e.shiftKey && selectedCell) {
-                                                        const fromCell = {
-                                                            rowIdx: selectedCell.rowIndex,
-                                                            colIdx: selectedCell.colIndex,
-                                                            RCI: selectedCell.cI,
-                                                        };
-
+                                                        const { fromCell } = rangeSelected;
                                                         const toCell = {
                                                             rowIdx: rowIndex,
                                                             colIdx: colIndex,
@@ -892,8 +890,13 @@
                                                         this.setState( { rangeSelected: { fromCell, toCell } } );
                                                     } else {
                                                         this.setState( {
-                                                            selectedCell: cell,
-                                                            rangeSelected: null,
+                                                            rangeSelected: {
+                                                                fromCell: {
+                                                                    rowIdx: rowIndex,
+                                                                    colIdx: colIndex,
+                                                                    RCI: cI,
+                                                                },
+                                                            },
                                                         } );
                                                     }
                                                 } }
@@ -902,6 +905,7 @@
                                                     className="wp-block-table__cell-content"
                                                     value={ content }
                                                     onChange={ ( value ) => this.updateCellContent( value ) }
+                                                    unstableOnFocus={ () => this.setState( { selectedCell: cell } ) }
                                                 />
                                             </td>
                                         )
