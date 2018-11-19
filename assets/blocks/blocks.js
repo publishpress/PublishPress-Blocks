@@ -2291,6 +2291,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var body = attributes.body;
 
 
+                if (!body.length) return null;
+
                 var newBody = body.map(function (row, cRow) {
                     return {
                         cells: row.cells.map(function (cell, cCol) {
@@ -2780,6 +2782,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     selectedCell = _state3.selectedCell,
                     rangeSelected = _state3.rangeSelected;
 
+                var maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
                 var TABLE_CONTROLS = [{
                     icon: 'table-row-before',
@@ -3004,6 +3007,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
+                            { title: __('Table Settings') },
+                            React.createElement(RangeControl, {
+                                label: __('Max width (px)'),
+                                help: __('Set this to 0 to make max-width is 100%'),
+                                min: 0,
+                                max: 1999,
+                                value: maxWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ maxWidth: value });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
                             { title: __('Cell Settings') },
                             React.createElement(PanelColorSettings, {
                                 title: __('Color Settings'),
@@ -3107,7 +3124,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "table",
-                        { className: className },
+                        { className: className, style: { maxWidth: maxWidthVal } },
                         React.createElement(
                             "tbody",
                             null,
@@ -3275,12 +3292,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvTable,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
-            var body = attributes.body;
+            var body = attributes.body,
+                maxWidth = attributes.maxWidth;
 
+            var maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
             return React.createElement(
                 "table",
-                null,
+                { className: "advgb-table-frontend", style: { maxWidth: maxWidthVal } },
                 React.createElement(
                     "tbody",
                     null,

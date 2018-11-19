@@ -64,6 +64,8 @@
             const { attributes, setAttributes } = this.props;
             const { body } = attributes;
 
+            if (!body.length) return null;
+
             const newBody = body.map( (row, cRow) => {
                 return {
                     cells: row.cells.map( (cell, cCol) => {
@@ -509,6 +511,7 @@
             const { attributes, setAttributes, className } = this.props;
             const { body, maxWidth } = attributes;
             const { selectedCell, rangeSelected } = this.state;
+            const maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
             const TABLE_CONTROLS = [
                 {
@@ -719,6 +722,16 @@
                         </Toolbar>
                     </BlockControls>
                     <InspectorControls>
+                        <PanelBody title={ __( 'Table Settings' ) }>
+                            <RangeControl
+                                label={ __( 'Max width (px)' ) }
+                                help={ __( 'Set this to 0 to make max-width is 100%' ) }
+                                min={ 0 }
+                                max={ 1999 }
+                                value={ maxWidth }
+                                onChange={ ( value ) => setAttributes( { maxWidth: value } ) }
+                            />
+                        </PanelBody>
                         <PanelBody title={ __( 'Cell Settings' ) }>
                             <PanelColorSettings
                                 title={ __( 'Color Settings' ) }
@@ -799,7 +812,7 @@
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
-                    <table className={ className }>
+                    <table className={ className } style={ { maxWidth: maxWidthVal } }>
                         <tbody>
                             {body.map( ( { cells }, rowIndex ) => (
                                 <tr key={ rowIndex }>
@@ -939,10 +952,11 @@
         },
         edit: AdvTable,
         save: function ( { attributes } ) {
-            const { body } = attributes;
+            const { body, maxWidth } = attributes;
+            const maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
             return (
-                <table>
+                <table className="advgb-table-frontend" style={ { maxWidth: maxWidthVal } }>
                     <tbody>
                     { body.map( ( { cells }, rowIndex ) => (
                         <tr key={ rowIndex }>
