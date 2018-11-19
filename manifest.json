@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.7.5",
+  "version": "1.7.6",
   "wp_version": "4.9.8",
   "ignore_files" : [
     "manifest.json",
@@ -20,6 +20,16 @@
     "babel.rc"
   ],
   "changelog": {
+    "1.7.6": [
+      {
+        "type": "feature",
+        "title": "Adv Table block: Reformat block structure and allow to style for multi cells"
+      },
+      {
+        "type": "fix",
+        "title": "Validation issue when clear color styles of some blocks"
+      }
+    ],
     "1.7.5": [
       {
         "type": "fix",
