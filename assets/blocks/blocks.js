@@ -2191,7 +2191,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
-    var registerBlockType = wpBlocks.registerBlockType;
+    var registerBlockType = wpBlocks.registerBlockType,
+        createBlock = wpBlocks.createBlock;
     var InspectorControls = wpEditor.InspectorControls,
         BlockControls = wpEditor.BlockControls,
         RichText = wpEditor.RichText,
@@ -3374,6 +3375,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     })
                 )
             );
+        },
+        transforms: {
+            from: [{
+                type: 'block',
+                blocks: ['core/table'],
+                transform: function transform(attributes) {
+                    return createBlock('advgb/table', {
+                        body: attributes.body
+                    });
+                }
+            }]
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);

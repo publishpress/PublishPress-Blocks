@@ -1,7 +1,7 @@
 (function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
-    const { registerBlockType } = wpBlocks;
+    const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, PanelColorSettings } = wpEditor;
     const { PanelBody, BaseControl, RangeControl, SelectControl, TextControl, IconButton, Button, Toolbar, DropdownMenu, Tooltip } = wpComponents;
     const { times } = lodash;
@@ -1006,6 +1006,19 @@
                     </tbody>
                 </table>
             );
-        }
+        },
+        transforms: {
+            from: [
+                {
+                    type: 'block',
+                    blocks: [ 'core/table' ],
+                    transform: ( attributes ) => {
+                        return createBlock( 'advgb/table', {
+                            body: attributes.body,
+                        } )
+                    }
+                },
+            ],
+        },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
