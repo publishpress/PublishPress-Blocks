@@ -2965,15 +2965,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 icon: "editor-table",
                                 label: __('Edit Table'),
                                 controls: TABLE_CONTROLS
+                            }),
+                            React.createElement(IconButton, {
+                                icon: "update",
+                                label: __('Refresh table (Use this after using undo or redo)'),
+                                onClick: function onClick() {
+                                    return _this2.calculateRealColIndex();
+                                }
                             })
-                        ),
-                        React.createElement(IconButton, {
-                            icon: "update",
-                            label: __('Refresh table (Use this after using undo or redo)'),
-                            onClick: function onClick() {
-                                return _this2.calculateRealColIndex();
-                            }
-                        })
+                        )
                     ),
                     React.createElement(
                         InspectorControls,
