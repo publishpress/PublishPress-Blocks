@@ -2195,7 +2195,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var InspectorControls = wpEditor.InspectorControls,
         BlockControls = wpEditor.BlockControls,
         RichText = wpEditor.RichText,
-        MediaUpload = wpEditor.MediaUpload,
         PanelColorSettings = wpEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
@@ -2656,28 +2655,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateCellsStyles",
             value: function updateCellsStyles(style) {
-                var cells = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state.selectedCell;
+                var _state2 = this.state,
+                    selectedCell = _state2.selectedCell,
+                    rangeSelected = _state2.rangeSelected;
 
-                if (!cells) {
+                if (!selectedCell && !rangeSelected) {
                     return null;
                 }
 
                 var _props9 = this.props,
                     attributes = _props9.attributes,
                     setAttributes = _props9.setAttributes;
-                var rowIndex = cells.rowIndex,
-                    colIndex = cells.colIndex;
+                var rowIndex = selectedCell.rowIndex,
+                    colIndex = selectedCell.colIndex;
                 var body = attributes.body;
 
+                var minRowIdx = void 0,
+                    maxRowIdx = void 0,
+                    minColIdx = void 0,
+                    maxColIdx = void 0;
+
+                if (rangeSelected) {
+                    var fromCell = rangeSelected.fromCell,
+                        toCell = rangeSelected.toCell;
+
+                    var fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                    var tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                    var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                    var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                    var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                    var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                    minRowIdx = Math.min(fromCell.rowIdx, toCell.rowIdx);
+                    maxRowIdx = Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan);
+                    minColIdx = Math.min(fromCell.RCI, toCell.RCI);
+                    maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
+                }
 
                 var newBody = body.map(function (row, curRowIndex) {
-                    if (curRowIndex !== rowIndex) {
+                    if (!rangeSelected && curRowIndex !== rowIndex || rangeSelected && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx)) {
                         return row;
                     }
 
                     return {
                         cells: row.cells.map(function (cell, curColIndex) {
-                            if (curColIndex === colIndex) {
+                            if (!rangeSelected && curColIndex === colIndex || rangeSelected && cell.cI >= minColIdx && cell.cI <= maxColIdx) {
                                 cell.styles = AdvTable.parseStyles(cell.styles);
 
                                 if (style.borderColor) {
@@ -2710,7 +2731,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateCellContent",
             value: function updateCellContent(content) {
-                var selectedCell = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.state.selectedCell;
+                var selectedCell = this.state.selectedCell;
 
                 if (!selectedCell) {
                     return null;
@@ -2755,9 +2776,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     className = _props11.className;
                 var body = attributes.body,
                     maxWidth = attributes.maxWidth;
-                var _state2 = this.state,
-                    selectedCell = _state2.selectedCell,
-                    rangeSelected = _state2.rangeSelected;
+                var _state3 = this.state,
+                    selectedCell = _state3.selectedCell,
+                    rangeSelected = _state3.rangeSelected;
 
 
                 var TABLE_CONTROLS = [{
@@ -2888,7 +2909,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             borderRightColor: _this2.getCellStyles('borderColor'),
                             borderBottomColor: _this2.getCellStyles('borderColor'),
                             borderLeftColor: _this2.getCellStyles('borderColor')
-                        }, selectedCell);
+                        });
                     }
                 }, {
                     title: __('Border None'),
@@ -2904,7 +2925,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             borderRightColor: undefined,
                             borderBottomColor: undefined,
                             borderLeftColor: undefined
-                        }, selectedCell);
+                        });
                     }
                 }];
 

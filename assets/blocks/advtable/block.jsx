@@ -2,7 +2,7 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, RichText, MediaUpload, PanelColorSettings } = wpEditor;
+    const { InspectorControls, BlockControls, RichText, PanelColorSettings } = wpEditor;
     const { PanelBody, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu, Tooltip } = wpComponents;
     const { times, isEmpty } = lodash;
 
@@ -406,23 +406,43 @@
             }
         }
 
-        updateCellsStyles( style, cells = this.state.selectedCell ) {
-            if (!cells) {
+        updateCellsStyles( style ) {
+            const { selectedCell, rangeSelected } = this.state;
+            if (!selectedCell && !rangeSelected ) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
-            const { rowIndex, colIndex } = cells;
+            const { rowIndex, colIndex } = selectedCell;
             const { body } = attributes;
+            let minRowIdx, maxRowIdx, minColIdx, maxColIdx;
+
+            if (rangeSelected) {
+                const { fromCell, toCell } = rangeSelected;
+                const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                minRowIdx = Math.min(fromCell.rowIdx, toCell.rowIdx);
+                maxRowIdx = Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan);
+                minColIdx = Math.min(fromCell.RCI, toCell.RCI);
+                maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
+            }
 
             const newBody = body.map( ( row, curRowIndex ) => {
-                if (curRowIndex !== rowIndex) {
+                if (!rangeSelected && curRowIndex !== rowIndex
+                    || (rangeSelected && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
+                ) {
                     return row;
                 }
 
                 return {
                     cells: row.cells.map( ( cell, curColIndex ) => {
-                        if (curColIndex === colIndex) {
+                        if (!rangeSelected && curColIndex === colIndex
+                            || (rangeSelected && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
+                        ) {
                             cell.styles = AdvTable.parseStyles( cell.styles );
 
                             if (style.borderColor) {
@@ -453,7 +473,8 @@
             setAttributes( { body: newBody } );
         }
 
-        updateCellContent( content, selectedCell = this.state.selectedCell ) {
+        updateCellContent( content ) {
+            const { selectedCell } = this.state;
             if (!selectedCell) {
                 return null;
             }
@@ -606,7 +627,7 @@
                         borderRightColor: this.getCellStyles( 'borderColor' ),
                         borderBottomColor: this.getCellStyles( 'borderColor' ),
                         borderLeftColor: this.getCellStyles( 'borderColor' ),
-                    }, selectedCell ),
+                    } ),
                 },
                 {
                     title: __( 'Border None' ),
@@ -621,7 +642,7 @@
                         borderRightColor: undefined,
                         borderBottomColor: undefined,
                         borderLeftColor: undefined,
-                    }, selectedCell ),
+                    } ),
                 },
             ];
 
