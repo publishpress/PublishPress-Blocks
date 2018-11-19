@@ -3,8 +3,8 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, PanelColorSettings } = wpEditor;
-    const { PanelBody, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu, Tooltip } = wpComponents;
-    const { times, isEmpty } = lodash;
+    const { PanelBody, BaseControl, RangeControl, SelectControl, TextControl, IconButton, Button, Toolbar, DropdownMenu, Tooltip } = wpComponents;
+    const { times } = lodash;
 
     const tableBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
@@ -17,26 +17,14 @@
         constructor() {
             super( ...arguments );
             this.state = {
+                initRow: 0,
+                initCol: 0,
                 selectedCell: null,
                 rangeSelected: null,
                 updated: false,
             };
 
             this.calculateRealColIndex = this.calculateRealColIndex.bind( this );
-        }
-
-        componentWillMount() {
-            const { attributes, setAttributes } = this.props;
-
-            if (!attributes.body.length) {
-                setAttributes( {
-                    body: times( 2, () => ( {
-                        cells: times( 2, () => ( {
-                            content: '',
-                        } ) )
-                    } ) )
-                } );
-            }
         }
 
         componentDidMount() {
@@ -58,6 +46,20 @@
                 this.calculateRealColIndex();
                 this.setState( { updated: false } );
             }
+        }
+
+        createTable() {
+            const { setAttributes } = this.props;
+            const { initRow, initCol } = this.state;
+
+            this.setState( { updated: true } );
+            return setAttributes( {
+                body: times( parseInt(initRow), () => ( {
+                    cells: times( parseInt(initCol), () => ( {
+                        content: '',
+                    } ) )
+                } ) )
+            } );
         }
 
         calculateRealColIndex() {
@@ -510,8 +512,32 @@
         render() {
             const { attributes, setAttributes, className } = this.props;
             const { body, maxWidth } = attributes;
-            const { selectedCell, rangeSelected } = this.state;
+            const { initRow, initCol, selectedCell, rangeSelected } = this.state;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
+
+            if (!body.length) {
+                return (
+                    <Fragment>
+                        <div className="advgb-init-table">
+                            <TextControl
+                                type="number"
+                                label={ __( 'Column Count' ) }
+                                value={ initCol }
+                                onChange={ ( value ) => this.setState( { initCol: value } ) }
+                                min="1"
+                            />
+                            <TextControl
+                                type="number"
+                                label={ __( 'Row Count' ) }
+                                value={ initRow }
+                                onChange={ ( value ) => this.setState( { initRow: value } ) }
+                                min="1"
+                            />
+                            <Button isPrimary onClick={ () => this.createTable() }>{ __( 'Create' ) }</Button>
+                        </div>
+                    </Fragment>
+                )
+            }
 
             const TABLE_CONTROLS = [
                 {

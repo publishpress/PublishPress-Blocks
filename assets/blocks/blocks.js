@@ -2200,13 +2200,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
+        TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
+        Button = wpComponents.Button,
         Toolbar = wpComponents.Toolbar,
         DropdownMenu = wpComponents.DropdownMenu,
         Tooltip = wpComponents.Tooltip;
     var _lodash = lodash,
-        times = _lodash.times,
-        isEmpty = _lodash.isEmpty;
+        times = _lodash.times;
 
 
     var tableBlockIcon = React.createElement(
@@ -2225,6 +2226,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (AdvTable.__proto__ || Object.getPrototypeOf(AdvTable)).apply(this, arguments));
 
             _this.state = {
+                initRow: 0,
+                initCol: 0,
                 selectedCell: null,
                 rangeSelected: null,
                 updated: false
@@ -2235,28 +2238,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvTable, [{
-            key: "componentWillMount",
-            value: function componentWillMount() {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
-
-
-                if (!attributes.body.length) {
-                    setAttributes({
-                        body: times(2, function () {
-                            return {
-                                cells: times(2, function () {
-                                    return {
-                                        content: ''
-                                    };
-                                })
-                            };
-                        })
-                    });
-                }
-            }
-        }, {
             key: "componentDidMount",
             value: function componentDidMount() {
                 this.calculateRealColIndex();
@@ -2283,11 +2264,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "createTable",
+            value: function createTable() {
+                var setAttributes = this.props.setAttributes;
+                var _state2 = this.state,
+                    initRow = _state2.initRow,
+                    initCol = _state2.initCol;
+
+
+                this.setState({ updated: true });
+                return setAttributes({
+                    body: times(parseInt(initRow), function () {
+                        return {
+                            cells: times(parseInt(initCol), function () {
+                                return {
+                                    content: ''
+                                };
+                            })
+                        };
+                    })
+                });
+            }
+        }, {
             key: "calculateRealColIndex",
             value: function calculateRealColIndex() {
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
                 var body = attributes.body;
 
 
@@ -2341,9 +2344,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var body = attributes.body;
                 var rowIndex = selectedCell.rowIndex;
 
@@ -2383,9 +2386,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var body = attributes.body;
                 var rowIndex = selectedCell.rowIndex;
 
@@ -2425,9 +2428,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var body = attributes.body;
                 var cI = selectedCell.cI;
 
@@ -2478,9 +2481,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var body = attributes.body;
                 var cI = selectedCell.cI;
 
@@ -2529,9 +2532,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes;
                 var fromCell = rangeSelected.fromCell,
                     toCell = rangeSelected.toCell;
                 var body = attributes.body;
@@ -2584,9 +2587,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props8 = this.props,
-                    attributes = _props8.attributes,
-                    setAttributes = _props8.setAttributes;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes;
                 var body = attributes.body;
                 var colIndex = selectedCell.colIndex,
                     rowIndex = selectedCell.rowIndex,
@@ -2657,17 +2660,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateCellsStyles",
             value: function updateCellsStyles(style) {
-                var _state2 = this.state,
-                    selectedCell = _state2.selectedCell,
-                    rangeSelected = _state2.rangeSelected;
+                var _state3 = this.state,
+                    selectedCell = _state3.selectedCell,
+                    rangeSelected = _state3.rangeSelected;
 
                 if (!selectedCell && !rangeSelected) {
                     return null;
                 }
 
-                var _props9 = this.props,
-                    attributes = _props9.attributes,
-                    setAttributes = _props9.setAttributes;
+                var _props8 = this.props,
+                    attributes = _props8.attributes,
+                    setAttributes = _props8.setAttributes;
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
                 var body = attributes.body;
@@ -2739,9 +2742,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props10 = this.props,
-                    attributes = _props10.attributes,
-                    setAttributes = _props10.setAttributes;
+                var _props9 = this.props,
+                    attributes = _props9.attributes,
+                    setAttributes = _props9.setAttributes;
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
                 var body = attributes.body;
@@ -2772,17 +2775,55 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props11 = this.props,
-                    attributes = _props11.attributes,
-                    setAttributes = _props11.setAttributes,
-                    className = _props11.className;
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes,
+                    className = _props10.className;
                 var body = attributes.body,
                     maxWidth = attributes.maxWidth;
-                var _state3 = this.state,
-                    selectedCell = _state3.selectedCell,
-                    rangeSelected = _state3.rangeSelected;
+                var _state4 = this.state,
+                    initRow = _state4.initRow,
+                    initCol = _state4.initCol,
+                    selectedCell = _state4.selectedCell,
+                    rangeSelected = _state4.rangeSelected;
 
                 var maxWidthVal = !!maxWidth ? maxWidth : undefined;
+
+                if (!body.length) {
+                    return React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(
+                            "div",
+                            { className: "advgb-init-table" },
+                            React.createElement(TextControl, {
+                                type: "number",
+                                label: __('Column Count'),
+                                value: initCol,
+                                onChange: function onChange(value) {
+                                    return _this2.setState({ initCol: value });
+                                },
+                                min: "1"
+                            }),
+                            React.createElement(TextControl, {
+                                type: "number",
+                                label: __('Row Count'),
+                                value: initRow,
+                                onChange: function onChange(value) {
+                                    return _this2.setState({ initRow: value });
+                                },
+                                min: "1"
+                            }),
+                            React.createElement(
+                                Button,
+                                { isPrimary: true, onClick: function onClick() {
+                                        return _this2.createTable();
+                                    } },
+                                __('Create')
+                            )
+                        )
+                    );
+                }
 
                 var TABLE_CONTROLS = [{
                     icon: 'table-row-before',
