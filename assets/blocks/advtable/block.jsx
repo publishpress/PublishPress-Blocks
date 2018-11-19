@@ -330,7 +330,7 @@
 
             const { attributes, setAttributes } = this.props;
             const { body } = attributes;
-            const { colIndex, rowIndex } = selectedCell;
+            const { colIndex, rowIndex, cI } = selectedCell;
 
             const cellColSpan = parseInt(body[rowIndex].cells[colIndex].colSpan);
             const cellRowSpan = parseInt(body[rowIndex].cells[colIndex].rowSpan);
@@ -338,20 +338,18 @@
             body[rowIndex].cells[colIndex].rowSpan = undefined;
 
             const newBody = body.map( (row, curRowIndex) => {
-                if (curRowIndex === rowIndex) {
-                    return {
-                        cells: [
-                            ...row.cells.slice( 0, colIndex + 1 ),
-                            ...times( cellColSpan - 1, () => ( { content: '' } ) ),
-                            ...row.cells.slice( colIndex + 1 ),
-                        ],
+                if (curRowIndex >= rowIndex && curRowIndex < (rowIndex + cellRowSpan) ) {
+                    const findColIdx = row.cells.findIndex( (cell) => cell.cI >= cI );
+                    let startRowFix = 0;
+                    if (curRowIndex === rowIndex) {
+                        startRowFix = 1;
                     }
-                } else if (curRowIndex > rowIndex && curRowIndex < (rowIndex + cellRowSpan) ) {
+
                     return {
                         cells: [
-                            ...row.cells.slice( 0, colIndex ),
-                            ...times( cellColSpan, () => ( { content: '' } ) ),
-                            ...row.cells.slice( colIndex ),
+                            ...row.cells.slice( 0, findColIdx + startRowFix ),
+                            ...times( cellColSpan - startRowFix, () => ( { content: '' } ) ),
+                            ...row.cells.slice( findColIdx + startRowFix ),
                         ],
                     }
                 }

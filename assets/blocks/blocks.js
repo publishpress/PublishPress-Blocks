@@ -2588,7 +2588,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes = _props8.setAttributes;
                 var body = attributes.body;
                 var colIndex = selectedCell.colIndex,
-                    rowIndex = selectedCell.rowIndex;
+                    rowIndex = selectedCell.rowIndex,
+                    cI = selectedCell.cI;
 
 
                 var cellColSpan = parseInt(body[rowIndex].cells[colIndex].colSpan);
@@ -2597,17 +2598,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 body[rowIndex].cells[colIndex].rowSpan = undefined;
 
                 var newBody = body.map(function (row, curRowIndex) {
-                    if (curRowIndex === rowIndex) {
+                    if (curRowIndex >= rowIndex && curRowIndex < rowIndex + cellRowSpan) {
+                        var findColIdx = row.cells.findIndex(function (cell) {
+                            return cell.cI >= cI;
+                        });
+                        var startRowFix = 0;
+                        if (curRowIndex === rowIndex) {
+                            startRowFix = 1;
+                        }
+
                         return {
-                            cells: [].concat(_toConsumableArray(row.cells.slice(0, colIndex + 1)), _toConsumableArray(times(cellColSpan - 1, function () {
+                            cells: [].concat(_toConsumableArray(row.cells.slice(0, findColIdx + startRowFix)), _toConsumableArray(times(cellColSpan - startRowFix, function () {
                                 return { content: '' };
-                            })), _toConsumableArray(row.cells.slice(colIndex + 1)))
-                        };
-                    } else if (curRowIndex > rowIndex && curRowIndex < rowIndex + cellRowSpan) {
-                        return {
-                            cells: [].concat(_toConsumableArray(row.cells.slice(0, colIndex)), _toConsumableArray(times(cellColSpan, function () {
-                                return { content: '' };
-                            })), _toConsumableArray(row.cells.slice(colIndex)))
+                            })), _toConsumableArray(row.cells.slice(findColIdx + startRowFix)))
                         };
                     }
 
