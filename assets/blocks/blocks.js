@@ -2231,6 +2231,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 initCol: 3,
                 selectedCell: null,
                 rangeSelected: null,
+                multiSelected: null,
                 updated: false
             };
 
@@ -2255,7 +2256,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (!isSelected && selectedCell) {
                     this.setState({
                         selectedCell: null,
-                        rangeSelected: null
+                        rangeSelected: null,
+                        multiSelected: null
                     });
                 }
 
@@ -2786,7 +2788,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     initRow = _state4.initRow,
                     initCol = _state4.initCol,
                     selectedCell = _state4.selectedCell,
-                    rangeSelected = _state4.rangeSelected;
+                    rangeSelected = _state4.rangeSelected,
+                    multiSelected = _state4.multiSelected;
 
                 var maxWidthVal = !!maxWidth ? maxWidth : undefined;
                 var currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
@@ -3186,6 +3189,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         var cell = { rowIndex: rowIndex, colIndex: colIndex, cI: cI };
 
                                         var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex;
+
                                         if (rangeSelected && rangeSelected.toCell) {
                                             var fromCell = rangeSelected.fromCell,
                                                 toCell = rangeSelected.toCell;
@@ -3200,6 +3204,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
                                         }
 
+                                        if (multiSelected && multiSelected.length > 1) {
+                                            isSelected = multiSelected.findIndex(function (c) {
+                                                return c.rowIndex === rowIndex && c.colIndex === colIndex;
+                                            }) > -1;
+                                        }
+
                                         var cellClassName = [isSelected && 'cell-selected'].filter(Boolean).join(' ');
 
                                         styles = AdvTable.parseStyles(styles);
@@ -3212,7 +3222,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 colSpan: colSpan,
                                                 rowSpan: rowSpan,
                                                 onClick: function onClick(e) {
-                                                    if (e.shiftKey && selectedCell) {
+                                                    if (e.shiftKey) {
+                                                        if (!rangeSelected) return;
+                                                        if (!rangeSelected.fromCell) return;
+
                                                         var _fromCell = rangeSelected.fromCell;
 
                                                         var _toCell = {
@@ -3221,7 +3234,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                             RCI: cI
                                                         };
 
-                                                        _this2.setState({ rangeSelected: { fromCell: _fromCell, toCell: _toCell } });
+                                                        _this2.setState({
+                                                            rangeSelected: { fromCell: _fromCell, toCell: _toCell },
+                                                            multiSelected: null
+                                                        });
+                                                    } else if (e.ctrlKey) {
+                                                        var multiCells = multiSelected ? multiSelected : [];
+                                                        var existCell = multiCells.findIndex(function (cel) {
+                                                            return cel.rowIndex === rowIndex && cel.colIndex === colIndex;
+                                                        });
+
+                                                        if (existCell === -1) {
+                                                            multiCells.push(cell);
+                                                        } else {
+                                                            multiCells.splice(existCell, 1);
+                                                        }
+
+                                                        _this2.setState({
+                                                            multiSelected: multiCells,
+                                                            rangeSelected: null
+                                                        });
                                                     } else {
                                                         _this2.setState({
                                                             rangeSelected: {
@@ -3230,7 +3262,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                     colIdx: colIndex,
                                                                     RCI: cI
                                                                 }
-                                                            }
+                                                            },
+                                                            multiSelected: [cell]
                                                         });
                                                     }
                                                 }

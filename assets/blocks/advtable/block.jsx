@@ -21,6 +21,7 @@
                 initCol: 3,
                 selectedCell: null,
                 rangeSelected: null,
+                multiSelected: null,
                 updated: false,
             };
 
@@ -39,6 +40,7 @@
                 this.setState( {
                     selectedCell: null,
                     rangeSelected: null,
+                    multiSelected: null,
                 } );
             }
 
@@ -512,7 +514,7 @@
         render() {
             const { attributes, setAttributes, className } = this.props;
             const { body, maxWidth } = attributes;
-            const { initRow, initCol, selectedCell, rangeSelected } = this.state;
+            const { initRow, initCol, selectedCell, rangeSelected, multiSelected } = this.state;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
             const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
 
@@ -851,6 +853,7 @@
                                         let isSelected = selectedCell
                                             && selectedCell.rowIndex === rowIndex
                                             && selectedCell.colIndex === colIndex;
+
                                         if (rangeSelected && rangeSelected.toCell) {
                                             const { fromCell, toCell } = rangeSelected;
                                             const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
@@ -866,6 +869,11 @@
                                                 && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
                                         }
 
+                                        if (multiSelected && multiSelected.length > 1) {
+                                            isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1;
+                                        }
+
+
                                         const cellClassName = [
                                             isSelected && 'cell-selected',
                                         ].filter( Boolean ).join( ' ' );
@@ -879,7 +887,10 @@
                                                 colSpan={ colSpan }
                                                 rowSpan={ rowSpan }
                                                 onClick={ (e) => {
-                                                    if (e.shiftKey && selectedCell) {
+                                                    if (e.shiftKey) {
+                                                        if (!rangeSelected) return;
+                                                        if (!rangeSelected.fromCell) return;
+
                                                         const { fromCell } = rangeSelected;
                                                         const toCell = {
                                                             rowIdx: rowIndex,
@@ -887,7 +898,24 @@
                                                             RCI: cI,
                                                         };
 
-                                                        this.setState( { rangeSelected: { fromCell, toCell } } );
+                                                        this.setState( {
+                                                            rangeSelected: { fromCell, toCell },
+                                                            multiSelected: null,
+                                                        } );
+                                                    } else if (e.ctrlKey) {
+                                                        const multiCells = multiSelected ? multiSelected : [];
+                                                        const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
+
+                                                        if (existCell === -1) {
+                                                            multiCells.push(cell);
+                                                        } else {
+                                                            multiCells.splice(existCell, 1);
+                                                        }
+
+                                                        this.setState( {
+                                                            multiSelected: multiCells,
+                                                            rangeSelected: null,
+                                                        } );
                                                     } else {
                                                         this.setState( {
                                                             rangeSelected: {
@@ -897,6 +925,7 @@
                                                                     RCI: cI,
                                                                 },
                                                             },
+                                                            multiSelected: [ cell ],
                                                         } );
                                                     }
                                                 } }
