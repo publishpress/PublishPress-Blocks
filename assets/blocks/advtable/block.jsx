@@ -199,7 +199,11 @@
                         return row;
                     }
 
-                    const findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
+                    let findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
+                    if (findColIdx === -1) {
+                        findColIdx = row.cells.length - 1;
+                    }
+
                     if (row.cells[findColIdx].colSpan
                         && row.cells[findColIdx].cI < cI + offset
                         && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset

@@ -2451,6 +2451,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         var findColIdx = row.cells.findIndex(function (cell, idx) {
                             return cell.cI === cI || row.cells[idx + 1] && row.cells[idx + 1].cI > cI;
                         });
+                        if (findColIdx === -1) {
+                            findColIdx = row.cells.length - 1;
+                        }
+
                         if (row.cells[findColIdx].colSpan && row.cells[findColIdx].cI < cI + offset && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset) {
                             row.cells[findColIdx].colSpan++;
 
