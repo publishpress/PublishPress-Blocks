@@ -2799,6 +2799,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var maxWidthVal = !!maxWidth ? maxWidth : undefined;
                 var currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
 
+                // First time insert block, let user determine the table
                 if (!body.length) {
                     return React.createElement(
                         Fragment,
@@ -2830,6 +2831,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return _this2.createTable();
                                     } },
                                 __('Create')
+                            ),
+                            React.createElement(
+                                "div",
+                                null,
+                                React.createElement(
+                                    "small",
+                                    null,
+                                    __('Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection.')
+                                )
                             )
                         )
                     );

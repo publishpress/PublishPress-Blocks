@@ -520,6 +520,7 @@
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
             const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
 
+            // First time insert block, let user determine the table
             if (!body.length) {
                 return (
                     <Fragment>
@@ -539,6 +540,9 @@
                                 min="1"
                             />
                             <Button isPrimary onClick={ () => this.createTable() }>{ __( 'Create' ) }</Button>
+                            <div>
+                                <small>{ __( 'Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection.' ) }</small>
+                            </div>
                         </div>
                     </Fragment>
                 )
