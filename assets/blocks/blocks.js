@@ -2603,8 +2603,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     cI = selectedCell.cI;
 
 
-                var cellColSpan = parseInt(body[rowIndex].cells[colIndex].colSpan);
-                var cellRowSpan = parseInt(body[rowIndex].cells[colIndex].rowSpan);
+                var cellColSpan = body[rowIndex].cells[colIndex].colSpan ? parseInt(body[rowIndex].cells[colIndex].colSpan) : 1;
+                var cellRowSpan = body[rowIndex].cells[colIndex].rowSpan ? parseInt(body[rowIndex].cells[colIndex].rowSpan) : 1;
                 body[rowIndex].cells[colIndex].colSpan = undefined;
                 body[rowIndex].cells[colIndex].rowSpan = undefined;
 

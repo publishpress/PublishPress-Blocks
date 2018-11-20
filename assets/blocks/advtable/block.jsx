@@ -342,8 +342,8 @@
             const { body } = attributes;
             const { colIndex, rowIndex, cI } = selectedCell;
 
-            const cellColSpan = parseInt(body[rowIndex].cells[colIndex].colSpan);
-            const cellRowSpan = parseInt(body[rowIndex].cells[colIndex].rowSpan);
+            const cellColSpan = body[rowIndex].cells[colIndex].colSpan ? parseInt(body[rowIndex].cells[colIndex].colSpan) : 1;
+            const cellRowSpan = body[rowIndex].cells[colIndex].rowSpan ? parseInt(body[rowIndex].cells[colIndex].rowSpan) : 1;
             body[rowIndex].cells[colIndex].colSpan = undefined;
             body[rowIndex].cells[colIndex].rowSpan = undefined;
 
