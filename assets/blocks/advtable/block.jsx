@@ -540,7 +540,7 @@
                                 min="1"
                             />
                             <Button isPrimary onClick={ () => this.createTable() }>{ __( 'Create' ) }</Button>
-                            <div>
+                            <div style={ { marginTop: 10 } }>
                                 <small>{ __( 'Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection.' ) }</small>
                             </div>
                         </div>

@@ -2834,7 +2834,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 "div",
-                                null,
+                                { style: { marginTop: 10 } },
                                 React.createElement(
                                     "small",
                                     null,
