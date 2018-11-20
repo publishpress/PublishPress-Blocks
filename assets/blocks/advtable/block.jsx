@@ -546,37 +546,37 @@
                 {
                     icon: 'table-row-before',
                     title: __( 'Add Row Before' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
                     onClick: () => this.insertRow( 0 ),
                 },
                 {
                     icon: 'table-row-after',
                     title: __( 'Add Row After' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
                     onClick: () => this.insertRow( 1 ),
                 },
                 {
                     icon: 'table-row-delete',
                     title: __( 'Delete Row' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
                     onClick: () => this.deleteRow(),
                 },
                 {
                     icon: 'table-col-before',
                     title: __( 'Add Column Before' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
                     onClick: () => this.insertColumn( 0 ),
                 },
                 {
                     icon: 'table-col-after',
                     title: __( 'Add Column After' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
                     onClick: () => this.insertColumn( 1 ),
                 },
                 {
                     icon: 'table-col-delete',
                     title: __( 'Delete Column' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
                     onClick: () => this.deleteColumn(),
                 },
                 {
@@ -589,7 +589,8 @@
                     title: __( 'Split Merged Cells' ),
                     isDisabled: ! selectedCell
                         || (currentCell && !currentCell.rowSpan && !currentCell.colSpan)
-                        || (rangeSelected && rangeSelected.toCell),
+                        || (rangeSelected && rangeSelected.toCell)
+                        || (multiSelected && multiSelected.length > 1),
                     onClick: () => this.splitMergedCells(),
                 },
                 {
