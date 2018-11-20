@@ -413,8 +413,8 @@
         }
 
         updateCellsStyles( style ) {
-            const { selectedCell, rangeSelected } = this.state;
-            if (!selectedCell && !rangeSelected.toCell ) {
+            const { selectedCell, rangeSelected, multiSelected } = this.state;
+            if (!selectedCell && !rangeSelected.toCell && !multiSelected ) {
                 return null;
             }
 
@@ -438,16 +438,18 @@
             }
 
             const newBody = body.map( ( row, curRowIndex ) => {
-                if (!rangeSelected.toCell && curRowIndex !== rowIndex
+                if ((!rangeSelected || (rangeSelected && !rangeSelected.toCell)) && multiSelected.length < 2 && curRowIndex !== rowIndex
                     || (rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
+                    || (multiSelected && multiSelected.length > 1 && multiSelected.findIndex( (c) => c.rowIndex === curRowIndex ) === -1)
                 ) {
                     return row;
                 }
 
                 return {
                     cells: row.cells.map( ( cell, curColIndex ) => {
-                        if (!rangeSelected.toCell && curColIndex === colIndex
+                        if ((!rangeSelected || (rangeSelected && !rangeSelected.toCell)) && multiSelected.length < 2 && curColIndex === colIndex
                             || (rangeSelected && rangeSelected.toCell && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
+                            || (multiSelected && multiSelected.length > 1 && multiSelected.findIndex( (c) => c.colIndex === curColIndex && c.rowIndex === curRowIndex ) > -1)
                         ) {
                             cell.styles = AdvTable.parseStyles( cell.styles );
 

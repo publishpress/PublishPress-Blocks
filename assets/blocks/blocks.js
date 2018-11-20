@@ -2665,9 +2665,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function updateCellsStyles(style) {
                 var _state3 = this.state,
                     selectedCell = _state3.selectedCell,
-                    rangeSelected = _state3.rangeSelected;
+                    rangeSelected = _state3.rangeSelected,
+                    multiSelected = _state3.multiSelected;
 
-                if (!selectedCell && !rangeSelected.toCell) {
+                if (!selectedCell && !rangeSelected.toCell && !multiSelected) {
                     return null;
                 }
 
@@ -2700,13 +2701,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 var newBody = body.map(function (row, curRowIndex) {
-                    if (!rangeSelected.toCell && curRowIndex !== rowIndex || rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx)) {
+                    if ((!rangeSelected || rangeSelected && !rangeSelected.toCell) && multiSelected.length < 2 && curRowIndex !== rowIndex || rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) || multiSelected && multiSelected.length > 1 && multiSelected.findIndex(function (c) {
+                        return c.rowIndex === curRowIndex;
+                    }) === -1) {
                         return row;
                     }
 
                     return {
                         cells: row.cells.map(function (cell, curColIndex) {
-                            if (!rangeSelected.toCell && curColIndex === colIndex || rangeSelected && rangeSelected.toCell && cell.cI >= minColIdx && cell.cI <= maxColIdx) {
+                            if ((!rangeSelected || rangeSelected && !rangeSelected.toCell) && multiSelected.length < 2 && curColIndex === colIndex || rangeSelected && rangeSelected.toCell && cell.cI >= minColIdx && cell.cI <= maxColIdx || multiSelected && multiSelected.length > 1 && multiSelected.findIndex(function (c) {
+                                return c.colIndex === curColIndex && c.rowIndex === curRowIndex;
+                            }) > -1) {
                                 cell.styles = AdvTable.parseStyles(cell.styles);
 
                                 if (style.borderColor) {
