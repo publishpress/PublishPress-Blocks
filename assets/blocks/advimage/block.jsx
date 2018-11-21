@@ -140,17 +140,17 @@
                                     {
                                         label: __( 'Title Color' ),
                                         value: titleColor,
-                                        onChange: ( value ) => setAttributes( { titleColor: value } ),
+                                        onChange: ( value ) => setAttributes( { titleColor: value === undefined ? '#fff' : value } ),
                                     },
                                     {
                                         label: __( 'Subtitle Color' ),
                                         value: subtitleColor,
-                                        onChange: ( value ) => setAttributes( { subtitleColor: value } ),
+                                        onChange: ( value ) => setAttributes( { subtitleColor: value === undefined ? '#fff' : value } ),
                                     },
                                     {
                                         label: __( 'Overlay Color' ),
                                         value: overlayColor,
-                                        onChange: ( value ) => setAttributes( { overlayColor: value } ),
+                                        onChange: ( value ) => setAttributes( { overlayColor: value === undefined ? '#2196f3' : value } ),
                                     },
                                 ] }
                             />

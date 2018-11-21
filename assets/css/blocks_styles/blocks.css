@@ -236,20 +236,20 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 }
 
 /*Advanced Table block styles*/
-.wp-block-advgb-table table {
+.wp-block-advgb-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
 }
 
-.wp-block-advgb-table table td, .wp-block-advgb-table table tr {
+.wp-block-advgb-table td, .wp-block-advgb-table tr {
     border-color: #dddddd;
     border-style: solid;
     border-width: 1px;
-    padding: .5em;
+    padding: 0;
 }
 
-.wp-block-advgb-table td[data-mce-selected="1"] {
+.wp-block-advgb-table td.cell-selected {
     outline: 1px solid #2196f3;
 }
 
@@ -702,6 +702,10 @@ hr.wp-block-separator {
 /*Recent Posts styles*/
 .advgb-recent-posts-block {
     padding-bottom: 1px;
+}
+
+.advgb-recent-posts-block h2.advgb-post-title {
+    font-size: 1.2em;
 }
 
 .advgb-recent-posts-block.grid-view .advgb-recent-posts {
