@@ -28,6 +28,10 @@
       {
         "type": "fix",
         "title": "Validation issue when clear color styles of some blocks"
+      },
+      {
+        "type": "fix",
+        "title": "Compatibility with Gutenberg ver 4.5.0"
       }
     ],
     "1.7.5": [
