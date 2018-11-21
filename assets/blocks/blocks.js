@@ -7431,7 +7431,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             'span',
                                             { className: 'advgb-tab-remove',
                                                 onClick: function onClick() {
-                                                    return setAttributes({
+                                                    if (index === activeTab) {
+                                                        _this2.setState({ activeTab: 0 });
+                                                    }
+                                                    setAttributes({
                                                         tabItems: tabItems.filter(function (vl, idx) {
                                                             return idx !== index;
                                                         })
