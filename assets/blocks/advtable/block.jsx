@@ -1,9 +1,10 @@
 (function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
-    const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, RichText, MediaUpload, BlockAlignmentToolbar, PanelColorSettings } = wpEditor;
-    const { PanelBody, BaseControl, RangeControl, SelectControl, IconButton, Toolbar, DropdownMenu, Tooltip } = wpComponents;
+    const { registerBlockType, createBlock } = wpBlocks;
+    const { InspectorControls, BlockControls, RichText, PanelColorSettings } = wpEditor;
+    const { PanelBody, BaseControl, RangeControl, SelectControl, TextControl, IconButton, Button, Toolbar, DropdownMenu, Tooltip } = wpComponents;
+    const { times } = lodash;
 
     const tableBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
@@ -16,184 +17,577 @@
         constructor() {
             super( ...arguments );
             this.state = {
-                editor: null,
+                initRow: 3,
+                initCol: 3,
                 selectedCell: null,
-                selectedCellBgColor: null,
-                selectedCellTextColor: null,
-                selectedCellBorderColor: null,
-                selectedCellBorderStyle: '',
-                selectedCellBorderWidth: '',
-                selectedCellPaddingTop: '',
-                selectedCellPaddingRight: '',
-                selectedCellPaddingBottom: '',
-                selectedCellPaddingLeft: '',
-                selectedCellTextAlign: null,
-                selectedCellVerticalAlign: null,
+                rangeSelected: null,
+                multiSelected: null,
+                updated: false,
             };
 
-            this.handleSetup = this.handleSetup.bind( this );
+            this.calculateRealColIndex = this.calculateRealColIndex.bind( this );
         }
 
-        componentWillMount() {
-            const { attributes, setAttributes } = this.props;
-            const currentBlockConfig = advgbDefaultConfig['advgb-table'];
-
-            // No override attributes of blocks inserted before
-            if (attributes.changed !== true) {
-                if (currentBlockConfig && typeof currentBlockConfig === 'object') {
-                    Object.keys(currentBlockConfig).map((attribute)=>{
-                        attributes[attribute] = currentBlockConfig[attribute];
-                    });
-
-                    // Finally set changed attribute to true, so we don't modify anything again
-                    setAttributes( { changed: true } );
-                }
-            }
+        componentDidMount() {
+            this.calculateRealColIndex();
         }
 
         componentDidUpdate() {
-            const { editor, selectedCell } = this.state;
-            if ( editor && selectedCell ) {
-                const rows = editor.dom.select( 'tr' );
-                rows.forEach(function ( row ) {
-                    const rowIndex = row.rowIndex;
-                    const cells = row.getElementsByTagName( 'td' );
-                    for (let i = 0; i < cells.length; i++) {
-                        const cellIndex = cells[i].cellIndex;
-                        editor.dom.setAttrib( cells[i], 'class', `r${rowIndex}c${cellIndex}` );
-                    }
-                });
+            const { isSelected } = this.props;
+            const { selectedCell, updated } = this.state;
+
+            if ( ! isSelected && selectedCell ) {
+                this.setState( {
+                    selectedCell: null,
+                    rangeSelected: null,
+                    multiSelected: null,
+                } );
+            }
+
+            if (updated) {
+                this.calculateRealColIndex();
+                this.setState( { updated: false } );
             }
         }
 
-        static isTableSelected( editor ) {
-            return editor.dom.getParent(
-                editor.selection.getStart( true ),
-                'table',
-                editor.getBody().parentNode
-            );
+        createTable() {
+            const { setAttributes } = this.props;
+            const { initRow, initCol } = this.state;
+
+            this.setState( { updated: true } );
+            return setAttributes( {
+                body: times( parseInt(initRow), () => ( {
+                    cells: times( parseInt(initCol), () => ( {
+                        content: '',
+                    } ) )
+                } ) )
+            } );
         }
 
-        static selectFirstCell( editor ) {
-            const cell = editor.getBody().querySelector( 'td,th' );
-            if ( cell ) {
-                cell.focus();
-                editor.selection.select( cell, true );
-                editor.selection.collapse( false );
-            }
-        }
+        calculateRealColIndex() {
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
 
-        static execCommand( command ) {
-            return ( editor ) => {
-                if ( editor ) {
-                    if ( ! AdvTable.isTableSelected( editor ) ) {
-                        AdvTable.selectFirstCell( editor );
-                    }
-                    editor.execCommand( command );
-                    editor.fire('change');
-                }
-            };
-        }
+            if (!body.length) return null;
 
-        handleSetup( editor, isSelected ) {
-            editor.on( 'init', () => {
-                if (isSelected) {
-                    AdvTable.selectFirstCell( editor );
+            const newBody = body.map( (row, cRow) => {
+                return {
+                    cells: row.cells.map( (cell, cCol) => {
+                        cell.cI = cCol;
+                        for (let i=0;i < cRow; i++) {
+                            for (let j=0; j < body[i].cells.length; j++) {
+                                if (body[i].cells[j] && body[i].cells[j].colSpan) {
+                                    if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
+                                        if (cCol === 0) {
+                                            if (body[i].cells[j].cI <= cell.cI) {
+                                                cell.cI += parseInt( body[i].cells[j].colSpan );
+                                            }
+                                        } else {
+                                            const lastColSpan = !isNaN(parseInt(row.cells[cCol-1].colSpan)) ? parseInt(row.cells[cCol-1].colSpan) : 0;
+                                            if (body[i].cells[j].cI === row.cells[cCol - 1].cI + 1
+                                                || body[i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan
+                                            ) {
+                                                cell.cI += parseInt( body[i].cells[j].colSpan );
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        for (let j=0; j < cCol; j++) {
+                            if (row.cells[j]) {
+                                if (row.cells[j].colSpan) {
+                                    cell.cI += parseInt( row.cells[j].colSpan ) - 1;
+                                }
+                            }
+                        }
+
+                        return cell;
+                    } )
                 }
             } );
 
-            this.setState( { editor } );
+            setAttributes( { body: newBody } );
+        }
 
-            editor.off('keydown');
-            editor.on( 'nodeChange', () => {
-                const selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
-                const selectedCellBgColor = editor.dom.getStyle( selectedCell, 'background-color' );
-                const selectedCellTextColor = editor.dom.getStyle( selectedCell, 'color' );
-                const selectedCellBorderColor = editor.dom.getAttrib( selectedCell, 'data-border-color' );
-                const selectedCellBorderStyle = editor.dom.getStyle( selectedCell, 'border-style' ) || 'solid';
-                let selectedCellBorderWidth = editor.dom.getStyle( selectedCell, 'border-width' ) || '1px' ;
-                selectedCellBorderWidth = parseInt( selectedCellBorderWidth.replace( 'px', '' ) );
-                let selectedCellPaddingTop = editor.dom.getStyle( selectedCell, 'padding-top' );
-                let selectedCellPaddingRight = editor.dom.getStyle( selectedCell, 'padding-right' );
-                let selectedCellPaddingBottom = editor.dom.getStyle( selectedCell, 'padding-bottom' );
-                let selectedCellPaddingLeft = editor.dom.getStyle( selectedCell, 'padding-left' );
-                if (selectedCellPaddingTop)
-                    selectedCellPaddingTop = selectedCellPaddingTop.replace( 'px', '' );
-                if (selectedCellPaddingRight)
-                    selectedCellPaddingRight = selectedCellPaddingRight.replace( 'px', '' );
-                if (selectedCellPaddingBottom)
-                    selectedCellPaddingBottom = selectedCellPaddingBottom.replace( 'px', '' );
-                if (selectedCellPaddingLeft)
-                    selectedCellPaddingLeft = selectedCellPaddingLeft.replace( 'px', '' );
-                const selectedCellTextAlign = editor.dom.getStyle( selectedCell, 'text-align' );
-                const selectedCellVerticalAlign = editor.dom.getStyle( selectedCell, 'vertical-align' );
+        insertRow( offset ) {
+            const { selectedCell } = this.state;
 
-                return this.setState( {
-                    selectedCell,
-                    selectedCellBgColor,
-                    selectedCellTextColor,
-                    selectedCellBorderColor,
-                    selectedCellBorderStyle,
-                    selectedCellBorderWidth,
-                    selectedCellPaddingTop,
-                    selectedCellPaddingRight,
-                    selectedCellPaddingBottom,
-                    selectedCellPaddingLeft,
-                    selectedCellTextAlign,
-                    selectedCellVerticalAlign,
+            if (!selectedCell) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
+            const { rowIndex } = selectedCell;
+            const newRow = jQuery.extend( true, {}, body[rowIndex] );
+            newRow.cells.map( ( cell ) => {
+                cell.content = '';
+
+                return cell;
+            } );
+            newRow.cells = newRow.cells.filter( ( cCell ) => !cCell.rowSpan );
+
+            const newBody = [
+                ...body.slice( 0, rowIndex + offset ),
+                newRow,
+                ...body.slice( rowIndex + offset ),
+            ].map( ( row, rowIdx ) => ( {
+                cells: row.cells.map( ( cell ) => {
+                    if (cell.rowSpan) {
+                        if (rowIdx <= rowIndex && ( (rowIdx + parseInt(cell.rowSpan) - 1) >= rowIndex) ) {
+                            cell.rowSpan = parseInt(cell.rowSpan) + 1;
+                        }
+                    }
+                    return cell;
                 } )
+            } ) );
+
+            this.setState( { selectedCell: null, updated: true } );
+            setAttributes( { body: newBody } );
+        }
+
+        deleteRow() {
+            const { selectedCell } = this.state;
+
+            if (!selectedCell) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
+            const { rowIndex } = selectedCell;
+
+            const newBody = body.map( (row, cRowIdx) => ( {
+                cells: row.cells.map( (cell) => {
+                    if (cell.rowSpan) {
+                        if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
+                            cell.rowSpan = parseInt(cell.rowSpan) - 1;
+                            if (cRowIdx === rowIndex) {
+                                const findColIdx = body[cRowIdx + 1].cells.findIndex( (elm) => elm.cI === cell.cI || elm.cI > cell.cI );
+                                body[cRowIdx + 1].cells.splice( findColIdx, 0, cell );
+                            }
+                        }
+                    }
+
+                    return cell;
+                } )
+            } ) );
+
+            this.setState( { selectedCell: null, updated: true } );
+            setAttributes( { body: newBody.filter( (row, index) => index !== rowIndex ) } );
+        }
+
+        insertColumn( offset ) {
+            const { selectedCell } = this.state;
+
+            if (!selectedCell) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
+            const { cI } = selectedCell;
+            let countRowSpan = 0;
+
+            this.setState( { selectedCell: null, updated: true } );
+            setAttributes( {
+                body: body.map( ( row ) => {
+                    if (countRowSpan > 0) { // Skip if previous cell has row span
+                        countRowSpan--;
+                        return row;
+                    }
+
+                    let findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
+                    if (findColIdx === -1) {
+                        findColIdx = row.cells.length - 1;
+                    }
+
+                    if (row.cells[findColIdx].colSpan
+                        && row.cells[findColIdx].cI < cI + offset
+                        && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset
+                    ) {
+                        row.cells[findColIdx].colSpan++;
+
+                        if (row.cells[findColIdx].rowSpan) {
+                            countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                        }
+
+                        return row;
+                    } else {
+                        let realOffset = offset;
+                        if (row.cells[findColIdx].cI > cI && offset === 1) {
+                            realOffset = 0;
+                        } else if (row.cells[findColIdx].cI < cI && offset === 0) {
+                            realOffset = 1;
+                        }
+
+                        return {
+                            cells: [
+                                ...row.cells.slice( 0, findColIdx + realOffset ),
+                                { content: '' },
+                                ...row.cells.slice( findColIdx + realOffset ),
+                            ],
+                        }
+                    }
+                } ),
             } );
+        }
+
+        deleteColumn() {
+            const { selectedCell } = this.state;
+
+            if (!selectedCell) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
+            const { cI } = selectedCell;
+            let countRowSpan = 0;
+
+            this.setState( { selectedCell: null, updated: true } );
+            setAttributes( {
+                body: body.map( ( row ) => {
+                    if (countRowSpan > 0) {
+                        countRowSpan--;
+                        return row;
+                    }
+
+                    const findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
+
+                    if (row.cells[findColIdx].rowSpan) {
+                        countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                    }
+
+                    if (row.cells[findColIdx].colSpan) {
+                        row.cells[findColIdx].colSpan--;
+                        if (row.cells[findColIdx].colSpan <= 1) {
+                            delete row.cells[findColIdx].colSpan;
+                        }
+
+                        return row;
+                    }
+
+                    return {
+                        cells: row.cells.filter( ( cell, index ) => index !== findColIdx ),
+                    }
+                } ),
+            } );
+        }
+
+        mergeCells() {
+            const { rangeSelected } = this.state;
+
+            if (!rangeSelected.toCell) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { fromCell, toCell } = rangeSelected;
+            const { body } = attributes;
+            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+            const minRowIdx = Math.min(fromCell.rowIdx, toCell.rowIdx);
+            const maxRowIdx = Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan);
+            const minColIdx = Math.min(fromCell.RCI, toCell.RCI);
+            const maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
+
+            const newBody = body.map( ( row, curRowIndex ) => {
+                if (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) {
+                    return row;
+                }
+
+                return {
+                    cells: row.cells.map( ( cell, curColIndex ) => {
+                        if (curColIndex === Math.min(fromCell.colIdx, toCell.colIdx)
+                            && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx)
+                        ) {
+                            const rowSpan = Math.abs(maxRowIdx - minRowIdx) + 1;
+                            const colSpan = Math.abs(maxColIdx - minColIdx) + 1;
+
+                            return {
+                                ...cell,
+                                rowSpan: rowSpan > 1 ? rowSpan : undefined,
+                                colSpan: colSpan > 1 ? colSpan : undefined,
+                            }
+                        }
+
+                        return cell;
+                    } ).filter( (cell, cCol) =>
+                        cell.cI < minColIdx
+                        || ( cCol === Math.min(fromCell.colIdx, toCell.colIdx) && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx) )
+                        || cell.cI > maxColIdx
+                    )
+                }
+            } );
+
+            setAttributes( { body: newBody } );
+            this.setState( { selectedCell: null, rangeSelected: null, updated: true } );
+        }
+
+        splitMergedCells() {
+            const { selectedCell } = this.state;
+
+            if (!selectedCell) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
+            const { colIndex, rowIndex, cI } = selectedCell;
+
+            const cellColSpan = body[rowIndex].cells[colIndex].colSpan ? parseInt(body[rowIndex].cells[colIndex].colSpan) : 1;
+            const cellRowSpan = body[rowIndex].cells[colIndex].rowSpan ? parseInt(body[rowIndex].cells[colIndex].rowSpan) : 1;
+            body[rowIndex].cells[colIndex].colSpan = undefined;
+            body[rowIndex].cells[colIndex].rowSpan = undefined;
+
+            const newBody = body.map( (row, curRowIndex) => {
+                if (curRowIndex >= rowIndex && curRowIndex < (rowIndex + cellRowSpan) ) {
+                    const findColIdx = row.cells.findIndex( (cell) => cell.cI >= cI );
+                    let startRowFix = 0;
+                    if (curRowIndex === rowIndex) {
+                        startRowFix = 1;
+                    }
+
+                    return {
+                        cells: [
+                            ...row.cells.slice( 0, findColIdx + startRowFix ),
+                            ...times( cellColSpan - startRowFix, () => ( { content: '' } ) ),
+                            ...row.cells.slice( findColIdx + startRowFix ),
+                        ],
+                    }
+                }
+
+                return row;
+            } );
+
+            setAttributes( { body: newBody } );
+            this.setState( { selectedCell: null, updated: true } );
+        }
+
+        // Parse styles from HTML form to React styles object
+        static parseStyles( styles ) {
+            if (typeof styles !== 'string') {
+                return styles;
+            }
+
+            return styles
+                .split(';')
+                .filter(style => style.split(':')[0] && style.split(':')[1])
+                .map(style => [
+                    style.split(':')[0].trim().replace(/-./g, c => c.substr(1).toUpperCase()),
+                    style.split(':')[1].trim()
+                ])
+                .reduce((styleObj, style) => ({
+                    ...styleObj,
+                    [style[0]]: style[1],
+                }), {});
+        }
+
+        getCellStyles( style ) {
+            const { selectedCell } = this.state;
+            const { body } = this.props.attributes;
+
+            if (!selectedCell) return null;
+
+            const { rowIndex, colIndex } = selectedCell;
+
+            if (style === 'borderColor') {
+                return body[rowIndex].cells[colIndex].borderColorSaved;
+            }
+            const styles = AdvTable.parseStyles(body[rowIndex].cells[colIndex].styles);
+
+            if (typeof styles === 'object') {
+                let convertedStyles = styles[style];
+
+                if (convertedStyles && typeof convertedStyles !== 'number' && convertedStyles.indexOf( 'px' )) {
+                    convertedStyles = styles[style].replace( /px/g, '' );
+                }
+
+                return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : convertedStyles;
+            } else {
+                return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : null;
+            }
+        }
+
+        updateCellsStyles( style ) {
+            const { selectedCell, rangeSelected, multiSelected } = this.state;
+            if (!selectedCell && !rangeSelected.toCell && !multiSelected ) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { rowIndex, colIndex } = selectedCell;
+            const { body } = attributes;
+            let minRowIdx, maxRowIdx, minColIdx, maxColIdx;
+
+            if (rangeSelected && rangeSelected.toCell) {
+                const { fromCell, toCell } = rangeSelected;
+                const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                minRowIdx = Math.min(fromCell.rowIdx, toCell.rowIdx);
+                maxRowIdx = Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan);
+                minColIdx = Math.min(fromCell.RCI, toCell.RCI);
+                maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
+            }
+
+            const newBody = body.map( ( row, curRowIndex ) => {
+                if ((!rangeSelected || (rangeSelected && !rangeSelected.toCell)) && multiSelected.length < 2 && curRowIndex !== rowIndex
+                    || (rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
+                    || (multiSelected && multiSelected.length > 1 && multiSelected.findIndex( (c) => c.rowIndex === curRowIndex ) === -1)
+                ) {
+                    return row;
+                }
+
+                return {
+                    cells: row.cells.map( ( cell, curColIndex ) => {
+                        if ((!rangeSelected || (rangeSelected && !rangeSelected.toCell)) && multiSelected.length < 2 && curColIndex === colIndex
+                            || (rangeSelected && rangeSelected.toCell && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
+                            || (multiSelected && multiSelected.length > 1 && multiSelected.findIndex( (c) => c.colIndex === curColIndex && c.rowIndex === curRowIndex ) > -1)
+                        ) {
+                            cell.styles = AdvTable.parseStyles( cell.styles );
+
+                            if (style.borderColor) {
+                                if (cell.styles.borderTopColor) {
+                                    cell.styles = { ...cell.styles, borderTopColor: style.borderColor };
+                                }
+                                if (cell.styles.borderRightColor) {
+                                    cell.styles = { ...cell.styles, borderRightColor: style.borderColor };
+                                }
+                                if (cell.styles.borderBottomColor) {
+                                    cell.styles = { ...cell.styles, borderBottomColor: style.borderColor };
+                                }
+                                if (cell.styles.borderLeftColor) {
+                                    cell.styles = { ...cell.styles, borderLeftColor: style.borderColor };
+                                }
+
+                                cell.borderColorSaved = style.borderColor;
+                            } else {
+                                cell.styles = { ...cell.styles, ...style };
+                            }
+                        }
+
+                        return cell;
+                    } )
+                }
+            } );
+
+            setAttributes( { body: newBody } );
+        }
+
+        updateCellContent( content ) {
+            const { selectedCell } = this.state;
+            if (!selectedCell) {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { rowIndex, colIndex } = selectedCell;
+            const { body } = attributes;
+
+            const newBody = body.map( ( row, curRowIndex ) => {
+                if (curRowIndex !== rowIndex) {
+                    return row;
+                }
+
+                return {
+                    cells: row.cells.map( ( cell, curColIndex ) => {
+                        if (curColIndex !== colIndex) {
+                            return cell;
+                        }
+
+                        return {
+                            ...cell,
+                            content,
+                        }
+                    } )
+                }
+            } );
+
+            setAttributes( { body: newBody } );
         }
 
         render() {
-            const { isSelected, attributes, setAttributes, className } = this.props;
-            const { content, align, maxWidth } = attributes;
-            const {
-                editor,
-                selectedCell,
-                selectedCellBgColor,
-                selectedCellTextColor,
-                selectedCellBorderColor,
-                selectedCellBorderStyle,
-                selectedCellBorderWidth,
-                selectedCellPaddingTop,
-                selectedCellPaddingRight,
-                selectedCellPaddingBottom,
-                selectedCellPaddingLeft,
-                selectedCellTextAlign,
-                selectedCellVerticalAlign,
-            } = this.state;
+            const { attributes, setAttributes, className } = this.props;
+            const { body, maxWidth } = attributes;
+            const { initRow, initCol, selectedCell, rangeSelected, multiSelected } = this.state;
+            const maxWidthVal = !!maxWidth ? maxWidth : undefined;
+            const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
+
+            // First time insert block, let user determine the table
+            if (!body.length) {
+                return (
+                    <Fragment>
+                        <div className="advgb-init-table">
+                            <TextControl
+                                type="number"
+                                label={ __( 'Column Count' ) }
+                                value={ initCol }
+                                onChange={ ( value ) => this.setState( { initCol: value } ) }
+                                min="1"
+                            />
+                            <TextControl
+                                type="number"
+                                label={ __( 'Row Count' ) }
+                                value={ initRow }
+                                onChange={ ( value ) => this.setState( { initRow: value } ) }
+                                min="1"
+                            />
+                            <Button isPrimary onClick={ () => this.createTable() }>{ __( 'Create' ) }</Button>
+                            <div style={ { marginTop: 10 } }>
+                                <small>{ __( 'Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection.' ) }</small>
+                            </div>
+                        </div>
+                    </Fragment>
+                )
+            }
 
             const TABLE_CONTROLS = [
                 {
                     icon: 'table-row-before',
                     title: __( 'Add Row Before' ),
-                    onClick: AdvTable.execCommand( 'mceTableInsertRowBefore' ),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    onClick: () => this.insertRow( 0 ),
                 },
                 {
                     icon: 'table-row-after',
                     title: __( 'Add Row After' ),
-                    onClick: AdvTable.execCommand( 'mceTableInsertRowAfter' ),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    onClick: () => this.insertRow( 1 ),
                 },
                 {
                     icon: 'table-row-delete',
                     title: __( 'Delete Row' ),
-                    onClick: AdvTable.execCommand( 'mceTableDeleteRow' ),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    onClick: () => this.deleteRow(),
                 },
                 {
                     icon: 'table-col-before',
                     title: __( 'Add Column Before' ),
-                    onClick: AdvTable.execCommand( 'mceTableInsertColBefore' ),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    onClick: () => this.insertColumn( 0 ),
                 },
                 {
                     icon: 'table-col-after',
                     title: __( 'Add Column After' ),
-                    onClick: AdvTable.execCommand( 'mceTableInsertColAfter' ),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    onClick: () => this.insertColumn( 1 ),
                 },
                 {
                     icon: 'table-col-delete',
                     title: __( 'Delete Column' ),
-                    onClick: AdvTable.execCommand( 'mceTableDeleteCol' ),
+                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    onClick: () => this.deleteColumn(),
                 },
                 {
                     icon: (
@@ -203,7 +597,11 @@
                         </svg>
                     ),
                     title: __( 'Split Merged Cells' ),
-                    onClick: AdvTable.execCommand( 'mceTableSplitCells' ),
+                    isDisabled: ! selectedCell
+                        || (currentCell && !currentCell.rowSpan && !currentCell.colSpan)
+                        || (rangeSelected && rangeSelected.toCell)
+                        || (multiSelected && multiSelected.length > 1),
+                    onClick: () => this.splitMergedCells(),
                 },
                 {
                     icon: (
@@ -215,7 +613,8 @@
                         </svg>
                     ),
                     title: __( 'Merge Cells' ),
-                    onClick: AdvTable.execCommand( 'mceTableMergeCells' ),
+                    isDisabled: !rangeSelected || (rangeSelected && ! rangeSelected.toCell),
+                    onClick: () => this.mergeCells(),
                 },
             ];
 
@@ -228,12 +627,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => {
-                        editor.dom.setStyles( selectedCell, {
-                            'border-top-color': selectedCellBorderColor,
-                        } );
-                        editor.fire('change');
-                    },
+                    onClick: () => this.updateCellsStyles( { borderTopColor: this.getCellStyles( 'borderColor' ) } ),
                 },
                 {
                     title: __( 'Border Right' ),
@@ -243,12 +637,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => {
-                        editor.dom.setStyles( selectedCell, {
-                            'border-right-color': selectedCellBorderColor,
-                        } );
-                        editor.fire('change');
-                    },
+                    onClick: () => this.updateCellsStyles( { borderRightColor: this.getCellStyles( 'borderColor' ) } ),
                 },
                 {
                     title: __( 'Border Bottom' ),
@@ -258,12 +647,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => {
-                        editor.dom.setStyles( selectedCell, {
-                            'border-bottom-color': selectedCellBorderColor,
-                        } );
-                        editor.fire('change');
-                    },
+                    onClick: () => this.updateCellsStyles( { borderBottomColor: this.getCellStyles( 'borderColor' ) } ),
                 },
                 {
                     title: __( 'Border Left' ),
@@ -273,12 +657,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => {
-                        editor.dom.setStyles( selectedCell, {
-                            'border-left-color': selectedCellBorderColor,
-                        } );
-                        editor.fire('change');
-                    },
+                    onClick: () => this.updateCellsStyles( { borderLeftColor: this.getCellStyles( 'borderColor' ) } ),
                 },
                 {
                     title: __( 'Border All' ),
@@ -288,15 +667,12 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => {
-                        editor.dom.setStyles( selectedCell, {
-                            'border-top-color': selectedCellBorderColor,
-                            'border-right-color': selectedCellBorderColor,
-                            'border-bottom-color': selectedCellBorderColor,
-                            'border-left-color': selectedCellBorderColor,
-                        } );
-                        editor.fire('change');
-                    },
+                    onClick: () => this.updateCellsStyles( {
+                        borderTopColor: this.getCellStyles( 'borderColor' ),
+                        borderRightColor: this.getCellStyles( 'borderColor' ),
+                        borderBottomColor: this.getCellStyles( 'borderColor' ),
+                        borderLeftColor: this.getCellStyles( 'borderColor' ),
+                    } ),
                 },
                 {
                     title: __( 'Border None' ),
@@ -306,15 +682,12 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => {
-                        editor.dom.setStyles( selectedCell, {
-                            'border-top-color': '',
-                            'border-right-color': '',
-                            'border-bottom-color': '',
-                            'border-left-color': '',
-                        } );
-                        editor.fire('change');
-                    },
+                    onClick: () => this.updateCellsStyles( {
+                        borderTopColor: undefined,
+                        borderRightColor: undefined,
+                        borderBottomColor: undefined,
+                        borderLeftColor: undefined,
+                    } ),
                 },
             ];
 
@@ -377,36 +750,16 @@
             return (
                 <Fragment>
                     <BlockControls>
-                        <BlockAlignmentToolbar
-                            value={ align }
-                            onChange={ (value) => setAttributes( { align: value } ) }
-                        />
                         <Toolbar>
                             <DropdownMenu
                                 icon="editor-table"
-                                label={ __( 'Edit table' ) }
-                                controls={ TABLE_CONTROLS.map( ( control ) => ( {
-                                    ...control,
-                                    onClick: () => control.onClick( this.state.editor ),
-                                } ) ) }
+                                label={ __( 'Edit Table' ) }
+                                controls={ TABLE_CONTROLS }
                             />
-                            <MediaUpload
-                                allowedTypes={ ["image"] }
-                                onSelect={ ( media ) => editor.execCommand(
-                                    'mceInsertContent',
-                                    false,
-                                    `<img src="${media.url}" alt="${media.alt || media.filename}" />`
-                                ) }
-                                render={ ( { open } ) => {
-                                    return (
-                                        <IconButton
-                                            className="components-icon-button components-toolbar__control"
-                                            icon="format-image"
-                                            label={ __( 'Insert image' ) }
-                                            onClick={ open }
-                                        />
-                                    )
-                                } }
+                            <IconButton
+                                icon="update"
+                                label={ __( 'Refresh table (Use this after using undo or redo)' ) }
+                                onClick={ () => this.calculateRealColIndex() }
                             />
                         </Toolbar>
                     </BlockControls>
@@ -421,70 +774,45 @@
                                 onChange={ ( value ) => setAttributes( { maxWidth: value } ) }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Single Cell Settings' ) }>
+                        <PanelBody title={ __( 'Cell Settings' ) }>
                             <PanelColorSettings
                                 title={ __( 'Color Settings' ) }
-                                initialOpen={ false }
                                 colorSettings={ [
                                     {
                                         label: __( 'Background Color' ),
-                                        value: selectedCellBgColor,
-                                        onChange: ( value ) => {
-                                            editor.dom.setStyle( selectedCell, 'background-color', value || '' );
-                                            editor.fire('change');
-                                            this.setState( { selectedCellBgColor: value } );
-                                        },
+                                        value: this.getCellStyles( 'backgroundColor' ),
+                                        onChange: ( value ) => this.updateCellsStyles( { backgroundColor: value } ),
                                     },
                                     {
                                         label: __( 'Text Color' ),
-                                        value: selectedCellTextColor,
-                                        onChange: ( value ) => {
-                                            editor.dom.setStyle( selectedCell, 'color', value || '' );
-                                            editor.fire('change');
-                                            this.setState( { selectedCellTextColor: value } );
-                                        },
+                                        value: this.getCellStyles( 'color' ),
+                                        onChange: ( value ) => this.updateCellsStyles( { color: value } ),
                                     },
                                     {
                                         label: __( 'Border Color' ),
-                                        value: selectedCellBorderColor,
-                                        onChange: (value) => {
-                                            editor.dom.setAttrib( selectedCell, 'data-border-color', value || '' );
-                                            [ 'top', 'right', 'bottom', 'left' ].map( function ( pos ) {
-                                                if (editor.dom.getStyle( selectedCell, `border-${pos}-color` ))
-                                                    editor.dom.setStyle( selectedCell, `border-${pos}-color`, value || '' );
-                                            } );
-                                            editor.fire('change');
-                                            this.setState( { selectedCellBorderColor: value } );
-                                        },
+                                        value: this.getCellStyles( 'borderColor' ),
+                                        onChange: ( value ) => this.updateCellsStyles( { borderColor: value } ),
                                     },
                                 ] }
                             />
                             <PanelBody title={ __( 'Border' ) } initialOpen={ false }>
                                 <SelectControl
                                     label={ __( 'Border Style' ) }
-                                    value={ selectedCellBorderStyle }
+                                    value={ this.getCellStyles( 'borderStyle' ) }
                                     options={ [
                                         { label: __( 'Solid' ), value: 'solid' },
                                         { label: __( 'Dashed' ), value: 'dashed' },
                                         { label: __( 'Dotted' ), value: 'dotted' },
                                         { label: __( 'None' ), value: 'none' },
                                     ] }
-                                    onChange={ ( value ) => {
-                                        editor.dom.setStyle( selectedCell, 'border-style', value );
-                                        editor.fire('change');
-                                        this.setState( { selectedCellBorderStyle: value } );
-                                    } }
+                                    onChange={ ( value ) => this.updateCellsStyles( { borderStyle: value } ) }
                                 />
                                 <RangeControl
                                     label={ __( 'Border width' ) }
-                                    value={ selectedCellBorderWidth }
+                                    value={ this.getCellStyles( 'borderWidth' ) }
                                     min={ 1 }
                                     max={ 10 }
-                                    onChange={ ( value ) => {
-                                        editor.dom.setStyle( selectedCell, 'border-width', value );
-                                        editor.fire('change');
-                                        this.setState( { selectedCellBorderWidth: value } );
-                                    } }
+                                    onChange={ ( value ) => this.updateCellsStyles( { borderWidth: value } ) }
                                 />
                                 <div className={ 'advgb-border-item-wrapper' }>
                                     {BORDER_SELECT.map( ( item, index ) => (
@@ -496,69 +824,16 @@
                                     ) ) }
                                 </div>
                             </PanelBody>
-                            <PanelBody title={ __( 'Padding' ) } initialOpen={ false }>
-                                <RangeControl
-                                    label={ __( 'Padding Top' ) }
-                                    min={ 0 }
-                                    max={ 50 }
-                                    value={ selectedCellPaddingTop }
-                                    onChange={ ( value ) => {
-                                        editor.dom.setStyle( selectedCell, 'padding-top', value || '' );
-                                        editor.fire('change');
-                                        this.setState( { selectedCellPaddingTop: value || '' } );
-                                    } }
-                                    allowReset
-                                />
-                                <RangeControl
-                                    label={ __( 'Padding Bottom' ) }
-                                    min={ 0 }
-                                    max={ 50 }
-                                    value={ selectedCellPaddingBottom }
-                                    onChange={ ( value ) => {
-                                        editor.dom.setStyle( selectedCell, 'padding-bottom', value || '' );
-                                        editor.fire('change');
-                                        this.setState( { selectedCellPaddingBottom: value || '' } );
-                                    } }
-                                    allowReset
-                                />
-                                <RangeControl
-                                    label={ __( 'Padding Left' ) }
-                                    min={ 0 }
-                                    max={ 50 }
-                                    value={ selectedCellPaddingLeft }
-                                    onChange={ ( value ) => {
-                                        editor.dom.setStyle( selectedCell, 'padding-left', value || '' );
-                                        editor.fire('change');
-                                        this.setState( { selectedCellPaddingLeft: value || '' } );
-                                    } }
-                                    allowReset
-                                />
-                                <RangeControl
-                                    label={ __( 'Padding Right' ) }
-                                    min={ 0 }
-                                    max={ 50 }
-                                    value={ selectedCellPaddingRight }
-                                    onChange={ ( value ) => {
-                                        editor.dom.setStyle( selectedCell, 'padding-right', value || '' );
-                                        editor.fire('change');
-                                        this.setState( { selectedCellPaddingRight: value || '' } );
-                                    } }
-                                    allowReset
-                                />
-                            </PanelBody>
                             <PanelBody title={ __( 'Text Alignment' ) } initialOpen={ false }>
                                 <BaseControl label={ __( 'Horizontal Align' ) }>
                                     <Toolbar
                                         controls={ HORZ_ALIGNMENT_CONTROLS.map( ( control ) => {
-                                            const isActive = ( selectedCellTextAlign === control.align );
+                                            const isActive = ( this.getCellStyles( 'textAlign' ) === control.align );
 
                                             return {
                                                 ...control,
                                                 isActive,
-                                                onClick: () => {
-                                                    editor.dom.setStyle( selectedCell, 'text-align', isActive ? '' : control.align );
-                                                    editor.fire('change');
-                                                },
+                                                onClick: () => this.updateCellsStyles( { textAlign: isActive ? undefined : control.align } ),
                                             };
                                         } ) }
                                     />
@@ -566,15 +841,12 @@
                                 <BaseControl label={ __( 'Vertical Align' ) }>
                                     <Toolbar
                                         controls={ VERT_ALIGNMENT_CONTROLS.map( ( control ) => {
-                                            const isActive = ( selectedCellVerticalAlign === control.align );
+                                            const isActive = ( this.getCellStyles( 'verticalAlign' ) === control.align );
 
                                             return {
                                                 ...control,
                                                 isActive,
-                                                onClick: () => {
-                                                    editor.dom.setStyle( selectedCell, 'vertical-align', isActive ? '' : control.align );
-                                                    editor.fire('change');
-                                                },
+                                                onClick: () => this.updateCellsStyles( { verticalAlign: isActive ? undefined : control.align } ),
                                             };
                                         } ) }
                                     />
@@ -582,18 +854,106 @@
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
-                    <RichText
-                        tagName="table"
-                        wrapperClassName={ className }
-                        unstableGetSettings={ (settings) => ( {
-                            ...settings,
-                            plugins: (settings.plugins || [] ).concat( 'table' ),
-                        } ) }
-                        value={ content }
-                        unstableOnSetup={ ( editor ) => this.handleSetup( editor, isSelected ) }
-                        onChange={ ( value ) => setAttributes( { content: value } ) }
-                        style={ { maxWidth: !!maxWidth && maxWidth + 'px' } }
-                    />
+                    <table className={ className } style={ { maxWidth: maxWidthVal } }>
+                        <tbody>
+                            {body.map( ( { cells }, rowIndex ) => (
+                                <tr key={ rowIndex }>
+                                    {cells.map( ( { content, styles, colSpan, rowSpan, cI }, colIndex ) => {
+                                        const cell = { rowIndex, colIndex, cI };
+
+                                        let isSelected = selectedCell
+                                            && selectedCell.rowIndex === rowIndex
+                                            && selectedCell.colIndex === colIndex;
+
+                                        if (rangeSelected && rangeSelected.toCell) {
+                                            const { fromCell, toCell } = rangeSelected;
+                                            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                                            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                                            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                                            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                                            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                                            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+
+                                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx)
+                                                && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
+                                                && cI >= Math.min(fromCell.RCI, toCell.RCI)
+                                                && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
+                                        }
+
+                                        if (multiSelected && multiSelected.length > 1) {
+                                            isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1;
+                                        }
+
+
+                                        const cellClassName = [
+                                            isSelected && 'cell-selected',
+                                        ].filter( Boolean ).join( ' ' );
+
+                                        styles = AdvTable.parseStyles( styles );
+
+                                        return (
+                                            <td key={ colIndex }
+                                                className={ cellClassName }
+                                                style={ styles }
+                                                colSpan={ colSpan }
+                                                rowSpan={ rowSpan }
+                                                onClick={ (e) => {
+                                                    if (e.shiftKey) {
+                                                        if (!rangeSelected) return;
+                                                        if (!rangeSelected.fromCell) return;
+
+                                                        const { fromCell } = rangeSelected;
+                                                        const toCell = {
+                                                            rowIdx: rowIndex,
+                                                            colIdx: colIndex,
+                                                            RCI: cI,
+                                                        };
+
+                                                        this.setState( {
+                                                            rangeSelected: { fromCell, toCell },
+                                                            multiSelected: null,
+                                                        } );
+                                                    } else if (e.ctrlKey || e.metaKey) {
+                                                        const multiCells = multiSelected ? multiSelected : [];
+                                                        const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
+
+                                                        if (existCell === -1) {
+                                                            multiCells.push(cell);
+                                                        } else {
+                                                            multiCells.splice(existCell, 1);
+                                                        }
+
+                                                        this.setState( {
+                                                            multiSelected: multiCells,
+                                                            rangeSelected: null,
+                                                        } );
+                                                    } else {
+                                                        this.setState( {
+                                                            rangeSelected: {
+                                                                fromCell: {
+                                                                    rowIdx: rowIndex,
+                                                                    colIdx: colIndex,
+                                                                    RCI: cI,
+                                                                },
+                                                            },
+                                                            multiSelected: [ cell ],
+                                                        } );
+                                                    }
+                                                } }
+                                            >
+                                                <RichText
+                                                    className="wp-block-table__cell-content"
+                                                    value={ content }
+                                                    onChange={ ( value ) => this.updateCellContent( value ) }
+                                                    unstableOnFocus={ () => this.setState( { selectedCell: cell } ) }
+                                                />
+                                            </td>
+                                        )
+                                    } ) }
+                                </tr>
+                            ) ) }
+                        </tbody>
+                    </table>
                 </Fragment>
             )
         }
@@ -609,19 +969,44 @@
         category: 'formatting',
         keywords: [ __( 'table' ), __( 'cell' ), __( 'data' ) ],
         attributes: {
-            content: {
+            body: {
                 type: 'array',
-                source: 'children',
-                selector: 'table',
-                default: [
-                    <tbody key="a">
-                    <tr><td><br /></td><td><br /></td></tr>
-                    <tr><td><br /></td><td><br /></td></tr>
-                    </tbody>,
-                ],
-            },
-            align: {
-                type: 'string',
+                default: [],
+                source: 'query',
+                selector: 'tbody tr',
+                query: {
+                    cells: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'td',
+                        query: {
+                            content: {
+                                source: 'html',
+                            },
+                            styles: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'style',
+                            },
+                            colSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'colspan',
+                            },
+                            rowSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'rowspan',
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color',
+                            }
+                        },
+                    },
+                },
             },
             maxWidth: {
                 type: 'number',
@@ -632,23 +1017,48 @@
                 default: false,
             },
         },
+        supports: {
+            align: true,
+        },
         edit: AdvTable,
         save: function ( { attributes } ) {
-            const { content, align, maxWidth } = attributes;
+            const { body, maxWidth } = attributes;
+            const maxWidthVal = !!maxWidth ? maxWidth : undefined;
+
             return (
-                <RichText.Content
-                    tagName="table"
-                    className={ 'advgb-table-frontend ' + (align ? `align${ align }` : '') }
-                    style={ { maxWidth: !!maxWidth ? maxWidth + 'px' : undefined } }
-                    value={ content }
-                />
+                <table className="advgb-table-frontend" style={ { maxWidth: maxWidthVal } }>
+                    <tbody>
+                    { body.map( ( { cells }, rowIndex ) => (
+                        <tr key={ rowIndex }>
+                            { cells.map( ( { content, styles, colSpan, rowSpan, borderColorSaved }, colIndex ) => (
+                                <RichText.Content
+                                    tagName="td"
+                                    value={ content }
+                                    key={ colIndex }
+                                    style={ styles }
+                                    colSpan={ colSpan }
+                                    rowSpan={ rowSpan }
+                                    data-border-color={ borderColorSaved }
+                                />
+                            ) ) }
+                        </tr>
+                    ) ) }
+                    </tbody>
+                </table>
             );
         },
-        getEditWrapperProps( attributes ) {
-            const { align } = attributes;
-            if ( 'left' === align || 'right' === align || 'wide' === align || 'full' === align ) {
-                return { 'data-align': align };
-            }
+        transforms: {
+            from: [
+                {
+                    type: 'block',
+                    blocks: [ 'core/table' ],
+                    transform: ( attributes ) => {
+                        return createBlock( 'advgb/table', {
+                            body: attributes.body,
+                        } )
+                    }
+                },
+            ],
         },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );

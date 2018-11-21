@@ -2,7 +2,7 @@
 defined('ABSPATH') || die;
 
 wp_enqueue_style('minicolors_css');
-wp_enqueue_style('qtip_style');
+wp_enqueue_style('advgb_qtip_style');
 wp_enqueue_style('codemirror_css');
 wp_enqueue_style('codemirror_hint_style');
 wp_enqueue_style('advgb_settings_style');

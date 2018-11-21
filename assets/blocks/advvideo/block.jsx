@@ -245,12 +245,12 @@
                                         {
                                             label: __( 'Overlay Color' ),
                                             value: overlayColor,
-                                            onChange: ( value ) => setAttributes( { overlayColor: value } ),
+                                            onChange: ( value ) => setAttributes( { overlayColor: value === undefined ? '#EEEEEE' : value } ),
                                         },
                                         {
                                             label: __( 'Play Button Color' ),
                                             value: playButtonColor,
-                                            onChange: ( value ) => setAttributes( { playButtonColor: value } ),
+                                            onChange: ( value ) => setAttributes( { playButtonColor: value === undefined ? '#fff' : value } ),
                                         },
                                     ] }
                                 />
