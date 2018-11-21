@@ -82,7 +82,7 @@ if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
 }
 
 if (!defined('GUTENBERG_VERSION_REQUIRED')) {
-    define('GUTENBERG_VERSION_REQUIRED', '4.4.0');
+    define('GUTENBERG_VERSION_REQUIRED', '4.5.0');
 }
 
 require_once(plugin_dir_path(__FILE__) . '/install.php');
