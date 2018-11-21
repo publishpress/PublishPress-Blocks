@@ -913,7 +913,7 @@
                                                             rangeSelected: { fromCell, toCell },
                                                             multiSelected: null,
                                                         } );
-                                                    } else if (e.ctrlKey) {
+                                                    } else if (e.ctrlKey || e.metaKey) {
                                                         const multiCells = multiSelected ? multiSelected : [];
                                                         const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
 

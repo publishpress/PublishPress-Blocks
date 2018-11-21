@@ -3257,7 +3257,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                             rangeSelected: { fromCell: _fromCell, toCell: _toCell },
                                                             multiSelected: null
                                                         });
-                                                    } else if (e.ctrlKey) {
+                                                    } else if (e.ctrlKey || e.metaKey) {
                                                         var multiCells = multiSelected ? multiSelected : [];
                                                         var existCell = multiCells.findIndex(function (cel) {
                                                             return cel.rowIndex === rowIndex && cel.colIndex === colIndex;
