@@ -7176,7 +7176,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+        PanelColorSettings = wpEditor.PanelColorSettings,
+        InnerBlocks = wpEditor.InnerBlocks;
     var Dashicon = wpComponents.Dashicon,
         Tooltip = wpComponents.Tooltip,
         PanelBody = wpComponents.PanelBody,
@@ -7189,7 +7190,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AdvTabsBlock() {
             _classCallCheck(this, AdvTabsBlock);
 
-            return _possibleConstructorReturn(this, (AdvTabsBlock.__proto__ || Object.getPrototypeOf(AdvTabsBlock)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (AdvTabsBlock.__proto__ || Object.getPrototypeOf(AdvTabsBlock)).apply(this, arguments));
+
+            _this.state = {
+                activeTab: 0
+            };
+            return _this;
         }
 
         _createClass(AdvTabsBlock, [{
@@ -7216,7 +7222,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'componentDidMount',
             value: function componentDidMount() {
-                this.initTabs();
                 if (!this.props.attributes.blockID) {
                     this.props.setAttributes({ blockID: this.props.clientId });
                 }
@@ -7228,33 +7233,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var tabItems = this.props.attributes.tabItems;
 
 
-                if (prevItems !== tabItems) {
-                    this.initTabs(true);
-                }
-
                 if (tabItems.length === 0) {
                     this.props.setAttributes({
                         tabItems: [{
                             header: 'Tab 1',
-                            body: 'At least one tab must remaining, to remove block use "Remove Block" button from right menu.'
+                            body: 'At least one tab must remaining, to remove block use "Remove Block" button instead.'
                         }]
-                    });
-                }
-            }
-        }, {
-            key: 'initTabs',
-            value: function initTabs() {
-                var refresh = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-                if (typeof jQuery !== "undefined") {
-                    if (!refresh) {
-                        jQuery('#block-' + this.props.clientId + ' .advgb-tabs-block').tabs();
-                    } else {
-                        jQuery('#block-' + this.props.clientId + ' .advgb-tabs-block').tabs('refresh');
-                    }
-
-                    jQuery('#block-' + this.props.clientId + ' .advgb-tabs-block a').on('keydown', function (e) {
-                        e.stopPropagation();
                     });
                 }
             }
@@ -7286,6 +7270,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props3.attributes,
                     setAttributes = _props3.setAttributes,
                     clientId = _props3.clientId;
+                var activeTab = this.state.activeTab;
                 var tabItems = attributes.tabItems,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
@@ -7298,7 +7283,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     blockID = attributes.blockID,
                     activeTabBgColor = attributes.activeTabBgColor,
                     activeTabTextColor = attributes.activeTabTextColor;
+                var _lodash = lodash,
+                    times = _lodash.times;
 
+                var tabsTemplate = times(tabItems.length, function () {
+                    return ['advgb/tab'];
+                });
 
                 return React.createElement(
                     Fragment,
@@ -7404,7 +7394,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     'li',
                                     { key: index,
-                                        className: 'advgb-tab',
+                                        className: index === activeTab ? "advgb-tab ui-tabs-active" : "advgb-tab",
                                         style: {
                                             backgroundColor: headerBgColor,
                                             borderStyle: borderStyle,
@@ -7417,7 +7407,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement(
                                         'a',
                                         { href: '#advgb-tab-' + blockID + '-' + index,
-                                            style: { color: headerTextColor }
+                                            style: { color: headerTextColor },
+                                            onClick: function onClick() {
+                                                return _this2.setState({ activeTab: index });
+                                            }
                                         },
                                         React.createElement(RichText, {
                                             tagName: 'p',
@@ -7474,37 +7467,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 )
                             )
                         ),
-                        tabItems.map(function (item, index) {
-                            return React.createElement(
-                                'div',
-                                { key: index,
-                                    id: 'advgb-tab-' + blockID + '-' + index,
-                                    className: 'advgb-tab-body',
-                                    style: {
-                                        backgroundColor: bodyBgColor,
-                                        color: bodyTextColor,
-                                        borderStyle: borderStyle,
-                                        borderWidth: borderWidth + 'px',
-                                        borderColor: borderColor,
-                                        borderRadius: borderRadius + 'px'
-                                    }
-                                },
-                                React.createElement(RichText, {
-                                    tagName: 'p',
-                                    value: item.body,
-                                    onChange: function onChange(value) {
-                                        return _this2.updateTabs({ body: value }, index);
-                                    },
-                                    placeholder: __('Enter text…')
-                                })
-                            );
-                        })
+                        React.createElement(
+                            'div',
+                            { className: 'advgb-tab-body',
+                                style: {
+                                    backgroundColor: bodyBgColor,
+                                    color: bodyTextColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
+                                }
+                            },
+                            React.createElement(InnerBlocks, {
+                                template: tabsTemplate,
+                                templateLock: 'all',
+                                allowedBlocks: ['advgb/tab']
+                            })
+                        )
                     ),
                     !!blockID && React.createElement(
                         'style',
                         null,
                         activeTabBgColor && '#block-' + clientId + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }',
-                        activeTabTextColor && '#block-' + clientId + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
+                        activeTabTextColor && '#block-' + clientId + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }',
+                        '#block-' + clientId + ' .advgb-tab-body > .editor-inner-blocks > .editor-block-list__layout > .editor-block-list__block:nth-child(' + (activeTab + 1) + ') {\n                                display: block !important;\n                            }'
                     )
                 );
             }
@@ -7526,13 +7513,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: "array",
             default: [{
                 header: __('Tab 1'),
-                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+                body: __('Text')
             }, {
                 header: __('Tab 2'),
-                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+                body: __('Text')
             }, {
                 header: __('Tab 3'),
-                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+                body: __('Text')
             }]
         },
         headerBgColor: {
@@ -7635,24 +7622,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         );
                     })
                 ),
-                tabItems.map(function (item, index) {
-                    return React.createElement(
-                        'div',
-                        { key: index,
-                            id: 'advgb-tab-' + blockID + '-' + index,
-                            className: 'advgb-tab-body',
-                            style: {
-                                backgroundColor: bodyBgColor,
-                                color: bodyTextColor,
-                                borderStyle: borderStyle,
-                                borderWidth: borderWidth + 'px',
-                                borderColor: borderColor,
-                                borderRadius: borderRadius + 'px'
-                            }
-                        },
-                        React.createElement(RichText.Content, { tagName: 'p', value: item.body })
-                    );
-                }),
+                React.createElement(
+                    'div',
+                    { className: 'advgb-tab-body',
+                        style: {
+                            backgroundColor: bodyBgColor,
+                            color: bodyTextColor,
+                            borderStyle: borderStyle,
+                            borderWidth: borderWidth + 'px',
+                            borderColor: borderColor,
+                            borderRadius: borderRadius + 'px'
+                        }
+                    },
+                    React.createElement(InnerBlocks.Content, null)
+                ),
                 !!blockID && React.createElement(
                     'style',
                     null,
@@ -7661,10 +7644,83 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 )
             );
         },
-        deprecated: [{
+        deprecated: [{ // In 1.7
             attributes: tabBlockAttrs,
             save: function save(_ref2) {
                 var attributes = _ref2.attributes;
+                var tabItems = attributes.tabItems,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    blockID = attributes.blockID,
+                    activeTabBgColor = attributes.activeTabBgColor,
+                    activeTabTextColor = attributes.activeTabTextColor;
+
+
+                return React.createElement(
+                    'div',
+                    { id: 'advgb-tabs-' + blockID, className: 'advgb-tabs-block', style: { border: 'none' } },
+                    React.createElement(
+                        'ul',
+                        { className: 'advgb-tabs-panel' },
+                        tabItems.map(function (item, index) {
+                            return React.createElement(
+                                'li',
+                                { key: index, className: 'advgb-tab',
+                                    style: {
+                                        backgroundColor: headerBgColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth + 'px',
+                                        borderColor: borderColor,
+                                        borderRadius: borderRadius + 'px',
+                                        margin: '-' + borderWidth + 'px 0 -' + borderWidth + 'px -' + borderWidth + 'px'
+                                    }
+                                },
+                                React.createElement(
+                                    'a',
+                                    { href: '#advgb-tab-' + blockID + '-' + index,
+                                        style: { color: headerTextColor }
+                                    },
+                                    React.createElement(RichText.Content, { tagName: 'span', value: item.header })
+                                )
+                            );
+                        })
+                    ),
+                    tabItems.map(function (item, index) {
+                        return React.createElement(
+                            'div',
+                            { key: index,
+                                id: 'advgb-tab-' + blockID + '-' + index,
+                                className: 'advgb-tab-body',
+                                style: {
+                                    backgroundColor: bodyBgColor,
+                                    color: bodyTextColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
+                                }
+                            },
+                            React.createElement(RichText.Content, { tagName: 'p', value: item.body })
+                        );
+                    }),
+                    !!blockID && React.createElement(
+                        'style',
+                        null,
+                        activeTabBgColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }\n                            ',
+                        activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
+                    )
+                );
+            }
+        }, { // Before 1.7
+            attributes: tabBlockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
                 var tabItems = attributes.tabItems,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
@@ -7737,6 +7793,72 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/tabs/tab.jsx":
+/*!************************************!*\
+  !*** ./assets/blocks/tabs/tab.jsx ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function (wpI18n, wpBlocks, wpEditor) {
+    var __ = wpI18n.__;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InnerBlocks = wpEditor.InnerBlocks;
+
+
+    var tabsBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("path", { d: "M21,3H3C1.9,3,1,3.9,1,5v14c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V5C23,3.9,22.1,3,21,3z M21,19H3V5h10v4h8V19z" })
+    );
+
+    registerBlockType('advgb/tab', {
+        title: __('Tab'),
+        parent: ['advgb/tabs'],
+        icon: tabsBlockIcon,
+        description: __('Tab content block for Adv Tabs block.'),
+        category: 'formatting',
+        attributes: {
+            blockID: {
+                type: 'string'
+            }
+        },
+        supports: {
+            inserter: false
+        },
+        edit: function edit(props) {
+            var selector = wp.data.select('core/editor');
+            var rootBlockID = selector.getBlockRootClientId(props.clientId);
+            var rootBlock = selector.getBlock(rootBlockID);
+            var rootBlockSavedID = rootBlock.attributes.blockID;
+            var blockIndex = selector.getBlockIndex(props.clientId, rootBlockID);
+
+            if (!props.attributes.blockID) {
+                props.setAttributes({ blockID: rootBlockSavedID + '-' + blockIndex });
+            }
+
+            return React.createElement(InnerBlocks, { templateLock: false });
+        },
+        save: function save(props) {
+            var blockID = props.attributes.blockID;
+
+
+            return React.createElement(
+                "div",
+                { id: "advgb-tab-" + blockID },
+                React.createElement(InnerBlocks.Content, null)
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.editor);
 
 /***/ }),
 
@@ -9063,9 +9185,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/tabs/tab.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9084,6 +9206,7 @@ __webpack_require__(/*! ./assets/blocks/recent-posts/block.jsx */"./assets/block
 __webpack_require__(/*! ./assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");
 __webpack_require__(/*! ./assets/blocks/summary/block.jsx */"./assets/blocks/summary/block.jsx");
 __webpack_require__(/*! ./assets/blocks/tabs/block.jsx */"./assets/blocks/tabs/block.jsx");
+__webpack_require__(/*! ./assets/blocks/tabs/tab.jsx */"./assets/blocks/tabs/tab.jsx");
 __webpack_require__(/*! ./assets/blocks/testimonial/block.jsx */"./assets/blocks/testimonial/block.jsx");
 __webpack_require__(/*! ./assets/blocks/woo-products/block.jsx */"./assets/blocks/woo-products/block.jsx");
 module.exports = __webpack_require__(/*! ./assets/js/editor.jsx */"./assets/js/editor.jsx");

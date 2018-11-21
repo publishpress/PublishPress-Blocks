@@ -535,12 +535,18 @@ span.advgb-social-icon.selected:before {
     padding: 15px 0;
 }
 
+#editor .advgb-tab-body > .editor-inner-blocks > .editor-block-list__layout > .editor-block-list__block {
+    display: none;
+}
+
 ul.advgb-tabs-panel {
     list-style-type: none !important;
     border: none;
     margin: 0 !important;
     padding: 0 !important;
     background: none;
+    position: relative;
+    z-index: 9;
 }
 
 ul.advgb-tabs-panel:after {

@@ -2,12 +2,15 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, PanelColorSettings } = wpEditor;
+    const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl } = wpComponents;
 
     class AdvTabsBlock extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                activeTab: 0,
+            }
         }
 
         componentWillMount() {
@@ -28,7 +31,6 @@
         }
 
         componentDidMount() {
-            this.initTabs();
             if (!this.props.attributes.blockID) {
                 this.props.setAttributes( { blockID: this.props.clientId } );
             }
@@ -38,33 +40,15 @@
             const { tabItems: prevItems } = prevProps.attributes;
             const { tabItems } = this.props.attributes;
 
-            if (prevItems !== tabItems) {
-                this.initTabs( true );
-            }
-
             if (tabItems.length === 0) {
                 this.props.setAttributes( {
                     tabItems: [
                         {
                             header: 'Tab 1',
-                            body: 'At least one tab must remaining, to remove block use "Remove Block" button from right menu.',
+                            body: 'At least one tab must remaining, to remove block use "Remove Block" button instead.',
                         },
                     ],
                 } );
-            }
-        }
-
-        initTabs( refresh = false ) {
-            if (typeof jQuery !== "undefined") {
-                if (!refresh) {
-                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs();
-                } else {
-                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs('refresh');
-                }
-
-                jQuery(`#block-${this.props.clientId} .advgb-tabs-block a`).on( 'keydown', function ( e ) {
-                    e.stopPropagation();
-                } )
             }
         }
 
@@ -85,6 +69,7 @@
 
         render() {
             const { attributes, setAttributes, clientId } = this.props;
+            const { activeTab } = this.state;
             const {
                 tabItems,
                 headerBgColor,
@@ -99,6 +84,9 @@
                 activeTabBgColor,
                 activeTabTextColor,
             } = attributes;
+
+            const { times } = lodash;
+            const tabsTemplate = times( tabItems.length, () => [ 'advgb/tab' ] );
 
             return (
                 <Fragment>
@@ -187,7 +175,7 @@
                         <ul className="advgb-tabs-panel">
                             {tabItems.map( ( item, index ) => (
                                 <li key={ index }
-                                    className="advgb-tab"
+                                    className={ index === activeTab ? "advgb-tab ui-tabs-active" : "advgb-tab" }
                                     style={ {
                                         backgroundColor: headerBgColor,
                                         borderStyle: borderStyle,
@@ -199,6 +187,7 @@
                                 >
                                     <a href={`#advgb-tab-${blockID}-${index}`}
                                        style={ { color: headerTextColor } }
+                                       onClick={ () => this.setState( { activeTab: index } ) }
                                     >
                                         <RichText
                                             tagName="p"
@@ -238,27 +227,22 @@
                                 </Tooltip>
                             </li>
                         </ul>
-                        {tabItems.map( ( item, index ) => (
-                            <div key={ index }
-                                 id={`advgb-tab-${blockID}-${index}`}
-                                 className="advgb-tab-body"
-                                 style={ {
-                                     backgroundColor: bodyBgColor,
-                                     color: bodyTextColor,
-                                     borderStyle: borderStyle,
-                                     borderWidth: borderWidth + 'px',
-                                     borderColor: borderColor,
-                                     borderRadius: borderRadius + 'px',
-                                 } }
-                            >
-                                <RichText
-                                    tagName="p"
-                                    value={ item.body }
-                                    onChange={ ( value ) => this.updateTabs( { body: value }, index ) }
-                                    placeholder={ __( 'Enter text…' ) }
-                                />
-                            </div>
-                        ) ) }
+                        <div className="advgb-tab-body"
+                             style={ {
+                                 backgroundColor: bodyBgColor,
+                                 color: bodyTextColor,
+                                 borderStyle: borderStyle,
+                                 borderWidth: borderWidth + 'px',
+                                 borderColor: borderColor,
+                                 borderRadius: borderRadius + 'px',
+                             } }
+                        >
+                            <InnerBlocks
+                                template={ tabsTemplate  }
+                                templateLock="all"
+                                allowedBlocks={ [ 'advgb/tab' ] }
+                            />
+                        </div>
                     </div>
                     {!!blockID &&
                         <style>
@@ -267,6 +251,9 @@
                             }`}
                             {activeTabTextColor && `#block-${clientId} li.advgb-tab.ui-tabs-active a {
                                 color: ${activeTabTextColor} !important;
+                            }`}
+                            {`#block-${clientId} .advgb-tab-body > .editor-inner-blocks > .editor-block-list__layout > .editor-block-list__block:nth-child(${activeTab + 1}) {
+                                display: block !important;
                             }`}
                         </style>
                     }
@@ -289,15 +276,15 @@
             default: [
                 {
                     header: __( 'Tab 1' ),
-                    body: __( 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.' )
+                    body: __( 'Text' )
                 },
                 {
                     header: __( 'Tab 2' ),
-                    body: __( 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.' )
+                    body: __( 'Text' )
                 },
                 {
                     header: __( 'Tab 3' ),
-                    body: __( 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.' )
+                    body: __( 'Text' )
                 },
             ]
         },
@@ -394,22 +381,18 @@
                             </li>
                         ) ) }
                     </ul>
-                    {tabItems.map( ( item, index ) => (
-                        <div key={ index }
-                             id={`advgb-tab-${blockID}-${index}`}
-                             className="advgb-tab-body"
-                             style={ {
-                                 backgroundColor: bodyBgColor,
-                                 color: bodyTextColor,
-                                 borderStyle: borderStyle,
-                                 borderWidth: borderWidth + 'px',
-                                 borderColor: borderColor,
-                                 borderRadius: borderRadius + 'px',
-                             } }
-                        >
-                            <RichText.Content tagName="p" value={ item.body }/>
-                        </div>
-                    ) ) }
+                    <div className="advgb-tab-body"
+                         style={ {
+                             backgroundColor: bodyBgColor,
+                             color: bodyTextColor,
+                             borderStyle: borderStyle,
+                             borderWidth: borderWidth + 'px',
+                             borderColor: borderColor,
+                             borderRadius: borderRadius + 'px',
+                         } }
+                    >
+                        <InnerBlocks.Content />
+                    </div>
                     {!!blockID &&
                         <style>
                             {activeTabBgColor && `#advgb-tabs-${blockID} li.advgb-tab.ui-tabs-active {
@@ -425,7 +408,78 @@
             );
         },
         deprecated: [
-            {
+            { // In 1.7
+                attributes: tabBlockAttrs,
+                save: function( { attributes } ) {
+                    const {
+                        tabItems,
+                        headerBgColor,
+                        headerTextColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        blockID,
+                        activeTabBgColor,
+                        activeTabTextColor,
+                    } = attributes;
+
+                    return (
+                        <div id={`advgb-tabs-${blockID}`} className="advgb-tabs-block" style={ { border: 'none' } }>
+                            <ul className="advgb-tabs-panel">
+                                {tabItems.map( ( item, index ) => (
+                                    <li key={ index } className="advgb-tab"
+                                        style={ {
+                                            backgroundColor: headerBgColor,
+                                            borderStyle: borderStyle,
+                                            borderWidth: borderWidth + 'px',
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px',
+                                            margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
+                                        } }
+                                    >
+                                        <a href={`#advgb-tab-${blockID}-${index}`}
+                                           style={ { color: headerTextColor } }
+                                        >
+                                            <RichText.Content tagName="span" value={ item.header }/>
+                                        </a>
+                                    </li>
+                                ) ) }
+                            </ul>
+                            {tabItems.map( ( item, index ) => (
+                                <div key={ index }
+                                     id={`advgb-tab-${blockID}-${index}`}
+                                     className="advgb-tab-body"
+                                     style={ {
+                                         backgroundColor: bodyBgColor,
+                                         color: bodyTextColor,
+                                         borderStyle: borderStyle,
+                                         borderWidth: borderWidth + 'px',
+                                         borderColor: borderColor,
+                                         borderRadius: borderRadius + 'px',
+                                     } }
+                                >
+                                    <RichText.Content tagName="p" value={ item.body }/>
+                                </div>
+                            ) ) }
+                            {!!blockID &&
+                            <style>
+                                {activeTabBgColor && `#advgb-tabs-${blockID} li.advgb-tab.ui-tabs-active {
+                                background-color: ${activeTabBgColor} !important;
+                            }
+                            `}
+                                {activeTabTextColor && `#advgb-tabs-${blockID} li.advgb-tab.ui-tabs-active a {
+                                color: ${activeTabTextColor} !important;
+                            }`}
+                            </style>
+                            }
+                        </div>
+                    );
+                }
+            },
+            { // Before 1.7
                 attributes: tabBlockAttrs,
                 save: function ( { attributes } ) {
                     const {
@@ -495,7 +549,7 @@
                         </div>
                     );
                 }
-            }
+            },
         ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
