@@ -339,19 +339,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Background Color'),
                                     value: headerBgColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ headerBgColor: value });
+                                        return setAttributes({ headerBgColor: value === undefined ? '#000' : value });
                                     }
                                 }, {
                                     label: __('Text Color'),
                                     value: headerTextColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ headerTextColor: value });
+                                        return setAttributes({ headerTextColor: value === undefined ? '#eee' : value });
                                     }
                                 }, {
                                     label: __('Icon Color'),
                                     value: headerIconColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ headerIconColor: value });
+                                        return setAttributes({ headerIconColor: value === undefined ? '#fff' : value });
                                     }
                                 }]
                             })
@@ -464,7 +464,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         onChange: function onChange(value) {
                                             return _this3.updateAccordion({ header: value }, index);
                                         },
-                                        onSplit: function onSplit() {
+                                        unstableOnSplit: function unstableOnSplit() {
                                             return null;
                                         },
                                         placeholder: __('Enter header…')
@@ -873,13 +873,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Background Color'),
                                     value: bgColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ bgColor: value });
+                                        return setAttributes({ bgColor: value === undefined ? '#2196f3' : value });
                                     }
                                 }, {
                                     label: __('Text Color'),
                                     value: textColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ textColor: value });
+                                        return setAttributes({ textColor: value === undefined ? '#fff' : value });
                                     }
                                 }]
                             })
@@ -914,7 +914,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         label: __('Border Color'),
                                         value: borderColor,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ borderColor: value });
+                                            return setAttributes({ borderColor: value === undefined ? '#2196f3' : value });
                                         }
                                     }]
                                 }),
@@ -979,19 +979,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Background Color'),
                                     value: hoverBgColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ hoverBgColor: value });
+                                        return setAttributes({ hoverBgColor: value === undefined ? '#2196f3' : value });
                                     }
                                 }, {
                                     label: __('Text Color'),
                                     value: hoverTextColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ hoverTextColor: value });
+                                        return setAttributes({ hoverTextColor: value === undefined ? '#fff' : value });
                                     }
                                 }, {
                                     label: __('Shadow Color'),
                                     value: hoverShadowColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ hoverShadowColor: value });
+                                        return setAttributes({ hoverShadowColor: value === undefined ? '#ccc' : value });
                                     }
                                 }]
                             }),
@@ -1463,19 +1463,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Title Color'),
                                     value: titleColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ titleColor: value });
+                                        return setAttributes({ titleColor: value === undefined ? '#fff' : value });
                                     }
                                 }, {
                                     label: __('Subtitle Color'),
                                     value: subtitleColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ subtitleColor: value });
+                                        return setAttributes({ subtitleColor: value === undefined ? '#fff' : value });
                                     }
                                 }, {
                                     label: __('Overlay Color'),
                                     value: overlayColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ overlayColor: value });
+                                        return setAttributes({ overlayColor: value === undefined ? '#2196f3' : value });
                                     }
                                 }]
                             }),
@@ -1919,8 +1919,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement(ColorPalette, {
                                         value: iconColor,
-                                        onChange: function onChange(color) {
-                                            return setAttributes({ iconColor: color });
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ iconColor: value === undefined ? '#000' : value });
                                         }
                                     })
                                 ),
@@ -1978,7 +1978,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         className: listClassName,
                         placeholder: __('Write advanced list…'),
                         onMerge: mergeBlocks,
-                        onSplit: insertBlocksAfter ? function (before, after) {
+                        unstableOnSplit: insertBlocksAfter ? function (before, after) {
                             for (var _len = arguments.length, blocks = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
                                 blocks[_key - 2] = arguments[_key];
                             }
@@ -2171,11 +2171,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2187,21 +2191,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
-    var registerBlockType = wpBlocks.registerBlockType;
+    var registerBlockType = wpBlocks.registerBlockType,
+        createBlock = wpBlocks.createBlock;
     var InspectorControls = wpEditor.InspectorControls,
         BlockControls = wpEditor.BlockControls,
         RichText = wpEditor.RichText,
-        MediaUpload = wpEditor.MediaUpload,
-        BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar,
         PanelColorSettings = wpEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
+        TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
+        Button = wpComponents.Button,
         Toolbar = wpComponents.Toolbar,
         DropdownMenu = wpComponents.DropdownMenu,
         Tooltip = wpComponents.Tooltip;
+    var _lodash = lodash,
+        times = _lodash.times;
 
 
     var tableBlockIcon = React.createElement(
@@ -2220,167 +2227,670 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (AdvTable.__proto__ || Object.getPrototypeOf(AdvTable)).apply(this, arguments));
 
             _this.state = {
-                editor: null,
+                initRow: 3,
+                initCol: 3,
                 selectedCell: null,
-                selectedCellBgColor: null,
-                selectedCellTextColor: null,
-                selectedCellBorderColor: null,
-                selectedCellBorderStyle: '',
-                selectedCellBorderWidth: '',
-                selectedCellPaddingTop: '',
-                selectedCellPaddingRight: '',
-                selectedCellPaddingBottom: '',
-                selectedCellPaddingLeft: '',
-                selectedCellTextAlign: null,
-                selectedCellVerticalAlign: null
+                rangeSelected: null,
+                multiSelected: null,
+                updated: false
             };
 
-            _this.handleSetup = _this.handleSetup.bind(_this);
+            _this.calculateRealColIndex = _this.calculateRealColIndex.bind(_this);
             return _this;
         }
 
         _createClass(AdvTable, [{
-            key: "componentWillMount",
-            value: function componentWillMount() {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
-
-                var currentBlockConfig = advgbDefaultConfig['advgb-table'];
-
-                // No override attributes of blocks inserted before
-                if (attributes.changed !== true) {
-                    if (currentBlockConfig && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
-                        Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
-                        });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
-                    }
-                }
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                this.calculateRealColIndex();
             }
         }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate() {
+                var isSelected = this.props.isSelected;
                 var _state = this.state,
-                    editor = _state.editor,
-                    selectedCell = _state.selectedCell;
+                    selectedCell = _state.selectedCell,
+                    updated = _state.updated;
 
-                if (editor && selectedCell) {
-                    var rows = editor.dom.select('tr');
-                    rows.forEach(function (row) {
-                        var rowIndex = row.rowIndex;
-                        var cells = row.getElementsByTagName('td');
-                        for (var i = 0; i < cells.length; i++) {
-                            var cellIndex = cells[i].cellIndex;
-                            editor.dom.setAttrib(cells[i], 'class', "r" + rowIndex + "c" + cellIndex);
-                        }
+
+                if (!isSelected && selectedCell) {
+                    this.setState({
+                        selectedCell: null,
+                        rangeSelected: null,
+                        multiSelected: null
                     });
+                }
+
+                if (updated) {
+                    this.calculateRealColIndex();
+                    this.setState({ updated: false });
                 }
             }
         }, {
-            key: "handleSetup",
-            value: function handleSetup(editor, isSelected) {
-                var _this2 = this;
+            key: "createTable",
+            value: function createTable() {
+                var setAttributes = this.props.setAttributes;
+                var _state2 = this.state,
+                    initRow = _state2.initRow,
+                    initCol = _state2.initCol;
 
-                editor.on('init', function () {
-                    if (isSelected) {
-                        AdvTable.selectFirstCell(editor);
+
+                this.setState({ updated: true });
+                return setAttributes({
+                    body: times(parseInt(initRow), function () {
+                        return {
+                            cells: times(parseInt(initCol), function () {
+                                return {
+                                    content: ''
+                                };
+                            })
+                        };
+                    })
+                });
+            }
+        }, {
+            key: "calculateRealColIndex",
+            value: function calculateRealColIndex() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+                var body = attributes.body;
+
+
+                if (!body.length) return null;
+
+                var newBody = body.map(function (row, cRow) {
+                    return {
+                        cells: row.cells.map(function (cell, cCol) {
+                            cell.cI = cCol;
+                            for (var i = 0; i < cRow; i++) {
+                                for (var j = 0; j < body[i].cells.length; j++) {
+                                    if (body[i].cells[j] && body[i].cells[j].colSpan) {
+                                        if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
+                                            if (cCol === 0) {
+                                                if (body[i].cells[j].cI <= cell.cI) {
+                                                    cell.cI += parseInt(body[i].cells[j].colSpan);
+                                                }
+                                            } else {
+                                                var lastColSpan = !isNaN(parseInt(row.cells[cCol - 1].colSpan)) ? parseInt(row.cells[cCol - 1].colSpan) : 0;
+                                                if (body[i].cells[j].cI === row.cells[cCol - 1].cI + 1 || body[i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan) {
+                                                    cell.cI += parseInt(body[i].cells[j].colSpan);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            for (var _j = 0; _j < cCol; _j++) {
+                                if (row.cells[_j]) {
+                                    if (row.cells[_j].colSpan) {
+                                        cell.cI += parseInt(row.cells[_j].colSpan) - 1;
+                                    }
+                                }
+                            }
+
+                            return cell;
+                        })
+                    };
+                });
+
+                setAttributes({ body: newBody });
+            }
+        }, {
+            key: "insertRow",
+            value: function insertRow(offset) {
+                var selectedCell = this.state.selectedCell;
+
+
+                if (!selectedCell) {
+                    return null;
+                }
+
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var body = attributes.body;
+                var rowIndex = selectedCell.rowIndex;
+
+                var newRow = jQuery.extend(true, {}, body[rowIndex]);
+                newRow.cells.map(function (cell) {
+                    cell.content = '';
+
+                    return cell;
+                });
+                newRow.cells = newRow.cells.filter(function (cCell) {
+                    return !cCell.rowSpan;
+                });
+
+                var newBody = [].concat(_toConsumableArray(body.slice(0, rowIndex + offset)), [newRow], _toConsumableArray(body.slice(rowIndex + offset))).map(function (row, rowIdx) {
+                    return {
+                        cells: row.cells.map(function (cell) {
+                            if (cell.rowSpan) {
+                                if (rowIdx <= rowIndex && rowIdx + parseInt(cell.rowSpan) - 1 >= rowIndex) {
+                                    cell.rowSpan = parseInt(cell.rowSpan) + 1;
+                                }
+                            }
+                            return cell;
+                        })
+                    };
+                });
+
+                this.setState({ selectedCell: null, updated: true });
+                setAttributes({ body: newBody });
+            }
+        }, {
+            key: "deleteRow",
+            value: function deleteRow() {
+                var selectedCell = this.state.selectedCell;
+
+
+                if (!selectedCell) {
+                    return null;
+                }
+
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
+                var body = attributes.body;
+                var rowIndex = selectedCell.rowIndex;
+
+
+                var newBody = body.map(function (row, cRowIdx) {
+                    return {
+                        cells: row.cells.map(function (cell) {
+                            if (cell.rowSpan) {
+                                if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
+                                    cell.rowSpan = parseInt(cell.rowSpan) - 1;
+                                    if (cRowIdx === rowIndex) {
+                                        var findColIdx = body[cRowIdx + 1].cells.findIndex(function (elm) {
+                                            return elm.cI === cell.cI || elm.cI > cell.cI;
+                                        });
+                                        body[cRowIdx + 1].cells.splice(findColIdx, 0, cell);
+                                    }
+                                }
+                            }
+
+                            return cell;
+                        })
+                    };
+                });
+
+                this.setState({ selectedCell: null, updated: true });
+                setAttributes({ body: newBody.filter(function (row, index) {
+                        return index !== rowIndex;
+                    }) });
+            }
+        }, {
+            key: "insertColumn",
+            value: function insertColumn(offset) {
+                var selectedCell = this.state.selectedCell;
+
+
+                if (!selectedCell) {
+                    return null;
+                }
+
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
+                var body = attributes.body;
+                var cI = selectedCell.cI;
+
+                var countRowSpan = 0;
+
+                this.setState({ selectedCell: null, updated: true });
+                setAttributes({
+                    body: body.map(function (row) {
+                        if (countRowSpan > 0) {
+                            // Skip if previous cell has row span
+                            countRowSpan--;
+                            return row;
+                        }
+
+                        var findColIdx = row.cells.findIndex(function (cell, idx) {
+                            return cell.cI === cI || row.cells[idx + 1] && row.cells[idx + 1].cI > cI;
+                        });
+                        if (findColIdx === -1) {
+                            findColIdx = row.cells.length - 1;
+                        }
+
+                        if (row.cells[findColIdx].colSpan && row.cells[findColIdx].cI < cI + offset && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset) {
+                            row.cells[findColIdx].colSpan++;
+
+                            if (row.cells[findColIdx].rowSpan) {
+                                countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                            }
+
+                            return row;
+                        } else {
+                            var realOffset = offset;
+                            if (row.cells[findColIdx].cI > cI && offset === 1) {
+                                realOffset = 0;
+                            } else if (row.cells[findColIdx].cI < cI && offset === 0) {
+                                realOffset = 1;
+                            }
+
+                            return {
+                                cells: [].concat(_toConsumableArray(row.cells.slice(0, findColIdx + realOffset)), [{ content: '' }], _toConsumableArray(row.cells.slice(findColIdx + realOffset)))
+                            };
+                        }
+                    })
+                });
+            }
+        }, {
+            key: "deleteColumn",
+            value: function deleteColumn() {
+                var selectedCell = this.state.selectedCell;
+
+
+                if (!selectedCell) {
+                    return null;
+                }
+
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
+                var body = attributes.body;
+                var cI = selectedCell.cI;
+
+                var countRowSpan = 0;
+
+                this.setState({ selectedCell: null, updated: true });
+                setAttributes({
+                    body: body.map(function (row) {
+                        if (countRowSpan > 0) {
+                            countRowSpan--;
+                            return row;
+                        }
+
+                        var findColIdx = row.cells.findIndex(function (cell, idx) {
+                            return cell.cI === cI || row.cells[idx + 1] && row.cells[idx + 1].cI > cI;
+                        });
+
+                        if (row.cells[findColIdx].rowSpan) {
+                            countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                        }
+
+                        if (row.cells[findColIdx].colSpan) {
+                            row.cells[findColIdx].colSpan--;
+                            if (row.cells[findColIdx].colSpan <= 1) {
+                                delete row.cells[findColIdx].colSpan;
+                            }
+
+                            return row;
+                        }
+
+                        return {
+                            cells: row.cells.filter(function (cell, index) {
+                                return index !== findColIdx;
+                            })
+                        };
+                    })
+                });
+            }
+        }, {
+            key: "mergeCells",
+            value: function mergeCells() {
+                var rangeSelected = this.state.rangeSelected;
+
+
+                if (!rangeSelected.toCell) {
+                    return null;
+                }
+
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes;
+                var fromCell = rangeSelected.fromCell,
+                    toCell = rangeSelected.toCell;
+                var body = attributes.body;
+
+                var fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                var tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                var minRowIdx = Math.min(fromCell.rowIdx, toCell.rowIdx);
+                var maxRowIdx = Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan);
+                var minColIdx = Math.min(fromCell.RCI, toCell.RCI);
+                var maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
+
+                var newBody = body.map(function (row, curRowIndex) {
+                    if (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) {
+                        return row;
                     }
+
+                    return {
+                        cells: row.cells.map(function (cell, curColIndex) {
+                            if (curColIndex === Math.min(fromCell.colIdx, toCell.colIdx) && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx)) {
+                                var rowSpan = Math.abs(maxRowIdx - minRowIdx) + 1;
+                                var colSpan = Math.abs(maxColIdx - minColIdx) + 1;
+
+                                return _extends({}, cell, {
+                                    rowSpan: rowSpan > 1 ? rowSpan : undefined,
+                                    colSpan: colSpan > 1 ? colSpan : undefined
+                                });
+                            }
+
+                            return cell;
+                        }).filter(function (cell, cCol) {
+                            return cell.cI < minColIdx || cCol === Math.min(fromCell.colIdx, toCell.colIdx) && curRowIndex === Math.min(fromCell.rowIdx, toCell.rowIdx) || cell.cI > maxColIdx;
+                        })
+                    };
                 });
 
-                this.setState({ editor: editor });
+                setAttributes({ body: newBody });
+                this.setState({ selectedCell: null, rangeSelected: null, updated: true });
+            }
+        }, {
+            key: "splitMergedCells",
+            value: function splitMergedCells() {
+                var selectedCell = this.state.selectedCell;
 
-                editor.off('keydown');
-                editor.on('nodeChange', function () {
-                    var selectedCell = editor.dom.getParent(editor.selection.getStart(), 'td');
-                    var selectedCellBgColor = editor.dom.getStyle(selectedCell, 'background-color');
-                    var selectedCellTextColor = editor.dom.getStyle(selectedCell, 'color');
-                    var selectedCellBorderColor = editor.dom.getAttrib(selectedCell, 'data-border-color');
-                    var selectedCellBorderStyle = editor.dom.getStyle(selectedCell, 'border-style') || 'solid';
-                    var selectedCellBorderWidth = editor.dom.getStyle(selectedCell, 'border-width') || '1px';
-                    selectedCellBorderWidth = parseInt(selectedCellBorderWidth.replace('px', ''));
-                    var selectedCellPaddingTop = editor.dom.getStyle(selectedCell, 'padding-top');
-                    var selectedCellPaddingRight = editor.dom.getStyle(selectedCell, 'padding-right');
-                    var selectedCellPaddingBottom = editor.dom.getStyle(selectedCell, 'padding-bottom');
-                    var selectedCellPaddingLeft = editor.dom.getStyle(selectedCell, 'padding-left');
-                    if (selectedCellPaddingTop) selectedCellPaddingTop = selectedCellPaddingTop.replace('px', '');
-                    if (selectedCellPaddingRight) selectedCellPaddingRight = selectedCellPaddingRight.replace('px', '');
-                    if (selectedCellPaddingBottom) selectedCellPaddingBottom = selectedCellPaddingBottom.replace('px', '');
-                    if (selectedCellPaddingLeft) selectedCellPaddingLeft = selectedCellPaddingLeft.replace('px', '');
-                    var selectedCellTextAlign = editor.dom.getStyle(selectedCell, 'text-align');
-                    var selectedCellVerticalAlign = editor.dom.getStyle(selectedCell, 'vertical-align');
 
-                    return _this2.setState({
-                        selectedCell: selectedCell,
-                        selectedCellBgColor: selectedCellBgColor,
-                        selectedCellTextColor: selectedCellTextColor,
-                        selectedCellBorderColor: selectedCellBorderColor,
-                        selectedCellBorderStyle: selectedCellBorderStyle,
-                        selectedCellBorderWidth: selectedCellBorderWidth,
-                        selectedCellPaddingTop: selectedCellPaddingTop,
-                        selectedCellPaddingRight: selectedCellPaddingRight,
-                        selectedCellPaddingBottom: selectedCellPaddingBottom,
-                        selectedCellPaddingLeft: selectedCellPaddingLeft,
-                        selectedCellTextAlign: selectedCellTextAlign,
-                        selectedCellVerticalAlign: selectedCellVerticalAlign
-                    });
+                if (!selectedCell) {
+                    return null;
+                }
+
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes;
+                var body = attributes.body;
+                var colIndex = selectedCell.colIndex,
+                    rowIndex = selectedCell.rowIndex,
+                    cI = selectedCell.cI;
+
+
+                var cellColSpan = body[rowIndex].cells[colIndex].colSpan ? parseInt(body[rowIndex].cells[colIndex].colSpan) : 1;
+                var cellRowSpan = body[rowIndex].cells[colIndex].rowSpan ? parseInt(body[rowIndex].cells[colIndex].rowSpan) : 1;
+                body[rowIndex].cells[colIndex].colSpan = undefined;
+                body[rowIndex].cells[colIndex].rowSpan = undefined;
+
+                var newBody = body.map(function (row, curRowIndex) {
+                    if (curRowIndex >= rowIndex && curRowIndex < rowIndex + cellRowSpan) {
+                        var findColIdx = row.cells.findIndex(function (cell) {
+                            return cell.cI >= cI;
+                        });
+                        var startRowFix = 0;
+                        if (curRowIndex === rowIndex) {
+                            startRowFix = 1;
+                        }
+
+                        return {
+                            cells: [].concat(_toConsumableArray(row.cells.slice(0, findColIdx + startRowFix)), _toConsumableArray(times(cellColSpan - startRowFix, function () {
+                                return { content: '' };
+                            })), _toConsumableArray(row.cells.slice(findColIdx + startRowFix)))
+                        };
+                    }
+
+                    return row;
                 });
+
+                setAttributes({ body: newBody });
+                this.setState({ selectedCell: null, updated: true });
+            }
+
+            // Parse styles from HTML form to React styles object
+
+        }, {
+            key: "getCellStyles",
+            value: function getCellStyles(style) {
+                var selectedCell = this.state.selectedCell;
+                var body = this.props.attributes.body;
+
+
+                if (!selectedCell) return null;
+
+                var rowIndex = selectedCell.rowIndex,
+                    colIndex = selectedCell.colIndex;
+
+
+                if (style === 'borderColor') {
+                    return body[rowIndex].cells[colIndex].borderColorSaved;
+                }
+                var styles = AdvTable.parseStyles(body[rowIndex].cells[colIndex].styles);
+
+                if ((typeof styles === "undefined" ? "undefined" : _typeof(styles)) === 'object') {
+                    var _convertedStyles = styles[style];
+
+                    if (_convertedStyles && typeof _convertedStyles !== 'number' && _convertedStyles.indexOf('px')) {
+                        _convertedStyles = styles[style].replace(/px/g, '');
+                    }
+
+                    return typeof _convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : _convertedStyles;
+                } else {
+                    return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : null;
+                }
+            }
+        }, {
+            key: "updateCellsStyles",
+            value: function updateCellsStyles(style) {
+                var _state3 = this.state,
+                    selectedCell = _state3.selectedCell,
+                    rangeSelected = _state3.rangeSelected,
+                    multiSelected = _state3.multiSelected;
+
+                if (!selectedCell && !rangeSelected.toCell && !multiSelected) {
+                    return null;
+                }
+
+                var _props8 = this.props,
+                    attributes = _props8.attributes,
+                    setAttributes = _props8.setAttributes;
+                var rowIndex = selectedCell.rowIndex,
+                    colIndex = selectedCell.colIndex;
+                var body = attributes.body;
+
+                var minRowIdx = void 0,
+                    maxRowIdx = void 0,
+                    minColIdx = void 0,
+                    maxColIdx = void 0;
+
+                if (rangeSelected && rangeSelected.toCell) {
+                    var fromCell = rangeSelected.fromCell,
+                        toCell = rangeSelected.toCell;
+
+                    var fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                    var tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                    var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                    var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                    var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                    var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                    minRowIdx = Math.min(fromCell.rowIdx, toCell.rowIdx);
+                    maxRowIdx = Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan);
+                    minColIdx = Math.min(fromCell.RCI, toCell.RCI);
+                    maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
+                }
+
+                var newBody = body.map(function (row, curRowIndex) {
+                    if ((!rangeSelected || rangeSelected && !rangeSelected.toCell) && multiSelected.length < 2 && curRowIndex !== rowIndex || rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) || multiSelected && multiSelected.length > 1 && multiSelected.findIndex(function (c) {
+                        return c.rowIndex === curRowIndex;
+                    }) === -1) {
+                        return row;
+                    }
+
+                    return {
+                        cells: row.cells.map(function (cell, curColIndex) {
+                            if ((!rangeSelected || rangeSelected && !rangeSelected.toCell) && multiSelected.length < 2 && curColIndex === colIndex || rangeSelected && rangeSelected.toCell && cell.cI >= minColIdx && cell.cI <= maxColIdx || multiSelected && multiSelected.length > 1 && multiSelected.findIndex(function (c) {
+                                return c.colIndex === curColIndex && c.rowIndex === curRowIndex;
+                            }) > -1) {
+                                cell.styles = AdvTable.parseStyles(cell.styles);
+
+                                if (style.borderColor) {
+                                    if (cell.styles.borderTopColor) {
+                                        cell.styles = _extends({}, cell.styles, { borderTopColor: style.borderColor });
+                                    }
+                                    if (cell.styles.borderRightColor) {
+                                        cell.styles = _extends({}, cell.styles, { borderRightColor: style.borderColor });
+                                    }
+                                    if (cell.styles.borderBottomColor) {
+                                        cell.styles = _extends({}, cell.styles, { borderBottomColor: style.borderColor });
+                                    }
+                                    if (cell.styles.borderLeftColor) {
+                                        cell.styles = _extends({}, cell.styles, { borderLeftColor: style.borderColor });
+                                    }
+
+                                    cell.borderColorSaved = style.borderColor;
+                                } else {
+                                    cell.styles = _extends({}, cell.styles, style);
+                                }
+                            }
+
+                            return cell;
+                        })
+                    };
+                });
+
+                setAttributes({ body: newBody });
+            }
+        }, {
+            key: "updateCellContent",
+            value: function updateCellContent(content) {
+                var selectedCell = this.state.selectedCell;
+
+                if (!selectedCell) {
+                    return null;
+                }
+
+                var _props9 = this.props,
+                    attributes = _props9.attributes,
+                    setAttributes = _props9.setAttributes;
+                var rowIndex = selectedCell.rowIndex,
+                    colIndex = selectedCell.colIndex;
+                var body = attributes.body;
+
+
+                var newBody = body.map(function (row, curRowIndex) {
+                    if (curRowIndex !== rowIndex) {
+                        return row;
+                    }
+
+                    return {
+                        cells: row.cells.map(function (cell, curColIndex) {
+                            if (curColIndex !== colIndex) {
+                                return cell;
+                            }
+
+                            return _extends({}, cell, {
+                                content: content
+                            });
+                        })
+                    };
+                });
+
+                setAttributes({ body: newBody });
             }
         }, {
             key: "render",
             value: function render() {
-                var _this3 = this;
+                var _this2 = this;
 
-                var _props2 = this.props,
-                    isSelected = _props2.isSelected,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    className = _props2.className;
-                var content = attributes.content,
-                    align = attributes.align,
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes,
+                    className = _props10.className;
+                var body = attributes.body,
                     maxWidth = attributes.maxWidth;
-                var _state2 = this.state,
-                    editor = _state2.editor,
-                    selectedCell = _state2.selectedCell,
-                    selectedCellBgColor = _state2.selectedCellBgColor,
-                    selectedCellTextColor = _state2.selectedCellTextColor,
-                    selectedCellBorderColor = _state2.selectedCellBorderColor,
-                    selectedCellBorderStyle = _state2.selectedCellBorderStyle,
-                    selectedCellBorderWidth = _state2.selectedCellBorderWidth,
-                    selectedCellPaddingTop = _state2.selectedCellPaddingTop,
-                    selectedCellPaddingRight = _state2.selectedCellPaddingRight,
-                    selectedCellPaddingBottom = _state2.selectedCellPaddingBottom,
-                    selectedCellPaddingLeft = _state2.selectedCellPaddingLeft,
-                    selectedCellTextAlign = _state2.selectedCellTextAlign,
-                    selectedCellVerticalAlign = _state2.selectedCellVerticalAlign;
+                var _state4 = this.state,
+                    initRow = _state4.initRow,
+                    initCol = _state4.initCol,
+                    selectedCell = _state4.selectedCell,
+                    rangeSelected = _state4.rangeSelected,
+                    multiSelected = _state4.multiSelected;
 
+                var maxWidthVal = !!maxWidth ? maxWidth : undefined;
+                var currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
+
+                // First time insert block, let user determine the table
+                if (!body.length) {
+                    return React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(
+                            "div",
+                            { className: "advgb-init-table" },
+                            React.createElement(TextControl, {
+                                type: "number",
+                                label: __('Column Count'),
+                                value: initCol,
+                                onChange: function onChange(value) {
+                                    return _this2.setState({ initCol: value });
+                                },
+                                min: "1"
+                            }),
+                            React.createElement(TextControl, {
+                                type: "number",
+                                label: __('Row Count'),
+                                value: initRow,
+                                onChange: function onChange(value) {
+                                    return _this2.setState({ initRow: value });
+                                },
+                                min: "1"
+                            }),
+                            React.createElement(
+                                Button,
+                                { isPrimary: true, onClick: function onClick() {
+                                        return _this2.createTable();
+                                    } },
+                                __('Create')
+                            ),
+                            React.createElement(
+                                "div",
+                                { style: { marginTop: 10 } },
+                                React.createElement(
+                                    "small",
+                                    null,
+                                    __('Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection.')
+                                )
+                            )
+                        )
+                    );
+                }
 
                 var TABLE_CONTROLS = [{
                     icon: 'table-row-before',
                     title: __('Add Row Before'),
-                    onClick: AdvTable.execCommand('mceTableInsertRowBefore')
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    onClick: function onClick() {
+                        return _this2.insertRow(0);
+                    }
                 }, {
                     icon: 'table-row-after',
                     title: __('Add Row After'),
-                    onClick: AdvTable.execCommand('mceTableInsertRowAfter')
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    onClick: function onClick() {
+                        return _this2.insertRow(1);
+                    }
                 }, {
                     icon: 'table-row-delete',
                     title: __('Delete Row'),
-                    onClick: AdvTable.execCommand('mceTableDeleteRow')
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    onClick: function onClick() {
+                        return _this2.deleteRow();
+                    }
                 }, {
                     icon: 'table-col-before',
                     title: __('Add Column Before'),
-                    onClick: AdvTable.execCommand('mceTableInsertColBefore')
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    onClick: function onClick() {
+                        return _this2.insertColumn(0);
+                    }
                 }, {
                     icon: 'table-col-after',
                     title: __('Add Column After'),
-                    onClick: AdvTable.execCommand('mceTableInsertColAfter')
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    onClick: function onClick() {
+                        return _this2.insertColumn(1);
+                    }
                 }, {
                     icon: 'table-col-delete',
                     title: __('Delete Column'),
-                    onClick: AdvTable.execCommand('mceTableDeleteCol')
+                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    onClick: function onClick() {
+                        return _this2.deleteColumn();
+                    }
                 }, {
                     icon: React.createElement(
                         "svg",
@@ -2389,7 +2899,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M4,5v13h17V5H4z M14,7v9h-3V7H14z M6,7h3v9H6V7z M19,16h-3V7h3V16z" })
                     ),
                     title: __('Split Merged Cells'),
-                    onClick: AdvTable.execCommand('mceTableSplitCells')
+                    isDisabled: !selectedCell || currentCell && !currentCell.rowSpan && !currentCell.colSpan || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    onClick: function onClick() {
+                        return _this2.splitMergedCells();
+                    }
                 }, {
                     icon: React.createElement(
                         "svg",
@@ -2400,7 +2913,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("polygon", { points: "21,4 2,4 2,6 21,6 21,4" })
                     ),
                     title: __('Merge Cells'),
-                    onClick: AdvTable.execCommand('mceTableMergeCells')
+                    isDisabled: !rangeSelected || rangeSelected && !rangeSelected.toCell,
+                    onClick: function onClick() {
+                        return _this2.mergeCells();
+                    }
                 }];
 
                 var BORDER_SELECT = [{
@@ -2412,10 +2928,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        editor.dom.setStyles(selectedCell, {
-                            'border-top-color': selectedCellBorderColor
-                        });
-                        editor.fire('change');
+                        return _this2.updateCellsStyles({ borderTopColor: _this2.getCellStyles('borderColor') });
                     }
                 }, {
                     title: __('Border Right'),
@@ -2426,10 +2939,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        editor.dom.setStyles(selectedCell, {
-                            'border-right-color': selectedCellBorderColor
-                        });
-                        editor.fire('change');
+                        return _this2.updateCellsStyles({ borderRightColor: _this2.getCellStyles('borderColor') });
                     }
                 }, {
                     title: __('Border Bottom'),
@@ -2440,10 +2950,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        editor.dom.setStyles(selectedCell, {
-                            'border-bottom-color': selectedCellBorderColor
-                        });
-                        editor.fire('change');
+                        return _this2.updateCellsStyles({ borderBottomColor: _this2.getCellStyles('borderColor') });
                     }
                 }, {
                     title: __('Border Left'),
@@ -2454,10 +2961,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        editor.dom.setStyles(selectedCell, {
-                            'border-left-color': selectedCellBorderColor
-                        });
-                        editor.fire('change');
+                        return _this2.updateCellsStyles({ borderLeftColor: _this2.getCellStyles('borderColor') });
                     }
                 }, {
                     title: __('Border All'),
@@ -2468,13 +2972,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        editor.dom.setStyles(selectedCell, {
-                            'border-top-color': selectedCellBorderColor,
-                            'border-right-color': selectedCellBorderColor,
-                            'border-bottom-color': selectedCellBorderColor,
-                            'border-left-color': selectedCellBorderColor
+                        return _this2.updateCellsStyles({
+                            borderTopColor: _this2.getCellStyles('borderColor'),
+                            borderRightColor: _this2.getCellStyles('borderColor'),
+                            borderBottomColor: _this2.getCellStyles('borderColor'),
+                            borderLeftColor: _this2.getCellStyles('borderColor')
                         });
-                        editor.fire('change');
                     }
                 }, {
                     title: __('Border None'),
@@ -2485,13 +2988,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        editor.dom.setStyles(selectedCell, {
-                            'border-top-color': '',
-                            'border-right-color': '',
-                            'border-bottom-color': '',
-                            'border-left-color': ''
+                        return _this2.updateCellsStyles({
+                            borderTopColor: undefined,
+                            borderRightColor: undefined,
+                            borderBottomColor: undefined,
+                            borderLeftColor: undefined
                         });
-                        editor.fire('change');
                     }
                 }];
 
@@ -2548,40 +3050,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(BlockAlignmentToolbar, {
-                            value: align,
-                            onChange: function onChange(value) {
-                                return setAttributes({ align: value });
-                            }
-                        }),
                         React.createElement(
                             Toolbar,
                             null,
                             React.createElement(DropdownMenu, {
                                 icon: "editor-table",
-                                label: __('Edit table'),
-                                controls: TABLE_CONTROLS.map(function (control) {
-                                    return _extends({}, control, {
-                                        onClick: function onClick() {
-                                            return control.onClick(_this3.state.editor);
-                                        }
-                                    });
-                                })
+                                label: __('Edit Table'),
+                                controls: TABLE_CONTROLS
                             }),
-                            React.createElement(MediaUpload, {
-                                allowedTypes: ["image"],
-                                onSelect: function onSelect(media) {
-                                    return editor.execCommand('mceInsertContent', false, "<img src=\"" + media.url + "\" alt=\"" + (media.alt || media.filename) + "\" />");
-                                },
-                                render: function render(_ref) {
-                                    var open = _ref.open;
-
-                                    return React.createElement(IconButton, {
-                                        className: "components-icon-button components-toolbar__control",
-                                        icon: "format-image",
-                                        label: __('Insert image'),
-                                        onClick: open
-                                    });
+                            React.createElement(IconButton, {
+                                icon: "update",
+                                label: __('Refresh table (Use this after using undo or redo)'),
+                                onClick: function onClick() {
+                                    return _this2.calculateRealColIndex();
                                 }
                             })
                         )
@@ -2605,36 +3086,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Single Cell Settings') },
+                            { title: __('Cell Settings') },
                             React.createElement(PanelColorSettings, {
                                 title: __('Color Settings'),
-                                initialOpen: false,
                                 colorSettings: [{
                                     label: __('Background Color'),
-                                    value: selectedCellBgColor,
+                                    value: this.getCellStyles('backgroundColor'),
                                     onChange: function onChange(value) {
-                                        editor.dom.setStyle(selectedCell, 'background-color', value || '');
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellBgColor: value });
+                                        return _this2.updateCellsStyles({ backgroundColor: value });
                                     }
                                 }, {
                                     label: __('Text Color'),
-                                    value: selectedCellTextColor,
+                                    value: this.getCellStyles('color'),
                                     onChange: function onChange(value) {
-                                        editor.dom.setStyle(selectedCell, 'color', value || '');
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellTextColor: value });
+                                        return _this2.updateCellsStyles({ color: value });
                                     }
                                 }, {
                                     label: __('Border Color'),
-                                    value: selectedCellBorderColor,
+                                    value: this.getCellStyles('borderColor'),
                                     onChange: function onChange(value) {
-                                        editor.dom.setAttrib(selectedCell, 'data-border-color', value || '');
-                                        ['top', 'right', 'bottom', 'left'].map(function (pos) {
-                                            if (editor.dom.getStyle(selectedCell, "border-" + pos + "-color")) editor.dom.setStyle(selectedCell, "border-" + pos + "-color", value || '');
-                                        });
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellBorderColor: value });
+                                        return _this2.updateCellsStyles({ borderColor: value });
                                     }
                                 }]
                             }),
@@ -2643,23 +3114,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { title: __('Border'), initialOpen: false },
                                 React.createElement(SelectControl, {
                                     label: __('Border Style'),
-                                    value: selectedCellBorderStyle,
+                                    value: this.getCellStyles('borderStyle'),
                                     options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }, { label: __('None'), value: 'none' }],
                                     onChange: function onChange(value) {
-                                        editor.dom.setStyle(selectedCell, 'border-style', value);
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellBorderStyle: value });
+                                        return _this2.updateCellsStyles({ borderStyle: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
                                     label: __('Border width'),
-                                    value: selectedCellBorderWidth,
+                                    value: this.getCellStyles('borderWidth'),
                                     min: 1,
                                     max: 10,
                                     onChange: function onChange(value) {
-                                        editor.dom.setStyle(selectedCell, 'border-width', value);
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellBorderWidth: value });
+                                        return _this2.updateCellsStyles({ borderWidth: value });
                                     }
                                 }),
                                 React.createElement(
@@ -2684,71 +3151,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Padding'), initialOpen: false },
-                                React.createElement(RangeControl, {
-                                    label: __('Padding Top'),
-                                    min: 0,
-                                    max: 50,
-                                    value: selectedCellPaddingTop,
-                                    onChange: function onChange(value) {
-                                        editor.dom.setStyle(selectedCell, 'padding-top', value || '');
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellPaddingTop: value || '' });
-                                    },
-                                    allowReset: true
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Padding Bottom'),
-                                    min: 0,
-                                    max: 50,
-                                    value: selectedCellPaddingBottom,
-                                    onChange: function onChange(value) {
-                                        editor.dom.setStyle(selectedCell, 'padding-bottom', value || '');
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellPaddingBottom: value || '' });
-                                    },
-                                    allowReset: true
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Padding Left'),
-                                    min: 0,
-                                    max: 50,
-                                    value: selectedCellPaddingLeft,
-                                    onChange: function onChange(value) {
-                                        editor.dom.setStyle(selectedCell, 'padding-left', value || '');
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellPaddingLeft: value || '' });
-                                    },
-                                    allowReset: true
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Padding Right'),
-                                    min: 0,
-                                    max: 50,
-                                    value: selectedCellPaddingRight,
-                                    onChange: function onChange(value) {
-                                        editor.dom.setStyle(selectedCell, 'padding-right', value || '');
-                                        editor.fire('change');
-                                        _this3.setState({ selectedCellPaddingRight: value || '' });
-                                    },
-                                    allowReset: true
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
                                 { title: __('Text Alignment'), initialOpen: false },
                                 React.createElement(
                                     BaseControl,
                                     { label: __('Horizontal Align') },
                                     React.createElement(Toolbar, {
                                         controls: HORZ_ALIGNMENT_CONTROLS.map(function (control) {
-                                            var isActive = selectedCellTextAlign === control.align;
+                                            var isActive = _this2.getCellStyles('textAlign') === control.align;
 
                                             return _extends({}, control, {
                                                 isActive: isActive,
                                                 onClick: function onClick() {
-                                                    editor.dom.setStyle(selectedCell, 'text-align', isActive ? '' : control.align);
-                                                    editor.fire('change');
+                                                    return _this2.updateCellsStyles({ textAlign: isActive ? undefined : control.align });
                                                 }
                                             });
                                         })
@@ -2759,13 +3173,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { label: __('Vertical Align') },
                                     React.createElement(Toolbar, {
                                         controls: VERT_ALIGNMENT_CONTROLS.map(function (control) {
-                                            var isActive = selectedCellVerticalAlign === control.align;
+                                            var isActive = _this2.getCellStyles('verticalAlign') === control.align;
 
                                             return _extends({}, control, {
                                                 isActive: isActive,
                                                 onClick: function onClick() {
-                                                    editor.dom.setStyle(selectedCell, 'vertical-align', isActive ? '' : control.align);
-                                                    editor.fire('change');
+                                                    return _this2.updateCellsStyles({ verticalAlign: isActive ? undefined : control.align });
                                                 }
                                             });
                                         })
@@ -2774,52 +3187,140 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             )
                         )
                     ),
-                    React.createElement(RichText, {
-                        tagName: "table",
-                        wrapperClassName: className,
-                        unstableGetSettings: function unstableGetSettings(settings) {
-                            return _extends({}, settings, {
-                                plugins: (settings.plugins || []).concat('table')
-                            });
-                        },
-                        value: content,
-                        unstableOnSetup: function unstableOnSetup(editor) {
-                            return _this3.handleSetup(editor, isSelected);
-                        },
-                        onChange: function onChange(value) {
-                            return setAttributes({ content: value });
-                        },
-                        style: { maxWidth: !!maxWidth && maxWidth + 'px' }
-                    })
+                    React.createElement(
+                        "table",
+                        { className: className, style: { maxWidth: maxWidthVal } },
+                        React.createElement(
+                            "tbody",
+                            null,
+                            body.map(function (_ref, rowIndex) {
+                                var cells = _ref.cells;
+                                return React.createElement(
+                                    "tr",
+                                    { key: rowIndex },
+                                    cells.map(function (_ref2, colIndex) {
+                                        var content = _ref2.content,
+                                            styles = _ref2.styles,
+                                            colSpan = _ref2.colSpan,
+                                            rowSpan = _ref2.rowSpan,
+                                            cI = _ref2.cI;
+
+                                        var cell = { rowIndex: rowIndex, colIndex: colIndex, cI: cI };
+
+                                        var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex;
+
+                                        if (rangeSelected && rangeSelected.toCell) {
+                                            var fromCell = rangeSelected.fromCell,
+                                                toCell = rangeSelected.toCell;
+
+                                            var fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                                            var tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                                            var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                                            var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                                            var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                                            var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+
+                                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
+                                        }
+
+                                        if (multiSelected && multiSelected.length > 1) {
+                                            isSelected = multiSelected.findIndex(function (c) {
+                                                return c.rowIndex === rowIndex && c.colIndex === colIndex;
+                                            }) > -1;
+                                        }
+
+                                        var cellClassName = [isSelected && 'cell-selected'].filter(Boolean).join(' ');
+
+                                        styles = AdvTable.parseStyles(styles);
+
+                                        return React.createElement(
+                                            "td",
+                                            { key: colIndex,
+                                                className: cellClassName,
+                                                style: styles,
+                                                colSpan: colSpan,
+                                                rowSpan: rowSpan,
+                                                onClick: function onClick(e) {
+                                                    if (e.shiftKey) {
+                                                        if (!rangeSelected) return;
+                                                        if (!rangeSelected.fromCell) return;
+
+                                                        var _fromCell = rangeSelected.fromCell;
+
+                                                        var _toCell = {
+                                                            rowIdx: rowIndex,
+                                                            colIdx: colIndex,
+                                                            RCI: cI
+                                                        };
+
+                                                        _this2.setState({
+                                                            rangeSelected: { fromCell: _fromCell, toCell: _toCell },
+                                                            multiSelected: null
+                                                        });
+                                                    } else if (e.ctrlKey || e.metaKey) {
+                                                        var multiCells = multiSelected ? multiSelected : [];
+                                                        var existCell = multiCells.findIndex(function (cel) {
+                                                            return cel.rowIndex === rowIndex && cel.colIndex === colIndex;
+                                                        });
+
+                                                        if (existCell === -1) {
+                                                            multiCells.push(cell);
+                                                        } else {
+                                                            multiCells.splice(existCell, 1);
+                                                        }
+
+                                                        _this2.setState({
+                                                            multiSelected: multiCells,
+                                                            rangeSelected: null
+                                                        });
+                                                    } else {
+                                                        _this2.setState({
+                                                            rangeSelected: {
+                                                                fromCell: {
+                                                                    rowIdx: rowIndex,
+                                                                    colIdx: colIndex,
+                                                                    RCI: cI
+                                                                }
+                                                            },
+                                                            multiSelected: [cell]
+                                                        });
+                                                    }
+                                                }
+                                            },
+                                            React.createElement(RichText, {
+                                                className: "wp-block-table__cell-content",
+                                                value: content,
+                                                onChange: function onChange(value) {
+                                                    return _this2.updateCellContent(value);
+                                                },
+                                                unstableOnFocus: function unstableOnFocus() {
+                                                    return _this2.setState({ selectedCell: cell });
+                                                }
+                                            })
+                                        );
+                                    })
+                                );
+                            })
+                        )
+                    )
                 );
             }
         }], [{
-            key: "isTableSelected",
-            value: function isTableSelected(editor) {
-                return editor.dom.getParent(editor.selection.getStart(true), 'table', editor.getBody().parentNode);
-            }
-        }, {
-            key: "selectFirstCell",
-            value: function selectFirstCell(editor) {
-                var cell = editor.getBody().querySelector('td,th');
-                if (cell) {
-                    cell.focus();
-                    editor.selection.select(cell, true);
-                    editor.selection.collapse(false);
+            key: "parseStyles",
+            value: function parseStyles(styles) {
+                if (typeof styles !== 'string') {
+                    return styles;
                 }
-            }
-        }, {
-            key: "execCommand",
-            value: function execCommand(command) {
-                return function (editor) {
-                    if (editor) {
-                        if (!AdvTable.isTableSelected(editor)) {
-                            AdvTable.selectFirstCell(editor);
-                        }
-                        editor.execCommand(command);
-                        editor.fire('change');
-                    }
-                };
+
+                return styles.split(';').filter(function (style) {
+                    return style.split(':')[0] && style.split(':')[1];
+                }).map(function (style) {
+                    return [style.split(':')[0].trim().replace(/-./g, function (c) {
+                        return c.substr(1).toUpperCase();
+                    }), style.split(':')[1].trim()];
+                }).reduce(function (styleObj, style) {
+                    return _extends({}, styleObj, _defineProperty({}, style[0], style[1]));
+                }, {});
             }
         }]);
 
@@ -2836,45 +3337,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'formatting',
         keywords: [__('table'), __('cell'), __('data')],
         attributes: {
-            content: {
+            body: {
                 type: 'array',
-                source: 'children',
-                selector: 'table',
-                default: [React.createElement(
-                    "tbody",
-                    { key: "a" },
-                    React.createElement(
-                        "tr",
-                        null,
-                        React.createElement(
-                            "td",
-                            null,
-                            React.createElement("br", null)
-                        ),
-                        React.createElement(
-                            "td",
-                            null,
-                            React.createElement("br", null)
-                        )
-                    ),
-                    React.createElement(
-                        "tr",
-                        null,
-                        React.createElement(
-                            "td",
-                            null,
-                            React.createElement("br", null)
-                        ),
-                        React.createElement(
-                            "td",
-                            null,
-                            React.createElement("br", null)
-                        )
-                    )
-                )]
-            },
-            align: {
-                type: 'string'
+                default: [],
+                source: 'query',
+                selector: 'tbody tr',
+                query: {
+                    cells: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'td',
+                        query: {
+                            content: {
+                                source: 'html'
+                            },
+                            styles: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'style'
+                            },
+                            colSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'colspan'
+                            },
+                            rowSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'rowspan'
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color'
+                            }
+                        }
+                    }
+                }
             },
             maxWidth: {
                 type: 'number',
@@ -2885,26 +3385,59 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: false
             }
         },
+        supports: {
+            align: true
+        },
         edit: AdvTable,
-        save: function save(_ref2) {
-            var attributes = _ref2.attributes;
-            var content = attributes.content,
-                align = attributes.align,
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
+            var body = attributes.body,
                 maxWidth = attributes.maxWidth;
 
-            return React.createElement(RichText.Content, {
-                tagName: "table",
-                className: 'advgb-table-frontend ' + (align ? "align" + align : ''),
-                style: { maxWidth: !!maxWidth ? maxWidth + 'px' : undefined },
-                value: content
-            });
-        },
-        getEditWrapperProps: function getEditWrapperProps(attributes) {
-            var align = attributes.align;
+            var maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
-            if ('left' === align || 'right' === align || 'wide' === align || 'full' === align) {
-                return { 'data-align': align };
-            }
+            return React.createElement(
+                "table",
+                { className: "advgb-table-frontend", style: { maxWidth: maxWidthVal } },
+                React.createElement(
+                    "tbody",
+                    null,
+                    body.map(function (_ref4, rowIndex) {
+                        var cells = _ref4.cells;
+                        return React.createElement(
+                            "tr",
+                            { key: rowIndex },
+                            cells.map(function (_ref5, colIndex) {
+                                var content = _ref5.content,
+                                    styles = _ref5.styles,
+                                    colSpan = _ref5.colSpan,
+                                    rowSpan = _ref5.rowSpan,
+                                    borderColorSaved = _ref5.borderColorSaved;
+                                return React.createElement(RichText.Content, {
+                                    tagName: "td",
+                                    value: content,
+                                    key: colIndex,
+                                    style: styles,
+                                    colSpan: colSpan,
+                                    rowSpan: rowSpan,
+                                    "data-border-color": borderColorSaved
+                                });
+                            })
+                        );
+                    })
+                )
+            );
+        },
+        transforms: {
+            from: [{
+                type: 'block',
+                blocks: ['core/table'],
+                transform: function transform(attributes) {
+                    return createBlock('advgb/table', {
+                        body: attributes.body
+                    });
+                }
+            }]
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
@@ -3212,13 +3745,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         label: __('Overlay Color'),
                                         value: overlayColor,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ overlayColor: value });
+                                            return setAttributes({ overlayColor: value === undefined ? '#EEEEEE' : value });
                                         }
                                     }, {
                                         label: __('Play Button Color'),
                                         value: playButtonColor,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ playButtonColor: value });
+                                            return setAttributes({ playButtonColor: value === undefined ? '#fff' : value });
                                         }
                                     }]
                                 }),
@@ -6780,13 +7313,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Background Color'),
                                 value: headerBgColor,
                                 onChange: function onChange(value) {
-                                    return setAttributes({ headerBgColor: value });
+                                    return setAttributes({ headerBgColor: value === undefined ? '#000' : value });
                                 }
                             }, {
                                 label: __('Text Color'),
                                 value: headerTextColor,
                                 onChange: function onChange(value) {
-                                    return setAttributes({ headerTextColor: value });
+                                    return setAttributes({ headerTextColor: value === undefined ? '#fff' : value });
                                 }
                             }, {
                                 label: __('Active Tab Background Color'),
@@ -6892,7 +7425,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             onChange: function onChange(value) {
                                                 return _this2.updateTabs({ header: value || '' }, index);
                                             },
-                                            onSplit: function onSplit() {
+                                            unstableOnSplit: function unstableOnSplit() {
                                                 return null;
                                             },
                                             placeholder: __('Title…')

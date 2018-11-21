@@ -160,12 +160,12 @@
                                     {
                                         label: __( 'Background Color' ),
                                         value: bgColor,
-                                        onChange: ( value ) => setAttributes( { bgColor: value } ),
+                                        onChange: ( value ) => setAttributes( { bgColor: value === undefined ? '#2196f3' : value } ),
                                     },
                                     {
                                         label: __( 'Text Color' ),
                                         value: textColor,
-                                        onChange: ( value ) => setAttributes( { textColor: value } ),
+                                        onChange: ( value ) => setAttributes( { textColor: value === undefined ? '#fff' : value } ),
                                     },
                                 ] }
                             />
@@ -193,7 +193,7 @@
                                             {
                                                 label: __( 'Border Color' ),
                                                 value: borderColor,
-                                                onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                                onChange: ( value ) => setAttributes( { borderColor: value === undefined ? '#2196f3' : value } ),
                                             },
                                         ] }
                                     />
@@ -245,17 +245,17 @@
                                     {
                                         label: __( 'Background Color' ),
                                         value: hoverBgColor,
-                                        onChange: ( value ) => setAttributes( { hoverBgColor: value } ),
+                                        onChange: ( value ) => setAttributes( { hoverBgColor: value === undefined ? '#2196f3' : value } ),
                                     },
                                     {
                                         label: __( 'Text Color' ),
                                         value: hoverTextColor,
-                                        onChange: ( value ) => setAttributes( { hoverTextColor: value } ),
+                                        onChange: ( value ) => setAttributes( { hoverTextColor: value === undefined ? '#fff' : value } ),
                                     },
                                     {
                                         label: __( 'Shadow Color' ),
                                         value: hoverShadowColor,
-                                        onChange: ( value ) => setAttributes( { hoverShadowColor: value } ),
+                                        onChange: ( value ) => setAttributes( { hoverShadowColor: value === undefined ? '#ccc' : value } ),
                                     },
                                 ] }
                             />
