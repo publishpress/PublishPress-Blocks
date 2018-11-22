@@ -243,7 +243,7 @@
                              } }
                         >
                             <InnerBlocks
-                                template={ tabsTemplate  }
+                                template={ tabsTemplate }
                                 templateLock="all"
                                 allowedBlocks={ [ 'advgb/tab' ] }
                             />

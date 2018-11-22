@@ -325,6 +325,66 @@
             <rect x="3" y="6" width="18" height="2"/>
         </svg>
     );
+    const accordionBlockAttrs = {
+        items: {
+            type: 'array',
+            default: [
+                {
+                    header: 'Header 1',
+                    body: 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated',
+                },
+                {
+                    header: 'Header 2',
+                    body: 'Description 2',
+                },
+                {
+                    header: 'Header 3',
+                    body: 'Description 3',
+                },
+            ]
+        },
+        headerBgColor: {
+            type: 'string',
+            default: '#000',
+        },
+        headerTextColor: {
+            type: 'string',
+            default: '#eee',
+        },
+        headerIcon: {
+            type: 'string',
+            default: 'unfold',
+        },
+        headerIconColor: {
+            type: 'string',
+            default: '#fff',
+        },
+        bodyBgColor: {
+            type: 'string',
+        },
+        bodyTextColor: {
+            type: 'string',
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid',
+        },
+        borderWidth: {
+            type: 'number',
+            default: 0,
+        },
+        borderColor: {
+            type: 'string',
+        },
+        borderRadius: {
+            type: 'number',
+            default: 2,
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        }
+    };
 
     registerBlockType( 'advgb/accordion', {
         title: __( 'Accordion' ),
@@ -335,66 +395,7 @@
         },
         category: 'formatting',
         keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
-        attributes: {
-            items: {
-                type: 'array',
-                default: [
-                    {
-                        header: 'Header 1',
-                        body: 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated',
-                    },
-                    {
-                        header: 'Header 2',
-                        body: 'Description 2',
-                    },
-                    {
-                        header: 'Header 3',
-                        body: 'Description 3',
-                    },
-                ]
-            },
-            headerBgColor: {
-                type: 'string',
-                default: '#000',
-            },
-            headerTextColor: {
-                type: 'string',
-                default: '#eee',
-            },
-            headerIcon: {
-                type: 'string',
-                default: 'unfold',
-            },
-            headerIconColor: {
-                type: 'string',
-                default: '#fff',
-            },
-            bodyBgColor: {
-                type: 'string',
-            },
-            bodyTextColor: {
-                type: 'string',
-            },
-            borderStyle: {
-                type: 'string',
-                default: 'solid',
-            },
-            borderWidth: {
-                type: 'number',
-                default: 0,
-            },
-            borderColor: {
-                type: 'string',
-            },
-            borderRadius: {
-                type: 'number',
-                default: 2,
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            }
-        },
+        attributes: accordionBlockAttrs,
         edit: AdvAccordion,
         save: function ( { attributes } ) {
             const {
@@ -449,5 +450,63 @@
                 </div>
             );
         },
+        deprecated: [
+            { // Before 1.8
+                attributes: accordionBlockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        items,
+                        headerBgColor,
+                        headerTextColor,
+                        headerIcon,
+                        headerIconColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                    } = attributes;
+
+                    return (
+                        <div className="advgb-accordion-block">
+                            {items.map( ( item, index ) => (
+                                <Fragment key={ index }>
+                                    <div className="advgb-accordion-header"
+                                         style={ {
+                                             backgroundColor: headerBgColor,
+                                             color: headerTextColor,
+                                             borderStyle: borderStyle,
+                                             borderWidth: borderWidth + 'px',
+                                             borderColor: borderColor,
+                                             borderRadius: borderRadius + 'px',
+                                         } }
+                                    >
+                                <span className="advgb-accordion-header-icon">
+                                    <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        { HEADER_ICONS[headerIcon] }
+                                    </svg>
+                                </span>
+                                        <h4 className="advgb-accordion-header-title">{ item.header }</h4>
+                                    </div>
+                                    <div className="advgb-accordion-body"
+                                         style={ {
+                                             backgroundColor: bodyBgColor,
+                                             color: bodyTextColor,
+                                             borderStyle: borderStyle,
+                                             borderWidth: borderWidth + 'px',
+                                             borderColor: borderColor,
+                                             borderRadius: borderRadius + 'px',
+                                         } }
+                                    >
+                                        <RichText.Content tagName="p" value={ item.body }/>
+                                    </div>
+                                </Fragment>
+                            ) ) }
+                        </div>
+                    );
+                },
+            },
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
