@@ -199,14 +199,9 @@
                                     </a>
                                     <Tooltip text={ __( 'Remove tab' ) }>
                                         <span className="advgb-tab-remove"
-                                              onClick={ () => {
-                                                  if (index === activeTab) {
-                                                      this.setState( { activeTab: 0 } );
-                                                  }
-                                                  setAttributes( {
-                                                      tabItems: tabItems.filter( (vl, idx) => idx !== index )
-                                                  } )
-                                              } }
+                                              onClick={ () => setAttributes( {
+                                                  tabItems: tabItems.filter( (vl, idx) => idx !== index )
+                                              } ) }
                                         >
                                             <Dashicon icon="no"/>
                                         </span>
