@@ -524,62 +524,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M19,12v1H5v-1H19 M21,10H3v5h18V10L21,10z" }),
         React.createElement("rect", { x: "3", y: "6", width: "18", height: "2" })
     );
-    var accordionBlockAttrs = {
-        items: {
-            type: 'array',
-            default: [{
-                header: 'Header 1',
-                body: 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated'
-            }, {
-                header: 'Header 2',
-                body: 'Description 2'
-            }, {
-                header: 'Header 3',
-                body: 'Description 3'
-            }]
-        },
-        headerBgColor: {
-            type: 'string',
-            default: '#000'
-        },
-        headerTextColor: {
-            type: 'string',
-            default: '#eee'
-        },
-        headerIcon: {
-            type: 'string',
-            default: 'unfold'
-        },
-        headerIconColor: {
-            type: 'string',
-            default: '#fff'
-        },
-        bodyBgColor: {
-            type: 'string'
-        },
-        bodyTextColor: {
-            type: 'string'
-        },
-        borderStyle: {
-            type: 'string',
-            default: 'solid'
-        },
-        borderWidth: {
-            type: 'number',
-            default: 0
-        },
-        borderColor: {
-            type: 'string'
-        },
-        borderRadius: {
-            type: 'number',
-            default: 2
-        },
-        changed: {
-            type: 'boolean',
-            default: false
-        }
-    };
 
     registerBlockType('advgb/accordion', {
         title: __('Accordion'),
@@ -590,7 +534,62 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'formatting',
         keywords: [__('accordion'), __('list'), __('faq')],
-        attributes: accordionBlockAttrs,
+        attributes: {
+            items: {
+                type: 'array',
+                default: [{
+                    header: 'Header 1',
+                    body: 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated'
+                }, {
+                    header: 'Header 2',
+                    body: 'Description 2'
+                }, {
+                    header: 'Header 3',
+                    body: 'Description 3'
+                }]
+            },
+            headerBgColor: {
+                type: 'string',
+                default: '#000'
+            },
+            headerTextColor: {
+                type: 'string',
+                default: '#eee'
+            },
+            headerIcon: {
+                type: 'string',
+                default: 'unfold'
+            },
+            headerIconColor: {
+                type: 'string',
+                default: '#fff'
+            },
+            bodyBgColor: {
+                type: 'string'
+            },
+            bodyTextColor: {
+                type: 'string'
+            },
+            borderStyle: {
+                type: 'string',
+                default: 'solid'
+            },
+            borderWidth: {
+                type: 'number',
+                default: 0
+            },
+            borderColor: {
+                type: 'string'
+            },
+            borderRadius: {
+                type: 'number',
+                default: 2
+            },
+            changed: {
+                type: 'boolean',
+                default: false
+            }
+        },
         edit: AdvAccordion,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -658,77 +657,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     );
                 })
             );
-        },
-        deprecated: [{ // Before 1.8
-            attributes: accordionBlockAttrs,
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
-                var items = attributes.items,
-                    headerBgColor = attributes.headerBgColor,
-                    headerTextColor = attributes.headerTextColor,
-                    headerIcon = attributes.headerIcon,
-                    headerIconColor = attributes.headerIconColor,
-                    bodyBgColor = attributes.bodyBgColor,
-                    bodyTextColor = attributes.bodyTextColor,
-                    borderStyle = attributes.borderStyle,
-                    borderWidth = attributes.borderWidth,
-                    borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius;
-
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-accordion-block" },
-                    items.map(function (item, index) {
-                        return React.createElement(
-                            Fragment,
-                            { key: index },
-                            React.createElement(
-                                "div",
-                                { className: "advgb-accordion-header",
-                                    style: {
-                                        backgroundColor: headerBgColor,
-                                        color: headerTextColor,
-                                        borderStyle: borderStyle,
-                                        borderWidth: borderWidth + 'px',
-                                        borderColor: borderColor,
-                                        borderRadius: borderRadius + 'px'
-                                    }
-                                },
-                                React.createElement(
-                                    "span",
-                                    { className: "advgb-accordion-header-icon" },
-                                    React.createElement(
-                                        "svg",
-                                        { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                                        HEADER_ICONS[headerIcon]
-                                    )
-                                ),
-                                React.createElement(
-                                    "h4",
-                                    { className: "advgb-accordion-header-title" },
-                                    item.header
-                                )
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "advgb-accordion-body",
-                                    style: {
-                                        backgroundColor: bodyBgColor,
-                                        color: bodyTextColor,
-                                        borderStyle: borderStyle,
-                                        borderWidth: borderWidth + 'px',
-                                        borderColor: borderColor,
-                                        borderRadius: borderRadius + 'px'
-                                    }
-                                },
-                                React.createElement(RichText.Content, { tagName: "p", value: item.body })
-                            )
-                        );
-                    })
-                );
-            }
-        }]
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
