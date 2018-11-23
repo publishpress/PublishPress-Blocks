@@ -2675,9 +2675,10 @@ float: left;'
         if (strpos($content, 'advgb-accordion-block') !== false) {
             wp_enqueue_script('jquery-ui-accordion');
             wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
-                $(".advgb-accordion-block").accordion({
+                $(".advgb-accordion-block").parent().accordion({
                     header: ".advgb-accordion-header",
-                    heightStyle: "content"
+                    heightStyle: "content",
+                    collapsible: true,
                 });
             });');
         }
