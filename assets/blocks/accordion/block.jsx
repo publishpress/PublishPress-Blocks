@@ -76,69 +76,11 @@
             }
         }
 
-        componentDidMount() {
-            this.initAccordion();
-        }
-
-        componentDidUpdate( prevProps ) {
-            if ( prevProps.attributes.items.length < this.props.attributes.items.length ) {
-                this.initAccordion( true );
-            }
-
-            if (this.props.attributes.items.length === 0) {
-                this.props.setAttributes( {
-                    items: [
-                        {
-                            header: 'Header 1',
-                            body: 'At least one accordion must remaining, to remove block use "Remove Block" button from right menu.',
-                        },
-                    ],
-                } );
-            }
-        }
-
-        initAccordion( refresh = false ) {
-            if (typeof jQuery !== "undefined") {
-                if (!refresh) {
-                    jQuery( `#block-${this.props.clientId} .advgb-accordion-block` ).accordion( {
-                        header: ".advgb-accordion-header",
-                        heightStyle: "content",
-                    } );
-                } else {
-                    jQuery(`#block-${this.props.clientId} .advgb-accordion-block`).accordion('refresh');
-                }
-
-                jQuery(`#block-${this.props.clientId} .advgb-accordion-block h4`).on( 'keydown', function ( e ) {
-                    e.stopPropagation();
-                } )
-            }
-        }
-
-        updateAccordion( value, index ) {
-            const { attributes, setAttributes } = this.props;
-            const { items } = attributes;
-
-            let newItems = items.map( ( item, thisIndex ) => {
-                if ( index === thisIndex ) {
-                    if (value.body) {
-                        if (value.body.length !== item.body.length) {
-                            this.initAccordion( true );
-                        }
-                    }
-
-                    item = { ...item, ...value };
-                }
-
-                return item;
-            } );
-
-            setAttributes( { items: newItems } )
-        }
-
         render() {
             const { isSelected, attributes, setAttributes } = this.props;
             const {
-                items,
+                header,
+                body,
                 headerBgColor,
                 headerTextColor,
                 headerIcon,
@@ -246,72 +188,47 @@
                         </PanelBody>
                     </InspectorControls>
                     <div className="advgb-accordion-block">
-                        {items.map( ( item, index ) => (
-                            <Fragment key={ index }>
-                                <div className="advgb-accordion-header"
-                                     style={ {
-                                         backgroundColor: headerBgColor,
-                                         color: headerTextColor,
-                                         borderStyle: borderStyle,
-                                         borderWidth: borderWidth + 'px',
-                                         borderColor: borderColor,
-                                         borderRadius: borderRadius + 'px',
-                                     } }
-                                >
-                                    <Tooltip text={ __( 'Remove item' ) }>
-                                        <span className="advgb-accordion-remove"
-                                              onClick={ () => setAttributes( { items: items.filter( ( cItem, cIndex) => cIndex !== index ) } ) }
-                                        >
-                                            <Dashicon icon="no"/>
-                                        </span>
-                                    </Tooltip>
-                                    <span className="advgb-accordion-header-icon">
-                                        <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                            { HEADER_ICONS[headerIcon] }
-                                        </svg>
-                                    </span>
-                                    <RichText
-                                        tagName="h4"
-                                        value={ item.header }
-                                        onChange={ ( value ) => this.updateAccordion( { header: value }, index ) }
-                                        unstableOnSplit={ () => null }
-                                        placeholder={ __( 'Enter header…' ) }
-                                    />
-                                </div>
-                                <div className="advgb-accordion-body"
-                                     style={ {
-                                         backgroundColor: bodyBgColor,
-                                         color: bodyTextColor,
-                                         borderStyle: borderStyle,
-                                         borderWidth: borderWidth + 'px',
-                                         borderColor: borderColor,
-                                         borderRadius: borderRadius + 'px',
-                                     } }
-                                >
-                                    <RichText
-                                        tagName="p"
-                                        value={ item.body }
-                                        onChange={ ( value ) => this.updateAccordion( { body: value }, index ) }
-                                        placeholder={ __( 'Enter text…' ) }
-                                    />
-                                </div>
-                            </Fragment>
-                        ) ) }
-                    </div>
-                    {isSelected &&
-                        <div className="advgb-accordion-controls">
-                            <button className="button button-large button-primary"
-                                    onClick={ () => setAttributes( {
-                                        items: [
-                                            ...items,
-                                            { header: __( 'New item' ), body: __( 'New item' ) }
-                                        ]
-                                    } ) }
-                            >
-                                { __( 'Add item' ) }
-                            </button>
+                        <div className="advgb-accordion-header"
+                             style={ {
+                                 backgroundColor: headerBgColor,
+                                 color: headerTextColor,
+                                 borderStyle: borderStyle,
+                                 borderWidth: borderWidth + 'px',
+                                 borderColor: borderColor,
+                                 borderRadius: borderRadius + 'px',
+                             } }
+                        >
+                            <span className="advgb-accordion-header-icon">
+                                <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    { HEADER_ICONS[headerIcon] }
+                                </svg>
+                            </span>
+                            <RichText
+                                tagName="h4"
+                                value={ header }
+                                onChange={ ( value ) => setAttributes( { header: value } ) }
+                                unstableOnSplit={ () => null }
+                                placeholder={ __( 'Enter header…' ) }
+                            />
                         </div>
-                    }
+                        <div className="advgb-accordion-body"
+                             style={ {
+                                 backgroundColor: bodyBgColor,
+                                 color: bodyTextColor,
+                                 borderStyle: borderStyle,
+                                 borderWidth: borderWidth + 'px',
+                                 borderColor: borderColor,
+                                 borderRadius: borderRadius + 'px',
+                             } }
+                        >
+                            <RichText
+                                tagName="p"
+                                value={ body }
+                                onChange={ ( value ) => setAttributes( { body: value } ) }
+                                placeholder={ __( 'Enter text…' ) }
+                            />
+                        </div>
+                    </div>
                 </Fragment>
             )
         }
@@ -326,6 +243,58 @@
         </svg>
     );
 
+    const accordionAttrs = {
+        header: {
+            type: 'string',
+            default: __( 'Header text' ),
+        },
+        body: {
+            type: 'string',
+            default: __( 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated' ),
+        },
+        headerBgColor: {
+            type: 'string',
+            default: '#000',
+        },
+        headerTextColor: {
+            type: 'string',
+            default: '#eee',
+        },
+        headerIcon: {
+            type: 'string',
+            default: 'unfold',
+        },
+        headerIconColor: {
+            type: 'string',
+            default: '#fff',
+        },
+        bodyBgColor: {
+            type: 'string',
+        },
+        bodyTextColor: {
+            type: 'string',
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid',
+        },
+        borderWidth: {
+            type: 'number',
+            default: 0,
+        },
+        borderColor: {
+            type: 'string',
+        },
+        borderRadius: {
+            type: 'number',
+            default: 2,
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        }
+    };
+
     registerBlockType( 'advgb/accordion', {
         title: __( 'Accordion' ),
         description: __( 'Easy to create an accordion for your post/page.' ),
@@ -335,70 +304,12 @@
         },
         category: 'formatting',
         keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
-        attributes: {
-            items: {
-                type: 'array',
-                default: [
-                    {
-                        header: 'Header 1',
-                        body: 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated',
-                    },
-                    {
-                        header: 'Header 2',
-                        body: 'Description 2',
-                    },
-                    {
-                        header: 'Header 3',
-                        body: 'Description 3',
-                    },
-                ]
-            },
-            headerBgColor: {
-                type: 'string',
-                default: '#000',
-            },
-            headerTextColor: {
-                type: 'string',
-                default: '#eee',
-            },
-            headerIcon: {
-                type: 'string',
-                default: 'unfold',
-            },
-            headerIconColor: {
-                type: 'string',
-                default: '#fff',
-            },
-            bodyBgColor: {
-                type: 'string',
-            },
-            bodyTextColor: {
-                type: 'string',
-            },
-            borderStyle: {
-                type: 'string',
-                default: 'solid',
-            },
-            borderWidth: {
-                type: 'number',
-                default: 0,
-            },
-            borderColor: {
-                type: 'string',
-            },
-            borderRadius: {
-                type: 'number',
-                default: 2,
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            }
-        },
+        attributes: accordionAttrs,
         edit: AdvAccordion,
         save: function ( { attributes } ) {
             const {
-                items,
+                header,
+                body,
                 headerBgColor,
                 headerTextColor,
                 headerIcon,
@@ -413,39 +324,35 @@
 
             return (
                 <div className="advgb-accordion-block">
-                    {items.map( ( item, index ) => (
-                        <Fragment key={ index }>
-                            <div className="advgb-accordion-header"
-                                 style={ {
-                                     backgroundColor: headerBgColor,
-                                     color: headerTextColor,
-                                     borderStyle: borderStyle,
-                                     borderWidth: borderWidth + 'px',
-                                     borderColor: borderColor,
-                                     borderRadius: borderRadius + 'px',
-                                 } }
-                            >
-                                <span className="advgb-accordion-header-icon">
-                                    <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        { HEADER_ICONS[headerIcon] }
-                                    </svg>
-                                </span>
-                                <h4 className="advgb-accordion-header-title">{ item.header }</h4>
-                            </div>
-                            <div className="advgb-accordion-body"
-                                 style={ {
-                                     backgroundColor: bodyBgColor,
-                                     color: bodyTextColor,
-                                     borderStyle: borderStyle,
-                                     borderWidth: borderWidth + 'px',
-                                     borderColor: borderColor,
-                                     borderRadius: borderRadius + 'px',
-                                 } }
-                            >
-                                <RichText.Content tagName="p" value={ item.body }/>
-                            </div>
-                        </Fragment>
-                    ) ) }
+                    <div className="advgb-accordion-header"
+                         style={ {
+                             backgroundColor: headerBgColor,
+                             color: headerTextColor,
+                             borderStyle: borderStyle,
+                             borderWidth: borderWidth + 'px',
+                             borderColor: borderColor,
+                             borderRadius: borderRadius + 'px',
+                         } }
+                    >
+                        <span className="advgb-accordion-header-icon">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                { HEADER_ICONS[headerIcon] }
+                            </svg>
+                        </span>
+                        <h4 className="advgb-accordion-header-title">{ header }</h4>
+                    </div>
+                    <div className="advgb-accordion-body"
+                         style={ {
+                             backgroundColor: bodyBgColor,
+                             color: bodyTextColor,
+                             borderStyle: borderStyle,
+                             borderWidth: borderWidth + 'px',
+                             borderColor: borderColor,
+                             borderRadius: borderRadius + 'px',
+                         } }
+                    >
+                        <RichText.Content tagName="p" value={ body }/>
+                    </div>
                 </div>
             );
         },
