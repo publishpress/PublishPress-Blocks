@@ -4923,6 +4923,198 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
+/***/ "./assets/blocks/image-slider/block.jsx":
+/*!**********************************************!*\
+  !*** ./assets/blocks/image-slider/block.jsx ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpEditor.InspectorControls,
+        RichText = wpEditor.RichText,
+        PanelColorSettings = wpEditor.PanelColorSettings;
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        ToggleControl = wpComponents.ToggleControl,
+        SelectControl = wpComponents.SelectControl,
+        Tooltip = wpComponents.Tooltip;
+
+    var AdvImageSlider = function (_Component) {
+        _inherits(AdvImageSlider, _Component);
+
+        function AdvImageSlider() {
+            _classCallCheck(this, AdvImageSlider);
+
+            return _possibleConstructorReturn(this, (AdvImageSlider.__proto__ || Object.getPrototypeOf(AdvImageSlider)).apply(this, arguments));
+        }
+
+        _createClass(AdvImageSlider, [{
+            key: 'render',
+            value: function render() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes,
+                    isSelected = _props.isSelected;
+                var images = attributes.images,
+                    actionOnClick = attributes.actionOnClick,
+                    fullWidth = attributes.fullWidth,
+                    width = attributes.width,
+                    height = attributes.height,
+                    hoverColor = attributes.hoverColor,
+                    titleColor = attributes.titleColor,
+                    textColor = attributes.textColor;
+
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Image Settings') },
+                            React.createElement(SelectControl, {
+                                label: __('Action on click'),
+                                value: actionOnClick,
+                                options: [{ label: __('None'), value: '' }, { label: __('Open image in lightbox'), value: 'lightbox' }, { label: __('Open custom link'), value: 'link' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ actionOnClick: value });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Full width'),
+                                checked: fullWidth,
+                                onChange: function onChange() {
+                                    return setAttributes({ fullWidth: !fullWidth });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Height'),
+                                value: height,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ height: value });
+                                },
+                                min: 100,
+                                max: 1000
+                            }),
+                            !fullWidth && React.createElement(RangeControl, {
+                                label: __('Width'),
+                                value: width,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ width: value });
+                                },
+                                min: 200,
+                                max: 1300
+                            })
+                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Color Settings'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Hover Color'),
+                                value: hoverColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverColor: value });
+                                }
+                            }, {
+                                label: __('Title Color'),
+                                value: titleColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ titleColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: textColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ textColor: value });
+                                }
+                            }]
+                        })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'advgb-image-slider' },
+                        '123'
+                    )
+                );
+            }
+        }]);
+
+        return AdvImageSlider;
+    }(Component);
+
+    registerBlockType('advgb/image-slider', {
+        title: __('Image Slider'),
+        description: __('Display your images in a slider.'),
+        icon: {
+            src: 'slides',
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'formatting',
+        keywords: [__('slide'), __('gallery'), __('photos')],
+        attributes: {
+            images: {
+                type: 'array',
+                default: [{
+                    id: null,
+                    title: '',
+                    text: '',
+                    link: ''
+                }]
+            },
+            actionOnClick: {
+                type: 'string'
+            },
+            fullWidth: {
+                type: 'boolean',
+                default: true
+            },
+            width: {
+                type: 'number',
+                default: 700
+            },
+            height: {
+                type: 'number',
+                default: 500
+            },
+            hoverColor: {
+                type: 'string'
+            },
+            titleColor: {
+                type: 'string'
+            },
+            textColor: {
+                type: 'string'
+            }
+        },
+        edit: AdvImageSlider,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+
+            return null;
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/blocks/map/block.jsx":
 /*!*************************************!*\
   !*** ./assets/blocks/map/block.jsx ***!
@@ -8933,9 +9125,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/image-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8949,6 +9141,7 @@ __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/co
 __webpack_require__(/*! ./assets/blocks/custom-columns/columns.jsx */"./assets/blocks/custom-columns/columns.jsx");
 __webpack_require__(/*! ./assets/blocks/custom-separator/separator.jsx */"./assets/blocks/custom-separator/separator.jsx");
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
+__webpack_require__(/*! ./assets/blocks/image-slider/block.jsx */"./assets/blocks/image-slider/block.jsx");
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
 __webpack_require__(/*! ./assets/blocks/recent-posts/block.jsx */"./assets/blocks/recent-posts/block.jsx");
 __webpack_require__(/*! ./assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");
