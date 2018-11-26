@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, PanelColorSettings } = wpEditor;
-    const { RangeControl, PanelBody, BaseControl , SelectControl, Dashicon, Tooltip } = wpComponents;
+    const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpEditor;
+    const { RangeControl, PanelBody, BaseControl , SelectControl, Tooltip } = wpComponents;
 
     const HEADER_ICONS = {
         plus: (
@@ -80,7 +80,6 @@
             const { isSelected, attributes, setAttributes } = this.props;
             const {
                 header,
-                body,
                 headerBgColor,
                 headerTextColor,
                 headerIcon,
@@ -221,12 +220,7 @@
                                  borderRadius: borderRadius + 'px',
                              } }
                         >
-                            <RichText
-                                tagName="p"
-                                value={ body }
-                                onChange={ ( value ) => setAttributes( { body: value } ) }
-                                placeholder={ __( 'Enter text…' ) }
-                            />
+                            <InnerBlocks />
                         </div>
                     </div>
                 </Fragment>
@@ -247,10 +241,6 @@
         header: {
             type: 'string',
             default: __( 'Header text' ),
-        },
-        body: {
-            type: 'string',
-            default: __( 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated' ),
         },
         headerBgColor: {
             type: 'string',
@@ -309,7 +299,6 @@
         save: function ( { attributes } ) {
             const {
                 header,
-                body,
                 headerBgColor,
                 headerTextColor,
                 headerIcon,
@@ -351,7 +340,7 @@
                              borderRadius: borderRadius + 'px',
                          } }
                     >
-                        <RichText.Content tagName="p" value={ body }/>
+                        <InnerBlocks.Content />
                     </div>
                 </div>
             );

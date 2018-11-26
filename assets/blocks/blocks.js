@@ -113,12 +113,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+        PanelColorSettings = wpEditor.PanelColorSettings,
+        InnerBlocks = wpEditor.InnerBlocks;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
-        Dashicon = wpComponents.Dashicon,
         Tooltip = wpComponents.Tooltip;
 
 
@@ -211,7 +211,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
                 var header = attributes.header,
-                    body = attributes.body,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
                     headerIcon = attributes.headerIcon,
@@ -390,14 +389,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderRadius: borderRadius + 'px'
                                 }
                             },
-                            React.createElement(RichText, {
-                                tagName: "p",
-                                value: body,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ body: value });
-                                },
-                                placeholder: __('Enter text…')
-                            })
+                            React.createElement(InnerBlocks, null)
                         )
                     )
                 );
@@ -420,10 +412,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         header: {
             type: 'string',
             default: __('Header text')
-        },
-        body: {
-            type: 'string',
-            default: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated')
         },
         headerBgColor: {
             type: 'string',
@@ -482,7 +470,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         save: function save(_ref) {
             var attributes = _ref.attributes;
             var header = attributes.header,
-                body = attributes.body,
                 headerBgColor = attributes.headerBgColor,
                 headerTextColor = attributes.headerTextColor,
                 headerIcon = attributes.headerIcon,
@@ -537,7 +524,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             borderRadius: borderRadius + 'px'
                         }
                     },
-                    React.createElement(RichText.Content, { tagName: "p", value: body })
+                    React.createElement(InnerBlocks.Content, null)
                 )
             );
         }
