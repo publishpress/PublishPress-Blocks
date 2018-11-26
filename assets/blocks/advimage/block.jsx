@@ -213,6 +213,7 @@
                             style={ { color: titleColor } }
                             isSelected={ isSelected && currentEdit === 'title' }
                             unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'title' ) }
+                            unstableOnSplit={ () => null }
                             placeholder={ __( 'Enter title…' ) }
                         />
                         <RichText
@@ -223,6 +224,7 @@
                             style={ { color: subtitleColor } }
                             isSelected={ isSelected && currentEdit === 'subtitle' }
                             unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'subtitle' ) }
+                            unstableOnSplit={ () => null }
                             placeholder={ __( 'Enter subtitle…' ) }
                         />
                     </div>
@@ -259,7 +261,7 @@
                 type: 'string',
             },
             imageID: {
-                type: 'string',
+                type: 'number',
             },
             title: {
                 type: 'string',

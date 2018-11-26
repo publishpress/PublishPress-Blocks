@@ -1415,6 +1415,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             unstableOnSetup: function unstableOnSetup(editor) {
                                 return _this3.handleSetup(editor, 'title');
                             },
+                            unstableOnSplit: function unstableOnSplit() {
+                                return null;
+                            },
                             placeholder: __('Enter title…')
                         }),
                         React.createElement(RichText, {
@@ -1428,6 +1431,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             isSelected: isSelected && currentEdit === 'subtitle',
                             unstableOnSetup: function unstableOnSetup(editor) {
                                 return _this3.handleSetup(editor, 'subtitle');
+                            },
+                            unstableOnSplit: function unstableOnSplit() {
+                                return null;
                             },
                             placeholder: __('Enter subtitle…')
                         })
@@ -1467,7 +1473,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string'
             },
             imageID: {
-                type: 'string'
+                type: 'number'
             },
             title: {
                 type: 'string',
