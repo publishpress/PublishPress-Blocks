@@ -5032,7 +5032,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(PanelColorSettings, {
                             title: __('Color Settings'),
-                            initialOpen: false,
                             colorSettings: [{
                                 label: __('Hover Color'),
                                 value: hoverColor,
@@ -5066,11 +5065,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvImageSlider;
     }(Component);
 
+    var imageSliderBlockIcon = React.createElement(
+        'svg',
+        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '2 2 22 22' },
+        React.createElement('path', { fill: 'none', d: 'M0 0h24v24H0V0z' }),
+        React.createElement('path', { d: 'M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM9.88 4h4.24l1.83 2H20v12H4V6h4.05' }),
+        React.createElement('path', { d: 'M15 11H9V8.5L5.5 12 9 15.5V13h6v2.5l3.5-3.5L15 8.5z' })
+    );
+
     registerBlockType('advgb/image-slider', {
         title: __('Image Slider'),
         description: __('Display your images in a slider.'),
         icon: {
-            src: 'slides',
+            src: imageSliderBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'formatting',
