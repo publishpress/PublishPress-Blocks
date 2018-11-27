@@ -4941,6 +4941,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -4953,13 +4955,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
-        RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+        PanelColorSettings = wpEditor.PanelColorSettings,
+        MediaUpload = wpEditor.MediaUpload;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
+        TextControl = wpComponents.TextControl,
+        TextareaControl = wpComponents.TextareaControl,
+        IconButton = wpComponents.IconButton,
+        Button = wpComponents.Button,
+        Placeholder = wpComponents.Placeholder,
         Tooltip = wpComponents.Tooltip;
+
+
+    var imageSliderBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22", className: "editor-block-icon" },
+        React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+        React.createElement("path", { d: "M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM9.88 4h4.24l1.83 2H20v12H4V6h4.05" }),
+        React.createElement("path", { d: "M15 11H9V8.5L5.5 12 9 15.5V13h6v2.5l3.5-3.5L15 8.5z" })
+    );
 
     var AdvImageSlider = function (_Component) {
         _inherits(AdvImageSlider, _Component);
@@ -4967,16 +4983,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AdvImageSlider() {
             _classCallCheck(this, AdvImageSlider);
 
-            return _possibleConstructorReturn(this, (AdvImageSlider.__proto__ || Object.getPrototypeOf(AdvImageSlider)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (AdvImageSlider.__proto__ || Object.getPrototypeOf(AdvImageSlider)).apply(this, arguments));
+
+            _this.state = {
+                currentSelected: null
+            };
+            return _this;
         }
 
         _createClass(AdvImageSlider, [{
-            key: 'render',
+            key: "render",
             value: function render() {
+                var _this2 = this;
+
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,
                     isSelected = _props.isSelected;
+                var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
@@ -4986,6 +5010,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     titleColor = attributes.titleColor,
                     textColor = attributes.textColor;
 
+
+                if (images.length === 0) {
+                    return React.createElement(
+                        Placeholder,
+                        {
+                            icon: imageSliderBlockIcon,
+                            label: __('Image Slider Block'),
+                            instructions: __('No images selected. Adding images to start using this block.')
+                        },
+                        React.createElement(MediaUpload, {
+                            allowedTypes: ['image'],
+                            value: null,
+                            multiple: true,
+                            onSelect: function onSelect(image) {
+                                var imgInsert = image.map(function (img) {
+                                    return {
+                                        url: img.url,
+                                        id: img.id
+                                    };
+                                });
+
+                                setAttributes({
+                                    images: [].concat(_toConsumableArray(images), _toConsumableArray(imgInsert))
+                                });
+                            },
+                            render: function render(_ref) {
+                                var open = _ref.open;
+                                return React.createElement(
+                                    Button,
+                                    { className: "button button-large button-primary", onClick: open },
+                                    __('Add images')
+                                );
+                            }
+                        })
+                    );
+                }
 
                 return React.createElement(
                     Fragment,
@@ -5054,9 +5114,113 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         })
                     ),
                     React.createElement(
-                        'div',
-                        { className: 'advgb-image-slider' },
-                        '123'
+                        "div",
+                        { className: "advgb-image-slider-block" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-image-slider" },
+                            images.map(function (image) {
+                                return React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-item" },
+                                    React.createElement("img", { src: image.url, className: "advgb-image-slider-img" }),
+                                    React.createElement(
+                                        "h4",
+                                        { className: "advgb-image-slider-title" },
+                                        image.title
+                                    ),
+                                    React.createElement(
+                                        "p",
+                                        { className: "advgb-image-silder-text" },
+                                        image.text
+                                    )
+                                );
+                            })
+                        ),
+                        isSelected && React.createElement(
+                            "div",
+                            { className: "advgb-image-slider-controls" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-control" },
+                                React.createElement(TextControl, {
+                                    label: __('Title'),
+                                    value: currentSelected,
+                                    onChange: function onChange(value) {
+                                        return null;
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-control" },
+                                React.createElement(TextareaControl, {
+                                    label: __('Text'),
+                                    value: currentSelected,
+                                    onChange: function onChange(value) {
+                                        return null;
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-control" },
+                                React.createElement(TextControl, {
+                                    label: __('Link'),
+                                    value: currentSelected,
+                                    onChange: function onChange(value) {
+                                        return null;
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-image-list" },
+                                images.map(function (image, index) {
+                                    return React.createElement(
+                                        "div",
+                                        { className: "advgb-image-slider-image-list-item" },
+                                        React.createElement("img", { src: image.url,
+                                            className: "advgb-image-slider-image-list-img",
+                                            onClick: function onClick() {
+                                                return _this2.setState({ currentSelected: index });
+                                            }
+                                        }),
+                                        React.createElement(IconButton, {
+                                            className: "advgb-image-slider-image-list-item-remove",
+                                            icon: "no",
+                                            onClick: function onClick() {
+                                                if (index === currentSelected) _this2.setState({ currentSelected: null });
+                                                setAttributes({ images: images.filter(function (img, idx) {
+                                                        return idx !== index;
+                                                    }) });
+                                            }
+                                        })
+                                    );
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-add-item" },
+                                    React.createElement(MediaUpload, {
+                                        allowedTypes: ['image'],
+                                        value: currentSelected,
+                                        onSelect: function onSelect(image) {
+                                            return setAttributes({
+                                                images: [].concat(_toConsumableArray(images), [{ id: image.id, url: image.url }])
+                                            });
+                                        },
+                                        render: function render(_ref2) {
+                                            var open = _ref2.open;
+                                            return React.createElement(IconButton, {
+                                                label: __('Add image'),
+                                                icon: "plus",
+                                                onClick: open
+                                            });
+                                        }
+                                    })
+                                )
+                            )
+                        )
                     )
                 );
             }
@@ -5064,14 +5228,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         return AdvImageSlider;
     }(Component);
-
-    var imageSliderBlockIcon = React.createElement(
-        'svg',
-        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '2 2 22 22' },
-        React.createElement('path', { fill: 'none', d: 'M0 0h24v24H0V0z' }),
-        React.createElement('path', { d: 'M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM9.88 4h4.24l1.83 2H20v12H4V6h4.05' }),
-        React.createElement('path', { d: 'M15 11H9V8.5L5.5 12 9 15.5V13h6v2.5l3.5-3.5L15 8.5z' })
-    );
 
     registerBlockType('advgb/image-slider', {
         title: __('Image Slider'),
@@ -5085,12 +5241,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             images: {
                 type: 'array',
-                default: [{
-                    id: null,
-                    title: '',
-                    text: '',
-                    link: ''
-                }]
+                default: []
             },
             actionOnClick: {
                 type: 'string'
@@ -5115,13 +5266,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             textColor: {
                 type: 'string'
+            },
+            vAlign: {
+                type: 'string',
+                default: 'center'
+            },
+            hAlign: {
+                type: 'string',
+                default: 'center'
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: AdvImageSlider,
-        save: function save(_ref) {
-            var attributes = _ref.attributes;
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
 
-            return null;
+            return React.createElement(
+                "div",
+                null,
+                "123"
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);

@@ -869,3 +869,45 @@ hr.wp-block-separator {
     display: block;
     margin: 0 auto 1.5em;
 }
+
+/*Image slider block*/
+.advgb-image-slider-controls .advgb-image-slider-control .components-base-control__field {
+    display: flex;
+    flex: 1;
+}
+
+.advgb-image-slider-controls .advgb-image-slider-control .components-base-control__field .components-base-control__label {
+    flex-basis: 70px;
+}
+
+.advgb-image-slider-image-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 25px 0;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item img {
+    height: 50px;
+    display: block;
+    cursor: pointer;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item {
+    margin: auto 10px;
+    position: relative;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item .advgb-image-slider-image-list-item-remove {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    color: #fff;
+    background-color: #ff0000;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-add-item button {
+    height: 50px;
+    border: 1px solid #ccc;
+}
