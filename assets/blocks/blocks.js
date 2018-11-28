@@ -5243,7 +5243,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 })
                             ),
-                            React.createElement(
+                            actionOnClick === 'link' && React.createElement(
                                 "div",
                                 { className: "advgb-image-slider-control" },
                                 React.createElement(TextControl, {

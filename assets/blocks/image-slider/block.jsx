@@ -230,13 +230,15 @@
                                     onChange={ (value) => this.updateImagesData( { text: value || '' } ) }
                                 />
                             </div>
-                            <div className="advgb-image-slider-control">
-                                <TextControl
-                                    label={ __( 'Link' ) }
-                                    value={ images[currentSelected] ? images[currentSelected].link || '' : '' }
-                                    onChange={ (value) => this.updateImagesData( { link: value || '' } ) }
-                                />
-                            </div>
+                            {actionOnClick === 'link' && (
+                                <div className="advgb-image-slider-control">
+                                    <TextControl
+                                        label={ __( 'Link' ) }
+                                        value={ images[currentSelected] ? images[currentSelected].link || '' : '' }
+                                        onChange={ (value) => this.updateImagesData( { link: value || '' } ) }
+                                    />
+                                </div>
+                            ) }
                             <div className="advgb-image-slider-image-list">
                                 {images.map( (image, index) => (
                                     <div className="advgb-image-slider-image-list-item" key={index}>
