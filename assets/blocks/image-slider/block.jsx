@@ -21,6 +21,26 @@
             };
         }
 
+        updateImagesData(data) {
+            const { currentSelected } = this.state;
+            if (typeof currentSelected !== 'number') {
+                return null;
+            }
+
+            const { attributes, setAttributes } = this.props;
+            const { images } = attributes;
+
+            const newImages = images.map( (image, index) => {
+                if (index === currentSelected) {
+                    image = { ...image, ...data };
+                }
+
+                return image;
+            } );
+
+            setAttributes( { images: newImages } );
+        }
+
         render() {
             const { attributes, setAttributes, isSelected } = this.props;
             const { currentSelected } = this.state;
@@ -128,8 +148,8 @@
                     </InspectorControls>
                     <div className="advgb-image-slider-block">
                         <div className="advgb-image-slider">
-                            {images.map( (image) => (
-                                <div className="advgb-image-slider-item">
+                            {images.map( (image, index) => (
+                                <div className="advgb-image-slider-item" key={index}>
                                     <img src={ image.url } className="advgb-image-slider-img" />
                                     <h4 className="advgb-image-slider-title">{ image.title }</h4>
                                     <p className="advgb-image-silder-text">{ image.text }</p>
@@ -141,27 +161,27 @@
                             <div className="advgb-image-slider-control">
                                 <TextControl
                                     label={ __( 'Title' ) }
-                                    value={ currentSelected }
-                                    onChange={ (value) => null }
+                                    value={ images[currentSelected] ? images[currentSelected].title || '' : '' }
+                                    onChange={ (value) => this.updateImagesData( { title: value || '' } ) }
                                 />
                             </div>
                             <div className="advgb-image-slider-control">
                                 <TextareaControl
                                     label={ __( 'Text' ) }
-                                    value={ currentSelected }
-                                    onChange={ (value) => null }
+                                    value={ images[currentSelected] ? images[currentSelected].text || '' : '' }
+                                    onChange={ (value) => this.updateImagesData( { text: value || '' } ) }
                                 />
                             </div>
                             <div className="advgb-image-slider-control">
                                 <TextControl
                                     label={ __( 'Link' ) }
-                                    value={ currentSelected }
-                                    onChange={ (value) => null }
+                                    value={ images[currentSelected] ? images[currentSelected].link || '' : '' }
+                                    onChange={ (value) => this.updateImagesData( { link: value || '' } ) }
                                 />
                             </div>
                             <div className="advgb-image-slider-image-list">
                                 {images.map( (image, index) => (
-                                    <div className="advgb-image-slider-image-list-item">
+                                    <div className="advgb-image-slider-image-list-item" key={index}>
                                         <img src={ image.url }
                                              className="advgb-image-slider-image-list-img"
                                              onClick={ () => this.setState( { currentSelected: index } ) }

@@ -4939,6 +4939,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -4992,14 +4994,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvImageSlider, [{
+            key: "updateImagesData",
+            value: function updateImagesData(data) {
+                var currentSelected = this.state.currentSelected;
+
+                if (typeof currentSelected !== 'number') {
+                    return null;
+                }
+
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+                var images = attributes.images;
+
+
+                var newImages = images.map(function (image, index) {
+                    if (index === currentSelected) {
+                        image = _extends({}, image, data);
+                    }
+
+                    return image;
+                });
+
+                setAttributes({ images: newImages });
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    isSelected = _props.isSelected;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    isSelected = _props2.isSelected;
                 var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
@@ -5119,10 +5146,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             "div",
                             { className: "advgb-image-slider" },
-                            images.map(function (image) {
+                            images.map(function (image, index) {
                                 return React.createElement(
                                     "div",
-                                    { className: "advgb-image-slider-item" },
+                                    { className: "advgb-image-slider-item", key: index },
                                     React.createElement("img", { src: image.url, className: "advgb-image-slider-img" }),
                                     React.createElement(
                                         "h4",
@@ -5145,9 +5172,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-image-slider-control" },
                                 React.createElement(TextControl, {
                                     label: __('Title'),
-                                    value: currentSelected,
+                                    value: images[currentSelected] ? images[currentSelected].title || '' : '',
                                     onChange: function onChange(value) {
-                                        return null;
+                                        return _this2.updateImagesData({ title: value || '' });
                                     }
                                 })
                             ),
@@ -5156,9 +5183,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-image-slider-control" },
                                 React.createElement(TextareaControl, {
                                     label: __('Text'),
-                                    value: currentSelected,
+                                    value: images[currentSelected] ? images[currentSelected].text || '' : '',
                                     onChange: function onChange(value) {
-                                        return null;
+                                        return _this2.updateImagesData({ text: value || '' });
                                     }
                                 })
                             ),
@@ -5167,9 +5194,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-image-slider-control" },
                                 React.createElement(TextControl, {
                                     label: __('Link'),
-                                    value: currentSelected,
+                                    value: images[currentSelected] ? images[currentSelected].link || '' : '',
                                     onChange: function onChange(value) {
-                                        return null;
+                                        return _this2.updateImagesData({ link: value || '' });
                                     }
                                 })
                             ),
@@ -5179,7 +5206,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 images.map(function (image, index) {
                                     return React.createElement(
                                         "div",
-                                        { className: "advgb-image-slider-image-list-item" },
+                                        { className: "advgb-image-slider-image-list-item", key: index },
                                         React.createElement("img", { src: image.url,
                                             className: "advgb-image-slider-image-list-img",
                                             onClick: function onClick() {
