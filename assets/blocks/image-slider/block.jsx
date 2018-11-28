@@ -4,6 +4,7 @@
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, PanelColorSettings, MediaUpload } = wpEditor;
     const { PanelBody, RangeControl, ToggleControl , SelectControl, TextControl, TextareaControl, IconButton, Button, Placeholder, Tooltip } = wpComponents;
+    const $ = jQuery;
 
     const imageSliderBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22" className="editor-block-icon">
@@ -48,11 +49,14 @@
                 images,
                 actionOnClick,
                 fullWidth,
+                autoHeight,
                 width,
                 height,
                 hoverColor,
                 titleColor,
                 textColor,
+                hAlign,
+                vAlign,
             } = attributes;
 
             if (images.length === 0) {
@@ -108,12 +112,10 @@
                                 checked={ fullWidth }
                                 onChange={ () => setAttributes( { fullWidth: !fullWidth } ) }
                             />
-                            <RangeControl
-                                label={ __( 'Height' ) }
-                                value={ height }
-                                onChange={ (value) => setAttributes( { height: value } ) }
-                                min={ 100 }
-                                max={ 1000 }
+                            <ToggleControl
+                                label={ __( 'Auto height' ) }
+                                checked={ autoHeight }
+                                onChange={ () => setAttributes( { autoHeight: !autoHeight } ) }
                             />
                             {!fullWidth && (
                                 <RangeControl
@@ -122,6 +124,15 @@
                                     onChange={ (value) => setAttributes( { width: value } ) }
                                     min={ 200 }
                                     max={ 1300 }
+                                />
+                            ) }
+                            {!autoHeight && (
+                                <RangeControl
+                                    label={ __( 'Height' ) }
+                                    value={ height }
+                                    onChange={ (value) => setAttributes( { height: value } ) }
+                                    min={ 100 }
+                                    max={ 1000 }
                                 />
                             ) }
                         </PanelBody>
@@ -145,14 +156,61 @@
                                 },
                             ] }
                         />
+                        <PanelBody title={ __( 'Text Alignment' ) } initialOpen={false}>
+                            <SelectControl
+                                label={ __( 'Vertical Alignment' ) }
+                                value={vAlign}
+                                options={ [
+                                    { label: __( 'Top' ), value: 'flex-start' },
+                                    { label: __( 'Center' ), value: 'center' },
+                                    { label: __( 'Bottom' ), value: 'flex-end' },
+                                ] }
+                                onChange={ (value) => setAttributes( { vAlign: value } ) }
+                            />
+                            <SelectControl
+                                label={ __( 'Horizontal Alignment' ) }
+                                value={hAlign}
+                                options={ [
+                                    { label: __( 'Left' ), value: 'flex-start' },
+                                    { label: __( 'Center' ), value: 'center' },
+                                    { label: __( 'Right' ), value: 'flex-end' },
+                                ] }
+                                onChange={ (value) => setAttributes( { hAlign: value } ) }
+                            />
+                        </PanelBody>
                     </InspectorControls>
                     <div className="advgb-image-slider-block">
                         <div className="advgb-image-slider">
                             {images.map( (image, index) => (
                                 <div className="advgb-image-slider-item" key={index}>
-                                    <img src={ image.url } className="advgb-image-slider-img" />
-                                    <h4 className="advgb-image-slider-title">{ image.title }</h4>
-                                    <p className="advgb-image-silder-text">{ image.text }</p>
+                                    <img src={ image.url }
+                                         className="advgb-image-slider-img"
+                                         alt={ __( 'Slider image' ) }
+                                         style={ {
+                                             width: fullWidth ? '100%' : width,
+                                             height: autoHeight ? 'auto' : height,
+                                         } }
+                                    />
+                                    <div className="advgb-image-slider-item-info"
+                                         style={ {
+                                             justifyContent: vAlign,
+                                             alignItems: hAlign,
+                                         } }
+                                    >
+                                        <span className="advgb-image-slider-overlay"
+                                              style={ { backgroundColor: hoverColor } }
+                                        />
+                                        <h4 className="advgb-image-slider-title"
+                                            style={ { color: titleColor } }
+                                        >
+                                            { image.title }
+                                        </h4>
+                                        <p className="advgb-image-slider-text"
+                                           style={ { color: textColor } }
+                                        >
+                                            { image.text }
+                                        </p>
+                                    </div>
                                 </div>
                             ) ) }
                         </div>
@@ -239,6 +297,10 @@
                 type: 'string',
             },
             fullWidth: {
+                type: 'boolean',
+                default: true,
+            },
+            autoHeight: {
                 type: 'boolean',
                 default: true,
             },

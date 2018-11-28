@@ -871,6 +871,53 @@ hr.wp-block-separator {
 }
 
 /*Image slider block*/
+
+.advgb-image-slider .advgb-image-slider-item {
+    position: relative;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.advgb-image-slider .advgb-image-slider-item-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.advgb-image-slider .advgb-image-slider-item img {
+    display: block;
+    max-width: unset;
+}
+
+.advgb-image-slider .advgb-image-slider-item-info .advgb-image-slider-title,
+.advgb-image-slider .advgb-image-slider-item-info .advgb-image-slider-text {
+    margin: 0 5px;
+    color: #fff;
+    position: relative;
+    z-index: 3;
+}
+
+.advgb-image-slider .advgb-image-slider-overlay {
+    opacity: 0;
+    background-color: #2196F3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+.advgb-image-slider-item:hover .advgb-image-slider-overlay {
+    opacity: 0.5;
+}
+
 .advgb-image-slider-controls .advgb-image-slider-control .components-base-control__field {
     display: flex;
     flex: 1;

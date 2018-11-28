@@ -4970,6 +4970,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Placeholder = wpComponents.Placeholder,
         Tooltip = wpComponents.Tooltip;
 
+    var $ = jQuery;
 
     var imageSliderBlockIcon = React.createElement(
         "svg",
@@ -5031,11 +5032,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
+                    autoHeight = attributes.autoHeight,
                     width = attributes.width,
                     height = attributes.height,
                     hoverColor = attributes.hoverColor,
                     titleColor = attributes.titleColor,
-                    textColor = attributes.textColor;
+                    textColor = attributes.textColor,
+                    hAlign = attributes.hAlign,
+                    vAlign = attributes.vAlign;
 
 
                 if (images.length === 0) {
@@ -5098,14 +5102,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ fullWidth: !fullWidth });
                                 }
                             }),
-                            React.createElement(RangeControl, {
-                                label: __('Height'),
-                                value: height,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ height: value });
-                                },
-                                min: 100,
-                                max: 1000
+                            React.createElement(ToggleControl, {
+                                label: __('Auto height'),
+                                checked: autoHeight,
+                                onChange: function onChange() {
+                                    return setAttributes({ autoHeight: !autoHeight });
+                                }
                             }),
                             !fullWidth && React.createElement(RangeControl, {
                                 label: __('Width'),
@@ -5115,6 +5117,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 min: 200,
                                 max: 1300
+                            }),
+                            !autoHeight && React.createElement(RangeControl, {
+                                label: __('Height'),
+                                value: height,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ height: value });
+                                },
+                                min: 100,
+                                max: 1000
                             })
                         ),
                         React.createElement(PanelColorSettings, {
@@ -5138,7 +5149,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ textColor: value });
                                 }
                             }]
-                        })
+                        }),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Text Alignment'), initialOpen: false },
+                            React.createElement(SelectControl, {
+                                label: __('Vertical Alignment'),
+                                value: vAlign,
+                                options: [{ label: __('Top'), value: 'flex-start' }, { label: __('Center'), value: 'center' }, { label: __('Bottom'), value: 'flex-end' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ vAlign: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Horizontal Alignment'),
+                                value: hAlign,
+                                options: [{ label: __('Left'), value: 'flex-start' }, { label: __('Center'), value: 'center' }, { label: __('Right'), value: 'flex-end' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hAlign: value });
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         "div",
@@ -5150,16 +5181,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "div",
                                     { className: "advgb-image-slider-item", key: index },
-                                    React.createElement("img", { src: image.url, className: "advgb-image-slider-img" }),
+                                    React.createElement("img", { src: image.url,
+                                        className: "advgb-image-slider-img",
+                                        alt: __('Slider image'),
+                                        style: {
+                                            width: fullWidth ? '100%' : width,
+                                            height: autoHeight ? 'auto' : height
+                                        }
+                                    }),
                                     React.createElement(
-                                        "h4",
-                                        { className: "advgb-image-slider-title" },
-                                        image.title
-                                    ),
-                                    React.createElement(
-                                        "p",
-                                        { className: "advgb-image-silder-text" },
-                                        image.text
+                                        "div",
+                                        { className: "advgb-image-slider-item-info",
+                                            style: {
+                                                justifyContent: vAlign,
+                                                alignItems: hAlign
+                                            }
+                                        },
+                                        React.createElement("span", { className: "advgb-image-slider-overlay",
+                                            style: { backgroundColor: hoverColor }
+                                        }),
+                                        React.createElement(
+                                            "h4",
+                                            { className: "advgb-image-slider-title",
+                                                style: { color: titleColor }
+                                            },
+                                            image.title
+                                        ),
+                                        React.createElement(
+                                            "p",
+                                            { className: "advgb-image-slider-text",
+                                                style: { color: textColor }
+                                            },
+                                            image.text
+                                        )
                                     )
                                 );
                             })
@@ -5274,6 +5328,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string'
             },
             fullWidth: {
+                type: 'boolean',
+                default: true
+            },
+            autoHeight: {
                 type: 'boolean',
                 default: true
             },
