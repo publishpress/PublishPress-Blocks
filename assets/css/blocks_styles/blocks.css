@@ -905,7 +905,7 @@ hr.wp-block-separator {
 
 .advgb-image-slider .advgb-image-slider-overlay {
     opacity: 0;
-    background-color: #2196F3;
+    background-color: #ccc;
     position: absolute;
     top: 0;
     left: 0;

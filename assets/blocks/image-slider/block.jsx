@@ -244,14 +244,16 @@
                                              className="advgb-image-slider-image-list-img"
                                              onClick={ () => this.setState( { currentSelected: index } ) }
                                         />
-                                        <IconButton
-                                            className="advgb-image-slider-image-list-item-remove"
-                                            icon="no"
-                                            onClick={ () => {
-                                                if (index === currentSelected) this.setState( { currentSelected: null } );
-                                                setAttributes( { images: images.filter( (img, idx) => idx !== index ) } )
-                                            } }
-                                        />
+                                        <Tooltip text={ __( 'Remove image' ) }>
+                                            <IconButton
+                                                className="advgb-image-slider-image-list-item-remove"
+                                                icon="no"
+                                                onClick={ () => {
+                                                    if (index === currentSelected) this.setState( { currentSelected: null } );
+                                                    setAttributes( { images: images.filter( (img, idx) => idx !== index ) } )
+                                                } }
+                                            />
+                                        </Tooltip>
                                     </div>
                                 ) ) }
                                 <div className="advgb-image-slider-add-item">

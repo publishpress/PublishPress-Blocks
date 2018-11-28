@@ -5267,16 +5267,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return _this2.setState({ currentSelected: index });
                                             }
                                         }),
-                                        React.createElement(IconButton, {
-                                            className: "advgb-image-slider-image-list-item-remove",
-                                            icon: "no",
-                                            onClick: function onClick() {
-                                                if (index === currentSelected) _this2.setState({ currentSelected: null });
-                                                setAttributes({ images: images.filter(function (img, idx) {
-                                                        return idx !== index;
-                                                    }) });
-                                            }
-                                        })
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Remove image') },
+                                            React.createElement(IconButton, {
+                                                className: "advgb-image-slider-image-list-item-remove",
+                                                icon: "no",
+                                                onClick: function onClick() {
+                                                    if (index === currentSelected) _this2.setState({ currentSelected: null });
+                                                    setAttributes({ images: images.filter(function (img, idx) {
+                                                            return idx !== index;
+                                                        }) });
+                                                }
+                                            })
+                                        )
                                     );
                                 }),
                                 React.createElement(
