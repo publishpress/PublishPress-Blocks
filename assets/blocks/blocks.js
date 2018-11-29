@@ -5373,8 +5373,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvImageSlider;
     }(Component);
 
-    registerBlockType('advgb/image-slider', {
-        title: __('Image Slider'),
+    registerBlockType('advgb/images-slider', {
+        title: __('Images Slider'),
         description: __('Display your images in a slider.'),
         icon: {
             src: imageSliderBlockIcon,

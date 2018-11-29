@@ -334,8 +334,8 @@
         }
     }
 
-    registerBlockType( 'advgb/image-slider', {
-        title: __( 'Image Slider' ),
+    registerBlockType( 'advgb/images-slider', {
+        title: __( 'Images Slider' ),
         description: __( 'Display your images in a slider.' ),
         icon: {
             src: imageSliderBlockIcon,
