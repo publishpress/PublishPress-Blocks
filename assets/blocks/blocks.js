@@ -5431,11 +5431,69 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvImageSlider,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
+            var images = attributes.images,
+                actionOnClick = attributes.actionOnClick,
+                fullWidth = attributes.fullWidth,
+                autoHeight = attributes.autoHeight,
+                width = attributes.width,
+                height = attributes.height,
+                hoverColor = attributes.hoverColor,
+                titleColor = attributes.titleColor,
+                textColor = attributes.textColor,
+                hAlign = attributes.hAlign,
+                vAlign = attributes.vAlign;
+
+            var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox'].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
-                null,
-                "123"
+                { className: blockClassName },
+                React.createElement(
+                    "div",
+                    { className: "advgb-images-slider" },
+                    images.map(function (image, index) {
+                        return React.createElement(
+                            "div",
+                            { className: "advgb-image-slider-item", key: index },
+                            React.createElement("img", { src: image.url,
+                                className: "advgb-image-slider-img",
+                                alt: __('Slider image'),
+                                style: {
+                                    width: fullWidth ? '100%' : width,
+                                    height: autoHeight ? 'auto' : height
+                                }
+                            }),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-item-info",
+                                    style: {
+                                        justifyContent: vAlign,
+                                        alignItems: hAlign
+                                    }
+                                },
+                                React.createElement("a", { className: "advgb-image-slider-overlay",
+                                    style: { backgroundColor: hoverColor },
+                                    target: "_blank",
+                                    href: actionOnClick === 'link' && !!image.link ? image.link : undefined
+                                }),
+                                React.createElement(
+                                    "h4",
+                                    { className: "advgb-image-slider-title",
+                                        style: { color: titleColor }
+                                    },
+                                    image.title
+                                ),
+                                React.createElement(
+                                    "p",
+                                    { className: "advgb-image-slider-text",
+                                        style: { color: textColor }
+                                    },
+                                    image.text
+                                )
+                            )
+                        );
+                    })
+                )
             );
         }
     });
