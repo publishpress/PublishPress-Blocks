@@ -912,6 +912,9 @@ hr.wp-block-separator {
     right: 0;
     bottom: 0;
     z-index: 2;
+    transition: all ease 1s;
+    -moz-transition: all ease 1s;
+    -webkit-transition: all ease 1s;
 }
 
 .advgb-image-slider-item:hover .advgb-image-slider-overlay {
