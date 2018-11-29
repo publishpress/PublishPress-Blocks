@@ -4989,12 +4989,69 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (AdvImageSlider.__proto__ || Object.getPrototypeOf(AdvImageSlider)).apply(this, arguments));
 
             _this.state = {
-                currentSelected: null
+                currentSelected: 0
             };
+
+            _this.initSlider = _this.initSlider.bind(_this);
             return _this;
         }
 
         _createClass(AdvImageSlider, [{
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var attributes = this.props.attributes;
+
+
+                if (attributes.images.length) {
+                    this.initSlider();
+                }
+            }
+        }, {
+            key: "componentWillUpdate",
+            value: function componentWillUpdate(nextProps) {
+                var _props = this.props,
+                    clientId = _props.clientId,
+                    attributes = _props.attributes;
+                var images = attributes.images;
+                var nextImages = nextProps.attributes.images;
+
+
+                if (images.length !== nextImages.length) {
+                    $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('unslick');
+                    $("#block-" + clientId + " .advgb-image-slider-item").removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+                }
+            }
+        }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate(prevProps) {
+                var images = this.props.attributes.images;
+                var prevImages = prevProps.attributes.images;
+
+
+                if (images.length !== prevImages.length && images.length) {
+                    this.initSlider();
+                }
+            }
+        }, {
+            key: "initSlider",
+            value: function initSlider() {
+                var _this2 = this;
+
+                var clientId = this.props.clientId;
+
+
+                $("#block-" + clientId + " .advgb-images-slider:not(.slick-initialized)").slick({
+                    dots: true,
+                    adaptiveHeight: true
+                });
+
+                $("#block-" + clientId + " .advgb-images-slider").on('afterChange', function (e, s, currentSlide) {
+                    if (_this2.state.currentSelected !== currentSlide) {
+                        _this2.setState({ currentSelected: currentSlide });
+                    }
+                });
+            }
+        }, {
             key: "updateImagesData",
             value: function updateImagesData(data) {
                 var currentSelected = this.state.currentSelected;
@@ -5003,9 +5060,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var images = attributes.images;
 
 
@@ -5022,12 +5079,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _this2 = this;
+                var _this3 = this;
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    isSelected = _props2.isSelected;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    isSelected = _props3.isSelected,
+                    clientId = _props3.clientId;
                 var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
@@ -5228,7 +5286,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Title'),
                                     value: images[currentSelected] ? images[currentSelected].title || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this2.updateImagesData({ title: value || '' });
+                                        return _this3.updateImagesData({ title: value || '' });
                                     }
                                 })
                             ),
@@ -5239,7 +5297,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Text'),
                                     value: images[currentSelected] ? images[currentSelected].text || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this2.updateImagesData({ text: value || '' });
+                                        return _this3.updateImagesData({ text: value || '' });
                                     }
                                 })
                             ),
@@ -5250,7 +5308,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Link'),
                                     value: images[currentSelected] ? images[currentSelected].link || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this2.updateImagesData({ link: value || '' });
+                                        return _this3.updateImagesData({ link: value || '' });
                                     }
                                 })
                             ),
@@ -5264,7 +5322,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement("img", { src: image.url,
                                             className: "advgb-image-slider-image-list-img",
                                             onClick: function onClick() {
-                                                return _this2.setState({ currentSelected: index });
+                                                $("#block-" + clientId + " .advgb-images-slider").slick('slickGoTo', index, false);
+                                                _this3.setState({ currentSelected: index });
                                             }
                                         }),
                                         React.createElement(
@@ -5274,7 +5333,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "advgb-image-slider-image-list-item-remove",
                                                 icon: "no",
                                                 onClick: function onClick() {
-                                                    if (index === currentSelected) _this2.setState({ currentSelected: null });
+                                                    if (index === currentSelected) _this3.setState({ currentSelected: null });
                                                     setAttributes({ images: images.filter(function (img, idx) {
                                                             return idx !== index;
                                                         }) });

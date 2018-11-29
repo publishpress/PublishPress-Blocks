@@ -871,6 +871,9 @@ hr.wp-block-separator {
 }
 
 /*Image slider block*/
+.advgb-images-slider-block {
+    padding-bottom: 1px;
+}
 
 .advgb-images-slider .advgb-image-slider-item {
     position: relative;
@@ -893,6 +896,7 @@ hr.wp-block-separator {
 .advgb-images-slider .advgb-image-slider-item img {
     display: block;
     max-width: unset;
+    margin: auto;
 }
 
 .advgb-images-slider .advgb-image-slider-item-info .advgb-image-slider-title,

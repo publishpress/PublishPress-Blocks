@@ -18,8 +18,56 @@
         constructor() {
             super( ...arguments );
             this.state = {
-                currentSelected: null,
+                currentSelected: 0,
             };
+
+            this.initSlider = this.initSlider.bind(this);
+        }
+
+        componentDidMount() {
+            const { attributes } = this.props;
+
+            if (attributes.images.length) {
+                this.initSlider();
+            }
+        }
+
+        componentWillUpdate( nextProps ) {
+            const { clientId, attributes } = this.props;
+            const { images } = attributes;
+            const { images: nextImages } = nextProps.attributes;
+
+            if ( images.length !== nextImages.length ) {
+                $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('unslick');
+                $(`#block-${clientId} .advgb-image-slider-item`)
+                    .removeAttr('tabindex')
+                    .removeAttr('role')
+                    .removeAttr('aria-describedby');
+            }
+        }
+
+        componentDidUpdate( prevProps ) {
+            const { images } = this.props.attributes;
+            const { images: prevImages } = prevProps.attributes;
+
+            if (images.length !== prevImages.length && images.length) {
+                this.initSlider();
+            }
+        }
+
+        initSlider() {
+            const { clientId } = this.props;
+
+            $(`#block-${clientId} .advgb-images-slider:not(.slick-initialized)`).slick( {
+                dots: true,
+                adaptiveHeight: true,
+            } );
+
+            $(`#block-${clientId} .advgb-images-slider`).on('afterChange', (e, s, currentSlide) => {
+                if (this.state.currentSelected !== currentSlide) {
+                    this.setState( { currentSelected: currentSlide } );
+                }
+            } );
         }
 
         updateImagesData(data) {
@@ -43,7 +91,7 @@
         }
 
         render() {
-            const { attributes, setAttributes, isSelected } = this.props;
+            const { attributes, setAttributes, isSelected, clientId } = this.props;
             const { currentSelected } = this.state;
             const {
                 images,
@@ -244,7 +292,10 @@
                                     <div className="advgb-image-slider-image-list-item" key={index}>
                                         <img src={ image.url }
                                              className="advgb-image-slider-image-list-img"
-                                             onClick={ () => this.setState( { currentSelected: index } ) }
+                                             onClick={ () => {
+                                                 $(`#block-${clientId} .advgb-images-slider`).slick('slickGoTo', index, false);
+                                                 this.setState( { currentSelected: index } )
+                                             } }
                                         />
                                         <Tooltip text={ __( 'Remove image' ) }>
                                             <IconButton
