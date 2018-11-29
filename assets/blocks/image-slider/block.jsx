@@ -179,8 +179,8 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className="advgb-image-slider-block">
-                        <div className="advgb-image-slider">
+                    <div className="advgb-images-slider-block">
+                        <div className="advgb-images-slider">
                             {images.map( (image, index) => (
                                 <div className="advgb-image-slider-item" key={index}>
                                     <img src={ image.url }

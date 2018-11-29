@@ -5173,10 +5173,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: "advgb-image-slider-block" },
+                        { className: "advgb-images-slider-block" },
                         React.createElement(
                             "div",
-                            { className: "advgb-image-slider" },
+                            { className: "advgb-images-slider" },
                             images.map(function (image, index) {
                                 return React.createElement(
                                     "div",

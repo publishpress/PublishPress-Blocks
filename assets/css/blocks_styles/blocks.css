@@ -872,13 +872,13 @@ hr.wp-block-separator {
 
 /*Image slider block*/
 
-.advgb-image-slider .advgb-image-slider-item {
+.advgb-images-slider .advgb-image-slider-item {
     position: relative;
     margin-bottom: 10px;
     width: fit-content;
 }
 
-.advgb-image-slider .advgb-image-slider-item-info {
+.advgb-images-slider .advgb-image-slider-item-info {
     position: absolute;
     top: 0;
     left: 0;
@@ -890,20 +890,20 @@ hr.wp-block-separator {
     align-items: center;
 }
 
-.advgb-image-slider .advgb-image-slider-item img {
+.advgb-images-slider .advgb-image-slider-item img {
     display: block;
     max-width: unset;
 }
 
-.advgb-image-slider .advgb-image-slider-item-info .advgb-image-slider-title,
-.advgb-image-slider .advgb-image-slider-item-info .advgb-image-slider-text {
+.advgb-images-slider .advgb-image-slider-item-info .advgb-image-slider-title,
+.advgb-images-slider .advgb-image-slider-item-info .advgb-image-slider-text {
     margin: 0 5px;
     color: #fff;
     position: relative;
     z-index: 3;
 }
 
-.advgb-image-slider .advgb-image-slider-overlay {
+.advgb-images-slider .advgb-image-slider-overlay {
     opacity: 0;
     background-color: #ccc;
     position: absolute;
@@ -912,9 +912,9 @@ hr.wp-block-separator {
     right: 0;
     bottom: 0;
     z-index: 2;
-    transition: all ease 1s;
-    -moz-transition: all ease 1s;
-    -webkit-transition: all ease 1s;
+    transition: all ease-in-out 0.5s;
+    -moz-transition: all ease-in-out 0.5s;
+    -webkit-transition: all ease-in-out 0.5s;
 }
 
 .advgb-image-slider-item:hover .advgb-image-slider-overlay {
