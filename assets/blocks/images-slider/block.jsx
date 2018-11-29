@@ -391,7 +391,64 @@
         },
         edit: AdvImageSlider,
         save: function ( { attributes } ) {
-            return <div>123</div>;
+            const {
+                images,
+                actionOnClick,
+                fullWidth,
+                autoHeight,
+                width,
+                height,
+                hoverColor,
+                titleColor,
+                textColor,
+                hAlign,
+                vAlign,
+            } = attributes;
+            const blockClassName = [
+                'advgb-images-slider-block',
+                actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox',
+            ].filter( Boolean ).join( ' ' );
+
+            return (
+                <div className={ blockClassName }>
+                    <div className="advgb-images-slider">
+                        {images.map( (image, index) => (
+                            <div className="advgb-image-slider-item" key={index}>
+                                <img src={ image.url }
+                                     className="advgb-image-slider-img"
+                                     alt={ __( 'Slider image' ) }
+                                     style={ {
+                                         width: fullWidth ? '100%' : width,
+                                         height: autoHeight ? 'auto' : height,
+                                     } }
+                                />
+                                <div className="advgb-image-slider-item-info"
+                                     style={ {
+                                         justifyContent: vAlign,
+                                         alignItems: hAlign,
+                                     } }
+                                >
+                                        <a className="advgb-image-slider-overlay"
+                                           style={ { backgroundColor: hoverColor } }
+                                           target="_blank"
+                                           href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
+                                        />
+                                    <h4 className="advgb-image-slider-title"
+                                        style={ { color: titleColor } }
+                                    >
+                                        { image.title }
+                                    </h4>
+                                    <p className="advgb-image-slider-text"
+                                       style={ { color: textColor } }
+                                    >
+                                        { image.text }
+                                    </p>
+                                </div>
+                            </div>
+                        ) ) }
+                    </div>
+                </div>
+            );
         },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
