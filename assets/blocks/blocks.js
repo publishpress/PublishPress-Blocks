@@ -5385,7 +5385,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             images: {
                 type: 'array',
-                default: []
+                default: [] // [ { id: int, url, title, text, link: string } ]
             },
             actionOnClick: {
                 type: 'string'
