@@ -220,7 +220,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderStyle = attributes.borderStyle,
                     borderWidth = attributes.borderWidth,
                     borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius;
+                    borderRadius = attributes.borderRadius,
+                    marginBottom = attributes.marginBottom;
 
 
                 return React.createElement(
@@ -229,6 +230,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         InspectorControls,
                         null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Accordion Settings') },
+                            React.createElement(RangeControl, {
+                                label: __('Bottom spacing'),
+                                value: marginBottom,
+                                help: __('Define space to next block. This will override Block spacing option (Frontend view only)'),
+                                min: 0,
+                                max: 50,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ marginBottom: value });
+                                }
+                            })
+                        ),
                         React.createElement(
                             PanelBody,
                             { title: __('Header Settings') },
@@ -450,6 +465,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 2
         },
+        marginBottom: {
+            type: 'number',
+            default: 15
+        },
         changed: {
             type: 'boolean',
             default: false
@@ -479,12 +498,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderStyle = attributes.borderStyle,
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
-                borderRadius = attributes.borderRadius;
+                borderRadius = attributes.borderRadius,
+                marginBottom = attributes.marginBottom;
 
 
             return React.createElement(
                 "div",
-                { className: "advgb-accordion-block" },
+                { className: "advgb-accordion-block", style: { marginBottom: marginBottom } },
                 React.createElement(
                     "div",
                     { className: "advgb-accordion-header",

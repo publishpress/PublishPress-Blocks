@@ -90,11 +90,22 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
+                marginBottom,
             } = attributes;
 
             return (
                 <Fragment>
                     <InspectorControls>
+                        <PanelBody title={ __( 'Accordion Settings' ) }>
+                            <RangeControl
+                                label={ __( 'Bottom spacing' ) }
+                                value={ marginBottom }
+                                help={ __( 'Define space to next block. This will override Block spacing option (Frontend view only)' ) }
+                                min={ 0 }
+                                max={ 50 }
+                                onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
+                            />
+                        </PanelBody>
                         <PanelBody title={ __( 'Header Settings' ) }>
                             <BaseControl label={ __( 'Header Icon Style' ) }>
                                 <div className="advgb-icon-items-wrapper">
@@ -279,6 +290,10 @@
             type: 'number',
             default: 2,
         },
+        marginBottom: {
+            type: 'number',
+            default: 15,
+        },
         changed: {
             type: 'boolean',
             default: false,
@@ -309,10 +324,11 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
+                marginBottom,
             } = attributes;
 
             return (
-                <div className="advgb-accordion-block">
+                <div className="advgb-accordion-block" style={ { marginBottom } }>
                     <div className="advgb-accordion-header"
                          style={ {
                              backgroundColor: headerBgColor,
