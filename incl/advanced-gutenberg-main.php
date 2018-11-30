@@ -2717,6 +2717,30 @@ float: left;'
             });');
         }
 
+        if (strpos($content, 'advgb-images-slider-block') !== false) {
+            wp_enqueue_style('slick_style');
+            wp_enqueue_style('slick_theme_style');
+            wp_enqueue_script('slick_js');
+            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                $(".advgb-images-slider-block .advgb-images-slider:not(.slick-initialized)").slick({
+                    dots: true,
+                    adaptiveHeight: true,
+                })
+            });');
+
+            if (strpos($content, 'advgb-images-slider-lightbox') !== false) {
+                wp_enqueue_style('colorbox_style');
+                wp_enqueue_script('colorbox_js');
+
+                wp_enqueue_script(
+                    'advgbImageSliderLightbox_js',
+                    plugins_url('assets/blocks/images-slider/lightbox.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+            }
+        }
+
         return $content;
     }
 
