@@ -932,6 +932,7 @@ hr.wp-block-separator {
 
 .advgb-image-slider-controls .advgb-image-slider-control .components-base-control__field .components-base-control__label {
     flex-basis: 70px;
+    align-self: center;
 }
 
 .advgb-image-slider-image-list {
