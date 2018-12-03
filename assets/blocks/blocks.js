@@ -4991,6 +4991,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Tooltip = wpComponents.Tooltip;
 
     var $ = jQuery;
+    var oldIndex = void 0,
+        newIndex = void 0;
 
     var imageSliderBlockIcon = React.createElement(
         "svg",
@@ -5009,10 +5011,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (AdvImageSlider.__proto__ || Object.getPrototypeOf(AdvImageSlider)).apply(this, arguments));
 
             _this.state = {
-                currentSelected: 0
+                currentSelected: 0,
+                inited: false
             };
 
             _this.initSlider = _this.initSlider.bind(_this);
+            _this.initItemSortable = _this.initItemSortable.bind(_this);
             return _this;
         }
 
@@ -5044,12 +5048,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate(prevProps) {
-                var images = this.props.attributes.images;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    isSelected = _props2.isSelected;
+                var images = attributes.images;
                 var prevImages = prevProps.attributes.images;
 
 
                 if (images.length !== prevImages.length && images.length) {
                     this.initSlider();
+                }
+
+                if (!this.state.inited && isSelected) {
+                    this.initItemSortable();
+                    this.setState({ inited: true });
+                }
+
+                if (!isSelected && this.state.inited) {
+                    this.setState({ inited: false });
                 }
             }
         }, {
@@ -5072,6 +5088,41 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
+            key: "initItemSortable",
+            value: function initItemSortable() {
+                var _this3 = this;
+
+                var _props3 = this.props,
+                    clientId = _props3.clientId,
+                    setAttributes = _props3.setAttributes,
+                    attributes = _props3.attributes;
+                var images = attributes.images;
+
+
+                $("#block-" + clientId + " .advgb-image-slider-image-list:not(.ui-sortable)").sortable({
+                    items: "> .advgb-image-slider-image-list-item",
+                    placeholder: 'advgb-slider-image-dragholder',
+                    start: function start(e, ui) {
+                        oldIndex = ui.item.index();
+                    },
+                    update: function update(e, ui) {
+                        newIndex = ui.item.index();
+                        var image = images[oldIndex];
+
+                        $("#block-" + clientId + " .advgb-image-slider-image-list.ui-sortable").sortable('cancel').sortable('destroy');
+                        setAttributes({
+                            images: [].concat(_toConsumableArray(images.filter(function (img, idx) {
+                                return idx !== oldIndex;
+                            }).slice(0, newIndex)), [image], _toConsumableArray(images.filter(function (img, idx) {
+                                return idx !== oldIndex;
+                            }).slice(newIndex)))
+                        });
+                        _this3.initItemSortable();
+                        $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('setPosition');
+                    }
+                });
+            }
+        }, {
             key: "updateImagesData",
             value: function updateImagesData(data) {
                 var currentSelected = this.state.currentSelected;
@@ -5080,9 +5131,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var images = attributes.images;
 
 
@@ -5099,13 +5150,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _this3 = this;
+                var _this4 = this;
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes,
-                    isSelected = _props3.isSelected,
-                    clientId = _props3.clientId;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    isSelected = _props5.isSelected,
+                    clientId = _props5.clientId;
                 var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
@@ -5119,6 +5170,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hAlign = attributes.hAlign,
                     vAlign = attributes.vAlign;
 
+                console.log(images);
 
                 if (images.length === 0) {
                     return React.createElement(
@@ -5306,7 +5358,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Title'),
                                     value: images[currentSelected] ? images[currentSelected].title || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this3.updateImagesData({ title: value || '' });
+                                        return _this4.updateImagesData({ title: value || '' });
                                     }
                                 })
                             ),
@@ -5317,7 +5369,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Text'),
                                     value: images[currentSelected] ? images[currentSelected].text || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this3.updateImagesData({ text: value || '' });
+                                        return _this4.updateImagesData({ text: value || '' });
                                     }
                                 })
                             ),
@@ -5328,7 +5380,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Link'),
                                     value: images[currentSelected] ? images[currentSelected].link || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this3.updateImagesData({ link: value || '' });
+                                        return _this4.updateImagesData({ link: value || '' });
                                     }
                                 })
                             ),
@@ -5343,7 +5395,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             className: "advgb-image-slider-image-list-img",
                                             onClick: function onClick() {
                                                 $("#block-" + clientId + " .advgb-images-slider").slick('slickGoTo', index, false);
-                                                _this3.setState({ currentSelected: index });
+                                                _this4.setState({ currentSelected: index });
                                             }
                                         }),
                                         React.createElement(
@@ -5353,7 +5405,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "advgb-image-slider-image-list-item-remove",
                                                 icon: "no",
                                                 onClick: function onClick() {
-                                                    if (index === currentSelected) _this3.setState({ currentSelected: null });
+                                                    if (index === currentSelected) _this4.setState({ currentSelected: null });
                                                     setAttributes({ images: images.filter(function (img, idx) {
                                                             return idx !== index;
                                                         }) });

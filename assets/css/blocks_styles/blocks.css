@@ -875,6 +875,13 @@ hr.wp-block-separator {
     padding-bottom: 1px;
 }
 
+.advgb-images-slider-block .advgb-slider-image-dragholder{
+    width: 50px;
+    height: 50px;
+    border: 1px dashed #333;
+    margin: auto 10px;
+}
+
 .advgb-images-slider .advgb-image-slider-item {
     position: relative;
     margin-bottom: 10px;

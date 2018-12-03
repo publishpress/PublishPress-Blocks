@@ -5,6 +5,7 @@
     const { InspectorControls, PanelColorSettings, MediaUpload } = wpEditor;
     const { PanelBody, RangeControl, ToggleControl , SelectControl, TextControl, TextareaControl, IconButton, Button, Placeholder, Tooltip } = wpComponents;
     const $ = jQuery;
+    let oldIndex, newIndex;
 
     const imageSliderBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22" className="editor-block-icon">
@@ -19,9 +20,11 @@
             super( ...arguments );
             this.state = {
                 currentSelected: 0,
+                inited: false,
             };
 
             this.initSlider = this.initSlider.bind(this);
+            this.initItemSortable = this.initItemSortable.bind(this);
         }
 
         componentDidMount() {
@@ -47,11 +50,21 @@
         }
 
         componentDidUpdate( prevProps ) {
-            const { images } = this.props.attributes;
+            const { attributes, isSelected } = this.props;
+            const { images } = attributes;
             const { images: prevImages } = prevProps.attributes;
 
             if (images.length !== prevImages.length && images.length) {
                 this.initSlider();
+            }
+
+            if (!this.state.inited && isSelected) {
+                this.initItemSortable();
+                this.setState( { inited: true } );
+            }
+
+            if (!isSelected && this.state.inited) {
+                this.setState( { inited: false } );
             }
         }
 
@@ -67,6 +80,34 @@
                 if (this.state.currentSelected !== currentSlide) {
                     this.setState( { currentSelected: currentSlide } );
                 }
+            } );
+        }
+
+        initItemSortable() {
+            const { clientId, setAttributes, attributes } = this.props;
+            const { images } = attributes;
+
+            $(`#block-${clientId} .advgb-image-slider-image-list:not(.ui-sortable)`).sortable( {
+                items: "> .advgb-image-slider-image-list-item",
+                placeholder: 'advgb-slider-image-dragholder',
+                start: (e, ui) => {
+                    oldIndex = ui.item.index();
+                },
+                update: (e, ui) => {
+                    newIndex = ui.item.index();
+                    const image = images[oldIndex];
+
+                    $(`#block-${clientId} .advgb-image-slider-image-list.ui-sortable`).sortable('cancel').sortable('destroy');
+                    setAttributes( {
+                        images: [
+                            ...images.filter( (img, idx) => idx !== oldIndex ).slice(0, newIndex),
+                            image,
+                            ...images.filter( (img, idx) => idx !== oldIndex ).slice(newIndex),
+                        ]
+                    } );
+                    this.initItemSortable();
+                    $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('setPosition');
+                },
             } );
         }
 
@@ -106,6 +147,7 @@
                 hAlign,
                 vAlign,
             } = attributes;
+            console.log(images);
 
             if (images.length === 0) {
                 return (
