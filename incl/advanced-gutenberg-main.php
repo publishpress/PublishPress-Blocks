@@ -297,7 +297,7 @@ float: left;'
                 'advgb_map_api',
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
             );
-            add_filter('script_loader_tag', 'addScriptAttributes', 10, 2);
+            add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
 
             /**
              * Add attributes to script tag
@@ -307,7 +307,7 @@ float: left;'
              *
              * @return mixed
              */
-            function addScriptAttributes($tag, $handle)
+            function advgbAddScriptAttributes($tag, $handle)
             {
                 if ('map_api' !== $handle) {
                     return $tag;
