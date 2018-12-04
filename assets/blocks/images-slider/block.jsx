@@ -141,13 +141,13 @@
                 autoHeight,
                 width,
                 height,
+                alwaysShowOverlay,
                 hoverColor,
                 titleColor,
                 textColor,
                 hAlign,
                 vAlign,
             } = attributes;
-            console.log(images);
 
             if (images.length === 0) {
                 return (
@@ -225,6 +225,11 @@
                                     max={ 1000 }
                                 />
                             ) }
+                            <ToggleControl
+                                label={ __( 'Always show overlay' ) }
+                                checked=    { alwaysShowOverlay }
+                                onChange={ () => setAttributes( { alwaysShowOverlay: !alwaysShowOverlay } ) }
+                            />
                         </PanelBody>
                         <PanelColorSettings
                             title={ __( 'Color Settings' ) }
@@ -288,7 +293,10 @@
                                          } }
                                     >
                                         <span className="advgb-image-slider-overlay"
-                                              style={ { backgroundColor: hoverColor } }
+                                              style={ {
+                                                  backgroundColor: hoverColor,
+                                                  opacity: alwaysShowOverlay ? 0.5 : undefined,
+                                              } }
                                         />
                                         <h4 className="advgb-image-slider-title"
                                             style={ { color: titleColor } }
@@ -409,6 +417,10 @@
                 type: 'number',
                 default: 500,
             },
+            alwaysShowOverlay: {
+                type: 'boolean',
+                default: false,
+            },
             hoverColor: {
                 type: 'string',
             },
@@ -440,6 +452,7 @@
                 autoHeight,
                 width,
                 height,
+                alwaysShowOverlay,
                 hoverColor,
                 titleColor,
                 textColor,
@@ -471,9 +484,12 @@
                                      } }
                                 >
                                         <a className="advgb-image-slider-overlay"
-                                           style={ { backgroundColor: hoverColor } }
                                            target="_blank"
                                            href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
+                                           style={ {
+                                               backgroundColor: hoverColor,
+                                               opacity: alwaysShowOverlay ? 0.5 : undefined,
+                                           } }
                                         />
                                     <h4 className="advgb-image-slider-title"
                                         style={ { color: titleColor } }

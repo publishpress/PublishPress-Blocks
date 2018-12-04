@@ -5164,13 +5164,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     autoHeight = attributes.autoHeight,
                     width = attributes.width,
                     height = attributes.height,
+                    alwaysShowOverlay = attributes.alwaysShowOverlay,
                     hoverColor = attributes.hoverColor,
                     titleColor = attributes.titleColor,
                     textColor = attributes.textColor,
                     hAlign = attributes.hAlign,
                     vAlign = attributes.vAlign;
 
-                console.log(images);
 
                 if (images.length === 0) {
                     return React.createElement(
@@ -5256,6 +5256,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 min: 100,
                                 max: 1000
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Always show overlay'),
+                                checked: alwaysShowOverlay,
+                                onChange: function onChange() {
+                                    return setAttributes({ alwaysShowOverlay: !alwaysShowOverlay });
+                                }
                             })
                         ),
                         React.createElement(PanelColorSettings, {
@@ -5328,7 +5335,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             }
                                         },
                                         React.createElement("span", { className: "advgb-image-slider-overlay",
-                                            style: { backgroundColor: hoverColor }
+                                            style: {
+                                                backgroundColor: hoverColor,
+                                                opacity: alwaysShowOverlay ? 0.5 : undefined
+                                            }
                                         }),
                                         React.createElement(
                                             "h4",
@@ -5478,6 +5488,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'number',
                 default: 500
             },
+            alwaysShowOverlay: {
+                type: 'boolean',
+                default: false
+            },
             hoverColor: {
                 type: 'string'
             },
@@ -5509,6 +5523,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 autoHeight = attributes.autoHeight,
                 width = attributes.width,
                 height = attributes.height,
+                alwaysShowOverlay = attributes.alwaysShowOverlay,
                 hoverColor = attributes.hoverColor,
                 titleColor = attributes.titleColor,
                 textColor = attributes.textColor,
@@ -5544,9 +5559,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 },
                                 React.createElement("a", { className: "advgb-image-slider-overlay",
-                                    style: { backgroundColor: hoverColor },
                                     target: "_blank",
-                                    href: actionOnClick === 'link' && !!image.link ? image.link : undefined
+                                    href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
+                                    style: {
+                                        backgroundColor: hoverColor,
+                                        opacity: alwaysShowOverlay ? 0.5 : undefined
+                                    }
                                 }),
                                 React.createElement(
                                     "h4",
