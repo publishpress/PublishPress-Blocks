@@ -322,6 +322,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
     height: 100%;
 }
 
+.advgb-play-button svg {
+    fill: currentColor;
+}
+
 .advgb-button-wrapper button.button {
     position: absolute;
     left: 50%;
@@ -332,6 +336,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 .advgb-video-input {
     width: fit-content !important;
     margin: 10px auto;
+}
+
+#editor .advgb-video-input > *:not(svg) {
+    vertical-align: sub;
 }
 
 .advgb-video-input .components-base-control {

@@ -3723,13 +3723,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(
                                     "div",
-                                    { className: 'advgb-play-button' },
+                                    { className: 'advgb-play-button', style: { color: playButtonColor } },
                                     React.createElement(
                                         "svg",
                                         { xmlns: "http://www.w3.org/2000/svg",
                                             width: playButtonSize,
                                             height: playButtonSize,
-                                            fill: playButtonColor,
                                             viewBox: "0 0 24 24"
                                         },
                                         PLAY_BUTTON_STYLE[playButtonIcon]
@@ -3963,13 +3962,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: 'advgb-button-wrapper', style: { height: videoHeight } },
                         React.createElement(
                             "div",
-                            { className: 'advgb-play-button' },
+                            { className: 'advgb-play-button', style: { color: playButtonColor } },
                             React.createElement(
                                 "svg",
                                 { xmlns: "http://www.w3.org/2000/svg",
                                     width: playButtonSize,
                                     height: playButtonSize,
-                                    fill: playButtonColor,
                                     viewBox: "0 0 24 24"
                                 },
                                 PLAY_BUTTON_STYLE[playButtonIcon]
