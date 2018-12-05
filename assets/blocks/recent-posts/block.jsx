@@ -7,7 +7,7 @@
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
-    const { moment } = wpDate;
+    const { dateI18n, __experimentalGetSettings } = wpDate;
 
     const advRecentPostsBlockIcon = (
         <svg width="20" height="20" viewBox="2 2 22 22">
@@ -247,6 +247,8 @@
                 postView === 'slider' && 'slider-view',
             ].filter( Boolean ).join( ' ' );
 
+            const dateFormat = __experimentalGetSettings().formats.date;
+
             return (
                 <Fragment>
                     { inspectorControls }
@@ -287,7 +289,7 @@
                                             ) }
                                             {displayDate && (
                                             <span className="advgb-post-date" >
-                                                { moment( post.date_gmt ).local().format( 'DD MMMM, Y' ) }
+                                                { dateI18n( dateFormat, post.date_gmt ) }
                                             </span>
                                             ) }
                                         </div>

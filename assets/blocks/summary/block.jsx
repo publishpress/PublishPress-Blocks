@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, getBlockContent, createBlock } = wpBlocks;
-    const { BlockControls, InspectorControls, InspectorAdvancedControls, ColorPalette, BlockAlignmentToolbar } = wpEditor;
-    const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody, PanelColor } = wpComponents;
+    const { BlockControls, InspectorControls, InspectorAdvancedControls, PanelColorSettings, BlockAlignmentToolbar } = wpEditor;
+    const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody } = wpComponents;
     const { select, dispatch } = wpData;
     const { addFilter } = wpHooks;
 
@@ -26,7 +26,7 @@
             const { insertBlock } = dispatch( 'core/editor' );
             const summaryBlock = createBlock( 'advgb/summary' );
 
-            $( '.gutenberg #editor' ).find( '.table-of-contents' ).click( function () {
+            $( '#editor' ).find( '.table-of-contents' ).click( function () {
                 const allBlocks = select( 'core/editor' ).getBlocks();
                 const summaryBlockExist = !!allBlocks.filter( ( block ) => ( block.name === 'advgb/summary' ) ).length;
                 setTimeout( function () {
@@ -36,7 +36,7 @@
                         '</button>'
                     );
 
-                    $( '.gutenberg #editor' ).find( '.table-of-contents__popover' ).find( '.document-outline' )
+                    $( '#editor' ).find( '.table-of-contents__popover' ).find( '.document-outline' )
                         .append( summaryButton );
                     summaryButton.unbind( 'click' ).click( function () {
                         insertBlock( summaryBlock, 0 );
@@ -234,12 +234,17 @@
                                 onChange={ (value) => setAttributes( { headerTitle: value } ) }
                             />
                             }
-                            <PanelColor title={ __('Anchor color') } colorValue={anchorColor} initialOpen={false} >
-                                <ColorPalette
-                                    value={anchorColor}
-                                    onChange={ (value) => setAttributes( { anchorColor: value } ) }
-                                />
-                            </PanelColor>
+                            <PanelColorSettings
+                                title={ __( 'Anchor Color' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Anchor Color' ),
+                                        value: anchorColor,
+                                        onChange: ( value ) => setAttributes( { anchorColor: value } ),
+                                    },
+                                ] }
+                            />
                         </PanelBody>
                     </InspectorControls>
                     {summaryContent}

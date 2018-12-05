@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || die;
 
-if (!defined('GUTENBERG_VERSION')) {
+if (!function_exists('register_block_type') && !defined('GUTENBERG_DEVELOPMENT_MODE')) {
     echo '<div class="ju-notice-msg ju-notice-error">'. esc_html__('You need to activate Gutenberg to use our plugin!', 'advanced-gutenberg') .'</div>';
     return false;
 }
@@ -59,7 +59,7 @@ $tabs_data = array(
     </div>
     <div class="ju-right-panel">
         <?php
-        if (version_compare(GUTENBERG_VERSION, GUTENBERG_VERSION_REQUIRED, 'lt')) {
+        if (defined('GUTENBERG_VERSION') && version_compare(GUTENBERG_VERSION, GUTENBERG_VERSION_REQUIRED, 'lt')) {
             $gutenbergUpdateUrl = wp_nonce_url(
                 add_query_arg(
                     array(

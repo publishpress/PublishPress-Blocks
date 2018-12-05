@@ -1,6 +1,6 @@
 === Advanced Gutenberg ===
 Contributors: JoomUnited
-Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor
+Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 4.8
 Tested up to: {{wp_version}}
 Stable tag: {{version}}

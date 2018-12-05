@@ -8,27 +8,16 @@
     padding: 15px 0;
 }
 
-.advgb-accordion-header.ui-accordion-header {
+.advgb-accordion-header {
     padding: 5px 40px 5px 10px;
     border: 1px solid #ccc;
     margin-top: 10px;
     position: relative;
     background: none;
+    margin-bottom: 0;
 }
 
-.advgb-accordion-remove {
-    position: absolute;
-    top: -8px;
-    left: -10px;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    background-color: #FCB908;
-    color: #fff;
-    border-radius: 50%;
-}
-
-.ui-accordion-header-icon.ui-icon {
+.ui-accordion-header-icon {
     display: none;
 }
 
@@ -37,6 +26,7 @@
     margin-right: -30px;
     line-height: 1.8;
     font-size: 1.2em;
+    cursor: pointer;
 }
 
 .advgb-accordion-header-icon svg {
@@ -50,13 +40,14 @@
     color: inherit;
     line-height: 1.8;
     font-size: 1.2em;
+    cursor: pointer;
 }
 
 .advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon {
     display: none;
 }
 
-.advgb-accordion-body.ui-accordion-content {
+.advgb-accordion-body {
     padding: 10px 10px 10px 15px;
     border: 1px solid #ccc;
     border-top: none !important;
@@ -236,20 +227,20 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 }
 
 /*Advanced Table block styles*/
-.wp-block-advgb-table table {
+.wp-block-advgb-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
 }
 
-.wp-block-advgb-table table td, .wp-block-advgb-table table tr {
+.wp-block-advgb-table td, .wp-block-advgb-table tr {
     border-color: #dddddd;
     border-style: solid;
     border-width: 1px;
-    padding: .5em;
+    padding: 0;
 }
 
-.wp-block-advgb-table td[data-mce-selected="1"] {
+.wp-block-advgb-table td.cell-selected {
     outline: 1px solid #2196f3;
 }
 
@@ -331,6 +322,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
     height: 100%;
 }
 
+.advgb-play-button svg {
+    fill: currentColor;
+}
+
 .advgb-button-wrapper button.button {
     position: absolute;
     left: 50%;
@@ -341,6 +336,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 .advgb-video-input {
     width: fit-content !important;
     margin: 10px auto;
+}
+
+#editor .advgb-video-input > *:not(svg) {
+    vertical-align: sub;
 }
 
 .advgb-video-input .components-base-control {
@@ -454,13 +453,13 @@ span.advgb-social-icon.selected:before {
 }
 
 /*Summary block styles*/
-.gutenberg #editor .editor-block-list__block[data-align=center] ul.advgb-toc {
+#editor .editor-block-list__block[data-align=center] ul.advgb-toc {
     width: fit-content;
     margin: auto;
     text-align: initial;
 }
 
-.gutenberg #editor ul.advgb-toc, ul.advgb-toc {
+#editor ul.advgb-toc, ul.advgb-toc {
     list-style: none !important;
     padding: 0;
 }
@@ -469,7 +468,7 @@ span.advgb-social-icon.selected:before {
     margin-bottom: 15px;
 }
 
-.gutenberg #editor ul.advgb-toc, ul.advgb-toc:not(.aligncenter):not(.alignleft):not(.alignright) {
+#editor ul.advgb-toc, ul.advgb-toc:not(.aligncenter):not(.alignleft):not(.alignright) {
     margin-left: 0;
     margin-right: 0;
 }
@@ -592,7 +591,7 @@ li.advgb-tab.advgb-add-tab.ui-state-default:hover {
 li.advgb-add-tab span {
     line-height: 1.8;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1em;
 }
 
 li.advgb-add-tab svg {
@@ -618,7 +617,7 @@ li.advgb-tab:hover span.advgb-tab-remove {
 }
 
 span.advgb-tab-remove svg {
-    vertical-align: baseline;
+    display: block;
 }
 
 div.advgb-tab-body {
@@ -702,6 +701,10 @@ hr.wp-block-separator {
 /*Recent Posts styles*/
 .advgb-recent-posts-block {
     padding-bottom: 1px;
+}
+
+.advgb-recent-posts-block h2.advgb-post-title {
+    font-size: 1.2em;
 }
 
 .advgb-recent-posts-block.grid-view .advgb-recent-posts {
@@ -873,4 +876,108 @@ hr.wp-block-separator {
     width: auto;
     display: block;
     margin: 0 auto 1.5em;
+}
+
+/*Image slider block*/
+.advgb-images-slider-block {
+    padding-bottom: 1px;
+}
+
+.advgb-images-slider-block .advgb-slider-image-dragholder{
+    width: 50px;
+    height: 50px;
+    border: 1px dashed #333;
+    margin: auto 10px;
+}
+
+.advgb-images-slider .advgb-image-slider-item {
+    position: relative;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.advgb-images-slider .advgb-image-slider-item-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.advgb-images-slider .advgb-image-slider-item img {
+    display: block;
+    max-width: unset;
+    margin: auto;
+}
+
+.advgb-images-slider .advgb-image-slider-item-info .advgb-image-slider-title,
+.advgb-images-slider .advgb-image-slider-item-info .advgb-image-slider-text {
+    margin: 0 5px;
+    color: #fff;
+    position: relative;
+    z-index: 3;
+}
+
+.advgb-images-slider .advgb-image-slider-overlay {
+    opacity: 0;
+    background-color: #333;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    transition: all ease-in-out 0.5s;
+    -moz-transition: all ease-in-out 0.5s;
+    -webkit-transition: all ease-in-out 0.5s;
+}
+
+.advgb-image-slider-item:hover .advgb-image-slider-overlay {
+    opacity: 0.5;
+}
+
+.advgb-image-slider-controls .advgb-image-slider-control .components-base-control__field {
+    display: flex;
+    flex: 1;
+}
+
+.advgb-image-slider-controls .advgb-image-slider-control .components-base-control__field .components-base-control__label {
+    flex-basis: 70px;
+    align-self: center;
+}
+
+.advgb-image-slider-image-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 25px 0;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item img {
+    height: 50px;
+    display: block;
+    cursor: pointer;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item {
+    margin: auto 10px;
+    position: relative;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item .advgb-image-slider-image-list-item-remove {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    color: #fff;
+    background-color: #ff0000;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-add-item button {
+    height: 50px;
+    border: 1px solid #ccc;
 }

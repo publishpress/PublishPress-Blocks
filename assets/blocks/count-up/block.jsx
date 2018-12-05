@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, ColorPalette } = wpEditor;
-    const { RangeControl, PanelBody, PanelColor, TextControl, FormToggle } = wpComponents;
+    const { InspectorControls, RichText, PanelColorSettings } = wpEditor;
+    const { RangeControl, PanelBody, TextControl, FormToggle } = wpComponents;
 
     class AdvCountUp extends Component {
         constructor() {
@@ -64,6 +64,27 @@
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Count Up Settings' ) }>
+                            <PanelColorSettings
+                                title={ __( 'Color Settings' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Header Color' ),
+                                        value: headerTextColor,
+                                        onChange: ( value ) => setAttributes( { headerTextColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Count Up Color' ),
+                                        value: countUpNumberColor,
+                                        onChange: ( value ) => setAttributes( { countUpNumberColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Description Color' ),
+                                        value: descTextColor,
+                                        onChange: ( value ) => setAttributes( { descTextColor: value } ),
+                                    },
+                                ] }
+                            />
                             <RangeControl
                                 label={ __( 'Columns' ) }
                                 min={ 1 }
@@ -71,24 +92,6 @@
                                 value={ columns }
                                 onChange={ (value) => setAttributes( { columns: value } ) }
                             />
-                            <PanelColor title={ __( 'Header Color' ) } colorValue={ headerTextColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ headerTextColor }
-                                    onChange={ (value) => setAttributes( { headerTextColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Count Up Color' ) } colorValue={ countUpNumberColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ countUpNumberColor }
-                                    onChange={ (value) => setAttributes( { countUpNumberColor: value } ) }
-                                />
-                            </PanelColor>
-                            <PanelColor title={ __( 'Description Color' ) } colorValue={ descTextColor } initialOpen={ false }>
-                                <ColorPalette
-                                    value={ descTextColor }
-                                    onChange={ (value) => setAttributes( { descTextColor: value } ) }
-                                />
-                            </PanelColor>
                             <RangeControl
                                 label={ __( 'Counter Number Size' ) }
                                 min={ 10 }
@@ -348,16 +351,16 @@
                 type: 'string',
             },
             countUpNumber: {
-                type: 'float',
-                default: 56789
+                type: 'string',
+                default: '56789'
             },
             countUpNumber2: {
-                type: 'float',
-                default: 56789
+                type: 'string',
+                default: '56789'
             },
             countUpNumber3: {
-                type: 'float',
-                default: 56789
+                type: 'string',
+                default: '56789'
             },
             countUpNumberColor: {
                 type: 'string',

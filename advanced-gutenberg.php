@@ -61,7 +61,7 @@ if (version_compare(PHP_VERSION, '5.3', '<')) {
          */
         function advgb_show_error()
         {
-            echo '<div class="error"><p><strong>Advanced Gutenberg</strong> need at least PHP 5.3 version, please update php before installing the plugin.</p></div>';
+            echo '<div class="error"><p><strong>Advanced Gutenberg</strong> needs at least PHP 5.3 version, please update php before installing the plugin.</p></div>';
         }
     }
 
@@ -82,7 +82,7 @@ if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
 }
 
 if (!defined('GUTENBERG_VERSION_REQUIRED')) {
-    define('GUTENBERG_VERSION_REQUIRED', '3.9.0');
+    define('GUTENBERG_VERSION_REQUIRED', '4.5.0');
 }
 
 require_once(plugin_dir_path(__FILE__) . '/install.php');

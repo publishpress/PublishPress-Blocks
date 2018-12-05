@@ -2,7 +2,7 @@
 defined('ABSPATH') || die;
 
 wp_enqueue_style('minicolors_css');
-wp_enqueue_style('qtip_style');
+wp_enqueue_style('advgb_qtip_style');
 wp_enqueue_style('codemirror_css');
 wp_enqueue_style('codemirror_hint_style');
 wp_enqueue_style('advgb_settings_style');
@@ -151,7 +151,7 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
                                    style="margin-left: 10px; width: 370px; display: block;"
                                    value="<?php echo esc_html($google_api_key_saved) ?>"
                             >
-                            <a target="_blank" href="https://support.google.com/googleapi/answer/6158862"
+                            <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key"
                                style="display: inline-block; margin: 15px; margin-left: 10px; color: #ff8726;">
                                 <?php esc_html_e('How to create a Google API Key', 'advanced-gutenberg') ?>
                             </a>
@@ -264,7 +264,7 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
                 endif; ?>
             <li class="block-config-item ju-settings-option">
                 <span class="block-icon" <?php echo esc_attr($iconColor) ?>>
-                    <?php echo html_entity_decode(stripslashes($block['icon'])); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
+                    <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>
                 <span class="block-title"><?php echo esc_html($block['title']); ?></span>
                 <i class="mi mi-settings block-config-button"
