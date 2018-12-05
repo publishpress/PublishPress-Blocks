@@ -7292,7 +7292,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var summaryBlock = createBlock('advgb/summary');
 
-            $('.gutenberg #editor').find('.table-of-contents').click(function () {
+            $('#editor').find('.table-of-contents').click(function () {
                 var allBlocks = select('core/editor').getBlocks();
                 var summaryBlockExist = !!allBlocks.filter(function (block) {
                     return block.name === 'advgb/summary';
@@ -7300,7 +7300,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setTimeout(function () {
                     var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Summary') + '</button>');
 
-                    $('.gutenberg #editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
+                    $('#editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
                     summaryButton.unbind('click').click(function () {
                         insertBlock(summaryBlock, 0);
                         $('.table-of-contents__popover').hide();

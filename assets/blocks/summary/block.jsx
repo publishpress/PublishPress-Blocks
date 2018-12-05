@@ -26,7 +26,7 @@
             const { insertBlock } = dispatch( 'core/editor' );
             const summaryBlock = createBlock( 'advgb/summary' );
 
-            $( '.gutenberg #editor' ).find( '.table-of-contents' ).click( function () {
+            $( '#editor' ).find( '.table-of-contents' ).click( function () {
                 const allBlocks = select( 'core/editor' ).getBlocks();
                 const summaryBlockExist = !!allBlocks.filter( ( block ) => ( block.name === 'advgb/summary' ) ).length;
                 setTimeout( function () {
@@ -36,7 +36,7 @@
                         '</button>'
                     );
 
-                    $( '.gutenberg #editor' ).find( '.table-of-contents__popover' ).find( '.document-outline' )
+                    $( '#editor' ).find( '.table-of-contents__popover' ).find( '.document-outline' )
                         .append( summaryButton );
                     summaryButton.unbind( 'click' ).click( function () {
                         insertBlock( summaryBlock, 0 );
