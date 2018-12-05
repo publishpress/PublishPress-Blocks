@@ -5821,8 +5821,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                             setAttributes({
-                                lat: location.lat(),
-                                lng: location.lng(),
+                                lat: location.lat().toString(),
+                                lng: location.lng().toString(),
                                 currentAddress: res[0].formatted_address
                             });
                         } else if (stt === ZERO_RESULTS) {
