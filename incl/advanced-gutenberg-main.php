@@ -145,7 +145,7 @@ float: left;'
      */
     public function __construct()
     {
-        add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
+        add_action('admin_init', array($this, 'registerStylesScripts'));
         add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
         add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
@@ -299,20 +299,22 @@ float: left;'
             );
             add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
 
-            /**
-             * Add attributes to script tag
-             *
-             * @param string $tag    Script tag
-             * @param string $handle Handle name
-             *
-             * @return mixed
-             */
-            function advgbAddScriptAttributes($tag, $handle)
-            {
-                if ('map_api' !== $handle) {
-                    return $tag;
+            if (!function_exists('advgbAddScriptAttributes')) {
+                /**
+                 * Add attributes to script tag
+                 *
+                 * @param string $tag    Script tag
+                 * @param string $handle Handle name
+                 *
+                 * @return mixed
+                 */
+                function advgbAddScriptAttributes($tag, $handle)
+                {
+                    if ('map_api' !== $handle) {
+                        return $tag;
+                    }
+                    return str_replace(' src', ' defer src', $tag);
                 }
-                return str_replace(' src', ' defer src', $tag);
             }
         }
     }
@@ -945,154 +947,156 @@ float: left;'
      */
     public function registerStylesScripts()
     {
-        // Register CSS
-        wp_register_style(
-            'ju_framework_styles',
-            plugins_url('assets/css/style.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'ju_framework_styles_min',
-            plugins_url('assets/css/style.min.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_main_style',
-            plugins_url('assets/css/main.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_profile_style',
-            plugins_url('assets/css/profile.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_settings_style',
-            plugins_url('assets/css/settings.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_qtip_style',
-            plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_quirk',
-            plugins_url('assets/css/quirk.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'codemirror_css',
-            plugins_url('assets/js/codemirror/lib/codemirror.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'codemirror_hint_style',
-            plugins_url('assets/js/codemirror/addon/hint/show-hint.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'minicolors_css',
-            plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'waves_styles',
-            plugins_url('assets/css/waves.min.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'material_icon_font',
-            plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'slick_style',
-            plugins_url('assets/css/slick.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'slick_theme_style',
-            plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
-        );
+        if (!wp_doing_ajax()) {
+            // Register CSS
+            wp_register_style(
+                'ju_framework_styles',
+                plugins_url('assets/css/style.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'ju_framework_styles_min',
+                plugins_url('assets/css/style.min.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_main_style',
+                plugins_url('assets/css/main.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_profile_style',
+                plugins_url('assets/css/profile.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_settings_style',
+                plugins_url('assets/css/settings.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_qtip_style',
+                plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_quirk',
+                plugins_url('assets/css/quirk.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'codemirror_css',
+                plugins_url('assets/js/codemirror/lib/codemirror.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'codemirror_hint_style',
+                plugins_url('assets/js/codemirror/addon/hint/show-hint.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'minicolors_css',
+                plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'waves_styles',
+                plugins_url('assets/css/waves.min.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'material_icon_font',
+                plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'slick_style',
+                plugins_url('assets/css/slick.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'slick_theme_style',
+                plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+            );
 
-        // Register JS
-        wp_register_script(
-            'advgb_main_js',
-            plugins_url('assets/js/main.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'advgb_update_list',
-            plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-            array('jquery'),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'advgb_profile_js',
-            plugins_url('assets/js/profile.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'advgb_settings_js',
-            plugins_url('assets/js/settings.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'velocity_js',
-            plugins_url('assets/js/velocity.min.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'waves_js',
-            plugins_url('assets/js/waves.min.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'tabs_js',
-            plugins_url('assets/js/tabs.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'qtip_js',
-            plugins_url('assets/js/jquery.qtip.min.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'codemirror_js',
-            plugins_url('assets/js/codemirror/lib/codemirror.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'codemirror_hint',
-            plugins_url('assets/js/codemirror/addon/hint/show-hint.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'codemirror_mode_css',
-            plugins_url('assets/js/codemirror/mode/css/css.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'codemirror_hint_css',
-            plugins_url('assets/js/codemirror/addon/hint/css-hint.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'less_js',
-            plugins_url('assets/js/less.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'minicolors_js',
-            plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'slick_js',
-            plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
-            array('jquery')
-        );
+            // Register JS
+            wp_register_script(
+                'advgb_main_js',
+                plugins_url('assets/js/main.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'advgb_update_list',
+                plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'advgb_profile_js',
+                plugins_url('assets/js/profile.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'advgb_settings_js',
+                plugins_url('assets/js/settings.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'velocity_js',
+                plugins_url('assets/js/velocity.min.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'waves_js',
+                plugins_url('assets/js/waves.min.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'tabs_js',
+                plugins_url('assets/js/tabs.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'qtip_js',
+                plugins_url('assets/js/jquery.qtip.min.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'codemirror_js',
+                plugins_url('assets/js/codemirror/lib/codemirror.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'codemirror_hint',
+                plugins_url('assets/js/codemirror/addon/hint/show-hint.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'codemirror_mode_css',
+                plugins_url('assets/js/codemirror/mode/css/css.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'codemirror_hint_css',
+                plugins_url('assets/js/codemirror/addon/hint/css-hint.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'less_js',
+                plugins_url('assets/js/less.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'minicolors_js',
+                plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'slick_js',
+                plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
+                array('jquery')
+            );
+        }
     }
 
     /**
