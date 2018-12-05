@@ -6172,7 +6172,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
     var decodeEntities = wpHtmlEntities.decodeEntities;
-    var moment = wpDate.moment;
+    var dateI18n = wpDate.dateI18n,
+        __experimentalGetSettings = wpDate.__experimentalGetSettings;
 
 
     var advRecentPostsBlockIcon = React.createElement(
@@ -6409,6 +6410,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 
+                var dateFormat = __experimentalGetSettings().formats.date;
+
                 return React.createElement(
                     Fragment,
                     null,
@@ -6475,7 +6478,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             displayDate && React.createElement(
                                                 "span",
                                                 { className: "advgb-post-date" },
-                                                moment(post.date_gmt).local().format('DD MMMM, Y')
+                                                dateI18n(dateFormat, post.date_gmt)
                                             )
                                         ),
                                         React.createElement(
