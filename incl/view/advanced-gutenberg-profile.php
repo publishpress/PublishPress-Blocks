@@ -26,6 +26,13 @@ if ($postid === 'new') {
     $users_access_saved = array();
 }
 
+$blockCategories = array();
+if (function_exists('gutenberg_get_block_categories')) {
+    $blockCategories = gutenberg_get_block_categories(get_post());
+} elseif (function_exists('get_block_categories')) {
+    $blockCategories = get_block_categories(get_post());
+}
+
 // In profile page we load gutenberg files to retrieve all blocks, including new ones
 wp_enqueue_script('wp-blocks');
 wp_enqueue_script('wp-element');
@@ -38,10 +45,9 @@ wp_enqueue_script('advgb_update_list');
 wp_localize_script('advgb_update_list', 'advgbUpdate', array('onProfile' => true));
 wp_add_inline_script(
     'wp-blocks',
-    sprintf('wp.blocks.setCategories( %s );', wp_json_encode(gutenberg_get_block_categories(get_post()))),
+    sprintf('wp.blocks.setCategories( %s );', wp_json_encode($blockCategories)),
     'after'
 );
-
 ?>
 
 <form method="post">

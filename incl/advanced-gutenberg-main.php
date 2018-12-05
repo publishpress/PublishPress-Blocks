@@ -341,9 +341,16 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
 
+            $blockCategories = array();
+            if (function_exists('gutenberg_get_block_categories')) {
+                $blockCategories = gutenberg_get_block_categories(get_post());
+            } elseif (function_exists('get_block_categories')) {
+                $blockCategories = get_block_categories(get_post());
+            }
+
             wp_add_inline_script(
                 'wp-blocks',
-                sprintf('wp.blocks.setCategories( %s );', wp_json_encode(gutenberg_get_block_categories(get_post()))),
+                sprintf('wp.blocks.setCategories( %s );', wp_json_encode($blockCategories)),
                 'after'
             );
 
