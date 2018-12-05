@@ -7754,7 +7754,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'componentDidMount',
             value: function componentDidMount() {
-                this.initTabs();
+                var _this2 = this;
+
+                setTimeout(function () {
+                    return _this2.initTabs();
+                }, 100);
                 if (!this.props.attributes.blockID) {
                     this.props.setAttributes({ blockID: this.props.clientId });
                 }
@@ -7818,7 +7822,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'render',
             value: function render() {
-                var _this2 = this;
+                var _this3 = this;
 
                 var _props3 = this.props,
                     attributes = _props3.attributes,
@@ -7961,7 +7965,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             tagName: 'p',
                                             value: item.header,
                                             onChange: function onChange(value) {
-                                                return _this2.updateTabs({ header: value || '' }, index);
+                                                return _this3.updateTabs({ header: value || '' }, index);
                                             },
                                             unstableOnSplit: function unstableOnSplit() {
                                                 return null;
@@ -8031,7 +8035,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     tagName: 'p',
                                     value: item.body,
                                     onChange: function onChange(value) {
-                                        return _this2.updateTabs({ body: value }, index);
+                                        return _this3.updateTabs({ body: value }, index);
                                     },
                                     placeholder: __('Enter text…')
                                 })

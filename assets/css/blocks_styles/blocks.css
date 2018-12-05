@@ -583,7 +583,7 @@ li.advgb-tab.advgb-add-tab.ui-state-default:hover {
 li.advgb-add-tab span {
     line-height: 1.8;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1em;
 }
 
 li.advgb-add-tab svg {
@@ -609,7 +609,7 @@ li.advgb-tab:hover span.advgb-tab-remove {
 }
 
 span.advgb-tab-remove svg {
-    vertical-align: baseline;
+    display: block;
 }
 
 div.advgb-tab-body {
