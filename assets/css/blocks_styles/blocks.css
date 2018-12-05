@@ -453,13 +453,13 @@ span.advgb-social-icon.selected:before {
 }
 
 /*Summary block styles*/
-.gutenberg #editor .editor-block-list__block[data-align=center] ul.advgb-toc {
+#editor .editor-block-list__block[data-align=center] ul.advgb-toc {
     width: fit-content;
     margin: auto;
     text-align: initial;
 }
 
-.gutenberg #editor ul.advgb-toc, ul.advgb-toc {
+#editor ul.advgb-toc, ul.advgb-toc {
     list-style: none !important;
     padding: 0;
 }
@@ -468,7 +468,7 @@ span.advgb-social-icon.selected:before {
     margin-bottom: 15px;
 }
 
-.gutenberg #editor ul.advgb-toc, ul.advgb-toc:not(.aligncenter):not(.alignleft):not(.alignright) {
+#editor ul.advgb-toc, ul.advgb-toc:not(.aligncenter):not(.alignleft):not(.alignright) {
     margin-left: 0;
     margin-right: 0;
 }
