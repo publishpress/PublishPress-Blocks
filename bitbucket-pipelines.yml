@@ -34,7 +34,7 @@ pipelines:
 definitions:
   services:
     chromedriver:
-      image: blueimp/chromedriver
+      image: joomunited/chromedriver:latest
     mysql:
       image: mysql:5.7.22
       environment:
