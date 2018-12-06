@@ -96,13 +96,9 @@
 "use strict";
 
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -117,12 +113,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+        PanelColorSettings = wpEditor.PanelColorSettings,
+        InnerBlocks = wpEditor.InnerBlocks;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
-        Dashicon = wpComponents.Dashicon,
         Tooltip = wpComponents.Tooltip;
 
 
@@ -208,83 +204,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "componentDidMount",
-            value: function componentDidMount() {
-                this.initAccordion();
-            }
-        }, {
-            key: "componentDidUpdate",
-            value: function componentDidUpdate(prevProps) {
-                if (prevProps.attributes.items.length < this.props.attributes.items.length) {
-                    this.initAccordion(true);
-                }
-
-                if (this.props.attributes.items.length === 0) {
-                    this.props.setAttributes({
-                        items: [{
-                            header: 'Header 1',
-                            body: 'At least one accordion must remaining, to remove block use "Remove Block" button from right menu.'
-                        }]
-                    });
-                }
-            }
-        }, {
-            key: "initAccordion",
-            value: function initAccordion() {
-                var refresh = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-                if (typeof jQuery !== "undefined") {
-                    if (!refresh) {
-                        jQuery("#block-" + this.props.clientId + " .advgb-accordion-block").accordion({
-                            header: ".advgb-accordion-header",
-                            heightStyle: "content"
-                        });
-                    } else {
-                        jQuery("#block-" + this.props.clientId + " .advgb-accordion-block").accordion('refresh');
-                    }
-
-                    jQuery("#block-" + this.props.clientId + " .advgb-accordion-block h4").on('keydown', function (e) {
-                        e.stopPropagation();
-                    });
-                }
-            }
-        }, {
-            key: "updateAccordion",
-            value: function updateAccordion(value, index) {
-                var _this2 = this;
-
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
-                var items = attributes.items;
-
-
-                var newItems = items.map(function (item, thisIndex) {
-                    if (index === thisIndex) {
-                        if (value.body) {
-                            if (value.body.length !== item.body.length) {
-                                _this2.initAccordion(true);
-                            }
-                        }
-
-                        item = _extends({}, item, value);
-                    }
-
-                    return item;
-                });
-
-                setAttributes({ items: newItems });
-            }
-        }, {
             key: "render",
             value: function render() {
-                var _this3 = this;
-
-                var _props3 = this.props,
-                    isSelected = _props3.isSelected,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
-                var items = attributes.items,
+                var _props2 = this.props,
+                    isSelected = _props2.isSelected,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var header = attributes.header,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
                     headerIcon = attributes.headerIcon,
@@ -294,7 +220,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderStyle = attributes.borderStyle,
                     borderWidth = attributes.borderWidth,
                     borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius;
+                    borderRadius = attributes.borderRadius,
+                    marginBottom = attributes.marginBottom;
 
 
                 return React.createElement(
@@ -303,6 +230,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         InspectorControls,
                         null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Accordion Settings') },
+                            React.createElement(RangeControl, {
+                                label: __('Bottom spacing'),
+                                value: marginBottom,
+                                help: __('Define space to next block. This will override Block spacing option (Frontend view only)'),
+                                min: 0,
+                                max: 50,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ marginBottom: value });
+                                }
+                            })
+                        ),
                         React.createElement(
                             PanelBody,
                             { title: __('Header Settings') },
@@ -418,201 +359,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "div",
                         { className: "advgb-accordion-block" },
-                        items.map(function (item, index) {
-                            return React.createElement(
-                                Fragment,
-                                { key: index },
-                                React.createElement(
-                                    "div",
-                                    { className: "advgb-accordion-header",
-                                        style: {
-                                            backgroundColor: headerBgColor,
-                                            color: headerTextColor,
-                                            borderStyle: borderStyle,
-                                            borderWidth: borderWidth + 'px',
-                                            borderColor: borderColor,
-                                            borderRadius: borderRadius + 'px'
-                                        }
-                                    },
-                                    React.createElement(
-                                        Tooltip,
-                                        { text: __('Remove item') },
-                                        React.createElement(
-                                            "span",
-                                            { className: "advgb-accordion-remove",
-                                                onClick: function onClick() {
-                                                    return setAttributes({ items: items.filter(function (cItem, cIndex) {
-                                                            return cIndex !== index;
-                                                        }) });
-                                                }
-                                            },
-                                            React.createElement(Dashicon, { icon: "no" })
-                                        )
-                                    ),
-                                    React.createElement(
-                                        "span",
-                                        { className: "advgb-accordion-header-icon" },
-                                        React.createElement(
-                                            "svg",
-                                            { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                                            HEADER_ICONS[headerIcon]
-                                        )
-                                    ),
-                                    React.createElement(RichText, {
-                                        tagName: "h4",
-                                        value: item.header,
-                                        onChange: function onChange(value) {
-                                            return _this3.updateAccordion({ header: value }, index);
-                                        },
-                                        unstableOnSplit: function unstableOnSplit() {
-                                            return null;
-                                        },
-                                        placeholder: __('Enter header…')
-                                    })
-                                ),
-                                React.createElement(
-                                    "div",
-                                    { className: "advgb-accordion-body",
-                                        style: {
-                                            backgroundColor: bodyBgColor,
-                                            color: bodyTextColor,
-                                            borderStyle: borderStyle,
-                                            borderWidth: borderWidth + 'px',
-                                            borderColor: borderColor,
-                                            borderRadius: borderRadius + 'px'
-                                        }
-                                    },
-                                    React.createElement(RichText, {
-                                        tagName: "p",
-                                        value: item.body,
-                                        onChange: function onChange(value) {
-                                            return _this3.updateAccordion({ body: value }, index);
-                                        },
-                                        placeholder: __('Enter text…')
-                                    })
-                                )
-                            );
-                        })
-                    ),
-                    isSelected && React.createElement(
-                        "div",
-                        { className: "advgb-accordion-controls" },
-                        React.createElement(
-                            "button",
-                            { className: "button button-large button-primary",
-                                onClick: function onClick() {
-                                    return setAttributes({
-                                        items: [].concat(_toConsumableArray(items), [{ header: __('New item'), body: __('New item') }])
-                                    });
-                                }
-                            },
-                            __('Add item')
-                        )
-                    )
-                );
-            }
-        }]);
-
-        return AdvAccordion;
-    }(Component);
-
-    var accordionBlockIcon = React.createElement(
-        "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
-        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("rect", { x: "3", y: "17", width: "18", height: "2" }),
-        React.createElement("path", { d: "M19,12v1H5v-1H19 M21,10H3v5h18V10L21,10z" }),
-        React.createElement("rect", { x: "3", y: "6", width: "18", height: "2" })
-    );
-
-    registerBlockType('advgb/accordion', {
-        title: __('Accordion'),
-        description: __('Easy to create an accordion for your post/page.'),
-        icon: {
-            src: accordionBlockIcon,
-            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
-        },
-        category: 'formatting',
-        keywords: [__('accordion'), __('list'), __('faq')],
-        attributes: {
-            items: {
-                type: 'array',
-                default: [{
-                    header: 'Header 1',
-                    body: 'Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated'
-                }, {
-                    header: 'Header 2',
-                    body: 'Description 2'
-                }, {
-                    header: 'Header 3',
-                    body: 'Description 3'
-                }]
-            },
-            headerBgColor: {
-                type: 'string',
-                default: '#000'
-            },
-            headerTextColor: {
-                type: 'string',
-                default: '#eee'
-            },
-            headerIcon: {
-                type: 'string',
-                default: 'unfold'
-            },
-            headerIconColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            bodyBgColor: {
-                type: 'string'
-            },
-            bodyTextColor: {
-                type: 'string'
-            },
-            borderStyle: {
-                type: 'string',
-                default: 'solid'
-            },
-            borderWidth: {
-                type: 'number',
-                default: 0
-            },
-            borderColor: {
-                type: 'string'
-            },
-            borderRadius: {
-                type: 'number',
-                default: 2
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
-        edit: AdvAccordion,
-        save: function save(_ref) {
-            var attributes = _ref.attributes;
-            var items = attributes.items,
-                headerBgColor = attributes.headerBgColor,
-                headerTextColor = attributes.headerTextColor,
-                headerIcon = attributes.headerIcon,
-                headerIconColor = attributes.headerIconColor,
-                bodyBgColor = attributes.bodyBgColor,
-                bodyTextColor = attributes.bodyTextColor,
-                borderStyle = attributes.borderStyle,
-                borderWidth = attributes.borderWidth,
-                borderColor = attributes.borderColor,
-                borderRadius = attributes.borderRadius;
-
-
-            return React.createElement(
-                "div",
-                { className: "advgb-accordion-block" },
-                items.map(function (item, index) {
-                    return React.createElement(
-                        Fragment,
-                        { key: index },
                         React.createElement(
                             "div",
                             { className: "advgb-accordion-header",
@@ -634,11 +380,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     HEADER_ICONS[headerIcon]
                                 )
                             ),
-                            React.createElement(
-                                "h4",
-                                { className: "advgb-accordion-header-title" },
-                                item.header
-                            )
+                            React.createElement(RichText, {
+                                tagName: "h4",
+                                value: header,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ header: value });
+                                },
+                                unstableOnSplit: function unstableOnSplit() {
+                                    return null;
+                                },
+                                placeholder: __('Enter header…')
+                            })
                         ),
                         React.createElement(
                             "div",
@@ -652,10 +404,148 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderRadius: borderRadius + 'px'
                                 }
                             },
-                            React.createElement(RichText.Content, { tagName: "p", value: item.body })
+                            React.createElement(InnerBlocks, null)
                         )
-                    );
-                })
+                    )
+                );
+            }
+        }]);
+
+        return AdvAccordion;
+    }(Component);
+
+    var accordionBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("rect", { x: "3", y: "17", width: "18", height: "2" }),
+        React.createElement("path", { d: "M19,12v1H5v-1H19 M21,10H3v5h18V10L21,10z" }),
+        React.createElement("rect", { x: "3", y: "6", width: "18", height: "2" })
+    );
+
+    var accordionAttrs = {
+        header: {
+            type: 'string',
+            default: __('Header text')
+        },
+        headerBgColor: {
+            type: 'string',
+            default: '#000'
+        },
+        headerTextColor: {
+            type: 'string',
+            default: '#eee'
+        },
+        headerIcon: {
+            type: 'string',
+            default: 'unfold'
+        },
+        headerIconColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        bodyBgColor: {
+            type: 'string'
+        },
+        bodyTextColor: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid'
+        },
+        borderWidth: {
+            type: 'number',
+            default: 0
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderRadius: {
+            type: 'number',
+            default: 2
+        },
+        marginBottom: {
+            type: 'number',
+            default: 15
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/accordion', {
+        title: __('Accordion'),
+        description: __('Easy to create an accordion for your post/page.'),
+        icon: {
+            src: accordionBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'formatting',
+        keywords: [__('accordion'), __('list'), __('faq')],
+        attributes: accordionAttrs,
+        edit: AdvAccordion,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var header = attributes.header,
+                headerBgColor = attributes.headerBgColor,
+                headerTextColor = attributes.headerTextColor,
+                headerIcon = attributes.headerIcon,
+                headerIconColor = attributes.headerIconColor,
+                bodyBgColor = attributes.bodyBgColor,
+                bodyTextColor = attributes.bodyTextColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                borderColor = attributes.borderColor,
+                borderRadius = attributes.borderRadius,
+                marginBottom = attributes.marginBottom;
+
+
+            return React.createElement(
+                "div",
+                { className: "advgb-accordion-block", style: { marginBottom: marginBottom } },
+                React.createElement(
+                    "div",
+                    { className: "advgb-accordion-header",
+                        style: {
+                            backgroundColor: headerBgColor,
+                            color: headerTextColor,
+                            borderStyle: borderStyle,
+                            borderWidth: borderWidth + 'px',
+                            borderColor: borderColor,
+                            borderRadius: borderRadius + 'px'
+                        }
+                    },
+                    React.createElement(
+                        "span",
+                        { className: "advgb-accordion-header-icon" },
+                        React.createElement(
+                            "svg",
+                            { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                            HEADER_ICONS[headerIcon]
+                        )
+                    ),
+                    React.createElement(
+                        "h4",
+                        { className: "advgb-accordion-header-title" },
+                        header
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "advgb-accordion-body",
+                        style: {
+                            backgroundColor: bodyBgColor,
+                            color: bodyTextColor,
+                            borderStyle: borderStyle,
+                            borderWidth: borderWidth + 'px',
+                            borderColor: borderColor,
+                            borderRadius: borderRadius + 'px'
+                        }
+                    },
+                    React.createElement(InnerBlocks.Content, null)
+                )
             );
         }
     });
@@ -1545,6 +1435,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             unstableOnSetup: function unstableOnSetup(editor) {
                                 return _this3.handleSetup(editor, 'title');
                             },
+                            unstableOnSplit: function unstableOnSplit() {
+                                return null;
+                            },
                             placeholder: __('Enter title…')
                         }),
                         React.createElement(RichText, {
@@ -1558,6 +1451,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             isSelected: isSelected && currentEdit === 'subtitle',
                             unstableOnSetup: function unstableOnSetup(editor) {
                                 return _this3.handleSetup(editor, 'subtitle');
+                            },
+                            unstableOnSplit: function unstableOnSplit() {
+                                return null;
                             },
                             placeholder: __('Enter subtitle…')
                         })
@@ -1597,7 +1493,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string'
             },
             imageID: {
-                type: 'string'
+                type: 'number'
             },
             title: {
                 type: 'string',
@@ -3827,13 +3723,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(
                                     "div",
-                                    { className: 'advgb-play-button' },
+                                    { className: 'advgb-play-button', style: { color: playButtonColor } },
                                     React.createElement(
                                         "svg",
                                         { xmlns: "http://www.w3.org/2000/svg",
                                             width: playButtonSize,
                                             height: playButtonSize,
-                                            fill: playButtonColor,
                                             viewBox: "0 0 24 24"
                                         },
                                         PLAY_BUTTON_STYLE[playButtonIcon]
@@ -4067,13 +3962,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: 'advgb-button-wrapper', style: { height: videoHeight } },
                         React.createElement(
                             "div",
-                            { className: 'advgb-play-button' },
+                            { className: 'advgb-play-button', style: { color: playButtonColor } },
                             React.createElement(
                                 "svg",
                                 { xmlns: "http://www.w3.org/2000/svg",
                                     width: playButtonSize,
                                     height: playButtonSize,
-                                    fill: playButtonColor,
                                     viewBox: "0 0 24 24"
                                 },
                                 PLAY_BUTTON_STYLE[playButtonIcon]
@@ -5053,6 +4947,648 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
+/***/ "./assets/blocks/images-slider/block.jsx":
+/*!***********************************************!*\
+  !*** ./assets/blocks/images-slider/block.jsx ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpEditor.InspectorControls,
+        PanelColorSettings = wpEditor.PanelColorSettings,
+        MediaUpload = wpEditor.MediaUpload;
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        ToggleControl = wpComponents.ToggleControl,
+        SelectControl = wpComponents.SelectControl,
+        TextControl = wpComponents.TextControl,
+        TextareaControl = wpComponents.TextareaControl,
+        IconButton = wpComponents.IconButton,
+        Button = wpComponents.Button,
+        Placeholder = wpComponents.Placeholder,
+        Tooltip = wpComponents.Tooltip;
+
+    var $ = jQuery;
+    var oldIndex = void 0,
+        newIndex = void 0;
+
+    var imageSliderBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22", className: "dashicon" },
+        React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+        React.createElement("path", { d: "M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM9.88 4h4.24l1.83 2H20v12H4V6h4.05" }),
+        React.createElement("path", { d: "M15 11H9V8.5L5.5 12 9 15.5V13h6v2.5l3.5-3.5L15 8.5z" })
+    );
+
+    var AdvImageSlider = function (_Component) {
+        _inherits(AdvImageSlider, _Component);
+
+        function AdvImageSlider() {
+            _classCallCheck(this, AdvImageSlider);
+
+            var _this = _possibleConstructorReturn(this, (AdvImageSlider.__proto__ || Object.getPrototypeOf(AdvImageSlider)).apply(this, arguments));
+
+            _this.state = {
+                currentSelected: 0,
+                inited: false
+            };
+
+            _this.initSlider = _this.initSlider.bind(_this);
+            _this.initItemSortable = _this.initItemSortable.bind(_this);
+            return _this;
+        }
+
+        _createClass(AdvImageSlider, [{
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var attributes = this.props.attributes;
+
+
+                if (attributes.images.length) {
+                    this.initSlider();
+                }
+            }
+        }, {
+            key: "componentWillUpdate",
+            value: function componentWillUpdate(nextProps) {
+                var _props = this.props,
+                    clientId = _props.clientId,
+                    attributes = _props.attributes;
+                var images = attributes.images;
+                var nextImages = nextProps.attributes.images;
+
+
+                if (images.length !== nextImages.length) {
+                    $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('unslick');
+                    $("#block-" + clientId + " .advgb-image-slider-item").removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+                }
+            }
+        }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate(prevProps) {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    isSelected = _props2.isSelected;
+                var images = attributes.images;
+                var prevImages = prevProps.attributes.images;
+
+
+                if (images.length !== prevImages.length && images.length) {
+                    this.initSlider();
+                }
+
+                if (!this.state.inited && isSelected) {
+                    this.initItemSortable();
+                    this.setState({ inited: true });
+                }
+
+                if (!isSelected && this.state.inited) {
+                    this.setState({ inited: false });
+                }
+            }
+        }, {
+            key: "initSlider",
+            value: function initSlider() {
+                var _this2 = this;
+
+                var clientId = this.props.clientId;
+
+
+                $("#block-" + clientId + " .advgb-images-slider:not(.slick-initialized)").slick({
+                    dots: true,
+                    adaptiveHeight: true
+                });
+
+                $("#block-" + clientId + " .advgb-images-slider").on('afterChange', function (e, s, currentSlide) {
+                    if (_this2.state.currentSelected !== currentSlide) {
+                        _this2.setState({ currentSelected: currentSlide });
+                    }
+                });
+            }
+        }, {
+            key: "initItemSortable",
+            value: function initItemSortable() {
+                var _this3 = this;
+
+                var _props3 = this.props,
+                    clientId = _props3.clientId,
+                    setAttributes = _props3.setAttributes,
+                    attributes = _props3.attributes;
+                var images = attributes.images;
+
+
+                $("#block-" + clientId + " .advgb-image-slider-image-list:not(.ui-sortable)").sortable({
+                    items: "> .advgb-image-slider-image-list-item",
+                    placeholder: 'advgb-slider-image-dragholder',
+                    start: function start(e, ui) {
+                        oldIndex = ui.item.index();
+                    },
+                    update: function update(e, ui) {
+                        newIndex = ui.item.index();
+                        var image = images[oldIndex];
+
+                        $("#block-" + clientId + " .advgb-image-slider-image-list.ui-sortable").sortable('cancel').sortable('destroy');
+                        setAttributes({
+                            images: [].concat(_toConsumableArray(images.filter(function (img, idx) {
+                                return idx !== oldIndex;
+                            }).slice(0, newIndex)), [image], _toConsumableArray(images.filter(function (img, idx) {
+                                return idx !== oldIndex;
+                            }).slice(newIndex)))
+                        });
+                        _this3.initItemSortable();
+                        $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('setPosition');
+                    }
+                });
+            }
+        }, {
+            key: "updateImagesData",
+            value: function updateImagesData(data) {
+                var currentSelected = this.state.currentSelected;
+
+                if (typeof currentSelected !== 'number') {
+                    return null;
+                }
+
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
+                var images = attributes.images;
+
+
+                var newImages = images.map(function (image, index) {
+                    if (index === currentSelected) {
+                        image = _extends({}, image, data);
+                    }
+
+                    return image;
+                });
+
+                setAttributes({ images: newImages });
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this4 = this;
+
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    isSelected = _props5.isSelected,
+                    clientId = _props5.clientId;
+                var currentSelected = this.state.currentSelected;
+                var images = attributes.images,
+                    actionOnClick = attributes.actionOnClick,
+                    fullWidth = attributes.fullWidth,
+                    autoHeight = attributes.autoHeight,
+                    width = attributes.width,
+                    height = attributes.height,
+                    alwaysShowOverlay = attributes.alwaysShowOverlay,
+                    hoverColor = attributes.hoverColor,
+                    titleColor = attributes.titleColor,
+                    textColor = attributes.textColor,
+                    hAlign = attributes.hAlign,
+                    vAlign = attributes.vAlign;
+
+
+                if (images.length === 0) {
+                    return React.createElement(
+                        Placeholder,
+                        {
+                            icon: imageSliderBlockIcon,
+                            label: __('Image Slider Block'),
+                            instructions: __('No images selected. Adding images to start using this block.')
+                        },
+                        React.createElement(MediaUpload, {
+                            allowedTypes: ['image'],
+                            value: null,
+                            multiple: true,
+                            onSelect: function onSelect(image) {
+                                var imgInsert = image.map(function (img) {
+                                    return {
+                                        url: img.url,
+                                        id: img.id
+                                    };
+                                });
+
+                                setAttributes({
+                                    images: [].concat(_toConsumableArray(images), _toConsumableArray(imgInsert))
+                                });
+                            },
+                            render: function render(_ref) {
+                                var open = _ref.open;
+                                return React.createElement(
+                                    Button,
+                                    { className: "button button-large button-primary", onClick: open },
+                                    __('Add images')
+                                );
+                            }
+                        })
+                    );
+                }
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Image Settings') },
+                            React.createElement(SelectControl, {
+                                label: __('Action on click'),
+                                value: actionOnClick,
+                                options: [{ label: __('None'), value: '' }, { label: __('Open image in lightbox'), value: 'lightbox' }, { label: __('Open custom link'), value: 'link' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ actionOnClick: value });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Full width'),
+                                checked: fullWidth,
+                                onChange: function onChange() {
+                                    return setAttributes({ fullWidth: !fullWidth });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Auto height'),
+                                checked: autoHeight,
+                                onChange: function onChange() {
+                                    return setAttributes({ autoHeight: !autoHeight });
+                                }
+                            }),
+                            !fullWidth && React.createElement(RangeControl, {
+                                label: __('Width'),
+                                value: width,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ width: value });
+                                },
+                                min: 200,
+                                max: 1300
+                            }),
+                            !autoHeight && React.createElement(RangeControl, {
+                                label: __('Height'),
+                                value: height,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ height: value });
+                                },
+                                min: 100,
+                                max: 1000
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Always show overlay'),
+                                checked: alwaysShowOverlay,
+                                onChange: function onChange() {
+                                    return setAttributes({ alwaysShowOverlay: !alwaysShowOverlay });
+                                }
+                            })
+                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Color Settings'),
+                            colorSettings: [{
+                                label: __('Hover Color'),
+                                value: hoverColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverColor: value });
+                                }
+                            }, {
+                                label: __('Title Color'),
+                                value: titleColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ titleColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: textColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ textColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Text Alignment'), initialOpen: false },
+                            React.createElement(SelectControl, {
+                                label: __('Vertical Alignment'),
+                                value: vAlign,
+                                options: [{ label: __('Top'), value: 'flex-start' }, { label: __('Center'), value: 'center' }, { label: __('Bottom'), value: 'flex-end' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ vAlign: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Horizontal Alignment'),
+                                value: hAlign,
+                                options: [{ label: __('Left'), value: 'flex-start' }, { label: __('Center'), value: 'center' }, { label: __('Right'), value: 'flex-end' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hAlign: value });
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-images-slider-block" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-images-slider" },
+                            images.map(function (image, index) {
+                                return React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-item", key: index },
+                                    React.createElement("img", { src: image.url,
+                                        className: "advgb-image-slider-img",
+                                        alt: __('Slider image'),
+                                        style: {
+                                            width: fullWidth ? '100%' : width,
+                                            height: autoHeight ? 'auto' : height
+                                        }
+                                    }),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-image-slider-item-info",
+                                            style: {
+                                                justifyContent: vAlign,
+                                                alignItems: hAlign
+                                            }
+                                        },
+                                        React.createElement("span", { className: "advgb-image-slider-overlay",
+                                            style: {
+                                                backgroundColor: hoverColor,
+                                                opacity: alwaysShowOverlay ? 0.5 : undefined
+                                            }
+                                        }),
+                                        React.createElement(
+                                            "h4",
+                                            { className: "advgb-image-slider-title",
+                                                style: { color: titleColor }
+                                            },
+                                            image.title
+                                        ),
+                                        React.createElement(
+                                            "p",
+                                            { className: "advgb-image-slider-text",
+                                                style: { color: textColor }
+                                            },
+                                            image.text
+                                        )
+                                    )
+                                );
+                            })
+                        ),
+                        isSelected && React.createElement(
+                            "div",
+                            { className: "advgb-image-slider-controls" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-control" },
+                                React.createElement(TextControl, {
+                                    label: __('Title'),
+                                    value: images[currentSelected] ? images[currentSelected].title || '' : '',
+                                    onChange: function onChange(value) {
+                                        return _this4.updateImagesData({ title: value || '' });
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-control" },
+                                React.createElement(TextareaControl, {
+                                    label: __('Text'),
+                                    value: images[currentSelected] ? images[currentSelected].text || '' : '',
+                                    onChange: function onChange(value) {
+                                        return _this4.updateImagesData({ text: value || '' });
+                                    }
+                                })
+                            ),
+                            actionOnClick === 'link' && React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-control" },
+                                React.createElement(TextControl, {
+                                    label: __('Link'),
+                                    value: images[currentSelected] ? images[currentSelected].link || '' : '',
+                                    onChange: function onChange(value) {
+                                        return _this4.updateImagesData({ link: value || '' });
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-image-list" },
+                                images.map(function (image, index) {
+                                    return React.createElement(
+                                        "div",
+                                        { className: "advgb-image-slider-image-list-item", key: index },
+                                        React.createElement("img", { src: image.url,
+                                            className: "advgb-image-slider-image-list-img",
+                                            onClick: function onClick() {
+                                                $("#block-" + clientId + " .advgb-images-slider").slick('slickGoTo', index, false);
+                                                _this4.setState({ currentSelected: index });
+                                            }
+                                        }),
+                                        React.createElement(
+                                            Tooltip,
+                                            { text: __('Remove image') },
+                                            React.createElement(IconButton, {
+                                                className: "advgb-image-slider-image-list-item-remove",
+                                                icon: "no",
+                                                onClick: function onClick() {
+                                                    if (index === currentSelected) _this4.setState({ currentSelected: null });
+                                                    setAttributes({ images: images.filter(function (img, idx) {
+                                                            return idx !== index;
+                                                        }) });
+                                                }
+                                            })
+                                        )
+                                    );
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-add-item" },
+                                    React.createElement(MediaUpload, {
+                                        allowedTypes: ['image'],
+                                        value: currentSelected,
+                                        onSelect: function onSelect(image) {
+                                            return setAttributes({
+                                                images: [].concat(_toConsumableArray(images), [{ id: image.id, url: image.url }])
+                                            });
+                                        },
+                                        render: function render(_ref2) {
+                                            var open = _ref2.open;
+                                            return React.createElement(IconButton, {
+                                                label: __('Add image'),
+                                                icon: "plus",
+                                                onClick: open
+                                            });
+                                        }
+                                    })
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return AdvImageSlider;
+    }(Component);
+
+    registerBlockType('advgb/images-slider', {
+        title: __('Images Slider'),
+        description: __('Display your images in a slider.'),
+        icon: {
+            src: imageSliderBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'formatting',
+        keywords: [__('slide'), __('gallery'), __('photos')],
+        attributes: {
+            images: {
+                type: 'array',
+                default: [] // [ { id: int, url, title, text, link: string } ]
+            },
+            actionOnClick: {
+                type: 'string'
+            },
+            fullWidth: {
+                type: 'boolean',
+                default: true
+            },
+            autoHeight: {
+                type: 'boolean',
+                default: true
+            },
+            width: {
+                type: 'number',
+                default: 700
+            },
+            height: {
+                type: 'number',
+                default: 500
+            },
+            alwaysShowOverlay: {
+                type: 'boolean',
+                default: false
+            },
+            hoverColor: {
+                type: 'string'
+            },
+            titleColor: {
+                type: 'string'
+            },
+            textColor: {
+                type: 'string'
+            },
+            vAlign: {
+                type: 'string',
+                default: 'center'
+            },
+            hAlign: {
+                type: 'string',
+                default: 'center'
+            },
+            changed: {
+                type: 'boolean',
+                default: false
+            }
+        },
+        edit: AdvImageSlider,
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
+            var images = attributes.images,
+                actionOnClick = attributes.actionOnClick,
+                fullWidth = attributes.fullWidth,
+                autoHeight = attributes.autoHeight,
+                width = attributes.width,
+                height = attributes.height,
+                alwaysShowOverlay = attributes.alwaysShowOverlay,
+                hoverColor = attributes.hoverColor,
+                titleColor = attributes.titleColor,
+                textColor = attributes.textColor,
+                hAlign = attributes.hAlign,
+                vAlign = attributes.vAlign;
+
+            var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox'].filter(Boolean).join(' ');
+
+            return React.createElement(
+                "div",
+                { className: blockClassName },
+                React.createElement(
+                    "div",
+                    { className: "advgb-images-slider" },
+                    images.map(function (image, index) {
+                        return React.createElement(
+                            "div",
+                            { className: "advgb-image-slider-item", key: index },
+                            React.createElement("img", { src: image.url,
+                                className: "advgb-image-slider-img",
+                                alt: __('Slider image'),
+                                style: {
+                                    width: fullWidth ? '100%' : width,
+                                    height: autoHeight ? 'auto' : height
+                                }
+                            }),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-item-info",
+                                    style: {
+                                        justifyContent: vAlign,
+                                        alignItems: hAlign
+                                    }
+                                },
+                                React.createElement("a", { className: "advgb-image-slider-overlay",
+                                    target: "_blank",
+                                    href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
+                                    style: {
+                                        backgroundColor: hoverColor,
+                                        opacity: alwaysShowOverlay ? 0.5 : undefined
+                                    }
+                                }),
+                                React.createElement(
+                                    "h4",
+                                    { className: "advgb-image-slider-title",
+                                        style: { color: titleColor }
+                                    },
+                                    image.title
+                                ),
+                                React.createElement(
+                                    "p",
+                                    { className: "advgb-image-slider-text",
+                                        style: { color: textColor }
+                                    },
+                                    image.text
+                                )
+                            )
+                        );
+                    })
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/blocks/map/block.jsx":
 /*!*************************************!*\
   !*** ./assets/blocks/map/block.jsx ***!
@@ -5092,7 +5628,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var mapBlockIcon = React.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22", className: "dashicon" },
         React.createElement("path", { d: "M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z" }),
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
@@ -5283,8 +5819,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                             setAttributes({
-                                lat: location.lat(),
-                                lng: location.lng(),
+                                lat: location.lat().toString(),
+                                lng: location.lng().toString(),
                                 currentAddress: res[0].formatted_address
                             });
                         } else if (stt === ZERO_RESULTS) {
@@ -5636,7 +6172,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
     var decodeEntities = wpHtmlEntities.decodeEntities;
-    var moment = wpDate.moment;
+    var dateI18n = wpDate.dateI18n,
+        __experimentalGetSettings = wpDate.__experimentalGetSettings;
 
 
     var advRecentPostsBlockIcon = React.createElement(
@@ -5873,6 +6410,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockClassName = ['advgb-recent-posts-block', this.state.updating && 'loading', postView === 'grid' && 'columns-' + columns, postView === 'grid' && 'grid-view', postView === 'list' && 'list-view', postView === 'slider' && 'slider-view'].filter(Boolean).join(' ');
 
+                var dateFormat = __experimentalGetSettings().formats.date;
+
                 return React.createElement(
                     Fragment,
                     null,
@@ -5939,7 +6478,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             displayDate && React.createElement(
                                                 "span",
                                                 { className: "advgb-post-date" },
-                                                moment(post.date_gmt).local().format('DD MMMM, Y')
+                                                dateI18n(dateFormat, post.date_gmt)
                                             )
                                         ),
                                         React.createElement(
@@ -6756,7 +7295,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var summaryBlock = createBlock('advgb/summary');
 
-            $('.gutenberg #editor').find('.table-of-contents').click(function () {
+            $('#editor').find('.table-of-contents').click(function () {
                 var allBlocks = select('core/editor').getBlocks();
                 var summaryBlockExist = !!allBlocks.filter(function (block) {
                     return block.name === 'advgb/summary';
@@ -6764,7 +7303,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setTimeout(function () {
                     var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Summary') + '</button>');
 
-                    $('.gutenberg #editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
+                    $('#editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
                     summaryButton.unbind('click').click(function () {
                         insertBlock(summaryBlock, 0);
                         $('.table-of-contents__popover').hide();
@@ -7216,7 +7755,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'componentDidMount',
             value: function componentDidMount() {
-                this.initTabs();
+                var _this2 = this;
+
+                setTimeout(function () {
+                    return _this2.initTabs();
+                }, 100);
                 if (!this.props.attributes.blockID) {
                     this.props.setAttributes({ blockID: this.props.clientId });
                 }
@@ -7280,7 +7823,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'render',
             value: function render() {
-                var _this2 = this;
+                var _this3 = this;
 
                 var _props3 = this.props,
                     attributes = _props3.attributes,
@@ -7423,7 +7966,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             tagName: 'p',
                                             value: item.header,
                                             onChange: function onChange(value) {
-                                                return _this2.updateTabs({ header: value || '' }, index);
+                                                return _this3.updateTabs({ header: value || '' }, index);
                                             },
                                             unstableOnSplit: function unstableOnSplit() {
                                                 return null;
@@ -7493,7 +8036,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     tagName: 'p',
                                     value: item.body,
                                     onChange: function onChange(value) {
-                                        return _this2.updateTabs({ body: value }, index);
+                                        return _this3.updateTabs({ body: value }, index);
                                     },
                                     placeholder: __('Enter text…')
                                 })
@@ -9063,9 +9606,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9079,6 +9622,7 @@ __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/co
 __webpack_require__(/*! ./assets/blocks/custom-columns/columns.jsx */"./assets/blocks/custom-columns/columns.jsx");
 __webpack_require__(/*! ./assets/blocks/custom-separator/separator.jsx */"./assets/blocks/custom-separator/separator.jsx");
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
+__webpack_require__(/*! ./assets/blocks/images-slider/block.jsx */"./assets/blocks/images-slider/block.jsx");
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
 __webpack_require__(/*! ./assets/blocks/recent-posts/block.jsx */"./assets/blocks/recent-posts/block.jsx");
 __webpack_require__(/*! ./assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");

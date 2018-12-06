@@ -301,11 +301,10 @@
                                     ) }
                                 />
                                 }
-                                <div className={ 'advgb-play-button' }>
+                                <div className={ 'advgb-play-button' } style={ { color: playButtonColor } }>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          width={ playButtonSize }
                                          height={ playButtonSize }
-                                         fill={ playButtonColor }
                                          viewBox="0 0 24 24"
                                     >
                                         {PLAY_BUTTON_STYLE[playButtonIcon]}
@@ -527,11 +526,10 @@
                     <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor, width: videoWidth } }>
                         <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
                         <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
-                            <div className={ 'advgb-play-button' }>
+                            <div className={ 'advgb-play-button' } style={ { color: playButtonColor } }>
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      width={ playButtonSize }
                                      height={ playButtonSize }
-                                     fill={ playButtonColor }
                                      viewBox="0 0 24 24"
                                 >
                                     {PLAY_BUTTON_STYLE[playButtonIcon]}

@@ -28,7 +28,7 @@
         }
 
         componentDidMount() {
-            this.initTabs();
+            setTimeout(() => this.initTabs(), 100);
             if (!this.props.attributes.blockID) {
                 this.props.setAttributes( { blockID: this.props.clientId } );
             }
