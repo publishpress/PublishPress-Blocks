@@ -2,8 +2,8 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.7.6",
-  "wp_version": "4.9.8",
+  "version": "1.8.0",
+  "wp_version": "5.0.0",
   "ignore_files" : [
     "manifest.json",
     "README.md",
@@ -20,6 +20,20 @@
     "babel.rc"
   ],
   "changelog": {
+    "1.8.0": [
+      {
+        "type": "feature",
+        "title": "New Images Slider block: Show your images in slider view with various styles"
+      },
+      {
+        "type": "fix",
+        "title": "Accordion block: Split block to separate accordion, allow to insert other blocks inside it"
+      },
+      {
+        "type": "fix",
+        "title": "Compatibility with WP 5.0.0"
+      }
+    ],
     "1.7.6": [
       {
         "type": "feature",
