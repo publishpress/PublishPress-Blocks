@@ -145,7 +145,7 @@ float: left;'
      */
     public function __construct()
     {
-        add_action('admin_enqueue_scripts', array($this, 'registerStylesScripts'));
+        add_action('admin_init', array($this, 'registerStylesScripts'));
         add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
         add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
@@ -225,6 +225,7 @@ float: left;'
         // Include needed JS libraries
         wp_enqueue_script('jquery-ui-accordion');
         wp_enqueue_script('jquery-ui-tabs');
+        wp_enqueue_script('jquery-ui-sortable');
         wp_enqueue_script('slick_js');
 
         // Include needed CSS styles
@@ -296,22 +297,24 @@ float: left;'
                 'advgb_map_api',
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
             );
-            add_filter('script_loader_tag', 'addScriptAttributes', 10, 2);
+            add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
 
-            /**
-             * Add attributes to script tag
-             *
-             * @param string $tag    Script tag
-             * @param string $handle Handle name
-             *
-             * @return mixed
-             */
-            function addScriptAttributes($tag, $handle)
-            {
-                if ('map_api' !== $handle) {
-                    return $tag;
+            if (!function_exists('advgbAddScriptAttributes')) {
+                /**
+                 * Add attributes to script tag
+                 *
+                 * @param string $tag    Script tag
+                 * @param string $handle Handle name
+                 *
+                 * @return mixed
+                 */
+                function advgbAddScriptAttributes($tag, $handle)
+                {
+                    if ('map_api' !== $handle) {
+                        return $tag;
+                    }
+                    return str_replace(' src', ' defer src', $tag);
                 }
-                return str_replace(' src', ' defer src', $tag);
             }
         }
     }
@@ -340,9 +343,16 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
 
+            $blockCategories = array();
+            if (function_exists('gutenberg_get_block_categories')) {
+                $blockCategories = gutenberg_get_block_categories(get_post());
+            } elseif (function_exists('get_block_categories')) {
+                $blockCategories = get_block_categories(get_post());
+            }
+
             wp_add_inline_script(
                 'wp-blocks',
-                sprintf('wp.blocks.setCategories( %s );', wp_json_encode(gutenberg_get_block_categories(get_post()))),
+                sprintf('wp.blocks.setCategories( %s );', wp_json_encode($blockCategories)),
                 'after'
             );
 
@@ -937,154 +947,156 @@ float: left;'
      */
     public function registerStylesScripts()
     {
-        // Register CSS
-        wp_register_style(
-            'ju_framework_styles',
-            plugins_url('assets/css/style.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'ju_framework_styles_min',
-            plugins_url('assets/css/style.min.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_main_style',
-            plugins_url('assets/css/main.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_profile_style',
-            plugins_url('assets/css/profile.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_settings_style',
-            plugins_url('assets/css/settings.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_qtip_style',
-            plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'advgb_quirk',
-            plugins_url('assets/css/quirk.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'codemirror_css',
-            plugins_url('assets/js/codemirror/lib/codemirror.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'codemirror_hint_style',
-            plugins_url('assets/js/codemirror/addon/hint/show-hint.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'minicolors_css',
-            plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'waves_styles',
-            plugins_url('assets/css/waves.min.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'material_icon_font',
-            plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'slick_style',
-            plugins_url('assets/css/slick.css', dirname(__FILE__))
-        );
-        wp_register_style(
-            'slick_theme_style',
-            plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
-        );
+        if (!wp_doing_ajax()) {
+            // Register CSS
+            wp_register_style(
+                'ju_framework_styles',
+                plugins_url('assets/css/style.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'ju_framework_styles_min',
+                plugins_url('assets/css/style.min.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_main_style',
+                plugins_url('assets/css/main.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_profile_style',
+                plugins_url('assets/css/profile.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_settings_style',
+                plugins_url('assets/css/settings.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_qtip_style',
+                plugins_url('assets/css/jquery.qtip.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'advgb_quirk',
+                plugins_url('assets/css/quirk.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'codemirror_css',
+                plugins_url('assets/js/codemirror/lib/codemirror.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'codemirror_hint_style',
+                plugins_url('assets/js/codemirror/addon/hint/show-hint.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'minicolors_css',
+                plugins_url('assets/css/jquery.minicolors.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'waves_styles',
+                plugins_url('assets/css/waves.min.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'material_icon_font',
+                plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'slick_style',
+                plugins_url('assets/css/slick.css', dirname(__FILE__))
+            );
+            wp_register_style(
+                'slick_theme_style',
+                plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+            );
 
-        // Register JS
-        wp_register_script(
-            'advgb_main_js',
-            plugins_url('assets/js/main.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'advgb_update_list',
-            plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
-            array('jquery'),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'advgb_profile_js',
-            plugins_url('assets/js/profile.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'advgb_settings_js',
-            plugins_url('assets/js/settings.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'velocity_js',
-            plugins_url('assets/js/velocity.min.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'waves_js',
-            plugins_url('assets/js/waves.min.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'tabs_js',
-            plugins_url('assets/js/tabs.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'qtip_js',
-            plugins_url('assets/js/jquery.qtip.min.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'codemirror_js',
-            plugins_url('assets/js/codemirror/lib/codemirror.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'codemirror_hint',
-            plugins_url('assets/js/codemirror/addon/hint/show-hint.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'codemirror_mode_css',
-            plugins_url('assets/js/codemirror/mode/css/css.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'codemirror_hint_css',
-            plugins_url('assets/js/codemirror/addon/hint/css-hint.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'less_js',
-            plugins_url('assets/js/less.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'minicolors_js',
-            plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__)),
-            array(),
-            ADVANCED_GUTENBERG_VERSION
-        );
-        wp_register_script(
-            'slick_js',
-            plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
-            array('jquery')
-        );
+            // Register JS
+            wp_register_script(
+                'advgb_main_js',
+                plugins_url('assets/js/main.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'advgb_update_list',
+                plugins_url('assets/js/update-block-list.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'advgb_profile_js',
+                plugins_url('assets/js/profile.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'advgb_settings_js',
+                plugins_url('assets/js/settings.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'velocity_js',
+                plugins_url('assets/js/velocity.min.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'waves_js',
+                plugins_url('assets/js/waves.min.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'tabs_js',
+                plugins_url('assets/js/tabs.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'qtip_js',
+                plugins_url('assets/js/jquery.qtip.min.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'codemirror_js',
+                plugins_url('assets/js/codemirror/lib/codemirror.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'codemirror_hint',
+                plugins_url('assets/js/codemirror/addon/hint/show-hint.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'codemirror_mode_css',
+                plugins_url('assets/js/codemirror/mode/css/css.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'codemirror_hint_css',
+                plugins_url('assets/js/codemirror/addon/hint/css-hint.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'less_js',
+                plugins_url('assets/js/less.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'minicolors_js',
+                plugins_url('assets/js/jquery.minicolors.min.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_register_script(
+                'slick_js',
+                plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
+                array('jquery')
+            );
+        }
     }
 
     /**
@@ -2641,15 +2653,17 @@ float: left;'
         }
 
         if (strpos($content, 'advgb-image-block') !== false) {
-            wp_enqueue_style('colorbox_style');
-            wp_enqueue_script('colorbox_js');
+            if (strpos($content, 'advgb-lightbox') !== false) {
+                wp_enqueue_style('colorbox_style');
+                wp_enqueue_script('colorbox_js');
 
-            wp_enqueue_script(
-                'advgbImageLightbox_js',
-                plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__)),
-                array(),
-                ADVANCED_GUTENBERG_VERSION
-            );
+                wp_enqueue_script(
+                    'advgbImageLightbox_js',
+                    plugins_url('assets/blocks/advimage/lightbox.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+            }
         }
 
         if (strpos($content, 'advgb-video-lightbox') !== false) {
@@ -2675,9 +2689,10 @@ float: left;'
         if (strpos($content, 'advgb-accordion-block') !== false) {
             wp_enqueue_script('jquery-ui-accordion');
             wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
-                $(".advgb-accordion-block").accordion({
+                $(".advgb-accordion-block").parent().accordion({
                     header: ".advgb-accordion-header",
-                    heightStyle: "content"
+                    heightStyle: "content",
+                    collapsible: true,
                 });
             });');
         }
@@ -2712,6 +2727,30 @@ float: left;'
                     adaptiveHeight: true,
                 })
             });');
+        }
+
+        if (strpos($content, 'advgb-images-slider-block') !== false) {
+            wp_enqueue_style('slick_style');
+            wp_enqueue_style('slick_theme_style');
+            wp_enqueue_script('slick_js');
+            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                $(".advgb-images-slider-block .advgb-images-slider:not(.slick-initialized)").slick({
+                    dots: true,
+                    adaptiveHeight: true,
+                })
+            });');
+
+            if (strpos($content, 'advgb-images-slider-lightbox') !== false) {
+                wp_enqueue_style('colorbox_style');
+                wp_enqueue_script('colorbox_js');
+
+                wp_enqueue_script(
+                    'advgbImageSliderLightbox_js',
+                    plugins_url('assets/blocks/images-slider/lightbox.js', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
+                );
+            }
         }
 
         return $content;
