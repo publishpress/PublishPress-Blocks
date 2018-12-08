@@ -20,7 +20,7 @@ pipelines:
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
+        - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
         services:
