@@ -7,15 +7,15 @@ image: php:7.1.1
 
 pipelines:
   custom:
-    phpcs: &sharedphpcs
-    - step:
+    phpcs: 
+    - step: &shared_phpcs
           name: Phpcs
           image: joomunited/phpcs
           script:
-            - ln -s /root/.composer/vendor $BITBUCKET_CLONE_DIR/vendor
-            - phpcs -s .
-    codeception: &sharedcodeception
-    - step:
+          - ln -s /root/.composer/vendor $BITBUCKET_CLONE_DIR/vendor
+          - phpcs -s .
+    codeception:
+    - step: &shared_codeception
         name: Codeception
         image: joomunited/codeception
         script:
@@ -27,14 +27,55 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress
+    generate_package:
+    - step: &shared_generate_package
+        name: Create package
+        image: joomunited/deployment
+        script:
+        - git clone git@bitbucket.org:junited/deployment-scripts.git deployment
+        - cp -r /root/.composer/vendor $BITBUCKET_CLONE_DIR/deployment/vendor
+        - php $BITBUCKET_CLONE_DIR/deployment/replacement.php
+        - php $BITBUCKET_CLONE_DIR/deployment/wordpress_language_extractor.php
+        - php $BITBUCKET_CLONE_DIR/deployment/zip_package.php
+        - bash $BITBUCKET_CLONE_DIR/deployment/upload_latest_commit.sh
+        artifacts:
+        - deployment/package.zip
+    deployment_production:
+    - step: &shared_deployment_production
+        name: Publish to production
+        image: joomunited/deployment
+        deployment: production
+        script:
+        - git clone git@bitbucket.org:junited/deployment-scripts.git deployment
+        - bash $BITBUCKET_CLONE_DIR/deployment/validate_pipeline_branch.sh master
+        - cp -r /root/.composer/vendor $BITBUCKET_CLONE_DIR/deployment/vendor
+        - php $BITBUCKET_CLONE_DIR/deployment/replacement.php
+        - php $BITBUCKET_CLONE_DIR/deployment/wordpress_language_extractor.php
+        - php $BITBUCKET_CLONE_DIR/deployment/zip_package.php
+        - php $BITBUCKET_CLONE_DIR/deployment/joomunited_changelog.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --article_id $CHANGELOG_ARTICLE_ID
+        - php $BITBUCKET_CLONE_DIR/deployment/language_uploader.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --language_id $LANGUAGE_ID --language_extension_id $LANGUAGE_EXTENSION_ID
+        - bash $BITBUCKET_CLONE_DIR/deployment/svn_updater.sh
+        - bash $BITBUCKET_CLONE_DIR/deployment/upload_tagged_version.sh
+        - bash $BITBUCKET_CLONE_DIR/deployment/tag.sh
+        artifacts:
+        - deployment/package.zip
   branches:
-    '{master,development}': *sharedphpcs
-    'development': *sharedcodeception
+    'development':
+    - parallel:
+      - step: *shared_phpcs
+      - step: *shared_generate_package
+    'release/*':
+    - parallel:
+      - step: *shared_phpcs
+      - step: *shared_codeception
+      - step: *shared_generate_package
+    'master':
+    - step: *shared_deployment_production
 
 definitions:
   services:
     chromedriver:
-      image: blueimp/chromedriver
+      image: joomunited/chromedriver:latest
     mysql:
       image: mysql:5.7.22
       environment:

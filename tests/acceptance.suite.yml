@@ -7,14 +7,15 @@
 class_name: AcceptanceTester
 modules:
   enabled:
-    - WebDriver
-    - \Helper\Acceptance
+  - WebDriver
+  - \Helper\Acceptance:
+      php-version: 5.3
   config:
     WebDriver:
       browser: chrome
       url: http://127.0.0.1
       host : 127.0.0.1
-      window_size: 1280x1024
+      window_size: 1900x1024
       port: 4444
       wait: 2
       adminUsername: admin
@@ -34,3 +35,4 @@ env:
         WebDriver:
           url: http://172.20.0.3
           host: 127.0.0.1
+  bitbucket:
