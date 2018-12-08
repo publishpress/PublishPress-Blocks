@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "wp_version": "5.0.0",
   "ignore_files" : [
     "manifest.json",
@@ -20,6 +20,16 @@
     "babel.rc"
   ],
   "changelog": {
+    "1.8.1": [
+      {
+        "type": "fix",
+        "title": "New blocks not loaded in WP 5.0"
+      },
+      {
+        "type": "fix",
+        "title": "Php notice in Recent posts block"
+      }
+    ],
     "1.8.0": [
       {
         "type": "feature",
