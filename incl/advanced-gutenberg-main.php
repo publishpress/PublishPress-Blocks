@@ -204,16 +204,32 @@ float: left;'
             }
         }
 
+        $current_screen = get_current_screen();
+        if ($current_screen->is_block_editor() && !defined('GUTENBERG_VERSION')) {
+            // WP 5 fires enqueue_block_editor_assets before block_editor_settings, Gutenberg plugin do the contrary
+            // Gutenberg WP5 core feature is used and we are in the block editor page, we must enqueue our assets after retrieving editor settings
+            $this->addEditorAssets(true);
+        }
+
         return $settings;
     }
 
     /**
      * Enqueue styles and scripts for gutenberg
      *
+     * @param boolean $force_loading Should force loading assets
+     *
      * @return void
      */
-    public function addEditorAssets()
+    public function addEditorAssets($force_loading = false)
     {
+        $current_screen = get_current_screen();
+        if (!$force_loading && $current_screen->is_block_editor() && !defined('GUTENBERG_VERSION')) {
+            // This function will be called manually in the block_editor_settings filter
+            // WP 5 fires enqueue_block_editor_assets before block_editor_settings, Gutenberg plugin do the contrary
+            return;
+        }
+
         wp_enqueue_script(
             'advgb_blocks',
             plugins_url('assets/blocks/blocks.js', dirname(__FILE__)),
@@ -532,7 +548,7 @@ float: left;'
         }
 
         if ((defined('GUTENBERG_VERSION')
-             && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
+            && version_compare(get_option('advgb_gutenberg_version'), GUTENBERG_VERSION, '<'))
         ) {
             update_option('advgb_gutenberg_version', GUTENBERG_VERSION);
         }
