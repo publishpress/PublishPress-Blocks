@@ -133,7 +133,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 == Changelog ==
 
-{{changelog}}
+{{wp_changelog}}
 
 
 == Upgrade Notice ==

@@ -64,11 +64,11 @@ function advgbRenderBlockRecentPosts($attributes)
 {
     $recent_posts = wp_get_recent_posts(
         array(
-            'numberposts' => $attributes['numberOfPosts'],
+            'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
             'post_status' => 'publish',
-            'order' => $attributes['order'],
-            'orderby' => $attributes['orderBy'],
-            'category' => $attributes['category'],
+            'order' => empty($attributes['order'])?'desc':$attributes['order'],
+            'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
+            'category' => empty($attributes['category'])?0:$attributes['category'],
         ),
         OBJECT
     );

@@ -2,24 +2,52 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.8.0",
+  "version": "1.8.1",
+  "platform": "wordpress",
   "wp_version": "5.0.0",
-  "ignore_files" : [
-    "manifest.json",
-    "README.md",
-    "bitbucket-pipelines.yml",
-    "composer.json",
-    "composer.lock",
-    ".gitignore",
-    "vendor",
-    ".git",
-    "phpcs.xml",
-    "tests",
-    "codeception.yml",
-    "node_modules",
-    "babel.rc"
-  ],
+  "text_domain": "advanced-gutenberg",
+  "language_file": "/languages/advanced-gutenberg-en_US.mo",
+  "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
+  "ignore_files": {
+    "shared": [
+      "manifest.json",
+      "bitbucket-pipelines.yml",
+      "composer.json",
+      "composer.lock",
+      "package.json",
+      ".gitignore",
+      "package-lock.json",
+      "webpack.config.js",
+      "vendor",
+      ".git",
+      "phpcs.xml",
+      "tests",
+      "codeception.yml",
+      "node_modules",
+      ".babelrc",
+      "deployment"
+    ],
+    "replacement":[],
+    "language_extractor" : [
+      "developer_documentation.html",
+      "juupdater.json"
+    ],
+    "zip_package" : [
+      "developer_documentation.html",
+      "juupdater.json"
+    ]
+  },
   "changelog": {
+    "1.8.1": [
+      {
+        "type": "fix",
+        "title": "New blocks not loaded in WP 5.0"
+      },
+      {
+        "type": "fix",
+        "title": "Php notice in Recent posts block"
+      }
+    ],
     "1.8.0": [
       {
         "type": "feature",

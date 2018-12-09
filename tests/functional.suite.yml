@@ -7,14 +7,43 @@
 class_name: FunctionalTester
 modules:
   enabled:
-    - PhpBrowser
-    - \Helper\Functional
+  - PhpBrowser
+  - \Helper\Functional:
+      php-version: 5.3
+  - Db:
   config:
     PhpBrowser:
       url: http://127.0.0.1
+    Db:
+      dsn: 'mysql:host=127.0.0.1;dbname=wordpress'
+      user: 'root'
+      password: ''
+      cleanup: false # run populator before each test
+      populate: false # run populator before all test
 env:
   local:
     modules:
       config:
         PhpBrowser:
           url: http://172.20.0.3
+        Db:
+          dsn: 'mysql:host=172.20.0.2;dbname=wordpress'
+          user: 'root'
+          password: ''
+          cleanup: false # run populator before each test
+          populate: false # run populator before all test
+
+  local_chrome:
+    modules:
+      config:
+        PhpBrowser:
+          url: http://172.20.0.3
+          host: 172.20.0.4
+        Db:
+          dsn: 'mysql:host=172.20.0.2;dbname=wordpress'
+          user: 'root'
+          password: ''
+          cleanup: false # run populator before each test
+          populate: false # run populator before all test
+
+  bitbucket:

@@ -1,8 +1,17 @@
 if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
     wp.domReady(()=>{
+        let gutenberg_init_function = null;
         if (typeof window._wpLoadGutenbergEditor !== 'undefined') {
+            // Using WP core Gutenberg
+            gutenberg_init_function = window._wpLoadGutenbergEditor;
+        } else if (typeof window._wpLoadBlockEditor !== 'undefined') {
+            // Using Gutenberg plugin
+            gutenberg_init_function = window._wpLoadBlockEditor;
+        }
+
+        if (gutenberg_init_function !== null) {
             // Wait for Gutenberg editor to be ready
-            window._wpLoadGutenbergEditor.then(() => {
+            gutenberg_init_function.then(() => {
                 if (advgb_blocks_vars.original_settings.allowedBlockTypes !== true) {
                     // allowed_block_types filter has been used, in this case we do nothing as we don't know why blocks have been filtered
                     return;
