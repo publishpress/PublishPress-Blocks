@@ -9,18 +9,18 @@ function prepare_install () {
     mysql -uroot -h $MYSQL_IP -e "DELETE FROM wp_options WHERE option_value LIKE 'advgb_%';" wordpress
     sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP << EOF
     cd /var/www/html/;
-    wp plugin deactivate --allow-root advanced-gutenberg;
-    wp post delete --allow-root \$(wp post list --allow-root --post_type='advgb_profiles' --format=ids)  2>&1 || true;
-    wp post delete --allow-root \$(wp post list --allow-root --post_type='post' --format=ids)  2>&1 || true;
+    wp plugin deactivate --allow-root advanced-gutenberg 2>/dev/null ;
+    wp post delete --allow-root \$(wp post list --allow-root --post_type='advgb_profiles' --format=ids 2>/dev/null)  2>&1 || true;
+    wp post delete --allow-root \$(wp post list --allow-root --post_type='post' --format=ids 2>/dev/null)  2>&1 || true;
     echo > /var/www/html/wp-content/debug.log;
 
     # Remove content used for Recent post
-    wp post delete --allow-root \$(wp post list --category=recent_posts --format=ids --allow-root) 2>&1 || true;
+    wp post delete --allow-root \$(wp post list --category=recent_posts --format=ids --allow-root 2>/dev/null) 2>&1 || true;
     wp term delete category recent_posts --by=slug --allow-root 2>&1 || true;
 
     #Create dummy posts and affect them the Recent post category
     wp term create category "Recent posts" --description="Test category for Recent Post blocks" --porcelain --slug="recent_posts" --allow-root  2>&1;
-    wp post generate --count=10 --format=ids --allow-root | xargs -d " " -I {} wp post term set {} category recent_posts --by=slug --allow-root 2>&1;
+    wp post generate --count=10 --format=ids --allow-root 2>/dev/null | xargs -d " " -I {} wp post term set {} category recent_posts --by=slug --allow-root 2>&1;
 EOF
 }
 
@@ -47,7 +47,7 @@ function do_tests () {
 
     PHP_ERRORS=$(grep -v "/var/www/html/wp-content/plugins/advanced-gutenberg" "$PLUGIN_DIR/tests/_output/wp_debug.log" 2>/dev/null || true)
     if [[ "$PHP_ERRORS" != "" ]]; then
-        echo -e "\n\e[31m\e[! Php errors not related to the plugin found in the debug log file\e[0m\n"
+        echo -e "\n\e[31m\e[1m\xc7\x83 Php errors not related to the plugin found in the debug log file\e[0m\n"
         echo "$PHP_ERRORS"
     else
         echo -e "\n\e[32m\e[1m\xe2\x9c\x93 No php errors not related to the plugin found in the debug log file\e[0m\n"
@@ -67,7 +67,7 @@ for TYPE in "core" "plugin"; do
     if [[ $TYPE = "plugin" ]]; then
         # Install gutenberg
         echo -e '\n\e[34m\e[1m####### Run tests with Gutenberg plugin #######\e[0m\n'
-        sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "cd /var/www/html/; wp plugin install gutenberg --activate --allow-root"
+        sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "cd /var/www/html/; wp plugin install gutenberg --activate --allow-root 2>/dev/null "
     else
         if [[ $WP_VERSION != "latest" ]]; then
             continue
