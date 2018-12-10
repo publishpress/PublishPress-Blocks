@@ -40,7 +40,7 @@ pipelines:
         services:
         - chromedriver
         - mysql
-        - wordpress_49
+        - wordpress49
     generate_package:
     - step: &shared_generate_package
         name: Create package
@@ -106,5 +106,5 @@ definitions:
         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     wordpress:
       image: joomunited/wordpress_cgi:latest
-    wordpress_49:
+    wordpress49:
       image: joomunited/wordpress_cgi:4.9.8
