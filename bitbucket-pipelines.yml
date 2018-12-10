@@ -27,6 +27,20 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress
+    codeception_4.9:
+    - step: &shared_codeception_4.9
+        name: Codeception
+        image: joomunited/codeception
+        script:
+        - wait_services.sh
+        - export WP_VERSION="4.9.8"
+        - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
+        artifacts:
+        - tests/_output/**
+        services:
+        - chromedriver
+        - mysql
+        - wordpress_4.9
     generate_package:
     - step: &shared_generate_package
         name: Create package
@@ -40,6 +54,15 @@ pipelines:
         - bash $BITBUCKET_CLONE_DIR/deployment/upload_latest_commit.sh
         artifacts:
         - deployment/package.zip
+    update_changelog:
+    - step: &shared_update_changelog
+        name: Update Joomunited changelog
+        image: joomunited/deployment
+        script:
+        - git clone git@bitbucket.org:junited/deployment-scripts.git deployment
+        - cp -r /root/.composer/vendor $BITBUCKET_CLONE_DIR/deployment/vendor
+        - php $BITBUCKET_CLONE_DIR/deployment/replacement.php
+        - php $BITBUCKET_CLONE_DIR/deployment/joomunited_changelog.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --article_id $CHANGELOG_ARTICLE_ID
     deployment_production:
     - step: &shared_deployment_production
         name: Publish to production
@@ -68,6 +91,7 @@ pipelines:
     - parallel:
       - step: *shared_phpcs
       - step: *shared_codeception
+      - step: *shared_codeception_4.9
       - step: *shared_generate_package
     'master':
     - step: *shared_deployment_production
@@ -82,3 +106,5 @@ definitions:
         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     wordpress:
       image: joomunited/wordpress_cgi:latest
+    wordpress_4.9:
+      image: joomunited/wordpress_cgi:4.9.8
