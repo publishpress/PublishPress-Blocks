@@ -9,11 +9,11 @@ pipelines:
   custom:
     phpcs: 
     - step: &shared_phpcs
-          name: Phpcs
-          image: joomunited/phpcs
-          script:
-          - ln -s /root/.composer/vendor $BITBUCKET_CLONE_DIR/vendor
-          - phpcs -s .
+        name: Phpcs
+        image: joomunited/phpcs
+        script:
+        - ln -s /root/.composer/vendor $BITBUCKET_CLONE_DIR/vendor
+        - phpcs -s .
     codeception:
     - step: &shared_codeception
         name: Codeception
@@ -27,8 +27,8 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress
-    codeception_4.9:
-    - step: &shared_codeception_4.9
+    codeception_49:
+    - step: &shared_codeception_49
         name: Codeception
         image: joomunited/codeception
         script:
@@ -40,7 +40,7 @@ pipelines:
         services:
         - chromedriver
         - mysql
-        - wordpress_4.9
+        - wordpress_49
     generate_package:
     - step: &shared_generate_package
         name: Create package
@@ -91,7 +91,7 @@ pipelines:
     - parallel:
       - step: *shared_phpcs
       - step: *shared_codeception
-      - step: *shared_codeception_4.9
+      - step: *shared_codeception_49
       - step: *shared_generate_package
     'master':
     - step: *shared_deployment_production
@@ -106,5 +106,5 @@ definitions:
         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     wordpress:
       image: joomunited/wordpress_cgi:latest
-    wordpress_4.9:
+    wordpress_49:
       image: joomunited/wordpress_cgi:4.9.8
