@@ -1112,6 +1112,13 @@ float: left;'
                 plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
                 array('jquery')
             );
+            $saved_settings = get_option('advgb_settings');
+            if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
+                wp_add_inline_style(
+                    'dashicons',
+                    '#editor .wp-block {max-width: ' . $saved_settings['editor_width'] . '%}'
+                );
+            }
         }
     }
 
@@ -1296,6 +1303,7 @@ float: left;'
             $save_config['google_api_key'] = $_POST['google_api_key'];
             $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
             $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
+            $save_config['editor_width'] = $_POST['editor_width'];
 
             update_option('advgb_settings', $save_config);
 

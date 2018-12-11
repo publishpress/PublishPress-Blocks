@@ -67,3 +67,8 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+select.ju-select-options {
+    padding: 15px;
+    height: auto;
+}
