@@ -5971,7 +5971,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         { label: [__('Marker Icon (27x43 px)'), markerIcon && React.createElement(
                                                 "a",
                                                 { key: "marker-icon-remove",
-                                                    style: { marginLeft: '10px' },
+                                                    style: { marginLeft: '10px', cursor: 'pointer' },
                                                     onClick: function onClick() {
                                                         return setAttributes({
                                                             markerIcon: undefined,
