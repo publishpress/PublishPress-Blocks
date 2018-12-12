@@ -4571,6 +4571,243 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/blocks/custom-blocks-options/custom-blocks.jsx":
+/*!***************************************************************!*\
+  !*** ./assets/blocks/custom-blocks-options/custom-blocks.jsx ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+(function (wpI18n, wpHooks, wpEditor, wpComponents, wpElement) {
+    var addFilter = wpHooks.addFilter;
+    var __ = wpI18n.__;
+    var Fragment = wpElement.Fragment;
+    var InspectorControls = wpEditor.InspectorControls,
+        PanelColorSettings = wpEditor.PanelColorSettings,
+        MediaUpload = wpEditor.MediaUpload;
+    var PanelBody = wpComponents.PanelBody,
+        BaseControl = wpComponents.BaseControl,
+        SelectControl = wpComponents.SelectControl,
+        RangeControl = wpComponents.RangeControl,
+        Button = wpComponents.Button;
+
+    // Register extra attributes to separator blocks
+
+    addFilter('blocks.registerBlockType', 'advgb/registerExtraBlocksAttrs', function (settings) {
+        if (!!settings.attributes) {
+            settings.attributes = _extends(settings.attributes, {
+                blockWidth: {
+                    type: 'number'
+                },
+                blockBgColor: {
+                    type: 'string'
+                },
+                blockBgImage: {
+                    type: 'string'
+                },
+                blockBgImageID: {
+                    type: 'number'
+                },
+                blockBgImageSize: {
+                    type: 'string'
+                },
+                blockBgImageSizeCustom: {
+                    type: 'number'
+                },
+                blockBgImageAlignH: {
+                    type: 'string'
+                },
+                blockBgImageAlignV: {
+                    type: 'string'
+                },
+                blockTopDivider: {
+                    type: 'string'
+                },
+                blockTopDividerColor: {
+                    type: 'string'
+                },
+                blockTopDividerHeight: {
+                    type: 'number'
+                },
+                blockTopDividerRotateX: {
+                    type: 'boolean'
+                },
+                blockTopDividerRotateY: {
+                    type: 'boolean'
+                },
+                blockBottomDivider: {
+                    type: 'string'
+                },
+                blockBottomDividerColor: {
+                    type: 'string'
+                },
+                blockBottomDividerHeight: {
+                    type: 'number'
+                },
+                blockBottomDividerRotateX: {
+                    type: 'boolean'
+                },
+                blockBottomDividerRotateY: {
+                    type: 'boolean'
+                }
+            });
+        }
+
+        return settings;
+    });
+
+    // Add option to select styles for separator
+    addFilter('editor.BlockEdit', 'advgb/addExtraBlocksStyle', function (BlockEdit) {
+        return function (props) {
+            var attributes = props.attributes,
+                setAttributes = props.setAttributes,
+                clientId = props.clientId;
+            var blockWidth = attributes.blockWidth,
+                blockBgColor = attributes.blockBgColor,
+                blockBgImage = attributes.blockBgImage,
+                blockBgImageID = attributes.blockBgImageID,
+                blockBgImageSize = attributes.blockBgImageSize,
+                blockBgImageSizeCustom = attributes.blockBgImageSizeCustom,
+                blockBgImageAlignH = attributes.blockBgImageAlignH,
+                blockBgImageAlignV = attributes.blockBgImageAlignV,
+                blockTopDivider = attributes.blockTopDivider,
+                blockTopDividerColor = attributes.blockTopDividerColor,
+                blockTopDividerHeight = attributes.blockTopDividerHeight,
+                blockTopDividerRotateX = attributes.blockTopDividerRotateX,
+                blockTopDividerRotateY = attributes.blockTopDividerRotateY,
+                blockBottomDivider = attributes.blockBottomDivider,
+                blockBottomDividerColor = attributes.blockBottomDividerColor,
+                blockBottomDividerHeight = attributes.blockBottomDividerHeight,
+                blockBottomDividerRotateX = attributes.blockBottomDividerRotateX,
+                blockBottomDividerRotateY = attributes.blockBottomDividerRotateY;
+
+
+            return React.createElement(
+                Fragment,
+                null,
+                React.createElement(BlockEdit, props),
+                React.createElement(
+                    InspectorControls,
+                    null,
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Blocks Settings') },
+                        React.createElement(RangeControl, {
+                            label: __('Block width (%)'),
+                            value: blockWidth,
+                            min: 10,
+                            max: 100,
+                            onChange: function onChange(value) {
+                                return setAttributes({ blockWidth: value });
+                            }
+                        }),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Block Color Settings'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background color'),
+                                value: blockBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ blockBgColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(MediaUpload, {
+                            allowedTypes: ["image"],
+                            value: blockBgImageID,
+                            onSelect: function onSelect(image) {
+                                return setAttributes({ blockBgImage: image.url, blockBgImageID: image.id });
+                            },
+                            render: function render(_ref) {
+                                var open = _ref.open;
+
+                                return React.createElement(
+                                    BaseControl,
+                                    { label: [__('Background Image'), blockBgImage && React.createElement(
+                                            'a',
+                                            { key: 'marker-icon-remove',
+                                                style: { marginLeft: '10px', cursor: 'pointer' },
+                                                onClick: function onClick() {
+                                                    return setAttributes({
+                                                        blockBgImage: undefined,
+                                                        blockBgImageID: undefined
+                                                    });
+                                                }
+                                            },
+                                            __('Remove')
+                                        )]
+                                    },
+                                    React.createElement(
+                                        Button,
+                                        { className: 'button button-large',
+                                            onClick: open
+                                        },
+                                        __('Choose')
+                                    ),
+                                    !!blockBgImage && React.createElement('img', { style: { maxHeight: '30px', marginLeft: '10px' },
+                                        src: blockBgImage,
+                                        alt: __('Background image') })
+                                );
+                            }
+                        }),
+                        !!blockBgImage && React.createElement(
+                            PanelBody,
+                            { title: __('Background Image Options') },
+                            React.createElement(SelectControl, {
+                                label: __('Image Size'),
+                                value: blockBgImageSize,
+                                options: [{ label: __('Auto'), value: 'auto' }, { label: __('Fit height'), value: 'contain' }, { label: __('Fit width'), value: 'cover' }, { label: __('Custom'), value: 'custom' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ blockBgImageSize: value });
+                                }
+                            }),
+                            blockBgImageSize === 'custom' && React.createElement(RangeControl, {
+                                label: __('Image size (%)'),
+                                value: blockBgImageSizeCustom,
+                                min: 1,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ blockBgImageSizeCustom: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Horizontal Align'),
+                                value: blockBgImageAlignH,
+                                options: [{ label: __('Left'), value: 'left' }, { label: __('Center'), value: 'center' }, { label: __('Right'), value: 'right' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ blockBgImageAlignH: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Vertical Align'),
+                                value: blockBgImageAlignV,
+                                options: [{ label: __('Top'), value: 'top' }, { label: __('Center'), value: 'center' }, { label: __('Bottom'), value: 'bottom' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ blockBgImageAlignV: value });
+                                }
+                            })
+                        )
+                    )
+                ),
+                React.createElement('style', null)
+            );
+        };
+    });
+
+    // Apply custom styles on front-end
+    addFilter('blocks.getSaveContent.extraProps', 'advgb/saveExtraBlocksStyles', function (extraProps, blockType, attributes) {
+
+        return extraProps;
+    });
+})(wp.i18n, wp.hooks, wp.editor, wp.components, wp.element);
+
+/***/ }),
+
 /***/ "./assets/blocks/custom-columns/columns.jsx":
 /*!**************************************************!*\
   !*** ./assets/blocks/custom-columns/columns.jsx ***!
@@ -9615,9 +9852,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-blocks-options/custom-blocks.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9628,6 +9865,7 @@ __webpack_require__(/*! ./assets/blocks/advlist/block.jsx */"./assets/blocks/adv
 __webpack_require__(/*! ./assets/blocks/advtable/block.jsx */"./assets/blocks/advtable/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advvideo/block.jsx */"./assets/blocks/advvideo/block.jsx");
 __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/count-up/block.jsx");
+__webpack_require__(/*! ./assets/blocks/custom-blocks-options/custom-blocks.jsx */"./assets/blocks/custom-blocks-options/custom-blocks.jsx");
 __webpack_require__(/*! ./assets/blocks/custom-columns/columns.jsx */"./assets/blocks/custom-columns/columns.jsx");
 __webpack_require__(/*! ./assets/blocks/custom-separator/separator.jsx */"./assets/blocks/custom-separator/separator.jsx");
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
