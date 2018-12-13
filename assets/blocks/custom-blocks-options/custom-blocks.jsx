@@ -3,7 +3,7 @@
     const { __ } = wpI18n;
     const { Fragment } = wpElement;
     const { InspectorControls, PanelColorSettings, MediaUpload } = wpEditor;
-    const { PanelBody, BaseControl, SelectControl, RangeControl, Button } = wpComponents;
+    const { PanelBody, BaseControl, SelectControl, RangeControl, ToggleControl, Button } = wpComponents;
 
     // Register extra attributes to separator blocks
     addFilter( 'blocks.registerBlockType', 'advgb/registerExtraBlocksAttrs', function ( settings ) {
@@ -32,6 +32,15 @@
                 },
                 blockBgImageAlignV: {
                     type: 'string',
+                },
+                blockOverlayDisplay: {
+                    type: 'boolean',
+                },
+                blockOverlayColor: {
+                    type: 'string',
+                },
+                blockOverlayOpacity: {
+                    type: 'number',
                 },
                 blockTopDivider: {
                     type: 'string',
@@ -82,6 +91,9 @@
                 blockBgImageSizeCustom,
                 blockBgImageAlignH,
                 blockBgImageAlignV,
+                blockOverlayDisplay,
+                blockOverlayColor,
+                blockOverlayOpacity,
                 blockTopDivider,
                 blockTopDividerColor,
                 blockTopDividerHeight,
@@ -98,9 +110,9 @@
                 <Fragment>
                     <BlockEdit {...props} />
                     <InspectorControls>
-                        <PanelBody title={__( 'Blocks Settings' )}>
+                        <PanelBody title={ __( 'Blocks Settings' ) }>
                             <RangeControl
-                                label={__( 'Block width (%)' )}
+                                label={ __( 'Block width (%)' ) }
                                 value={ blockWidth }
                                 min={ 10 }
                                 max={ 100 }
@@ -115,8 +127,29 @@
                                         value: blockBgColor,
                                         onChange: ( value ) => setAttributes( { blockBgColor: value } ),
                                     },
+                                    {
+                                        label: __( 'Overlay color' ),
+                                        value: blockOverlayColor,
+                                        onChange: ( value ) => setAttributes( { blockOverlayColor: value } ),
+                                    },
                                 ] }
                             />
+                            {blockOverlayColor && (
+                                <Fragment>
+                                    <RangeControl
+                                        label={ __( 'Overlay opacity (%)' ) }
+                                        value={ blockOverlayOpacity }
+                                        min={ 10 }
+                                        max={ 90 }
+                                        onChange={ ( value ) => setAttributes( { blockOverlayOpacity: value } ) }
+                                    />
+                                    <ToggleControl
+                                        label={ __( 'Always show overlay' ) }
+                                        checked={ blockOverlayDisplay }
+                                        onChange={ () => setAttributes( { blockOverlayDisplay: !blockOverlayDisplay } ) }
+                                    />
+                                </Fragment>
+                            ) }
                             <MediaUpload
                                 allowedTypes={ ["image"] }
                                 value={ blockBgImageID }

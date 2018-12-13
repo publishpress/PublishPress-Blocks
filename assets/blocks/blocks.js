@@ -4594,6 +4594,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
         RangeControl = wpComponents.RangeControl,
+        ToggleControl = wpComponents.ToggleControl,
         Button = wpComponents.Button;
 
     // Register extra attributes to separator blocks
@@ -4624,6 +4625,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 },
                 blockBgImageAlignV: {
                     type: 'string'
+                },
+                blockOverlayDisplay: {
+                    type: 'boolean'
+                },
+                blockOverlayColor: {
+                    type: 'string'
+                },
+                blockOverlayOpacity: {
+                    type: 'number'
                 },
                 blockTopDivider: {
                     type: 'string'
@@ -4675,6 +4685,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 blockBgImageSizeCustom = attributes.blockBgImageSizeCustom,
                 blockBgImageAlignH = attributes.blockBgImageAlignH,
                 blockBgImageAlignV = attributes.blockBgImageAlignV,
+                blockOverlayDisplay = attributes.blockOverlayDisplay,
+                blockOverlayColor = attributes.blockOverlayColor,
+                blockOverlayOpacity = attributes.blockOverlayOpacity,
                 blockTopDivider = attributes.blockTopDivider,
                 blockTopDividerColor = attributes.blockTopDividerColor,
                 blockTopDividerHeight = attributes.blockTopDividerHeight,
@@ -4715,8 +4728,34 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                 onChange: function onChange(value) {
                                     return setAttributes({ blockBgColor: value });
                                 }
+                            }, {
+                                label: __('Overlay color'),
+                                value: blockOverlayColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ blockOverlayColor: value });
+                                }
                             }]
                         }),
+                        blockOverlayColor && React.createElement(
+                            Fragment,
+                            null,
+                            React.createElement(RangeControl, {
+                                label: __('Overlay opacity (%)'),
+                                value: blockOverlayOpacity,
+                                min: 10,
+                                max: 90,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ blockOverlayOpacity: value });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Always show overlay'),
+                                checked: blockOverlayDisplay,
+                                onChange: function onChange() {
+                                    return setAttributes({ blockOverlayDisplay: !blockOverlayDisplay });
+                                }
+                            })
+                        ),
                         React.createElement(MediaUpload, {
                             allowedTypes: ["image"],
                             value: blockBgImageID,
