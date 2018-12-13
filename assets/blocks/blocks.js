@@ -4720,7 +4720,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             }
                         }),
                         React.createElement(PanelColorSettings, {
-                            title: __('Block Color Settings'),
+                            title: __('Block Color'),
                             initialOpen: false,
                             colorSettings: [{
                                 label: __('Background color'),
@@ -4756,80 +4756,84 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                 }
                             })
                         ),
-                        React.createElement(MediaUpload, {
-                            allowedTypes: ["image"],
-                            value: blockBgImageID,
-                            onSelect: function onSelect(image) {
-                                return setAttributes({ blockBgImage: image.url, blockBgImageID: image.id });
-                            },
-                            render: function render(_ref) {
-                                var open = _ref.open;
-
-                                return React.createElement(
-                                    BaseControl,
-                                    { label: [__('Background Image'), blockBgImage && React.createElement(
-                                            'a',
-                                            { key: 'marker-icon-remove',
-                                                style: { marginLeft: '10px', cursor: 'pointer' },
-                                                onClick: function onClick() {
-                                                    return setAttributes({
-                                                        blockBgImage: undefined,
-                                                        blockBgImageID: undefined
-                                                    });
-                                                }
-                                            },
-                                            __('Remove')
-                                        )]
-                                    },
-                                    React.createElement(
-                                        Button,
-                                        { className: 'button button-large',
-                                            onClick: open
-                                        },
-                                        __('Choose')
-                                    ),
-                                    !!blockBgImage && React.createElement('img', { style: { maxHeight: '30px', marginLeft: '10px' },
-                                        src: blockBgImage,
-                                        alt: __('Background image') })
-                                );
-                            }
-                        }),
-                        !!blockBgImage && React.createElement(
+                        React.createElement(
                             PanelBody,
-                            { title: __('Background Image Options') },
-                            React.createElement(SelectControl, {
-                                label: __('Image Size'),
-                                value: blockBgImageSize,
-                                options: [{ label: __('Auto'), value: 'auto' }, { label: __('Fit height'), value: 'contain' }, { label: __('Fit width'), value: 'cover' }, { label: __('Custom'), value: 'custom' }],
-                                onChange: function onChange(value) {
-                                    return setAttributes({ blockBgImageSize: value });
+                            { title: __('Block Background'), initialOpen: false },
+                            React.createElement(MediaUpload, {
+                                allowedTypes: ["image"],
+                                value: blockBgImageID,
+                                onSelect: function onSelect(image) {
+                                    return setAttributes({ blockBgImage: image.url, blockBgImageID: image.id });
+                                },
+                                render: function render(_ref) {
+                                    var open = _ref.open;
+
+                                    return React.createElement(
+                                        BaseControl,
+                                        { label: [__('Background Image'), blockBgImage && React.createElement(
+                                                'a',
+                                                { key: 'icon-remove',
+                                                    style: { marginLeft: '10px', cursor: 'pointer' },
+                                                    onClick: function onClick() {
+                                                        return setAttributes({
+                                                            blockBgImage: undefined,
+                                                            blockBgImageID: undefined
+                                                        });
+                                                    }
+                                                },
+                                                __('Remove')
+                                            )]
+                                        },
+                                        React.createElement(
+                                            Button,
+                                            { className: 'button button-large',
+                                                onClick: open
+                                            },
+                                            __('Choose')
+                                        ),
+                                        !!blockBgImage && React.createElement('img', { style: { maxHeight: '30px', marginLeft: '10px' },
+                                            src: blockBgImage,
+                                            alt: __('Background image') })
+                                    );
                                 }
                             }),
-                            blockBgImageSize === 'custom' && React.createElement(RangeControl, {
-                                label: __('Image size (%)'),
-                                value: blockBgImageSizeCustom,
-                                min: 1,
-                                max: 100,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ blockBgImageSizeCustom: value });
-                                }
-                            }),
-                            React.createElement(SelectControl, {
-                                label: __('Horizontal Align'),
-                                value: blockBgImageAlignH,
-                                options: [{ label: __('Left'), value: 'left' }, { label: __('Center'), value: 'center' }, { label: __('Right'), value: 'right' }],
-                                onChange: function onChange(value) {
-                                    return setAttributes({ blockBgImageAlignH: value });
-                                }
-                            }),
-                            React.createElement(SelectControl, {
-                                label: __('Vertical Align'),
-                                value: blockBgImageAlignV,
-                                options: [{ label: __('Top'), value: 'top' }, { label: __('Center'), value: 'center' }, { label: __('Bottom'), value: 'bottom' }],
-                                onChange: function onChange(value) {
-                                    return setAttributes({ blockBgImageAlignV: value });
-                                }
-                            })
+                            !!blockBgImage && React.createElement(
+                                PanelBody,
+                                { title: __('Background Image Options') },
+                                React.createElement(SelectControl, {
+                                    label: __('Image Size'),
+                                    value: blockBgImageSize,
+                                    options: [{ label: __('Auto'), value: 'auto' }, { label: __('Fit height'), value: 'contain' }, { label: __('Fit width'), value: 'cover' }, { label: __('Custom'), value: 'custom' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ blockBgImageSize: value });
+                                    }
+                                }),
+                                blockBgImageSize === 'custom' && React.createElement(RangeControl, {
+                                    label: __('Image size (%)'),
+                                    value: blockBgImageSizeCustom,
+                                    min: 1,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ blockBgImageSizeCustom: value });
+                                    }
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Horizontal Align'),
+                                    value: blockBgImageAlignH,
+                                    options: [{ label: __('Left'), value: 'left' }, { label: __('Center'), value: 'center' }, { label: __('Right'), value: 'right' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ blockBgImageAlignH: value });
+                                    }
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Vertical Align'),
+                                    value: blockBgImageAlignV,
+                                    options: [{ label: __('Top'), value: 'top' }, { label: __('Center'), value: 'center' }, { label: __('Bottom'), value: 'bottom' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ blockBgImageAlignV: value });
+                                    }
+                                })
+                            )
                         )
                     )
                 ),
