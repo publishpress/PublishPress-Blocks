@@ -4704,7 +4704,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 Fragment,
                 null,
                 React.createElement(BlockEdit, props),
-                React.createElement(
+                typeof agTheme !== 'undefined' && !!agTheme.activated && React.createElement(
                     InspectorControls,
                     null,
                     React.createElement(
