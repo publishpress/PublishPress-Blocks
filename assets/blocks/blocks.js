@@ -353,7 +353,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         )
                     )
                 ),
-                React.createElement('style', null)
+                React.createElement(
+                    'style',
+                    null,
+                    '#block-' + clientId + ' .editor-block-list__block-edit {\n                            max-width: ' + (blockWidth ? parseInt(blockWidth) + 8 : undefined) + '%;\n                        }',
+                    '#block-' + clientId + ' > .editor-block-list__block-edit::before {\n                            background-color: ' + blockBgColor + ';\n                            background-image: url(' + blockBgImage + ');\n                            background-size: ' + (blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize) + ';\n                            background-position: ' + blockBgImageAlignV + ' ' + blockBgImageAlignH + ';\n                        }'
+                )
             );
         };
     });

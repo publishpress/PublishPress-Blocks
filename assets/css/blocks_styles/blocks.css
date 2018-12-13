@@ -981,3 +981,10 @@ hr.wp-block-separator {
     height: 50px;
     border: 1px solid #ccc;
 }
+
+/*Custom blocks options*/
+#editor .editor-block-list__block-edit::before {
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: top left;
+}

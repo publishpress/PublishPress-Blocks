@@ -237,7 +237,15 @@
                         </InspectorControls>
                     ) }
                     <style>
-
+                        {`#block-${clientId} .editor-block-list__block-edit {
+                            max-width: ${blockWidth ? parseInt(blockWidth) + 8 : undefined}%;
+                        }`}
+                        {`#block-${clientId} > .editor-block-list__block-edit::before {
+                            background-color: ${blockBgColor};
+                            background-image: url(${blockBgImage});
+                            background-size: ${blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize};
+                            background-position: ${blockBgImageAlignV} ${blockBgImageAlignH};
+                        }`}
                     </style>
                 </Fragment>
             );

@@ -238,6 +238,8 @@ float: left;'
             true
         );
 
+        wp_localize_script('advgb_blocks', 'agTheme', array('activated' => true));
+
         // Include needed JS libraries
         wp_enqueue_script('jquery-ui-accordion');
         wp_enqueue_script('jquery-ui-tabs');
