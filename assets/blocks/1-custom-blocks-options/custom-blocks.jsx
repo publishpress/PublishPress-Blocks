@@ -118,6 +118,7 @@
                                     min={ 10 }
                                     max={ 100 }
                                     onChange={ ( value ) => setAttributes( { blockWidth: value } ) }
+                                    allowReset
                                 />
                                 <PanelColorSettings
                                     title={ __( 'Block Color' ) }
