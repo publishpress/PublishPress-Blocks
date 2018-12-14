@@ -357,7 +357,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     'style',
                     null,
                     '#block-' + clientId + ' .editor-block-list__block-edit {\n                            max-width: ' + (blockWidth ? parseInt(blockWidth) + 8 : undefined) + '%;\n                        }',
-                    '#block-' + clientId + ' > .editor-block-list__block-edit::before {\n                            background-color: ' + blockBgColor + ';\n                            background-image: url(' + blockBgImage + ');\n                            background-size: ' + (blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize) + ';\n                            background-position: ' + blockBgImageAlignV + ' ' + blockBgImageAlignH + ';\n                        }'
+                    '#block-' + clientId + ' > .editor-block-list__block-edit::before {\n                            background-color: ' + blockBgColor + ';\n                            background-image: url(' + blockBgImage + ');\n                            background-size: ' + (blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize) + ';\n                            background-position: ' + blockBgImageAlignV + ' ' + blockBgImageAlignH + ';\n                        }',
+                    '#block-' + clientId + ' > .editor-block-list__block-edit::after {\n                            background-color: ' + blockOverlayColor + ';\n                            ' + (blockOverlayDisplay && 'opacity: ' + blockOverlayOpacity / 100 + ';') + '\n                        }',
+                    !blockOverlayDisplay && '#block-' + clientId + ' > .editor-block-list__block-edit:hover::after {\n                            opacity: ' + blockOverlayOpacity / 100 + ';\n                        }'
                 )
             );
         };

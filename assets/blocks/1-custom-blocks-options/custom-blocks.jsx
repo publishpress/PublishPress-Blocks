@@ -246,6 +246,14 @@
                             background-size: ${blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize};
                             background-position: ${blockBgImageAlignV} ${blockBgImageAlignH};
                         }`}
+                        {`#block-${clientId} > .editor-block-list__block-edit::after {
+                            background-color: ${blockOverlayColor};
+                            ${blockOverlayDisplay && `opacity: ${blockOverlayOpacity/100};`}
+                        }`}
+                        {!blockOverlayDisplay &&
+                        `#block-${clientId} > .editor-block-list__block-edit:hover::after {
+                            opacity: ${blockOverlayOpacity/100};
+                        }`}
                     </style>
                 </Fragment>
             );

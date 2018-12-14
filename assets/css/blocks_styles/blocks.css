@@ -988,3 +988,21 @@ hr.wp-block-separator {
     background-size: auto;
     background-position: top left;
 }
+
+#editor .editor-block-list__block-edit::after {
+    z-index: 0;
+    content: "";
+    position: absolute;
+    outline: 1px solid transparent;
+    transition: outline 0.1s linear;
+    pointer-events: none;
+    right: -14px;
+    left: -14px;
+    top: -14px;
+    bottom: -14px;
+    opacity: 0;
+}
+
+#editor .editor-block-list__block-edit:hover::after {
+    opacity: 0.5;
+}
