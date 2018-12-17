@@ -96,12 +96,9 @@ EOF
 }
 
 function do_general_tests () {
-    if [[ "$PHP_VERSION" = "5.2" ]]; then
-        # Run PHP 5.2 tests
-        codecept run functional -g php5.2 --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION"
-    else
-        codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION"
-    fi
+
+    codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION"
+
 
     check_php_errors
 }
@@ -143,13 +140,18 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
 
     clean_install
 
-    if [[ "$INSTALL_TYPE" = "install" ]]; then
+    if [[ "$PHP_VERSION" = "5.2" ]]; then
+        # Run PHP 5.2 tests
+        copy_plugin_to_www
+        codecept run functional -g php5.2 --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION"
+    elif [[ "$INSTALL_TYPE" = "install" ]]; then
         copy_plugin_to_www
         do_install_tests
+        do_general_tests
     elif [[ "$INSTALL_TYPE" = "update" ]]; then
         do_update_tests
         copy_plugin_to_www
+        do_general_tests
     fi
 
-    do_general_tests
 done

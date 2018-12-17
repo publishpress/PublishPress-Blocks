@@ -91,13 +91,15 @@ function start_containers () {
     echo "Web server ready"
 }
 
-set -e
-
 for WP_VERSION in "${WP_VERSIONS[@]}"; do
     for INSTALL_TYPE in "${INSTALL_TYPES[@]}"; do
         # Test the core gutenberg version and plugin version
         for GUTENBERG_TYPE in "${GUTENBERG_TYPES[@]}"; do
+            set +e
+
             start_containers
+
+            set -e
 
             cd "$PLUGIN_DIR"
             source "$PLUGIN_DIR/tests/scripts/codeception.sh"
