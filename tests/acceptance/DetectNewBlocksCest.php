@@ -25,7 +25,7 @@ class DetectNewBlocksCest
         $I->executeJS('wp.data.dispatch( \'core/nux\' ).disableTips()');
 
         // Click on + button
-        $I->click('.editor-inserter button');
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Test
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Test');
@@ -36,7 +36,7 @@ class DetectNewBlocksCest
 
         // Go to new post page
         $I->amOnPage('/wp-admin/post-new.php');
-        $I->click('.editor-inserter button');
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Test');
 
         $I->see("Test block");

@@ -19,18 +19,34 @@ else
     DOCKER_ENV="$1"
 fi
 
-for WP_VERSION in "4.9.8" "latest"; do
+if [[ -z "$INSTALL_TYPES" ]]; then
+    INSTALL_TYPES=("update" "install")
+fi
+
+if [[ -z "$PHP_VERSIONS" ]]; then
+    PHP_VERSIONS=('5.2' '5.3' '5.4' '5.5' '5.6' '7.0' '7.1' '7.2' '7.3')
+fi
+
+if [[ -z "$WP_VERSIONS" ]]; then
+    WP_VERSIONS=("4.9.8" "latest")
+fi
+
+if [[ -z "$GUTENBERG_TYPES" ]]; then
+    GUTENBERG_TYPES=("core" "plugin")
+fi
+
+# Start docker containers
+function start_containers () {
     # Clean previous run
     echo -e '\e[34m\e[1m##### Remove docker containers #####\e[0m\n'
+
     # Disconnect before remove it
     for CONTAINER in "wordpress_cgi" "mysql" "chromedriver"
     do
-        docker network disconnect -f pipelines $CONTAINER
+        docker network disconnect -f pipelines $CONTAINER 2>/dev/null
     done;
-    docker rm -f wordpress_cgi mysql chromedriver
+    docker rm -f wordpress_cgi mysql chromedriver 2>/dev/null
     docker network rm pipelines
-
-    echo -e "\n\e[34m\e[1m##### Run tests under WP $WP_VERSION #####\e[0m\n"
 
     # Start containers
     echo -e '\n\e[34m\e[1m##### Start docker containers #####\e[0m\n'
@@ -73,19 +89,18 @@ for WP_VERSION in "4.9.8" "latest"; do
     fi
 
     echo "Web server ready"
+}
 
-    set -e
+set -e
 
-    # Clean plugin folder to made sure tests script is updated
-    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "rm -fr /var/www/html/wp-content/plugins/advanced-gutenberg; mkdir -p /var/www/html/wp-content/plugins/advanced-gutenberg"
-    # Copy plugin to web server
-    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "mkdir -p /var/www/html/wp-content/plugins/advanced-gutenberg"
-    sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 "$PLUGIN_DIR"/* root@$WWW_IP:/var/www/html/wp-content/plugins/advanced-gutenberg
+for WP_VERSION in "${WP_VERSIONS[@]}"; do
+    for INSTALL_TYPE in "${INSTALL_TYPES[@]}"; do
+        # Test the core gutenberg version and plugin version
+        for GUTENBERG_TYPE in "${GUTENBERG_TYPES[@]}"; do
+            start_containers
 
-    # Fix chown
-    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "chown -Rh www-data:www-data /var/www/html/wp-content/plugins/advanced-gutenberg"
-
-    cd "$PLUGIN_DIR"
-    source "$PLUGIN_DIR/tests/scripts/codeception.sh"
+            cd "$PLUGIN_DIR"
+            source "$PLUGIN_DIR/tests/scripts/codeception.sh"
+        done
+    done
 done
-

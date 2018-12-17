@@ -23,4 +23,22 @@ class Acceptance extends \Codeception\Module
         sleep($sleep);
         $webDriver->getMouse()->mouseUp();
     }
+
+    /**
+     * Select all the content of the element the pointer is in
+     */
+    public function selectCurrentElementText()
+    {
+        $webDriver = $this->getModule('WebDriver')->webDriver;
+        $action = new \WebDriverActions($webDriver);
+        $action->sendKeys(null, \WebDriverKeys::PAGE_UP)->keyDown(null, \WebDriverKeys::SHIFT)->sendKeys(null, \WebDriverKeys::PAGE_DOWN)->keyUp(null, \WebDriverKeys::SHIFT)->perform();
+    }
+
+    /**
+     * Press multiple keys
+     */
+    public function pressKeys($keys)
+    {
+        $this->getModule('WebDriver')->webDriver->getKeyboard()->sendKeys($keys);
+    }
 }

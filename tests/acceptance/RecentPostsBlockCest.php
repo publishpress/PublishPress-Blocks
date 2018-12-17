@@ -18,7 +18,7 @@ class RecentPostsBlockCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Click on + button
-        $I->click('.editor-inserter button');
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Recent Posts');
