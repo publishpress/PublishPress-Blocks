@@ -50,6 +50,8 @@
                                       border: 'none',
                                       width: '16px',
                                       height: '16px',
+                                      display: 'inline-block',
+                                      marginLeft: '10px',
                                   } } />
                         ] }
                         help={__( 'This option let you add custom style for current paragraph. (Front-end only!)' )}

@@ -5190,7 +5190,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             borderRadius: '50%',
                             border: 'none',
                             width: '16px',
-                            height: '16px'
+                            height: '16px',
+                            display: 'inline-block',
+                            marginLeft: '10px'
                         } })],
                     help: __('This option let you add custom style for current paragraph. (Front-end only!)'),
                     value: props.attributes.customStyle,
