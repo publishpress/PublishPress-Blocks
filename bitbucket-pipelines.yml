@@ -16,7 +16,7 @@ pipelines:
         - phpcs -s .
     codeception_core_install:
     - step: &shared_codeception_core_install
-        name: Codeception
+        name: Codeception WP latest core install
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -30,7 +30,7 @@ pipelines:
         - wordpress
     codeception_core_update:
     - step: &shared_codeception_core_update
-        name: Codeception
+        name: Codeception WP latest core update
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -44,7 +44,7 @@ pipelines:
         - wordpress
     codeception_plugin_install:
     - step: &shared_codeception_plugin_install
-        name: Codeception
+        name: Codeception WP latest plugin install
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -58,7 +58,7 @@ pipelines:
         - wordpress
     codeception_plugin_update:
     - step: &shared_codeception_plugin_update
-        name: Codeception
+        name: Codeception WP latest plugin update
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -72,7 +72,7 @@ pipelines:
         - wordpress
     codeception_49_install:
     - step: &shared_codeception_49_install
-        name: Codeception
+        name: Codeception WP 4.9 plugin install
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -86,7 +86,7 @@ pipelines:
         - wordpress49
     codeception_49_update:
     - step: &shared_codeception_49_update
-        name: Codeception
+        name: Codeception WP 4.9 plugin update
         image: joomunited/codeception
         script:
         - wait_services.sh
