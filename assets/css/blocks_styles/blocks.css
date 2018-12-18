@@ -1006,3 +1006,44 @@ hr.wp-block-separator {
 #editor .editor-block-list__block-edit:hover::after {
     opacity: 0.5;
 }
+
+#editor .advgb-styles-item {
+    cursor: pointer;
+    padding: 3px;
+    margin-bottom: 3px;
+    min-height: 30px;
+    border-bottom: 3px solid transparent;
+}
+
+#editor .advgb-styles-item.selected {
+    background-color: #a3d6ff;
+}
+
+#editor .advgb-styles-item:hover {
+    border-bottom-color: #2196f3;
+}
+
+#editor div[data-block] > * {
+    position: relative;
+    z-index: 3;
+}
+
+#editor div[data-block]:before, #editor div[data-block]:after {
+    content: '';
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    left: -2%;
+    z-index: 0;
+    width: 104%;
+    height: 50px;
+    background-repeat: no-repeat;
+}
+
+#editor div[data-block]:before {
+    bottom: 100%;
+}
+
+#editor div[data-block]:after {
+    top: 100%;
+}
