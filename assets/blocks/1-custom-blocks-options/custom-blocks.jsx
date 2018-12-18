@@ -250,6 +250,9 @@
                 blockTopDividerRotateY: {
                     type: 'boolean',
                 },
+                blockTopDividerOnTop: {
+                    type: 'boolean',
+                },
                 blockBottomDivider: {
                     type: 'string',
                 },
@@ -263,6 +266,9 @@
                     type: 'boolean',
                 },
                 blockBottomDividerRotateY: {
+                    type: 'boolean',
+                },
+                blockBottomDividerOnTop: {
                     type: 'boolean',
                 },
             } );
@@ -292,11 +298,13 @@
                 blockTopDividerHeight,
                 blockTopDividerRotateX,
                 blockTopDividerRotateY,
+                blockTopDividerOnTop,
                 blockBottomDivider,
                 blockBottomDividerColor,
                 blockBottomDividerHeight,
                 blockBottomDividerRotateX,
                 blockBottomDividerRotateY,
+                blockBottomDividerOnTop,
             } = attributes;
 
             const topDividerMod = [
@@ -518,6 +526,12 @@
                                                 checked={ blockTopDividerRotateY }
                                                 onChange={ () => setAttributes( { blockTopDividerRotateY: !blockTopDividerRotateY } ) }
                                             />
+                                            <ToggleControl
+                                                label={ __( 'Divider on top' ) }
+                                                help={ __( 'Show divider on top of text' ) }
+                                                checked={ blockTopDividerOnTop }
+                                                onChange={ () => setAttributes( { blockTopDividerOnTop: !blockTopDividerOnTop } ) }
+                                            />
                                         </Fragment>
                                         : __( ' Choose styles first' )
                                         }
@@ -577,6 +591,12 @@
                                                     checked={ blockBottomDividerRotateY }
                                                     onChange={ () => setAttributes( { blockBottomDividerRotateY: !blockBottomDividerRotateY } ) }
                                                 />
+                                                <ToggleControl
+                                                    label={ __( 'Divider on top' ) }
+                                                    help={ __( 'Show divider on top of text' ) }
+                                                    checked={ blockBottomDividerOnTop }
+                                                    onChange={ () => setAttributes( { blockBottomDividerOnTop: !blockBottomDividerOnTop } ) }
+                                                />
                                             </Fragment>
                                             : __( ' Choose styles first' )
                                         }
@@ -607,11 +627,13 @@
                         `#editor div[data-block="${clientId}"]:before {
                             background-image: url(${topDividerURI});
                             height: ${blockTopDividerHeight}px;
+                            z-index: ${blockTopDividerOnTop ? 5 : 0};
                         }`}
                         {blockBottomDivider &&
                         `#editor div[data-block="${clientId}"]:after {
                             background-image: url(${bottomDividerURI});
                             height: ${blockBottomDividerHeight}px;
+                            z-index: ${blockBottomDividerOnTop ? 5 : 0};
                         }`}
                     </style>
                 </Fragment>

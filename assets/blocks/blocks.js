@@ -359,6 +359,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 blockTopDividerRotateY: {
                     type: 'boolean'
                 },
+                blockTopDividerOnTop: {
+                    type: 'boolean'
+                },
                 blockBottomDivider: {
                     type: 'string'
                 },
@@ -372,6 +375,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'boolean'
                 },
                 blockBottomDividerRotateY: {
+                    type: 'boolean'
+                },
+                blockBottomDividerOnTop: {
                     type: 'boolean'
                 }
             });
@@ -402,11 +408,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 blockTopDividerHeight = attributes.blockTopDividerHeight,
                 blockTopDividerRotateX = attributes.blockTopDividerRotateX,
                 blockTopDividerRotateY = attributes.blockTopDividerRotateY,
+                blockTopDividerOnTop = attributes.blockTopDividerOnTop,
                 blockBottomDivider = attributes.blockBottomDivider,
                 blockBottomDividerColor = attributes.blockBottomDividerColor,
                 blockBottomDividerHeight = attributes.blockBottomDividerHeight,
                 blockBottomDividerRotateX = attributes.blockBottomDividerRotateX,
-                blockBottomDividerRotateY = attributes.blockBottomDividerRotateY;
+                blockBottomDividerRotateY = attributes.blockBottomDividerRotateY,
+                blockBottomDividerOnTop = attributes.blockBottomDividerOnTop;
 
 
             var topDividerMod = [blockTopDividerRotateX && 'rotateX(180deg)', blockTopDividerRotateY && 'rotateY(180deg)'].filter(Boolean).join(' ');
@@ -667,6 +675,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                         onChange: function onChange() {
                                             return setAttributes({ blockTopDividerRotateY: !blockTopDividerRotateY });
                                         }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Divider on top'),
+                                        help: __('Show divider on top of text'),
+                                        checked: blockTopDividerOnTop,
+                                        onChange: function onChange() {
+                                            return setAttributes({ blockTopDividerOnTop: !blockTopDividerOnTop });
+                                        }
                                     })
                                 ) : __(' Choose styles first')
                             )
@@ -755,6 +771,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                         onChange: function onChange() {
                                             return setAttributes({ blockBottomDividerRotateY: !blockBottomDividerRotateY });
                                         }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Divider on top'),
+                                        help: __('Show divider on top of text'),
+                                        checked: blockBottomDividerOnTop,
+                                        onChange: function onChange() {
+                                            return setAttributes({ blockBottomDividerOnTop: !blockBottomDividerOnTop });
+                                        }
                                     })
                                 ) : __(' Choose styles first')
                             )
@@ -768,8 +792,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     "#block-" + clientId + " > .editor-block-list__block-edit::before {\n                            background-color: " + blockBgColor + ";\n                            background-image: url(" + blockBgImage + ");\n                            background-size: " + (blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize) + ";\n                            background-position: " + blockBgImageAlignV + " " + blockBgImageAlignH + ";\n                        }",
                     "#block-" + clientId + " > .editor-block-list__block-edit::after {\n                            background-color: " + blockOverlayColor + ";\n                            " + (blockOverlayDisplay && "opacity: " + blockOverlayOpacity / 100 + ";") + "\n                        }",
                     !blockOverlayDisplay && "#block-" + clientId + " > .editor-block-list__block-edit:hover::after {\n                            opacity: " + blockOverlayOpacity / 100 + ";\n                        }",
-                    blockTopDivider && "#editor div[data-block=\"" + clientId + "\"]:before {\n                            background-image: url(" + topDividerURI + ");\n                            height: " + blockTopDividerHeight + "px;\n                        }",
-                    blockBottomDivider && "#editor div[data-block=\"" + clientId + "\"]:after {\n                            background-image: url(" + bottomDividerURI + ");\n                            height: " + blockBottomDividerHeight + "px;\n                        }"
+                    blockTopDivider && "#editor div[data-block=\"" + clientId + "\"]:before {\n                            background-image: url(" + topDividerURI + ");\n                            height: " + blockTopDividerHeight + "px;\n                            z-index: " + (blockTopDividerOnTop ? 5 : 0) + ";\n                        }",
+                    blockBottomDivider && "#editor div[data-block=\"" + clientId + "\"]:after {\n                            background-image: url(" + bottomDividerURI + ");\n                            height: " + blockBottomDividerHeight + "px;\n                            z-index: " + (blockBottomDividerOnTop ? 5 : 0) + ";\n                        }"
                 )
             );
         };
