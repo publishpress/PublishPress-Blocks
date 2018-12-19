@@ -667,7 +667,25 @@
 
     // Apply custom styles on front-end
     addFilter( 'blocks.getSaveContent.extraProps', 'advgb/saveExtraBlocksStyles', function ( extraProps, blockType, attributes ) {
+        const {
+            blockWidth,
+            blockBgColor,
+            blockBgImage,
+            blockBgImageSize,
+            blockBgImageSizeCustom,
+            blockBgImageAlignH,
+            blockBgImageAlignV,
+        } = attributes;
 
+        extraProps.style = {
+            ...extraProps.style,
+            width: blockWidth ? blockWidth + '%' : undefined,
+            backgroundColor: blockBgColor,
+            backgroundImage: blockBgImage ? `url(${blockBgImage})` : undefined,
+            backgroundSize: blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize,
+            backgroundPosition: (blockBgImageAlignV || blockBgImageAlignH) ? `${blockBgImageAlignV || ''} ${blockBgImageAlignH || ''}` : undefined,
+            backgroundRepeat: blockBgImage ? 'no-repeat' : undefined,
+        } ;
 
         return extraProps;
     } );

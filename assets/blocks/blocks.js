@@ -827,6 +827,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     // Apply custom styles on front-end
     addFilter('blocks.getSaveContent.extraProps', 'advgb/saveExtraBlocksStyles', function (extraProps, blockType, attributes) {
+        var blockWidth = attributes.blockWidth,
+            blockBgColor = attributes.blockBgColor,
+            blockBgImage = attributes.blockBgImage,
+            blockBgImageSize = attributes.blockBgImageSize,
+            blockBgImageSizeCustom = attributes.blockBgImageSizeCustom,
+            blockBgImageAlignH = attributes.blockBgImageAlignH,
+            blockBgImageAlignV = attributes.blockBgImageAlignV;
+
+
+        extraProps.style = _extends({}, extraProps.style, {
+            width: blockWidth ? blockWidth + '%' : undefined,
+            backgroundColor: blockBgColor,
+            backgroundImage: blockBgImage ? "url(" + blockBgImage + ")" : undefined,
+            backgroundSize: blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize,
+            backgroundPosition: blockBgImageAlignV || blockBgImageAlignH ? (blockBgImageAlignV || '') + " " + (blockBgImageAlignH || '') : undefined,
+            backgroundRepeat: blockBgImage ? 'no-repeat' : undefined
+        });
 
         return extraProps;
     });
