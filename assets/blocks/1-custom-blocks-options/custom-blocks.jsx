@@ -244,6 +244,9 @@
                 blockTopDividerHeight: {
                     type: 'number',
                 },
+                blockTopDividerPosition: {
+                    type: 'number',
+                },
                 blockTopDividerRotateX: {
                     type: 'boolean',
                 },
@@ -260,6 +263,9 @@
                     type: 'string',
                 },
                 blockBottomDividerHeight: {
+                    type: 'number',
+                },
+                blockBottomDividerPosition: {
                     type: 'number',
                 },
                 blockBottomDividerRotateX: {
@@ -296,12 +302,14 @@
                 blockTopDivider,
                 blockTopDividerColor,
                 blockTopDividerHeight,
+                blockTopDividerPosition,
                 blockTopDividerRotateX,
                 blockTopDividerRotateY,
                 blockTopDividerOnTop,
                 blockBottomDivider,
                 blockBottomDividerColor,
                 blockBottomDividerHeight,
+                blockBottomDividerPosition,
                 blockBottomDividerRotateX,
                 blockBottomDividerRotateY,
                 blockBottomDividerOnTop,
@@ -516,6 +524,13 @@
                                                 max={ 500 }
                                                 onChange={ (value) => setAttributes( { blockTopDividerHeight: value } ) }
                                             />
+                                            <RangeControl
+                                                label={ __( 'Divider position' ) }
+                                                value={ blockTopDividerPosition }
+                                                min={ 0 }
+                                                max={ 99 }
+                                                onChange={ (value) => setAttributes( { blockTopDividerPosition: value } ) }
+                                            />
                                             <ToggleControl
                                                 label={ __( 'Flip Horizontal' ) }
                                                 checked={ blockTopDividerRotateX }
@@ -581,6 +596,13 @@
                                                     max={ 500 }
                                                     onChange={ (value) => setAttributes( { blockBottomDividerHeight: value } ) }
                                                 />
+                                                <RangeControl
+                                                    label={ __( 'Divider position' ) }
+                                                    value={ blockBottomDividerPosition }
+                                                    min={ 0 }
+                                                    max={ 99 }
+                                                    onChange={ (value) => setAttributes( { blockBottomDividerPosition: value } ) }
+                                                />
                                                 <ToggleControl
                                                     label={ __( 'Flip Horizontal' ) }
                                                     checked={ blockBottomDividerRotateX }
@@ -628,12 +650,14 @@
                             background-image: url(${topDividerURI});
                             height: ${blockTopDividerHeight}px;
                             z-index: ${blockTopDividerOnTop ? 5 : 0};
+                            bottom: calc(100% - ${blockTopDividerPosition ? blockTopDividerPosition : 0}%);
                         }`}
                         {blockBottomDivider &&
                         `#editor div[data-block="${clientId}"]:after {
                             background-image: url(${bottomDividerURI});
                             height: ${blockBottomDividerHeight}px;
                             z-index: ${blockBottomDividerOnTop ? 5 : 0};
+                            top: calc(100% - ${blockBottomDividerPosition ? blockBottomDividerPosition : 0}%);
                         }`}
                     </style>
                 </Fragment>

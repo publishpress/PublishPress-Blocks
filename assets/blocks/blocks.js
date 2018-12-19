@@ -353,6 +353,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 blockTopDividerHeight: {
                     type: 'number'
                 },
+                blockTopDividerPosition: {
+                    type: 'number'
+                },
                 blockTopDividerRotateX: {
                     type: 'boolean'
                 },
@@ -369,6 +372,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'string'
                 },
                 blockBottomDividerHeight: {
+                    type: 'number'
+                },
+                blockBottomDividerPosition: {
                     type: 'number'
                 },
                 blockBottomDividerRotateX: {
@@ -406,12 +412,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 blockTopDivider = attributes.blockTopDivider,
                 blockTopDividerColor = attributes.blockTopDividerColor,
                 blockTopDividerHeight = attributes.blockTopDividerHeight,
+                blockTopDividerPosition = attributes.blockTopDividerPosition,
                 blockTopDividerRotateX = attributes.blockTopDividerRotateX,
                 blockTopDividerRotateY = attributes.blockTopDividerRotateY,
                 blockTopDividerOnTop = attributes.blockTopDividerOnTop,
                 blockBottomDivider = attributes.blockBottomDivider,
                 blockBottomDividerColor = attributes.blockBottomDividerColor,
                 blockBottomDividerHeight = attributes.blockBottomDividerHeight,
+                blockBottomDividerPosition = attributes.blockBottomDividerPosition,
                 blockBottomDividerRotateX = attributes.blockBottomDividerRotateX,
                 blockBottomDividerRotateY = attributes.blockBottomDividerRotateY,
                 blockBottomDividerOnTop = attributes.blockBottomDividerOnTop;
@@ -662,6 +670,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                             return setAttributes({ blockTopDividerHeight: value });
                                         }
                                     }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Divider position'),
+                                        value: blockTopDividerPosition,
+                                        min: 0,
+                                        max: 99,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ blockTopDividerPosition: value });
+                                        }
+                                    }),
                                     React.createElement(ToggleControl, {
                                         label: __('Flip Horizontal'),
                                         checked: blockTopDividerRotateX,
@@ -758,6 +775,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                             return setAttributes({ blockBottomDividerHeight: value });
                                         }
                                     }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Divider position'),
+                                        value: blockBottomDividerPosition,
+                                        min: 0,
+                                        max: 99,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ blockBottomDividerPosition: value });
+                                        }
+                                    }),
                                     React.createElement(ToggleControl, {
                                         label: __('Flip Horizontal'),
                                         checked: blockBottomDividerRotateX,
@@ -792,8 +818,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     "#block-" + clientId + " > .editor-block-list__block-edit::before {\n                            background-color: " + blockBgColor + ";\n                            background-image: url(" + blockBgImage + ");\n                            background-size: " + (blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize) + ";\n                            background-position: " + blockBgImageAlignV + " " + blockBgImageAlignH + ";\n                        }",
                     "#block-" + clientId + " > .editor-block-list__block-edit::after {\n                            background-color: " + blockOverlayColor + ";\n                            " + (blockOverlayDisplay && "opacity: " + blockOverlayOpacity / 100 + ";") + "\n                        }",
                     !blockOverlayDisplay && "#block-" + clientId + " > .editor-block-list__block-edit:hover::after {\n                            opacity: " + blockOverlayOpacity / 100 + ";\n                        }",
-                    blockTopDivider && "#editor div[data-block=\"" + clientId + "\"]:before {\n                            background-image: url(" + topDividerURI + ");\n                            height: " + blockTopDividerHeight + "px;\n                            z-index: " + (blockTopDividerOnTop ? 5 : 0) + ";\n                        }",
-                    blockBottomDivider && "#editor div[data-block=\"" + clientId + "\"]:after {\n                            background-image: url(" + bottomDividerURI + ");\n                            height: " + blockBottomDividerHeight + "px;\n                            z-index: " + (blockBottomDividerOnTop ? 5 : 0) + ";\n                        }"
+                    blockTopDivider && "#editor div[data-block=\"" + clientId + "\"]:before {\n                            background-image: url(" + topDividerURI + ");\n                            height: " + blockTopDividerHeight + "px;\n                            z-index: " + (blockTopDividerOnTop ? 5 : 0) + ";\n                            bottom: calc(100% - " + (blockTopDividerPosition ? blockTopDividerPosition : 0) + "%);\n                        }",
+                    blockBottomDivider && "#editor div[data-block=\"" + clientId + "\"]:after {\n                            background-image: url(" + bottomDividerURI + ");\n                            height: " + blockBottomDividerHeight + "px;\n                            z-index: " + (blockBottomDividerOnTop ? 5 : 0) + ";\n                            top: calc(100% - " + (blockBottomDividerPosition ? blockBottomDividerPosition : 0) + "%);\n                        }"
                 )
             );
         };
