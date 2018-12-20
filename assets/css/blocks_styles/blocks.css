@@ -1003,10 +1003,6 @@ hr.wp-block-separator {
     opacity: 0;
 }
 
-#editor .editor-block-list__block-edit:hover::after {
-    opacity: 0.5;
-}
-
 #editor .advgb-styles-item {
     cursor: pointer;
     padding: 3px;

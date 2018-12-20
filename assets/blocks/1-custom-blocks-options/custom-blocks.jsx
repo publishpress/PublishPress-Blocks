@@ -202,6 +202,9 @@
     addFilter( 'blocks.registerBlockType', 'advgb/registerExtraBlocksAttrs', function ( settings ) {
         if (!!settings.attributes) {
             settings.attributes = Object.assign( settings.attributes, {
+                blockID: {
+                    type: 'string',
+                },
                 blockWidth: {
                     type: 'number',
                 },
@@ -288,6 +291,7 @@
         return ( props ) => {
             const { attributes, setAttributes, clientId } = props;
             const {
+                blockID,
                 blockWidth,
                 blockBgColor,
                 blockBgImage,
@@ -377,7 +381,10 @@
                                         {
                                             label: __( 'Overlay color' ),
                                             value: blockOverlayColor,
-                                            onChange: ( value ) => setAttributes( { blockOverlayColor: value } ),
+                                            onChange: ( value ) => {
+                                                if (!blockID) setAttributes( { blockID: 'advgb-block-' + clientId } );
+                                                return setAttributes( { blockOverlayColor: value } );
+                                            },
                                         },
                                     ] }
                                 />
@@ -639,11 +646,11 @@
                         }`}
                         {`#block-${clientId} > .editor-block-list__block-edit::after {
                             background-color: ${blockOverlayColor};
-                            ${blockOverlayDisplay && `opacity: ${blockOverlayOpacity/100};`}
+                            ${blockOverlayDisplay && `opacity: ${blockOverlayOpacity ? blockOverlayOpacity/100 : 0.5};`}
                         }`}
                         {!blockOverlayDisplay &&
                         `#block-${clientId} > .editor-block-list__block-edit:hover::after {
-                            opacity: ${blockOverlayOpacity/100};
+                            opacity: ${blockOverlayOpacity ? blockOverlayOpacity/100 : 0.5};
                         }`}
                         {blockTopDivider &&
                         `#editor div[data-block="${clientId}"]:before {
@@ -668,6 +675,7 @@
     // Apply custom styles on front-end
     addFilter( 'blocks.getSaveContent.extraProps', 'advgb/saveExtraBlocksStyles', function ( extraProps, blockType, attributes ) {
         const {
+            blockID,
             blockWidth,
             blockBgColor,
             blockBgImage,
@@ -675,6 +683,7 @@
             blockBgImageSizeCustom,
             blockBgImageAlignH,
             blockBgImageAlignV,
+            blockOverlayColor
         } = attributes;
 
         extraProps.style = {
@@ -685,8 +694,15 @@
             backgroundSize: blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize,
             backgroundPosition: (blockBgImageAlignV || blockBgImageAlignH) ? `${blockBgImageAlignV || ''} ${blockBgImageAlignH || ''}` : undefined,
             backgroundRepeat: blockBgImage ? 'no-repeat' : undefined,
-        } ;
+        };
+
+        extraProps.id = blockOverlayColor ? blockID : extraProps.id;
 
         return extraProps;
     } );
+
+    addFilter( 'blocks.getSaveElement', 'advgb/saveExtraBlocksElement', function ( SaveElem, blockType, attributes ) {
+
+        return SaveElem;
+    } )
 })( wp.i18n, wp.hooks, wp.editor, wp.components, wp.element );

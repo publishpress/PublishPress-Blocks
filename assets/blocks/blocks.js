@@ -311,6 +311,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     addFilter('blocks.registerBlockType', 'advgb/registerExtraBlocksAttrs', function (settings) {
         if (!!settings.attributes) {
             settings.attributes = _extends(settings.attributes, {
+                blockID: {
+                    type: 'string'
+                },
                 blockWidth: {
                     type: 'number'
                 },
@@ -398,7 +401,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var attributes = props.attributes,
                 setAttributes = props.setAttributes,
                 clientId = props.clientId;
-            var blockWidth = attributes.blockWidth,
+            var blockID = attributes.blockID,
+                blockWidth = attributes.blockWidth,
                 blockBgColor = attributes.blockBgColor,
                 blockBgImage = attributes.blockBgImage,
                 blockBgImageID = attributes.blockBgImageID,
@@ -492,6 +496,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                 label: __('Overlay color'),
                                 value: blockOverlayColor,
                                 onChange: function onChange(value) {
+                                    if (!blockID) setAttributes({ blockID: 'advgb-block-' + clientId });
                                     return setAttributes({ blockOverlayColor: value });
                                 }
                             }]
@@ -816,8 +821,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     null,
                     "#block-" + clientId + " .editor-block-list__block-edit {\n                            max-width: " + (blockWidth ? parseInt(blockWidth) + 8 : undefined) + "%;\n                        }",
                     "#block-" + clientId + " > .editor-block-list__block-edit::before {\n                            background-color: " + blockBgColor + ";\n                            background-image: url(" + blockBgImage + ");\n                            background-size: " + (blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize) + ";\n                            background-position: " + blockBgImageAlignV + " " + blockBgImageAlignH + ";\n                        }",
-                    "#block-" + clientId + " > .editor-block-list__block-edit::after {\n                            background-color: " + blockOverlayColor + ";\n                            " + (blockOverlayDisplay && "opacity: " + blockOverlayOpacity / 100 + ";") + "\n                        }",
-                    !blockOverlayDisplay && "#block-" + clientId + " > .editor-block-list__block-edit:hover::after {\n                            opacity: " + blockOverlayOpacity / 100 + ";\n                        }",
+                    "#block-" + clientId + " > .editor-block-list__block-edit::after {\n                            background-color: " + blockOverlayColor + ";\n                            " + (blockOverlayDisplay && "opacity: " + (blockOverlayOpacity ? blockOverlayOpacity / 100 : 0.5) + ";") + "\n                        }",
+                    !blockOverlayDisplay && "#block-" + clientId + " > .editor-block-list__block-edit:hover::after {\n                            opacity: " + (blockOverlayOpacity ? blockOverlayOpacity / 100 : 0.5) + ";\n                        }",
                     blockTopDivider && "#editor div[data-block=\"" + clientId + "\"]:before {\n                            background-image: url(" + topDividerURI + ");\n                            height: " + blockTopDividerHeight + "px;\n                            z-index: " + (blockTopDividerOnTop ? 5 : 0) + ";\n                            bottom: calc(100% - " + (blockTopDividerPosition ? blockTopDividerPosition : 0) + "%);\n                        }",
                     blockBottomDivider && "#editor div[data-block=\"" + clientId + "\"]:after {\n                            background-image: url(" + bottomDividerURI + ");\n                            height: " + blockBottomDividerHeight + "px;\n                            z-index: " + (blockBottomDividerOnTop ? 5 : 0) + ";\n                            top: calc(100% - " + (blockBottomDividerPosition ? blockBottomDividerPosition : 0) + "%);\n                        }"
                 )
@@ -827,13 +832,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     // Apply custom styles on front-end
     addFilter('blocks.getSaveContent.extraProps', 'advgb/saveExtraBlocksStyles', function (extraProps, blockType, attributes) {
-        var blockWidth = attributes.blockWidth,
+        var blockID = attributes.blockID,
+            blockWidth = attributes.blockWidth,
             blockBgColor = attributes.blockBgColor,
             blockBgImage = attributes.blockBgImage,
             blockBgImageSize = attributes.blockBgImageSize,
             blockBgImageSizeCustom = attributes.blockBgImageSizeCustom,
             blockBgImageAlignH = attributes.blockBgImageAlignH,
-            blockBgImageAlignV = attributes.blockBgImageAlignV;
+            blockBgImageAlignV = attributes.blockBgImageAlignV,
+            blockOverlayColor = attributes.blockOverlayColor;
 
 
         extraProps.style = _extends({}, extraProps.style, {
@@ -845,7 +852,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             backgroundRepeat: blockBgImage ? 'no-repeat' : undefined
         });
 
+        extraProps.id = blockOverlayColor ? blockID : extraProps.id;
+
         return extraProps;
+    });
+
+    addFilter('blocks.getSaveElement', 'advgb/saveExtraBlocksElement', function (SaveElem, blockType, attributes) {
+
+        return SaveElem;
     });
 })(wp.i18n, wp.hooks, wp.editor, wp.components, wp.element);
 
