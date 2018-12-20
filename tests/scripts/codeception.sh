@@ -35,8 +35,8 @@ function clean_install () {
         wp plugin deactivate --allow-root advanced-gutenberg 2>/dev/null ;
 
         # Remove ADVG profiles
-        wp post delete --allow-root \$(wp post list --allow-root --post_type='advgb_profiles' --format=ids 2>/dev/null)  2>/dev/null || true;
-        # Remove ADVG profiles
+        wp post delete --force --allow-root \$(wp post list --allow-root --post_type='advgb_profiles' --format=ids 2>/dev/null)  2>/dev/null || true;
+        # Remove existing posts
         wp post delete --allow-root \$(wp post list --allow-root --post_type='post' --format=ids 2>/dev/null)  2>/dev/null || true;
 
         # Reset error file
