@@ -51,7 +51,8 @@ class RecentPostsBlockCest
         $I->click('Recent Posts');
         $I->waitForText('Recent Posts');
 
-        $I->fillField('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()', 5);
+        $I->waitForElementVisible('//label[text()="Number of items"]/following-sibling::input[@type="number"]');
+        $I->fillField('//label[text()="Number of items"]/following-sibling::input[@type="number"]', 5);
 
         $I->waitForElementNotVisible('//article[@class="advgb-recent-post"][6]');
 
