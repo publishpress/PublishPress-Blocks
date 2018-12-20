@@ -97,6 +97,9 @@ for WP_VERSION in "${WP_VERSIONS[@]}"; do
         for GUTENBERG_TYPE in "${GUTENBERG_TYPES[@]}"; do
             set +e
 
+            # Remove previous codeception fail outputs
+            rm "$PLUGIN_DIR/tests/_output/"*.fail.*
+
             start_containers
 
             set -e
