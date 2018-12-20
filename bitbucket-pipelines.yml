@@ -76,7 +76,7 @@ pipelines:
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - export WP_VERSION="4.9.8" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="install"
+        - export WP_VERSION="4.9" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="install"
         - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
@@ -90,7 +90,7 @@ pipelines:
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - export WP_VERSION="4.9.8" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="update"
+        - export WP_VERSION="4.9" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="update"
         - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
@@ -168,4 +168,4 @@ definitions:
     wordpress:
       image: joomunited/wordpress_cgi:latest
     wordpress49:
-      image: joomunited/wordpress_cgi:4.9.8
+      image: joomunited/wordpress_cgi:4.9

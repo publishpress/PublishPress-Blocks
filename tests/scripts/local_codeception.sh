@@ -28,7 +28,7 @@ if [[ -z "$PHP_VERSIONS" ]]; then
 fi
 
 if [[ -z "$WP_VERSIONS" ]]; then
-    WP_VERSIONS=("4.9.8" "latest")
+    WP_VERSIONS=("4.9" "latest")
 fi
 
 if [[ -z "$GUTENBERG_TYPES" ]]; then
@@ -53,7 +53,7 @@ function start_containers () {
     docker network create --subnet=172.20.0.0/24 pipelines
     docker run --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d --network pipelines --ip $MYSQL_IP mysql:5.7.22
     docker run --name wordpress_cgi --link mysql -d -e MYSQL_HOST=mysql -e WWW_HOST=$WWW_IP --network=pipelines --ip $WWW_IP joomunited/wordpress_cgi:$WP_VERSION
-    docker run --name chromedriver --network=pipelines --ip $CHROMEDRIVER_IP -d joomunited/chromedriver:latest
+    docker run --name chromedriver --network=pipelines --ip $CHROMEDRIVER_IP -d --shm-size=1024m joomunited/chromedriver:latest
 
     max_steps=20
     time_to_wait=5
