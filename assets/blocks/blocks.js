@@ -497,13 +497,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                 value: blockOverlayColor,
                                 onChange: function onChange(value) {
                                     if (!blockID) setAttributes({ blockID: 'advgb-block-' + clientId });
+                                    if (!value) setAttributes({ blockID: undefined });
                                     return setAttributes({ blockOverlayColor: value });
                                 }
                             }]
                         }),
                         blockOverlayColor && React.createElement(
-                            Fragment,
-                            null,
+                            PanelBody,
+                            { title: __('Overlay settings') },
                             React.createElement(RangeControl, {
                                 label: __('Overlay opacity (%)'),
                                 value: blockOverlayOpacity,
@@ -847,8 +848,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             width: blockWidth ? blockWidth + '%' : undefined,
             backgroundColor: blockBgColor,
             backgroundImage: blockBgImage ? "url(" + blockBgImage + ")" : undefined,
-            backgroundSize: blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize,
-            backgroundPosition: blockBgImageAlignV || blockBgImageAlignH ? (blockBgImageAlignV || '') + " " + (blockBgImageAlignH || '') : undefined,
+            backgroundSize: blockBgImage ? blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize : undefined,
+            backgroundPosition: blockBgImage ? blockBgImageAlignV || blockBgImageAlignH ? (blockBgImageAlignV || '') + " " + (blockBgImageAlignH || '') : undefined : undefined,
             backgroundRepeat: blockBgImage ? 'no-repeat' : undefined
         });
 

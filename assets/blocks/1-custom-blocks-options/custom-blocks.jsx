@@ -383,13 +383,14 @@
                                             value: blockOverlayColor,
                                             onChange: ( value ) => {
                                                 if (!blockID) setAttributes( { blockID: 'advgb-block-' + clientId } );
+                                                if (!value) setAttributes( { blockID: undefined } );
                                                 return setAttributes( { blockOverlayColor: value } );
                                             },
                                         },
                                     ] }
                                 />
                                 {blockOverlayColor && (
-                                    <Fragment>
+                                    <PanelBody title={ __( 'Overlay settings' ) }>
                                         <RangeControl
                                             label={ __( 'Overlay opacity (%)' ) }
                                             value={ blockOverlayOpacity }
@@ -402,7 +403,7 @@
                                             checked={ blockOverlayDisplay }
                                             onChange={ () => setAttributes( { blockOverlayDisplay: !blockOverlayDisplay } ) }
                                         />
-                                    </Fragment>
+                                    </PanelBody>
                                 ) }
                                 <PanelBody title={ __( 'Block Background' ) } initialOpen={ false }>
                                     <MediaUpload
@@ -691,8 +692,8 @@
             width: blockWidth ? blockWidth + '%' : undefined,
             backgroundColor: blockBgColor,
             backgroundImage: blockBgImage ? `url(${blockBgImage})` : undefined,
-            backgroundSize: blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize,
-            backgroundPosition: (blockBgImageAlignV || blockBgImageAlignH) ? `${blockBgImageAlignV || ''} ${blockBgImageAlignH || ''}` : undefined,
+            backgroundSize: blockBgImage ? ( blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize ) : undefined,
+            backgroundPosition: blockBgImage ? ( (blockBgImageAlignV || blockBgImageAlignH) ? `${blockBgImageAlignV || ''} ${blockBgImageAlignH || ''}` : undefined ) : undefined,
             backgroundRepeat: blockBgImage ? 'no-repeat' : undefined,
         };
 
