@@ -646,6 +646,7 @@
                             background-position: ${blockBgImageAlignV} ${blockBgImageAlignH};
                         }`}
                         {`#block-${clientId} > .editor-block-list__block-edit::after {
+                            z-index: 9;
                             background-color: ${blockOverlayColor};
                             ${blockOverlayDisplay && `opacity: ${blockOverlayOpacity ? blockOverlayOpacity/100 : 0.5};`}
                         }`}
@@ -703,6 +704,47 @@
     } );
 
     addFilter( 'blocks.getSaveElement', 'advgb/saveExtraBlocksElement', function ( SaveElem, blockType, attributes ) {
+        const {
+            blockID,
+            blockOverlayDisplay,
+            blockOverlayColor,
+            blockOverlayOpacity,
+            blockTopDivider,
+            blockTopDividerColor,
+            blockTopDividerHeight,
+            blockTopDividerPosition,
+            blockTopDividerRotateX,
+            blockTopDividerRotateY,
+            blockTopDividerOnTop,
+            blockBottomDivider,
+            blockBottomDividerColor,
+            blockBottomDividerHeight,
+            blockBottomDividerPosition,
+            blockBottomDividerRotateX,
+            blockBottomDividerRotateY,
+            blockBottomDividerOnTop,
+        } = attributes;
+
+        if (blockOverlayColor || blockTopDivider || blockBottomDivider) {
+            return (
+                <div className="advgb-block-container" style={ { position: 'relative', zIndex: 5 } }>
+                    {SaveElem}
+                    {blockOverlayColor && (
+                        <style>
+                            {`#${blockID}:before {
+                                content: '';display: block;position: absolute;pointer-events: none;
+                                top: 0;left:0;right:0;bottom: 0;opacity: 0;z-index: 9;
+                                background-color: ${blockOverlayColor};
+                                ${blockOverlayDisplay && `opacity: ${blockOverlayOpacity ? blockOverlayOpacity/100 : 0.5};`}
+                            }`}
+                            {!blockOverlayDisplay && `#${blockID}:hover:before {
+                                opacity: ${blockOverlayOpacity ? blockOverlayOpacity/100 : 0.5};
+                            }`}
+                        </style>
+                    ) }
+                </div>
+            )
+        }
 
         return SaveElem;
     } )

@@ -822,7 +822,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     null,
                     "#block-" + clientId + " .editor-block-list__block-edit {\n                            max-width: " + (blockWidth ? parseInt(blockWidth) + 8 : undefined) + "%;\n                        }",
                     "#block-" + clientId + " > .editor-block-list__block-edit::before {\n                            background-color: " + blockBgColor + ";\n                            background-image: url(" + blockBgImage + ");\n                            background-size: " + (blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize) + ";\n                            background-position: " + blockBgImageAlignV + " " + blockBgImageAlignH + ";\n                        }",
-                    "#block-" + clientId + " > .editor-block-list__block-edit::after {\n                            background-color: " + blockOverlayColor + ";\n                            " + (blockOverlayDisplay && "opacity: " + (blockOverlayOpacity ? blockOverlayOpacity / 100 : 0.5) + ";") + "\n                        }",
+                    "#block-" + clientId + " > .editor-block-list__block-edit::after {\n                            z-index: 9;\n                            background-color: " + blockOverlayColor + ";\n                            " + (blockOverlayDisplay && "opacity: " + (blockOverlayOpacity ? blockOverlayOpacity / 100 : 0.5) + ";") + "\n                        }",
                     !blockOverlayDisplay && "#block-" + clientId + " > .editor-block-list__block-edit:hover::after {\n                            opacity: " + (blockOverlayOpacity ? blockOverlayOpacity / 100 : 0.5) + ";\n                        }",
                     blockTopDivider && "#editor div[data-block=\"" + clientId + "\"]:before {\n                            background-image: url(" + topDividerURI + ");\n                            height: " + blockTopDividerHeight + "px;\n                            z-index: " + (blockTopDividerOnTop ? 5 : 0) + ";\n                            bottom: calc(100% - " + (blockTopDividerPosition ? blockTopDividerPosition : 0) + "%);\n                        }",
                     blockBottomDivider && "#editor div[data-block=\"" + clientId + "\"]:after {\n                            background-image: url(" + bottomDividerURI + ");\n                            height: " + blockBottomDividerHeight + "px;\n                            z-index: " + (blockBottomDividerOnTop ? 5 : 0) + ";\n                            top: calc(100% - " + (blockBottomDividerPosition ? blockBottomDividerPosition : 0) + "%);\n                        }"
@@ -859,6 +859,39 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     });
 
     addFilter('blocks.getSaveElement', 'advgb/saveExtraBlocksElement', function (SaveElem, blockType, attributes) {
+        var blockID = attributes.blockID,
+            blockOverlayDisplay = attributes.blockOverlayDisplay,
+            blockOverlayColor = attributes.blockOverlayColor,
+            blockOverlayOpacity = attributes.blockOverlayOpacity,
+            blockTopDivider = attributes.blockTopDivider,
+            blockTopDividerColor = attributes.blockTopDividerColor,
+            blockTopDividerHeight = attributes.blockTopDividerHeight,
+            blockTopDividerPosition = attributes.blockTopDividerPosition,
+            blockTopDividerRotateX = attributes.blockTopDividerRotateX,
+            blockTopDividerRotateY = attributes.blockTopDividerRotateY,
+            blockTopDividerOnTop = attributes.blockTopDividerOnTop,
+            blockBottomDivider = attributes.blockBottomDivider,
+            blockBottomDividerColor = attributes.blockBottomDividerColor,
+            blockBottomDividerHeight = attributes.blockBottomDividerHeight,
+            blockBottomDividerPosition = attributes.blockBottomDividerPosition,
+            blockBottomDividerRotateX = attributes.blockBottomDividerRotateX,
+            blockBottomDividerRotateY = attributes.blockBottomDividerRotateY,
+            blockBottomDividerOnTop = attributes.blockBottomDividerOnTop;
+
+
+        if (blockOverlayColor || blockTopDivider || blockBottomDivider) {
+            return React.createElement(
+                "div",
+                { className: "advgb-block-container", style: { position: 'relative', zIndex: 5 } },
+                SaveElem,
+                blockOverlayColor && React.createElement(
+                    "style",
+                    null,
+                    "#" + blockID + ":before {\n                                content: '';display: block;position: absolute;pointer-events: none;\n                                top: 0;left:0;right:0;bottom: 0;opacity: 0;z-index: 9;\n                                background-color: " + blockOverlayColor + ";\n                                " + (blockOverlayDisplay && "opacity: " + (blockOverlayOpacity ? blockOverlayOpacity / 100 : 0.5) + ";") + "\n                            }",
+                    !blockOverlayDisplay && "#" + blockID + ":hover:before {\n                                opacity: " + (blockOverlayOpacity ? blockOverlayOpacity / 100 : 0.5) + ";\n                            }"
+                )
+            );
+        }
 
         return SaveElem;
     });
