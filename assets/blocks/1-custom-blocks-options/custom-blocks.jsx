@@ -535,8 +535,8 @@
                                             <RangeControl
                                                 label={ __( 'Divider position' ) }
                                                 value={ blockTopDividerPosition }
-                                                min={ 0 }
-                                                max={ 99 }
+                                                min={ -100 }
+                                                max={ 100 }
                                                 onChange={ (value) => setAttributes( { blockTopDividerPosition: value } ) }
                                             />
                                             <ToggleControl
@@ -607,8 +607,8 @@
                                                 <RangeControl
                                                     label={ __( 'Divider position' ) }
                                                     value={ blockBottomDividerPosition }
-                                                    min={ 0 }
-                                                    max={ 99 }
+                                                    min={ -100 }
+                                                    max={ 100 }
                                                     onChange={ (value) => setAttributes( { blockBottomDividerPosition: value } ) }
                                                 />
                                                 <ToggleControl
@@ -659,14 +659,14 @@
                             background-image: url(${topDividerURI});
                             height: ${blockTopDividerHeight}px;
                             z-index: ${blockTopDividerOnTop ? 5 : 0};
-                            bottom: calc(100% - ${blockTopDividerPosition ? blockTopDividerPosition : 0}%);
+                            top: calc(0% - ${blockTopDividerPosition ? blockTopDividerPosition : 0}%);
                         }`}
                         {blockBottomDivider &&
                         `#editor div[data-block="${clientId}"]:after {
                             background-image: url(${bottomDividerURI});
                             height: ${blockBottomDividerHeight}px;
                             z-index: ${blockBottomDividerOnTop ? 5 : 0};
-                            top: calc(100% - ${blockBottomDividerPosition ? blockBottomDividerPosition : 0}%);
+                            bottom: calc(0% - ${blockBottomDividerPosition ? blockBottomDividerPosition : 0}%);
                         }`}
                     </style>
                 </Fragment>
@@ -726,9 +726,65 @@
         } = attributes;
 
         if (blockOverlayColor || blockTopDivider || blockBottomDivider) {
+            const topDividerMod = [
+                blockTopDividerRotateX && 'rotateX(180deg)',
+                blockTopDividerRotateY && 'rotateY(180deg)'
+            ].filter( Boolean ).join(' ');
+            const topDividerElm = (
+                <svg width="100%" viewBox="0 0 1280 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+                     style={ {
+                         transform: topDividerMod ? topDividerMod : undefined,
+                     } }
+                >
+                    <g fill={ blockTopDividerColor }>
+                        { DIVIDER_STYLES[ blockTopDivider ] }
+                    </g>
+                </svg>
+            );
+            const topDividerString = blockTopDivider ? renderToString( topDividerElm ).replace(/preserveaspectratio/g, 'preserveAspectRatio').replace(/viewbox/g, 'viewBox') : '';
+            const topDividerURI = topDividerString ? `data:image/svg+xml;base64,${window.btoa(topDividerString)}` : '';
+
+            const bottomDividerMod = [
+                blockBottomDividerRotateX && 'rotateX(180deg)',
+                blockBottomDividerRotateY && 'rotateY(180deg)'
+            ].filter( Boolean ).join( ' ' );
+            const bottomDividerElm = (
+                <svg width="100%" viewBox="0 0 1280 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+                     style={ {
+                         transform: bottomDividerMod ? bottomDividerMod : undefined,
+                     } }
+                >
+                    <g fill={ blockBottomDividerColor }>
+                        { DIVIDER_STYLES[ blockBottomDivider ] }
+                    </g>
+                </svg>
+            );
+            const bottomDividerString = blockBottomDivider ? renderToString( bottomDividerElm ).replace(/preserveaspectratio/g, 'preserveAspectRatio').replace(/viewbox/g, 'viewBox') : '';
+            const bottomDividerURI = bottomDividerString ? `data:image/svg+xml;base64,${window.btoa(bottomDividerString)}` : '';
+
             return (
                 <div className="advgb-block-container" style={ { position: 'relative', zIndex: 5 } }>
+                    {blockTopDivider && (
+                        <div className="advgb-block-top-divider"
+                             style={ {
+                                 backgroundImage: `url(${topDividerURI})`,
+                                 height: blockTopDividerHeight,
+                                 top: `calc(0% - ${blockTopDividerPosition ? blockTopDividerPosition : 0}%)`,
+                                 zIndex: blockTopDividerOnTop ? 5 : 0,
+                             } }
+                        />
+                    ) }
                     {SaveElem}
+                    {blockBottomDivider && (
+                        <div className="advgb-block-bottom-divider"
+                             style={ {
+                                 backgroundImage: `url(${bottomDividerURI})`,
+                                 height: blockBottomDividerHeight,
+                                 bottom: `calc(0% - ${blockBottomDividerPosition ? blockBottomDividerPosition : 0}%)`,
+                                 zIndex: blockBottomDividerOnTop ? 5 : 0,
+                             } }
+                        />
+                    ) }
                     {blockOverlayColor && (
                         <style>
                             {`#${blockID}:before {
