@@ -394,7 +394,7 @@
             const { selectedCell } = this.state;
             const { body } = this.props.attributes;
 
-            if (!selectedCell) return null;
+            if (!selectedCell) return undefined;
 
             const { rowIndex, colIndex } = selectedCell;
 
@@ -412,7 +412,11 @@
 
                 return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : convertedStyles;
             } else {
-                return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : null;
+                if (typeof styles !== 'undefined') {
+                    let convertedStyles = styles[style];
+                }
+
+                return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : undefined;
             }
         }
 

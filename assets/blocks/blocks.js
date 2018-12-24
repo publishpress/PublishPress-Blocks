@@ -3400,7 +3400,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var body = this.props.attributes.body;
 
 
-                if (!selectedCell) return null;
+                if (!selectedCell) return undefined;
 
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
@@ -3420,7 +3420,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     return typeof _convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : _convertedStyles;
                 } else {
-                    return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : null;
+                    if (typeof styles !== 'undefined') {
+                        var _convertedStyles2 = styles[style];
+                    }
+
+                    return typeof convertedStyles === 'undefined' && style === 'borderStyle' ? 'solid' : undefined;
                 }
             }
         }, {
