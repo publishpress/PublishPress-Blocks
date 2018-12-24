@@ -7823,7 +7823,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ),
                         React.createElement(AlignmentToolbar, { value: align, onChange: function onChange(value) {
-                                return setAttributes({ align: value });
+                                return setAttributes({ align: value === undefined ? 'center' : value });
                             } })
                     ),
                     React.createElement(
@@ -7884,7 +7884,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             var newItems = items.map(function (item, index) {
                                                 if (index === currentSelected) {
                                                     item = _extends({}, item, {
-                                                        icon: media.sizes.thumbnail.url,
+                                                        icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
                                                         iconID: media.id
                                                     });
                                                 }
@@ -8032,11 +8032,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: [{ icon: '', iconID: '', iconColor: '', link: '#' }, { icon: '', iconID: '', iconColor: '', link: '#' }, { icon: '', iconID: '', iconColor: '', link: '#' }]
             },
             align: {
-                type: 'string'
+                type: 'string',
+                default: 'center'
             },
             iconSize: {
                 type: 'number',
-                default: 24
+                default: 48
             },
             iconSpace: {
                 type: 'number',
