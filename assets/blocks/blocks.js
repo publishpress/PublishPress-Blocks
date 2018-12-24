@@ -7884,7 +7884,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             var newItems = items.map(function (item, index) {
                                                 if (index === currentSelected) {
                                                     item = _extends({}, item, {
-                                                        icon: media.sizes.thumbnail.url,
+                                                        icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
                                                         iconID: media.id
                                                     });
                                                 }

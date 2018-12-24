@@ -271,7 +271,7 @@
                                                 if (index === currentSelected) {
                                                     item = {
                                                         ...item,
-                                                        icon: media.sizes.thumbnail.url,
+                                                        icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
                                                         iconID: media.id,
                                                     };
                                                 }
