@@ -10467,7 +10467,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                                 nonce: advgb_blocks_vars.nonce
                             },
                             success: function success(data) {
-                                console.log(data);
+                                //console.log(data);
                             }
                         });
                     } catch (e) {}
