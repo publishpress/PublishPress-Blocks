@@ -5601,9 +5601,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     addFilter('editor.BlockEdit', 'advgb/customSeparatorStyles', function (BlockEdit) {
         return function (props) {
             if (props.name === "core/separator") {
-                var isSelected = props.isSelected,
-                    attributes = props.attributes,
-                    setAttributes = props.setAttributes,
+                var attributes = props.attributes,
                     clientId = props.clientId;
                 var borderColor = attributes.borderColor,
                     borderSize = attributes.borderSize,
@@ -5611,51 +5609,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     borderWidth = attributes.borderWidth;
 
 
-                return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-separator' }, props)), isSelected && React.createElement(
-                    InspectorControls,
-                    { key: 'inspector-custom-separator' },
-                    React.createElement(
-                        PanelBody,
-                        { title: __('Separator Settings') },
-                        React.createElement(PanelColorSettings, {
-                            title: __('Color Settings'),
-                            initialOpen: false,
-                            colorSettings: [{
-                                label: __('Color'),
-                                value: borderColor,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ borderColor: value });
-                                }
-                            }]
-                        }),
-                        React.createElement(SelectControl, {
-                            label: __('Styles'),
-                            value: borderStyle,
-                            options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }],
-                            onChange: function onChange(value) {
-                                return setAttributes({ borderStyle: value });
-                            }
-                        }),
-                        React.createElement(RangeControl, {
-                            label: __('Thick'),
-                            value: borderWidth,
-                            min: 1,
-                            max: 20,
-                            onChange: function onChange(value) {
-                                return setAttributes({ borderWidth: value });
-                            }
-                        }),
-                        React.createElement(RangeControl, {
-                            label: __('Width'),
-                            value: borderSize,
-                            min: 50,
-                            max: 1000,
-                            onChange: function onChange(value) {
-                                return setAttributes({ borderSize: value });
-                            }
-                        })
-                    )
-                ), React.createElement(
+                return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-separator' }, props)), React.createElement(
                     'style',
                     { key: 'custom-separator-styles' },
                     '#block-' + clientId + ' hr {\n                        border-bottom-color: ' + borderColor + ';\n                        border-bottom-style: ' + borderStyle + ';\n                        border-bottom-width: ' + borderWidth + 'px;\n                        max-width: ' + borderSize + 'px;\n                    }'
