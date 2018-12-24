@@ -227,7 +227,7 @@
                                 } }
                             />
                         </Toolbar>
-                        <AlignmentToolbar value={ align } onChange={ ( value ) => setAttributes( { align: value } ) } />
+                        <AlignmentToolbar value={ align } onChange={ ( value ) => setAttributes( { align: value === undefined ? 'center' : value } ) } />
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Preset Icons' ) }>

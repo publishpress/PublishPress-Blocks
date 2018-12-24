@@ -7823,7 +7823,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ),
                         React.createElement(AlignmentToolbar, { value: align, onChange: function onChange(value) {
-                                return setAttributes({ align: value });
+                                return setAttributes({ align: value === undefined ? 'center' : value });
                             } })
                     ),
                     React.createElement(
