@@ -8032,11 +8032,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: [{ icon: '', iconID: '', iconColor: '', link: '#' }, { icon: '', iconID: '', iconColor: '', link: '#' }, { icon: '', iconID: '', iconColor: '', link: '#' }]
             },
             align: {
-                type: 'string'
+                type: 'string',
+                default: 'center'
             },
             iconSize: {
                 type: 'number',
-                default: 24
+                default: 48
             },
             iconSpace: {
                 type: 'number',
