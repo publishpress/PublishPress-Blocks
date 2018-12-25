@@ -4873,17 +4873,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls,
-        MediaUpload = wpEditor.MediaUpload,
-        AlignmentToolbar = wpEditor.AlignmentToolbar,
         PanelColorSettings = wpEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
-        IconButton = wpComponents.IconButton,
-        Button = wpComponents.Button,
-        Toolbar = wpComponents.Toolbar,
         Tooltip = wpComponents.Tooltip;
 
 
@@ -4970,8 +4964,66 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return setAttributes({ borderRadius: value });
                                     },
                                     min: 0,
-                                    max: 100
+                                    max: 50
                                 })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-contact-form" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-form-field advgb-form-field-half" },
+                            React.createElement("input", { type: "text", disabled: true,
+                                className: "advgb-form-input",
+                                value: __('Name'),
+                                style: {
+                                    backgroundColor: bgColor,
+                                    color: textColor,
+                                    borderColor: borderColor,
+                                    borderStyle: borderStyle,
+                                    borderRadius: borderRadius ? borderRadius + 'px' : undefined
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-form-field advgb-form-field-half" },
+                            React.createElement("input", { type: "text", disabled: true,
+                                className: "advgb-form-input",
+                                value: __('Email address'),
+                                style: {
+                                    backgroundColor: bgColor,
+                                    color: textColor,
+                                    borderColor: borderColor,
+                                    borderStyle: borderStyle,
+                                    borderRadius: borderRadius ? borderRadius + 'px' : undefined
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-form-field advgb-form-field-full" },
+                            React.createElement("textarea", { className: "advgb-form-input",
+                                disabled: true,
+                                value: __('Message'),
+                                style: {
+                                    backgroundColor: bgColor,
+                                    color: textColor,
+                                    borderColor: borderColor,
+                                    borderStyle: borderStyle,
+                                    borderRadius: borderRadius ? borderRadius + 'px' : undefined
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-form-submit-wrapper" },
+                            React.createElement(
+                                "button",
+                                { className: "advgb-form-submit" },
+                                "Submit"
                             )
                         )
                     )

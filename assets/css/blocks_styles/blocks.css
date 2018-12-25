@@ -1059,3 +1059,44 @@ hr.wp-block-separator {
 .advgb-block-container .advgb-block-bottom-divider {
     bottom: 0;
 }
+
+/*Contact Form styles*/
+.advgb-form-field {
+    float: left;
+    width: 100%;
+    margin-bottom: 3%;
+    padding: 0;
+    padding-left: 3%;
+}
+
+.advgb-form-field.advgb-form-field-half {
+    width: 50%;
+}
+
+.advgb-contact-form {
+    clear: both;
+}
+
+.advgb-form-field input.advgb-form-input, .advgb-form-field textarea.advgb-form-input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.advgb-form-submit-wrapper {
+    clear: both;
+    margin-left: 3%;
+    text-align: center;
+}
+
+button.advgb-form-submit {
+    padding: 10px;
+    background: #fff;
+    box-shadow: none;
+    outline: none;
+    border: 2px solid #2196f3;
+    color: #2196f3;
+    cursor: pointer;
+    transition: all ease 0.5s;
+}

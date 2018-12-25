@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, MediaUpload, AlignmentToolbar, PanelColorSettings } = wpEditor;
-    const { PanelBody, RangeControl, SelectControl, TextControl, IconButton, Button, Toolbar, Tooltip } = wpComponents;
+    const { InspectorControls, PanelColorSettings } = wpEditor;
+    const { PanelBody, RangeControl, SelectControl, TextControl, Tooltip } = wpComponents;
 
     const contactBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -73,11 +73,55 @@
                                     value={ borderRadius }
                                     onChange={ (value) => setAttributes( { borderRadius: value } ) }
                                     min={ 0 }
-                                    max={ 100 }
+                                    max={ 50 }
                                 />
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
+                    <div className="advgb-contact-form">
+                        <div className="advgb-form-field advgb-form-field-half">
+                            <input type="text" disabled={ true }
+                                   className="advgb-form-input"
+                                   value={ __( 'Name' ) }
+                                   style={ {
+                                       backgroundColor: bgColor,
+                                       color: textColor,
+                                       borderColor: borderColor,
+                                       borderStyle: borderStyle,
+                                       borderRadius: borderRadius ? borderRadius + 'px' : undefined,
+                                   } }
+                            />
+                        </div>
+                        <div className="advgb-form-field advgb-form-field-half">
+                            <input type="text" disabled={ true }
+                                   className="advgb-form-input"
+                                   value={ __( 'Email address' ) }
+                                   style={ {
+                                       backgroundColor: bgColor,
+                                       color: textColor,
+                                       borderColor: borderColor,
+                                       borderStyle: borderStyle,
+                                       borderRadius: borderRadius ? borderRadius + 'px' : undefined,
+                                   } }
+                            />
+                        </div>
+                        <div className="advgb-form-field advgb-form-field-full">
+                            <textarea className="advgb-form-input"
+                                      disabled={ true }
+                                      value={ __( 'Message' ) }
+                                      style={ {
+                                          backgroundColor: bgColor,
+                                          color: textColor,
+                                          borderColor: borderColor,
+                                          borderStyle: borderStyle,
+                                          borderRadius: borderRadius ? borderRadius + 'px' : undefined,
+                                      } }
+                            />
+                        </div>
+                        <div className="advgb-form-submit-wrapper">
+                            <button className="advgb-form-submit">Submit</button>
+                        </div>
+                    </div>
                 </Fragment>
             )
         }
