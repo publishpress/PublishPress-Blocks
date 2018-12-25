@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, MediaUpload, AlignmentToolbar, PanelColorSettings } = wpEditor;
-    const { RangeControl, BaseControl, PanelBody, TextControl, IconButton, Button, Toolbar, Tooltip } = wpComponents;
+    const { PanelBody, RangeControl, SelectControl, TextControl, IconButton, Button, Toolbar, Tooltip } = wpComponents;
 
     const contactBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -18,9 +18,66 @@
         }
 
         render() {
+            const { attributes, setAttributes } = this.props;
+            const {
+                bgColor,
+                textColor,
+                borderColor,
+                borderStyle,
+                borderRadius,
+            } = attributes;
+
             return (
                 <Fragment>
-                    <div>123</div>
+                    <InspectorControls>
+                        <PanelBody title={ __( 'Form Settings' ) }>
+                            <PanelColorSettings
+                                title={ __( 'Input Color' ) }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Background color' ),
+                                        value: bgColor,
+                                        onChange: (value) => setAttributes( { bgColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Text color' ),
+                                        value: textColor,
+                                        onChange: (value) => setAttributes( { textColor: value } ),
+                                    },
+                                ] }
+                            />
+                            <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
+                                <PanelColorSettings
+                                    title={ __( 'Border Color' ) }
+                                    initialOpen={ false }
+                                    colorSettings={ [
+                                        {
+                                            label: __( 'Border color' ),
+                                            value: borderColor,
+                                            onChange: (value) => setAttributes( { borderColor: value } ),
+                                        },
+                                    ] }
+                                />
+                                <SelectControl
+                                    label={ __( 'Border Style' ) }
+                                    value={ borderStyle }
+                                    options={ [
+                                        { label: __( 'Solid' ), value: 'solid' },
+                                        { label: __( 'Dashed' ), value: 'dashed' },
+                                        { label: __( 'Dotted' ), value: 'dotted' },
+                                    ] }
+                                    onChange={ (value) => setAttributes( { borderStyle: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Border radius (px)' ) }
+                                    value={ borderRadius }
+                                    onChange={ (value) => setAttributes( { borderRadius: value } ) }
+                                    min={ 0 }
+                                    max={ 100 }
+                                />
+                            </PanelBody>
+                        </PanelBody>
+                    </InspectorControls>
                 </Fragment>
             )
         }
@@ -47,6 +104,9 @@
             },
             borderColor: {
                 type: 'string',
+            },
+            borderRadius: {
+                type: 'number',
             },
             changed: {
                 type: 'boolean',

@@ -4877,9 +4877,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         MediaUpload = wpEditor.MediaUpload,
         AlignmentToolbar = wpEditor.AlignmentToolbar,
         PanelColorSettings = wpEditor.PanelColorSettings;
-    var RangeControl = wpComponents.RangeControl,
-        BaseControl = wpComponents.BaseControl,
-        PanelBody = wpComponents.PanelBody,
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
         Button = wpComponents.Button,
@@ -4906,13 +4906,74 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(AdvContactForm, [{
             key: "render",
             value: function render() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+                var bgColor = attributes.bgColor,
+                    textColor = attributes.textColor,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderRadius = attributes.borderRadius;
+
+
                 return React.createElement(
                     Fragment,
                     null,
                     React.createElement(
-                        "div",
+                        InspectorControls,
                         null,
-                        "123"
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Form Settings') },
+                            React.createElement(PanelColorSettings, {
+                                title: __('Input Color'),
+                                colorSettings: [{
+                                    label: __('Background color'),
+                                    value: bgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ bgColor: value });
+                                    }
+                                }, {
+                                    label: __('Text color'),
+                                    value: textColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ textColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Border Settings'), initialOpen: false },
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Border Color'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Border color'),
+                                        value: borderColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderColor: value });
+                                        }
+                                    }]
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Border Style'),
+                                    value: borderStyle,
+                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderStyle: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Border radius (px)'),
+                                    value: borderRadius,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderRadius: value });
+                                    },
+                                    min: 0,
+                                    max: 100
+                                })
+                            )
+                        )
                     )
                 );
             }
@@ -4942,6 +5003,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             borderColor: {
                 type: 'string'
+            },
+            borderRadius: {
+                type: 'number'
             },
             changed: {
                 type: 'boolean',
