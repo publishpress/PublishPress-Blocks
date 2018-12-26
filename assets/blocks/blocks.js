@@ -4907,7 +4907,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     textColor = attributes.textColor,
                     borderColor = attributes.borderColor,
                     borderStyle = attributes.borderStyle,
-                    borderRadius = attributes.borderRadius;
+                    borderRadius = attributes.borderRadius,
+                    submitColor = attributes.submitColor,
+                    submitBgColor = attributes.submitBgColor,
+                    submitRadius = attributes.submitRadius,
+                    submitPosition = attributes.submitPosition;
 
 
                 return React.createElement(
@@ -4966,6 +4970,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 0,
                                     max: 50
                                 })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Submit Button Settings') },
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Color Settings'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Border and Text'),
+                                        value: submitColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ submitColor: value });
+                                        }
+                                    }, {
+                                        label: __('Background'),
+                                        value: submitBgColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ submitBgColor: value });
+                                        }
+                                    }]
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Button border radius'),
+                                    value: submitRadius,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitRadius: value });
+                                    },
+                                    min: 0,
+                                    max: 50
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Button position'),
+                                    value: submitPosition,
+                                    options: [{ label: __('Center'), value: 'center' }, { label: __('Left'), value: 'left' }, { label: __('Right'), value: 'right' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitPosition: value });
+                                    }
+                                })
                             )
                         )
                     ),
@@ -4983,7 +5025,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     color: textColor,
                                     borderColor: borderColor,
                                     borderStyle: borderStyle,
-                                    borderRadius: borderRadius ? borderRadius + 'px' : undefined
+                                    borderRadius: borderRadius
                                 }
                             })
                         ),
@@ -4998,7 +5040,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     color: textColor,
                                     borderColor: borderColor,
                                     borderStyle: borderStyle,
-                                    borderRadius: borderRadius ? borderRadius + 'px' : undefined
+                                    borderRadius: borderRadius
                                 }
                             })
                         ),
@@ -5013,17 +5055,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     color: textColor,
                                     borderColor: borderColor,
                                     borderStyle: borderStyle,
-                                    borderRadius: borderRadius ? borderRadius + 'px' : undefined
+                                    borderRadius: borderRadius
                                 }
                             })
                         ),
                         React.createElement(
                             "div",
-                            { className: "advgb-form-submit-wrapper" },
+                            { className: "advgb-form-submit-wrapper",
+                                style: { textAlign: submitPosition }
+                            },
                             React.createElement(
                                 "button",
-                                { className: "advgb-form-submit" },
-                                "Submit"
+                                { className: "advgb-form-submit",
+                                    style: {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: borderRadius
+                                    }
+                                },
+                                __('Submit')
                             )
                         )
                     )
@@ -5058,6 +5109,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             borderRadius: {
                 type: 'number'
+            },
+            submitColor: {
+                type: 'string'
+            },
+            submitBgColor: {
+                type: 'string'
+            },
+            submitRadius: {
+                type: 'number'
+            },
+            submitPosition: {
+                type: 'string'
             },
             changed: {
                 type: 'boolean',

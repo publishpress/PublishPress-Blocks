@@ -25,6 +25,10 @@
                 borderColor,
                 borderStyle,
                 borderRadius,
+                submitColor,
+                submitBgColor,
+                submitRadius,
+                submitPosition,
             } = attributes;
 
             return (
@@ -76,6 +80,41 @@
                                     max={ 50 }
                                 />
                             </PanelBody>
+                            <PanelBody title={ __( 'Submit Button Settings' ) }>
+                                <PanelColorSettings
+                                    title={ __( 'Color Settings' ) }
+                                    initialOpen={ false }
+                                    colorSettings={ [
+                                        {
+                                            label: __( 'Border and Text' ),
+                                            value: submitColor,
+                                            onChange: (value) => setAttributes( { submitColor: value } ),
+                                        },
+                                        {
+                                            label: __( 'Background' ),
+                                            value: submitBgColor,
+                                            onChange: (value) => setAttributes( { submitBgColor: value } ),
+                                        },
+                                    ] }
+                                />
+                                <RangeControl
+                                    label={ __( 'Button border radius' ) }
+                                    value={ submitRadius }
+                                    onChange={ (value) => setAttributes( { submitRadius: value } ) }
+                                    min={ 0 }
+                                    max={ 50 }
+                                />
+                                <SelectControl
+                                    label={ __( 'Button position' ) }
+                                    value={ submitPosition }
+                                    options={ [
+                                        { label: __( 'Center' ), value: 'center' },
+                                        { label: __( 'Left' ), value: 'left' },
+                                        { label: __( 'Right' ), value: 'right' },
+                                    ] }
+                                    onChange={ (value) => setAttributes( { submitPosition: value } ) }
+                                />
+                            </PanelBody>
                         </PanelBody>
                     </InspectorControls>
                     <div className="advgb-contact-form">
@@ -88,7 +127,7 @@
                                        color: textColor,
                                        borderColor: borderColor,
                                        borderStyle: borderStyle,
-                                       borderRadius: borderRadius ? borderRadius + 'px' : undefined,
+                                       borderRadius: borderRadius,
                                    } }
                             />
                         </div>
@@ -101,7 +140,7 @@
                                        color: textColor,
                                        borderColor: borderColor,
                                        borderStyle: borderStyle,
-                                       borderRadius: borderRadius ? borderRadius + 'px' : undefined,
+                                       borderRadius: borderRadius,
                                    } }
                             />
                         </div>
@@ -114,12 +153,23 @@
                                           color: textColor,
                                           borderColor: borderColor,
                                           borderStyle: borderStyle,
-                                          borderRadius: borderRadius ? borderRadius + 'px' : undefined,
+                                          borderRadius: borderRadius,
                                       } }
                             />
                         </div>
-                        <div className="advgb-form-submit-wrapper">
-                            <button className="advgb-form-submit">Submit</button>
+                        <div className="advgb-form-submit-wrapper"
+                             style={ { textAlign: submitPosition } }
+                        >
+                            <button className="advgb-form-submit"
+                                    style={ {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: borderRadius,
+                                    } }
+                            >
+                                { __( 'Submit' ) }
+                            </button>
                         </div>
                     </div>
                 </Fragment>
@@ -151,6 +201,18 @@
             },
             borderRadius: {
                 type: 'number',
+            },
+            submitColor: {
+                type: 'string',
+            },
+            submitBgColor: {
+                type: 'string',
+            },
+            submitRadius: {
+                type: 'number',
+            },
+            submitPosition: {
+                type: 'string',
             },
             changed: {
                 type: 'boolean',
