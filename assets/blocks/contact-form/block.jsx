@@ -165,7 +165,7 @@
                                         borderColor: submitColor,
                                         color: submitColor,
                                         backgroundColor: submitBgColor,
-                                        borderRadius: borderRadius,
+                                        borderRadius: submitRadius,
                                     } }
                             >
                                 { __( 'Submit' ) }
@@ -221,7 +221,76 @@
         },
         edit: AdvContactForm,
         save: function ( { attributes } ) {
-            return null;
+            const {
+                bgColor,
+                textColor,
+                borderColor,
+                borderStyle,
+                borderRadius,
+                submitColor,
+                submitBgColor,
+                submitRadius,
+                submitPosition,
+            } = attributes;
+
+            return (
+                <div className="advgb-contact-form">
+                    <form method="POST">
+                        <div className="advgb-form-field advgb-form-field-half">
+                            <input type="text"
+                                   className="advgb-form-input"
+                                   placeholder={ __( 'Name' ) }
+                                   style={ {
+                                       backgroundColor: bgColor,
+                                       color: textColor,
+                                       borderColor: borderColor,
+                                       borderStyle: borderStyle,
+                                       borderRadius: borderRadius,
+                                   } }
+                            />
+                        </div>
+                        <div className="advgb-form-field advgb-form-field-half">
+                            <input type="email"
+                                   className="advgb-form-input"
+                                   placeholder={ __( 'Email address' ) }
+                                   style={ {
+                                       backgroundColor: bgColor,
+                                       color: textColor,
+                                       borderColor: borderColor,
+                                       borderStyle: borderStyle,
+                                       borderRadius: borderRadius,
+                                   } }
+                            />
+                        </div>
+                        <div className="advgb-form-field advgb-form-field-full">
+                            <textarea className="advgb-form-input"
+                                      placeholder={ __( 'Message' ) }
+                                      style={ {
+                                          backgroundColor: bgColor,
+                                          color: textColor,
+                                          borderColor: borderColor,
+                                          borderStyle: borderStyle,
+                                          borderRadius: borderRadius,
+                                      } }
+                            />
+                        </div>
+                        <div className="advgb-form-submit-wrapper"
+                             style={ { textAlign: submitPosition } }
+                        >
+                            <button className="advgb-form-submit"
+                                    style={ {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: submitRadius,
+                                    } }
+                            >
+                                { __( 'Submit' ) }
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            );
         }
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
