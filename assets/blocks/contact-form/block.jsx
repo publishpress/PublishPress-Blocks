@@ -238,8 +238,9 @@
                     <form method="POST">
                         <div className="advgb-form-field advgb-form-field-half">
                             <input type="text"
-                                   className="advgb-form-input"
+                                   className="advgb-form-input advgb-form-input-name"
                                    placeholder={ __( 'Name' ) }
+                                   name="contact_name"
                                    style={ {
                                        backgroundColor: bgColor,
                                        color: textColor,
@@ -251,8 +252,9 @@
                         </div>
                         <div className="advgb-form-field advgb-form-field-half">
                             <input type="email"
-                                   className="advgb-form-input"
+                                   className="advgb-form-input advgb-form-input-email"
                                    placeholder={ __( 'Email address' ) }
+                                   name="contact_email"
                                    style={ {
                                        backgroundColor: bgColor,
                                        color: textColor,
@@ -263,8 +265,9 @@
                             />
                         </div>
                         <div className="advgb-form-field advgb-form-field-full">
-                            <textarea className="advgb-form-input"
+                            <textarea className="advgb-form-input advgb-form-input-msg"
                                       placeholder={ __( 'Message' ) }
+                                      name="contact_message"
                                       style={ {
                                           backgroundColor: bgColor,
                                           color: textColor,
@@ -278,6 +281,7 @@
                              style={ { textAlign: submitPosition } }
                         >
                             <button className="advgb-form-submit"
+                                    type="submit"
                                     style={ {
                                         borderColor: submitColor,
                                         color: submitColor,

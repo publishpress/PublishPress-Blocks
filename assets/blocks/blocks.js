@@ -5151,8 +5151,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "text",
-                            className: "advgb-form-input",
+                            className: "advgb-form-input advgb-form-input-name",
                             placeholder: __('Name'),
+                            name: "contact_name",
                             style: {
                                 backgroundColor: bgColor,
                                 color: textColor,
@@ -5166,8 +5167,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "email",
-                            className: "advgb-form-input",
+                            className: "advgb-form-input advgb-form-input-email",
                             placeholder: __('Email address'),
+                            name: "contact_email",
                             style: {
                                 backgroundColor: bgColor,
                                 color: textColor,
@@ -5180,8 +5182,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "div",
                         { className: "advgb-form-field advgb-form-field-full" },
-                        React.createElement("textarea", { className: "advgb-form-input",
+                        React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
                             placeholder: __('Message'),
+                            name: "contact_message",
                             style: {
                                 backgroundColor: bgColor,
                                 color: textColor,
@@ -5199,6 +5202,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             "button",
                             { className: "advgb-form-submit",
+                                type: "submit",
                                 style: {
                                     borderColor: submitColor,
                                     color: submitColor,
