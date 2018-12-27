@@ -168,6 +168,7 @@ float: left;'
             add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
             add_action('wp_ajax_advgb_delete_profiles', array($this, 'deleteProfiles'));
             add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
+            add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
         } else {
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
@@ -956,6 +957,35 @@ float: left;'
 
         update_option('advgb_blocks_default_config', $blocks_config_saved);
         wp_send_json(true, 200);
+    }
+
+    /**
+     * Ajax for saving contact form data
+     *
+     * @return boolean,void     Return false if failure, echo json on success
+     */
+    public function saveContactFormData()
+    {
+        // phpcs:disable -- WordPress.Security.NonceVerification.NoNonceVerification - frontend form, no nonce
+        if (!isset($_POST['action'])) {
+            wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
+            return false;
+        }
+
+        $contacts_saved = get_option('advgb_contacts_saved');
+        if (!$contacts_saved) $contacts_saved = array();
+
+        $contact_data = array(
+            'name'  => sanitize_text_field($_POST['contact_name']),
+            'email' => sanitize_email($_POST['contact_email']),
+            'msg'   => sanitize_textarea_field($_POST['contact_msg']),
+        );
+
+        array_push($contacts_saved, $contact_data);
+
+        update_option('advgb_contacts_saved', $contacts_saved);
+        wp_send_json($contacts_saved, 200);
+        // phpcs:enable
     }
 
     /**
@@ -2777,6 +2807,16 @@ float: left;'
                     ADVANCED_GUTENBERG_VERSION
                 );
             }
+        }
+
+        if (strpos($content, 'advgb-contact-form') !== false) {
+            wp_enqueue_script(
+                'advgbContactForm_js',
+                plugins_url('assets/blocks/contact-form/frontend.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_localize_script('advgbContactForm_js', 'advgbContactForm', array('ajax_url' => admin_url('admin-ajax.php')));
         }
 
         return $content;
