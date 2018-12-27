@@ -8,6 +8,7 @@ jQuery(document).ready(function ($) {
 
     $('.advgb-contact-form form').submit(function (e) {
         e.preventDefault();
+        $thisForm = $(this).closest('.advgb-contact-form');
         contactName = $(this).find('.advgb-form-input-name').val();
         contactEmail = $(this).find('.advgb-form-input-email').val();
         contactMsg = $(this).find('.advgb-form-input-msg').val();
@@ -27,13 +28,16 @@ jQuery(document).ready(function ($) {
                 contact_msg: contactMsg
             },
             beforeSend: function () {
-
+                $thisForm.append('<div class="advgb-contact-form-overlay" />');
+                $thisForm.find('.advgb-contact-form-submit-success').remove();
             },
             success: function () {
-
+                $thisForm.find('.advgb-contact-form-overlay').remove();
+                $thisForm.append('<div class="advgb-contact-form-submit-success">Successfully submitted!</div>');
             },
             error: function ( jqxhr, textStatus, error ) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
+                $thisForm.find('.advgb-contact-form-overlay').remove();
             }
         } )
     });
