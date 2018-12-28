@@ -41,4 +41,15 @@ class Acceptance extends \Codeception\Module
     {
         $this->getModule('WebDriver')->webDriver->getKeyboard()->sendKeys($keys);
     }
+
+    /**
+     * Get an element width
+     *
+     * @param $xpath
+     */
+    public function getElementWidth($xpath)
+    {
+        $webDriver = $this->getModule('WebDriver')->webDriver;
+        return $webDriver->findElement(\WebDriverBy::xpath('//*[contains(@class,"advgb-table-frontend")]'))->getSize()->getWidth();
+    }
 }
