@@ -67,7 +67,7 @@ EOF
 }
 
 function do_install_tests () {
-    codecept run functional --skip-group php5.2 --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION"
+    codecept run functional --skip-group php5.2 --env=$DOCKER_ENV --fail-fast
 }
 
 function do_update_tests () {
@@ -93,7 +93,7 @@ EOF
 
 function do_general_tests () {
 
-    codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION"
+    codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION" -o "map-api-key: $MAP_API_KEY"
 
 
     check_php_errors
@@ -135,7 +135,7 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
     if [[ "$PHP_VERSION" = "5.2" ]]; then
         # Run PHP 5.2 tests
         copy_plugin_to_www
-        codecept run functional -g php5.2 --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION"
+        codecept run functional -g php5.2 --env=$DOCKER_ENV --fail-fast
     elif [[ "$INSTALL_TYPE" = "install" ]]; then
         copy_plugin_to_www
         do_install_tests

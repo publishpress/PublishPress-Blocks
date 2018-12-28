@@ -8,8 +8,7 @@ class_name: AcceptanceTester
 modules:
   enabled:
   - WebDriver
-  - \Helper\Acceptance:
-      php-version: 5.3
+  - \Helper\Acceptance
   config:
     WebDriver:
       browser: chrome
@@ -22,6 +21,9 @@ modules:
       adminPassword: password
       adminUrl: /wp-admin
       clear_cookies : false
+    \Helper\Acceptance:
+      php-version: %PHP_VERSION%
+      map-api-key: %MAP_API_KEY%
 env:
   local:
     modules:

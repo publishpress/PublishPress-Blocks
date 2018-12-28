@@ -7,6 +7,7 @@ namespace Helper;
 
 class Acceptance extends \Codeception\Module
 {
+    protected $config = ['php-version' => null, 'map-api-key'];
 
     public function dragAndDrop($xpath_from, $xpath_to, $sleep=0)
     {
@@ -51,5 +52,17 @@ class Acceptance extends \Codeception\Module
     {
         $webDriver = $this->getModule('WebDriver')->webDriver;
         return $webDriver->findElement(\WebDriverBy::xpath('//*[contains(@class,"advgb-table-frontend")]'))->getSize()->getWidth();
+    }
+
+
+    /**
+     * Get param from commandline
+     */
+    public function getParam($key)
+    {
+        if (isset($this->config[$key])) {
+            return $this->config[$key];
+        }
+        return '';
     }
 }

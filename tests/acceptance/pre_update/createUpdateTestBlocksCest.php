@@ -18,8 +18,9 @@ class createUpdateTestBlocksCest
         $I->loginAsAdmin('admin', 'password');
 
         // Save Google map API Key
+        $map_api_key = $I->getParam('map-api-key');
         $I->amOnPage('/wp-admin/admin.php?page=advgb_main#settings');
-        $I->fillField('//input[@id="google_api_key"]', 'AIzaSyAPKXK39zYbh93hA3kQC7mt9lv7Wk_RUnk');
+        $I->fillField('//input[@id="google_api_key"]', $map_api_key);
         $I->click('Save');
 
         $I->amOnPage('/wp-admin/post-new.php');
