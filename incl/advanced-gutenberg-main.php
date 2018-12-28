@@ -1297,6 +1297,8 @@ float: left;'
             $this->saveAdvgbProfile();
         } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveSettings();
+        } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+            $this->downloadBlockFormData();
         }
 
         return false;
@@ -1469,6 +1471,63 @@ float: left;'
         }
 
         return $postID;
+    }
+
+    /**
+     * Download block form data
+     *
+     * @return mixed
+     */
+    private function downloadBlockFormData()
+    {
+        // Verify nonce
+        if (!wp_verify_nonce($_POST['advgb_export_data_nonce_field'], 'advgb_export_data_nonce')) {
+            return false;
+        }
+
+        $postValue = $_POST['block_data_export'];
+        $postValue = explode('.', $postValue);
+        $dataExport = $postValue[0];
+        $dataType = $postValue[1];
+        $data = '';
+
+        if ($dataExport === 'contact_form') {
+            $dataSaved = get_option('advgb_contacts_saved');
+            if (!$dataSaved) {
+                return false;
+            }
+
+            switch ($dataType) {
+                case 'xls':
+                    $data .= "#\tName\tEmail\tMessage\n";
+                    $tab = "\t";
+                    $int = 1;
+                    foreach ($dataSaved as $dataVal) {
+                        $data .= $int.$tab;
+                        $data .= $dataVal['name'].$tab;
+                        $data .= $dataVal['email'].$tab;
+                        $data .= $dataVal['msg'].$tab;
+                        $data .= "\n";
+                    }
+                    $data = trim($data);
+
+                    header('Content-Type: application/xls; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_contact_form-'.date('m-d-Y').'.xls');
+                    header('Pragma: no-cache');
+                    header('Expires: 0');
+
+                    echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
+                    exit;
+                case 'json':
+                    header('Content-Type: application/json; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_contact_form-'.date('m-d-Y').'.json');
+                    header('Pragma: no-cache');
+                    header('Expires: 0');
+
+                    echo json_encode($dataSaved);
+                    exit;
+            }
+        }
     }
 
     /**
