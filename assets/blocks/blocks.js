@@ -7309,6 +7309,305 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/blocks/newsletter/block.jsx":
+/*!********************************************!*\
+  !*** ./assets/blocks/newsletter/block.jsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpEditor.InspectorControls,
+        PanelColorSettings = wpEditor.PanelColorSettings;
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        SelectControl = wpComponents.SelectControl;
+
+
+    var newsletterBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+        React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+        React.createElement("path", { "fill-opacity": ".9", d: "M12 1.95c-5.52 0-10 4.48-10 10s4.48 10 10 10h5v-2h-5c-4.34 0-8-3.66-8-8s3.66-8 8-8 8 3.66 8 8v1.43c0 .79-.71 1.57-1.5 1.57s-1.5-.78-1.5-1.57v-1.43c0-2.76-2.24-5-5-5s-5 2.24-5 5 2.24 5 5 5c1.38 0 2.64-.56 3.54-1.47.65.89 1.77 1.47 2.96 1.47 1.97 0 3.5-1.6 3.5-3.57v-1.43c0-5.52-4.48-10-10-10zm0 13c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" })
+    );
+
+    var AdvNewsletter = function (_Component) {
+        _inherits(AdvNewsletter, _Component);
+
+        function AdvNewsletter() {
+            _classCallCheck(this, AdvNewsletter);
+
+            return _possibleConstructorReturn(this, (AdvNewsletter.__proto__ || Object.getPrototypeOf(AdvNewsletter)).apply(this, arguments));
+        }
+
+        _createClass(AdvNewsletter, [{
+            key: "render",
+            value: function render() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+                var formWidth = attributes.formWidth,
+                    bgColor = attributes.bgColor,
+                    textColor = attributes.textColor,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderRadius = attributes.borderRadius,
+                    submitColor = attributes.submitColor,
+                    submitBgColor = attributes.submitBgColor,
+                    submitRadius = attributes.submitRadius;
+
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Form Settings') },
+                            React.createElement(RangeControl, {
+                                label: __('Form width (px)'),
+                                value: formWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ formWidth: value });
+                                },
+                                min: 200,
+                                max: 1000
+                            }),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Input Color'),
+                                colorSettings: [{
+                                    label: __('Background color'),
+                                    value: bgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ bgColor: value });
+                                    }
+                                }, {
+                                    label: __('Text color'),
+                                    value: textColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ textColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Border Settings'), initialOpen: false },
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Border Color'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Border color'),
+                                        value: borderColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderColor: value });
+                                        }
+                                    }]
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Border Style'),
+                                    value: borderStyle,
+                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderStyle: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Border radius (px)'),
+                                    value: borderRadius,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderRadius: value });
+                                    },
+                                    min: 0,
+                                    max: 50
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Submit Button Settings') },
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Color Settings'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Border and Text'),
+                                        value: submitColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ submitColor: value });
+                                        }
+                                    }, {
+                                        label: __('Background'),
+                                        value: submitBgColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ submitBgColor: value });
+                                        }
+                                    }]
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Button border radius'),
+                                    value: submitRadius,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitRadius: value });
+                                    },
+                                    min: 0,
+                                    max: 50
+                                })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-newsletter-wrapper" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-newsletter", style: { maxWidth: formWidth } },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-form-field advgb-form-field-full" },
+                                React.createElement("input", { type: "text", disabled: true,
+                                    className: "advgb-form-input",
+                                    value: __('First Name'),
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: textColor,
+                                        borderColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderRadius: borderRadius
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-form-field advgb-form-field-full" },
+                                React.createElement("input", { type: "text", disabled: true,
+                                    className: "advgb-form-input",
+                                    value: __('Last Name'),
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: textColor,
+                                        borderColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderRadius: borderRadius
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-form-field advgb-form-field-full" },
+                                React.createElement("input", { type: "text", disabled: true,
+                                    className: "advgb-form-input",
+                                    value: __('Email address'),
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: textColor,
+                                        borderColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderRadius: borderRadius
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-form-submit-wrapper" },
+                                React.createElement(
+                                    "button",
+                                    { className: "advgb-form-submit",
+                                        type: "button",
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
+                                    },
+                                    __('Submit')
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return AdvNewsletter;
+    }(Component);
+
+    registerBlockType('advgb/newsletter', {
+        title: __('Newsletter'),
+        description: __('Fastest way to create a newsletter form for your page.'),
+        icon: {
+            src: newsletterBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'widgets',
+        keywords: [__('newsletter'), __('form'), __('email')],
+        attributes: {
+            formWidth: {
+                type: 'number',
+                default: 400
+            },
+            bgColor: {
+                type: 'string'
+            },
+            textColor: {
+                type: 'string'
+            },
+            borderStyle: {
+                type: 'string'
+            },
+            borderColor: {
+                type: 'string'
+            },
+            borderRadius: {
+                type: 'number'
+            },
+            submitColor: {
+                type: 'string'
+            },
+            submitBgColor: {
+                type: 'string'
+            },
+            submitRadius: {
+                type: 'number'
+            },
+            changed: {
+                type: 'boolean',
+                default: false
+            }
+        },
+        supports: {
+            align: true
+        },
+        edit: AdvNewsletter,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+
+            return React.createElement(
+                "div",
+                null,
+                "123"
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/blocks/recent-posts/block.jsx":
 /*!**********************************************!*\
   !*** ./assets/blocks/recent-posts/block.jsx ***!
@@ -10792,9 +11091,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/1-custom-blocks-options/custom-blocks.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/1-custom-blocks-options/custom-blocks.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10812,6 +11111,7 @@ __webpack_require__(/*! ./assets/blocks/custom-separator/separator.jsx */"./asse
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
 __webpack_require__(/*! ./assets/blocks/images-slider/block.jsx */"./assets/blocks/images-slider/block.jsx");
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
+__webpack_require__(/*! ./assets/blocks/newsletter/block.jsx */"./assets/blocks/newsletter/block.jsx");
 __webpack_require__(/*! ./assets/blocks/recent-posts/block.jsx */"./assets/blocks/recent-posts/block.jsx");
 __webpack_require__(/*! ./assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");
 __webpack_require__(/*! ./assets/blocks/summary/block.jsx */"./assets/blocks/summary/block.jsx");

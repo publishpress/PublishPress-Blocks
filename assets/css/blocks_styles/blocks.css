@@ -1139,3 +1139,14 @@ button.advgb-form-submit:hover:after {
     font-weight: bold;
     color: green;
 }
+
+/*Newsletter block*/
+.advgb-newsletter .advgb-form-submit-wrapper,
+.advgb-newsletter .advgb-form-field {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.advgb-newsletter .advgb-form-submit {
+    width: 100%;
+}
