@@ -9,6 +9,7 @@
 .ju-settings-option .ju-setting-label + * {
     float: right;
     margin-right: 30px;
+    line-height: 50px;
 }
 
 .settings-option-wrapper {
@@ -213,4 +214,9 @@ li.block-config-item .block-config-button {
     margin-right: 10px;
     cursor: pointer;
     color: #888;
+}
+
+/*Export data tab*/
+.advgb-export-actions button {
+    margin: auto 2px;
 }

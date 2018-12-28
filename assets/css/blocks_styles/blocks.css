@@ -1059,3 +1059,83 @@ hr.wp-block-separator {
 .advgb-block-container .advgb-block-bottom-divider {
     bottom: 0;
 }
+
+/*Contact Form styles*/
+.advgb-form-field {
+    float: left;
+    width: 100%;
+    margin-bottom: 3%;
+    padding: 0;
+    padding-left: 3%;
+}
+
+.advgb-form-field.advgb-form-field-half {
+    width: 50%;
+}
+
+.advgb-contact-form {
+    clear: both;
+    position: relative;
+}
+
+.advgb-form-field input.advgb-form-input, .advgb-form-field textarea.advgb-form-input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.advgb-form-submit-wrapper {
+    clear: both;
+    margin-left: 3%;
+    text-align: center;
+}
+
+button.advgb-form-submit {
+    padding: 10px;
+    background: #fff;
+    box-shadow: none;
+    outline: none;
+    border: 2px solid #2196f3;
+    color: #2196f3;
+    cursor: pointer;
+    transition: all ease 0.5s;
+    position: relative;
+}
+
+button.advgb-form-submit:hover:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.advgb-contact-form-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    background-color: #000;
+    opacity: 0.1;
+    z-index: 10;
+    background-image: url(../../images/loading.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100px;
+}
+
+.advgb-contact-form-submit-success {
+    text-align: center;
+    padding: 10px;
+    margin-left: 3%;
+    font-weight: bold;
+    color: green;
+}
