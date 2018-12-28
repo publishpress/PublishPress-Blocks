@@ -118,14 +118,12 @@ class AdvancedTableBlockCest
 
         // Change background color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]');
-        $I->click('//span[text()="Background Color"]/following-sibling::node()//div'); // Todo: remove this line color picket selection as it's buggy in the last version
         $I->click('//span[text()="Background Color"]/following-sibling::node()//div[last()]');
         $I->fillField('.components-color-picker__inputs-wrapper input', '#ff006a');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]'); // Click back on the cell to hide popup
 
         // Change text color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]');
-        $I->click('//span[text()="Text Color"]/following-sibling::node()//div'); // Todo: remove this line color picket selection as it's buggy in the last version
         $I->click('//span[text()="Text Color"]/following-sibling::node()//div[last()]');
         $I->fillField('.components-color-picker__inputs-wrapper input', '#335e77');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]'); // Click back on the cell to hide popup
