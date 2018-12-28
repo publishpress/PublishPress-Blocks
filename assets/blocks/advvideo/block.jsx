@@ -259,12 +259,12 @@
                                         <div className="advgb-icon-items-wrapper">
                                             {Object.keys( PLAY_BUTTON_STYLE ).map( ( key, index ) => (
                                                 <div className="advgb-icon-item" key={ index }>
-                                            <span className={ key === playButtonIcon ? 'active' : '' }
-                                                  onClick={ () => setAttributes( { playButtonIcon: key } ) }>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                                    { PLAY_BUTTON_STYLE[key] }
-                                                </svg>
-                                            </span>
+                                                    <span className={ key === playButtonIcon ? 'active' : '' }
+                                                          onClick={ () => setAttributes( { playButtonIcon: key } ) }>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                            { PLAY_BUTTON_STYLE[key] }
+                                                        </svg>
+                                                    </span>
                                                 </div>
                                             ) ) }
                                         </div>
