@@ -976,6 +976,7 @@ float: left;'
         if (!$contacts_saved) $contacts_saved = array();
 
         $contact_data = array(
+            'date'  => sanitize_text_field($_POST['submit_date']),
             'name'  => sanitize_text_field($_POST['contact_name']),
             'email' => sanitize_email($_POST['contact_email']),
             'msg'   => sanitize_textarea_field($_POST['contact_msg']),
@@ -984,7 +985,7 @@ float: left;'
         array_push($contacts_saved, $contact_data);
 
         update_option('advgb_contacts_saved', $contacts_saved);
-        wp_send_json($contacts_saved, 200);
+        wp_send_json($contact_data, 200);
         // phpcs:enable
     }
 
@@ -1499,11 +1500,12 @@ float: left;'
 
             switch ($dataType) {
                 case 'xls':
-                    $data .= "#\tName\tEmail\tMessage\n";
+                    $data .= "#\tDate\tName\tEmail\tMessage\n";
                     $tab = "\t";
                     $int = 1;
                     foreach ($dataSaved as $dataVal) {
                         $data .= $int.$tab;
+                        $data .= $dataVal['date'].$tab;
                         $data .= $dataVal['name'].$tab;
                         $data .= $dataVal['email'].$tab;
                         $data .= $dataVal['msg'].$tab;
