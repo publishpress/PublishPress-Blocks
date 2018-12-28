@@ -4876,9 +4876,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelColorSettings = wpEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
-        SelectControl = wpComponents.SelectControl,
-        TextControl = wpComponents.TextControl,
-        Tooltip = wpComponents.Tooltip;
+        SelectControl = wpComponents.SelectControl;
 
 
     var contactBlockIcon = React.createElement(

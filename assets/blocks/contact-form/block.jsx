@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, PanelColorSettings } = wpEditor;
-    const { PanelBody, RangeControl, SelectControl, TextControl, Tooltip } = wpComponents;
+    const { PanelBody, RangeControl, SelectControl } = wpComponents;
 
     const contactBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
