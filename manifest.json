@@ -25,7 +25,6 @@
       "codeception.yml",
       "node_modules",
       ".babelrc",
-      ".jsx",
       "deployment"
     ],
     "replacement":[],
