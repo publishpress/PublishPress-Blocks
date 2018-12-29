@@ -1141,6 +1141,10 @@ button.advgb-form-submit:hover:after {
 }
 
 /*Newsletter block*/
+.editor-block-list__block[data-align="center"] .advgb-newsletter {
+    margin: auto;
+}
+
 .advgb-newsletter .advgb-form-submit-wrapper,
 .advgb-newsletter .advgb-form-field {
     margin-left: 0;
