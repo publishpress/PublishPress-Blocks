@@ -18,8 +18,6 @@ class AdvancedTableBlockCest
 
     public function createAdvancedTableBlock(AcceptanceTester $I)
     {
-        $I->loginAsAdmin('admin', 'password');
-
         $I->wantTo('Create an advanced table block');
 
         $I->amOnPage('/wp-admin/post-new.php');
@@ -106,38 +104,60 @@ class AdvancedTableBlockCest
     public function setColors(AcceptanceTester $I) {
         $I->wantTo('Set cells color');
 
+        $colors = [];
+
         $I->click('Edit Post');
 
         // Change background color to predefined
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[3]');
         $I->click('//span[text()="Background Color"]/following-sibling::node()//div[2]');
+        // Grab color from predefined picker
+        $string = $I->grabAttributeFrom('//span[text()="Background Color"]/following-sibling::node()//div[2]/button', 'style');
+        $re = '/color:\s*rgb\(([0-9]{1,3}),\s*([0-9]{1,3}),\s*([0-9]{1,3})\);/';
+        $matches = null;
+        preg_match($re, $string, $matches);
+        $colors[0] = '';
+        for ($ij=1; $ij<=3; $ij++) {$colors[0] .= str_pad(dechex($matches[$ij]), 2, '0', STR_PAD_LEFT);}
+        $colors[0]='#'.(($colors[0][0]===$colors[0][1] && $colors[0][2]===$colors[0][3] && $colors[0][4]===$colors[0][5])?$colors[0][0].$colors[0][2].$colors[0][4]:$colors[0]);
+
 
         // Change text color to predefined
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[3]');
         $I->click('//span[text()="Text Color"]/following-sibling::node()//div[3]');
+        // Grab color from predefined picker
+        $string = $I->grabAttributeFrom('//span[text()="Text Color"]/following-sibling::node()//div[3]/button', 'style');
+        $re = '/color:\s*rgb\(([0-9]{1,3}),\s*([0-9]{1,3}),\s*([0-9]{1,3})\);/';
+        $matches = null;
+        preg_match($re, $string, $matches);
+        $colors[1] = '';
+        for ($ij=1; $ij<=3; $ij++) {$colors[1] .= str_pad(dechex($matches[$ij]), 2, '0', STR_PAD_LEFT);}
+        $colors[1]='#'.(($colors[1][0]===$colors[1][1] && $colors[1][2]===$colors[1][3] && $colors[1][4]===$colors[1][5])?$colors[1][0].$colors[1][2].$colors[1][4]:$colors[1]);
 
-        // Change background color to custom
+        // Change$colors[0] = ''; background color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]');
         $I->click('//span[text()="Background Color"]/following-sibling::node()//div[last()]');
         $I->fillField('.components-color-picker__inputs-wrapper input', '#ff006a');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]'); // Click back on the cell to hide popup
+        $colors[2] = '#ff006a';
 
         // Change text color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]');
         $I->click('//span[text()="Text Color"]/following-sibling::node()//div[last()]');
         $I->fillField('.components-color-picker__inputs-wrapper input', '#335e77');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]'); // Click back on the cell to hide popup
+        $colors[3] = '#335e77';
 
+        var_dump($colors);
 
         $I->click('Update');
         $I->waitForText('Post updated.');
 
         $I->click('View Post');
 
-        $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[3 and contains(@style, "background-color:#cf2e2e")]');
-        $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[3]//td[3 and contains(@style, "color:#ff6900")]');
-        $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[5 and contains(@style, "background-color:#ff006a")]');
-        $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[3]//td[5 and contains(@style, "color:#335e77")]');
+        $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[3 and contains(@style, "background-color:'.$colors[0].'")]');
+        $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[3]//td[3 and contains(@style, "color:'.$colors[1].'")]');
+        $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[5 and contains(@style, "background-color:'.$colors[2].'")]');
+        $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[3]//td[5 and contains(@style, "color:'.$colors[3].'")]');
     }
 
     public function removeCells(AcceptanceTester $I)
