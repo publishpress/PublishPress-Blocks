@@ -7604,11 +7604,86 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvNewsletter,
         save: function save(_ref) {
             var attributes = _ref.attributes;
+            var formWidth = attributes.formWidth,
+                bgColor = attributes.bgColor,
+                textColor = attributes.textColor,
+                borderColor = attributes.borderColor,
+                borderStyle = attributes.borderStyle,
+                borderRadius = attributes.borderRadius,
+                submitColor = attributes.submitColor,
+                submitBgColor = attributes.submitBgColor,
+                submitRadius = attributes.submitRadius;
+
 
             return React.createElement(
                 "div",
-                null,
-                "123"
+                { className: "advgb-newsletter", style: { maxWidth: formWidth } },
+                React.createElement(
+                    "form",
+                    { method: "POST" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-form-field advgb-form-field-full" },
+                        React.createElement("input", { type: "text",
+                            className: "advgb-form-input",
+                            placeholder: __('First Name'),
+                            style: {
+                                backgroundColor: bgColor,
+                                color: textColor,
+                                borderColor: borderColor,
+                                borderStyle: borderStyle,
+                                borderRadius: borderRadius
+                            }
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-form-field advgb-form-field-full" },
+                        React.createElement("input", { type: "text",
+                            className: "advgb-form-input",
+                            placeholder: __('Last Name'),
+                            style: {
+                                backgroundColor: bgColor,
+                                color: textColor,
+                                borderColor: borderColor,
+                                borderStyle: borderStyle,
+                                borderRadius: borderRadius
+                            }
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-form-field advgb-form-field-full" },
+                        React.createElement("input", { type: "email",
+                            className: "advgb-form-input",
+                            placeholder: __('Email address'),
+                            style: {
+                                backgroundColor: bgColor,
+                                color: textColor,
+                                borderColor: borderColor,
+                                borderStyle: borderStyle,
+                                borderRadius: borderRadius
+                            }
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-form-submit-wrapper" },
+                        React.createElement(
+                            "button",
+                            { className: "advgb-form-submit",
+                                type: "submit",
+                                style: {
+                                    borderColor: submitColor,
+                                    color: submitColor,
+                                    backgroundColor: submitBgColor,
+                                    borderRadius: submitRadius
+                                }
+                            },
+                            __('Submit')
+                        )
+                    )
+                )
             );
         }
     });

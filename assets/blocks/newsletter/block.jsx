@@ -223,9 +223,74 @@
         },
         edit: AdvNewsletter,
         save: function ( { attributes } ) {
+            const {
+                formWidth,
+                bgColor,
+                textColor,
+                borderColor,
+                borderStyle,
+                borderRadius,
+                submitColor,
+                submitBgColor,
+                submitRadius,
+            } = attributes;
+
             return (
-                <div>
-                    123
+                <div className="advgb-newsletter" style={ { maxWidth: formWidth } }>
+                    <form method="POST">
+                        <div className="advgb-form-field advgb-form-field-full">
+                            <input type="text"
+                                   className="advgb-form-input"
+                                   placeholder={ __( 'First Name' ) }
+                                   style={ {
+                                       backgroundColor: bgColor,
+                                       color: textColor,
+                                       borderColor: borderColor,
+                                       borderStyle: borderStyle,
+                                       borderRadius: borderRadius,
+                                   } }
+                            />
+                        </div>
+                        <div className="advgb-form-field advgb-form-field-full">
+                            <input type="text"
+                                   className="advgb-form-input"
+                                   placeholder={ __( 'Last Name' ) }
+                                   style={ {
+                                       backgroundColor: bgColor,
+                                       color: textColor,
+                                       borderColor: borderColor,
+                                       borderStyle: borderStyle,
+                                       borderRadius: borderRadius,
+                                   } }
+                            />
+                        </div>
+                        <div className="advgb-form-field advgb-form-field-full">
+                            <input type="email"
+                                   className="advgb-form-input"
+                                   placeholder={ __( 'Email address' ) }
+                                   style={ {
+                                       backgroundColor: bgColor,
+                                       color: textColor,
+                                       borderColor: borderColor,
+                                       borderStyle: borderStyle,
+                                       borderRadius: borderRadius,
+                                   } }
+                            />
+                        </div>
+                        <div className="advgb-form-submit-wrapper">
+                            <button className="advgb-form-submit"
+                                    type="submit"
+                                    style={ {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: submitRadius,
+                                    } }
+                            >
+                                { __( 'Submit' ) }
+                            </button>
+                        </div>
+                    </form>
                 </div>
             );
         }
