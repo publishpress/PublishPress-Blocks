@@ -1116,7 +1116,7 @@ button.advgb-form-submit:hover:after {
     pointer-events: none;
 }
 
-.advgb-contact-form-overlay {
+.advgb-form-overlay {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -1132,7 +1132,7 @@ button.advgb-form-submit:hover:after {
     background-size: 100px;
 }
 
-.advgb-contact-form-submit-success {
+.advgb-form-submit-success {
     text-align: center;
     padding: 10px;
     margin-left: 3%;
