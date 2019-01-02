@@ -6222,6 +6222,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate(prevProps) {
+                var _this2 = this;
+
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     isSelected = _props2.isSelected;
@@ -6230,7 +6232,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 if (images.length !== prevImages.length && images.length) {
-                    this.initSlider();
+                    setTimeout(function () {
+                        return _this2.initSlider();
+                    }, 100);
+                }
+
+                if (images.length === 0 && this.state.inited) {
+                    this.setState({ inited: false });
                 }
 
                 if (!this.state.inited && isSelected) {
@@ -6245,7 +6253,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "initSlider",
             value: function initSlider() {
-                var _this2 = this;
+                var _this3 = this;
 
                 var clientId = this.props.clientId;
 
@@ -6256,15 +6264,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 $("#block-" + clientId + " .advgb-images-slider").on('afterChange', function (e, s, currentSlide) {
-                    if (_this2.state.currentSelected !== currentSlide) {
-                        _this2.setState({ currentSelected: currentSlide });
+                    if (_this3.state.currentSelected !== currentSlide) {
+                        _this3.setState({ currentSelected: currentSlide });
                     }
                 });
             }
         }, {
             key: "initItemSortable",
             value: function initItemSortable() {
-                var _this3 = this;
+                var _this4 = this;
 
                 var _props3 = this.props,
                     clientId = _props3.clientId,
@@ -6291,7 +6299,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return idx !== oldIndex;
                             }).slice(newIndex)))
                         });
-                        _this3.initItemSortable();
+                        _this4.initItemSortable();
                         $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('setPosition');
                     }
                 });
@@ -6324,7 +6332,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _this4 = this;
+                var _this5 = this;
 
                 var _props5 = this.props,
                     attributes = _props5.attributes,
@@ -6542,7 +6550,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Title'),
                                     value: images[currentSelected] ? images[currentSelected].title || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this4.updateImagesData({ title: value || '' });
+                                        return _this5.updateImagesData({ title: value || '' });
                                     }
                                 })
                             ),
@@ -6553,7 +6561,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Text'),
                                     value: images[currentSelected] ? images[currentSelected].text || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this4.updateImagesData({ text: value || '' });
+                                        return _this5.updateImagesData({ text: value || '' });
                                     }
                                 })
                             ),
@@ -6564,7 +6572,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Link'),
                                     value: images[currentSelected] ? images[currentSelected].link || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this4.updateImagesData({ link: value || '' });
+                                        return _this5.updateImagesData({ link: value || '' });
                                     }
                                 })
                             ),
@@ -6579,7 +6587,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             className: "advgb-image-slider-image-list-img",
                                             onClick: function onClick() {
                                                 $("#block-" + clientId + " .advgb-images-slider").slick('slickGoTo', index, false);
-                                                _this4.setState({ currentSelected: index });
+                                                _this5.setState({ currentSelected: index });
                                             }
                                         }),
                                         React.createElement(
@@ -6589,7 +6597,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "advgb-image-slider-image-list-item-remove",
                                                 icon: "no",
                                                 onClick: function onClick() {
-                                                    if (index === currentSelected) _this4.setState({ currentSelected: null });
+                                                    if (index === currentSelected) _this5.setState({ currentSelected: null });
                                                     setAttributes({ images: images.filter(function (img, idx) {
                                                             return idx !== index;
                                                         }) });

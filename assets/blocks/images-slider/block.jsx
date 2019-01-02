@@ -55,7 +55,11 @@
             const { images: prevImages } = prevProps.attributes;
 
             if (images.length !== prevImages.length && images.length) {
-                this.initSlider();
+                setTimeout(() => this.initSlider(), 100);
+            }
+
+            if (images.length === 0 && this.state.inited) {
+                this.setState( { inited: false } );
             }
 
             if (!this.state.inited && isSelected) {
