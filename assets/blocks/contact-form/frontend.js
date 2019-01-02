@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
 
     $('.advgb-contact-form form').submit(function (e) {
         e.preventDefault();
-        $thisForm = $(this).closest('.advgb-contact-form');
+        var $thisForm = $(this).closest('.advgb-contact-form');
         var contactName = $(this).find('.advgb-form-input-name').val();
         var contactEmail = $(this).find('.advgb-form-input-email').val();
         var contactMsg = $(this).find('.advgb-form-input-msg').val();
