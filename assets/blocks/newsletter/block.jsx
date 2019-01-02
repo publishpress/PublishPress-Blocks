@@ -240,7 +240,7 @@
                     <form method="POST">
                         <div className="advgb-form-field advgb-form-field-full">
                             <input type="text"
-                                   className="advgb-form-input"
+                                   className="advgb-form-input advgb-form-input-fname"
                                    placeholder={ __( 'First Name' ) }
                                    style={ {
                                        backgroundColor: bgColor,
@@ -253,7 +253,7 @@
                         </div>
                         <div className="advgb-form-field advgb-form-field-full">
                             <input type="text"
-                                   className="advgb-form-input"
+                                   className="advgb-form-input advgb-form-input-lname"
                                    placeholder={ __( 'Last Name' ) }
                                    style={ {
                                        backgroundColor: bgColor,
@@ -266,7 +266,7 @@
                         </div>
                         <div className="advgb-form-field advgb-form-field-full">
                             <input type="email"
-                                   className="advgb-form-input"
+                                   className="advgb-form-input advgb-form-input-email"
                                    placeholder={ __( 'Email address' ) }
                                    style={ {
                                        backgroundColor: bgColor,
