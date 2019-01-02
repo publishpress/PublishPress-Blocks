@@ -32,15 +32,15 @@ jQuery(document).ready(function ($) {
             },
             beforeSend: function () {
                 $thisForm.append('<div class="advgb-form-overlay" />');
-                $thisForm.find('.advgb-contact-form-submit-success').remove();
+                $thisForm.find('.advgb-form-submit-success').remove();
             },
             success: function () {
-                $thisForm.find('.advgb-contact-form-overlay').remove();
+                $thisForm.find('.advgb-form-overlay').remove();
                 $thisForm.append('<div class="advgb-form-submit-success">Successfully submitted!</div>');
             },
             error: function ( jqxhr, textStatus, error ) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
-                $thisForm.find('.advgb-contact-form-overlay').remove();
+                $thisForm.find('.advgb-form-overlay').remove();
             }
         } )
     });
