@@ -1497,22 +1497,22 @@ float: left;'
             }
 
             switch ($dataType) {
-                case 'xls':
-                    $data .= "#\tDate\tName\tEmail\tMessage\n";
-                    $tab = "\t";
+                case 'csv':
+                    $data .= '"#","Date","Name","Email","Message"' . PHP_EOL;
+                    $tab = ',';
                     $int = 1;
                     foreach ($dataSaved as $dataVal) {
-                        $data .= $int.$tab;
-                        $data .= $dataVal['date'].$tab;
-                        $data .= $dataVal['name'].$tab;
-                        $data .= $dataVal['email'].$tab;
-                        $data .= $dataVal['msg'].$tab;
-                        $data .= "\n";
+                        $data .= '"'.$int.'"'.$tab;
+                        $data .= '"'.$dataVal['date'].'"'.$tab;
+                        $data .= '"'.$dataVal['name'].'"'.$tab;
+                        $data .= '"'.$dataVal['email'].'"'.$tab;
+                        $data .= '"'.$dataVal['msg'].'"';
+                        $data .= PHP_EOL;
                     }
                     $data = trim($data);
 
-                    header('Content-Type: application/xls; charset=utf-8');
-                    header('Content-Disposition: attachment; filename=advgb_contact_form-'.date('m-d-Y').'.xls');
+                    header('Content-Type: text/csv; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_contact_form-'.date('m-d-Y').'.csv');
                     header('Pragma: no-cache');
                     header('Expires: 0');
 

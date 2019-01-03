@@ -324,9 +324,9 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                         </label>
                         <div class="advgb-export-actions">
                             <button type="submit" class="ju-material-button advgb-export-download"
-                                    name="block_data_export" value="contact_form.xls"
+                                    name="block_data_export" value="contact_form.csv"
                             >
-                                <?php esc_html_e('Excel', 'advanced-gutenberg'); ?>
+                                <?php esc_html_e('CSV', 'advanced-gutenberg'); ?>
                             </button>
                             <button type="submit" class="ju-material-button advgb-export-download"
                                     name="block_data_export" value="contact_form.json"
