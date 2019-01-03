@@ -74,7 +74,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
             </li>
             <li class="tab">
                 <a href="#export-block-data" class="link-tab">
-                    <?php esc_html_e('Export data', 'advanced-gutenberg') ?>
+                    <?php esc_html_e('Forms data', 'advanced-gutenberg') ?>
                 </a>
             </li>
         </ul>
