@@ -1084,6 +1084,8 @@ hr.wp-block-separator {
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
+    background-color: #eee;
+    color: #444;
 }
 
 .advgb-form-submit-wrapper {
@@ -1094,11 +1096,11 @@ hr.wp-block-separator {
 
 button.advgb-form-submit {
     padding: 10px;
-    background: #fff;
+    background-color: #444;
     box-shadow: none;
     outline: none;
-    border: 2px solid #2196f3;
-    color: #2196f3;
+    border: 2px solid #444;
+    color: #fff;
     cursor: pointer;
     transition: all ease 0.5s;
     position: relative;
@@ -1111,7 +1113,7 @@ button.advgb-form-submit:hover:after {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #333;
+    background-color: #aaa;
     opacity: 0.2;
     pointer-events: none;
 }
