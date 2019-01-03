@@ -1135,7 +1135,14 @@ button.advgb-form-submit:hover:after {
 .advgb-form-submit-success {
     text-align: center;
     padding: 10px;
+    margin: 10px 0;
     margin-left: 3%;
     font-weight: bold;
-    color: green;
+    color: #fafafa;
+    background-color: #444;
+    font-size: 14px;
+    border-radius: 2px;
+    -webkit-box-shadow: 1px 1px 12px #ccc;
+    -moz-box-shadow: 1px 1px 12px #ccc;
+    box-shadow: 1px 1px 12px #ccc;
 }
