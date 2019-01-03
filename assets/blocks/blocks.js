@@ -4877,8 +4877,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
-        TextControl = wpComponents.TextControl,
-        Tooltip = wpComponents.Tooltip;
+        TextControl = wpComponents.TextControl;
 
 
     var contactBlockIcon = React.createElement(
@@ -4903,7 +4902,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
-                var bgColor = attributes.bgColor,
+                var nameLabel = attributes.nameLabel,
+                    emailLabel = attributes.emailLabel,
+                    msgLabel = attributes.msgLabel,
+                    submitLabel = attributes.submitLabel,
+                    successLabel = attributes.successLabel,
+                    bgColor = attributes.bgColor,
                     textColor = attributes.textColor,
                     borderColor = attributes.borderColor,
                     borderStyle = attributes.borderStyle,
@@ -4923,6 +4927,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Form Settings') },
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Text Label') },
+                                React.createElement(TextControl, {
+                                    label: __('Name input placeholder'),
+                                    value: nameLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ nameLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Email input placeholder'),
+                                    value: emailLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ emailLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Message input placeholder'),
+                                    value: msgLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ msgLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Submit text'),
+                                    value: submitLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Submit success text'),
+                                    value: successLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ successLabel: value });
+                                    }
+                                })
+                            ),
                             React.createElement(PanelColorSettings, {
                                 title: __('Input Color'),
                                 colorSettings: [{
@@ -5019,7 +5062,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: __('Name'),
+                                value: nameLabel ? nameLabel : __('Name'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -5034,7 +5077,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: __('Email address'),
+                                value: emailLabel ? emailLabel : __('Email address'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -5049,7 +5092,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("textarea", { className: "advgb-form-input",
                                 disabled: true,
-                                value: __('Message'),
+                                value: msgLabel ? msgLabel : __('Message'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -5074,7 +5117,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                __('Submit')
+                                submitLabel ? submitLabel : __('Submit')
                             )
                         )
                     )
@@ -5095,6 +5138,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'widgets',
         keywords: [__('contact'), __('form')],
         attributes: {
+            nameLabel: {
+                type: 'string'
+            },
+            emailLabel: {
+                type: 'string'
+            },
+            msgLabel: {
+                type: 'string'
+            },
+            submitLabel: {
+                type: 'string'
+            },
+            successLabel: {
+                type: 'string'
+            },
             bgColor: {
                 type: 'string'
             },
@@ -5130,7 +5188,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvContactForm,
         save: function save(_ref) {
             var attributes = _ref.attributes;
-            var bgColor = attributes.bgColor,
+            var nameLabel = attributes.nameLabel,
+                emailLabel = attributes.emailLabel,
+                msgLabel = attributes.msgLabel,
+                submitLabel = attributes.submitLabel,
+                successLabel = attributes.successLabel,
+                bgColor = attributes.bgColor,
                 textColor = attributes.textColor,
                 borderColor = attributes.borderColor,
                 borderStyle = attributes.borderStyle,
@@ -5152,7 +5215,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "text",
                             className: "advgb-form-input advgb-form-input-name",
-                            placeholder: __('Name'),
+                            placeholder: nameLabel ? nameLabel : __('Name'),
                             name: "contact_name",
                             style: {
                                 backgroundColor: bgColor,
@@ -5168,7 +5231,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: __('Email address'),
+                            placeholder: emailLabel ? emailLabel : __('Email address'),
                             name: "contact_email",
                             style: {
                                 backgroundColor: bgColor,
@@ -5183,7 +5246,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-form-field advgb-form-field-full" },
                         React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                            placeholder: __('Message'),
+                            placeholder: msgLabel ? msgLabel : __('Message'),
                             name: "contact_message",
                             style: {
                                 backgroundColor: bgColor,
@@ -5203,6 +5266,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "button",
                             { className: "advgb-form-submit",
                                 type: "submit",
+                                "data-success": successLabel ? successLabel : undefined,
                                 style: {
                                     borderColor: submitColor,
                                     color: submitColor,
@@ -5210,7 +5274,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderRadius: submitRadius
                                 }
                             },
-                            __('Submit')
+                            submitLabel ? submitLabel : __('Submit')
                         )
                     )
                 )
