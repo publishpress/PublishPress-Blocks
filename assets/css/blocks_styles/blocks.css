@@ -161,6 +161,10 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     list-style-type: none !important;
 }
 
+.advgb-list li ul {
+    margin: 5px 0;
+}
+
 .advgb-list li:before {
     font-family: 'dashicons';
     speak: none;
