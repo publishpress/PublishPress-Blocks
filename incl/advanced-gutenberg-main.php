@@ -982,8 +982,32 @@ float: left;'
 
         array_push($contacts_saved, $contact_data);
 
-        update_option('advgb_contacts_saved', $contacts_saved);
-        wp_send_json($contact_data, 200);
+        $saved = update_option('advgb_contacts_saved', $contacts_saved);
+        if ($saved) {
+            $saved_settings = get_option('advgb_settings');
+            $website_title  = get_option('blogname');
+            $admin_email    = get_option('admin_email');
+            $sender_name    = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : $website_title;
+            $sender_email   = isset($saved_settings['contact_form_sender_email']) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : $admin_email;
+            $email_title    = isset($saved_settings['contact_form_email_title']) && $saved_settings['contact_form_email_title'] ? $saved_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
+            $email_receiver = isset($saved_settings['contact_form_email_receiver']) && $saved_settings['contact_form_email_receiver'] ? $saved_settings['contact_form_email_receiver'] : $admin_email;
+            $email_header[] = 'Content-Type: text/html; charset=UTF-8';
+            $email_header[] = 'From: '.$sender_name.' <'.$sender_email.'>';
+            $msg = '<html><body>';
+            $msg .= '<h2>'. __('You have received a contact from your website.', 'advanced-gutenberg') .'</h2>';
+            $msg .= '<ul>';
+            $msg .= '<li><strong>'. __('Name', 'advanced-gutenberg') .': </strong>'. $contact_data['name'] .'</li>';
+            $msg .= '<li><strong>'. __('Email', 'advanced-gutenberg') .': </strong>'. $contact_data['email'] .'</li>';
+            $msg .= '<li><strong>'. __('Date', 'advanced-gutenberg') .': </strong>'. $contact_data['date'] .'</li>';
+            $msg .= '<li><strong>'. __('Message', 'advanced-gutenberg') .': </strong>'. $contact_data['msg'] .'</li>';
+            $msg .= '</ul>';
+            $msg .= '</body></html>';
+
+            wp_mail($email_receiver, $email_title, $msg, $email_header);
+            wp_send_json($contact_data, 200);
+        } else {
+            wp_send_json(__('Error while sending form. Try again!', 'advanced-gutenberg'), 500);
+        }
         // phpcs:enable
     }
 
