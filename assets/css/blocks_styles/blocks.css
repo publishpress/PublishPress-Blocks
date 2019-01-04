@@ -1119,20 +1119,16 @@ button.advgb-form-submit:hover:after {
     pointer-events: none;
 }
 
-.advgb-form-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0;
-    background-color: #000;
-    opacity: 0.1;
-    z-index: 10;
+.advgb-form-sending {
+    display: inline-block;
+    vertical-align: middle;
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
     background-image: url(../../images/loading.gif);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100px;
+    background-size: contain;
 }
 
 .advgb-form-submit-success {

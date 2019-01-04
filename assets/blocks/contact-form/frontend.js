@@ -31,18 +31,24 @@ jQuery(document).ready(function ($) {
                 submit_date: submitDate
             },
             beforeSend: function () {
-                $thisForm.append('<div class="advgb-form-overlay" />');
+                var pos = $thisForm.find('.advgb-form-submit-wrapper').css('text-align');
+                if (pos === 'right') {
+                    $thisForm.find('.advgb-form-submit-wrapper').prepend('<div class="advgb-form-sending" />');
+                } else {
+                    $thisForm.find('.advgb-form-submit-wrapper').append('<div class="advgb-form-sending" />');
+                }
+
                 $thisForm.find('.advgb-form-submit-success').remove();
             },
             success: function () {
-                $thisForm.find('.advgb-form-overlay').remove();
+                $thisForm.find('.advgb-form-sending').remove();
                 var successText = $thisForm.find('.advgb-form-submit').data('success');
                 successText = successText ? successText : 'Message sent with success!';
                 $thisForm.append('<div class="advgb-form-submit-success">'+ successText +'</div>');
             },
             error: function ( jqxhr, textStatus, error ) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
-                $thisForm.find('.advgb-form-overlay').remove();
+                $thisForm.find('.advgb-form-sending').remove();
             }
         } )
     });
