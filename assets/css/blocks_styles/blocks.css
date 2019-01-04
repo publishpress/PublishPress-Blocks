@@ -1024,8 +1024,8 @@ hr.wp-block-separator {
 }
 
 #editor div[data-block] > * {
-    position: relative;
-    z-index: 3;
+    /*position: relative;*/
+    /*z-index: 3;*/
 }
 
 .advgb-block-container > * {
