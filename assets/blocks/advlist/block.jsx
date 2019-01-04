@@ -388,9 +388,9 @@
                 icon && `advgb-list-${icon}`
             ].filter( Boolean ).join( ' ' );
 
-            const marg = typeof margin != 'undefined' ? parseInt(margin) : undefined;
-            const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : undefined;
-            const padd = typeof pad != 'undefined' ? parseInt(pad) : undefined;
+            const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+            const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+            const padd = typeof padding != 'undefined' ? parseInt(padding)*2 : 4;
 
             return <div>
                 <ul className={listClassName}>

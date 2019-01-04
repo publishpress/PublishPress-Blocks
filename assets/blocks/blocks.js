@@ -2900,9 +2900,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
 
-            var marg = typeof margin != 'undefined' ? parseInt(margin) : undefined;
-            var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : undefined;
-            var padd = typeof pad != 'undefined' ? parseInt(pad) : undefined;
+            var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+            var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+            var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
 
             return React.createElement(
                 'div',
