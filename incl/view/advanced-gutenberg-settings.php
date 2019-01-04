@@ -22,6 +22,8 @@ $blocks_list_saved = get_option('advgb_blocks_list');
 $contactform_saved = get_option('advgb_contacts_saved');
 $advgb_blocks      = array();
 $contacts_count    = $contactform_saved ? count($contactform_saved) : 0;
+$website_title     = get_option('blogname');
+$admin_email       = get_option('admin_email');
 
 if (gettype($blocks_list_saved) === 'array') {
     foreach ($blocks_list_saved as $block) {
@@ -57,10 +59,10 @@ $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
 $editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
-$contact_form_sender_name         = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : '';
-$contact_form_sender_email        = isset($saved_settings['contact_form_sender_email']) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : '';
-$contact_form_email_title         = isset($saved_settings['contact_form_email_title']) && $saved_settings['contact_form_email_title'] ? $saved_settings['contact_form_email_title'] : '';
-$contact_form_email_receiver      = isset($saved_settings['contact_form_email_receiver']) && $saved_settings['contact_form_email_receiver'] ? $saved_settings['contact_form_email_receiver'] : '';
+$contact_form_sender_name         = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : $website_title;
+$contact_form_sender_email        = isset($saved_settings['contact_form_sender_email']) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : $admin_email;
+$contact_form_email_title         = isset($saved_settings['contact_form_email_title']) && $saved_settings['contact_form_email_title'] ? $saved_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
+$contact_form_email_receiver      = isset($saved_settings['contact_form_email_receiver']) && $saved_settings['contact_form_email_receiver'] ? $saved_settings['contact_form_email_receiver'] : $admin_email;
 ?>
 
 <div id="advgb-settings-container">
