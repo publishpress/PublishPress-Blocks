@@ -156,13 +156,8 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     margin-left: 15px;
 }
 
-#editor .advgb-list, .advgb-list {
+#editor .advgb-list, .advgb-list, .advgb-list li ul {
     margin-left: 0;
-    list-style-type: none !important;
-}
-
-.advgb-list li ul {
-    margin-left: 20px;
     list-style-type: none !important;
 }
 

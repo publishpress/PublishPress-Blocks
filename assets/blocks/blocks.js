@@ -2603,6 +2603,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     fontSize = attributes.fontSize;
 
                 var listClassName = [className, id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
+                var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+                var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+                var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
 
                 return React.createElement(
                     Fragment,
@@ -2767,12 +2770,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li { font-size: ' + fontSize + 'px }'
+                            '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
                         ),
                         icon && React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li:before {\n                                font-size: ' + iconSize + 'px;\n                                color: ' + iconColor + ';\n                                line-height: ' + lineHeight + 'px;\n                                margin: ' + margin + 'px;\n                                padding: ' + padding + 'px;\n                            }'
+                            '.' + id + ' li:before {\n                                font-size: ' + iconSize + 'px;\n                                color: ' + iconColor + ';\n                                line-height: ' + lineHeight + 'px;\n                                margin: ' + margin + 'px;\n                                padding: ' + padding + 'px;\n                                margin-left: -' + (size + padd + marg) + 'px\n                            }'
                         )
                     )
                 );
@@ -2789,6 +2792,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
     );
 
+    var listBlockAttrs = {
+        id: {
+            type: 'string'
+        },
+        icon: {
+            type: 'string'
+        },
+        iconSize: {
+            type: 'number',
+            default: 16
+        },
+        iconColor: {
+            type: 'string',
+            default: '#000'
+        },
+        fontSize: {
+            type: 'number',
+            default: 16
+        },
+        lineHeight: {
+            type: 'number',
+            default: 18
+        },
+        margin: {
+            type: 'number',
+            default: 2
+        },
+        padding: {
+            type: 'number',
+            default: 2
+        },
+        values: {
+            type: 'array',
+            source: 'children',
+            selector: 'ul',
+            default: []
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/list', {
         title: __('Advanced List'),
         description: __('List block with custom icons and styles.'),
@@ -2798,48 +2844,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'common',
         keywords: [__('list'), __('icon')],
-        attributes: {
-            id: {
-                type: 'string'
-            },
-            icon: {
-                type: 'string'
-            },
-            iconSize: {
-                type: 'number',
-                default: 16
-            },
-            iconColor: {
-                type: 'string',
-                default: '#000'
-            },
-            fontSize: {
-                type: 'number',
-                default: 16
-            },
-            lineHeight: {
-                type: 'number',
-                default: 18
-            },
-            margin: {
-                type: 'number',
-                default: 2
-            },
-            padding: {
-                type: 'number',
-                default: 2
-            },
-            values: {
-                type: 'array',
-                source: 'children',
-                selector: 'ul',
-                default: []
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: listBlockAttrs,
         transforms: {
             from: [{
                 type: 'block',
@@ -2895,6 +2900,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
 
+            var marg = typeof margin != 'undefined' ? parseInt(margin) : undefined;
+            var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : undefined;
+            var padd = typeof pad != 'undefined' ? parseInt(pad) : undefined;
+
             return React.createElement(
                 'div',
                 null,
@@ -2906,15 +2915,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement(
                     'style',
                     null,
-                    '.' + id + ' li { font-size: ' + fontSize + 'px }'
+                    '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
                 ),
                 icon && React.createElement(
                     'style',
                     null,
-                    '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
+                    '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                            margin-left: -' + (size + padd + marg) + 'px;\n                        }'
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: listBlockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
+                var id = attributes.id,
+                    values = attributes.values,
+                    icon = attributes.icon,
+                    iconSize = attributes.iconSize,
+                    iconColor = attributes.iconColor,
+                    margin = attributes.margin,
+                    padding = attributes.padding,
+                    lineHeight = attributes.lineHeight,
+                    fontSize = attributes.fontSize;
+
+                var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'ul',
+                        { className: listClassName },
+                        values
+                    ),
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li { font-size: ' + fontSize + 'px }'
+                    ),
+                    icon && React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 

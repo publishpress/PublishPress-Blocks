@@ -115,6 +115,9 @@
                 icon && 'advgb-list',
                 icon && `advgb-list-${icon}`
             ].filter( Boolean ).join( ' ' );
+            const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+            const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+            const padd = typeof padding != 'undefined' ? parseInt(padding)*2 : 4;
 
             return (
                 <Fragment>
@@ -243,7 +246,7 @@
                     />
                     <div>
                         <style>
-                            {`.${id} li { font-size: ${fontSize}px }`}
+                            {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
                         </style>
                         {icon &&
                         <style>
@@ -253,6 +256,7 @@
                                 line-height: ${lineHeight}px;
                                 margin: ${margin}px;
                                 padding: ${padding}px;
+                                margin-left: -${size + padd + marg}px
                             }`}
                         </style>
                         }
@@ -269,6 +273,49 @@
         </svg>
     );
 
+    const listBlockAttrs = {
+        id: {
+            type: 'string'
+        },
+        icon: {
+            type: 'string'
+        },
+        iconSize: {
+            type: 'number',
+            default: 16,
+        },
+        iconColor: {
+            type: 'string',
+            default: '#000',
+        },
+        fontSize: {
+            type: 'number',
+            default: 16,
+        },
+        lineHeight: {
+            type: 'number',
+            default: 18,
+        },
+        margin: {
+            type: 'number',
+            default: 2,
+        },
+        padding: {
+            type: 'number',
+            default: 2,
+        },
+        values: {
+            type: 'array',
+            source: 'children',
+            selector: 'ul',
+            default: [],
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+    };
+
     registerBlockType( 'advgb/list', {
         title: __( 'Advanced List' ),
         description: __( 'List block with custom icons and styles.' ),
@@ -278,48 +325,7 @@
         },
         category: 'common',
         keywords: [ __( 'list' ), __( 'icon' ) ],
-        attributes: {
-            id: {
-                type: 'string'
-            },
-            icon: {
-                type: 'string'
-            },
-            iconSize: {
-                type: 'number',
-                default: 16,
-            },
-            iconColor: {
-                type: 'string',
-                default: '#000',
-            },
-            fontSize: {
-                type: 'number',
-                default: 16,
-            },
-            lineHeight: {
-                type: 'number',
-                default: 18,
-            },
-            margin: {
-                type: 'number',
-                default: 2,
-            },
-            padding: {
-                type: 'number',
-                default: 2,
-            },
-            values: {
-                type: 'array',
-                source: 'children',
-                selector: 'ul',
-                default: [],
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            },
-        },
+        attributes: listBlockAttrs,
         transforms: {
             from: [
                 {
@@ -382,12 +388,16 @@
                 icon && `advgb-list-${icon}`
             ].filter( Boolean ).join( ' ' );
 
+            const marg = typeof margin != 'undefined' ? parseInt(margin) : undefined;
+            const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : undefined;
+            const padd = typeof pad != 'undefined' ? parseInt(pad) : undefined;
+
             return <div>
                 <ul className={listClassName}>
                     {values}
                 </ul>
                 <style>
-                    {`.${id} li { font-size: ${fontSize}px }`}
+                    {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
                 </style>
                 {icon &&
                 <style>
@@ -397,10 +407,54 @@
                             line-height: ${lineHeight}px;
                             margin: ${margin}px;
                             padding: ${padding}px;
+                            margin-left: -${size + padd + marg}px;
                         }`}
                 </style>
                 }
             </div>
-        }
+        },
+        deprecated: [
+            {
+                attributes: listBlockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        values,
+                        icon,
+                        iconSize,
+                        iconColor,
+                        margin,
+                        padding,
+                        lineHeight,
+                        fontSize,
+                    } = attributes;
+                    const listClassName = [
+                        id,
+                        icon && 'advgb-list',
+                        icon && `advgb-list-${icon}`
+                    ].filter( Boolean ).join( ' ' );
+
+                    return <div>
+                        <ul className={listClassName}>
+                            {values}
+                        </ul>
+                        <style>
+                            {`.${id} li { font-size: ${fontSize}px }`}
+                        </style>
+                        {icon &&
+                        <style>
+                            {`.${id} li:before {
+                            font-size: ${iconSize}px;
+                            color: ${iconColor};
+                            line-height: ${lineHeight}px;
+                            margin: ${margin}px;
+                            padding: ${padding}px;
+                        }`}
+                        </style>
+                        }
+                    </div>
+                }
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
