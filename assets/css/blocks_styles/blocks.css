@@ -1082,9 +1082,10 @@ hr.wp-block-separator {
     width: 100%;
     padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 2px;
     resize: vertical;
-    background-color: #eee;
+    font-size: 15px;
+    background-color: #fafafa;
     color: #444;
 }
 
