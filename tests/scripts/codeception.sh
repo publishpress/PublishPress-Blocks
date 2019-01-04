@@ -26,6 +26,7 @@ function prepare_tests () {
         mysql --host ${MYSQL_IP} -e "UPDATE wp_options SET option_value=\"a:0:{}\" WHERE option_name=\"woocommerce_admin_notices\"" wordpress
 EOF
 
+    sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 tests/_data/block root@$WWW_IP:/var/www/html/wp-content/plugins/
 }
 function check_php_errors () {
     # Check for php errors
@@ -93,7 +94,7 @@ EOF
 
 function do_general_tests () {
 
-    codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast -o "php-version: $PHP_VERSION" -o "map-api-key: $MAP_API_KEY"
+    codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast
 
 
     check_php_errors
@@ -108,13 +109,14 @@ function copy_plugin_to_www () {
 
 prepare_tests
 
-sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 tests/_data/block root@$WWW_IP:/var/www/html/wp-content/plugins/
-
 for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
     # Skip php 7.3 tests for WP version lower than 5.0
     if [[ $PHP_VERSION = "7.3" && $WP_VERSION != "latest" ]]; then
         continue
     fi
+
+    # Export php version so codeception can get it through env variables
+    export PHP_VERSION=$PHP_VERSION
 
     if [[ $GUTENBERG_TYPE = "plugin" ]]; then
         # Install gutenberg plugin

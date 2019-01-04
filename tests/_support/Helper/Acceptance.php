@@ -58,10 +58,13 @@ class Acceptance extends \Codeception\Module
     /**
      * Get param from commandline
      */
-    public function getParam($key)
+    public function getParam($key, $default=null)
     {
         if (isset($this->config[$key])) {
             return $this->config[$key];
+        }
+        if ($default!==null) {
+            return $default;
         }
         return '';
     }
