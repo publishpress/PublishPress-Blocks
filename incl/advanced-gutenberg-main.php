@@ -1337,6 +1337,10 @@ float: left;'
             $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
             $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
             $save_config['editor_width'] = $_POST['editor_width'];
+            $save_config['contact_form_sender_name'] = $_POST['contact_form_sender_name'];
+            $save_config['contact_form_sender_email'] = $_POST['contact_form_sender_email'];
+            $save_config['contact_form_email_title'] = $_POST['contact_form_email_title'];
+            $save_config['contact_form_email_receiver'] = $_POST['contact_form_email_receiver'];
 
             update_option('advgb_settings', $save_config);
 

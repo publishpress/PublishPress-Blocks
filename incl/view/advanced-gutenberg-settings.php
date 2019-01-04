@@ -57,6 +57,10 @@ $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
 $editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
+$contact_form_sender_name         = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : '';
+$contact_form_sender_email        = isset($saved_settings['contact_form_sender_email']) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : '';
+$contact_form_email_title         = isset($saved_settings['contact_form_email_title']) && $saved_settings['contact_form_email_title'] ? $saved_settings['contact_form_email_title'] : '';
+$contact_form_email_receiver      = isset($saved_settings['contact_form_email_receiver']) && $saved_settings['contact_form_email_receiver'] ? $saved_settings['contact_form_email_receiver'] : '';
 ?>
 
 <div id="advgb-settings-container">
@@ -238,7 +242,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                             <input type="text"
                                    name="blocks_icon_color"
                                    id="blocks_icon_color"
-                                   class="minicolors minicolors-input ju-input"
+                                   class="ju-input"
                                    value="<?php echo esc_html($blocks_icon_color) ?>"/>
                         </span>
                     </div>
@@ -261,6 +265,77 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                                 <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>Large</option>
                                 <option value="95" <?php echo $editor_width === '95' ? 'selected' : '' ?>>Full width</option>
                             </select>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="ju-settings-option settings-separator">
+                    <p class="settings-separator-title">
+                        <?php esc_html_e('Contact Form Email Sender', 'advanced-gutenberg') ?>
+                    </p>
+                </li>
+
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper no-child-float clearfix">
+                        <label for="contact_form_sender_name"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('Sender name', 'advanced-gutenberg') ?>
+                        </label>
+                        <div>
+                            <input type="text"
+                                   name="contact_form_sender_name"
+                                   id="contact_form_sender_name"
+                                   class="ju-input full-width"
+                                   value="<?php echo esc_html($contact_form_sender_name) ?>"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper no-child-float clearfix">
+                        <label for="contact_form_sender_email"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('Sender email', 'advanced-gutenberg') ?>
+                        </label>
+                        <div>
+                            <input type="email"
+                                   name="contact_form_sender_email"
+                                   id="contact_form_sender_email"
+                                   class="ju-input full-width"
+                                   value="<?php echo esc_html($contact_form_sender_email) ?>"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper no-child-float clearfix">
+                        <label for="contact_form_email_title"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('Email title', 'advanced-gutenberg') ?>
+                        </label>
+                        <div>
+                            <input type="text"
+                                   name="contact_form_email_title"
+                                   id="contact_form_email_title"
+                                   class="ju-input full-width"
+                                   value="<?php echo esc_html($contact_form_email_title) ?>"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper no-child-float clearfix">
+                        <label for="contact_form_email_receiver"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('Email receiver', 'advanced-gutenberg') ?>
+                        </label>
+                        <div>
+                            <input type="email"
+                                   name="contact_form_email_receiver"
+                                   id="contact_form_email_receiver"
+                                   class="ju-input full-width"
+                                   value="<?php echo esc_html($contact_form_email_receiver) ?>"/>
                         </div>
                     </div>
                 </li>
