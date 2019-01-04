@@ -1105,6 +1105,7 @@ button.advgb-form-submit {
     cursor: pointer;
     transition: all ease 0.5s;
     position: relative;
+    border-radius: 0;
 }
 
 button.advgb-form-submit:hover:after {
