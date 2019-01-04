@@ -260,6 +260,7 @@
             },
             submitPosition: {
                 type: 'string',
+                default: 'right',
             },
             changed: {
                 type: 'boolean',

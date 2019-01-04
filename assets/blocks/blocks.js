@@ -5178,7 +5178,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'number'
             },
             submitPosition: {
-                type: 'string'
+                type: 'string',
+                default: 'right'
             },
             changed: {
                 type: 'boolean',
