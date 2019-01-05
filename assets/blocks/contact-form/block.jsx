@@ -40,6 +40,10 @@
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Form Settings' ) }>
+                            <p style={ { fontStyle: 'italic' } }>
+                                { __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change the email sender in ') }
+                                <a href={advgbSettings.config_url + '#settings'} target="_blank"> { __( 'settings' ) }</a>
+                            </p>
                             <PanelBody title={ __( 'Text Label' ) }>
                                 <TextControl
                                     label={ __( 'Name input placeholder' ) }
