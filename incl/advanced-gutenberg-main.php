@@ -1320,6 +1320,8 @@ float: left;'
             $this->saveAdvgbProfile();
         } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveSettings();
+        } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+            $this->saveEmailSettings();
         } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->downloadBlockFormData();
         }
@@ -1339,6 +1341,7 @@ float: left;'
                 return false;
             }
 
+            $save_config = array();
             if (isset($_POST['gallery_lightbox'])) {
                 $save_config['gallery_lightbox'] = 1;
             } else {
@@ -1361,10 +1364,6 @@ float: left;'
             $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
             $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
             $save_config['editor_width'] = $_POST['editor_width'];
-            $save_config['contact_form_sender_name'] = $_POST['contact_form_sender_name'];
-            $save_config['contact_form_sender_email'] = $_POST['contact_form_sender_email'];
-            $save_config['contact_form_email_title'] = $_POST['contact_form_email_title'];
-            $save_config['contact_form_email_receiver'] = $_POST['contact_form_email_receiver'];
 
             update_option('advgb_settings', $save_config);
 
@@ -1555,6 +1554,35 @@ float: left;'
                     echo json_encode($dataSaved);
                     exit;
             }
+        }
+    }
+
+    /**
+     * Save forms and email settings
+     *
+     * @return mixed
+     */
+    private function saveEmailSettings()
+    {
+        if (!isset($_POST['advgb_email_config_nonce_field'])) {
+            return false;
+        }
+
+        if (!wp_verify_nonce($_POST['advgb_email_config_nonce_field'], 'advgb_email_config_nonce')) {
+            return false;
+        }
+
+        $save_config = array();
+        $save_config['contact_form_sender_name'] = $_POST['contact_form_sender_name'];
+        $save_config['contact_form_sender_email'] = $_POST['contact_form_sender_email'];
+        $save_config['contact_form_email_title'] = $_POST['contact_form_email_title'];
+        $save_config['contact_form_email_receiver'] = $_POST['contact_form_email_receiver'];
+
+        update_option('advgb_email_sender', $save_config);
+
+        if (isset($_REQUEST['_wp_http_referer'])) {
+            wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
+            exit;
         }
     }
 

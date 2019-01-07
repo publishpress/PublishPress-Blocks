@@ -1,15 +1,16 @@
 <?php
 defined('ABSPATH') || die;
 
+$email_settings    = get_option('advgb_email_sender');
 $contactform_saved = get_option('advgb_contacts_saved');
 $contacts_count    = $contactform_saved ? count($contactform_saved) : 0;
 $website_title     = get_option('blogname');
 $admin_email       = get_option('admin_email');
 
-$contact_form_sender_name     = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : $website_title;
-$contact_form_sender_email    = isset($saved_settings['contact_form_sender_email']) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : $admin_email;
-$contact_form_email_title     = isset($saved_settings['contact_form_email_title']) && $saved_settings['contact_form_email_title'] ? $saved_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
-$contact_form_email_receiver  = isset($saved_settings['contact_form_email_receiver']) && $saved_settings['contact_form_email_receiver'] ? $saved_settings['contact_form_email_receiver'] : $admin_email;
+$contact_form_sender_name     = isset($email_settings['contact_form_sender_name']) && $email_settings['contact_form_sender_name'] ? $email_settings['contact_form_sender_name'] : $website_title;
+$contact_form_sender_email    = isset($email_settings['contact_form_sender_email']) && $email_settings['contact_form_sender_email'] ? $email_settings['contact_form_sender_email'] : $admin_email;
+$contact_form_email_title     = isset($email_settings['contact_form_email_title']) && $email_settings['contact_form_email_title'] ? $email_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
+$contact_form_email_receiver  = isset($email_settings['contact_form_email_receiver']) && $email_settings['contact_form_email_receiver'] ? $email_settings['contact_form_email_receiver'] : $admin_email;
 ?>
 
 <div id="advgb-settings-container">
