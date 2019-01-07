@@ -19,11 +19,7 @@ wp_enqueue_script('advgb_settings_js');
 
 $saved_settings    = get_option('advgb_settings');
 $blocks_list_saved = get_option('advgb_blocks_list');
-$contactform_saved = get_option('advgb_contacts_saved');
 $advgb_blocks      = array();
-$contacts_count    = $contactform_saved ? count($contactform_saved) : 0;
-$website_title     = get_option('blogname');
-$admin_email       = get_option('admin_email');
 
 if (gettype($blocks_list_saved) === 'array') {
     foreach ($blocks_list_saved as $block) {
@@ -59,10 +55,6 @@ $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
 $editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
-$contact_form_sender_name         = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : $website_title;
-$contact_form_sender_email        = isset($saved_settings['contact_form_sender_email']) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : $admin_email;
-$contact_form_email_title         = isset($saved_settings['contact_form_email_title']) && $saved_settings['contact_form_email_title'] ? $saved_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
-$contact_form_email_receiver      = isset($saved_settings['contact_form_email_receiver']) && $saved_settings['contact_form_email_receiver'] ? $saved_settings['contact_form_email_receiver'] : $admin_email;
 ?>
 
 <div id="advgb-settings-container">
@@ -76,11 +68,6 @@ $contact_form_email_receiver      = isset($saved_settings['contact_form_email_re
             <li class="tab">
                 <a href="#block-config-tab" class="link-tab">
                     <?php esc_html_e('Default blocks config', 'advanced-gutenberg') ?>
-                </a>
-            </li>
-            <li class="tab">
-                <a href="#export-block-data" class="link-tab">
-                    <?php esc_html_e('Forms data', 'advanced-gutenberg') ?>
                 </a>
             </li>
         </ul>
@@ -270,77 +257,6 @@ $contact_form_email_receiver      = isset($saved_settings['contact_form_email_re
                         </div>
                     </div>
                 </li>
-
-                <li class="ju-settings-option settings-separator">
-                    <p class="settings-separator-title">
-                        <?php esc_html_e('Contact Form Email Sender', 'advanced-gutenberg') ?>
-                    </p>
-                </li>
-
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper no-child-float clearfix">
-                        <label for="contact_form_sender_name"
-                               class="ju-setting-label"
-                        >
-                            <?php esc_html_e('Sender name', 'advanced-gutenberg') ?>
-                        </label>
-                        <div>
-                            <input type="text"
-                                   name="contact_form_sender_name"
-                                   id="contact_form_sender_name"
-                                   class="ju-input full-width"
-                                   value="<?php echo esc_html($contact_form_sender_name) ?>"/>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper no-child-float clearfix">
-                        <label for="contact_form_sender_email"
-                               class="ju-setting-label"
-                        >
-                            <?php esc_html_e('Sender email', 'advanced-gutenberg') ?>
-                        </label>
-                        <div>
-                            <input type="email"
-                                   name="contact_form_sender_email"
-                                   id="contact_form_sender_email"
-                                   class="ju-input full-width"
-                                   value="<?php echo esc_html($contact_form_sender_email) ?>"/>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper no-child-float clearfix">
-                        <label for="contact_form_email_title"
-                               class="ju-setting-label"
-                        >
-                            <?php esc_html_e('Email title', 'advanced-gutenberg') ?>
-                        </label>
-                        <div>
-                            <input type="text"
-                                   name="contact_form_email_title"
-                                   id="contact_form_email_title"
-                                   class="ju-input full-width"
-                                   value="<?php echo esc_html($contact_form_email_title) ?>"/>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper no-child-float clearfix">
-                        <label for="contact_form_email_receiver"
-                               class="ju-setting-label"
-                        >
-                            <?php esc_html_e('Email receiver', 'advanced-gutenberg') ?>
-                        </label>
-                        <div>
-                            <input type="email"
-                                   name="contact_form_email_receiver"
-                                   id="contact_form_email_receiver"
-                                   class="ju-input full-width"
-                                   value="<?php echo esc_html($contact_form_email_receiver) ?>"/>
-                        </div>
-                    </div>
-                </li>
             </ul>
 
             <div class="save-settings-block">
@@ -387,33 +303,5 @@ $contact_form_email_receiver      = isset($saved_settings['contact_form_email_re
                 <p><?php esc_html_e('We are updating blocks list...', 'advanced-gutenberg'); ?></p>
             </div>
         <?php endif; ?>
-    </div>
-
-    <div id="export-block-data" class="tab-content clearfix">
-        <form method="POST" id="export-block-data-form">
-            <?php wp_nonce_field('advgb_export_data_nonce', 'advgb_export_data_nonce_field') ?>
-            <ul class="advgb-export-field">
-                <li class="advgb-export-item ju-settings-option full-width clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label class="advgb-export-data-title ju-setting-label">
-                            <?php esc_html_e('Download Contacts Form data', 'advanced-gutenberg'); ?>
-                            <?php echo ' ('. esc_html($contacts_count) . ')'; ?>
-                        </label>
-                        <div class="advgb-export-actions">
-                            <button type="submit" class="ju-material-button advgb-export-download"
-                                    name="block_data_export" value="contact_form.csv"
-                            >
-                                <?php esc_html_e('CSV', 'advanced-gutenberg'); ?>
-                            </button>
-                            <button type="submit" class="ju-material-button advgb-export-download"
-                                    name="block_data_export" value="contact_form.json"
-                            >
-                                <?php esc_html_e('JSON', 'advanced-gutenberg'); ?>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </form>
     </div>
 </div>
