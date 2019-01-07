@@ -16,6 +16,15 @@
     padding: 5px 10px;
 }
 
+.settings-option-wrapper.no-child-float > * {
+    float: none !important;
+}
+
+.ju-input.full-width {
+    display: inline-block;
+    width: 100%;
+}
+
 #gallery_lightbox_caption_wrapper .slider {
     transition: none;
     -moz-transition: none;

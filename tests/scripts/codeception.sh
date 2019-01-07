@@ -5,34 +5,30 @@
 # Should only be included through local_codeception.sh or bitbucket_codeception.sh
 #
 
-function prepare_install () {
-    mysql -uroot -h $MYSQL_IP -e "DELETE FROM wp_options WHERE option_value LIKE 'advgb_%';" wordpress
+# Prepare container for all the tests, this function will only be run once at first
+function prepare_tests () {
     sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP << EOF
-    cd /var/www/html/;
-    wp plugin deactivate --allow-root advanced-gutenberg;
-    wp post delete --allow-root \$(wp post list --allow-root --post_type='advgb_profiles' --format=ids)  2>&1 || true;
-    wp post delete --allow-root \$(wp post list --allow-root --post_type='post' --format=ids)  2>&1 || true;
-    echo > /var/www/html/wp-content/debug.log;
+        # Set php cli to 7.2 to prevent wp-cli errors
+        update-alternatives --set php /usr/bin/php7.2
 
-    # Remove content used for Recent post
-    wp post delete --allow-root \$(wp post list --category=recent_posts --format=ids --allow-root) 2>&1 || true;
-    wp term delete category recent_posts --by=slug --allow-root 2>&1 || true;
+        cd /var/www/html/;
 
-    #Create dummy posts and affect them the Recent post category
-    wp term create category "Recent posts" --description="Test category for Recent Post blocks" --porcelain --slug="recent_posts" --allow-root  2>&1;
-    wp post generate --count=10 --format=ids --allow-root | xargs -d " " -I {} wp post term set {} category recent_posts --by=slug --allow-root 2>&1;
+        #Create dummy posts and affect them the Recent post category
+        wp term create category "Recent posts" --description="Test category for Recent Post blocks" --porcelain --slug="recent_posts" --allow-root  2>/dev/null;
+        wp post generate --count=10 --format=ids --allow-root 2>/dev/null | xargs -d " " -I {} wp post term set {} category recent_posts --by=slug --allow-root 2>/dev/null;
+
+        # Create woocommerce products
+        wp plugin install --allow-root woocommerce --activate --force 2>/dev/null ;
+        wp wc product create --name="Test Product 1" --type=simple --sku=WCCLITESTP1 --regular_price=20 --user=admin --allow-root
+        wp wc product create --name="Test Product 2" --type=simple --sku=WCCLITESTP2 --regular_price=30 --user=admin --allow-root
+
+        # Remove woocommerce admin notices
+        mysql --host ${MYSQL_IP} -e "UPDATE wp_options SET option_value=\"a:0:{}\" WHERE option_name=\"woocommerce_admin_notices\"" wordpress
 EOF
+
+    sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 tests/_data/block root@$WWW_IP:/var/www/html/wp-content/plugins/
 }
-
-function do_tests () {
-    echo -e "\n\e[34m\e[1m##### Run tests on php $1 #####\e[0m\n"
-
-    prepare_install
-
-    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "/root/set_php_version.sh $1;"
-    codecept run functional --skip-group php5.2 --env=$DOCKER_ENV --fail-fast -o "php-version: $1"
-    codecept run acceptance --skip-group php5.2 --env=$DOCKER_ENV --fail-fast -o "php-version: $1"
-
+function check_php_errors () {
     # Check for php errors
     sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 root@$WWW_IP:/var/www/html/wp-content/debug.log "$PLUGIN_DIR/tests/_output/wp_debug.log" 2>/dev/null || true
     echo -e "\n\e[1mChecking errors in debug.log file\e[0m"
@@ -47,44 +43,109 @@ function do_tests () {
 
     PHP_ERRORS=$(grep -v "/var/www/html/wp-content/plugins/advanced-gutenberg" "$PLUGIN_DIR/tests/_output/wp_debug.log" 2>/dev/null || true)
     if [[ "$PHP_ERRORS" != "" ]]; then
-        echo -e "\n\e[31m\e[! Php errors not related to the plugin found in the debug log file\e[0m\n"
+        echo -e "\n\e[31m\e[1m\xc7\x83 Php errors not related to the plugin found in the debug log file\e[0m\n"
         echo "$PHP_ERRORS"
     else
         echo -e "\n\e[32m\e[1m\xe2\x9c\x93 No php errors not related to the plugin found in the debug log file\e[0m\n"
     fi
 }
 
-# Copy test block plugin
-sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 "$( pwd )"/tests/_data/block root@$WWW_IP:/var/www/html/wp-content/plugins/
+function clean_install () {
+    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP << EOF
+        cd /var/www/html/;
 
-# Test the core gutenberg version and plugin version
-for TYPE in "core" "plugin"; do
-    prepare_install
+        #Deactivate ADVG
+        wp plugin deactivate --allow-root advanced-gutenberg 2>/dev/null ;
 
-    # Set php version to 5.2
-    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "/root/set_php_version.sh 5.2;"
+        # Remove ADVG profiles
+        wp post delete --force --allow-root \$(wp post list --allow-root --post_type='advgb_profiles' --format=ids 2>/dev/null)  2>/dev/null || true;
 
-    if [[ $TYPE = "plugin" ]]; then
-        # Install gutenberg
-        echo -e '\n\e[34m\e[1m####### Run tests with Gutenberg plugin #######\e[0m\n'
-        sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "cd /var/www/html/; wp plugin install gutenberg --activate --allow-root"
-    else
+        # Reset error file
+        echo > /var/www/html/wp-content/debug.log;
+
+        wp plugin deactivate --allow-root woocommerce 2>/dev/null || true;
+EOF
+}
+
+function do_install_tests () {
+    codecept run functional --skip-group php5.2 --env=$DOCKER_ENV --fail-fast
+}
+
+function do_update_tests () {
+    # Send images needed for tests
+    sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 tests/_data/wp_cli_images root@$WWW_IP:/tmp/
+
+    # Install Advanced Gutenberg plugin from WP Repository
+    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP << EOF
+            cd /var/www/html/;
+            wp plugin install --allow-root advanced-gutenberg --activate --force 2>/dev/null ;
+
+            # Import medias
+            wp media import --allow-root /tmp/wp_cli_images/*
+
+            # Activate Woocomerce and remove notices
+            wp plugin activate --allow-root woocommerce 2>/dev/null || true;
+            mysql --host ${MYSQL_IP} -e "UPDATE wp_options SET option_value=\"a:0:{}\" WHERE option_name=\"woocommerce_admin_notices\"" wordpress
+EOF
+
+    codecept run acceptance -g pre_update --env=$DOCKER_ENV --fail-fast
+    codecept run acceptance -g update --env=$DOCKER_ENV --fail-fast
+}
+
+function do_general_tests () {
+
+    codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast
+
+
+    check_php_errors
+}
+
+function copy_plugin_to_www () {
+# Copy plugin to web server
+        sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "rm -rf /var/www/html/wp-content/plugins/advanced-gutenberg; mkdir -p /var/www/html/wp-content/plugins/advanced-gutenberg"
+        sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 "$PLUGIN_DIR"/* root@$WWW_IP:/var/www/html/wp-content/plugins/advanced-gutenberg
+        sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "chown -Rh www-data:www-data /var/www/html/wp-content/plugins/advanced-gutenberg"
+}
+
+prepare_tests
+
+for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
+    # Skip php 7.3 tests for WP version lower than 5.0
+    if [[ $PHP_VERSION = "7.3" && $WP_VERSION != "latest" ]]; then
+        continue
+    fi
+
+    # Export php version so codeception can get it through env variables
+    export PHP_VERSION=$PHP_VERSION
+
+    if [[ $GUTENBERG_TYPE = "plugin" ]]; then
+        # Install gutenberg plugin
+        echo -e "\n\e[34m\e[1m##### Run $INSTALL_TYPE tests under WP $WP_VERSION, PHP $PHP_VERSION, Gutenberg plugin #####\e[0m\n"
+        sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "cd /var/www/html/; wp plugin install gutenberg --activate --allow-root 2>/dev/null "
+    elif [[ $GUTENBERG_TYPE = "core" ]]; then
         if [[ $WP_VERSION != "latest" ]]; then
             continue
         fi
-        echo -e '\n\e[34m\e[1m####### Run test with core Gutenberg version #######\e[0m\n'
+        echo -e "\n\e[34m\e[1m##### Run $INSTALL_TYPE tests under WP $WP_VERSION, PHP $PHP_VERSION, Gutenberg core #####\e[0m\n"
     fi
 
-    echo -e '\n\e[34m\e[1m##### Run tests on php 5.2 #####\e[0m\n'
-    codecept run functional -g php5.2 --env=$DOCKER_ENV --fail-fast
+    # Set php version
+    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "/root/set_php_version.sh $PHP_VERSION;"
 
+    clean_install
 
-    for PHP_VERSION in '5.3' '5.4' '5.5' '5.6' '7.0' '7.1' '7.2' '7.3'
-    do
-        # Don't run 7.3 tests under php 4.9
-        if [[ $WP_VERSION != "latest" && $PHP_VERSION = "7.3" ]]; then
-            continue
-        fi
-        do_tests $PHP_VERSION
-    done
+    if [[ "$PHP_VERSION" = "5.2" ]]; then
+        # Run PHP 5.2 tests
+        copy_plugin_to_www
+        codecept run functional -g php5.2 --env=$DOCKER_ENV --fail-fast
+    elif [[ "$INSTALL_TYPE" = "install" ]]; then
+        copy_plugin_to_www
+        do_install_tests
+        do_general_tests
+    elif [[ "$INSTALL_TYPE" = "update" ]]; then
+        do_update_tests
+        copy_plugin_to_www
+        do_general_tests
+    fi
+
 done
