@@ -20,6 +20,7 @@
         render() {
             const { attributes, setAttributes } = this.props;
             const {
+                formStyle,
                 formWidth,
                 bgColor,
                 textColor,
@@ -35,6 +36,15 @@
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Form Settings' ) }>
+                            <SelectControl
+                                label={ __( 'Form style' ) }
+                                value={ formStyle }
+                                options={ [
+                                    { label: __( 'Default' ), value: 'default' },
+                                    { label: __( 'Alternative' ), value: 'alt' },
+                                ] }
+                                onChange={ (value) => setAttributes( { formStyle: value } ) }
+                            />
                             <RangeControl
                                 label={ __( 'Form width (px)' ) }
                                 value={ formWidth }
@@ -115,34 +125,9 @@
                         </PanelBody>
                     </InspectorControls>
                     <div className="advgb-newsletter-wrapper">
-                        <div className="advgb-newsletter" style={ { maxWidth: formWidth } }>
-                            <div className="advgb-form-field advgb-form-field-full">
-                                <input type="text" disabled={ true }
-                                       className="advgb-form-input"
-                                       value={ __( 'First Name' ) }
-                                       style={ {
-                                           backgroundColor: bgColor,
-                                           color: textColor,
-                                           borderColor: borderColor,
-                                           borderStyle: borderStyle,
-                                           borderRadius: borderRadius,
-                                       } }
-                                />
-                            </div>
-                            <div className="advgb-form-field advgb-form-field-full">
-                                <input type="text" disabled={ true }
-                                       className="advgb-form-input"
-                                       value={ __( 'Last Name' ) }
-                                       style={ {
-                                           backgroundColor: bgColor,
-                                           color: textColor,
-                                           borderColor: borderColor,
-                                           borderStyle: borderStyle,
-                                           borderRadius: borderRadius,
-                                       } }
-                                />
-                            </div>
-                            <div className="advgb-form-field advgb-form-field-full">
+                        <div className={ `advgb-newsletter clearfix style-${formStyle}` } style={ { maxWidth: formWidth } }>
+                        {formStyle === 'default' && (
+                            <div className="advgb-form-field">
                                 <input type="text" disabled={ true }
                                        className="advgb-form-input"
                                        value={ __( 'Email address' ) }
@@ -154,20 +139,78 @@
                                            borderRadius: borderRadius,
                                        } }
                                 />
+                                <div className="advgb-form-submit-wrapper">
+                                    <button className="advgb-form-submit"
+                                            type="button"
+                                            style={ {
+                                                borderColor: submitColor,
+                                                color: submitColor,
+                                                backgroundColor: submitBgColor,
+                                                borderRadius: submitRadius,
+                                            } }
+                                    >
+                                        { __( 'Submit' ) }
+                                    </button>
+                                </div>
                             </div>
-                            <div className="advgb-form-submit-wrapper">
-                                <button className="advgb-form-submit"
-                                        type="button"
-                                        style={ {
-                                            borderColor: submitColor,
-                                            color: submitColor,
-                                            backgroundColor: submitBgColor,
-                                            borderRadius: submitRadius,
-                                        } }
-                                >
-                                    { __( 'Submit' ) }
-                                </button>
-                            </div>
+                        ) }
+
+                        {formStyle === 'alt' && (
+                            <Fragment>
+                                <div className="advgb-form-field advgb-form-field-full">
+                                    <input type="text" disabled={ true }
+                                           className="advgb-form-input"
+                                           value={ __( 'First Name' ) }
+                                           style={ {
+                                               backgroundColor: bgColor,
+                                               color: textColor,
+                                               borderColor: borderColor,
+                                               borderStyle: borderStyle,
+                                               borderRadius: borderRadius,
+                                           } }
+                                    />
+                                </div>
+                                <div className="advgb-form-field advgb-form-field-full">
+                                    <input type="text" disabled={ true }
+                                           className="advgb-form-input"
+                                           value={ __( 'Last Name' ) }
+                                           style={ {
+                                               backgroundColor: bgColor,
+                                               color: textColor,
+                                               borderColor: borderColor,
+                                               borderStyle: borderStyle,
+                                               borderRadius: borderRadius,
+                                           } }
+                                    />
+                                </div>
+                                <div className="advgb-form-field advgb-form-field-full">
+                                    <input type="text" disabled={ true }
+                                           className="advgb-form-input"
+                                           value={ __( 'Email address' ) }
+                                           style={ {
+                                               backgroundColor: bgColor,
+                                               color: textColor,
+                                               borderColor: borderColor,
+                                               borderStyle: borderStyle,
+                                               borderRadius: borderRadius,
+                                           } }
+                                    />
+                                </div>
+                                <div className="advgb-form-submit-wrapper">
+                                    <button className="advgb-form-submit"
+                                            type="button"
+                                            style={ {
+                                                borderColor: submitColor,
+                                                color: submitColor,
+                                                backgroundColor: submitBgColor,
+                                                borderRadius: submitRadius,
+                                            } }
+                                    >
+                                        { __( 'Submit' ) }
+                                    </button>
+                                </div>
+                            </Fragment>
+                        ) }
                         </div>
                     </div>
                 </Fragment>
@@ -185,6 +228,10 @@
         category: 'widgets',
         keywords: [ __( 'newsletter' ), __( 'form' ), __( 'email' ) ],
         attributes: {
+            formStyle: {
+                type: 'string',
+                default: 'default',
+            },
             formWidth: {
                 type: 'number',
                 default: 400,
@@ -218,12 +265,10 @@
                 default: false,
             }
         },
-        supports: {
-            align: true,
-        },
         edit: AdvNewsletter,
         save: function ( { attributes } ) {
             const {
+                formStyle,
                 formWidth,
                 bgColor,
                 textColor,
@@ -236,60 +281,93 @@
             } = attributes;
 
             return (
-                <div className="advgb-newsletter" style={ { maxWidth: formWidth } }>
+                <div className={`advgb-newsletter clearfix style-${formStyle}`} style={ { maxWidth: formWidth } }>
                     <form method="POST">
-                        <div className="advgb-form-field advgb-form-field-full">
-                            <input type="text"
-                                   className="advgb-form-input advgb-form-input-fname"
-                                   placeholder={ __( 'First Name' ) }
-                                   style={ {
-                                       backgroundColor: bgColor,
-                                       color: textColor,
-                                       borderColor: borderColor,
-                                       borderStyle: borderStyle,
-                                       borderRadius: borderRadius,
-                                   } }
-                            />
-                        </div>
-                        <div className="advgb-form-field advgb-form-field-full">
-                            <input type="text"
-                                   className="advgb-form-input advgb-form-input-lname"
-                                   placeholder={ __( 'Last Name' ) }
-                                   style={ {
-                                       backgroundColor: bgColor,
-                                       color: textColor,
-                                       borderColor: borderColor,
-                                       borderStyle: borderStyle,
-                                       borderRadius: borderRadius,
-                                   } }
-                            />
-                        </div>
-                        <div className="advgb-form-field advgb-form-field-full">
-                            <input type="email"
-                                   className="advgb-form-input advgb-form-input-email"
-                                   placeholder={ __( 'Email address' ) }
-                                   style={ {
-                                       backgroundColor: bgColor,
-                                       color: textColor,
-                                       borderColor: borderColor,
-                                       borderStyle: borderStyle,
-                                       borderRadius: borderRadius,
-                                   } }
-                            />
-                        </div>
-                        <div className="advgb-form-submit-wrapper">
-                            <button className="advgb-form-submit"
-                                    type="submit"
-                                    style={ {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius,
-                                    } }
-                            >
-                                { __( 'Submit' ) }
-                            </button>
-                        </div>
+                        {formStyle === 'default' && (
+                            <div className="advgb-form-field">
+                                <input type="email"
+                                       className="advgb-form-input advgb-form-input-email"
+                                       placeholder={ __( 'Email address' ) }
+                                       style={ {
+                                           backgroundColor: bgColor,
+                                           color: textColor,
+                                           borderColor: borderColor,
+                                           borderStyle: borderStyle,
+                                           borderRadius: borderRadius,
+                                       } }
+                                />
+                                <div className="advgb-form-submit-wrapper">
+                                    <button className="advgb-form-submit"
+                                            type="submit"
+                                            style={ {
+                                                borderColor: submitColor,
+                                                color: submitColor,
+                                                backgroundColor: submitBgColor,
+                                                borderRadius: submitRadius,
+                                            } }
+                                    >
+                                        { __( 'Submit' ) }
+                                    </button>
+                                </div>
+                            </div>
+                        ) }
+
+                        {formStyle === 'alt' && (
+                            <Fragment>
+                                <div className="advgb-form-field advgb-form-field-full">
+                                    <input type="text"
+                                           className="advgb-form-input advgb-form-input-fname"
+                                           placeholder={ __( 'First Name' ) }
+                                           style={ {
+                                               backgroundColor: bgColor,
+                                               color: textColor,
+                                               borderColor: borderColor,
+                                               borderStyle: borderStyle,
+                                               borderRadius: borderRadius,
+                                           } }
+                                    />
+                                </div>
+                                <div className="advgb-form-field advgb-form-field-full">
+                                    <input type="text"
+                                           className="advgb-form-input advgb-form-input-lname"
+                                           placeholder={ __( 'Last Name' ) }
+                                           style={ {
+                                               backgroundColor: bgColor,
+                                               color: textColor,
+                                               borderColor: borderColor,
+                                               borderStyle: borderStyle,
+                                               borderRadius: borderRadius,
+                                           } }
+                                    />
+                                </div>
+                                <div className="advgb-form-field advgb-form-field-full">
+                                    <input type="email"
+                                           className="advgb-form-input advgb-form-input-email"
+                                           placeholder={ __( 'Email address' ) }
+                                           style={ {
+                                               backgroundColor: bgColor,
+                                               color: textColor,
+                                               borderColor: borderColor,
+                                               borderStyle: borderStyle,
+                                               borderRadius: borderRadius,
+                                           } }
+                                    />
+                                </div>
+                                <div className="advgb-form-submit-wrapper">
+                                    <button className="advgb-form-submit"
+                                            type="submit"
+                                            style={ {
+                                                borderColor: submitColor,
+                                                color: submitColor,
+                                                backgroundColor: submitBgColor,
+                                                borderRadius: submitRadius,
+                                            } }
+                                    >
+                                        { __( 'Submit' ) }
+                                    </button>
+                                </div>
+                            </Fragment>
+                        ) }
                     </form>
                 </div>
             );

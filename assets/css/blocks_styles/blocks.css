@@ -1,3 +1,9 @@
+.clearfix:after, .clearfix:before {
+    content: '';
+    display: block;
+    clear: both;
+}
+
 /*Accordion block styles*/
 #editor .advgb-accordion-block .advgb-accordion-header p.mce-content-body,
 #editor .advgb-accordion-block .advgb-accordion-body p.mce-content-body {
@@ -1100,7 +1106,7 @@ hr.wp-block-separator {
 }
 
 button.advgb-form-submit {
-    padding: 10px;
+    padding: 14px;
     background-color: #444;
     box-shadow: none;
     outline: none;
@@ -1110,6 +1116,7 @@ button.advgb-form-submit {
     transition: all ease 0.5s;
     position: relative;
     border-radius: 0;
+    font-size: 15px;
 }
 
 button.advgb-form-submit:hover:after {
@@ -1152,7 +1159,7 @@ button.advgb-form-submit:hover:after {
 }
 
 /*Newsletter block*/
-.editor-block-list__block[data-align="center"] .advgb-newsletter {
+.advgb-newsletter {
     margin: auto;
 }
 
@@ -1162,6 +1169,16 @@ button.advgb-form-submit:hover:after {
     padding-left: 0;
 }
 
-.advgb-newsletter .advgb-form-submit {
+.advgb-newsletter.style-alt .advgb-form-submit {
     width: 100%;
+}
+
+.advgb-newsletter.style-default .advgb-form-field {
+    position: relative;
+}
+
+.advgb-newsletter.style-default .advgb-form-submit-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
