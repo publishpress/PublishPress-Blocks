@@ -4974,14 +4974,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             PanelBody,
                             { title: __('Form Settings') },
                             React.createElement(
-                                "p",
-                                { style: { fontStyle: 'italic' } },
-                                __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change the email sender in '),
+                                PanelBody,
+                                { title: __('Email sender'), initialOpen: false },
                                 React.createElement(
-                                    "a",
-                                    { href: advgbSettings.config_url + '#settings', target: "_blank" },
-                                    " ",
-                                    __('settings')
+                                    "p",
+                                    { style: { fontStyle: 'italic' } },
+                                    __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in '),
+                                    React.createElement(
+                                        "a",
+                                        { href: advgbSettings.config_url + '#settings', target: "_blank" },
+                                        " ",
+                                        __('settings'),
+                                        "."
+                                    )
                                 )
                             ),
                             React.createElement(
