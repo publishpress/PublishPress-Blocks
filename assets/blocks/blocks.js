@@ -2603,6 +2603,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     fontSize = attributes.fontSize;
 
                 var listClassName = [className, id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
+                var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+                var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+                var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
 
                 return React.createElement(
                     Fragment,
@@ -2767,12 +2770,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li { font-size: ' + fontSize + 'px }'
+                            '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
                         ),
                         icon && React.createElement(
                             'style',
                             null,
-                            '.' + id + ' li:before {\n                                font-size: ' + iconSize + 'px;\n                                color: ' + iconColor + ';\n                                line-height: ' + lineHeight + 'px;\n                                margin: ' + margin + 'px;\n                                padding: ' + padding + 'px;\n                            }'
+                            '.' + id + ' li:before {\n                                font-size: ' + iconSize + 'px;\n                                color: ' + iconColor + ';\n                                line-height: ' + lineHeight + 'px;\n                                margin: ' + margin + 'px;\n                                padding: ' + padding + 'px;\n                                margin-left: -' + (size + padd + marg) + 'px\n                            }'
                         )
                     )
                 );
@@ -2789,6 +2792,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
     );
 
+    var listBlockAttrs = {
+        id: {
+            type: 'string'
+        },
+        icon: {
+            type: 'string'
+        },
+        iconSize: {
+            type: 'number',
+            default: 16
+        },
+        iconColor: {
+            type: 'string',
+            default: '#000'
+        },
+        fontSize: {
+            type: 'number',
+            default: 16
+        },
+        lineHeight: {
+            type: 'number',
+            default: 18
+        },
+        margin: {
+            type: 'number',
+            default: 2
+        },
+        padding: {
+            type: 'number',
+            default: 2
+        },
+        values: {
+            type: 'array',
+            source: 'children',
+            selector: 'ul',
+            default: []
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/list', {
         title: __('Advanced List'),
         description: __('List block with custom icons and styles.'),
@@ -2798,48 +2844,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'common',
         keywords: [__('list'), __('icon')],
-        attributes: {
-            id: {
-                type: 'string'
-            },
-            icon: {
-                type: 'string'
-            },
-            iconSize: {
-                type: 'number',
-                default: 16
-            },
-            iconColor: {
-                type: 'string',
-                default: '#000'
-            },
-            fontSize: {
-                type: 'number',
-                default: 16
-            },
-            lineHeight: {
-                type: 'number',
-                default: 18
-            },
-            margin: {
-                type: 'number',
-                default: 2
-            },
-            padding: {
-                type: 'number',
-                default: 2
-            },
-            values: {
-                type: 'array',
-                source: 'children',
-                selector: 'ul',
-                default: []
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: listBlockAttrs,
         transforms: {
             from: [{
                 type: 'block',
@@ -2895,6 +2900,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
 
+            var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+            var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+            var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
+
             return React.createElement(
                 'div',
                 null,
@@ -2906,15 +2915,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement(
                     'style',
                     null,
-                    '.' + id + ' li { font-size: ' + fontSize + 'px }'
+                    '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
                 ),
                 icon && React.createElement(
                     'style',
                     null,
-                    '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
+                    '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                            margin-left: -' + (size + padd + marg) + 'px;\n                        }'
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: listBlockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
+                var id = attributes.id,
+                    values = attributes.values,
+                    icon = attributes.icon,
+                    iconSize = attributes.iconSize,
+                    iconColor = attributes.iconColor,
+                    margin = attributes.margin,
+                    padding = attributes.padding,
+                    lineHeight = attributes.lineHeight,
+                    fontSize = attributes.fontSize;
+
+                var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'ul',
+                        { className: listClassName },
+                        values
+                    ),
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li { font-size: ' + fontSize + 'px }'
+                    ),
+                    icon && React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -4877,8 +4923,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
-        TextControl = wpComponents.TextControl,
-        Tooltip = wpComponents.Tooltip;
+        TextControl = wpComponents.TextControl;
 
 
     var contactBlockIcon = React.createElement(
@@ -4903,7 +4948,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
-                var bgColor = attributes.bgColor,
+                var nameLabel = attributes.nameLabel,
+                    emailLabel = attributes.emailLabel,
+                    msgLabel = attributes.msgLabel,
+                    submitLabel = attributes.submitLabel,
+                    successLabel = attributes.successLabel,
+                    bgColor = attributes.bgColor,
                     textColor = attributes.textColor,
                     borderColor = attributes.borderColor,
                     borderStyle = attributes.borderStyle,
@@ -4923,6 +4973,61 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Form Settings') },
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Email sender'), initialOpen: false },
+                                React.createElement(
+                                    "p",
+                                    { style: { fontStyle: 'italic' } },
+                                    __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in '),
+                                    React.createElement(
+                                        "a",
+                                        { href: advgbSettings.config_url + '#settings', target: "_blank" },
+                                        " ",
+                                        __('settings'),
+                                        "."
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Text Label') },
+                                React.createElement(TextControl, {
+                                    label: __('Name input placeholder'),
+                                    value: nameLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ nameLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Email input placeholder'),
+                                    value: emailLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ emailLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Message input placeholder'),
+                                    value: msgLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ msgLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Submit text'),
+                                    value: submitLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Submit success text'),
+                                    value: successLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ successLabel: value });
+                                    }
+                                })
+                            ),
                             React.createElement(PanelColorSettings, {
                                 title: __('Input Color'),
                                 colorSettings: [{
@@ -5019,7 +5124,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: __('Name'),
+                                value: nameLabel ? nameLabel : __('Name'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -5034,7 +5139,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: __('Email address'),
+                                value: emailLabel ? emailLabel : __('Email address'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -5049,7 +5154,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("textarea", { className: "advgb-form-input",
                                 disabled: true,
-                                value: __('Message'),
+                                value: msgLabel ? msgLabel : __('Message'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -5074,7 +5179,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                __('Submit')
+                                submitLabel ? submitLabel : __('Submit')
                             )
                         )
                     )
@@ -5095,6 +5200,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'widgets',
         keywords: [__('contact'), __('form')],
         attributes: {
+            nameLabel: {
+                type: 'string'
+            },
+            emailLabel: {
+                type: 'string'
+            },
+            msgLabel: {
+                type: 'string'
+            },
+            submitLabel: {
+                type: 'string'
+            },
+            successLabel: {
+                type: 'string'
+            },
             bgColor: {
                 type: 'string'
             },
@@ -5120,7 +5240,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'number'
             },
             submitPosition: {
-                type: 'string'
+                type: 'string',
+                default: 'right'
             },
             changed: {
                 type: 'boolean',
@@ -5130,7 +5251,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvContactForm,
         save: function save(_ref) {
             var attributes = _ref.attributes;
-            var bgColor = attributes.bgColor,
+            var nameLabel = attributes.nameLabel,
+                emailLabel = attributes.emailLabel,
+                msgLabel = attributes.msgLabel,
+                submitLabel = attributes.submitLabel,
+                successLabel = attributes.successLabel,
+                bgColor = attributes.bgColor,
                 textColor = attributes.textColor,
                 borderColor = attributes.borderColor,
                 borderStyle = attributes.borderStyle,
@@ -5152,7 +5278,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "text",
                             className: "advgb-form-input advgb-form-input-name",
-                            placeholder: __('Name'),
+                            placeholder: nameLabel ? nameLabel : __('Name'),
                             name: "contact_name",
                             style: {
                                 backgroundColor: bgColor,
@@ -5168,7 +5294,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: __('Email address'),
+                            placeholder: emailLabel ? emailLabel : __('Email address'),
                             name: "contact_email",
                             style: {
                                 backgroundColor: bgColor,
@@ -5183,7 +5309,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-form-field advgb-form-field-full" },
                         React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                            placeholder: __('Message'),
+                            placeholder: msgLabel ? msgLabel : __('Message'),
                             name: "contact_message",
                             style: {
                                 backgroundColor: bgColor,
@@ -5203,6 +5329,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "button",
                             { className: "advgb-form-submit",
                                 type: "submit",
+                                "data-success": successLabel ? successLabel : undefined,
                                 style: {
                                     borderColor: submitColor,
                                     color: submitColor,
@@ -5210,7 +5337,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderRadius: submitRadius
                                 }
                             },
-                            __('Submit')
+                            submitLabel ? submitLabel : __('Submit')
                         )
                     )
                 )

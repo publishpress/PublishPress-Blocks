@@ -18,6 +18,11 @@ $tabs_data = array(
         'icon' => 'settings',
     ),
     array(
+        'id' => 'email-form',
+        'title' => __('Email & Form', 'advanced-gutenberg'),
+        'icon' => 'mail',
+    ),
+    array(
         'id' => 'custom-styles',
         'title' => __('Custom Styles', 'advanced-gutenberg'),
         'icon' => 'code',

@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
 
     $('.advgb-contact-form form').submit(function (e) {
         e.preventDefault();
-        $thisForm = $(this).closest('.advgb-contact-form');
+        var $thisForm = $(this).closest('.advgb-contact-form');
         var contactName = $(this).find('.advgb-form-input-name').val();
         var contactEmail = $(this).find('.advgb-form-input-email').val();
         var contactMsg = $(this).find('.advgb-form-input-msg').val();
@@ -31,16 +31,24 @@ jQuery(document).ready(function ($) {
                 submit_date: submitDate
             },
             beforeSend: function () {
-                $thisForm.append('<div class="advgb-contact-form-overlay" />');
-                $thisForm.find('.advgb-contact-form-submit-success').remove();
+                var pos = $thisForm.find('.advgb-form-submit-wrapper').css('text-align');
+                if (pos === 'right') {
+                    $thisForm.find('.advgb-form-submit-wrapper').prepend('<div class="advgb-form-sending" />');
+                } else {
+                    $thisForm.find('.advgb-form-submit-wrapper').append('<div class="advgb-form-sending" />');
+                }
+
+                $thisForm.find('.advgb-form-submit-success').remove();
             },
             success: function () {
-                $thisForm.find('.advgb-contact-form-overlay').remove();
-                $thisForm.append('<div class="advgb-contact-form-submit-success">Successfully submitted!</div>');
+                $thisForm.find('.advgb-form-sending').remove();
+                var successText = $thisForm.find('.advgb-form-submit').data('success');
+                successText = successText ? successText : 'Message sent with success!';
+                $thisForm.append('<div class="advgb-form-submit-success">'+ successText +'</div>');
             },
             error: function ( jqxhr, textStatus, error ) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
-                $thisForm.find('.advgb-contact-form-overlay').remove();
+                $thisForm.find('.advgb-form-sending').remove();
             }
         } )
     });

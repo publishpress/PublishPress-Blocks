@@ -19,9 +19,7 @@ wp_enqueue_script('advgb_settings_js');
 
 $saved_settings    = get_option('advgb_settings');
 $blocks_list_saved = get_option('advgb_blocks_list');
-$contactform_saved = get_option('advgb_contacts_saved');
 $advgb_blocks      = array();
-$contacts_count    = $contactform_saved ? count($contactform_saved) : 0;
 
 if (gettype($blocks_list_saved) === 'array') {
     foreach ($blocks_list_saved as $block) {
@@ -70,11 +68,6 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
             <li class="tab">
                 <a href="#block-config-tab" class="link-tab">
                     <?php esc_html_e('Default blocks config', 'advanced-gutenberg') ?>
-                </a>
-            </li>
-            <li class="tab">
-                <a href="#export-block-data" class="link-tab">
-                    <?php esc_html_e('Export data', 'advanced-gutenberg') ?>
                 </a>
             </li>
         </ul>
@@ -238,7 +231,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                             <input type="text"
                                    name="blocks_icon_color"
                                    id="blocks_icon_color"
-                                   class="minicolors minicolors-input ju-input"
+                                   class="ju-input"
                                    value="<?php echo esc_html($blocks_icon_color) ?>"/>
                         </span>
                     </div>
@@ -310,33 +303,5 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                 <p><?php esc_html_e('We are updating blocks list...', 'advanced-gutenberg'); ?></p>
             </div>
         <?php endif; ?>
-    </div>
-
-    <div id="export-block-data" class="tab-content clearfix">
-        <form method="POST" id="export-block-data-form">
-            <?php wp_nonce_field('advgb_export_data_nonce', 'advgb_export_data_nonce_field') ?>
-            <ul class="advgb-export-field">
-                <li class="advgb-export-item ju-settings-option full-width clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label class="advgb-export-data-title ju-setting-label">
-                            <?php esc_html_e('Download Contacts Form data', 'advanced-gutenberg'); ?>
-                            <?php echo ' ('. esc_html($contacts_count) . ')'; ?>
-                        </label>
-                        <div class="advgb-export-actions">
-                            <button type="submit" class="ju-material-button advgb-export-download"
-                                    name="block_data_export" value="contact_form.xls"
-                            >
-                                <?php esc_html_e('Excel', 'advanced-gutenberg'); ?>
-                            </button>
-                            <button type="submit" class="ju-material-button advgb-export-download"
-                                    name="block_data_export" value="contact_form.json"
-                            >
-                                <?php esc_html_e('JSON', 'advanced-gutenberg'); ?>
-                            </button>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </form>
     </div>
 </div>
