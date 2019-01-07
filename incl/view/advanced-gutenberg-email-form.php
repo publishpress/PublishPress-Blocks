@@ -102,9 +102,10 @@ $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiv
                                class="ju-setting-label"
                         >
                             <?php esc_html_e('Email receiver', 'advanced-gutenberg') ?>
+                            <small>(<?php esc_html_e('separate by comma', 'advanced-gutenberg') ?>)</small>
                         </label>
                         <div>
-                            <input type="email"
+                            <input type="text"
                                    name="contact_form_email_receiver"
                                    id="contact_form_email_receiver"
                                    class="ju-input full-width"
