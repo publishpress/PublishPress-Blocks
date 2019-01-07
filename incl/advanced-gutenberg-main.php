@@ -984,7 +984,7 @@ float: left;'
 
         $saved = update_option('advgb_contacts_saved', $contacts_saved);
         if ($saved) {
-            $saved_settings = get_option('advgb_settings');
+            $saved_settings = get_option('advgb_email_sender');
             $website_title  = get_option('blogname');
             $admin_email    = get_option('admin_email');
             $sender_name    = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : $website_title;
