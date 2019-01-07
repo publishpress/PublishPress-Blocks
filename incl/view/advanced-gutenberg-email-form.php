@@ -43,9 +43,15 @@ $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiv
             <?php wp_nonce_field('advgb_email_config_nonce', 'advgb_email_config_nonce_field') ?>
             <ul class="settings-list clearfix">
                 <li class="ju-settings-option settings-separator">
-                    <p class="settings-separator-title">
-                        <?php esc_html_e('Contact Form', 'advanced-gutenberg') ?>
-                    </p>
+                    <h2 class="settings-separator-title">
+                        <?php esc_html_e('Contact Form Block', 'advanced-gutenberg') ?>
+                    </h2>
+                </li>
+
+                <li class="ju-settings-option settings-separator">
+                    <h3 class="settings-separator-title">
+                        <?php esc_html_e('Sender Information', 'advanced-gutenberg') ?>
+                    </h3>
                 </li>
 
                 <li class="ju-settings-option clearfix">
@@ -80,6 +86,13 @@ $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiv
                         </div>
                     </div>
                 </li>
+
+                <li class="ju-settings-option settings-separator">
+                    <h3 class="settings-separator-title">
+                        <?php esc_html_e('Receiver Information', 'advanced-gutenberg') ?>
+                    </h3>
+                </li>
+
                 <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper no-child-float clearfix">
                         <label for="contact_form_email_title"

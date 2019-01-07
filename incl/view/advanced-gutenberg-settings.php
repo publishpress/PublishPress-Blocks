@@ -162,9 +162,9 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                 </li>
 
                 <li class="ju-settings-option settings-separator">
-                    <p class="settings-separator-title">
+                    <h2 class="settings-separator-title">
                         <?php esc_html_e('Blocks Settings', 'advanced-gutenberg') ?>
-                    </p>
+                    </h2>
                 </li>
 
                 <li class="ju-settings-option clearfix">
