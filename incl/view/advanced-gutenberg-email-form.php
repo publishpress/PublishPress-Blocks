@@ -44,7 +44,7 @@ $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiv
             <ul class="settings-list clearfix">
                 <li class="ju-settings-option settings-separator">
                     <h2 class="settings-separator-title">
-                        <?php esc_html_e('Contact Form', 'advanced-gutenberg') ?>
+                        <?php esc_html_e('Contact Form Block', 'advanced-gutenberg') ?>
                     </h2>
                 </li>
 
