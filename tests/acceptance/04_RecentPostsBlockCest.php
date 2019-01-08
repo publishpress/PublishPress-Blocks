@@ -18,19 +18,18 @@ class RecentPostsBlockCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Click on + button
-        $I->click('.editor-inserter button');
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Recent Posts');
 
+        $I->waitForText('Recent Posts');
         $I->click('Recent Posts');
 
-        $I->wait(1);
-
+        $I->waitForElement('//label[text()="Category"]/following-sibling::node()/option[text()="Recent posts"]');
         $I->selectOption('//label[text()="Category"]/following-sibling::node()', array('text' => 'Recent posts'));
 
         $I->fillField('.editor-post-title__input', 'Recent Posts blocks test');
-        $I->wait(0.2);
 
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
@@ -50,9 +49,13 @@ class RecentPostsBlockCest
         $I->click('.editor-block-navigation');
 
         $I->click('Recent Posts');
+        $I->waitForText('Recent Posts');
 
-        $I->fillField('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()', 5);
-        $I->wait(0.2);
+        $I->waitForElementVisible('//label[text()="Number of items"]/following-sibling::input[@type="number"][@value="8"]');
+        $I->wait(1);
+        $I->fillField('//label[text()="Number of items"]/following-sibling::input[@type="number"]', 5);
+
+        $I->waitForElementNotVisible('//article[@class="advgb-recent-post"][6]');
 
         $I->click('Update');
         $I->waitForText('Post updated.');

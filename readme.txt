@@ -1,7 +1,7 @@
 === Advanced Gutenberg ===
 Contributors: JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
-Requires at least: 4.8
+Requires at least: 4.9
 Tested up to: {{wp_version}}
 Stable tag: {{version}}
 Requires PHP: 5.6
@@ -23,6 +23,7 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Default block configuration (Advanced Gutenberg blocks)
 - Define Advanced Gutenberg icons block color
 - Custom CSS styles: create and apply on paragraph blocks
+- Define Gutenberg editor size(admin edition)
 
 
 ## ADVANCED GUTENBERG SPECIAL BLOCKS
@@ -30,6 +31,7 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Latest post slider and latest post slider
 - Latest WooCommerce product slider and latest product slider
 - Advanced Button block: create button with tons of styles
+- Contact form block: get user messages and export messages
 - Advanced List block: create list with list icon, icon color
 - Map block: load a Google map position with zoom, icon, tooltip, title...
 - Advanced Table block: create tables with style like color, border
@@ -93,13 +95,13 @@ We also have a forum on www.joomunited.com for feature requests.
 1. Make sure the plugin is activated :)
 2. All right, that could be because the new blocks are not activated to your account, please reach the menu Adv. Gutenberg > Profiles > Setup the blocks to activate
 3. Advanced Gutenberg is pretty well integrated with native Gutenberg, some blocks are new some other are original Gutenberg blocks but supercharged by new features
-4. You can define a custom color for the new blocks, it helps to find them
+4. You can define a custom color for the new blocks, by default it's a kind of purple color
 
 = Can I get support for the editor use? =
 We reply to every question about the editor on the forum here, just ask :) We also have an online documentation here: https://www.joomunited.com/documentation/advanced-gutenberg
 
 = Does Advanced Gutenberg slowing down my website? =
-The plugin has almost NO impact on page load, it's only loaded during the edition process.
+The plugin has almost NO impact on page load for your visitors, it's only loaded during the edition process.
 
 = What is the Gutenberg version required to run Advanced Gutenberg plugin properly? =
 The latest one, always! We're testing it with previous versions but the latest version of Gutenberg brings new features for developer and allow better content edition. 
@@ -143,4 +145,4 @@ Update through the automatic WordPress updater, all Advanced Gutenberg content a
 
 == Requirements ==
 
-PHP 5.6+, 7, 7.1 or 7.2 recommended for better performance, WordPress 4.9+
+PHP 5.6+, 7, 7.1, 7.2 & 7.3 recommended for better performance, WordPress 4.9+
