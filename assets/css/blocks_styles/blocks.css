@@ -156,12 +156,16 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     margin-left: 15px;
 }
 
-#editor .advgb-list, .advgb-list {
+#editor .advgb-list, .advgb-list, .advgb-list li ul {
     margin-left: 0;
     list-style-type: none !important;
 }
 
-.advgb-list > li:before {
+.advgb-list li ul {
+    margin: 5px 0;
+}
+
+.advgb-list li:before {
     font-family: 'dashicons';
     speak: none;
     font-style: normal;
@@ -397,6 +401,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 }
 
 /*Social links block styles*/
+.advgb-social-links-block {
+    text-align: center;
+}
+
 .advgb-social-icons {
     display:  inline-block;
 }
@@ -1020,8 +1028,8 @@ hr.wp-block-separator {
 }
 
 #editor div[data-block] > * {
-    position: relative;
-    z-index: 3;
+    /*position: relative;*/
+    /*z-index: 3;*/
 }
 
 .advgb-block-container > * {
@@ -1082,8 +1090,11 @@ hr.wp-block-separator {
     width: 100%;
     padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 2px;
     resize: vertical;
+    font-size: 15px;
+    background-color: #fafafa;
+    color: #444;
 }
 
 .advgb-form-submit-wrapper {
@@ -1094,14 +1105,15 @@ hr.wp-block-separator {
 
 button.advgb-form-submit {
     padding: 10px;
-    background: #fff;
+    background-color: #444;
     box-shadow: none;
     outline: none;
-    border: 2px solid #2196f3;
-    color: #2196f3;
+    border: 2px solid #444;
+    color: #fff;
     cursor: pointer;
     transition: all ease 0.5s;
     position: relative;
+    border-radius: 0;
 }
 
 button.advgb-form-submit:hover:after {
@@ -1111,31 +1123,34 @@ button.advgb-form-submit:hover:after {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #333;
+    background-color: #aaa;
     opacity: 0.2;
     pointer-events: none;
 }
 
-.advgb-contact-form-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0;
-    background-color: #000;
-    opacity: 0.1;
-    z-index: 10;
+.advgb-form-sending {
+    display: inline-block;
+    vertical-align: middle;
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
     background-image: url(../../images/loading.gif);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100px;
+    background-size: contain;
 }
 
-.advgb-contact-form-submit-success {
+.advgb-form-submit-success {
     text-align: center;
     padding: 10px;
+    margin: 10px 0;
     margin-left: 3%;
     font-weight: bold;
-    color: green;
+    color: #fafafa;
+    background-color: #444;
+    font-size: 14px;
+    border-radius: 2px;
+    -webkit-box-shadow: 1px 1px 12px #ccc;
+    -moz-box-shadow: 1px 1px 12px #ccc;
+    box-shadow: 1px 1px 12px #ccc;
 }

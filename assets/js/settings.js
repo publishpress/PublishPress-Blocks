@@ -25,9 +25,9 @@ jQuery(document).ready(function ($) {
         $('#blocks_spacing_wrapper').removeClass('hidden-item');
     }
 
-    $('#settings .ju-top-tabs .tab a').click(function () {
+    $('.ju-top-tabs .tab a').click(function () {
         var currentText = $(this).text().trim();
-        $('#settings .advgb-settings-header').text(currentText);
+        $(this).closest('.ju-content-wrapper').find('.advgb-settings-header').text(currentText);
     });
 
     $('.advgb_qtip').qtip({

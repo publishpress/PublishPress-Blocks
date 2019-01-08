@@ -982,8 +982,32 @@ float: left;'
 
         array_push($contacts_saved, $contact_data);
 
-        update_option('advgb_contacts_saved', $contacts_saved);
-        wp_send_json($contact_data, 200);
+        $saved = update_option('advgb_contacts_saved', $contacts_saved);
+        if ($saved) {
+            $saved_settings = get_option('advgb_email_sender');
+            $website_title  = get_option('blogname');
+            $admin_email    = get_option('admin_email');
+            $sender_name    = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : $website_title;
+            $sender_email   = isset($saved_settings['contact_form_sender_email']) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : $admin_email;
+            $email_title    = isset($saved_settings['contact_form_email_title']) && $saved_settings['contact_form_email_title'] ? $saved_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
+            $email_receiver = isset($saved_settings['contact_form_email_receiver']) && $saved_settings['contact_form_email_receiver'] ? $saved_settings['contact_form_email_receiver'] : $admin_email;
+            $email_header[] = 'Content-Type: text/html; charset=UTF-8';
+            $email_header[] = 'From: '.$sender_name.' <'.$sender_email.'>';
+            $msg = '<html><body>';
+            $msg .= '<h2>'. __('You have received a contact from your website.', 'advanced-gutenberg') .'</h2>';
+            $msg .= '<ul>';
+            $msg .= '<li><strong>'. __('Name', 'advanced-gutenberg') .': </strong>'. $contact_data['name'] .'</li>';
+            $msg .= '<li><strong>'. __('Email', 'advanced-gutenberg') .': </strong>'. $contact_data['email'] .'</li>';
+            $msg .= '<li><strong>'. __('Date', 'advanced-gutenberg') .': </strong>'. $contact_data['date'] .'</li>';
+            $msg .= '<li><strong>'. __('Message', 'advanced-gutenberg') .': </strong>'. $contact_data['msg'] .'</li>';
+            $msg .= '</ul>';
+            $msg .= '</body></html>';
+
+            wp_mail($email_receiver, $email_title, $msg, $email_header);
+            wp_send_json($contact_data, 200);
+        } else {
+            wp_send_json(__('Error while sending form. Try again!', 'advanced-gutenberg'), 500);
+        }
         // phpcs:enable
     }
 
@@ -1296,6 +1320,8 @@ float: left;'
             $this->saveAdvgbProfile();
         } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveSettings();
+        } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+            $this->saveEmailSettings();
         } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->downloadBlockFormData();
         }
@@ -1315,6 +1341,7 @@ float: left;'
                 return false;
             }
 
+            $save_config = array();
             if (isset($_POST['gallery_lightbox'])) {
                 $save_config['gallery_lightbox'] = 1;
             } else {
@@ -1497,22 +1524,22 @@ float: left;'
             }
 
             switch ($dataType) {
-                case 'xls':
-                    $data .= "#\tDate\tName\tEmail\tMessage\n";
-                    $tab = "\t";
+                case 'csv':
+                    $data .= '"#","Date","Name","Email","Message"' . PHP_EOL;
+                    $tab = ',';
                     $int = 1;
                     foreach ($dataSaved as $dataVal) {
-                        $data .= $int.$tab;
-                        $data .= $dataVal['date'].$tab;
-                        $data .= $dataVal['name'].$tab;
-                        $data .= $dataVal['email'].$tab;
-                        $data .= $dataVal['msg'].$tab;
-                        $data .= "\n";
+                        $data .= '"'.$int.'"'.$tab;
+                        $data .= '"'.$dataVal['date'].'"'.$tab;
+                        $data .= '"'.$dataVal['name'].'"'.$tab;
+                        $data .= '"'.$dataVal['email'].'"'.$tab;
+                        $data .= '"'.$dataVal['msg'].'"';
+                        $data .= PHP_EOL;
                     }
                     $data = trim($data);
 
-                    header('Content-Type: application/xls; charset=utf-8');
-                    header('Content-Disposition: attachment; filename=advgb_contact_form-'.date('m-d-Y').'.xls');
+                    header('Content-Type: text/csv; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_contact_form-'.date('m-d-Y').'.csv');
                     header('Pragma: no-cache');
                     header('Expires: 0');
 
@@ -1527,6 +1554,35 @@ float: left;'
                     echo json_encode($dataSaved);
                     exit;
             }
+        }
+    }
+
+    /**
+     * Save forms and email settings
+     *
+     * @return mixed
+     */
+    private function saveEmailSettings()
+    {
+        if (!isset($_POST['advgb_email_config_nonce_field'])) {
+            return false;
+        }
+
+        if (!wp_verify_nonce($_POST['advgb_email_config_nonce_field'], 'advgb_email_config_nonce')) {
+            return false;
+        }
+
+        $save_config = array();
+        $save_config['contact_form_sender_name'] = $_POST['contact_form_sender_name'];
+        $save_config['contact_form_sender_email'] = $_POST['contact_form_sender_email'];
+        $save_config['contact_form_email_title'] = $_POST['contact_form_email_title'];
+        $save_config['contact_form_email_receiver'] = $_POST['contact_form_email_receiver'];
+
+        update_option('advgb_email_sender', $save_config);
+
+        if (isset($_REQUEST['_wp_http_referer'])) {
+            wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
+            exit;
         }
     }
 

@@ -147,8 +147,6 @@ class AdvancedTableBlockCest
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]'); // Click back on the cell to hide popup
         $colors[3] = '#335e77';
 
-        var_dump($colors);
-
         $I->click('Update');
         $I->waitForText('Post updated.');
 
