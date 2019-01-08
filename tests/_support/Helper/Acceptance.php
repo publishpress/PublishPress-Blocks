@@ -7,6 +7,7 @@ namespace Helper;
 
 class Acceptance extends \Codeception\Module
 {
+    protected $config = ['php-version' => null, 'map-api-key'];
 
     public function dragAndDrop($xpath_from, $xpath_to, $sleep=0)
     {
@@ -22,5 +23,49 @@ class Acceptance extends \Codeception\Module
         $webDriver->getMouse()->mouseMove($dropZone->getCoordinates());
         sleep($sleep);
         $webDriver->getMouse()->mouseUp();
+    }
+
+    /**
+     * Select all the content of the element the pointer is in
+     */
+    public function selectCurrentElementText()
+    {
+        $webDriver = $this->getModule('WebDriver')->webDriver;
+        $action = new \WebDriverActions($webDriver);
+        $action->sendKeys(null, \WebDriverKeys::PAGE_UP)->keyDown(null, \WebDriverKeys::SHIFT)->sendKeys(null, \WebDriverKeys::PAGE_DOWN)->keyUp(null, \WebDriverKeys::SHIFT)->perform();
+    }
+
+    /**
+     * Press multiple keys
+     */
+    public function pressKeys($keys)
+    {
+        $this->getModule('WebDriver')->webDriver->getKeyboard()->sendKeys($keys);
+    }
+
+    /**
+     * Get an element width
+     *
+     * @param $xpath
+     */
+    public function getElementWidth($xpath)
+    {
+        $webDriver = $this->getModule('WebDriver')->webDriver;
+        return $webDriver->findElement(\WebDriverBy::xpath($xpath))->getSize()->getWidth();
+    }
+
+
+    /**
+     * Get param from commandline
+     */
+    public function getParam($key, $default=null)
+    {
+        if (isset($this->config[$key])) {
+            return $this->config[$key];
+        }
+        if ($default!==null) {
+            return $default;
+        }
+        return '';
     }
 }

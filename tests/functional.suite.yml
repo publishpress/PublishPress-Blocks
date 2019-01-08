@@ -8,8 +8,7 @@ class_name: FunctionalTester
 modules:
   enabled:
   - PhpBrowser
-  - \Helper\Functional:
-      php-version: 5.3
+  - \Helper\Functional
   - Db:
   config:
     PhpBrowser:
@@ -20,6 +19,9 @@ modules:
       password: ''
       cleanup: false # run populator before each test
       populate: false # run populator before all test
+    \Helper\Functionnal:
+      php-version: %PHP_VERSION%
+      map-api-key: %MAP_API_KEY%
 env:
   local:
     modules:
