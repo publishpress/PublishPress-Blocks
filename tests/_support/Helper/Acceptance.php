@@ -32,7 +32,7 @@ class Acceptance extends \Codeception\Module
     {
         $webDriver = $this->getModule('WebDriver')->webDriver;
         $action = new \WebDriverActions($webDriver);
-        $action->sendKeys(null, \WebDriverKeys::PAGE_UP)->keyDown(null, \WebDriverKeys::SHIFT)->sendKeys(null, \WebDriverKeys::PAGE_DOWN)->keyUp(null, \WebDriverKeys::SHIFT)->perform();
+        $action->sendKeys(null, \WebDriverKeys::PAGE_UP)->sendKeys(null, \WebDriverKeys::HOME)->keyDown(null, \WebDriverKeys::SHIFT)->sendKeys(null, \WebDriverKeys::PAGE_DOWN)->sendKeys(null, \WebDriverKeys::END)->keyUp(null, \WebDriverKeys::SHIFT)->perform();
     }
 
     /**

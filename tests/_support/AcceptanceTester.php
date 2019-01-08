@@ -25,14 +25,17 @@ class AcceptanceTester extends \Codeception\Actor
     */
     public function loginAsAdmin($username, $password)
     {
-      $I = $this;
-      $I->amOnPage('/wp-admin/index.php');
-      $I->wait(1);
-      $I->submitForm('#loginform', [
-           'log' => $username,
-           'pwd' => $password
-       ]);
-      $I->see('Welcome to WordPress!');
+        $I = $this;
+        if ($I->loadSessionSnapshot('adminLogin')) {
+            return;
+        }
+        $I->amOnPage('/wp-admin/index.php');
+        $I->wait(1);
+        $I->submitForm('#loginform', [
+            'log' => $username,
+            'pwd' => $password
+        ]);
+        $I->saveSessionSnapshot('adminLogin');
     }
 
     public function activatePlugin($plugin_slug)
