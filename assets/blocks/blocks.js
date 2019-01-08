@@ -470,7 +470,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 typeof agTheme !== 'undefined' && !!agTheme.activated && React.createElement(
                     InspectorControls,
                     null,
-                    React.createElement(
+                    props.name !== 'advgb/image' && React.createElement(
                         PanelBody,
                         { title: __('Blocks Settings') },
                         React.createElement(RangeControl, {
@@ -844,14 +844,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             blockOverlayColor = attributes.blockOverlayColor;
 
 
-        extraProps.style = _extends({}, extraProps.style, {
-            width: blockWidth ? blockWidth + '%' : undefined,
-            backgroundColor: blockBgColor,
-            backgroundImage: blockBgImage ? "url(" + blockBgImage + ")" : undefined,
-            backgroundSize: blockBgImage ? blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize : undefined,
-            backgroundPosition: blockBgImage ? blockBgImageAlignV || blockBgImageAlignH ? (blockBgImageAlignV || '') + " " + (blockBgImageAlignH || '') : undefined : undefined,
-            backgroundRepeat: blockBgImage ? 'no-repeat' : undefined
-        });
+        if (blockType.name !== 'advgb/image') {
+            extraProps.style = _extends({}, extraProps.style, {
+                width: blockWidth ? blockWidth + '%' : undefined,
+                backgroundColor: blockBgColor,
+                backgroundImage: blockBgImage ? "url(" + blockBgImage + ")" : undefined,
+                backgroundSize: blockBgImage ? blockBgImageSize === 'custom' ? blockBgImageSizeCustom + '%' : blockBgImageSize : undefined,
+                backgroundPosition: blockBgImage ? blockBgImageAlignV || blockBgImageAlignH ? (blockBgImageAlignV || '') + " " + (blockBgImageAlignH || '') : undefined : undefined,
+                backgroundRepeat: blockBgImage ? 'no-repeat' : undefined
+            });
+        }
 
         extraProps.id = blockOverlayColor ? blockID : extraProps.id;
 
