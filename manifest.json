@@ -40,12 +40,16 @@
   "changelog": {
     "1.9.0": [
       {
-        "type": "featured",
+        "type": "feature",
         "title": "New block: Contact Form, recive and download contact form data"
       },
       {
-        "type": "featured",
+        "type": "feature",
         "title": "Settings to define editor admin width: Default, large, Full width"
+      },
+      {
+        "type": "feature",
+        "title": "Change default state of social icons align to center"
       },
       {
         "type": "fix",
