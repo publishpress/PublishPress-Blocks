@@ -401,11 +401,10 @@
             },
             align: {
                 type: 'string',
-                default: 'center',
             },
             iconSize: {
                 type: 'number',
-                default: 48,
+                default: 24,
             },
             iconSpace: {
                 type: 'number',
