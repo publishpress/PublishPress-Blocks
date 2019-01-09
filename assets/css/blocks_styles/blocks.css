@@ -1092,7 +1092,9 @@ hr.wp-block-separator {
     position: relative;
 }
 
-.advgb-form-field input.advgb-form-input, .advgb-form-field textarea.advgb-form-input {
+.advgb-form-field input.advgb-form-input[type="text"],
+.advgb-form-field input.advgb-form-input[type="email"],
+.advgb-form-field textarea.advgb-form-input {
     width: 100%;
     padding: 15px;
     border: 1px solid #ccc;
