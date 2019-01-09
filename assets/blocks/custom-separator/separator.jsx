@@ -30,52 +30,11 @@
     addFilter( 'editor.BlockEdit', 'advgb/customSeparatorStyles', function ( BlockEdit ) {
         return ( props ) => {
             if (props.name === "core/separator") {
-                const { isSelected, attributes, setAttributes, clientId } = props;
+                const { attributes, clientId } = props;
                 const { borderColor, borderSize, borderStyle, borderWidth } = attributes;
 
                 return ( [
                     <BlockEdit key="block-edit-custom-separator" {...props} />,
-                    isSelected &&
-                    <InspectorControls key="inspector-custom-separator">
-                        <PanelBody title={__( 'Separator Settings' )}>
-                            <PanelColorSettings
-                                title={ __( 'Color Settings' ) }
-                                initialOpen={ false }
-                                colorSettings={ [
-                                    {
-                                        label: __( 'Color' ),
-                                        value: borderColor,
-                                        onChange: ( value ) => setAttributes( { borderColor: value } ),
-                                    },
-                                ] }
-                            />
-                            <SelectControl
-                                label={__( 'Styles' )}
-                                value={borderStyle}
-                                options={[
-                                    { label: __( 'Solid' ), value: 'solid' },
-                                    { label: __( 'Dotted' ), value: 'dotted' },
-                                    { label: __( 'Dashed' ), value: 'dashed' },
-                                    { label: __( 'Double' ), value: 'double' },
-                                ]}
-                                onChange={( value ) => setAttributes( { borderStyle: value } )}
-                            />
-                            <RangeControl
-                                label={__( 'Thick' )}
-                                value={borderWidth}
-                                min={1}
-                                max={20}
-                                onChange={( value ) => setAttributes( { borderWidth: value } )}
-                            />
-                            <RangeControl
-                                label={__( 'Width' )}
-                                value={borderSize}
-                                min={50}
-                                max={1000}
-                                onChange={( value ) => setAttributes( { borderSize: value } )}
-                            />
-                        </PanelBody>
-                    </InspectorControls>,
                     <style key="custom-separator-styles">
                         {`#block-${clientId} hr {
                         border-bottom-color: ${borderColor};

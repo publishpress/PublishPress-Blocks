@@ -168,6 +168,7 @@ float: left;'
             add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
             add_action('wp_ajax_advgb_delete_profiles', array($this, 'deleteProfiles'));
             add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
+            add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
         } else {
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
@@ -957,6 +958,60 @@ float: left;'
     }
 
     /**
+     * Ajax for saving contact form data
+     *
+     * @return boolean,void     Return false if failure, echo json on success
+     */
+    public function saveContactFormData()
+    {
+        // phpcs:disable -- WordPress.Security.NonceVerification.NoNonceVerification - frontend form, no nonce
+        if (!isset($_POST['action'])) {
+            wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
+            return false;
+        }
+
+        $contacts_saved = get_option('advgb_contacts_saved');
+        if (!$contacts_saved) $contacts_saved = array();
+
+        $contact_data = array(
+            'date'  => sanitize_text_field($_POST['submit_date']),
+            'name'  => sanitize_text_field($_POST['contact_name']),
+            'email' => sanitize_email($_POST['contact_email']),
+            'msg'   => sanitize_textarea_field($_POST['contact_msg']),
+        );
+
+        array_push($contacts_saved, $contact_data);
+
+        $saved = update_option('advgb_contacts_saved', $contacts_saved);
+        if ($saved) {
+            $saved_settings = get_option('advgb_email_sender');
+            $website_title  = get_option('blogname');
+            $admin_email    = get_option('admin_email');
+            $sender_name    = isset($saved_settings['contact_form_sender_name']) && $saved_settings['contact_form_sender_name'] ? $saved_settings['contact_form_sender_name'] : $website_title;
+            $sender_email   = isset($saved_settings['contact_form_sender_email']) && $saved_settings['contact_form_sender_email'] ? $saved_settings['contact_form_sender_email'] : $admin_email;
+            $email_title    = isset($saved_settings['contact_form_email_title']) && $saved_settings['contact_form_email_title'] ? $saved_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
+            $email_receiver = isset($saved_settings['contact_form_email_receiver']) && $saved_settings['contact_form_email_receiver'] ? $saved_settings['contact_form_email_receiver'] : $admin_email;
+            $email_header[] = 'Content-Type: text/html; charset=UTF-8';
+            $email_header[] = 'From: '.$sender_name.' <'.$sender_email.'>';
+            $msg = '<html><body>';
+            $msg .= '<h2>'. __('You have received a contact from your website.', 'advanced-gutenberg') .'</h2>';
+            $msg .= '<ul>';
+            $msg .= '<li><strong>'. __('Name', 'advanced-gutenberg') .': </strong>'. $contact_data['name'] .'</li>';
+            $msg .= '<li><strong>'. __('Email', 'advanced-gutenberg') .': </strong>'. $contact_data['email'] .'</li>';
+            $msg .= '<li><strong>'. __('Date', 'advanced-gutenberg') .': </strong>'. $contact_data['date'] .'</li>';
+            $msg .= '<li><strong>'. __('Message', 'advanced-gutenberg') .': </strong>'. $contact_data['msg'] .'</li>';
+            $msg .= '</ul>';
+            $msg .= '</body></html>';
+
+            wp_mail($email_receiver, $email_title, $msg, $email_header);
+            wp_send_json($contact_data, 200);
+        } else {
+            wp_send_json(__('Error while sending form. Try again!', 'advanced-gutenberg'), 500);
+        }
+        // phpcs:enable
+    }
+
+    /**
      * Register back-end styles and script for later use
      *
      * @return void
@@ -1112,6 +1167,13 @@ float: left;'
                 plugins_url('assets/js/slick.min.js', dirname(__FILE__)),
                 array('jquery')
             );
+            $saved_settings = get_option('advgb_settings');
+            if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
+                wp_add_inline_style(
+                    'dashicons',
+                    '#editor .wp-block {max-width: ' . $saved_settings['editor_width'] . '%}'
+                );
+            }
         }
     }
 
@@ -1258,6 +1320,10 @@ float: left;'
             $this->saveAdvgbProfile();
         } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveSettings();
+        } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+            $this->saveEmailSettings();
+        } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+            $this->downloadBlockFormData();
         }
 
         return false;
@@ -1275,6 +1341,7 @@ float: left;'
                 return false;
             }
 
+            $save_config = array();
             if (isset($_POST['gallery_lightbox'])) {
                 $save_config['gallery_lightbox'] = 1;
             } else {
@@ -1296,6 +1363,7 @@ float: left;'
             $save_config['google_api_key'] = $_POST['google_api_key'];
             $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
             $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
+            $save_config['editor_width'] = $_POST['editor_width'];
 
             update_option('advgb_settings', $save_config);
 
@@ -1429,6 +1497,93 @@ float: left;'
         }
 
         return $postID;
+    }
+
+    /**
+     * Download block form data
+     *
+     * @return mixed
+     */
+    private function downloadBlockFormData()
+    {
+        // Verify nonce
+        if (!wp_verify_nonce($_POST['advgb_export_data_nonce_field'], 'advgb_export_data_nonce')) {
+            return false;
+        }
+
+        $postValue = $_POST['block_data_export'];
+        $postValue = explode('.', $postValue);
+        $dataExport = $postValue[0];
+        $dataType = $postValue[1];
+        $data = '';
+
+        if ($dataExport === 'contact_form') {
+            $dataSaved = get_option('advgb_contacts_saved');
+            if (!$dataSaved) {
+                return false;
+            }
+
+            switch ($dataType) {
+                case 'csv':
+                    $data .= '"#","Date","Name","Email","Message"' . PHP_EOL;
+                    $tab = ',';
+                    $int = 1;
+                    foreach ($dataSaved as $dataVal) {
+                        $data .= '"'.$int.'"'.$tab;
+                        $data .= '"'.$dataVal['date'].'"'.$tab;
+                        $data .= '"'.$dataVal['name'].'"'.$tab;
+                        $data .= '"'.$dataVal['email'].'"'.$tab;
+                        $data .= '"'.$dataVal['msg'].'"';
+                        $data .= PHP_EOL;
+                    }
+                    $data = trim($data);
+
+                    header('Content-Type: text/csv; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_contact_form-'.date('m-d-Y').'.csv');
+                    header('Pragma: no-cache');
+                    header('Expires: 0');
+
+                    echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
+                    exit;
+                case 'json':
+                    header('Content-Type: application/json; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_contact_form-'.date('m-d-Y').'.json');
+                    header('Pragma: no-cache');
+                    header('Expires: 0');
+
+                    echo json_encode($dataSaved);
+                    exit;
+            }
+        }
+    }
+
+    /**
+     * Save forms and email settings
+     *
+     * @return mixed
+     */
+    private function saveEmailSettings()
+    {
+        if (!isset($_POST['advgb_email_config_nonce_field'])) {
+            return false;
+        }
+
+        if (!wp_verify_nonce($_POST['advgb_email_config_nonce_field'], 'advgb_email_config_nonce')) {
+            return false;
+        }
+
+        $save_config = array();
+        $save_config['contact_form_sender_name'] = $_POST['contact_form_sender_name'];
+        $save_config['contact_form_sender_email'] = $_POST['contact_form_sender_email'];
+        $save_config['contact_form_email_title'] = $_POST['contact_form_email_title'];
+        $save_config['contact_form_email_receiver'] = $_POST['contact_form_email_receiver'];
+
+        update_option('advgb_email_sender', $save_config);
+
+        if (isset($_REQUEST['_wp_http_referer'])) {
+            wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
+            exit;
+        }
     }
 
     /**
@@ -2767,6 +2922,16 @@ float: left;'
                     ADVANCED_GUTENBERG_VERSION
                 );
             }
+        }
+
+        if (strpos($content, 'advgb-contact-form') !== false) {
+            wp_enqueue_script(
+                'advgbContactForm_js',
+                plugins_url('assets/blocks/contact-form/frontend.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_localize_script('advgbContactForm_js', 'advgbContactForm', array('ajax_url' => admin_url('admin-ajax.php')));
         }
 
         return $content;

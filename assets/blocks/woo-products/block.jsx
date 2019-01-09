@@ -286,7 +286,7 @@
                                 {productsList.map( (product, idx) => (
                                     <div key={idx} className="advgb-product">
                                         <div className="advgb-product-img">
-                                            <img src={product.images[0].src} alt={product.name} />
+                                            <img src={product.images.length ? product.images[0].src : undefined} alt={product.name} />
                                         </div>
                                         <div className="advgb-product-title">{ product.name }</div>
                                         <div className="advgb-product-price" dangerouslySetInnerHTML={ { __html: product.price_html } } />

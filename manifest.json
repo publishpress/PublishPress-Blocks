@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "platform": "wordpress",
-  "wp_version": "5.0.0",
+  "wp_version": "5.0.2",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,36 @@
     ]
   },
   "changelog": {
+    "1.9.0": [
+      {
+        "type": "feature",
+        "title": "New block: Contact Form, receive and download contact form data"
+      },
+      {
+        "type": "feature",
+        "title": "Settings to define editor admin width: Default, large, Full width"
+      },
+      {
+        "type": "feature",
+        "title": "Change default state of social icons align to center"
+      },
+      {
+        "type": "fix",
+        "title": "Advanced Table block: Error while set cell color color in some cases"
+      },
+      {
+        "type": "fix",
+        "title": "WooCommerce Products block: Error while load product without image"
+      },
+      {
+        "type": "fix",
+        "title": "Social link block: add support for png and small size image"
+      },
+      {
+        "type": "fix",
+        "title": "Remove Custom Separator block and Custom Columns block settings"
+      }
+    ],
     "1.8.2": [
       {
         "type": "fix",

@@ -227,7 +227,7 @@
                                 } }
                             />
                         </Toolbar>
-                        <AlignmentToolbar value={ align } onChange={ ( value ) => setAttributes( { align: value } ) } />
+                        <AlignmentToolbar value={ align } onChange={ ( value ) => setAttributes( { align: value === undefined ? 'center' : value } ) } />
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Preset Icons' ) }>
@@ -271,7 +271,7 @@
                                                 if (index === currentSelected) {
                                                     item = {
                                                         ...item,
-                                                        icon: media.sizes.thumbnail.url,
+                                                        icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
                                                         iconID: media.id,
                                                     };
                                                 }

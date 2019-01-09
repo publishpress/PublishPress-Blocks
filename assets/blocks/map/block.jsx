@@ -282,7 +282,7 @@
                                             __( 'Marker Icon (27x43 px)' ),
                                             markerIcon && (
                                                 <a key="marker-icon-remove"
-                                                   style={ { marginLeft: '10px' } }
+                                                   style={ { marginLeft: '10px', cursor: 'pointer' } }
                                                    onClick={ () => setAttributes( {
                                                        markerIcon: undefined,
                                                        markerIconID: undefined,

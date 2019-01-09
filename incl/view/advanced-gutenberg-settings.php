@@ -19,7 +19,7 @@ wp_enqueue_script('advgb_settings_js');
 
 $saved_settings    = get_option('advgb_settings');
 $blocks_list_saved = get_option('advgb_blocks_list');
-$advgb_blocks = array();
+$advgb_blocks      = array();
 
 if (gettype($blocks_list_saved) === 'array') {
     foreach ($blocks_list_saved as $block) {
@@ -54,6 +54,7 @@ $google_api_key_saved             = isset($saved_settings['google_api_key']) ? $
 $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
+$editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
 ?>
 
 <div id="advgb-settings-container">
@@ -151,7 +152,8 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
                                    style="margin-left: 10px; width: 370px; display: block;"
                                    value="<?php echo esc_html($google_api_key_saved) ?>"
                             >
-                            <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key"
+                            <a target="_blank"
+                               href="https://developers.google.com/maps/documentation/javascript/get-api-key"
                                style="display: inline-block; margin: 15px; margin-left: 10px; color: #ff8726;">
                                 <?php esc_html_e('How to create a Google API Key', 'advanced-gutenberg') ?>
                             </a>
@@ -160,9 +162,9 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
                 </li>
 
                 <li class="ju-settings-option settings-separator">
-                    <p class="settings-separator-title">
+                    <h2 class="settings-separator-title">
                         <?php esc_html_e('Blocks Settings', 'advanced-gutenberg') ?>
-                    </p>
+                    </h2>
                 </li>
 
                 <li class="ju-settings-option clearfix">
@@ -199,6 +201,7 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
                                ) ?>"
                         >
                             <?php esc_html_e('Blocks spacing', 'advanced-gutenberg') ?>
+                            <span> (px)</span>
                         </label>
                         <span>
                             <input type="number"
@@ -209,7 +212,6 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
                                    style="margin-left: 10px; width: 80px"
                                    value="<?php echo esc_html($blocks_spacing) ?>"
                             >
-                            <span>px</span>
                         </span>
                     </div>
                 </li>
@@ -229,9 +231,30 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
                             <input type="text"
                                    name="blocks_icon_color"
                                    id="blocks_icon_color"
-                                   class="minicolors minicolors-input ju-input"
+                                   class="ju-input"
                                    value="<?php echo esc_html($blocks_icon_color) ?>"/>
                         </span>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="editor_width"
+                               class="ju-setting-label advgb_qtip"
+                               style="line-height: 50px"
+                               data-qtip="<?php esc_attr_e(
+                                   'Define the admin Gutenberg editor width size',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Editor width', 'advanced-gutenberg') ?>
+                        </label>
+                        <div>
+                            <select class="ju-select-options" name="editor_width" id="editor_width">
+                                <option value="" <?php echo $editor_width === '' ? 'selected' : '' ?>>Original</option>
+                                <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>Large</option>
+                                <option value="95" <?php echo $editor_width === '95' ? 'selected' : '' ?>>Full width</option>
+                            </select>
+                        </div>
                     </div>
                 </li>
             </ul>

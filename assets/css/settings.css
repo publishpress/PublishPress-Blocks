@@ -6,13 +6,28 @@
     padding-left: 40px;
 }
 
+.ju-settings-option.settings-separator > * {
+    margin: 0;
+    padding: 5px;
+}
+
 .ju-settings-option .ju-setting-label + * {
     float: right;
     margin-right: 30px;
+    line-height: 50px;
 }
 
 .settings-option-wrapper {
     padding: 5px 10px;
+}
+
+.settings-option-wrapper.no-child-float > * {
+    float: none !important;
+}
+
+.ju-input.full-width {
+    display: inline-block;
+    width: 100%;
 }
 
 #gallery_lightbox_caption_wrapper .slider {
@@ -213,4 +228,13 @@ li.block-config-item .block-config-button {
     margin-right: 10px;
     cursor: pointer;
     color: #888;
+}
+
+/*Export data tab*/
+#email-tab .ju-settings-option .settings-option-wrapper .ju-setting-label {
+    font-weight: bold;
+}
+
+.advgb-export-actions button {
+    margin: auto 2px;
 }
