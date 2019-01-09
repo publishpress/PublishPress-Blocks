@@ -18,6 +18,8 @@ class AdvancedTableBlockCest
 
     public function createAdvancedTableBlock(AcceptanceTester $I)
     {
+        $I->loginAsAdmin('admin', 'password');
+
         $I->wantTo('Create an advanced table block');
 
         $I->amOnPage('/wp-admin/post-new.php');
@@ -120,7 +122,6 @@ class AdvancedTableBlockCest
         for ($ij=1; $ij<=3; $ij++) {$colors[0] .= str_pad(dechex($matches[$ij]), 2, '0', STR_PAD_LEFT);}
         $colors[0]='#'.(($colors[0][0]===$colors[0][1] && $colors[0][2]===$colors[0][3] && $colors[0][4]===$colors[0][5])?$colors[0][0].$colors[0][2].$colors[0][4]:$colors[0]);
 
-
         // Change text color to predefined
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[3]');
         $I->click('//span[text()="Text Color"]/following-sibling::node()//div[3]');
@@ -133,21 +134,23 @@ class AdvancedTableBlockCest
         for ($ij=1; $ij<=3; $ij++) {$colors[1] .= str_pad(dechex($matches[$ij]), 2, '0', STR_PAD_LEFT);}
         $colors[1]='#'.(($colors[1][0]===$colors[1][1] && $colors[1][2]===$colors[1][3] && $colors[1][4]===$colors[1][5])?$colors[1][0].$colors[1][2].$colors[1][4]:$colors[1]);
 
-        // Change$colors[0] = ''; background color to custom
+        // Change background color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]');
         $I->click('//span[text()="Background Color"]/following-sibling::node()//div[last()]');
-        $I->fillField('.components-color-picker__inputs-wrapper input', '#ff006a');
+        $I->click('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff006a');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]'); // Click back on the cell to hide popup
         $colors[2] = '#ff006a';
 
         // Change text color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]');
         $I->click('//span[text()="Text Color"]/following-sibling::node()//div[last()]');
-        $I->fillField('.components-color-picker__inputs-wrapper input', '#335e77');
+        $I->click('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#335e77');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]'); // Click back on the cell to hide popup
         $colors[3] = '#335e77';
-
-        var_dump($colors);
 
         $I->click('Update');
         $I->waitForText('Post updated.');

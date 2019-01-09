@@ -24,5 +24,6 @@ class checkUpdaterCest
         $I->click('Update test');
 
         $I->dontSee('This block has encountered an error and cannot be previewed.');
+        $I->dontSee('This block contains unexpected or invalid content.');
     }
 }

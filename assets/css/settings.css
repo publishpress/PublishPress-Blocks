@@ -6,6 +6,11 @@
     padding-left: 40px;
 }
 
+.ju-settings-option.settings-separator > * {
+    margin: 0;
+    padding: 5px;
+}
+
 .ju-settings-option .ju-setting-label + * {
     float: right;
     margin-right: 30px;
@@ -226,6 +231,10 @@ li.block-config-item .block-config-button {
 }
 
 /*Export data tab*/
+#email-tab .ju-settings-option .settings-option-wrapper .ju-setting-label {
+    font-weight: bold;
+}
+
 .advgb-export-actions button {
     margin: auto 2px;
 }

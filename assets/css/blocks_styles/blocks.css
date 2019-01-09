@@ -407,6 +407,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 }
 
 /*Social links block styles*/
+.advgb-social-links-block {
+    text-align: center;
+}
+
 .advgb-social-icons {
     display:  inline-block;
 }

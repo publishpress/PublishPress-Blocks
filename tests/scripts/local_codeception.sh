@@ -98,7 +98,7 @@ for WP_VERSION in "${WP_VERSIONS[@]}"; do
             set +e
 
             # Remove previous codeception fail outputs
-            rm "$PLUGIN_DIR/tests/_output/"*.fail.*
+            codecept clean
 
             start_containers
 

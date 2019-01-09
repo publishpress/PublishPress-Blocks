@@ -71,7 +71,7 @@ function do_install_tests () {
     codecept run functional --skip-group php5.2 --env=$DOCKER_ENV --fail-fast
 }
 
-function do_update_tests () {
+function prepare_update_tests() {
     # Send images needed for tests
     sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 tests/_data/wp_cli_images root@$WWW_IP:/tmp/
 
@@ -88,23 +88,25 @@ function do_update_tests () {
             mysql --host ${MYSQL_IP} -e "UPDATE wp_options SET option_value=\"a:0:{}\" WHERE option_name=\"woocommerce_admin_notices\"" wordpress
 EOF
 
+    # It's not actual tests but preparation for upcoming tests
     codecept run acceptance -g pre_update --env=$DOCKER_ENV --fail-fast
+}
+
+function do_update_tests () {
     codecept run acceptance -g update --env=$DOCKER_ENV --fail-fast
 }
 
 function do_general_tests () {
-
     codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast
-
 
     check_php_errors
 }
 
 function copy_plugin_to_www () {
-# Copy plugin to web server
-        sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "rm -rf /var/www/html/wp-content/plugins/advanced-gutenberg; mkdir -p /var/www/html/wp-content/plugins/advanced-gutenberg"
-        sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 "$PLUGIN_DIR"/* root@$WWW_IP:/var/www/html/wp-content/plugins/advanced-gutenberg
-        sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "chown -Rh www-data:www-data /var/www/html/wp-content/plugins/advanced-gutenberg"
+    # Copy plugin to web server
+    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "rm -rf /var/www/html/wp-content/plugins/advanced-gutenberg; mkdir -p /var/www/html/wp-content/plugins/advanced-gutenberg"
+    sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 "$PLUGIN_DIR"/* root@$WWW_IP:/var/www/html/wp-content/plugins/advanced-gutenberg
+    sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "chown -Rh www-data:www-data /var/www/html/wp-content/plugins/advanced-gutenberg"
 }
 
 prepare_tests
@@ -143,8 +145,9 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
         do_install_tests
         do_general_tests
     elif [[ "$INSTALL_TYPE" = "update" ]]; then
-        do_update_tests
+        prepare_update_tests
         copy_plugin_to_www
+        do_update_tests
         do_general_tests
     fi
 
