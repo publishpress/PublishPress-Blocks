@@ -1090,6 +1090,7 @@ hr.wp-block-separator {
 .advgb-contact-form {
     clear: both;
     position: relative;
+    padding-right: 3%;
 }
 
 .advgb-form-field input.advgb-form-input[type="text"],
@@ -1109,6 +1110,7 @@ hr.wp-block-separator {
     clear: both;
     margin-left: 3%;
     text-align: center;
+    position: relative;
 }
 
 button.advgb-form-submit {
@@ -1139,10 +1141,10 @@ button.advgb-form-submit:hover:after {
 
 .advgb-form-sending {
     display: inline-block;
-    vertical-align: middle;
+    position: absolute;
     width: 25px;
     height: 25px;
-    margin: 0 10px;
+    margin: 12px 3px;
     background-image: url(../../images/loading.gif);
     background-repeat: no-repeat;
     background-position: center;
@@ -1187,4 +1189,8 @@ button.advgb-form-submit:hover:after {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.advgb-newsletter .advgb-form-submit-success {
+    margin-left: 0;
 }

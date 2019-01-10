@@ -31,13 +31,7 @@ jQuery(document).ready(function ($) {
                 submit_date: submitDate
             },
             beforeSend: function () {
-                var pos = $thisForm.find('.advgb-form-submit-wrapper').css('text-align');
-                if (pos === 'right') {
-                    $thisForm.find('.advgb-form-submit-wrapper').prepend('<div class="advgb-form-sending" />');
-                } else {
-                    $thisForm.find('.advgb-form-submit-wrapper').append('<div class="advgb-form-sending" />');
-                }
-
+                $thisForm.find('.advgb-form-submit-wrapper').append('<div class="advgb-form-sending" />');
                 $thisForm.find('.advgb-form-submit-success').remove();
             },
             success: function () {
