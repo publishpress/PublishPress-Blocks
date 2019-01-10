@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, PanelColorSettings } = wpEditor;
-    const { PanelBody, RangeControl, SelectControl } = wpComponents;
+    const { PanelBody, RangeControl, SelectControl, TextControl } = wpComponents;
 
     const newsletterBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -22,6 +22,11 @@
             const {
                 formStyle,
                 formWidth,
+                fnameLabel,
+                lnameLabel,
+                emailLabel,
+                submitLabel,
+                successLabel,
                 bgColor,
                 textColor,
                 borderColor,
@@ -35,23 +40,56 @@
             return (
                 <Fragment>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Form Settings' ) }>
-                            <SelectControl
-                                label={ __( 'Form style' ) }
-                                value={ formStyle }
-                                options={ [
-                                    { label: __( 'Default' ), value: 'default' },
-                                    { label: __( 'Alternative' ), value: 'alt' },
-                                ] }
-                                onChange={ (value) => setAttributes( { formStyle: value } ) }
-                            />
-                            <RangeControl
-                                label={ __( 'Form width (px)' ) }
-                                value={ formWidth }
-                                onChange={ (value) => setAttributes( { formWidth: value } ) }
-                                min={ 200 }
-                                max={ 1000 }
-                            />
+                        <PanelBody title={ __( 'Newsletter Settings' ) }>
+                            <PanelBody title={ __( 'Form Settings' ) }>
+                                <SelectControl
+                                    label={ __( 'Form style' ) }
+                                    value={ formStyle }
+                                    options={ [
+                                        { label: __( 'Default' ), value: 'default' },
+                                        { label: __( 'Alternative' ), value: 'alt' },
+                                    ] }
+                                    onChange={ (value) => setAttributes( { formStyle: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Form width (px)' ) }
+                                    value={ formWidth }
+                                    onChange={ (value) => setAttributes( { formWidth: value } ) }
+                                    min={ 200 }
+                                    max={ 1000 }
+                                />
+                            </PanelBody>
+                            <PanelBody title={ __( 'Text Label' ) }>
+                                {formStyle === 'alt' && (
+                                    <Fragment>
+                                        <TextControl
+                                            label={ __( 'First Name input placeholder' ) }
+                                            value={ fnameLabel }
+                                            onChange={ (value) => setAttributes( { fnameLabel: value } ) }
+                                        />
+                                        <TextControl
+                                            label={ __( 'Last Name input placeholder' ) }
+                                            value={ lnameLabel }
+                                            onChange={ (value) => setAttributes( { lnameLabel: value } ) }
+                                        />
+                                    </Fragment>
+                                ) }
+                                <TextControl
+                                    label={ __( 'Email input placeholder' ) }
+                                    value={ emailLabel }
+                                    onChange={ (value) => setAttributes( { emailLabel: value } ) }
+                                />
+                                <TextControl
+                                    label={ __( 'Submit text' ) }
+                                    value={ submitLabel }
+                                    onChange={ (value) => setAttributes( { submitLabel: value } ) }
+                                />
+                                <TextControl
+                                    label={ __( 'Submit success text' ) }
+                                    value={ successLabel }
+                                    onChange={ (value) => setAttributes( { successLabel: value } ) }
+                                />
+                            </PanelBody>
                             <PanelColorSettings
                                 title={ __( 'Input Color' ) }
                                 colorSettings={ [
@@ -130,7 +168,7 @@
                             <div className="advgb-form-field">
                                 <input type="text" disabled={ true }
                                        className="advgb-form-input"
-                                       value={ __( 'Email address' ) }
+                                       value={ emailLabel ? emailLabel : __( 'Email address' ) }
                                        style={ {
                                            backgroundColor: bgColor,
                                            color: textColor,
@@ -149,7 +187,7 @@
                                                 borderRadius: submitRadius,
                                             } }
                                     >
-                                        { __( 'Submit' ) }
+                                        { submitLabel ? submitLabel : __( 'Submit' ) }
                                     </button>
                                 </div>
                             </div>
@@ -160,7 +198,7 @@
                                 <div className="advgb-form-field advgb-form-field-full">
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
-                                           value={ __( 'First Name' ) }
+                                           value={ fnameLabel ? fnameLabel : __( 'First Name' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -173,7 +211,7 @@
                                 <div className="advgb-form-field advgb-form-field-full">
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
-                                           value={ __( 'Last Name' ) }
+                                           value={ lnameLabel ? lnameLabel : __( 'Last Name' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -186,7 +224,7 @@
                                 <div className="advgb-form-field advgb-form-field-full">
                                     <input type="text" disabled={ true }
                                            className="advgb-form-input"
-                                           value={ __( 'Email address' ) }
+                                           value={ emailLabel ? emailLabel : __( 'Email address' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -206,7 +244,7 @@
                                                 borderRadius: submitRadius,
                                             } }
                                     >
-                                        { __( 'Submit' ) }
+                                        { submitLabel ? submitLabel : __( 'Submit' ) }
                                     </button>
                                 </div>
                             </Fragment>
@@ -235,6 +273,21 @@
             formWidth: {
                 type: 'number',
                 default: 400,
+            },
+            fnameLabel: {
+                type: 'string',
+            },
+            lnameLabel: {
+                type: 'string',
+            },
+            emailLabel: {
+                type: 'string',
+            },
+            submitLabel: {
+                type: 'string',
+            },
+            successLabel: {
+                type: 'string',
             },
             bgColor: {
                 type: 'string',
@@ -270,6 +323,11 @@
             const {
                 formStyle,
                 formWidth,
+                fnameLabel,
+                lnameLabel,
+                emailLabel,
+                submitLabel,
+                successLabel,
                 bgColor,
                 textColor,
                 borderColor,
@@ -282,12 +340,12 @@
 
             return (
                 <div className={`advgb-newsletter clearfix style-${formStyle}`} style={ { maxWidth: formWidth } }>
-                    <form method="POST">
+                    <form method="POST" className="clearfix">
                         {formStyle === 'default' && (
                             <div className="advgb-form-field">
                                 <input type="email"
                                        className="advgb-form-input advgb-form-input-email"
-                                       placeholder={ __( 'Email address' ) }
+                                       placeholder={ emailLabel ? emailLabel : __( 'Email address' ) }
                                        style={ {
                                            backgroundColor: bgColor,
                                            color: textColor,
@@ -299,6 +357,7 @@
                                 <div className="advgb-form-submit-wrapper">
                                     <button className="advgb-form-submit"
                                             type="submit"
+                                            data-success={ successLabel ? successLabel : undefined }
                                             style={ {
                                                 borderColor: submitColor,
                                                 color: submitColor,
@@ -306,7 +365,7 @@
                                                 borderRadius: submitRadius,
                                             } }
                                     >
-                                        { __( 'Submit' ) }
+                                        { submitLabel ? submitLabel : __( 'Submit' ) }
                                     </button>
                                 </div>
                             </div>
@@ -317,7 +376,7 @@
                                 <div className="advgb-form-field advgb-form-field-full">
                                     <input type="text"
                                            className="advgb-form-input advgb-form-input-fname"
-                                           placeholder={ __( 'First Name' ) }
+                                           placeholder={ fnameLabel ? fnameLabel : __( 'First Name' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -330,7 +389,7 @@
                                 <div className="advgb-form-field advgb-form-field-full">
                                     <input type="text"
                                            className="advgb-form-input advgb-form-input-lname"
-                                           placeholder={ __( 'Last Name' ) }
+                                           placeholder={ lnameLabel ? lnameLabel : __( 'Last Name' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -343,7 +402,7 @@
                                 <div className="advgb-form-field advgb-form-field-full">
                                     <input type="email"
                                            className="advgb-form-input advgb-form-input-email"
-                                           placeholder={ __( 'Email address' ) }
+                                           placeholder={ emailLabel ? emailLabel : __( 'Email address' ) }
                                            style={ {
                                                backgroundColor: bgColor,
                                                color: textColor,
@@ -356,6 +415,7 @@
                                 <div className="advgb-form-submit-wrapper">
                                     <button className="advgb-form-submit"
                                             type="submit"
+                                            data-success={ successLabel ? successLabel : undefined }
                                             style={ {
                                                 borderColor: submitColor,
                                                 color: submitColor,
@@ -363,7 +423,7 @@
                                                 borderRadius: submitRadius,
                                             } }
                                     >
-                                        { __( 'Submit' ) }
+                                        { submitLabel ? submitLabel : __( 'Submit' ) }
                                     </button>
                                 </div>
                             </Fragment>

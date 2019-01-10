@@ -6610,7 +6610,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelColorSettings = wpEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
-        SelectControl = wpComponents.SelectControl;
+        SelectControl = wpComponents.SelectControl,
+        TextControl = wpComponents.TextControl;
 
 
     var newsletterBlockIcon = React.createElement(
@@ -6637,6 +6638,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes = _props.setAttributes;
                 var formStyle = attributes.formStyle,
                     formWidth = attributes.formWidth,
+                    fnameLabel = attributes.fnameLabel,
+                    lnameLabel = attributes.lnameLabel,
+                    emailLabel = attributes.emailLabel,
+                    submitLabel = attributes.submitLabel,
+                    successLabel = attributes.successLabel,
                     bgColor = attributes.bgColor,
                     textColor = attributes.textColor,
                     borderColor = attributes.borderColor,
@@ -6655,24 +6661,71 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Form Settings') },
-                            React.createElement(SelectControl, {
-                                label: __('Form style'),
-                                value: formStyle,
-                                options: [{ label: __('Default'), value: 'default' }, { label: __('Alternative'), value: 'alt' }],
-                                onChange: function onChange(value) {
-                                    return setAttributes({ formStyle: value });
-                                }
-                            }),
-                            React.createElement(RangeControl, {
-                                label: __('Form width (px)'),
-                                value: formWidth,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ formWidth: value });
-                                },
-                                min: 200,
-                                max: 1000
-                            }),
+                            { title: __('Newsletter Settings') },
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Form Settings') },
+                                React.createElement(SelectControl, {
+                                    label: __('Form style'),
+                                    value: formStyle,
+                                    options: [{ label: __('Default'), value: 'default' }, { label: __('Alternative'), value: 'alt' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ formStyle: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Form width (px)'),
+                                    value: formWidth,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ formWidth: value });
+                                    },
+                                    min: 200,
+                                    max: 1000
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Text Label') },
+                                formStyle === 'alt' && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(TextControl, {
+                                        label: __('First Name input placeholder'),
+                                        value: fnameLabel,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ fnameLabel: value });
+                                        }
+                                    }),
+                                    React.createElement(TextControl, {
+                                        label: __('Last Name input placeholder'),
+                                        value: lnameLabel,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ lnameLabel: value });
+                                        }
+                                    })
+                                ),
+                                React.createElement(TextControl, {
+                                    label: __('Email input placeholder'),
+                                    value: emailLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ emailLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Submit text'),
+                                    value: submitLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Submit success text'),
+                                    value: successLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ successLabel: value });
+                                    }
+                                })
+                            ),
                             React.createElement(PanelColorSettings, {
                                 title: __('Input Color'),
                                 colorSettings: [{
@@ -6764,7 +6817,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-form-field" },
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-form-input",
-                                    value: __('Email address'),
+                                    value: emailLabel ? emailLabel : __('Email address'),
                                     style: {
                                         backgroundColor: bgColor,
                                         color: textColor,
@@ -6787,7 +6840,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderRadius: submitRadius
                                             }
                                         },
-                                        __('Submit')
+                                        submitLabel ? submitLabel : __('Submit')
                                     )
                                 )
                             ),
@@ -6799,7 +6852,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-form-field advgb-form-field-full" },
                                     React.createElement("input", { type: "text", disabled: true,
                                         className: "advgb-form-input",
-                                        value: __('First Name'),
+                                        value: fnameLabel ? fnameLabel : __('First Name'),
                                         style: {
                                             backgroundColor: bgColor,
                                             color: textColor,
@@ -6814,7 +6867,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-form-field advgb-form-field-full" },
                                     React.createElement("input", { type: "text", disabled: true,
                                         className: "advgb-form-input",
-                                        value: __('Last Name'),
+                                        value: lnameLabel ? lnameLabel : __('Last Name'),
                                         style: {
                                             backgroundColor: bgColor,
                                             color: textColor,
@@ -6829,7 +6882,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-form-field advgb-form-field-full" },
                                     React.createElement("input", { type: "text", disabled: true,
                                         className: "advgb-form-input",
-                                        value: __('Email address'),
+                                        value: emailLabel ? emailLabel : __('Email address'),
                                         style: {
                                             backgroundColor: bgColor,
                                             color: textColor,
@@ -6853,7 +6906,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderRadius: submitRadius
                                             }
                                         },
-                                        __('Submit')
+                                        submitLabel ? submitLabel : __('Submit')
                                     )
                                 )
                             )
@@ -6883,6 +6936,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             formWidth: {
                 type: 'number',
                 default: 400
+            },
+            fnameLabel: {
+                type: 'string'
+            },
+            lnameLabel: {
+                type: 'string'
+            },
+            emailLabel: {
+                type: 'string'
+            },
+            submitLabel: {
+                type: 'string'
+            },
+            successLabel: {
+                type: 'string'
             },
             bgColor: {
                 type: 'string'
@@ -6918,6 +6986,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref.attributes;
             var formStyle = attributes.formStyle,
                 formWidth = attributes.formWidth,
+                fnameLabel = attributes.fnameLabel,
+                lnameLabel = attributes.lnameLabel,
+                emailLabel = attributes.emailLabel,
+                submitLabel = attributes.submitLabel,
+                successLabel = attributes.successLabel,
                 bgColor = attributes.bgColor,
                 textColor = attributes.textColor,
                 borderColor = attributes.borderColor,
@@ -6933,13 +7006,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: "advgb-newsletter clearfix style-" + formStyle, style: { maxWidth: formWidth } },
                 React.createElement(
                     "form",
-                    { method: "POST" },
+                    { method: "POST", className: "clearfix" },
                     formStyle === 'default' && React.createElement(
                         "div",
                         { className: "advgb-form-field" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: __('Email address'),
+                            placeholder: emailLabel ? emailLabel : __('Email address'),
                             style: {
                                 backgroundColor: bgColor,
                                 color: textColor,
@@ -6955,6 +7028,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "button",
                                 { className: "advgb-form-submit",
                                     type: "submit",
+                                    "data-success": successLabel ? successLabel : undefined,
                                     style: {
                                         borderColor: submitColor,
                                         color: submitColor,
@@ -6962,7 +7036,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                __('Submit')
+                                submitLabel ? submitLabel : __('Submit')
                             )
                         )
                     ),
@@ -6974,7 +7048,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("input", { type: "text",
                                 className: "advgb-form-input advgb-form-input-fname",
-                                placeholder: __('First Name'),
+                                placeholder: fnameLabel ? fnameLabel : __('First Name'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -6989,7 +7063,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("input", { type: "text",
                                 className: "advgb-form-input advgb-form-input-lname",
-                                placeholder: __('Last Name'),
+                                placeholder: lnameLabel ? lnameLabel : __('Last Name'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -7004,7 +7078,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("input", { type: "email",
                                 className: "advgb-form-input advgb-form-input-email",
-                                placeholder: __('Email address'),
+                                placeholder: emailLabel ? emailLabel : __('Email address'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -7021,6 +7095,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "button",
                                 { className: "advgb-form-submit",
                                     type: "submit",
+                                    "data-success": successLabel ? successLabel : undefined,
                                     style: {
                                         borderColor: submitColor,
                                         color: submitColor,
@@ -7028,7 +7103,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                __('Submit')
+                                submitLabel ? submitLabel : __('Submit')
                             )
                         )
                     )
