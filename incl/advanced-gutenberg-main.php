@@ -169,6 +169,7 @@ float: left;'
             add_action('wp_ajax_advgb_delete_profiles', array($this, 'deleteProfiles'));
             add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
             add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
+            add_action('wp_ajax_advgb_newsletter_save', array($this, 'saveNewsletterData'));
         } else {
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
@@ -1008,6 +1009,36 @@ float: left;'
         } else {
             wp_send_json(__('Error while sending form. Try again!', 'advanced-gutenberg'), 500);
         }
+        // phpcs:enable
+    }
+
+    /**
+     * Ajax for saving newsletter form data
+     *
+     * @return boolean,void     Return false if failure, echo json on success
+     */
+    public function saveNewsletterData()
+    {
+        // phpcs:disable -- WordPress.Security.NonceVerification.NoNonceVerification - frontend form, no nonce
+        if (!isset($_POST['action'])) {
+            wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
+            return false;
+        }
+
+        $newsletter_saved = get_option('advgb_newsletter_saved');
+        if (!$newsletter_saved) $newsletter_saved = array();
+
+        $newsletter_data = array(
+            'date'  => sanitize_text_field($_POST['submit_date']),
+            'fname' => sanitize_text_field($_POST['f_name']),
+            'lname' => sanitize_text_field($_POST['l_name']),
+            'email' => sanitize_email($_POST['email']),
+        );
+
+        array_push($newsletter_saved, $newsletter_data);
+
+        update_option('advgb_newsletter_saved', $newsletter_saved);
+        wp_send_json($newsletter_data, 200);
         // phpcs:enable
     }
 
@@ -2932,6 +2963,16 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_localize_script('advgbContactForm_js', 'advgbContactForm', array('ajax_url' => admin_url('admin-ajax.php')));
+        }
+
+        if (strpos($content, 'advgb-contact-form') !== false) {
+            wp_enqueue_script(
+                'advgbNewsletter_js',
+                plugins_url('assets/blocks/newsletter/frontend.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_localize_script('advgbNewsletter_js', 'advgbNewsletter', array('ajax_url' => admin_url('admin-ajax.php')));
         }
 
         return $content;
