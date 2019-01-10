@@ -4,6 +4,8 @@ defined('ABSPATH') || die;
 $email_settings    = get_option('advgb_email_sender');
 $contactform_saved = get_option('advgb_contacts_saved');
 $contacts_count    = $contactform_saved ? count($contactform_saved) : 0;
+$newsletter_saved  = get_option('advgb_newsletter_saved');
+$newsletter_count  = $newsletter_saved ? count($newsletter_saved) : 0;
 $website_title     = get_option('blogname');
 $admin_email       = get_option('admin_email');
 
@@ -158,6 +160,26 @@ $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiv
                             </button>
                             <button type="submit" class="ju-material-button advgb-export-download"
                                     name="block_data_export" value="contact_form.json"
+                            >
+                                <?php esc_html_e('JSON', 'advanced-gutenberg'); ?>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <li class="advgb-export-item ju-settings-option full-width clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label class="advgb-export-data-title ju-setting-label">
+                            <?php esc_html_e('Download Newsletter Form data', 'advanced-gutenberg'); ?>
+                            <?php echo ' ('. esc_html($newsletter_count) . ')'; ?>
+                        </label>
+                        <div class="advgb-export-actions">
+                            <button type="submit" class="ju-material-button advgb-export-download"
+                                    name="block_data_export" value="newsletter.csv"
+                            >
+                                <?php esc_html_e('CSV', 'advanced-gutenberg'); ?>
+                            </button>
+                            <button type="submit" class="ju-material-button advgb-export-download"
+                                    name="block_data_export" value="newsletter.json"
                             >
                                 <?php esc_html_e('JSON', 'advanced-gutenberg'); ?>
                             </button>

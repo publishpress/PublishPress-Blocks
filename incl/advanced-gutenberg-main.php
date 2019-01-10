@@ -1566,6 +1566,7 @@ float: left;'
                         $data .= '"'.$dataVal['email'].'"'.$tab;
                         $data .= '"'.$dataVal['msg'].'"';
                         $data .= PHP_EOL;
+                        $int++;
                     }
                     $data = trim($data);
 
@@ -1585,7 +1586,47 @@ float: left;'
                     echo json_encode($dataSaved);
                     exit;
             }
+        } elseif ($dataExport === 'newsletter') {
+            $dataSaved = get_option('advgb_newsletter_saved');
+            if (!$dataSaved) {
+                return false;
+            }
+
+            switch ($dataType) {
+                case 'csv':
+                    $data .= '"#","Date","First Name","Last Name","Email",' . PHP_EOL;
+                    $tab = ',';
+                    $int = 1;
+                    foreach ($dataSaved as $dataVal) {
+                        $data .= '"'.$int.'"'.$tab;
+                        $data .= '"'.$dataVal['date'].'"'.$tab;
+                        $data .= '"'.$dataVal['fname'].'"'.$tab;
+                        $data .= '"'.$dataVal['lname'].'"'.$tab;
+                        $data .= '"'.$dataVal['email'].'"';
+                        $data .= PHP_EOL;
+                        $int++;
+                    }
+                    $data = trim($data);
+
+                    header('Content-Type: text/csv; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_newsletter-'.date('m-d-Y').'.csv');
+                    header('Pragma: no-cache');
+                    header('Expires: 0');
+
+                    echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
+                    exit;
+                case 'json':
+                    header('Content-Type: application/json; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_newsletter-'.date('m-d-Y').'.json');
+                    header('Pragma: no-cache');
+                    header('Expires: 0');
+
+                    echo json_encode($dataSaved);
+                    exit;
+            }
         }
+
+        return false;
     }
 
     /**
