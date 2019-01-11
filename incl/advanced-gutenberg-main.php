@@ -1676,6 +1676,11 @@ float: left;'
         }
 
         $save_config = array();
+        if (isset($_POST['recaptcha_enable'])) {
+            $save_config['recaptcha_enable'] = 1;
+        } else {
+            $save_config['recaptcha_enable'] = 0;
+        }
         $save_config['recaptcha_site_key'] = $_POST['recaptcha_site_key'];
         $save_config['recaptcha_secret_key'] = $_POST['recaptcha_secret_key'];
         $save_config['recaptcha_language'] = $_POST['recaptcha_language'];

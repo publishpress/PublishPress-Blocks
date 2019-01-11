@@ -15,6 +15,7 @@ $contact_form_sender_email    = isset($email_settings['contact_form_sender_email
 $contact_form_email_title     = isset($email_settings['contact_form_email_title']) && $email_settings['contact_form_email_title'] ? $email_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
 $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiver']) && $email_settings['contact_form_email_receiver'] ? $email_settings['contact_form_email_receiver'] : $admin_email;
 
+$recaptcha_enabled    = isset($recaptcha_config['recaptcha_enable']) && $recaptcha_config['recaptcha_enable'] ? 'checked' : '';
 $recaptcha_site_key   = isset($recaptcha_config['recaptcha_site_key']) ? $recaptcha_config['recaptcha_site_key'] : '';
 $recaptcha_secret_key = isset($recaptcha_config['recaptcha_secret_key']) ? $recaptcha_config['recaptcha_secret_key'] : '';
 $recaptcha_language   = isset($recaptcha_config['recaptcha_language']) ? $recaptcha_config['recaptcha_language'] : '';
@@ -154,18 +155,37 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
     </div>
 
     <div id="captcha-tab" class="tab-content clearfix">
-        <div class="advgb-captcha-intro">
-            <span>
-                <?php esc_html_e('Use the Google reCaptcha to avoid spam in Contact and an Newsletter forms. Get credentials for your domain by registering', 'advanced-gutenberg') ?>
-            </span>
-            <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank">
-                <?php esc_html_e(' here', 'advanced-gutenberg') ?>
-            </a>
-        </div>
-
         <form method="POST">
             <?php wp_nonce_field('advgb_captcha_nonce', 'advgb_captcha_nonce_field') ?>
             <ul class="settings-list clearfix">
+                <li class="ju-settings-option full-width clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="recaptcha_enable"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('Enable reCAPTCHA', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="ju-switch-button">
+                            <label class="switch">
+                                <input type="checkbox"
+                                       name="recaptcha_enable"
+                                       id="recaptcha_enable"
+                                       value="1"
+                                    <?php echo esc_attr($recaptcha_enabled) ?>
+                                />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="advgb-captcha-intro">
+                        <?php esc_html_e('Use the Google reCaptcha to avoid spam in Contact and Newsletter forms. Get credentials for your domain by registering', 'advanced-gutenberg') ?>
+                        <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank">
+                            <?php esc_html_e(' here', 'advanced-gutenberg') ?>
+                        </a>
+                    </div>
+                </li>
                 <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper no-child-float clearfix">
                         <label for="recaptcha_site_key"
