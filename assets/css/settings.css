@@ -6,6 +6,11 @@
     padding-left: 40px;
 }
 
+select.ju-input {
+    padding: 15px;
+    height: auto;
+}
+
 .ju-settings-option.settings-separator > * {
     margin: 0;
     padding: 5px;
@@ -231,10 +236,15 @@ li.block-config-item .block-config-button {
 }
 
 /*Export data tab*/
-#email-tab .ju-settings-option .settings-option-wrapper .ju-setting-label {
+.ju-settings-option .settings-option-wrapper.no-child-float .ju-setting-label {
     font-weight: bold;
 }
 
 .advgb-export-actions button {
     margin: auto 2px;
+}
+
+.advgb-captcha-intro {
+    padding: 10px 0;
+    margin: 10px 0;
 }

@@ -6,6 +6,7 @@ $contactform_saved = get_option('advgb_contacts_saved');
 $contacts_count    = $contactform_saved ? count($contactform_saved) : 0;
 $newsletter_saved  = get_option('advgb_newsletter_saved');
 $newsletter_count  = $newsletter_saved ? count($newsletter_saved) : 0;
+$recaptcha_config  = get_option('advgb_recaptcha_config');
 $website_title     = get_option('blogname');
 $admin_email       = get_option('admin_email');
 
@@ -13,6 +14,11 @@ $contact_form_sender_name     = isset($email_settings['contact_form_sender_name'
 $contact_form_sender_email    = isset($email_settings['contact_form_sender_email']) && $email_settings['contact_form_sender_email'] ? $email_settings['contact_form_sender_email'] : $admin_email;
 $contact_form_email_title     = isset($email_settings['contact_form_email_title']) && $email_settings['contact_form_email_title'] ? $email_settings['contact_form_email_title'] : __('Website Contact', 'advanced-gutenberg');
 $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiver']) && $email_settings['contact_form_email_receiver'] ? $email_settings['contact_form_email_receiver'] : $admin_email;
+
+$recaptcha_site_key   = isset($recaptcha_config['recaptcha_site_key']) ? $recaptcha_config['recaptcha_site_key'] : '';
+$recaptcha_secret_key = isset($recaptcha_config['recaptcha_secret_key']) ? $recaptcha_config['recaptcha_secret_key'] : '';
+$recaptcha_language   = isset($recaptcha_config['recaptcha_language']) ? $recaptcha_config['recaptcha_language'] : '';
+$recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha_config['recaptcha_theme'] : '';
 ?>
 
 <div id="advgb-settings-container">
@@ -21,6 +27,11 @@ $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiv
             <li class="tab">
                 <a href="#email-tab" class="link-tab">
                     <?php esc_html_e('Email settings', 'advanced-gutenberg') ?>
+                </a>
+            </li>
+            <li class="tab">
+                <a href="#captcha-tab" class="link-tab">
+                    <?php esc_html_e('Forms reCaptcha', 'advanced-gutenberg') ?>
                 </a>
             </li>
             <li class="tab">
@@ -135,6 +146,98 @@ $contact_form_email_receiver  = isset($email_settings['contact_form_email_receiv
                         class="ju-button orange-button waves-effect waves-light"
                         id="save_email_config"
                         name="save_email_config"
+                >
+                    <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div id="captcha-tab" class="tab-content clearfix">
+        <div class="advgb-captcha-intro">
+            <span>
+                <?php esc_html_e('Use the Google reCaptcha to avoid spam in Contact and an Newsletter forms. Get credentials for your domain by registering', 'advanced-gutenberg') ?>
+            </span>
+            <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank">
+                <?php esc_html_e(' here', 'advanced-gutenberg') ?>
+            </a>
+        </div>
+
+        <form method="POST">
+            <?php wp_nonce_field('advgb_captcha_nonce', 'advgb_captcha_nonce_field') ?>
+            <ul class="settings-list clearfix">
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper no-child-float clearfix">
+                        <label for="recaptcha_site_key"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('reCAPTCHA Site Key', 'advanced-gutenberg') ?>
+                        </label>
+                        <div>
+                            <input type="text"
+                                   name="recaptcha_site_key"
+                                   id="recaptcha_site_key"
+                                   class="ju-input full-width"
+                                   value="<?php echo esc_html($recaptcha_site_key) ?>"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper no-child-float clearfix">
+                        <label for="recaptcha_secret_key"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('reCAPTCHA Secret Key', 'advanced-gutenberg') ?>
+                        </label>
+                        <div>
+                            <input type="text"
+                                   name="recaptcha_secret_key"
+                                   id="recaptcha_secret_key"
+                                   class="ju-input full-width"
+                                   value="<?php echo esc_html($recaptcha_secret_key) ?>"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper no-child-float clearfix">
+                        <label for="recaptcha_language"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('reCAPTCHA Language', 'advanced-gutenberg') ?>
+                            (<a target="_blank" href="https://developers.google.com/recaptcha/docs/language"><?php esc_html_e('List', 'advanced-gutenberg') ?></a>)
+                        </label>
+                        <div>
+                            <input type="text"
+                                   name="recaptcha_language"
+                                   id="recaptcha_language"
+                                   class="ju-input full-width"
+                                   value="<?php echo esc_html($recaptcha_language) ?>"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper no-child-float clearfix">
+                        <label for="recaptcha_theme"
+                               class="ju-setting-label"
+                        >
+                            <?php esc_html_e('reCAPTCHA Theme', 'advanced-gutenberg') ?>
+                        </label>
+                        <div>
+                            <select class="ju-input full-width" name="recaptcha_theme" id="recaptcha_theme">
+                                <option value="light" <?php echo $recaptcha_theme === 'light' ? 'selected' : '' ?>>Light</option>
+                                <option value="dark" <?php echo $recaptcha_theme === 'dark' ? 'selected' : '' ?>>Dark</option>
+                                <option value="invisible" <?php echo $recaptcha_theme === 'invisible' ? 'selected' : '' ?>>Invisible</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="save-settings-block">
+                <button type="submit"
+                        class="ju-button orange-button waves-effect waves-light"
+                        id="save_recaptcha_config"
+                        name="save_recaptcha_config"
                 >
                     <span><?php esc_html_e('Save', 'advanced-gutenberg') ?></span>
                 </button>
