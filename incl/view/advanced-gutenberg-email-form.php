@@ -192,6 +192,7 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
                                class="ju-setting-label"
                         >
                             <?php esc_html_e('reCAPTCHA Site Key', 'advanced-gutenberg') ?>
+                            <span class="advgb-field-required">(<?php esc_html_e('required', 'advanced-gutenberg') ?>)</span>
                         </label>
                         <div>
                             <input type="text"
@@ -208,6 +209,7 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
                                class="ju-setting-label"
                         >
                             <?php esc_html_e('reCAPTCHA Secret Key', 'advanced-gutenberg') ?>
+                            <span class="advgb-field-required">(<?php esc_html_e('required', 'advanced-gutenberg') ?>)</span>
                         </label>
                         <div>
                             <input type="text"

@@ -240,6 +240,10 @@ li.block-config-item .block-config-button {
     font-weight: bold;
 }
 
+span.advgb-field-required {
+    color: #ff0000;
+}
+
 .advgb-export-actions button {
     margin: auto 2px;
 }
