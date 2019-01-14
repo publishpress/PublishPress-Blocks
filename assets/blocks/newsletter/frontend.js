@@ -32,7 +32,8 @@ jQuery(document).ready(function ($) {
                 f_name: firstName,
                 l_name: lastName,
                 email: email,
-                submit_date: submitDate
+                submit_date: submitDate,
+                captcha: typeof grecaptcha !== "undefined" ? grecaptcha.getResponse() : undefined
             },
             beforeSend: function () {
                 $thisForm.find('.advgb-form-submit-wrapper').append('<div class="advgb-form-sending" />');
