@@ -252,6 +252,7 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
                                 <option value="invisible" <?php echo $recaptcha_theme === 'invisible' ? 'selected' : '' ?>>Invisible</option>
                             </select>
                         </div>
+                        <p style="font-style: italic; margin: 5px 0;"><?php esc_html_e('We strongly recommend not using Invisible reCAPTCHA if you have more than 1 Newsletter or Contact forms block in a page.', 'advanced-gutenberg') ?></p>
                     </div>
                 </li>
             </ul>
