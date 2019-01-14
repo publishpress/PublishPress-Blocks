@@ -5091,7 +5091,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var __ = wpI18n.__;
     var Fragment = wpElement.Fragment;
     var InspectorControls = wpEditor.InspectorControls;
-    var RangeControl = wpComponents.RangeControl;
+    var PanelBody = wpComponents.PanelBody,
+        Button = wpComponents.Button;
 
     // Register extra attributes
 
@@ -5127,6 +5128,31 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     Fragment,
                     null,
                     React.createElement(BlockEdit, props),
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Custom styles') },
+                            React.createElement(
+                                Button,
+                                { isPrimary: true,
+                                    onClick: function onClick() {
+                                        return props.setAttributes({
+                                            colMargin: undefined,
+                                            colPadding: undefined,
+                                            blockID: undefined
+                                        });
+                                    } },
+                                __('Clear custom styles')
+                            ),
+                            React.createElement(
+                                'p',
+                                { style: { fontStyle: 'italic', marginTop: 10 } },
+                                __('We recommend to clear all custom styles as soon as possible to avoid block error validation,' + ' because we will remove this feature in very next version.')
+                            )
+                        )
+                    ),
                     props.name === 'core/columns' && (!!colMargin || !!colPadding) && React.createElement(
                         'style',
                         { key: 'custom-columns-styles' },
@@ -5197,11 +5223,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 (function (wpI18n, wpHooks, wpEditor, wpComponents) {
     var addFilter = wpHooks.addFilter;
     var __ = wpI18n.__;
-    var InspectorControls = wpEditor.InspectorControls,
-        PanelColorSettings = wpEditor.PanelColorSettings;
-    var SelectControl = wpComponents.SelectControl,
-        PanelBody = wpComponents.PanelBody,
-        RangeControl = wpComponents.RangeControl;
+    var InspectorControls = wpEditor.InspectorControls;
+    var PanelBody = wpComponents.PanelBody,
+        Button = wpComponents.Button;
 
     // Register extra attributes to separator blocks
 
@@ -5239,6 +5263,31 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
                 return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-separator' }, props)), React.createElement(
+                    InspectorControls,
+                    { key: 'inspector-custom' },
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Custom styles') },
+                        React.createElement(
+                            Button,
+                            { isPrimary: true,
+                                onClick: function onClick() {
+                                    return props.setAttributes({
+                                        borderColor: undefined,
+                                        borderSize: undefined,
+                                        borderStyle: undefined,
+                                        borderWidth: undefined
+                                    });
+                                } },
+                            __('Clear custom styles')
+                        ),
+                        React.createElement(
+                            'p',
+                            { style: { fontStyle: 'italic', marginTop: 10 } },
+                            __('We recommend to clear all custom styles as soon as possible to avoid block error validation,' + ' because we will remove this feature in very next version.')
+                        )
+                    )
+                ), React.createElement(
                     'style',
                     { key: 'custom-separator-styles' },
                     '#block-' + clientId + ' hr {\n                        border-bottom-color: ' + borderColor + ';\n                        border-bottom-style: ' + borderStyle + ';\n                        border-bottom-width: ' + borderWidth + 'px;\n                        max-width: ' + borderSize + 'px;\n                    }'

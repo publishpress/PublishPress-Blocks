@@ -3,7 +3,7 @@
     const { __ } = wpI18n;
     const { Fragment } = wpElement;
     const { InspectorControls } = wpEditor;
-    const { RangeControl } = wpComponents;
+    const { PanelBody, Button } = wpComponents;
 
     // Register extra attributes
     addFilter( 'blocks.registerBlockType', 'advgb/registerExtraColumnsAttrs', function ( settings ) {
@@ -34,6 +34,22 @@
                 return (
                     <Fragment>
                         <BlockEdit {...props} />
+                        <InspectorControls>
+                            <PanelBody title={ __( 'Custom styles' ) }>
+                                <Button isPrimary
+                                        onClick={ () => props.setAttributes( {
+                                            colMargin: undefined,
+                                            colPadding: undefined,
+                                            blockID: undefined,
+                                        } ) }>
+                                    { __( 'Clear custom styles' ) }
+                                </Button>
+                                <p style={ { fontStyle: 'italic', marginTop: 10 } }>
+                                    { __( 'We recommend to clear all custom styles as soon as possible to avoid block error validation,' +
+                                        ' because we will remove this feature in very next version.' ) }
+                                </p>
+                            </PanelBody>
+                        </InspectorControls>
                         {props.name === 'core/columns' && (!!colMargin || !!colPadding) &&
                         <style key="custom-columns-styles">
                             {`#block-${clientId} .wp-block-columns .editor-block-list__block:not(:first-child) {margin-left: ${colMargin}px;}`}
