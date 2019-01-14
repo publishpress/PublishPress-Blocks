@@ -1199,3 +1199,7 @@ button.advgb-form-submit:hover:after {
 form .advgb-grecaptcha {
     margin: 15px auto;
 }
+
+form .advgb-grecaptcha > div {
+    margin: auto;
+}

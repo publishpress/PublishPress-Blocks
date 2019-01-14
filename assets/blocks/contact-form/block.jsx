@@ -215,6 +215,56 @@
         }
     }
 
+    const contactBlockAttrs = {
+        nameLabel: {
+            type: 'string',
+        },
+        emailLabel: {
+            type: 'string',
+        },
+        msgLabel: {
+            type: 'string',
+        },
+        submitLabel: {
+            type: 'string',
+        },
+        successLabel: {
+            type: 'string',
+        },
+        bgColor: {
+            type: 'string',
+        },
+        textColor: {
+            type: 'string',
+        },
+        borderStyle: {
+            type: 'string',
+        },
+        borderColor: {
+            type: 'string',
+        },
+        borderRadius: {
+            type: 'number',
+        },
+        submitColor: {
+            type: 'string',
+        },
+        submitBgColor: {
+            type: 'string',
+        },
+        submitRadius: {
+            type: 'number',
+        },
+        submitPosition: {
+            type: 'string',
+            default: 'right',
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        }
+    };
+
     registerBlockType( 'advgb/contact-form', {
         title: __( 'Contact Form' ),
         description: __( 'Fastest way to create a contact form for your page.' ),
@@ -224,55 +274,7 @@
         },
         category: 'widgets',
         keywords: [ __( 'contact' ), __( 'form' ) ],
-        attributes: {
-            nameLabel: {
-                type: 'string',
-            },
-            emailLabel: {
-                type: 'string',
-            },
-            msgLabel: {
-                type: 'string',
-            },
-            submitLabel: {
-                type: 'string',
-            },
-            successLabel: {
-                type: 'string',
-            },
-            bgColor: {
-                type: 'string',
-            },
-            textColor: {
-                type: 'string',
-            },
-            borderStyle: {
-                type: 'string',
-            },
-            borderColor: {
-                type: 'string',
-            },
-            borderRadius: {
-                type: 'number',
-            },
-            submitColor: {
-                type: 'string',
-            },
-            submitBgColor: {
-                type: 'string',
-            },
-            submitRadius: {
-                type: 'number',
-            },
-            submitPosition: {
-                type: 'string',
-                default: 'right',
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            }
-        },
+        attributes: contactBlockAttrs,
         edit: AdvContactForm,
         save: function ( { attributes } ) {
             const {
@@ -352,9 +354,97 @@
                                 { submitLabel ? submitLabel : __( 'Submit' ) }
                             </button>
                         </div>
+                        <div className="advgb-grecaptcha clearfix"/>
                     </form>
                 </div>
             );
-        }
+        },
+        deprecated: [
+            {
+                attributes: contactBlockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        nameLabel,
+                        emailLabel,
+                        msgLabel,
+                        submitLabel,
+                        successLabel,
+                        bgColor,
+                        textColor,
+                        borderColor,
+                        borderStyle,
+                        borderRadius,
+                        submitColor,
+                        submitBgColor,
+                        submitRadius,
+                        submitPosition,
+                    } = attributes;
+
+                    return (
+                        <div className="advgb-contact-form">
+                            <form method="POST">
+                                <div className="advgb-form-field advgb-form-field-half">
+                                    <input type="text"
+                                           className="advgb-form-input advgb-form-input-name"
+                                           placeholder={ nameLabel ? nameLabel : __( 'Name' ) }
+                                           name="contact_name"
+                                           style={ {
+                                               backgroundColor: bgColor,
+                                               color: textColor,
+                                               borderColor: borderColor,
+                                               borderStyle: borderStyle,
+                                               borderRadius: borderRadius,
+                                           } }
+                                    />
+                                </div>
+                                <div className="advgb-form-field advgb-form-field-half">
+                                    <input type="email"
+                                           className="advgb-form-input advgb-form-input-email"
+                                           placeholder={ emailLabel ? emailLabel : __( 'Email address' ) }
+                                           name="contact_email"
+                                           style={ {
+                                               backgroundColor: bgColor,
+                                               color: textColor,
+                                               borderColor: borderColor,
+                                               borderStyle: borderStyle,
+                                               borderRadius: borderRadius,
+                                           } }
+                                    />
+                                </div>
+                                <div className="advgb-form-field advgb-form-field-full">
+                                    <textarea className="advgb-form-input advgb-form-input-msg"
+                                              placeholder={ msgLabel ? msgLabel : __( 'Message' ) }
+                                              name="contact_message"
+                                              style={ {
+                                                  backgroundColor: bgColor,
+                                                  color: textColor,
+                                                  borderColor: borderColor,
+                                                  borderStyle: borderStyle,
+                                                  borderRadius: borderRadius,
+                                              } }
+                                    />
+                                </div>
+                                <div className="advgb-form-submit-wrapper"
+                                     style={ { textAlign: submitPosition } }
+                                >
+                                    <button className="advgb-form-submit"
+                                            type="submit"
+                                            data-success={ successLabel ? successLabel : undefined }
+                                            style={ {
+                                                borderColor: submitColor,
+                                                color: submitColor,
+                                                backgroundColor: submitBgColor,
+                                                borderRadius: submitRadius,
+                                            } }
+                                    >
+                                        { submitLabel ? submitLabel : __( 'Submit' ) }
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    );
+                }
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
