@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "platform": "wordpress",
-  "wp_version": "5.0.2",
+  "wp_version": "5.0.3",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,16 @@
     ]
   },
   "changelog": {
+    "1.9.1": [
+      {
+        "type": "fix",
+        "title": "Validation error on Columns block"
+      },
+      {
+        "type": "fix",
+        "title": "Add button to clear custom styles of Columns and Separator block (We strongly recommend to do this as soon as possible to avoid block error validation, because we gonna remove this feature completely in very next version)"
+      }
+    ],
     "1.9.0": [
       {
         "type": "feature",
