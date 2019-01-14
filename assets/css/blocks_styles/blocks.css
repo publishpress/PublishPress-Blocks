@@ -1195,3 +1195,7 @@ button.advgb-form-submit:hover:after {
 .advgb-newsletter .advgb-form-submit-success {
     margin-left: 0;
 }
+
+form .advgb-grecaptcha {
+    margin: 15px auto;
+}
