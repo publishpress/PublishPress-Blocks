@@ -994,6 +994,22 @@ float: left;'
             return false;
         }
 
+        if (isset($_POST['captcha'])) {
+            $recaptcha_config  = get_option('advgb_recaptcha_config');
+            if (!isset($recaptcha_config['recaptcha_secret_key']) || !isset($recaptcha_config['recaptcha_site_key'])) {
+                wp_send_json(__('Server error. Try again later!', 'advanced-gutenberg'), 500);
+            }
+
+            $captcha = $_POST['captcha'];
+            $secret_key = $recaptcha_config['recaptcha_secret_key'];
+            $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha}");
+            $verified = json_decode($verify);
+
+            if (!$verified->success) {
+                wp_send_json(__('Captcha validation error', 'advanced-gutenberg'), 400);
+            }
+        }
+
         $contacts_saved = get_option('advgb_contacts_saved');
         if (!$contacts_saved) $contacts_saved = array();
 

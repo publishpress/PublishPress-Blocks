@@ -28,7 +28,8 @@ jQuery(document).ready(function ($) {
                 contact_name: contactName,
                 contact_email: contactEmail,
                 contact_msg: contactMsg,
-                submit_date: submitDate
+                submit_date: submitDate,
+                captcha: typeof grecaptcha !== "undefined" ? grecaptcha.getResponse() : undefined
             },
             beforeSend: function () {
                 $thisForm.find('.advgb-form-submit-wrapper').append('<div class="advgb-form-sending" />');
