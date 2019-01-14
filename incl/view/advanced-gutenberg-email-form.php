@@ -231,7 +231,7 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
                                    name="recaptcha_language"
                                    id="recaptcha_language"
                                    class="ju-input full-width"
-                                   placeholder="<?php esc_html_e('Default: en', 'advanced-gutenberg'); ?>"
+                                   placeholder="<?php esc_html_e('Auto detect', 'advanced-gutenberg'); ?>"
                                    value="<?php echo esc_html($recaptcha_language) ?>"/>
                         </div>
                     </div>
