@@ -7106,7 +7106,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 submitLabel ? submitLabel : __('Submit')
                             )
                         )
-                    )
+                    ),
+                    React.createElement("div", { className: "advgb-grecaptcha clearfix" })
                 )
             );
         }

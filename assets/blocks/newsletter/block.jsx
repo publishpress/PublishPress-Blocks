@@ -428,6 +428,7 @@
                                 </div>
                             </Fragment>
                         ) }
+                        <div className="advgb-grecaptcha clearfix"/>
                     </form>
                 </div>
             );

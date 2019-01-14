@@ -1183,6 +1183,7 @@ button.advgb-form-submit:hover:after {
 
 .advgb-newsletter.style-default .advgb-form-field {
     position: relative;
+    float: none;
 }
 
 .advgb-newsletter.style-default .advgb-form-submit-wrapper {
