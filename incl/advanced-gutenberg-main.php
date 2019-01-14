@@ -322,6 +322,8 @@ float: left;'
             {
                 if ('advgb_map_api' === $handle) {
                     return str_replace(' src', ' defer src', $tag);
+                } elseif ('advgb_recaptcha_js' === $handle) {
+                    return str_replace(' src', ' async defer src', $tag);
                 }
                 return $tag;
             }
@@ -334,6 +336,27 @@ float: left;'
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
             );
             add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
+        }
+
+        $recaptcha_config = get_option('advgb_recaptcha_config');
+        if (!is_admin() && isset($recaptcha_config['recaptcha_enable']) && $recaptcha_config['recaptcha_enable']) {
+            $lang = $recaptcha_config['recaptcha_language'] ? '&hl='.$recaptcha_config['recaptcha_language'] : '';
+            wp_enqueue_script(
+                'advgb_recaptcha_js',
+                'https://www.google.com/recaptcha/api.js?onload=advgbRecaptchaInit&render=explicit' . $lang
+            );
+
+            if (isset($recaptcha_config['recaptcha_site_key']) && $recaptcha_config['recaptcha_site_key']) {
+                wp_enqueue_script(
+                    'advgb_recaptcha_init_js',
+                    plugins_url('assets/js/recaptcha.js', dirname(__FILE__))
+                );
+
+                wp_localize_script('advgb_recaptcha_init_js', 'advgbGRC', array(
+                    'site_key' => $recaptcha_config['recaptcha_site_key'],
+                    'theme' => $recaptcha_config['recaptcha_theme'],
+                ));
+            }
         }
     }
 
