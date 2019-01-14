@@ -38,11 +38,6 @@
                         <style key="custom-columns-styles">
                             {`#block-${clientId} .wp-block-columns .editor-block-list__block:not(:first-child) {margin-left: ${colMargin}px;}`}
                             {`#block-${clientId} .wp-block-columns .editor-block-list__block-edit {padding: ${colPadding}px;}`}
-                        </style>},
-                        {props.name === 'core/text-columns' && (!!colMargin || !!colPadding) &&
-                        <style key="custom-text-columns-styles">
-                            {`#block-${clientId} .wp-block-column:not(:first-child) {margin-left: ${colMargin}px;}`}
-                            {`#block-${clientId} .wp-block-column {padding: ${colPadding}px;}`}
                         </style>}
                     </Fragment>
                 )
@@ -58,7 +53,7 @@
 
         if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
             extraProps = Object.assign( extraProps, {
-                id: (colMargin || colPadding) ? blockID : extraProps.id,
+                id: (colMargin || colPadding || blockID) ? blockID : extraProps.id,
             } )
         }
 
