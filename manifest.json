@@ -41,6 +41,10 @@
     "1.9.1": [
       {
         "type": "fix",
+        "title": "Compatibility with more blocks provider plugins"
+      },
+      {
+        "type": "fix",
         "title": "Validation error on Columns block"
       },
       {
