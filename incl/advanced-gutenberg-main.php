@@ -3101,7 +3101,7 @@ float: left;'
             wp_localize_script('advgbContactForm_js', 'advgbContactForm', array('ajax_url' => admin_url('admin-ajax.php')));
         }
 
-        if (strpos($content, 'advgb-contact-form') !== false) {
+        if (strpos($content, 'advgb-newsletter') !== false) {
             wp_enqueue_script(
                 'advgbNewsletter_js',
                 plugins_url('assets/blocks/newsletter/frontend.js', dirname(__FILE__)),
