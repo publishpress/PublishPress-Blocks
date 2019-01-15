@@ -1,33 +1,37 @@
 jQuery(document).ready(function ($) {
-    $('.advgb-contact-form input.advgb-form-input').on('keydown', function (e) {
+    $('.advgb-newsletter input.advgb-form-input').on('keydown', function (e) {
         if(e.which === 13) {
             e.preventDefault();
             return false;
         }
     });
 
-    $('.advgb-contact-form form').submit(function (e) {
+    $('.advgb-newsletter form').submit(function (e) {
         e.preventDefault();
-        var $thisForm = $(this).closest('.advgb-contact-form');
-        var contactName = $(this).find('.advgb-form-input-name').val();
-        var contactEmail = $(this).find('.advgb-form-input-email').val();
-        var contactMsg = $(this).find('.advgb-form-input-msg').val();
+        var $thisForm = $(this).closest('.advgb-newsletter');
+        var firstName = $(this).find('.advgb-form-input-fname').val();
+        var lastName = $(this).find('.advgb-form-input-lname').val();
+        var email = $(this).find('.advgb-form-input-email').val();
         var date = new Date();
         var submitDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' - ' + date.getHours() + ':' + date.getMinutes();
 
-        if (contactName === '' || contactEmail === '' || contactMsg === '') {
+        if (typeof firstName !== "undefined") firstName = firstName.trim();
+        if (typeof lastName !== "undefined") lastName = lastName.trim();
+        if (typeof email !== "undefined") email = email.trim();
+
+        if (firstName === '' || lastName === '' || email === '') {
             alert('You need to fill all fields!');
             return false;
         }
 
         $.ajax( {
-            url: advgbContactForm.ajax_url,
+            url: advgbNewsletter.ajax_url,
             type: "POST",
             data: {
-                action: 'advgb_contact_form_save',
-                contact_name: contactName,
-                contact_email: contactEmail,
-                contact_msg: contactMsg,
+                action: 'advgb_newsletter_save',
+                f_name: firstName,
+                l_name: lastName,
+                email: email,
                 submit_date: submitDate,
                 captcha: typeof grecaptcha !== "undefined" ? grecaptcha.getResponse() : undefined
             },
@@ -38,7 +42,7 @@ jQuery(document).ready(function ($) {
             success: function () {
                 $thisForm.find('.advgb-form-sending').remove();
                 var successText = $thisForm.find('.advgb-form-submit').data('success');
-                successText = successText ? successText : 'Message sent with success!';
+                successText = successText ? successText : 'Submitted with success!';
                 $thisForm.append('<div class="advgb-form-submit-success">'+ successText +'</div>');
             },
             error: function ( jqxhr, textStatus, error ) {
