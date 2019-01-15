@@ -41,15 +41,15 @@
     "1.9.1": [
       {
         "type": "fix",
-        "title": "Compatibility with more blocks provider plugins"
+        "title": "Compatibility with 3rd party Gutenberg blocks (including Elementor)"
       },
       {
         "type": "fix",
-        "title": "Validation error on Columns block"
+        "title": "Validation error on Table block"
       },
       {
         "type": "fix",
-        "title": "Add button to clear custom styles of Columns and Separator block (We strongly recommend to do this as soon as possible to avoid block error validation, because we gonna remove this feature completely in very next version)"
+        "title": "Add button to clear custom styles of Columns and Separator (before block removal)"
       }
     ],
     "1.9.0": [
