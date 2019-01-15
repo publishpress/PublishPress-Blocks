@@ -4110,6 +4110,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Form Settings') },
+                            typeof advgbGRC !== 'undefined' && !parseInt(advgbGRC.enabled) && React.createElement(
+                                PanelBody,
+                                { title: __('Notice') },
+                                React.createElement(
+                                    "p",
+                                    { style: { fontStyle: 'italic' } },
+                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
+                                    React.createElement(
+                                        "a",
+                                        { href: advgbSettings.config_url + '#email-form', target: "_blank" },
+                                        " ",
+                                        __('settings'),
+                                        "."
+                                    )
+                                )
+                            ),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Email sender'), initialOpen: false },
@@ -6762,6 +6778,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Newsletter Settings') },
+                            typeof advgbGRC !== 'undefined' && !parseInt(advgbGRC.enabled) && React.createElement(
+                                PanelBody,
+                                { title: __('Notice') },
+                                React.createElement(
+                                    "p",
+                                    { style: { fontStyle: 'italic' } },
+                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
+                                    React.createElement(
+                                        "a",
+                                        { href: advgbSettings.config_url + '#email-form', target: "_blank" },
+                                        " ",
+                                        __('settings'),
+                                        "."
+                                    )
+                                )
+                            ),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Form Settings') },

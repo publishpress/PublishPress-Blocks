@@ -280,6 +280,10 @@ float: left;'
         $blocks_config_saved = get_option('advgb_blocks_default_config');
         $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
         wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
+
+        $recaptcha_config = get_option('advgb_recaptcha_config');
+        $recaptcha_config = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
+        wp_localize_script('wp-blocks', 'advgbGRC', array('enabled' => $recaptcha_config['recaptcha_enable']));
     }
 
     /**
