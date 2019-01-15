@@ -24,7 +24,12 @@ window.onload = function () {
             if (block.icon.foreground !== undefined) blockItem.iconColor = block.icon.foreground;
 
             if (typeof savedIcon === 'function') {
-                blockItem.icon = wp.element.renderToString(savedIcon());
+                if (!!savedIcon.prototype.render) {
+                    blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
+                } else {
+                    blockItem.icon = wp.element.renderToString(savedIcon());
+                }
+
                 blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
                 blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
             } else if (typeof savedIcon === 'object') {
