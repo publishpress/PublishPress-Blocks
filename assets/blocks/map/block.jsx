@@ -1435,12 +1435,31 @@
                 markerIcon,
                 markerTitle,
                 markerDesc,
+                mapStyle,
+                mapStyleCustom,
             } = attributes;
 
             const formattedDesc = markerDesc.replace( /\n/g, '<br/>' ).replace( /'/, '\\\'' );
             const formattedTitle = markerTitle.replace( /'/, '\\\'' );
             const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-            const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${formattedTitle}</h2><p class="advgbmap-desc">${formattedDesc || ''}</p></div>`;
+            const infoWindowHtml = ''+
+                '<div class="advgbmap-wrapper">' +
+                    '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' +
+                    '<p class="advgbmap-desc">'+ formattedDesc +'</p>' +
+                '</div>';
+            let mapStyleApply = MAP_STYLES[mapStyle];
+            if (mapStyle === 'custom') {
+                try {
+                    mapStyleApply = JSON.parse(mapStyleCustom);
+                } catch (e) {
+                    mapStyleApply = '';
+                }
+            }
+            if (mapStyleApply) {
+                mapStyleApply = JSON.stringify(mapStyleApply);
+            } else {
+                mapStyleApply = '';
+            }
 
             return (
                 <div className="advgb-map-block" style={ { margin: '10px auto' } }>
@@ -1452,13 +1471,16 @@
                             lat: parseFloat(${lat}),
                             lng: parseFloat(${lng})
                         };
+                        var contentHtml = '${infoWindowHtml}';
+                        var mapStyle = '${mapStyleApply}';
                         var map = new google.maps.Map(document.getElementById('${mapID}'), {
                             zoom: ${zoom},
                             center: location,
+                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},
                             gestureHandling: 'cooperative',
                         });
                         var infoWindow = new google.maps.InfoWindow({
-                            content: '${infoWindowHtml}'
+                            content: contentHtml
                         });
                         var marker = new google.maps.Marker({
                             position: location,

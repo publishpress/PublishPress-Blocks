@@ -7374,13 +7374,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 height = attributes.height,
                 markerIcon = attributes.markerIcon,
                 markerTitle = attributes.markerTitle,
-                markerDesc = attributes.markerDesc;
+                markerDesc = attributes.markerDesc,
+                mapStyle = attributes.mapStyle,
+                mapStyleCustom = attributes.mapStyleCustom;
 
 
             var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
             var formattedTitle = markerTitle.replace(/'/, '\\\'');
             var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-            var infoWindowHtml = "<div class=\"advgbmap-wrapper\"><h2 class=\"advgbmap-title\">" + formattedTitle + "</h2><p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p></div>";
+            var infoWindowHtml = '' + '<div class="advgbmap-wrapper">' + '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' + '<p class="advgbmap-desc">' + formattedDesc + '</p>' + '</div>';
+            var mapStyleApply = MAP_STYLES[mapStyle];
+            if (mapStyle === 'custom') {
+                try {
+                    mapStyleApply = JSON.parse(mapStyleCustom);
+                } catch (e) {
+                    mapStyleApply = '';
+                }
+            }
+            if (mapStyleApply) {
+                mapStyleApply = JSON.stringify(mapStyleApply);
+            } else {
+                mapStyleApply = '';
+            }
 
             return React.createElement(
                 "div",
@@ -7389,7 +7404,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement(
                     "script",
                     { type: "text/javascript" },
-                    "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: '" + infoWindowHtml + "'\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
+                    "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var contentHtml = '" + infoWindowHtml + "';\n                        var mapStyle = '" + mapStyleApply + "';\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: contentHtml\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
                 )
             );
         },
