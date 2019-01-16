@@ -36,7 +36,12 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                     if (blocks[block].icon.foreground !== undefined) blockItem.iconColor = blocks[block].icon.foreground;
 
                     if (typeof savedIcon === 'function') {
-                        blockItem.icon = wp.element.renderToString(savedIcon());
+                        if (!!savedIcon.prototype.render) {
+                            blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
+                        } else {
+                            blockItem.icon = wp.element.renderToString(savedIcon());
+                        }
+
                         blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
                         blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
                     } else if (typeof savedIcon === 'object') {
@@ -93,6 +98,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined'){
                             }
                         });
                     } catch (e) {
+                        // console.log(e);
                     }
                 }
             });
