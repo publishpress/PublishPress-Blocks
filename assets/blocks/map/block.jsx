@@ -979,6 +979,7 @@
                 currentMarker: null,
                 currentInfo: null,
                 fetching: false,
+                invalidStyle: false,
             };
 
             this.initMap = this.initMap.bind(this);
@@ -1030,7 +1031,7 @@
                 return null;
 
             const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-            const { currentMap, currentMarker, currentInfo } = this.state;
+            const { currentMap, currentMarker, currentInfo, invalidStyle } = this.state;
             const { mapID, lat, lng, zoom, markerTitle, markerIcon, markerDesc, mapStyle, mapStyleCustom } = this.props.attributes;
             const location = { lat: parseFloat(lat), lng: parseFloat(lng) };
             const that = this;
@@ -1038,6 +1039,16 @@
             let map = currentMap;
             let marker = currentMarker;
             let infoWindow = currentInfo;
+            let customStyleParsed = '';
+
+            if (mapStyle === 'custom') {
+                try {
+                    customStyleParsed = JSON.parse(mapStyleCustom);
+                    if (invalidStyle) that.setState( { invalidStyle: false } );
+                } catch (e) {
+                    that.setState( { invalidStyle: true } )
+                }
+            }
 
             if (!map) {
                 map = new google.maps.Map(document.getElementById(mapID), {
@@ -1050,7 +1061,7 @@
 
             map.setCenter( location );
             map.setZoom( zoom );
-            map.setOptions( { styles: !!mapStyle ? mapStyle !== 'custom' ? MAP_STYLES[mapStyle] : JSON.parse(mapStyleCustom) : undefined } );
+            map.setOptions( { styles: !!mapStyle ? mapStyle !== 'custom' ? MAP_STYLES[mapStyle] : customStyleParsed : undefined } );
 
             if (!infoWindow) {
                 infoWindow = new google.maps.InfoWindow( {
@@ -1140,7 +1151,7 @@
         }
 
         render() {
-            const { fetching } = this.state;
+            const { fetching, invalidStyle } = this.state;
             const { attributes, setAttributes } = this.props;
             const {
                 mapID,
@@ -1284,6 +1295,7 @@
                             />
                             <SelectControl
                                 label={ __( 'Map styles' ) }
+                                help={ __( 'Custom map style is recommended for experienced users only.' ) }
                                 value={ mapStyle }
                                 onChange={ (value) => setAttributes( { mapStyle: value } ) }
                                 options={ [
@@ -1292,6 +1304,29 @@
                                     { label: __( 'Custom' ), value: 'custom' },
                                 ] }
                             />
+                            {mapStyle === 'custom' && (
+                                <TextareaControl
+                                    label={ [
+                                        __( 'Custom code' ),
+                                        invalidStyle && (
+                                            <span key="invalid-json"
+                                                  style={ { fontWeight: 'bold', color: '#ff0000', marginLeft: 5 } }
+                                            >
+                                                { __( 'Invalid JSON' ) }
+                                            </span>
+                                        )
+                                    ] }
+                                    help={ [
+                                        __( 'Paste your custom map styles in json format into the text field. You can create your own map styles by follow one of these links: ' ),
+                                        <a href="https://mapstyle.withgoogle.com/" target="_blank" key="gg-map">Google Map</a>,
+                                        ' - ',
+                                        <a href="https://snazzymaps.com/" target="_blank" key="snazzy-map">Snazzy Map</a>
+                                    ] }
+                                    value={ mapStyleCustom }
+                                    placeholder={ __( 'Enter your json code here…' ) }
+                                    onChange={ (value) => setAttributes( { mapStyleCustom: value } ) }
+                                />
+                            ) }
                         </PanelBody>
                     </InspectorControls>
                     }

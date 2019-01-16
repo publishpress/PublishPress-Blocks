@@ -6849,7 +6849,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 currentMap: null,
                 currentMarker: null,
                 currentInfo: null,
-                fetching: false
+                fetching: false,
+                invalidStyle: false
             };
 
             _this.initMap = _this.initMap.bind(_this);
@@ -6920,7 +6921,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _state = this.state,
                     currentMap = _state.currentMap,
                     currentMarker = _state.currentMarker,
-                    currentInfo = _state.currentInfo;
+                    currentInfo = _state.currentInfo,
+                    invalidStyle = _state.invalidStyle;
                 var _props$attributes2 = this.props.attributes,
                     mapID = _props$attributes2.mapID,
                     lat = _props$attributes2.lat,
@@ -6938,6 +6940,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var map = currentMap;
                 var marker = currentMarker;
                 var infoWindow = currentInfo;
+                var customStyleParsed = '';
+
+                if (mapStyle === 'custom') {
+                    try {
+                        customStyleParsed = JSON.parse(mapStyleCustom);
+                        if (invalidStyle) that.setState({ invalidStyle: false });
+                    } catch (e) {
+                        that.setState({ invalidStyle: true });
+                    }
+                }
 
                 if (!map) {
                     map = new google.maps.Map(document.getElementById(mapID), {
@@ -6950,7 +6962,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 map.setCenter(location);
                 map.setZoom(zoom);
-                map.setOptions({ styles: !!mapStyle ? mapStyle !== 'custom' ? MAP_STYLES[mapStyle] : JSON.parse(mapStyleCustom) : undefined });
+                map.setOptions({ styles: !!mapStyle ? mapStyle !== 'custom' ? MAP_STYLES[mapStyle] : customStyleParsed : undefined });
 
                 if (!infoWindow) {
                     infoWindow = new google.maps.InfoWindow({
@@ -7040,7 +7052,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var fetching = this.state.fetching;
+                var _state2 = this.state,
+                    fetching = _state2.fetching,
+                    invalidStyle = _state2.invalidStyle;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     setAttributes = _props4.setAttributes;
@@ -7223,11 +7237,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(SelectControl, {
                                 label: __('Map styles'),
+                                help: __('Custom map style is recommended for experienced users only.'),
                                 value: mapStyle,
                                 onChange: function onChange(value) {
                                     return setAttributes({ mapStyle: value });
                                 },
                                 options: [{ label: __('Standard'), value: '' }].concat(_toConsumableArray(listStyles), [{ label: __('Custom'), value: 'custom' }])
+                            }),
+                            mapStyle === 'custom' && React.createElement(TextareaControl, {
+                                label: [__('Custom code'), invalidStyle && React.createElement(
+                                    "span",
+                                    { key: "invalid-json",
+                                        style: { fontWeight: 'bold', color: '#ff0000', marginLeft: 5 }
+                                    },
+                                    __('Invalid JSON')
+                                )],
+                                help: [__('Paste your custom map styles in json format into the text field. You can create your own map styles by follow one of these links: '), React.createElement(
+                                    "a",
+                                    { href: "https://mapstyle.withgoogle.com/", target: "_blank", key: "gg-map" },
+                                    "Google Map"
+                                ), ' - ', React.createElement(
+                                    "a",
+                                    { href: "https://snazzymaps.com/", target: "_blank", key: "snazzy-map" },
+                                    "Snazzy Map"
+                                )],
+                                value: mapStyleCustom,
+                                placeholder: __('Enter your json code here…'),
+                                onChange: function onChange(value) {
+                                    return setAttributes({ mapStyleCustom: value });
+                                }
                             })
                         )
                     ),
