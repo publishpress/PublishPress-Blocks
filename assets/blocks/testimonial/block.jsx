@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, Tooltip } = wpComponents;
+    const { RangeControl, ToggleControl, PanelBody, Tooltip } = wpComponents;
 
     class AdvTestimonial extends Component {
         constructor() {
@@ -38,12 +38,15 @@
             const { currentEdit } = this.state;
             const { attributes, setAttributes, isSelected } = this.props;
             const {
+                sliderView,
                 avatarUrl,
                 avatarID,
                 avatarUrl2,
                 avatarID2,
                 avatarUrl3,
                 avatarID3,
+                avatarUrl4,
+                avatarID4,
                 avatarColor,
                 avatarBorderRadius,
                 avatarBorderWidth,
@@ -52,29 +55,45 @@
                 name,
                 name2,
                 name3,
+                name4,
                 nameColor,
                 position,
                 position2,
                 position3,
+                position4,
                 positionColor,
                 desc,
                 desc2,
                 desc3,
+                desc4,
                 descColor,
                 columns,
             } = attributes;
+
+            const blockClass = [
+                'advgb-testimonial',
+                !sliderView && `advgb-column-${columns}`,
+                sliderView && 'slider-view',
+            ].filter( Boolean ).join( ' ' );
 
             return (
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Testimonial Settings' ) }>
-                            <RangeControl
-                                label={ __( 'Columns' ) }
-                                min={ 1 }
-                                max={ 3 }
-                                value={ columns }
-                                onChange={ (value) => setAttributes( { columns: value } ) }
+                            <ToggleControl
+                                label={ __( 'Slider view' ) }
+                                checked={ sliderView }
+                                onChange={ () => setAttributes( { sliderView: !sliderView } ) }
                             />
+                            {!sliderView && (
+                                <RangeControl
+                                    label={ __( 'Columns' ) }
+                                    min={ 1 }
+                                    max={ 3 }
+                                    value={ columns }
+                                    onChange={ (value) => setAttributes( { columns: value } ) }
+                                />
+                            ) }
                             <PanelBody title={ __( 'Avatar' ) } initialOpen={ false }>
                                 <PanelColorSettings
                                     title={ __( 'Avatar Colors' ) }
@@ -137,11 +156,14 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className={`advgb-testimonial advgb-column-${columns}`}>
+                    <div className={ blockClass }>
                         <div className="advgb-testimonial-columns-one">
                             <MediaUpload
                                 allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( { avatarUrl: media.sizes.thumbnail.url, avatarID: media.id } ) }
+                                onSelect={ (media) => setAttributes( {
+                                    avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                    avatarID: media.id
+                                } ) }
                                 value={ avatarID }
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
@@ -201,7 +223,10 @@
                         <div className="advgb-testimonial-columns-two">
                             <MediaUpload
                                 allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( { avatarUrl2: media.sizes.thumbnail.url, avatarID2: media.id } ) }
+                                onSelect={ (media) => setAttributes( {
+                                    avatarUrl2: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                    avatarID2: media.id
+                                } ) }
                                 value={ avatarID2 }
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
@@ -261,7 +286,10 @@
                         <div className="advgb-testimonial-columns-three">
                             <MediaUpload
                                 allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( { avatarUrl3: media.sizes.thumbnail.url, avatarID3: media.id } ) }
+                                onSelect={ (media) => setAttributes( {
+                                    avatarUrl3: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                    avatarID3: media.id
+                                } ) }
                                 value={ avatarID3 }
                                 render={ ( { open } ) => (
                                     <div className={ 'advgb-testimonial-avatar-group' }>
@@ -314,6 +342,69 @@
                                 onChange={ (value) => setAttributes( { desc3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc3' }
                                 onSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
+                                style={ { color: descColor } }
+                                placeholder={ __( 'Text…' ) }
+                            />
+                        </div>
+                        <div className="advgb-testimonial-columns-four">
+                            <MediaUpload
+                                allowedTypes={ ["image"] }
+                                onSelect={ (media) => setAttributes( {
+                                    avatarUrl4: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                    avatarID4: media.id
+                                } ) }
+                                value={ avatarID4 }
+                                render={ ( { open } ) => (
+                                    <div className={ 'advgb-testimonial-avatar-group' }>
+                                        <Tooltip text={ __( 'Click to change avatar' ) }>
+                                            <div className={ 'advgb-testimonial-avatar' }
+                                                 onClick={ open }
+                                                 style={ {
+                                                     backgroundImage: `url(${avatarUrl4 ? avatarUrl4 : advgbAvatar.holder})`,
+                                                     backgroundColor: avatarColor,
+                                                     borderRadius: avatarBorderRadius + '%',
+                                                     borderWidth: avatarBorderWidth + 'px',
+                                                     borderColor: avatarBorderColor,
+                                                     width: avatarSize + 'px',
+                                                     height: avatarSize + 'px',
+                                                 } }
+                                            />
+                                        </Tooltip>
+                                        <Tooltip text={ __( 'Remove avatar' ) }>
+                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
+                                                  onClick={ () => setAttributes( { avatarUrl4: undefined, avatarID4: undefined } ) }
+                                            />
+                                        </Tooltip>
+                                    </div>
+                                ) }
+                            />
+                            <RichText
+                                tagName={ 'h4' }
+                                className={ 'advgb-testimonial-name' }
+                                value={ name4 }
+                                onChange={ (value) => setAttributes( { name4: value } ) }
+                                isSelected={ isSelected && currentEdit === 'name4' }
+                                onSetup={ ( editor ) => this.handleSetup( editor, 'name4' ) }
+                                style={ { color: nameColor } }
+                                placeholder={ __( 'Text…' ) }
+                            />
+                            <RichText
+                                tagName={ 'p' }
+                                className={ 'advgb-testimonial-position' }
+                                value={ position4 }
+                                onChange={ (value) => setAttributes( { position4: value } ) }
+                                isSelected={ isSelected && currentEdit === 'position4' }
+                                onSetup={ ( editor ) => this.handleSetup( editor, 'position4' ) }
+                                style={ { color: positionColor } }
+                                placeholder={ __( 'Text…' ) }
+                            />
+                            <RichText
+                                tagName={ 'p' }
+                                className={ 'advgb-testimonial-desc' }
+                                value={ desc4 }
+                                onChange={ (value) => setAttributes( { desc4: value } ) }
+                                isSelected={ isSelected && currentEdit === 'desc4' }
+                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc4' ) }
                                 style={ { color: descColor } }
                                 placeholder={ __( 'Text…' ) }
                             />
@@ -466,6 +557,10 @@
         category: 'common',
         keywords: [ __( 'testimonial' ), __( 'personal' ), __( 'about' ) ],
         attributes: {
+            sliderView: {
+                type: 'boolean',
+                default: false,
+            },
             avatarUrl: {
                 type: 'string',
                 default: advgbAvatar.holder,
@@ -485,6 +580,13 @@
                 default: advgbAvatar.holder,
             },
             avatarID3: {
+                type: 'number',
+            },
+            avatarUrl4: {
+                type: 'string',
+                default: advgbAvatar.holder,
+            },
+            avatarID4: {
                 type: 'number',
             },
             avatarColor: {
@@ -516,6 +618,10 @@
                 type: 'string',
                 default: __( 'Person Name' ),
             },
+            name4: {
+                type: 'string',
+                default: __( 'Person Name' ),
+            },
             nameColor: {
                 type: 'string',
             },
@@ -531,6 +637,10 @@
                 type: 'string',
                 default: __( 'Job Position' ),
             },
+            position4: {
+                type: 'string',
+                default: __( 'Job Position' ),
+            },
             positionColor: {
                 type: 'string'
             },
@@ -543,6 +653,10 @@
                 default: __( 'A little description about this person will show up here.' ),
             },
             desc3: {
+                type: 'string',
+                default: __( 'A little description about this person will show up here.' ),
+            },
+            desc4: {
                 type: 'string',
                 default: __( 'A little description about this person will show up here.' ),
             },
