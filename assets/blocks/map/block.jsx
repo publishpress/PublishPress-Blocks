@@ -1249,7 +1249,10 @@
                             <MediaUpload
                                 allowedTypes={ ["image"] }
                                 value={ markerIconID }
-                                onSelect={ (image) => setAttributes( { markerIcon: image.sizes.thumbnail.url, markerIconID: image.id } ) }
+                                onSelect={ (image) => setAttributes( {
+                                    markerIcon: image.sizes.thumbnail ? image.sizes.thumbnail.url : image.sizes.full.url,
+                                    markerIconID: image.id
+                                } ) }
                                 render={ ( { open } ) => {
                                     return (
                                         <BaseControl label={ [
