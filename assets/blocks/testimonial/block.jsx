@@ -3,13 +3,14 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpEditor;
-    const { RangeControl, ToggleControl, PanelBody, Tooltip } = wpComponents;
+    const { RangeControl, ToggleControl, PanelBody, Tooltip, Button } = wpComponents;
 
     class AdvTestimonial extends Component {
         constructor() {
             super( ...arguments );
             this.state = {
                 currentEdit: '',
+                isPreview: true,
             }
         }
 
@@ -35,7 +36,7 @@
         }
 
         render() {
-            const { currentEdit } = this.state;
+            const { currentEdit, isPreview } = this.state;
             const { attributes, setAttributes, isSelected } = this.props;
             const {
                 sliderView,
@@ -83,7 +84,11 @@
                             <ToggleControl
                                 label={ __( 'Slider view' ) }
                                 checked={ sliderView }
-                                onChange={ () => setAttributes( { sliderView: !sliderView } ) }
+                                onChange={ () => {
+                                    this.setState( { isPreview: true } );
+                                    setAttributes( { sliderView: !sliderView } );
+                                    return null;
+                                } }
                             />
                             {!sliderView && (
                                 <RangeControl
@@ -94,66 +99,84 @@
                                     onChange={ (value) => setAttributes( { columns: value } ) }
                                 />
                             ) }
-                            <PanelBody title={ __( 'Avatar' ) } initialOpen={ false }>
-                                <PanelColorSettings
-                                    title={ __( 'Avatar Colors' ) }
-                                    initialOpen={ false }
-                                    colorSettings={ [
-                                        {
-                                            label: __( 'Background Color' ),
-                                            value: avatarColor,
-                                            onChange: ( value ) => setAttributes( { avatarColor: value } ),
-                                        },
-                                        {
-                                            label: __( 'Border Color' ),
-                                            value: avatarBorderColor,
-                                            onChange: ( value ) => setAttributes( { avatarBorderColor: value } ),
-                                        },
-                                    ] }
-                                />
-                                <RangeControl
-                                    label={ __( 'Border Radius (%)' ) }
-                                    min={ 0 }
-                                    max={ 50 }
-                                    value={ avatarBorderRadius }
-                                    onChange={ (value) => setAttributes( { avatarBorderRadius: value } ) }
-                                />
-                                <RangeControl
-                                    label={ __( 'Border Width' ) }
-                                    min={ 0 }
-                                    max={ 5 }
-                                    value={ avatarBorderWidth }
-                                    onChange={ (value) => setAttributes( { avatarBorderWidth: value } ) }
-                                />
-                                <RangeControl
-                                    label={ __( 'Avatar Size' ) }
-                                    min={ 50 }
-                                    max={ 130 }
-                                    value={ avatarSize }
-                                    onChange={ (value) => setAttributes( { avatarSize: value } ) }
-                                />
-                            </PanelBody>
-                            <PanelColorSettings
-                                title={ __( 'Text Colors' ) }
-                                initialOpen={ false }
-                                colorSettings={ [
-                                    {
-                                        label: __( 'Name Color' ),
-                                        value: nameColor,
-                                        onChange: ( value ) => setAttributes( { nameColor: value } ),
-                                    },
-                                    {
-                                        label: __( 'Position Color' ),
-                                        value: positionColor,
-                                        onChange: ( value ) => setAttributes( { positionColor: value } ),
-                                    },
-                                    {
-                                        label: __( 'Description Color' ),
-                                        value: descColor,
-                                        onChange: ( value ) => setAttributes( { descColor: value } ),
-                                    },
-                                ] }
-                            />
+                            {sliderView && isPreview && (
+                                <Button className="button advgb-testimonial-preview"
+                                        onClick={ () => this.setState( { isPreview: false } ) }
+                                >
+                                    { __( 'Edit Styles' ) }
+                                </Button>
+                            ) }
+                            {sliderView && !isPreview && (
+                                <Button className="button advgb-testimonial-preview"
+                                        onClick={ () => this.setState( { isPreview: true } ) }
+                                >
+                                    { __( 'Preview Slider' ) }
+                                </Button>
+                            ) }
+                            {(!sliderView || !isPreview) && (
+                                <Fragment>
+                                    <PanelBody title={ __( 'Avatar' ) } initialOpen={ false }>
+                                        <PanelColorSettings
+                                            title={ __( 'Avatar Colors' ) }
+                                            initialOpen={ false }
+                                            colorSettings={ [
+                                                {
+                                                    label: __( 'Background Color' ),
+                                                    value: avatarColor,
+                                                    onChange: ( value ) => setAttributes( { avatarColor: value } ),
+                                                },
+                                                {
+                                                    label: __( 'Border Color' ),
+                                                    value: avatarBorderColor,
+                                                    onChange: ( value ) => setAttributes( { avatarBorderColor: value } ),
+                                                },
+                                            ] }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Border Radius (%)' ) }
+                                            min={ 0 }
+                                            max={ 50 }
+                                            value={ avatarBorderRadius }
+                                            onChange={ (value) => setAttributes( { avatarBorderRadius: value } ) }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Border Width' ) }
+                                            min={ 0 }
+                                            max={ 5 }
+                                            value={ avatarBorderWidth }
+                                            onChange={ (value) => setAttributes( { avatarBorderWidth: value } ) }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Avatar Size' ) }
+                                            min={ 50 }
+                                            max={ 130 }
+                                            value={ avatarSize }
+                                            onChange={ (value) => setAttributes( { avatarSize: value } ) }
+                                        />
+                                    </PanelBody>
+                                    <PanelColorSettings
+                                        title={ __( 'Text Colors' ) }
+                                        initialOpen={ false }
+                                        colorSettings={ [
+                                            {
+                                                label: __( 'Name Color' ),
+                                                value: nameColor,
+                                                onChange: ( value ) => setAttributes( { nameColor: value } ),
+                                            },
+                                            {
+                                                label: __( 'Position Color' ),
+                                                value: positionColor,
+                                                onChange: ( value ) => setAttributes( { positionColor: value } ),
+                                            },
+                                            {
+                                                label: __( 'Description Color' ),
+                                                value: descColor,
+                                                onChange: ( value ) => setAttributes( { descColor: value } ),
+                                            },
+                                        ] }
+                                    />
+                                </Fragment>
+                            ) }
                         </PanelBody>
                     </InspectorControls>
                     <div className={ blockClass }>

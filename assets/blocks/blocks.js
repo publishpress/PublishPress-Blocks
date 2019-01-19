@@ -10217,7 +10217,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
         PanelBody = wpComponents.PanelBody,
-        Tooltip = wpComponents.Tooltip;
+        Tooltip = wpComponents.Tooltip,
+        Button = wpComponents.Button;
 
     var AdvTestimonial = function (_Component) {
         _inherits(AdvTestimonial, _Component);
@@ -10228,7 +10229,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (AdvTestimonial.__proto__ || Object.getPrototypeOf(AdvTestimonial)).apply(this, arguments));
 
             _this.state = {
-                currentEdit: ''
+                currentEdit: '',
+                isPreview: true
             };
             return _this;
         }
@@ -10268,7 +10270,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this3 = this;
 
-                var currentEdit = this.state.currentEdit;
+                var _state = this.state,
+                    currentEdit = _state.currentEdit,
+                    isPreview = _state.isPreview;
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes,
@@ -10320,7 +10324,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Slider view'),
                                 checked: sliderView,
                                 onChange: function onChange() {
-                                    return setAttributes({ sliderView: !sliderView });
+                                    _this3.setState({ isPreview: true });
+                                    setAttributes({ sliderView: !sliderView });
+                                    return null;
                                 }
                             }),
                             !sliderView && React.createElement(RangeControl, {
@@ -10332,77 +10338,99 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ columns: value });
                                 }
                             }),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Avatar'), initialOpen: false },
+                            sliderView && isPreview && React.createElement(
+                                Button,
+                                { className: 'button advgb-testimonial-preview',
+                                    onClick: function onClick() {
+                                        return _this3.setState({ isPreview: false });
+                                    }
+                                },
+                                __('Edit Styles')
+                            ),
+                            sliderView && !isPreview && React.createElement(
+                                Button,
+                                { className: 'button advgb-testimonial-preview',
+                                    onClick: function onClick() {
+                                        return _this3.setState({ isPreview: true });
+                                    }
+                                },
+                                __('Preview Slider')
+                            ),
+                            (!sliderView || !isPreview) && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(
+                                    PanelBody,
+                                    { title: __('Avatar'), initialOpen: false },
+                                    React.createElement(PanelColorSettings, {
+                                        title: __('Avatar Colors'),
+                                        initialOpen: false,
+                                        colorSettings: [{
+                                            label: __('Background Color'),
+                                            value: avatarColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ avatarColor: value });
+                                            }
+                                        }, {
+                                            label: __('Border Color'),
+                                            value: avatarBorderColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ avatarBorderColor: value });
+                                            }
+                                        }]
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border Radius (%)'),
+                                        min: 0,
+                                        max: 50,
+                                        value: avatarBorderRadius,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ avatarBorderRadius: value });
+                                        }
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border Width'),
+                                        min: 0,
+                                        max: 5,
+                                        value: avatarBorderWidth,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ avatarBorderWidth: value });
+                                        }
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Avatar Size'),
+                                        min: 50,
+                                        max: 130,
+                                        value: avatarSize,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ avatarSize: value });
+                                        }
+                                    })
+                                ),
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Avatar Colors'),
+                                    title: __('Text Colors'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Background Color'),
-                                        value: avatarColor,
+                                        label: __('Name Color'),
+                                        value: nameColor,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ avatarColor: value });
+                                            return setAttributes({ nameColor: value });
                                         }
                                     }, {
-                                        label: __('Border Color'),
-                                        value: avatarBorderColor,
+                                        label: __('Position Color'),
+                                        value: positionColor,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ avatarBorderColor: value });
+                                            return setAttributes({ positionColor: value });
+                                        }
+                                    }, {
+                                        label: __('Description Color'),
+                                        value: descColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ descColor: value });
                                         }
                                     }]
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Border Radius (%)'),
-                                    min: 0,
-                                    max: 50,
-                                    value: avatarBorderRadius,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ avatarBorderRadius: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Border Width'),
-                                    min: 0,
-                                    max: 5,
-                                    value: avatarBorderWidth,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ avatarBorderWidth: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Avatar Size'),
-                                    min: 50,
-                                    max: 130,
-                                    value: avatarSize,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ avatarSize: value });
-                                    }
                                 })
-                            ),
-                            React.createElement(PanelColorSettings, {
-                                title: __('Text Colors'),
-                                initialOpen: false,
-                                colorSettings: [{
-                                    label: __('Name Color'),
-                                    value: nameColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ nameColor: value });
-                                    }
-                                }, {
-                                    label: __('Position Color'),
-                                    value: positionColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ positionColor: value });
-                                    }
-                                }, {
-                                    label: __('Description Color'),
-                                    value: descColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ descColor: value });
-                                    }
-                                }]
-                            })
+                            )
                         )
                     ),
                     React.createElement(
