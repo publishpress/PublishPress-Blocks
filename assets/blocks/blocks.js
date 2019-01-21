@@ -10826,9 +10826,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     function AdvTestimonialSave(_ref5) {
         var attributes = _ref5.attributes;
-        var avatarUrl = attributes.avatarUrl,
+        var sliderView = attributes.sliderView,
+            avatarUrl = attributes.avatarUrl,
             avatarUrl2 = attributes.avatarUrl2,
             avatarUrl3 = attributes.avatarUrl3,
+            avatarUrl4 = attributes.avatarUrl4,
             avatarColor = attributes.avatarColor,
             avatarBorderRadius = attributes.avatarBorderRadius,
             avatarBorderWidth = attributes.avatarBorderWidth,
@@ -10837,21 +10839,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             name = attributes.name,
             name2 = attributes.name2,
             name3 = attributes.name3,
+            name4 = attributes.name4,
             nameColor = attributes.nameColor,
             position = attributes.position,
             position2 = attributes.position2,
             position3 = attributes.position3,
+            position4 = attributes.position4,
             positionColor = attributes.positionColor,
             desc = attributes.desc,
             desc2 = attributes.desc2,
             desc3 = attributes.desc3,
+            desc4 = attributes.desc4,
             descColor = attributes.descColor,
             columns = attributes.columns;
 
 
+        var blockClass = ['advgb-testimonial', sliderView && 'slider-view'].filter(Boolean).join(' ');
+
         return React.createElement(
             'div',
-            { className: 'advgb-testimonial' },
+            { className: blockClass },
             React.createElement(
                 'div',
                 { className: 'advgb-testimonial-columns-one' },
@@ -10892,7 +10899,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     desc
                 )
             ),
-            parseInt(columns) > 1 && React.createElement(
+            (parseInt(columns) > 1 || sliderView) && React.createElement(
                 'div',
                 { className: 'advgb-testimonial-columns-two' },
                 React.createElement(
@@ -10932,7 +10939,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     desc2
                 )
             ),
-            parseInt(columns) > 2 && React.createElement(
+            (parseInt(columns) > 2 || sliderView) && React.createElement(
                 'div',
                 { className: 'advgb-testimonial-columns-two' },
                 React.createElement(
@@ -10970,6 +10977,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         style: { color: descColor }
                     },
                     desc3
+                )
+            ),
+            sliderView && React.createElement(
+                'div',
+                { className: 'advgb-testimonial-columns-four' },
+                React.createElement(
+                    'div',
+                    { className: 'advgb-testimonial-avatar-group' },
+                    React.createElement('div', { className: 'advgb-testimonial-avatar',
+                        style: {
+                            backgroundImage: 'url(' + (avatarUrl4 ? avatarUrl4 : advgbAvatar.holder) + ')',
+                            backgroundColor: avatarColor,
+                            borderRadius: avatarBorderRadius + '%',
+                            borderWidth: avatarBorderWidth + 'px',
+                            borderColor: avatarBorderColor,
+                            width: avatarSize + 'px',
+                            height: avatarSize + 'px'
+                        }
+                    })
+                ),
+                React.createElement(
+                    'h4',
+                    { className: 'advgb-testimonial-name',
+                        style: { color: nameColor }
+                    },
+                    name4
+                ),
+                React.createElement(
+                    'p',
+                    { className: 'advgb-testimonial-position',
+                        style: { color: positionColor }
+                    },
+                    position4
+                ),
+                React.createElement(
+                    'p',
+                    { className: 'advgb-testimonial-desc',
+                        style: { color: descColor }
+                    },
+                    desc4
                 )
             )
         );

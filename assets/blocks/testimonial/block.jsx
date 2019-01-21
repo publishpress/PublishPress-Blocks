@@ -213,9 +213,9 @@
                                 } ) }
                                 value={ avatarID }
                                 render={ ( { open } ) => (
-                                    <div className={ 'advgb-testimonial-avatar-group' }>
+                                    <div className="advgb-testimonial-avatar-group">
                                         <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className={ 'advgb-testimonial-avatar' }
+                                            <div className="advgb-testimonial-avatar"
                                                  onClick={ open }
                                                  style={ {
                                                      backgroundImage: `url(${avatarUrl ? avatarUrl : advgbAvatar.holder})`,
@@ -229,7 +229,7 @@
                                             />
                                         </Tooltip>
                                         <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
+                                            <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
                                                   onClick={ () => setAttributes( { avatarUrl: undefined, avatarID: undefined } ) }
                                             />
                                         </Tooltip>
@@ -237,8 +237,8 @@
                                 ) }
                             />
                             <RichText
-                                tagName={ 'h4' }
-                                className={ 'advgb-testimonial-name' }
+                                tagName="h4"
+                                className="advgb-testimonial-name"
                                 value={ name }
                                 onChange={ (value) => setAttributes( { name: value } ) }
                                 isSelected={ isSelected && currentEdit === 'name' }
@@ -247,8 +247,8 @@
                                 placeholder={ __( 'Text…' ) }
                             />
                             <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-position' }
+                                tagName="p"
+                                className="advgb-testimonial-position"
                                 value={ position }
                                 onChange={ (value) => setAttributes( { position: value } ) }
                                 isSelected={ isSelected && currentEdit === 'position' }
@@ -257,8 +257,8 @@
                                 placeholder={ __( 'Text…' ) }
                             />
                             <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-desc' }
+                                tagName="p"
+                                className="advgb-testimonial-desc"
                                 value={ desc }
                                 onChange={ (value) => setAttributes( { desc: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc' }
@@ -276,9 +276,9 @@
                                 } ) }
                                 value={ avatarID2 }
                                 render={ ( { open } ) => (
-                                    <div className={ 'advgb-testimonial-avatar-group' }>
+                                    <div className="advgb-testimonial-avatar-group">
                                         <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className={ 'advgb-testimonial-avatar' }
+                                            <div className="advgb-testimonial-avatar"
                                                  onClick={ open }
                                                  style={ {
                                                      backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbAvatar.holder})`,
@@ -292,7 +292,7 @@
                                             />
                                         </Tooltip>
                                         <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
+                                            <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
                                                   onClick={ () => setAttributes( { avatarUrl2: undefined, avatarID2: undefined } ) }
                                             />
                                         </Tooltip>
@@ -300,8 +300,8 @@
                                 ) }
                             />
                             <RichText
-                                tagName={ 'h4' }
-                                className={ 'advgb-testimonial-name' }
+                                tagName="h4"
+                                className="advgb-testimonial-name"
                                 value={ name2 }
                                 onChange={ (value) => setAttributes( { name2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'name2' }
@@ -310,8 +310,8 @@
                                 placeholder={ __( 'Text…' ) }
                             />
                             <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-position' }
+                                tagName="p"
+                                className="advgb-testimonial-position"
                                 value={ position2 }
                                 onChange={ (value) => setAttributes( { position2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'position2' }
@@ -320,8 +320,8 @@
                                 placeholder={ __( 'Text…' ) }
                             />
                             <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-desc' }
+                                tagName="p"
+                                className="advgb-testimonial-desc"
                                 value={ desc2 }
                                 onChange={ (value) => setAttributes( { desc2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc2' }
@@ -339,9 +339,9 @@
                                 } ) }
                                 value={ avatarID3 }
                                 render={ ( { open } ) => (
-                                    <div className={ 'advgb-testimonial-avatar-group' }>
+                                    <div className="advgb-testimonial-avatar-group">
                                         <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className={ 'advgb-testimonial-avatar' }
+                                            <div className="advgb-testimonial-avatar"
                                                  onClick={ open }
                                                  style={ {
                                                      backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbAvatar.holder})`,
@@ -355,7 +355,7 @@
                                             />
                                         </Tooltip>
                                         <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
+                                            <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
                                                   onClick={ () => setAttributes( { avatarUrl3: undefined, avatarID3: undefined } ) }
                                             />
                                         </Tooltip>
@@ -363,8 +363,8 @@
                                 ) }
                             />
                             <RichText
-                                tagName={ 'h4' }
-                                className={ 'advgb-testimonial-name' }
+                                tagName="h4"
+                                className="advgb-testimonial-name"
                                 value={ name3 }
                                 onChange={ (value) => setAttributes( { name3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'name3' }
@@ -373,8 +373,8 @@
                                 placeholder={ __( 'Text…' ) }
                             />
                             <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-position' }
+                                tagName="p"
+                                className="advgb-testimonial-position"
                                 value={ position3 }
                                 onChange={ (value) => setAttributes( { position3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'position3' }
@@ -383,8 +383,8 @@
                                 placeholder={ __( 'Text…' ) }
                             />
                             <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-desc' }
+                                tagName="p"
+                                className="advgb-testimonial-desc"
                                 value={ desc3 }
                                 onChange={ (value) => setAttributes( { desc3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc3' }
@@ -402,9 +402,9 @@
                                 } ) }
                                 value={ avatarID4 }
                                 render={ ( { open } ) => (
-                                    <div className={ 'advgb-testimonial-avatar-group' }>
+                                    <div className="advgb-testimonial-avatar-group">
                                         <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className={ 'advgb-testimonial-avatar' }
+                                            <div className="advgb-testimonial-avatar"
                                                  onClick={ open }
                                                  style={ {
                                                      backgroundImage: `url(${avatarUrl4 ? avatarUrl4 : advgbAvatar.holder})`,
@@ -418,7 +418,7 @@
                                             />
                                         </Tooltip>
                                         <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
+                                            <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
                                                   onClick={ () => setAttributes( { avatarUrl4: undefined, avatarID4: undefined } ) }
                                             />
                                         </Tooltip>
@@ -426,8 +426,8 @@
                                 ) }
                             />
                             <RichText
-                                tagName={ 'h4' }
-                                className={ 'advgb-testimonial-name' }
+                                tagName="h4"
+                                className="advgb-testimonial-name"
                                 value={ name4 }
                                 onChange={ (value) => setAttributes( { name4: value } ) }
                                 isSelected={ isSelected && currentEdit === 'name4' }
@@ -436,8 +436,8 @@
                                 placeholder={ __( 'Text…' ) }
                             />
                             <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-position' }
+                                tagName="p"
+                                className="advgb-testimonial-position"
                                 value={ position4 }
                                 onChange={ (value) => setAttributes( { position4: value } ) }
                                 isSelected={ isSelected && currentEdit === 'position4' }
@@ -446,8 +446,8 @@
                                 placeholder={ __( 'Text…' ) }
                             />
                             <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-desc' }
+                                tagName="p"
+                                className="advgb-testimonial-desc"
                                 value={ desc4 }
                                 onChange={ (value) => setAttributes( { desc4: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc4' }
@@ -464,9 +464,11 @@
 
     function AdvTestimonialSave( { attributes } ) {
         const {
+            sliderView,
             avatarUrl,
             avatarUrl2,
             avatarUrl3,
+            avatarUrl4,
             avatarColor,
             avatarBorderRadius,
             avatarBorderWidth,
@@ -475,23 +477,31 @@
             name,
             name2,
             name3,
+            name4,
             nameColor,
             position,
             position2,
             position3,
+            position4,
             positionColor,
             desc,
             desc2,
             desc3,
+            desc4,
             descColor,
-            columns,
+            columns
         } = attributes;
 
+        const blockClass = [
+            'advgb-testimonial',
+            sliderView && 'slider-view',
+        ].filter( Boolean ).join( ' ' );
+
         return (
-            <div className={ 'advgb-testimonial' }>
-                <div className={ 'advgb-testimonial-columns-one' }>
-                    <div className={ 'advgb-testimonial-avatar-group' }>
-                        <div className={ 'advgb-testimonial-avatar' }
+            <div className={ blockClass }>
+                <div className="advgb-testimonial-columns-one">
+                    <div className="advgb-testimonial-avatar-group">
+                        <div className="advgb-testimonial-avatar"
                              style={ {
                                  backgroundImage: `url(${avatarUrl ? avatarUrl : advgbAvatar.holder})`,
                                  backgroundColor: avatarColor,
@@ -503,26 +513,26 @@
                              } }
                         />
                     </div>
-                    <h4 className={ 'advgb-testimonial-name' }
+                    <h4 className="advgb-testimonial-name"
                         style={ { color: nameColor } }
                     >
                         { name }
                     </h4>
-                    <p className={ 'advgb-testimonial-position' }
+                    <p className="advgb-testimonial-position"
                        style={ { color: positionColor } }
                     >
                         { position }
                     </p>
-                    <p className={ 'advgb-testimonial-desc' }
+                    <p className="advgb-testimonial-desc"
                        style={ { color: descColor } }
                     >
                         { desc }
                     </p>
                 </div>
-                {parseInt(columns) > 1 && (
-                    <div className={ 'advgb-testimonial-columns-two' }>
-                        <div className={ 'advgb-testimonial-avatar-group' }>
-                            <div className={ 'advgb-testimonial-avatar' }
+                {(parseInt(columns) > 1 || sliderView) && (
+                    <div className="advgb-testimonial-columns-two">
+                        <div className="advgb-testimonial-avatar-group">
+                            <div className="advgb-testimonial-avatar"
                                  style={ {
                                      backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbAvatar.holder})`,
                                      backgroundColor: avatarColor,
@@ -534,27 +544,27 @@
                                  } }
                             />
                         </div>
-                        <h4 className={ 'advgb-testimonial-name' }
+                        <h4 className="advgb-testimonial-name"
                             style={ { color: nameColor } }
                         >
                             { name2 }
                         </h4>
-                        <p className={ 'advgb-testimonial-position' }
+                        <p className="advgb-testimonial-position"
                            style={ { color: positionColor } }
                         >
                             { position2 }
                         </p>
-                        <p className={ 'advgb-testimonial-desc' }
+                        <p className="advgb-testimonial-desc"
                            style={ { color: descColor } }
                         >
                             { desc2 }
                         </p>
                     </div>
                 ) }
-                {parseInt(columns) > 2 && (
-                    <div className={ 'advgb-testimonial-columns-two' }>
-                        <div className={ 'advgb-testimonial-avatar-group' }>
-                            <div className={ 'advgb-testimonial-avatar' }
+                {(parseInt(columns) > 2 || sliderView) && (
+                    <div className="advgb-testimonial-columns-two">
+                        <div className="advgb-testimonial-avatar-group">
+                            <div className="advgb-testimonial-avatar"
                                  style={ {
                                      backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbAvatar.holder})`,
                                      backgroundColor: avatarColor,
@@ -566,20 +576,52 @@
                                  } }
                             />
                         </div>
-                        <h4 className={ 'advgb-testimonial-name' }
+                        <h4 className="advgb-testimonial-name"
                             style={ { color: nameColor } }
                         >
                             { name3 }
                         </h4>
-                        <p className={ 'advgb-testimonial-position' }
+                        <p className="advgb-testimonial-position"
                            style={ { color: positionColor } }
                         >
                             { position3 }
                         </p>
-                        <p className={ 'advgb-testimonial-desc' }
+                        <p className="advgb-testimonial-desc"
                            style={ { color: descColor } }
                         >
                             { desc3 }
+                        </p>
+                    </div>
+                ) }
+                {sliderView && (
+                    <div className="advgb-testimonial-columns-four">
+                        <div className="advgb-testimonial-avatar-group">
+                            <div className="advgb-testimonial-avatar"
+                                 style={ {
+                                     backgroundImage: `url(${avatarUrl4 ? avatarUrl4 : advgbAvatar.holder})`,
+                                     backgroundColor: avatarColor,
+                                     borderRadius: avatarBorderRadius + '%',
+                                     borderWidth: avatarBorderWidth + 'px',
+                                     borderColor: avatarBorderColor,
+                                     width: avatarSize + 'px',
+                                     height: avatarSize + 'px',
+                                 } }
+                            />
+                        </div>
+                        <h4 className="advgb-testimonial-name"
+                            style={ { color: nameColor } }
+                        >
+                            { name4 }
+                        </h4>
+                        <p className="advgb-testimonial-position"
+                           style={ { color: positionColor } }
+                        >
+                            { position4 }
+                        </p>
+                        <p className="advgb-testimonial-desc"
+                           style={ { color: descColor } }
+                        >
+                            { desc4 }
                         </p>
                     </div>
                 ) }
