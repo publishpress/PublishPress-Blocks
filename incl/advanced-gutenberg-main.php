@@ -150,6 +150,7 @@ float: left;'
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
         add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
         add_action('rest_api_init', array($this, 'registerRestAPI'));
+        add_action('admin_print_scripts', array($this, 'disableAllAdminNotices')); // Disable all admin notice for page belong to plugin
 
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbProfile'));
@@ -173,6 +174,29 @@ float: left;'
         } else {
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
+        }
+    }
+
+    /**
+     * Disable all admin notices in our page
+     *
+     * @return void
+     */
+    public function disableAllAdminNotices()
+    {
+        global $wp_filter;
+        // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- No action, nonce is not required
+        if ((!empty($_GET['page']) && in_array($_GET['page'], array('advgb_main')))) {
+            if (is_user_admin()) {
+                if (isset($wp_filter['user_admin_notices'])) {
+                    unset($wp_filter['user_admin_notices']);
+                }
+            } elseif (isset($wp_filter['admin_notices'])) {
+                unset($wp_filter['admin_notices']);
+            }
+            if (isset($wp_filter['all_admin_notices'])) {
+                unset($wp_filter['all_admin_notices']);
+            }
         }
     }
 
