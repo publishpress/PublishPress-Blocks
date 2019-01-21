@@ -30,6 +30,20 @@
             }
         }
 
+        componentDidMount() {
+            const { attributes, clientId } = this.props;
+            const { sliderView } = attributes;
+
+            if (sliderView) {
+                jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({
+                    infinite: true,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 3,
+                });
+            }
+        }
+
         componentWillUpdate(nextProps) {
             const { sliderView: nextView } = nextProps.attributes;
             const { attributes, clientId } = this.props;

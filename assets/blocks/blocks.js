@@ -10255,12 +10255,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: 'componentWillUpdate',
-            value: function componentWillUpdate(nextProps) {
-                var nextView = nextProps.attributes.sliderView;
+            key: 'componentDidMount',
+            value: function componentDidMount() {
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     clientId = _props2.clientId;
+                var sliderView = attributes.sliderView;
+
+
+                if (sliderView) {
+                    jQuery('#block-' + clientId + ' .advgb-testimonial.slider-view').slick({
+                        infinite: true,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 3
+                    });
+                }
+            }
+        }, {
+            key: 'componentWillUpdate',
+            value: function componentWillUpdate(nextProps) {
+                var nextView = nextProps.attributes.sliderView;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
                 var sliderView = attributes.sliderView;
 
 
@@ -10275,9 +10293,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
                 var prevView = prevProps.attributes.sliderView;
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    clientId = _props3.clientId;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    clientId = _props4.clientId;
                 var sliderView = attributes.sliderView;
 
 
@@ -10307,10 +10325,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _this3 = this;
 
                 var currentEdit = this.state.currentEdit;
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes,
-                    isSelected = _props4.isSelected;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    isSelected = _props5.isSelected;
                 var sliderView = attributes.sliderView,
                     avatarUrl = attributes.avatarUrl,
                     avatarID = attributes.avatarID,
