@@ -741,6 +741,8 @@ button.advgb-testimonial-preview {
 .advgb-testimonial .slick-slide.slick-current >*:not(.advgb-testimonial-avatar-group) {
     margin-left: -100px;
     margin-right: -100px;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .advgb-testimonial .slick-slide.slick-current .advgb-testimonial-avatar-group {

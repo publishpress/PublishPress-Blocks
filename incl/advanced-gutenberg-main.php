@@ -3111,6 +3111,20 @@ float: left;'
             wp_localize_script('advgbNewsletter_js', 'advgbNewsletter', array('ajax_url' => admin_url('admin-ajax.php')));
         }
 
+        if (strpos($content, 'advgb-testimonial slider-view') !== false) {
+            wp_enqueue_style('slick_style');
+            wp_enqueue_style('slick_theme_style');
+            wp_enqueue_script('slick_js');
+            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                $(".advgb-testimonial.slider-view:not(.slick-initialized)").slick({
+                    infinite: true,
+                    centerMode: true,
+                    centerPadding: "40px",
+                    slidesToShow: 3,
+                })
+            });');
+        }
+
         return $content;
     }
 
