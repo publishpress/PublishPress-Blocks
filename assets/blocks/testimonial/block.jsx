@@ -30,6 +30,39 @@
             }
         }
 
+        componentWillUpdate(nextProps) {
+            const { sliderView: nextView } = nextProps.attributes;
+            const { attributes, clientId } = this.props;
+            const { sliderView } = attributes;
+
+            if (nextView !== sliderView) {
+                if (sliderView) {
+                    jQuery(`#block-${clientId} .advgb-testimonial.slick-initialized`).slick('unslick');
+                    jQuery(`#block-${clientId} .advgb-testimonial`)
+                        .removeAttr('tabindex')
+                        .removeAttr('role')
+                        .removeAttr('aria-describedby');
+                }
+            }
+        }
+
+        componentDidUpdate(prevProps) {
+            const { sliderView: prevView } = prevProps.attributes;
+            const { attributes, clientId } = this.props;
+            const { sliderView } = attributes;
+
+            if (sliderView !== prevView) {
+                if (sliderView) {
+                    jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({
+                        infinite: true,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 3,
+                    });
+                }
+            }
+        }
+
         handleSetup( editor, area ) {
             editor.on( 'focus', () => this.setState( { currentEdit: area } ) );
         }

@@ -10255,6 +10255,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'componentWillUpdate',
+            value: function componentWillUpdate(nextProps) {
+                var nextView = nextProps.attributes.sliderView;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    clientId = _props2.clientId;
+                var sliderView = attributes.sliderView;
+
+
+                if (nextView !== sliderView) {
+                    if (sliderView) {
+                        jQuery('#block-' + clientId + ' .advgb-testimonial.slick-initialized').slick('unslick');
+                        jQuery('#block-' + clientId + ' .advgb-testimonial').removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
+                    }
+                }
+            }
+        }, {
+            key: 'componentDidUpdate',
+            value: function componentDidUpdate(prevProps) {
+                var prevView = prevProps.attributes.sliderView;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
+                var sliderView = attributes.sliderView;
+
+
+                if (sliderView !== prevView) {
+                    if (sliderView) {
+                        jQuery('#block-' + clientId + ' .advgb-testimonial.slider-view').slick({
+                            infinite: true,
+                            centerMode: true,
+                            centerPadding: '40px',
+                            slidesToShow: 3
+                        });
+                    }
+                }
+            }
+        }, {
             key: 'handleSetup',
             value: function handleSetup(editor, area) {
                 var _this2 = this;
@@ -10269,10 +10307,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _this3 = this;
 
                 var currentEdit = this.state.currentEdit;
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    isSelected = _props2.isSelected;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    isSelected = _props4.isSelected;
                 var sliderView = attributes.sliderView,
                     avatarUrl = attributes.avatarUrl,
                     avatarID = attributes.avatarID,
