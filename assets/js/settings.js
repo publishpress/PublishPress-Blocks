@@ -42,7 +42,7 @@ jQuery(document).ready(function ($) {
             tip: {
                 corner: true
             },
-            classes: 'advgb_qtip'
+            classes: 'advgb-qtip'
         },
         show: 'hover',
         hide: {

@@ -19,10 +19,17 @@
     text-transform: capitalize;
 }
 
-.qtip.advgb_qtip {
+.qtip.advgb-qtip {
     background: #000000;
     color: #ffffff;
     border: 1px solid #000000;
+}
+
+.advgb_qtip:after {
+    content: "\f223";
+    font-family: dashicons;
+    font-size: 18px;
+    vertical-align: middle;
 }
 
 /*Search input styles*/
