@@ -10204,6 +10204,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -11177,7 +11179,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         deprecated: [{
             attributes: blockAttrsOld,
             migrate: function migrate(attributes) {
-                return _extends({}, attributes);
+                var convertItems = [];
+                convertItems[0] = {
+                    avatarUrl: attributes.avatarUrl,
+                    avatarID: attributes.avatarID,
+                    name: attributes.name,
+                    position: attributes.position,
+                    desc: attributes.desc
+                };
+
+                convertItems[1] = {
+                    avatarUrl: attributes.avatarUrl2,
+                    avatarID: attributes.avatarID2,
+                    name: attributes.name2,
+                    position: attributes.position2,
+                    desc: attributes.desc2
+                };
+
+                convertItems[2] = {
+                    avatarUrl: attributes.avatarUrl3,
+                    avatarID: attributes.avatarID3,
+                    name: attributes.name3,
+                    position: attributes.position3,
+                    desc: attributes.desc3
+                };
+
+                return _extends({
+                    items: [].concat(convertItems, _toConsumableArray(times(7, function () {
+                        return {
+                            avatarUrl: advgbAvatar.holder,
+                            avatarID: undefined,
+                            name: __('Person Name'),
+                            position: __('Job Position'),
+                            desc: __('A little description about this person will show up here.')
+                        };
+                    })))
+                }, attributes);
             },
             save: AdvTestimonialSave
         }]

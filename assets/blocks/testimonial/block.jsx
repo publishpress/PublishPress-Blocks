@@ -780,7 +780,42 @@
             {
                 attributes: blockAttrsOld,
                 migrate: function( attributes ) {
+                    let convertItems = [];
+                    convertItems[0] = {
+                        avatarUrl: attributes.avatarUrl,
+                        avatarID: attributes.avatarID,
+                        name: attributes.name,
+                        position: attributes.position,
+                        desc: attributes.desc,
+                    };
+
+                    convertItems[1] = {
+                        avatarUrl: attributes.avatarUrl2,
+                        avatarID: attributes.avatarID2,
+                        name: attributes.name2,
+                        position: attributes.position2,
+                        desc: attributes.desc2,
+                    };
+
+                    convertItems[2] = {
+                        avatarUrl: attributes.avatarUrl3,
+                        avatarID: attributes.avatarID3,
+                        name: attributes.name3,
+                        position: attributes.position3,
+                        desc: attributes.desc3,
+                    };
+
                     return {
+                        items: [
+                            ...convertItems,
+                            ...times(7, () => ( {
+                                avatarUrl: advgbAvatar.holder,
+                                avatarID: undefined,
+                                name: __( 'Person Name' ),
+                                position: __( 'Job Position' ),
+                                desc: __( 'A little description about this person will show up here.' ),
+                            } ) ),
+                        ],
                         ... attributes,
                     };
                 },
