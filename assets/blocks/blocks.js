@@ -10198,6 +10198,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -10221,6 +10223,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToggleControl = wpComponents.ToggleControl,
         PanelBody = wpComponents.PanelBody,
         Tooltip = wpComponents.Tooltip;
+    var _lodash = lodash,
+        times = _lodash.times;
 
     var AdvTestimonial = function (_Component) {
         _inherits(AdvTestimonial, _Component);
@@ -10332,7 +10336,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes,
                     isSelected = _props5.isSelected;
-                var sliderView = attributes.sliderView,
+                var items = attributes.items,
+                    sliderView = attributes.sliderView,
                     avatarUrl = attributes.avatarUrl,
                     avatarID = attributes.avatarID,
                     avatarUrl2 = attributes.avatarUrl2,
@@ -10829,11 +10834,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     function AdvTestimonialSave(_ref5) {
         var attributes = _ref5.attributes;
-        var sliderView = attributes.sliderView,
-            avatarUrl = attributes.avatarUrl,
+        var avatarUrl = attributes.avatarUrl,
             avatarUrl2 = attributes.avatarUrl2,
             avatarUrl3 = attributes.avatarUrl3,
-            avatarUrl4 = attributes.avatarUrl4,
             avatarColor = attributes.avatarColor,
             avatarBorderRadius = attributes.avatarBorderRadius,
             avatarBorderWidth = attributes.avatarBorderWidth,
@@ -10842,26 +10845,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             name = attributes.name,
             name2 = attributes.name2,
             name3 = attributes.name3,
-            name4 = attributes.name4,
             nameColor = attributes.nameColor,
             position = attributes.position,
             position2 = attributes.position2,
             position3 = attributes.position3,
-            position4 = attributes.position4,
             positionColor = attributes.positionColor,
             desc = attributes.desc,
             desc2 = attributes.desc2,
             desc3 = attributes.desc3,
-            desc4 = attributes.desc4,
             descColor = attributes.descColor,
             columns = attributes.columns;
 
 
-        var blockClass = ['advgb-testimonial', sliderView && 'slider-view'].filter(Boolean).join(' ');
-
         return React.createElement(
             'div',
-            { className: blockClass },
+            { className: 'advgb-testimonial' },
             React.createElement(
                 'div',
                 { className: 'advgb-testimonial-columns-one' },
@@ -10902,7 +10900,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     desc
                 )
             ),
-            (parseInt(columns) > 1 || sliderView) && React.createElement(
+            parseInt(columns) > 1 && React.createElement(
                 'div',
                 { className: 'advgb-testimonial-columns-two' },
                 React.createElement(
@@ -10942,7 +10940,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     desc2
                 )
             ),
-            (parseInt(columns) > 2 || sliderView) && React.createElement(
+            parseInt(columns) > 2 && React.createElement(
                 'div',
                 { className: 'advgb-testimonial-columns-two' },
                 React.createElement(
@@ -10981,46 +10979,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     },
                     desc3
                 )
-            ),
-            sliderView && React.createElement(
-                'div',
-                { className: 'advgb-testimonial-columns-four' },
-                React.createElement(
-                    'div',
-                    { className: 'advgb-testimonial-avatar-group' },
-                    React.createElement('div', { className: 'advgb-testimonial-avatar',
-                        style: {
-                            backgroundImage: 'url(' + (avatarUrl4 ? avatarUrl4 : advgbAvatar.holder) + ')',
-                            backgroundColor: avatarColor,
-                            borderRadius: avatarBorderRadius + '%',
-                            borderWidth: avatarBorderWidth + 'px',
-                            borderColor: avatarBorderColor,
-                            width: avatarSize + 'px',
-                            height: avatarSize + 'px'
-                        }
-                    })
-                ),
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-testimonial-name',
-                        style: { color: nameColor }
-                    },
-                    name4
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-position',
-                        style: { color: positionColor }
-                    },
-                    position4
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-desc',
-                        style: { color: descColor }
-                    },
-                    desc4
-                )
             )
         );
     }
@@ -11032,6 +10990,123 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
     );
 
+    var blockAttrsOld = {
+        sliderView: {
+            type: 'boolean',
+            default: false
+        },
+        avatarUrl: {
+            type: 'string',
+            default: advgbAvatar.holder
+        },
+        avatarID: {
+            type: 'number'
+        },
+        avatarUrl2: {
+            type: 'string',
+            default: advgbAvatar.holder
+        },
+        avatarID2: {
+            type: 'number'
+        },
+        avatarUrl3: {
+            type: 'string',
+            default: advgbAvatar.holder
+        },
+        avatarID3: {
+            type: 'number'
+        },
+        avatarUrl4: {
+            type: 'string',
+            default: advgbAvatar.holder
+        },
+        avatarID4: {
+            type: 'number'
+        },
+        avatarColor: {
+            type: 'string'
+        },
+        avatarBorderRadius: {
+            type: 'number',
+            default: 50
+        },
+        avatarBorderWidth: {
+            type: 'number'
+        },
+        avatarBorderColor: {
+            type: 'string'
+        },
+        avatarSize: {
+            type: 'number',
+            default: 70
+        },
+        name: {
+            type: 'string',
+            default: __('Person Name')
+        },
+        name2: {
+            type: 'string',
+            default: __('Person Name')
+        },
+        name3: {
+            type: 'string',
+            default: __('Person Name')
+        },
+        name4: {
+            type: 'string',
+            default: __('Person Name')
+        },
+        nameColor: {
+            type: 'string'
+        },
+        position: {
+            type: 'string',
+            default: __('Job Position')
+        },
+        position2: {
+            type: 'string',
+            default: __('Job Position')
+        },
+        position3: {
+            type: 'string',
+            default: __('Job Position')
+        },
+        position4: {
+            type: 'string',
+            default: __('Job Position')
+        },
+        positionColor: {
+            type: 'string'
+        },
+        desc: {
+            type: 'string',
+            default: __('A little description about this person will show up here.')
+        },
+        desc2: {
+            type: 'string',
+            default: __('A little description about this person will show up here.')
+        },
+        desc3: {
+            type: 'string',
+            default: __('A little description about this person will show up here.')
+        },
+        desc4: {
+            type: 'string',
+            default: __('A little description about this person will show up here.')
+        },
+        descColor: {
+            type: 'string'
+        },
+        columns: {
+            type: 'number',
+            default: 1
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/testimonial', {
         title: __('Testimonial'),
         description: __('Block for creating personal or team/group information.'),
@@ -11042,37 +11117,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'common',
         keywords: [__('testimonial'), __('personal'), __('about')],
         attributes: {
+            items: {
+                type: 'array',
+                default: times(10, function () {
+                    return {
+                        avatarUrl: advgbAvatar.holder,
+                        avatarID: undefined,
+                        name: __('Person Name'),
+                        position: __('Job Position'),
+                        desc: __('A little description about this person will show up here.')
+                    };
+                })
+            },
             sliderView: {
                 type: 'boolean',
                 default: false
-            },
-            avatarUrl: {
-                type: 'string',
-                default: advgbAvatar.holder
-            },
-            avatarID: {
-                type: 'number'
-            },
-            avatarUrl2: {
-                type: 'string',
-                default: advgbAvatar.holder
-            },
-            avatarID2: {
-                type: 'number'
-            },
-            avatarUrl3: {
-                type: 'string',
-                default: advgbAvatar.holder
-            },
-            avatarID3: {
-                type: 'number'
-            },
-            avatarUrl4: {
-                type: 'string',
-                default: advgbAvatar.holder
-            },
-            avatarID4: {
-                type: 'number'
             },
             avatarColor: {
                 type: 'string'
@@ -11091,59 +11150,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'number',
                 default: 70
             },
-            name: {
-                type: 'string',
-                default: __('Person Name')
-            },
-            name2: {
-                type: 'string',
-                default: __('Person Name')
-            },
-            name3: {
-                type: 'string',
-                default: __('Person Name')
-            },
-            name4: {
-                type: 'string',
-                default: __('Person Name')
-            },
             nameColor: {
                 type: 'string'
             },
-            position: {
-                type: 'string',
-                default: __('Job Position')
-            },
-            position2: {
-                type: 'string',
-                default: __('Job Position')
-            },
-            position3: {
-                type: 'string',
-                default: __('Job Position')
-            },
-            position4: {
-                type: 'string',
-                default: __('Job Position')
-            },
             positionColor: {
                 type: 'string'
-            },
-            desc: {
-                type: 'string',
-                default: __('A little description about this person will show up here.')
-            },
-            desc2: {
-                type: 'string',
-                default: __('A little description about this person will show up here.')
-            },
-            desc3: {
-                type: 'string',
-                default: __('A little description about this person will show up here.')
-            },
-            desc4: {
-                type: 'string',
-                default: __('A little description about this person will show up here.')
             },
             descColor: {
                 type: 'string'
@@ -11158,7 +11169,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         },
         edit: AdvTestimonial,
-        save: AdvTestimonialSave
+        save: function save(_ref6) {
+            var attributes = _ref6.attributes;
+
+            return null;
+        },
+        deprecated: [{
+            attributes: blockAttrsOld,
+            migrate: function migrate(attributes) {
+                return _extends({}, attributes);
+            },
+            save: AdvTestimonialSave
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 

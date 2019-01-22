@@ -4,6 +4,7 @@
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpEditor;
     const { RangeControl, ToggleControl, PanelBody, Tooltip } = wpComponents;
+    const { times } = lodash;
 
     class AdvTestimonial extends Component {
         constructor() {
@@ -85,6 +86,7 @@
             const { currentEdit } = this.state;
             const { attributes, setAttributes, isSelected } = this.props;
             const {
+                items,
                 sliderView,
                 avatarUrl,
                 avatarID,
@@ -464,11 +466,9 @@
 
     function AdvTestimonialSave( { attributes } ) {
         const {
-            sliderView,
             avatarUrl,
             avatarUrl2,
             avatarUrl3,
-            avatarUrl4,
             avatarColor,
             avatarBorderRadius,
             avatarBorderWidth,
@@ -477,28 +477,20 @@
             name,
             name2,
             name3,
-            name4,
             nameColor,
             position,
             position2,
             position3,
-            position4,
             positionColor,
             desc,
             desc2,
             desc3,
-            desc4,
             descColor,
             columns
         } = attributes;
 
-        const blockClass = [
-            'advgb-testimonial',
-            sliderView && 'slider-view',
-        ].filter( Boolean ).join( ' ' );
-
         return (
-            <div className={ blockClass }>
+            <div className="advgb-testimonial">
                 <div className="advgb-testimonial-columns-one">
                     <div className="advgb-testimonial-avatar-group">
                         <div className="advgb-testimonial-avatar"
@@ -529,7 +521,7 @@
                         { desc }
                     </p>
                 </div>
-                {(parseInt(columns) > 1 || sliderView) && (
+                {(parseInt(columns) > 1) && (
                     <div className="advgb-testimonial-columns-two">
                         <div className="advgb-testimonial-avatar-group">
                             <div className="advgb-testimonial-avatar"
@@ -561,7 +553,7 @@
                         </p>
                     </div>
                 ) }
-                {(parseInt(columns) > 2 || sliderView) && (
+                {(parseInt(columns) > 2) && (
                     <div className="advgb-testimonial-columns-two">
                         <div className="advgb-testimonial-avatar-group">
                             <div className="advgb-testimonial-avatar"
@@ -593,38 +585,6 @@
                         </p>
                     </div>
                 ) }
-                {sliderView && (
-                    <div className="advgb-testimonial-columns-four">
-                        <div className="advgb-testimonial-avatar-group">
-                            <div className="advgb-testimonial-avatar"
-                                 style={ {
-                                     backgroundImage: `url(${avatarUrl4 ? avatarUrl4 : advgbAvatar.holder})`,
-                                     backgroundColor: avatarColor,
-                                     borderRadius: avatarBorderRadius + '%',
-                                     borderWidth: avatarBorderWidth + 'px',
-                                     borderColor: avatarBorderColor,
-                                     width: avatarSize + 'px',
-                                     height: avatarSize + 'px',
-                                 } }
-                            />
-                        </div>
-                        <h4 className="advgb-testimonial-name"
-                            style={ { color: nameColor } }
-                        >
-                            { name4 }
-                        </h4>
-                        <p className="advgb-testimonial-position"
-                           style={ { color: positionColor } }
-                        >
-                            { position4 }
-                        </p>
-                        <p className="advgb-testimonial-desc"
-                           style={ { color: descColor } }
-                        >
-                            { desc4 }
-                        </p>
-                    </div>
-                ) }
             </div>
         );
     }
@@ -636,6 +596,123 @@
         </svg>
     );
 
+    const blockAttrsOld = {
+        sliderView: {
+            type: 'boolean',
+            default: false,
+        },
+        avatarUrl: {
+            type: 'string',
+            default: advgbAvatar.holder,
+        },
+        avatarID: {
+            type: 'number',
+        },
+        avatarUrl2: {
+            type: 'string',
+            default: advgbAvatar.holder,
+        },
+        avatarID2: {
+            type: 'number',
+        },
+        avatarUrl3: {
+            type: 'string',
+            default: advgbAvatar.holder,
+        },
+        avatarID3: {
+            type: 'number',
+        },
+        avatarUrl4: {
+            type: 'string',
+            default: advgbAvatar.holder,
+        },
+        avatarID4: {
+            type: 'number',
+        },
+        avatarColor: {
+            type: 'string',
+        },
+        avatarBorderRadius: {
+            type: 'number',
+            default: 50,
+        },
+        avatarBorderWidth: {
+            type: 'number',
+        },
+        avatarBorderColor: {
+            type: 'string',
+        },
+        avatarSize: {
+            type: 'number',
+            default: 70,
+        },
+        name: {
+            type: 'string',
+            default: __( 'Person Name' ),
+        },
+        name2: {
+            type: 'string',
+            default: __( 'Person Name' ),
+        },
+        name3: {
+            type: 'string',
+            default: __( 'Person Name' ),
+        },
+        name4: {
+            type: 'string',
+            default: __( 'Person Name' ),
+        },
+        nameColor: {
+            type: 'string',
+        },
+        position: {
+            type: 'string',
+            default: __( 'Job Position' ),
+        },
+        position2: {
+            type: 'string',
+            default: __( 'Job Position' ),
+        },
+        position3: {
+            type: 'string',
+            default: __( 'Job Position' ),
+        },
+        position4: {
+            type: 'string',
+            default: __( 'Job Position' ),
+        },
+        positionColor: {
+            type: 'string'
+        },
+        desc: {
+            type: 'string',
+            default: __( 'A little description about this person will show up here.' ),
+        },
+        desc2: {
+            type: 'string',
+            default: __( 'A little description about this person will show up here.' ),
+        },
+        desc3: {
+            type: 'string',
+            default: __( 'A little description about this person will show up here.' ),
+        },
+        desc4: {
+            type: 'string',
+            default: __( 'A little description about this person will show up here.' ),
+        },
+        descColor: {
+            type: 'string',
+        },
+        columns: {
+            type: 'number',
+            default: 1,
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+    };
+
     registerBlockType( 'advgb/testimonial', {
         title: __( 'Testimonial' ),
         description: __( 'Block for creating personal or team/group information.' ),
@@ -646,37 +723,19 @@
         category: 'common',
         keywords: [ __( 'testimonial' ), __( 'personal' ), __( 'about' ) ],
         attributes: {
+            items: {
+                type: 'array',
+                default: times(10, () => ( {
+                    avatarUrl: advgbAvatar.holder,
+                    avatarID: undefined,
+                    name: __( 'Person Name' ),
+                    position: __( 'Job Position' ),
+                    desc: __( 'A little description about this person will show up here.' ),
+                } ) ),
+            },
             sliderView: {
                 type: 'boolean',
                 default: false,
-            },
-            avatarUrl: {
-                type: 'string',
-                default: advgbAvatar.holder,
-            },
-            avatarID: {
-                type: 'number',
-            },
-            avatarUrl2: {
-                type: 'string',
-                default: advgbAvatar.holder,
-            },
-            avatarID2: {
-                type: 'number',
-            },
-            avatarUrl3: {
-                type: 'string',
-                default: advgbAvatar.holder,
-            },
-            avatarID3: {
-                type: 'number',
-            },
-            avatarUrl4: {
-                type: 'string',
-                default: advgbAvatar.holder,
-            },
-            avatarID4: {
-                type: 'number',
             },
             avatarColor: {
                 type: 'string',
@@ -695,59 +754,11 @@
                 type: 'number',
                 default: 70,
             },
-            name: {
-                type: 'string',
-                default: __( 'Person Name' ),
-            },
-            name2: {
-                type: 'string',
-                default: __( 'Person Name' ),
-            },
-            name3: {
-                type: 'string',
-                default: __( 'Person Name' ),
-            },
-            name4: {
-                type: 'string',
-                default: __( 'Person Name' ),
-            },
             nameColor: {
                 type: 'string',
             },
-            position: {
-                type: 'string',
-                default: __( 'Job Position' ),
-            },
-            position2: {
-                type: 'string',
-                default: __( 'Job Position' ),
-            },
-            position3: {
-                type: 'string',
-                default: __( 'Job Position' ),
-            },
-            position4: {
-                type: 'string',
-                default: __( 'Job Position' ),
-            },
             positionColor: {
                 type: 'string'
-            },
-            desc: {
-                type: 'string',
-                default: __( 'A little description about this person will show up here.' ),
-            },
-            desc2: {
-                type: 'string',
-                default: __( 'A little description about this person will show up here.' ),
-            },
-            desc3: {
-                type: 'string',
-                default: __( 'A little description about this person will show up here.' ),
-            },
-            desc4: {
-                type: 'string',
-                default: __( 'A little description about this person will show up here.' ),
             },
             descColor: {
                 type: 'string',
@@ -762,6 +773,19 @@
             },
         },
         edit: AdvTestimonial,
-        save: AdvTestimonialSave,
+        save: function ( { attributes } ) {
+            return null;
+        },
+        deprecated: [
+            {
+                attributes: blockAttrsOld,
+                migrate: function( attributes ) {
+                    return {
+                        ... attributes,
+                    };
+                },
+                save: AdvTestimonialSave,
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
