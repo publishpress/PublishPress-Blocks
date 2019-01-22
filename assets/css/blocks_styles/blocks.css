@@ -1245,3 +1245,8 @@ form .advgb-grecaptcha {
 form .advgb-grecaptcha > div {
     margin: auto;
 }
+
+/*Container block*/
+#editor .editor-inner-blocks .wp-block {
+    max-width: none;
+}
