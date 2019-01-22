@@ -57,14 +57,8 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
             <?php wp_nonce_field('advgb_email_config_nonce', 'advgb_email_config_nonce_field') ?>
             <ul class="settings-list clearfix">
                 <li class="ju-settings-option settings-separator">
-                    <h2 class="settings-separator-title">
-                        <?php esc_html_e('Contact Form Block', 'advanced-gutenberg') ?>
-                    </h2>
-                </li>
-
-                <li class="ju-settings-option settings-separator">
                     <h3 class="settings-separator-title">
-                        <?php esc_html_e('Sender Information', 'advanced-gutenberg') ?>
+                        <?php esc_html_e('Contact Form: Sender Information', 'advanced-gutenberg') ?>
                     </h3>
                 </li>
 
@@ -103,7 +97,7 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
 
                 <li class="ju-settings-option settings-separator">
                     <h3 class="settings-separator-title">
-                        <?php esc_html_e('Receiver Information', 'advanced-gutenberg') ?>
+                        <?php esc_html_e('Contact Form: Receiver Information', 'advanced-gutenberg') ?>
                     </h3>
                 </li>
 
