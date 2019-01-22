@@ -6,6 +6,11 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('.advgb-newsletter.style-alt .advgb-grecaptcha').each(function () {
+        var submitWrapper = $(this).closest('.advgb-newsletter.style-alt').find('.advgb-form-submit-wrapper');
+        $(this).insertBefore(submitWrapper);
+    });
+
     $('.advgb-newsletter form').submit(function (e) {
         e.preventDefault();
         var $thisForm = $(this).closest('.advgb-newsletter');
