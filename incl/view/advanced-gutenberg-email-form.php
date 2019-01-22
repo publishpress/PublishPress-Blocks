@@ -241,7 +241,11 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
                 <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper no-child-float clearfix">
                         <label for="recaptcha_theme"
-                               class="ju-setting-label"
+                               class="ju-setting-label advgb_qtip"
+                               data-qtip="<?php esc_attr_e(
+                                   'We strongly recommend not using Invisible reCAPTCHA if you have more than 1 Newsletter or Contact forms block in a page.',
+                                   'advanced-gutenberg'
+                               ) ?>"
                         >
                             <?php esc_html_e('reCAPTCHA Theme', 'advanced-gutenberg') ?>
                         </label>
@@ -252,7 +256,6 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
                                 <option value="invisible" <?php echo $recaptcha_theme === 'invisible' ? 'selected' : '' ?>>Invisible</option>
                             </select>
                         </div>
-                        <p style="font-style: italic; margin: 5px 0;"><?php esc_html_e('We strongly recommend not using Invisible reCAPTCHA if you have more than 1 Newsletter or Contact forms block in a page.', 'advanced-gutenberg') ?></p>
                     </div>
                 </li>
             </ul>
