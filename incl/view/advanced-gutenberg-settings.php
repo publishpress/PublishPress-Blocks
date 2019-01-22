@@ -138,7 +138,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                                class="ju-setting-label advgb_qtip"
                                style="float: none; margin-bottom: 10px"
                                data-qtip="<?php esc_attr_e(
-                                   'This API key is required to using Map Block.',
+                                   'A Google API key is required to use the Map block without any warning.',
                                    'advanced-gutenberg'
                                ) ?>"
                         >
