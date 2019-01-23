@@ -10884,8 +10884,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvTestimonial,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
+            var items = attributes.items,
+                sliderView = attributes.sliderView,
+                avatarColor = attributes.avatarColor,
+                avatarBorderRadius = attributes.avatarBorderRadius,
+                avatarBorderWidth = attributes.avatarBorderWidth,
+                avatarBorderColor = attributes.avatarBorderColor,
+                avatarSize = attributes.avatarSize,
+                nameColor = attributes.nameColor,
+                positionColor = attributes.positionColor,
+                descColor = attributes.descColor,
+                columns = attributes.columns;
 
-            return null;
+
+            var blockClass = ['advgb-testimonial', sliderView && 'slider-view'].filter(Boolean).join(' ');
+
+            var i = 0;
+            var validCols = columns;
+            if (columns < 1) {
+                validCols = 1;
+            } else if (columns > 3 && !sliderView) {
+                validCols = 3;
+            } else if (columns < 4 && sliderView) {
+                validCols = 4;
+            } else if (columns > 10) {
+                validCols = 10;
+            }
+
+            return React.createElement(
+                'div',
+                { className: blockClass },
+                items.map(function (item, idx) {
+                    i++;
+                    if (i > validCols) return false;
+                    return React.createElement(
+                        'div',
+                        { className: 'advgb-testimonial-item', key: idx },
+                        React.createElement(
+                            'div',
+                            { className: 'advgb-testimonial-avatar-group' },
+                            React.createElement('div', { className: 'advgb-testimonial-avatar',
+                                style: {
+                                    backgroundImage: 'url(' + (item.avatarUrl ? item.avatarUrl : advgbAvatar.holder) + ')',
+                                    backgroundColor: avatarColor,
+                                    borderRadius: avatarBorderRadius + '%',
+                                    borderWidth: avatarBorderWidth + 'px',
+                                    borderColor: avatarBorderColor,
+                                    width: avatarSize + 'px',
+                                    height: avatarSize + 'px'
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            'h4',
+                            { className: 'advgb-testimonial-name',
+                                style: { color: nameColor }
+                            },
+                            item.name
+                        ),
+                        React.createElement(
+                            'p',
+                            { className: 'advgb-testimonial-position',
+                                style: { color: positionColor }
+                            },
+                            item.position
+                        ),
+                        React.createElement(
+                            'p',
+                            { className: 'advgb-testimonial-desc',
+                                style: { color: descColor }
+                            },
+                            item.desc
+                        )
+                    );
+                })
+            );
         },
         deprecated: [{
             attributes: blockAttrsOld,

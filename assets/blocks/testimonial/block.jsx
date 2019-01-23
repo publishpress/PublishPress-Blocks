@@ -554,7 +554,76 @@
         },
         edit: AdvTestimonial,
         save: function ( { attributes } ) {
-            return null;
+            const {
+                items,
+                sliderView,
+                avatarColor,
+                avatarBorderRadius,
+                avatarBorderWidth,
+                avatarBorderColor,
+                avatarSize,
+                nameColor,
+                positionColor,
+                descColor,
+                columns,
+            } = attributes;
+
+            const blockClass = [
+                'advgb-testimonial',
+                sliderView && 'slider-view',
+            ].filter( Boolean ).join( ' ' );
+
+            let i = 0;
+            let validCols = columns;
+            if (columns < 1) {
+                validCols = 1;
+            } else if (columns > 3 && !sliderView) {
+                validCols = 3;
+            } else if (columns < 4 && sliderView) {
+                validCols = 4;
+            } else if (columns > 10) {
+                validCols = 10;
+            }
+
+            return (
+                <div className={ blockClass }>
+                    {items.map( (item, idx) => {
+                        i++;
+                        if (i > validCols) return false;
+                        return (
+                            <div className="advgb-testimonial-item" key={idx}>
+                                <div className="advgb-testimonial-avatar-group">
+                                    <div className="advgb-testimonial-avatar"
+                                         style={ {
+                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbAvatar.holder})`,
+                                             backgroundColor: avatarColor,
+                                             borderRadius: avatarBorderRadius + '%',
+                                             borderWidth: avatarBorderWidth + 'px',
+                                             borderColor: avatarBorderColor,
+                                             width: avatarSize + 'px',
+                                             height: avatarSize + 'px',
+                                         } }
+                                    />
+                                </div>
+                                <h4 className="advgb-testimonial-name"
+                                    style={ { color: nameColor } }
+                                >
+                                    { item.name }
+                                </h4>
+                                <p className="advgb-testimonial-position"
+                                   style={ { color: positionColor } }
+                                >
+                                    { item.position }
+                                </p>
+                                <p className="advgb-testimonial-desc"
+                                   style={ { color: descColor } }
+                                >
+                                    { item.desc }
+                                </p>
+                            </div>
+                        ) } ) }
+                </div>
+            );
         },
         deprecated: [
             {
