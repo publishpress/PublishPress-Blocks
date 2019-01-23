@@ -79,7 +79,16 @@
         }
 
         updateItems(idx, data) {
+            const { attributes, setAttributes } = this.props;
+            const { items } = attributes;
 
+            const newItems = items.map( (item, index) => {
+                if (idx === index) item = { ...item, ...data };
+
+                return item;
+            } );
+
+            setAttributes( { items: newItems } );
         }
 
         render() {

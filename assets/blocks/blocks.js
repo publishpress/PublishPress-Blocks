@@ -10321,17 +10321,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: 'updateItems',
-            value: function updateItems(idx, data) {}
+            value: function updateItems(idx, data) {
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
+                var items = attributes.items;
+
+
+                var newItems = items.map(function (item, index) {
+                    if (idx === index) item = _extends({}, item, data);
+
+                    return item;
+                });
+
+                setAttributes({ items: newItems });
+            }
         }, {
             key: 'render',
             value: function render() {
                 var _this2 = this;
 
                 var currentEdit = this.state.currentEdit;
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes,
-                    isSelected = _props5.isSelected;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes,
+                    isSelected = _props6.isSelected;
                 var items = attributes.items,
                     sliderView = attributes.sliderView,
                     avatarColor = attributes.avatarColor,
