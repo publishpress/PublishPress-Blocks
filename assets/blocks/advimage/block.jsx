@@ -30,10 +30,6 @@
             }
         }
 
-        handleSetup( editor, area ) {
-            editor.on( 'focus', () => this.setState( { currentEdit: area } ) );
-        }
-
         render() {
             const { currentEdit } = this.state;
             const { attributes, setAttributes, isSelected } = this.props;
@@ -212,7 +208,7 @@
                             onChange={ (value) => setAttributes( { title: value } ) }
                             style={ { color: titleColor } }
                             isSelected={ isSelected && currentEdit === 'title' }
-                            unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'title' ) }
+                            unstableOnFocus={ () => this.setState( { currentEdit: 'title' } ) }
                             unstableOnSplit={ () => null }
                             placeholder={ __( 'Enter title…' ) }
                         />
@@ -223,7 +219,7 @@
                             onChange={ (value) => setAttributes( { subtitle: value } ) }
                             style={ { color: subtitleColor } }
                             isSelected={ isSelected && currentEdit === 'subtitle' }
-                            unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'subtitle' ) }
+                            unstableOnFocus={ () => this.setState( { currentEdit: 'subtitle' } ) }
                             unstableOnSplit={ () => null }
                             placeholder={ __( 'Enter subtitle…' ) }
                         />

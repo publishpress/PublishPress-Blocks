@@ -1221,18 +1221,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: 'handleSetup',
-            value: function handleSetup(editor, area) {
-                var _this2 = this;
-
-                editor.on('focus', function () {
-                    return _this2.setState({ currentEdit: area });
-                });
-            }
-        }, {
             key: 'render',
             value: function render() {
-                var _this3 = this;
+                var _this2 = this;
 
                 var currentEdit = this.state.currentEdit;
                 var _props2 = this.props,
@@ -1432,8 +1423,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             style: { color: titleColor },
                             isSelected: isSelected && currentEdit === 'title',
-                            unstableOnSetup: function unstableOnSetup(editor) {
-                                return _this3.handleSetup(editor, 'title');
+                            unstableOnFocus: function unstableOnFocus() {
+                                return _this2.setState({ currentEdit: 'title' });
                             },
                             unstableOnSplit: function unstableOnSplit() {
                                 return null;
@@ -1449,8 +1440,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             style: { color: subtitleColor },
                             isSelected: isSelected && currentEdit === 'subtitle',
-                            unstableOnSetup: function unstableOnSetup(editor) {
-                                return _this3.handleSetup(editor, 'subtitle');
+                            unstableOnFocus: function unstableOnFocus() {
+                                return _this2.setState({ currentEdit: 'subtitle' });
                             },
                             unstableOnSplit: function unstableOnSplit() {
                                 return null;
