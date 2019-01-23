@@ -4625,18 +4625,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: 'handleSetup',
-            value: function handleSetup(editor, area) {
-                var _this2 = this;
-
-                editor.on('focus', function () {
-                    return _this2.setState({ currentEdit: area });
-                });
-            }
-        }, {
             key: 'render',
             value: function render() {
-                var _this3 = this;
+                var _this2 = this;
 
                 var currentEdit = this.state.currentEdit;
                 var _props2 = this.props,
@@ -4791,8 +4782,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ headerText: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'header',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'header');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'header' });
                                 },
                                 style: { color: headerTextColor },
                                 placeholder: __('Enter text…')
@@ -4804,8 +4795,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ countUpNumber: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'countUp',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'countUp');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'countUp' });
                                 },
                                 style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
                             }),
@@ -4816,8 +4807,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ descText: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'desc',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'desc');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'desc' });
                                 },
                                 style: { color: descTextColor },
                                 placeholder: __('Enter text…')
@@ -4833,8 +4824,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ headerText2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'header2',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'header2');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'header2' });
                                 },
                                 style: { color: headerTextColor },
                                 placeholder: __('Enter text…')
@@ -4846,8 +4837,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ countUpNumber2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'countUp2',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'countUp2');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'countUp2' });
                                 },
                                 style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
                             }),
@@ -4858,8 +4849,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ descText2: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'desc2',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'desc2');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'desc2' });
                                 },
                                 style: { color: descTextColor },
                                 placeholder: __('Enter text…')
@@ -4875,8 +4866,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ headerText3: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'header3',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'header3');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'header3' });
                                 },
                                 style: { color: headerTextColor },
                                 placeholder: __('Enter text…')
@@ -4888,8 +4879,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ countUpNumber3: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'countUp3',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'countUp3');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'countUp3' });
                                 },
                                 style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
                             }),
@@ -4900,8 +4891,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ descText3: value });
                                 },
                                 isSelected: isSelected && currentEdit === 'desc3',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'desc3');
+                                unstableOnFocus: function unstableOnFocus() {
+                                    return _this2.setState({ currentEdit: 'desc3' });
                                 },
                                 style: { color: descTextColor },
                                 placeholder: __('Enter text…')
