@@ -10320,18 +10320,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: 'handleSetup',
-            value: function handleSetup(editor, area) {
-                var _this2 = this;
-
-                editor.on('focus', function () {
-                    return _this2.setState({ currentEdit: area });
-                });
-            }
+            key: 'updateItems',
+            value: function updateItems(idx, data) {}
         }, {
             key: 'render',
             value: function render() {
-                var _this3 = this;
+                var _this2 = this;
 
                 var currentEdit = this.state.currentEdit;
                 var _props5 = this.props,
@@ -10340,38 +10334,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isSelected = _props5.isSelected;
                 var items = attributes.items,
                     sliderView = attributes.sliderView,
-                    avatarUrl = attributes.avatarUrl,
-                    avatarID = attributes.avatarID,
-                    avatarUrl2 = attributes.avatarUrl2,
-                    avatarID2 = attributes.avatarID2,
-                    avatarUrl3 = attributes.avatarUrl3,
-                    avatarID3 = attributes.avatarID3,
-                    avatarUrl4 = attributes.avatarUrl4,
-                    avatarID4 = attributes.avatarID4,
                     avatarColor = attributes.avatarColor,
                     avatarBorderRadius = attributes.avatarBorderRadius,
                     avatarBorderWidth = attributes.avatarBorderWidth,
                     avatarBorderColor = attributes.avatarBorderColor,
                     avatarSize = attributes.avatarSize,
-                    name = attributes.name,
-                    name2 = attributes.name2,
-                    name3 = attributes.name3,
-                    name4 = attributes.name4,
                     nameColor = attributes.nameColor,
-                    position = attributes.position,
-                    position2 = attributes.position2,
-                    position3 = attributes.position3,
-                    position4 = attributes.position4,
                     positionColor = attributes.positionColor,
-                    desc = attributes.desc,
-                    desc2 = attributes.desc2,
-                    desc3 = attributes.desc3,
-                    desc4 = attributes.desc4,
                     descColor = attributes.descColor,
                     columns = attributes.columns;
 
 
                 var blockClass = ['advgb-testimonial', !sliderView && 'advgb-column-' + columns, sliderView && 'slider-view'].filter(Boolean).join(' ');
+
+                var maxCols = sliderView ? 10 : 3;
+                var minCols = sliderView ? 4 : 1;
+                var i = 0;
+                var validCols = columns;
+                if (columns < 1) {
+                    validCols = 1;
+                } else if (columns > 3 && !sliderView) {
+                    validCols = 3;
+                } else if (columns < 4 && sliderView) {
+                    validCols = 4;
+                } else if (columns > 10) {
+                    validCols = 10;
+                }
 
                 return React.createElement(
                     Fragment,
@@ -10389,10 +10377,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ sliderView: !sliderView });
                                 }
                             }),
-                            !sliderView && React.createElement(RangeControl, {
+                            React.createElement(RangeControl, {
                                 label: __('Columns'),
-                                min: 1,
-                                max: 3,
+                                min: minCols,
+                                max: maxCols,
                                 value: columns,
                                 onChange: function onChange(value) {
                                     return setAttributes({ columns: value });
@@ -10474,358 +10462,98 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'div',
                         { className: blockClass },
-                        React.createElement(
-                            'div',
-                            { className: 'advgb-testimonial-columns-one' },
-                            React.createElement(MediaUpload, {
-                                allowedTypes: ["image"],
-                                onSelect: function onSelect(media) {
-                                    return setAttributes({
-                                        avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                        avatarID: media.id
-                                    });
-                                },
-                                value: avatarID,
-                                render: function render(_ref) {
-                                    var open = _ref.open;
-                                    return React.createElement(
-                                        'div',
-                                        { className: 'advgb-testimonial-avatar-group' },
-                                        React.createElement(
-                                            Tooltip,
-                                            { text: __('Click to change avatar') },
-                                            React.createElement('div', { className: 'advgb-testimonial-avatar',
-                                                onClick: open,
-                                                style: {
-                                                    backgroundImage: 'url(' + (avatarUrl ? avatarUrl : advgbAvatar.holder) + ')',
-                                                    backgroundColor: avatarColor,
-                                                    borderRadius: avatarBorderRadius + '%',
-                                                    borderWidth: avatarBorderWidth + 'px',
-                                                    borderColor: avatarBorderColor,
-                                                    width: avatarSize + 'px',
-                                                    height: avatarSize + 'px'
-                                                }
-                                            })
-                                        ),
-                                        React.createElement(
-                                            Tooltip,
-                                            { text: __('Remove avatar') },
-                                            React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
-                                                onClick: function onClick() {
-                                                    return setAttributes({ avatarUrl: undefined, avatarID: undefined });
-                                                }
-                                            })
-                                        )
-                                    );
-                                }
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'h4',
-                                className: 'advgb-testimonial-name',
-                                value: name,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ name: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'name',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'name');
-                                },
-                                style: { color: nameColor },
-                                placeholder: __('Text…')
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'p',
-                                className: 'advgb-testimonial-position',
-                                value: position,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ position: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'position',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'position');
-                                },
-                                style: { color: positionColor },
-                                placeholder: __('Text…')
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'p',
-                                className: 'advgb-testimonial-desc',
-                                value: desc,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ desc: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'desc',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'desc');
-                                },
-                                style: { color: descColor },
-                                placeholder: __('Text…')
-                            })
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'advgb-testimonial-columns-two' },
-                            React.createElement(MediaUpload, {
-                                allowedTypes: ["image"],
-                                onSelect: function onSelect(media) {
-                                    return setAttributes({
-                                        avatarUrl2: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                        avatarID2: media.id
-                                    });
-                                },
-                                value: avatarID2,
-                                render: function render(_ref2) {
-                                    var open = _ref2.open;
-                                    return React.createElement(
-                                        'div',
-                                        { className: 'advgb-testimonial-avatar-group' },
-                                        React.createElement(
-                                            Tooltip,
-                                            { text: __('Click to change avatar') },
-                                            React.createElement('div', { className: 'advgb-testimonial-avatar',
-                                                onClick: open,
-                                                style: {
-                                                    backgroundImage: 'url(' + (avatarUrl2 ? avatarUrl2 : advgbAvatar.holder) + ')',
-                                                    backgroundColor: avatarColor,
-                                                    borderRadius: avatarBorderRadius + '%',
-                                                    borderWidth: avatarBorderWidth + 'px',
-                                                    borderColor: avatarBorderColor,
-                                                    width: avatarSize + 'px',
-                                                    height: avatarSize + 'px'
-                                                }
-                                            })
-                                        ),
-                                        React.createElement(
-                                            Tooltip,
-                                            { text: __('Remove avatar') },
-                                            React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
-                                                onClick: function onClick() {
-                                                    return setAttributes({ avatarUrl2: undefined, avatarID2: undefined });
-                                                }
-                                            })
-                                        )
-                                    );
-                                }
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'h4',
-                                className: 'advgb-testimonial-name',
-                                value: name2,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ name2: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'name2',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'name2');
-                                },
-                                style: { color: nameColor },
-                                placeholder: __('Text…')
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'p',
-                                className: 'advgb-testimonial-position',
-                                value: position2,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ position2: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'position2',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'position2');
-                                },
-                                style: { color: positionColor },
-                                placeholder: __('Text…')
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'p',
-                                className: 'advgb-testimonial-desc',
-                                value: desc2,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ desc2: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'desc2',
-                                unstableOnSetup: function unstableOnSetup(editor) {
-                                    return _this3.handleSetup(editor, 'desc2');
-                                },
-                                style: { color: descColor },
-                                placeholder: __('Text…')
-                            })
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'advgb-testimonial-columns-three' },
-                            React.createElement(MediaUpload, {
-                                allowedTypes: ["image"],
-                                onSelect: function onSelect(media) {
-                                    return setAttributes({
-                                        avatarUrl3: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                        avatarID3: media.id
-                                    });
-                                },
-                                value: avatarID3,
-                                render: function render(_ref3) {
-                                    var open = _ref3.open;
-                                    return React.createElement(
-                                        'div',
-                                        { className: 'advgb-testimonial-avatar-group' },
-                                        React.createElement(
-                                            Tooltip,
-                                            { text: __('Click to change avatar') },
-                                            React.createElement('div', { className: 'advgb-testimonial-avatar',
-                                                onClick: open,
-                                                style: {
-                                                    backgroundImage: 'url(' + (avatarUrl3 ? avatarUrl3 : advgbAvatar.holder) + ')',
-                                                    backgroundColor: avatarColor,
-                                                    borderRadius: avatarBorderRadius + '%',
-                                                    borderWidth: avatarBorderWidth + 'px',
-                                                    borderColor: avatarBorderColor,
-                                                    width: avatarSize + 'px',
-                                                    height: avatarSize + 'px'
-                                                }
-                                            })
-                                        ),
-                                        React.createElement(
-                                            Tooltip,
-                                            { text: __('Remove avatar') },
-                                            React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
-                                                onClick: function onClick() {
-                                                    return setAttributes({ avatarUrl3: undefined, avatarID3: undefined });
-                                                }
-                                            })
-                                        )
-                                    );
-                                }
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'h4',
-                                className: 'advgb-testimonial-name',
-                                value: name3,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ name3: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'name3',
-                                onSetup: function onSetup(editor) {
-                                    return _this3.handleSetup(editor, 'name3');
-                                },
-                                style: { color: nameColor },
-                                placeholder: __('Text…')
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'p',
-                                className: 'advgb-testimonial-position',
-                                value: position3,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ position3: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'position3',
-                                onSetup: function onSetup(editor) {
-                                    return _this3.handleSetup(editor, 'position3');
-                                },
-                                style: { color: positionColor },
-                                placeholder: __('Text…')
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'p',
-                                className: 'advgb-testimonial-desc',
-                                value: desc3,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ desc3: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'desc3',
-                                onSetup: function onSetup(editor) {
-                                    return _this3.handleSetup(editor, 'desc3');
-                                },
-                                style: { color: descColor },
-                                placeholder: __('Text…')
-                            })
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'advgb-testimonial-columns-four' },
-                            React.createElement(MediaUpload, {
-                                allowedTypes: ["image"],
-                                onSelect: function onSelect(media) {
-                                    return setAttributes({
-                                        avatarUrl4: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                        avatarID4: media.id
-                                    });
-                                },
-                                value: avatarID4,
-                                render: function render(_ref4) {
-                                    var open = _ref4.open;
-                                    return React.createElement(
-                                        'div',
-                                        { className: 'advgb-testimonial-avatar-group' },
-                                        React.createElement(
-                                            Tooltip,
-                                            { text: __('Click to change avatar') },
-                                            React.createElement('div', { className: 'advgb-testimonial-avatar',
-                                                onClick: open,
-                                                style: {
-                                                    backgroundImage: 'url(' + (avatarUrl4 ? avatarUrl4 : advgbAvatar.holder) + ')',
-                                                    backgroundColor: avatarColor,
-                                                    borderRadius: avatarBorderRadius + '%',
-                                                    borderWidth: avatarBorderWidth + 'px',
-                                                    borderColor: avatarBorderColor,
-                                                    width: avatarSize + 'px',
-                                                    height: avatarSize + 'px'
-                                                }
-                                            })
-                                        ),
-                                        React.createElement(
-                                            Tooltip,
-                                            { text: __('Remove avatar') },
-                                            React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
-                                                onClick: function onClick() {
-                                                    return setAttributes({ avatarUrl4: undefined, avatarID4: undefined });
-                                                }
-                                            })
-                                        )
-                                    );
-                                }
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'h4',
-                                className: 'advgb-testimonial-name',
-                                value: name4,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ name4: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'name4',
-                                onSetup: function onSetup(editor) {
-                                    return _this3.handleSetup(editor, 'name4');
-                                },
-                                style: { color: nameColor },
-                                placeholder: __('Text…')
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'p',
-                                className: 'advgb-testimonial-position',
-                                value: position4,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ position4: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'position4',
-                                onSetup: function onSetup(editor) {
-                                    return _this3.handleSetup(editor, 'position4');
-                                },
-                                style: { color: positionColor },
-                                placeholder: __('Text…')
-                            }),
-                            React.createElement(RichText, {
-                                tagName: 'p',
-                                className: 'advgb-testimonial-desc',
-                                value: desc4,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ desc4: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'desc4',
-                                onSetup: function onSetup(editor) {
-                                    return _this3.handleSetup(editor, 'desc4');
-                                },
-                                style: { color: descColor },
-                                placeholder: __('Text…')
-                            })
-                        )
+                        items.map(function (item, idx) {
+                            i++;
+                            if (i > validCols) return false;
+                            return React.createElement(
+                                'div',
+                                { className: 'advgb-testimonial-item', key: idx },
+                                React.createElement(MediaUpload, {
+                                    allowedTypes: ["image"],
+                                    onSelect: function onSelect(media) {
+                                        return _this2.updateItems(idx, {
+                                            avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                            avatarID: media.id
+                                        });
+                                    },
+                                    value: item.avatarID,
+                                    render: function render(_ref) {
+                                        var open = _ref.open;
+                                        return React.createElement(
+                                            'div',
+                                            { className: 'advgb-testimonial-avatar-group' },
+                                            React.createElement(
+                                                Tooltip,
+                                                { text: __('Click to change avatar') },
+                                                React.createElement('div', { className: 'advgb-testimonial-avatar',
+                                                    onClick: open,
+                                                    style: {
+                                                        backgroundImage: 'url(' + (item.avatarUrl ? item.avatarUrl : advgbAvatar.holder) + ')',
+                                                        backgroundColor: avatarColor,
+                                                        borderRadius: avatarBorderRadius + '%',
+                                                        borderWidth: avatarBorderWidth + 'px',
+                                                        borderColor: avatarBorderColor,
+                                                        width: avatarSize + 'px',
+                                                        height: avatarSize + 'px'
+                                                    }
+                                                })
+                                            ),
+                                            React.createElement(
+                                                Tooltip,
+                                                { text: __('Remove avatar') },
+                                                React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
+                                                    onClick: function onClick() {
+                                                        return _this2.updateItems(idx, { avatarUrl: undefined, avatarID: undefined });
+                                                    }
+                                                })
+                                            )
+                                        );
+                                    }
+                                }),
+                                React.createElement(RichText, {
+                                    tagName: 'h4',
+                                    className: 'advgb-testimonial-name',
+                                    value: item.name,
+                                    isSelected: isSelected && currentEdit === 'name' + idx,
+                                    unstableOnFocus: function unstableOnFocus() {
+                                        return _this2.setState({ currentEdit: 'name' + idx });
+                                    },
+                                    onChange: function onChange(value) {
+                                        return _this2.updateItems(idx, { name: value });
+                                    },
+                                    style: { color: nameColor },
+                                    placeholder: __('Text…')
+                                }),
+                                React.createElement(RichText, {
+                                    tagName: 'p',
+                                    className: 'advgb-testimonial-position',
+                                    value: item.position,
+                                    isSelected: isSelected && currentEdit === 'pos' + idx,
+                                    unstableOnFocus: function unstableOnFocus() {
+                                        return _this2.setState({ currentEdit: 'pos' + idx });
+                                    },
+                                    onChange: function onChange(value) {
+                                        return _this2.updateItems(idx, { position: value });
+                                    },
+                                    style: { color: positionColor },
+                                    placeholder: __('Text…')
+                                }),
+                                React.createElement(RichText, {
+                                    tagName: 'p',
+                                    className: 'advgb-testimonial-desc',
+                                    value: item.desc,
+                                    isSelected: isSelected && currentEdit === 'desc' + idx,
+                                    unstableOnFocus: function unstableOnFocus() {
+                                        return _this2.setState({ currentEdit: 'desc' + idx });
+                                    },
+                                    onChange: function onChange(value) {
+                                        return _this2.updateItems(idx, { desc: value });
+                                    },
+                                    style: { color: descColor },
+                                    placeholder: __('Text…')
+                                })
+                            );
+                        })
                     )
                 );
             }
@@ -10834,8 +10562,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvTestimonial;
     }(Component);
 
-    function AdvTestimonialSave(_ref5) {
-        var attributes = _ref5.attributes;
+    function AdvTestimonialSave(_ref2) {
+        var attributes = _ref2.attributes;
         var avatarUrl = attributes.avatarUrl,
             avatarUrl2 = attributes.avatarUrl2,
             avatarUrl3 = attributes.avatarUrl3,
@@ -11133,8 +10861,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }),
         edit: AdvTestimonial,
-        save: function save(_ref6) {
-            var attributes = _ref6.attributes;
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
 
             return null;
         },

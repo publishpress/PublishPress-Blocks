@@ -78,8 +78,8 @@
             }
         }
 
-        handleSetup( editor, area ) {
-            editor.on( 'focus', () => this.setState( { currentEdit: area } ) );
+        updateItems(idx, data) {
+
         }
 
         render() {
@@ -88,33 +88,13 @@
             const {
                 items,
                 sliderView,
-                avatarUrl,
-                avatarID,
-                avatarUrl2,
-                avatarID2,
-                avatarUrl3,
-                avatarID3,
-                avatarUrl4,
-                avatarID4,
                 avatarColor,
                 avatarBorderRadius,
                 avatarBorderWidth,
                 avatarBorderColor,
                 avatarSize,
-                name,
-                name2,
-                name3,
-                name4,
                 nameColor,
-                position,
-                position2,
-                position3,
-                position4,
                 positionColor,
-                desc,
-                desc2,
-                desc3,
-                desc4,
                 descColor,
                 columns,
             } = attributes;
@@ -125,6 +105,20 @@
                 sliderView && 'slider-view',
             ].filter( Boolean ).join( ' ' );
 
+            const maxCols  = sliderView ? 10 : 3;
+            const minCols = sliderView ? 4 : 1;
+            let i = 0;
+            let validCols = columns;
+            if (columns < 1) {
+                validCols = 1;
+            } else if (columns > 3 && !sliderView) {
+                validCols = 3;
+            } else if (columns < 4 && sliderView) {
+                validCols = 4;
+            } else if (columns > 10) {
+                validCols = 10;
+            }
+
             return (
                 <Fragment>
                     <InspectorControls>
@@ -134,15 +128,13 @@
                                 checked={ sliderView }
                                 onChange={ () => setAttributes( { sliderView: !sliderView } ) }
                             />
-                            {!sliderView && (
-                                <RangeControl
-                                    label={ __( 'Columns' ) }
-                                    min={ 1 }
-                                    max={ 3 }
-                                    value={ columns }
-                                    onChange={ (value) => setAttributes( { columns: value } ) }
-                                />
-                            ) }
+                            <RangeControl
+                                label={ __( 'Columns' ) }
+                                min={ minCols }
+                                max={ maxCols }
+                                value={ columns }
+                                onChange={ (value) => setAttributes( { columns: value } ) }
+                            />
                             <PanelBody title={ __( 'Avatar' ) } initialOpen={ false }>
                                 <PanelColorSettings
                                     title={ __( 'Avatar Colors' ) }
@@ -206,258 +198,74 @@
                         </PanelBody>
                     </InspectorControls>
                     <div className={ blockClass }>
-                        <div className="advgb-testimonial-columns-one">
-                            <MediaUpload
-                                allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( {
-                                    avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                    avatarID: media.id
-                                } ) }
-                                value={ avatarID }
-                                render={ ( { open } ) => (
-                                    <div className="advgb-testimonial-avatar-group">
-                                        <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className="advgb-testimonial-avatar"
-                                                 onClick={ open }
-                                                 style={ {
-                                                     backgroundImage: `url(${avatarUrl ? avatarUrl : advgbAvatar.holder})`,
-                                                     backgroundColor: avatarColor,
-                                                     borderRadius: avatarBorderRadius + '%',
-                                                     borderWidth: avatarBorderWidth + 'px',
-                                                     borderColor: avatarBorderColor,
-                                                     width: avatarSize + 'px',
-                                                     height: avatarSize + 'px',
-                                                 } }
-                                            />
-                                        </Tooltip>
-                                        <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
-                                                  onClick={ () => setAttributes( { avatarUrl: undefined, avatarID: undefined } ) }
-                                            />
-                                        </Tooltip>
-                                    </div>
-                                ) }
-                            />
-                            <RichText
-                                tagName="h4"
-                                className="advgb-testimonial-name"
-                                value={ name }
-                                onChange={ (value) => setAttributes( { name: value } ) }
-                                isSelected={ isSelected && currentEdit === 'name' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'name' ) }
-                                style={ { color: nameColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName="p"
-                                className="advgb-testimonial-position"
-                                value={ position }
-                                onChange={ (value) => setAttributes( { position: value } ) }
-                                isSelected={ isSelected && currentEdit === 'position' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'position' ) }
-                                style={ { color: positionColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName="p"
-                                className="advgb-testimonial-desc"
-                                value={ desc }
-                                onChange={ (value) => setAttributes( { desc: value } ) }
-                                isSelected={ isSelected && currentEdit === 'desc' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
-                                style={ { color: descColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                        </div>
-                        <div className="advgb-testimonial-columns-two">
-                            <MediaUpload
-                                allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( {
-                                    avatarUrl2: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                    avatarID2: media.id
-                                } ) }
-                                value={ avatarID2 }
-                                render={ ( { open } ) => (
-                                    <div className="advgb-testimonial-avatar-group">
-                                        <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className="advgb-testimonial-avatar"
-                                                 onClick={ open }
-                                                 style={ {
-                                                     backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbAvatar.holder})`,
-                                                     backgroundColor: avatarColor,
-                                                     borderRadius: avatarBorderRadius + '%',
-                                                     borderWidth: avatarBorderWidth + 'px',
-                                                     borderColor: avatarBorderColor,
-                                                     width: avatarSize + 'px',
-                                                     height: avatarSize + 'px',
-                                                 } }
-                                            />
-                                        </Tooltip>
-                                        <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
-                                                  onClick={ () => setAttributes( { avatarUrl2: undefined, avatarID2: undefined } ) }
-                                            />
-                                        </Tooltip>
-                                    </div>
-                                ) }
-                            />
-                            <RichText
-                                tagName="h4"
-                                className="advgb-testimonial-name"
-                                value={ name2 }
-                                onChange={ (value) => setAttributes( { name2: value } ) }
-                                isSelected={ isSelected && currentEdit === 'name2' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'name2' ) }
-                                style={ { color: nameColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName="p"
-                                className="advgb-testimonial-position"
-                                value={ position2 }
-                                onChange={ (value) => setAttributes( { position2: value } ) }
-                                isSelected={ isSelected && currentEdit === 'position2' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'position2' ) }
-                                style={ { color: positionColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName="p"
-                                className="advgb-testimonial-desc"
-                                value={ desc2 }
-                                onChange={ (value) => setAttributes( { desc2: value } ) }
-                                isSelected={ isSelected && currentEdit === 'desc2' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
-                                style={ { color: descColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                        </div>
-                        <div className="advgb-testimonial-columns-three">
-                            <MediaUpload
-                                allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( {
-                                    avatarUrl3: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                    avatarID3: media.id
-                                } ) }
-                                value={ avatarID3 }
-                                render={ ( { open } ) => (
-                                    <div className="advgb-testimonial-avatar-group">
-                                        <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className="advgb-testimonial-avatar"
-                                                 onClick={ open }
-                                                 style={ {
-                                                     backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbAvatar.holder})`,
-                                                     backgroundColor: avatarColor,
-                                                     borderRadius: avatarBorderRadius + '%',
-                                                     borderWidth: avatarBorderWidth + 'px',
-                                                     borderColor: avatarBorderColor,
-                                                     width: avatarSize + 'px',
-                                                     height: avatarSize + 'px',
-                                                 } }
-                                            />
-                                        </Tooltip>
-                                        <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
-                                                  onClick={ () => setAttributes( { avatarUrl3: undefined, avatarID3: undefined } ) }
-                                            />
-                                        </Tooltip>
-                                    </div>
-                                ) }
-                            />
-                            <RichText
-                                tagName="h4"
-                                className="advgb-testimonial-name"
-                                value={ name3 }
-                                onChange={ (value) => setAttributes( { name3: value } ) }
-                                isSelected={ isSelected && currentEdit === 'name3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'name3' ) }
-                                style={ { color: nameColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName="p"
-                                className="advgb-testimonial-position"
-                                value={ position3 }
-                                onChange={ (value) => setAttributes( { position3: value } ) }
-                                isSelected={ isSelected && currentEdit === 'position3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'position3' ) }
-                                style={ { color: positionColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName="p"
-                                className="advgb-testimonial-desc"
-                                value={ desc3 }
-                                onChange={ (value) => setAttributes( { desc3: value } ) }
-                                isSelected={ isSelected && currentEdit === 'desc3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
-                                style={ { color: descColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                        </div>
-                        <div className="advgb-testimonial-columns-four">
-                            <MediaUpload
-                                allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( {
-                                    avatarUrl4: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                    avatarID4: media.id
-                                } ) }
-                                value={ avatarID4 }
-                                render={ ( { open } ) => (
-                                    <div className="advgb-testimonial-avatar-group">
-                                        <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className="advgb-testimonial-avatar"
-                                                 onClick={ open }
-                                                 style={ {
-                                                     backgroundImage: `url(${avatarUrl4 ? avatarUrl4 : advgbAvatar.holder})`,
-                                                     backgroundColor: avatarColor,
-                                                     borderRadius: avatarBorderRadius + '%',
-                                                     borderWidth: avatarBorderWidth + 'px',
-                                                     borderColor: avatarBorderColor,
-                                                     width: avatarSize + 'px',
-                                                     height: avatarSize + 'px',
-                                                 } }
-                                            />
-                                        </Tooltip>
-                                        <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
-                                                  onClick={ () => setAttributes( { avatarUrl4: undefined, avatarID4: undefined } ) }
-                                            />
-                                        </Tooltip>
-                                    </div>
-                                ) }
-                            />
-                            <RichText
-                                tagName="h4"
-                                className="advgb-testimonial-name"
-                                value={ name4 }
-                                onChange={ (value) => setAttributes( { name4: value } ) }
-                                isSelected={ isSelected && currentEdit === 'name4' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'name4' ) }
-                                style={ { color: nameColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName="p"
-                                className="advgb-testimonial-position"
-                                value={ position4 }
-                                onChange={ (value) => setAttributes( { position4: value } ) }
-                                isSelected={ isSelected && currentEdit === 'position4' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'position4' ) }
-                                style={ { color: positionColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName="p"
-                                className="advgb-testimonial-desc"
-                                value={ desc4 }
-                                onChange={ (value) => setAttributes( { desc4: value } ) }
-                                isSelected={ isSelected && currentEdit === 'desc4' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc4' ) }
-                                style={ { color: descColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                        </div>
+                        {items.map( (item, idx) => {
+                            i++;
+                            if (i > validCols) return false;
+                            return (
+                                <div className="advgb-testimonial-item" key={idx}>
+                                    <MediaUpload
+                                        allowedTypes={ ["image"] }
+                                        onSelect={ (media) => this.updateItems(idx, {
+                                            avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                            avatarID: media.id
+                                        } ) }
+                                        value={ item.avatarID }
+                                        render={ ( { open } ) => (
+                                            <div className="advgb-testimonial-avatar-group">
+                                                <Tooltip text={ __( 'Click to change avatar' ) }>
+                                                    <div className="advgb-testimonial-avatar"
+                                                         onClick={ open }
+                                                         style={ {
+                                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbAvatar.holder})`,
+                                                             backgroundColor: avatarColor,
+                                                             borderRadius: avatarBorderRadius + '%',
+                                                             borderWidth: avatarBorderWidth + 'px',
+                                                             borderColor: avatarBorderColor,
+                                                             width: avatarSize + 'px',
+                                                             height: avatarSize + 'px',
+                                                         } }
+                                                    />
+                                                </Tooltip>
+                                                <Tooltip text={ __( 'Remove avatar' ) }>
+                                                <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
+                                                      onClick={ () => this.updateItems(idx, { avatarUrl: undefined, avatarID: undefined } ) }
+                                                />
+                                                </Tooltip>
+                                            </div>
+                                        ) }
+                                    />
+                                    <RichText
+                                        tagName="h4"
+                                        className="advgb-testimonial-name"
+                                        value={ item.name }
+                                        isSelected={ isSelected && currentEdit === 'name' + idx }
+                                        unstableOnFocus={ () => this.setState( { currentEdit: 'name' + idx } ) }
+                                        onChange={ (value) => this.updateItems(idx, { name: value } ) }
+                                        style={ { color: nameColor } }
+                                        placeholder={ __( 'Text…' ) }
+                                    />
+                                    <RichText
+                                        tagName="p"
+                                        className="advgb-testimonial-position"
+                                        value={ item.position }
+                                        isSelected={ isSelected && currentEdit === 'pos' + idx }
+                                        unstableOnFocus={ () => this.setState( { currentEdit: 'pos' + idx } ) }
+                                        onChange={ (value) => this.updateItems(idx, { position: value } ) }
+                                        style={ { color: positionColor } }
+                                        placeholder={ __( 'Text…' ) }
+                                    />
+                                    <RichText
+                                        tagName="p"
+                                        className="advgb-testimonial-desc"
+                                        value={ item.desc }
+                                        isSelected={ isSelected && currentEdit === 'desc' + idx }
+                                        unstableOnFocus={ () => this.setState( { currentEdit: 'desc' + idx } ) }
+                                        onChange={ (value) => this.updateItems(idx, { desc: value } ) }
+                                        style={ { color: descColor } }
+                                        placeholder={ __( 'Text…' ) }
+                                    />
+                                </div>
+                        ) } ) }
                     </div>
                 </Fragment>
             )
