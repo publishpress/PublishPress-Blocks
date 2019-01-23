@@ -10993,10 +10993,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     var blockAttrsOld = {
-        sliderView: {
-            type: 'boolean',
-            default: false
-        },
         avatarUrl: {
             type: 'string',
             default: advgbAvatar.holder
@@ -11118,7 +11114,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'common',
         keywords: [__('testimonial'), __('personal'), __('about')],
-        attributes: {
+        attributes: _extends({}, blockAttrsOld, {
             items: {
                 type: 'array',
                 default: times(10, function () {
@@ -11134,42 +11130,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             sliderView: {
                 type: 'boolean',
                 default: false
-            },
-            avatarColor: {
-                type: 'string'
-            },
-            avatarBorderRadius: {
-                type: 'number',
-                default: 50
-            },
-            avatarBorderWidth: {
-                type: 'number'
-            },
-            avatarBorderColor: {
-                type: 'string'
-            },
-            avatarSize: {
-                type: 'number',
-                default: 70
-            },
-            nameColor: {
-                type: 'string'
-            },
-            positionColor: {
-                type: 'string'
-            },
-            descColor: {
-                type: 'string'
-            },
-            columns: {
-                type: 'number',
-                default: 1
-            },
-            changed: {
-                type: 'boolean',
-                default: false
             }
-        },
+        }),
         edit: AdvTestimonial,
         save: function save(_ref6) {
             var attributes = _ref6.attributes;
@@ -11204,7 +11166,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     desc: attributes.desc3
                 };
 
-                return _extends({
+                return _extends({}, attributes, {
                     items: [].concat(convertItems, _toConsumableArray(times(7, function () {
                         return {
                             avatarUrl: advgbAvatar.holder,
@@ -11214,7 +11176,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             desc: __('A little description about this person will show up here.')
                         };
                     })))
-                }, attributes);
+                });
             },
             save: AdvTestimonialSave
         }]

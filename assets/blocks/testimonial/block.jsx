@@ -597,10 +597,6 @@
     );
 
     const blockAttrsOld = {
-        sliderView: {
-            type: 'boolean',
-            default: false,
-        },
         avatarUrl: {
             type: 'string',
             default: advgbAvatar.holder,
@@ -723,6 +719,7 @@
         category: 'common',
         keywords: [ __( 'testimonial' ), __( 'personal' ), __( 'about' ) ],
         attributes: {
+            ...blockAttrsOld,
             items: {
                 type: 'array',
                 default: times(10, () => ( {
@@ -734,40 +731,6 @@
                 } ) ),
             },
             sliderView: {
-                type: 'boolean',
-                default: false,
-            },
-            avatarColor: {
-                type: 'string',
-            },
-            avatarBorderRadius: {
-                type: 'number',
-                default: 50,
-            },
-            avatarBorderWidth: {
-                type: 'number',
-            },
-            avatarBorderColor: {
-                type: 'string',
-            },
-            avatarSize: {
-                type: 'number',
-                default: 70,
-            },
-            nameColor: {
-                type: 'string',
-            },
-            positionColor: {
-                type: 'string'
-            },
-            descColor: {
-                type: 'string',
-            },
-            columns: {
-                type: 'number',
-                default: 1,
-            },
-            changed: {
                 type: 'boolean',
                 default: false,
             },
@@ -806,6 +769,7 @@
                     };
 
                     return {
+                        ... attributes,
                         items: [
                             ...convertItems,
                             ...times(7, () => ( {
@@ -816,7 +780,6 @@
                                 desc: __( 'A little description about this person will show up here.' ),
                             } ) ),
                         ],
-                        ... attributes,
                     };
                 },
                 save: AdvTestimonialSave,
