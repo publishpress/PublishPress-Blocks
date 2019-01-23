@@ -656,25 +656,6 @@ div.advgb-tab-body {
     text-align: center;
 }
 
-.advgb-column-1 .advgb-testimonial-columns-two,
-.advgb-column-1 .advgb-testimonial-columns-three,
-.advgb-column-1 .advgb-testimonial-columns-four {
-    display: none;
-}
-
-.advgb-column-2 .advgb-testimonial-columns-three,
-.advgb-column-2 .advgb-testimonial-columns-four {
-    display: none;
-}
-
-.advgb-testimonial .advgb-testimonial-columns-four {
-    display: none;
-}
-
-.advgb-testimonial.slider-view .advgb-testimonial-columns-four {
-    display: block;
-}
-
 .advgb-testimonial .advgb-testimonial-avatar-group {
     position: relative;
 }
