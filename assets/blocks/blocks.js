@@ -1641,12 +1641,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AdvList() {
             _classCallCheck(this, AdvList);
 
-            var _this = _possibleConstructorReturn(this, (AdvList.__proto__ || Object.getPrototypeOf(AdvList)).apply(this, arguments));
-
-            _this.getEditorSettings = _this.getEditorSettings.bind(_this);
-            _this.setupEditor = _this.setupEditor.bind(_this);
-            _this.setNextValues = _this.setNextValues.bind(_this);
-            return _this;
+            return _possibleConstructorReturn(this, (AdvList.__proto__ || Object.getPrototypeOf(AdvList)).apply(this, arguments));
         }
 
         _createClass(AdvList, [{
@@ -1684,37 +1679,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         id: 'advgblist-' + clientId
                     });
                 }
-            }
-        }, {
-            key: 'getEditorSettings',
-            value: function getEditorSettings(editorSettings) {
-                return _extends({}, editorSettings, {
-                    plugins: (editorSettings.plugins || []).concat('lists'),
-                    lists_indent_on_tab: false
-                });
-            }
-        }, {
-            key: 'setupEditor',
-            value: function setupEditor(editor) {
-                // this checks for languages that do not typically have square brackets on their keyboards
-                var lang = window.navigator.browserLanguage || window.navigator.language;
-                var keyboardHasSqBracket = !/^(?:fr|nl|sv|ru|de|es|it)/.test(lang);
-
-                if (keyboardHasSqBracket) {
-                    // keycode 219 = '[' and keycode 221 = ']'
-                    editor.shortcuts.add('meta+219', 'Decrease indent', 'Outdent');
-                    editor.shortcuts.add('meta+221', 'Increase indent', 'Indent');
-                } else {
-                    editor.shortcuts.add('meta+shift+m', 'Decrease indent', 'Outdent');
-                    editor.shortcuts.add('meta+m', 'Increase indent', 'Indent');
-                }
-
-                this.editor = editor;
-            }
-        }, {
-            key: 'setNextValues',
-            value: function setNextValues(nextValues) {
-                this.props.setAttributes({ values: nextValues });
             }
         }, {
             key: 'render',
@@ -1869,9 +1833,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(RichText, {
                         multiline: 'li',
                         tagName: 'ul',
-                        unstableGetSettings: this.getEditorSettings,
-                        unstableOnSetup: this.setupEditor,
-                        onChange: this.setNextValues,
+                        onChange: function onChange(value) {
+                            return setAttributes({ values: value });
+                        },
                         value: values,
                         wrapperClassName: 'advgb-list-item',
                         className: listClassName,
