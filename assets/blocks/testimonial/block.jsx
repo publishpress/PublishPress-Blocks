@@ -46,11 +46,11 @@
         }
 
         componentWillUpdate(nextProps) {
-            const { sliderView: nextView } = nextProps.attributes;
+            const { sliderView: nextView, columns: nextColumns } = nextProps.attributes;
             const { attributes, clientId } = this.props;
-            const { sliderView } = attributes;
+            const { sliderView, columns } = attributes;
 
-            if (nextView !== sliderView) {
+            if (nextView !== sliderView || nextColumns !== columns) {
                 if (sliderView) {
                     jQuery(`#block-${clientId} .advgb-testimonial.slick-initialized`).slick('unslick');
                     jQuery(`#block-${clientId} .advgb-testimonial`)
@@ -62,11 +62,11 @@
         }
 
         componentDidUpdate(prevProps) {
-            const { sliderView: prevView } = prevProps.attributes;
+            const { sliderView: prevView, columns: prevColumns } = prevProps.attributes;
             const { attributes, clientId } = this.props;
-            const { sliderView } = attributes;
+            const { sliderView, columns } = attributes;
 
-            if (sliderView !== prevView) {
+            if (sliderView !== prevView || columns !== prevColumns) {
                 if (sliderView) {
                     jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({
                         infinite: true,
@@ -110,7 +110,6 @@
 
             const blockClass = [
                 'advgb-testimonial',
-                !sliderView && `advgb-column-${columns}`,
                 sliderView && 'slider-view',
             ].filter( Boolean ).join( ' ' );
 
@@ -139,6 +138,7 @@
                             />
                             <RangeControl
                                 label={ __( 'Columns' ) }
+                                help={ __( 'Columns range in Normal view is 1-3, and in Slider view is 4-10.' ) }
                                 min={ minCols }
                                 max={ maxCols }
                                 value={ columns }

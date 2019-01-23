@@ -734,11 +734,11 @@ button.advgb-testimonial-preview {
     opacity: 1;
 }
 
-.advgb-testimonial .slick-slide:not(.slick-current) >*:not(.advgb-testimonial-avatar-group) {
+.advgb-testimonial .slick-slide:not(.slick-current) > div:not(.advgb-testimonial-avatar-group) {
     visibility: hidden;
 }
 
-.advgb-testimonial .slick-slide.slick-current >*:not(.advgb-testimonial-avatar-group) {
+.advgb-testimonial .slick-slide.slick-current > div:not(.advgb-testimonial-avatar-group) {
     margin-left: -100px;
     margin-right: -100px;
     margin-top: 1em;

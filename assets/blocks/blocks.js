@@ -10284,14 +10284,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'componentWillUpdate',
             value: function componentWillUpdate(nextProps) {
-                var nextView = nextProps.attributes.sliderView;
+                var _nextProps$attributes = nextProps.attributes,
+                    nextView = _nextProps$attributes.sliderView,
+                    nextColumns = _nextProps$attributes.columns;
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     clientId = _props3.clientId;
-                var sliderView = attributes.sliderView;
+                var sliderView = attributes.sliderView,
+                    columns = attributes.columns;
 
 
-                if (nextView !== sliderView) {
+                if (nextView !== sliderView || nextColumns !== columns) {
                     if (sliderView) {
                         jQuery('#block-' + clientId + ' .advgb-testimonial.slick-initialized').slick('unslick');
                         jQuery('#block-' + clientId + ' .advgb-testimonial').removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
@@ -10301,14 +10304,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
-                var prevView = prevProps.attributes.sliderView;
+                var _prevProps$attributes = prevProps.attributes,
+                    prevView = _prevProps$attributes.sliderView,
+                    prevColumns = _prevProps$attributes.columns;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     clientId = _props4.clientId;
-                var sliderView = attributes.sliderView;
+                var sliderView = attributes.sliderView,
+                    columns = attributes.columns;
 
 
-                if (sliderView !== prevView) {
+                if (sliderView !== prevView || columns !== prevColumns) {
                     if (sliderView) {
                         jQuery('#block-' + clientId + ' .advgb-testimonial.slider-view').slick({
                             infinite: true,
@@ -10359,7 +10365,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columns = attributes.columns;
 
 
-                var blockClass = ['advgb-testimonial', !sliderView && 'advgb-column-' + columns, sliderView && 'slider-view'].filter(Boolean).join(' ');
+                var blockClass = ['advgb-testimonial', sliderView && 'slider-view'].filter(Boolean).join(' ');
 
                 var maxCols = sliderView ? 10 : 3;
                 var minCols = sliderView ? 4 : 1;
@@ -10393,6 +10399,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(RangeControl, {
                                 label: __('Columns'),
+                                help: __('Columns range in Normal view is 1-3, and in Slider view is 4-10.'),
                                 min: minCols,
                                 max: maxCols,
                                 value: columns,
