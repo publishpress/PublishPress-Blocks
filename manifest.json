@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "platform": "wordpress",
   "wp_version": "5.0.3",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,36 @@
     ]
   },
   "changelog": {
+    "1.10.0": [
+      {
+        "type": "feature",
+        "title": "New block: Newsletter"
+      },
+      {
+        "type": "feature",
+        "title": "New block: Container - A block for containing other blocks"
+      },
+      {
+        "type": "feature",
+        "title": "Integrate Google reCaptcha in Newsletter and Contact Form block"
+      },
+      {
+        "type": "feature",
+        "title": "Custom map styles for Maps block"
+      },
+      {
+        "type": "feature",
+        "title": "New Testimonial block style: Slider - with more items"
+      },
+      {
+        "type": "fix",
+        "title": "Cannot use too small image as Map custom marker"
+      },
+      {
+        "type": "fix",
+        "title": "Recent posts block extra classes not saved"
+      }
+    ],
     "1.9.1": [
       {
         "type": "fix",
