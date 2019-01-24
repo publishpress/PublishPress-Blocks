@@ -10321,10 +10321,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     validCols = 1;
                 } else if (columns > 3 && !sliderView) {
                     validCols = 3;
+                    setAttributes({ columns: 3 });
                 } else if (columns < 4 && sliderView) {
                     validCols = 4;
+                    setAttributes({ columns: 4 });
                 } else if (columns > 10) {
                     validCols = 10;
+                    setAttributes({ columns: 10 });
                 }
 
                 return React.createElement(
