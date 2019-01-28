@@ -356,6 +356,7 @@ float: left;'
                 return $tag;
             }
         }
+        add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
 
         $saved_settings = get_option('advgb_settings');
         if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
@@ -363,7 +364,6 @@ float: left;'
                 'advgb_map_api',
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
             );
-            add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
         }
 
         $recaptcha_config = get_option('advgb_recaptcha_config');
