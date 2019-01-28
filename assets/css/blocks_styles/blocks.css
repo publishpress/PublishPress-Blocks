@@ -4,6 +4,10 @@
     clear: both;
 }
 
+#editor .editor-inner-blocks .wp-block {
+    max-width: unset;
+}
+
 /*Accordion block styles*/
 #editor .advgb-accordion-block .advgb-accordion-header p.mce-content-body,
 #editor .advgb-accordion-block .advgb-accordion-body p.mce-content-body {
