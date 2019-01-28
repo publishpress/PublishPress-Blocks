@@ -317,7 +317,7 @@ float: left;'
      */
     public function addEditorAndFrontendStyles()
     {
-        $custom_styles_url = wp_upload_dir();
+        $custom_styles_url = wp_get_upload_dir();
         $custom_styles_url = $custom_styles_url['baseurl'] . '/advgb/';
         wp_enqueue_style(
             'advgb_custom_styles',
