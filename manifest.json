@@ -68,6 +68,12 @@
         "title": "Recent posts block extra classes not saved"
       }
     ],
+    "1.9.2": [
+      {
+        "type": "fix",
+        "title": "Cannot save Recent Posts block inside Columns"
+      }
+    ],
     "1.9.1": [
       {
         "type": "fix",
