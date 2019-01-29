@@ -1195,7 +1195,8 @@ button.advgb-form-submit:hover:after {
 
 /*Newsletter block*/
 .advgb-newsletter {
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .advgb-newsletter .advgb-form-submit-wrapper,
