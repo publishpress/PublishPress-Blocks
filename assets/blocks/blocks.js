@@ -7508,6 +7508,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     emailLabel = attributes.emailLabel,
                     submitLabel = attributes.submitLabel,
                     successLabel = attributes.successLabel,
+                    alertLabel = attributes.alertLabel,
                     bgColor = attributes.bgColor,
                     textColor = attributes.textColor,
                     borderColor = attributes.borderColor,
@@ -7597,6 +7598,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     value: submitLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitLabel: value });
+                                    }
+                                }),
+                                React.createElement(TextControl, {
+                                    label: __('Empty field warning text'),
+                                    value: alertLabel,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ alertLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
@@ -7833,6 +7841,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             successLabel: {
                 type: 'string'
             },
+            alertLabel: {
+                type: 'string'
+            },
             bgColor: {
                 type: 'string'
             },
@@ -7872,6 +7883,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 emailLabel = attributes.emailLabel,
                 submitLabel = attributes.submitLabel,
                 successLabel = attributes.successLabel,
+                alertLabel = attributes.alertLabel,
                 bgColor = attributes.bgColor,
                 textColor = attributes.textColor,
                 borderColor = attributes.borderColor,
@@ -7910,6 +7922,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-form-submit",
                                     type: "submit",
                                     "data-success": successLabel ? successLabel : undefined,
+                                    "data-alert": alertLabel ? alertLabel : undefined,
                                     style: {
                                         borderColor: submitColor,
                                         color: submitColor,
@@ -7977,6 +7990,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-form-submit",
                                     type: "submit",
                                     "data-success": successLabel ? successLabel : undefined,
+                                    "data-alert": alertLabel ? alertLabel : undefined,
                                     style: {
                                         borderColor: submitColor,
                                         color: submitColor,

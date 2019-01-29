@@ -25,7 +25,9 @@ jQuery(document).ready(function ($) {
         if (typeof email !== "undefined") email = email.trim();
 
         if (firstName === '' || lastName === '' || email === '') {
-            alert('You need to fill all fields!');
+            var alertText = $thisForm.find('.advgb-form-submit').data('alert');
+            alertText = alertText ? alertText : 'You need to fill all fields!';
+            alert(alertText);
             return false;
         }
 
