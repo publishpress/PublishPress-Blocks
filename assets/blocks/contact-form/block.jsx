@@ -25,6 +25,7 @@
                 msgLabel,
                 submitLabel,
                 successLabel,
+                alertLabel,
                 bgColor,
                 textColor,
                 borderColor,
@@ -74,6 +75,11 @@
                                     label={ __( 'Submit text' ) }
                                     value={ submitLabel }
                                     onChange={ (value) => setAttributes( { submitLabel: value } ) }
+                                />
+                                <TextControl
+                                    label={ __( 'Empty field warning text' ) }
+                                    value={ alertLabel }
+                                    onChange={ (value) => setAttributes( { alertLabel: value } ) }
                                 />
                                 <TextControl
                                     label={ __( 'Submit success text' ) }
@@ -239,6 +245,9 @@
         successLabel: {
             type: 'string',
         },
+        alertLabel: {
+            type: 'string',
+        },
         bgColor: {
             type: 'string',
         },
@@ -291,6 +300,7 @@
                 msgLabel,
                 submitLabel,
                 successLabel,
+                alertLabel,
                 bgColor,
                 textColor,
                 borderColor,
@@ -352,6 +362,7 @@
                             <button className="advgb-form-submit"
                                     type="submit"
                                     data-success={ successLabel ? successLabel : undefined }
+                                    data-alert={ alertLabel ? alertLabel : undefined }
                                     style={ {
                                         borderColor: submitColor,
                                         color: submitColor,

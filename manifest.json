@@ -41,15 +41,19 @@
     "1.10.0": [
       {
         "type": "feature",
-        "title": "New block: Newsletter"
-      },
-      {
-        "type": "feature",
         "title": "New block: Container - A block for containing other blocks"
       },
       {
         "type": "feature",
+        "title": "New block: Newsletter"
+      },
+      {
+        "type": "feature",
         "title": "Integrate Google reCaptcha in Newsletter and Contact Form block"
+      },
+      {
+        "type": "feature",
+        "title": "Custom label for Newsletter and Contact Form block"
       },
       {
         "type": "feature",
@@ -65,7 +69,23 @@
       },
       {
         "type": "fix",
+        "title": "Social icons block can not render properly in some rare cases"
+      },
+      {
+        "type": "fix",
+        "title": "Testimonial block: Let br tag show correctly on front end"
+      },
+      {
+        "type": "fix",
+        "title": "Products block: Cannot show all products categories"
+      },
+      {
+        "type": "fix",
         "title": "Recent posts block extra classes not saved"
+      },
+      {
+        "type": "fix",
+        "title": "Add tooltip icon to the label that has tooltip"
       }
     ],
     "1.9.2": [

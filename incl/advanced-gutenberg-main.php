@@ -317,7 +317,7 @@ float: left;'
      */
     public function addEditorAndFrontendStyles()
     {
-        $custom_styles_url = wp_upload_dir();
+        $custom_styles_url = wp_get_upload_dir();
         $custom_styles_url = $custom_styles_url['baseurl'] . '/advgb/';
         wp_enqueue_style(
             'advgb_custom_styles',
@@ -356,6 +356,7 @@ float: left;'
                 return $tag;
             }
         }
+        add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
 
         $saved_settings = get_option('advgb_settings');
         if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
@@ -363,7 +364,6 @@ float: left;'
                 'advgb_map_api',
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
             );
-            add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
         }
 
         $recaptcha_config = get_option('advgb_recaptcha_config');
@@ -1853,9 +1853,10 @@ float: left;'
     {
         $advgb_block = array(
             'accordion', 'button', 'image', 'list',
-            'table', 'video', 'count-up', 'map',
-            'social-links', 'summary', 'tabs', 'testimonial',
-            'recent-posts', 'woo-products',
+            'table', 'video', 'contact-form', 'container',
+            'count-up','images-slider', 'map', 'newsletter',
+            'recent-posts', 'social-links', 'summary', 'tabs',
+            'testimonial', 'woo-products',
         );
 
         foreach ($advgb_block as $block) {
@@ -3147,6 +3148,14 @@ float: left;'
                     slidesToShow: 3,
                 })
             });');
+        }
+
+        if (strpos($content, 'advgb-testimonial') !== false) {
+            $content = preg_replace_callback(
+                '@<div[^>]*?advgb\-testimonial.*?(</p></div></div>)@s',
+                array($this, 'decodeHtmlEntity'),
+                $content
+            );
         }
 
         return $content;

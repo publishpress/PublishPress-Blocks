@@ -26,10 +26,12 @@
 }
 
 .advgb_qtip:after {
-    content: "\f223";
-    font-family: dashicons;
-    font-size: 18px;
+    content: "\e0cb";
+    font-family: 'Material Icons';
+    font-size: 14px;
     vertical-align: sub;
+    margin-left: 5px;
+    color: inherit;
 }
 
 /*Search input styles*/

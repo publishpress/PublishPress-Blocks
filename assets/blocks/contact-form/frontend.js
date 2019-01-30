@@ -16,7 +16,9 @@ jQuery(document).ready(function ($) {
         var submitDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' - ' + date.getHours() + ':' + date.getMinutes();
 
         if (contactName === '' || contactEmail === '' || contactMsg === '') {
-            alert('You need to fill all fields!');
+            var alertText = $thisForm.find('.advgb-form-submit').data('alert');
+            alertText = alertText ? alertText : 'You need to fill all fields!';
+            alert(alertText);
             return false;
         }
 
