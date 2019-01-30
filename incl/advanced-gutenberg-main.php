@@ -1853,9 +1853,10 @@ float: left;'
     {
         $advgb_block = array(
             'accordion', 'button', 'image', 'list',
-            'table', 'video', 'count-up', 'map',
-            'social-links', 'summary', 'tabs', 'testimonial',
-            'recent-posts', 'woo-products',
+            'table', 'video', 'contact-form', 'container',
+            'count-up','images-slider', 'map', 'newsletter',
+            'recent-posts', 'social-links', 'summary', 'tabs',
+            'testimonial', 'woo-products',
         );
 
         foreach ($advgb_block as $block) {
