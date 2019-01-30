@@ -3,7 +3,8 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpEditor;
-    const { RangeControl, PanelBody, Tooltip } = wpComponents;
+    const { RangeControl, ToggleControl, PanelBody, Tooltip } = wpComponents;
+    const { times } = lodash;
 
     class AdvTestimonial extends Component {
         constructor() {
@@ -30,48 +31,119 @@
             }
         }
 
-        handleSetup( editor, area ) {
-            editor.on( 'focus', () => this.setState( { currentEdit: area } ) );
+        componentDidMount() {
+            const { attributes, clientId } = this.props;
+            const { sliderView } = attributes;
+
+            if (sliderView) {
+                jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({
+                    infinite: true,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 3,
+                });
+            }
+        }
+
+        componentWillUpdate(nextProps) {
+            const { sliderView: nextView, columns: nextColumns } = nextProps.attributes;
+            const { attributes, clientId } = this.props;
+            const { sliderView, columns } = attributes;
+
+            if (nextView !== sliderView || nextColumns !== columns) {
+                if (sliderView) {
+                    jQuery(`#block-${clientId} .advgb-testimonial.slick-initialized`).slick('unslick');
+                    jQuery(`#block-${clientId} .advgb-testimonial`)
+                        .removeAttr('tabindex')
+                        .removeAttr('role')
+                        .removeAttr('aria-describedby');
+                }
+            }
+        }
+
+        componentDidUpdate(prevProps) {
+            const { sliderView: prevView, columns: prevColumns } = prevProps.attributes;
+            const { attributes, clientId } = this.props;
+            const { sliderView, columns } = attributes;
+
+            if (sliderView !== prevView || columns !== prevColumns) {
+                if (sliderView) {
+                    jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({
+                        infinite: true,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 3,
+                    });
+                }
+            }
+        }
+
+        updateItems(idx, data) {
+            const { attributes, setAttributes } = this.props;
+            const { items } = attributes;
+
+            const newItems = items.map( (item, index) => {
+                if (idx === index) item = { ...item, ...data };
+
+                return item;
+            } );
+
+            setAttributes( { items: newItems } );
         }
 
         render() {
             const { currentEdit } = this.state;
             const { attributes, setAttributes, isSelected } = this.props;
             const {
-                avatarUrl,
-                avatarID,
-                avatarUrl2,
-                avatarID2,
-                avatarUrl3,
-                avatarID3,
+                items,
+                sliderView,
                 avatarColor,
                 avatarBorderRadius,
                 avatarBorderWidth,
                 avatarBorderColor,
                 avatarSize,
-                name,
-                name2,
-                name3,
                 nameColor,
-                position,
-                position2,
-                position3,
                 positionColor,
-                desc,
-                desc2,
-                desc3,
                 descColor,
                 columns,
             } = attributes;
+
+            const blockClass = [
+                'advgb-testimonial',
+                sliderView && 'slider-view',
+            ].filter( Boolean ).join( ' ' );
+
+            const maxCols  = sliderView ? 10 : 3;
+            const minCols = sliderView ? 4 : 1;
+            let i = 0;
+            let validCols = columns;
+            if (columns < 1) {
+                validCols = 1;
+            } else if (columns > 3 && !sliderView) {
+                validCols = 3;
+                setAttributes( { columns: 3 } );
+            } else if (columns < 4 && sliderView) {
+                validCols = 4;
+                setAttributes( { columns: 4 } );
+            } else if (columns > 10) {
+                validCols = 10;
+                setAttributes( { columns: 10 } );
+            }
 
             return (
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Testimonial Settings' ) }>
+                            <ToggleControl
+                                label={ __( 'Slider view' ) }
+                                checked={ sliderView }
+                                onChange={ () => setAttributes( { sliderView: !sliderView } ) }
+                            />
                             <RangeControl
                                 label={ __( 'Columns' ) }
-                                min={ 1 }
-                                max={ 3 }
+                                help={ __( 'Columns range in Normal view is 1-3, and in Slider view is 4-10.' ) }
+                                min={ minCols }
+                                max={ maxCols }
                                 value={ columns }
                                 onChange={ (value) => setAttributes( { columns: value } ) }
                             />
@@ -137,187 +209,75 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className={`advgb-testimonial advgb-column-${columns}`}>
-                        <div className="advgb-testimonial-columns-one">
-                            <MediaUpload
-                                allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( { avatarUrl: media.sizes.thumbnail.url, avatarID: media.id } ) }
-                                value={ avatarID }
-                                render={ ( { open } ) => (
-                                    <div className={ 'advgb-testimonial-avatar-group' }>
-                                        <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className={ 'advgb-testimonial-avatar' }
-                                                 onClick={ open }
-                                                 style={ {
-                                                     backgroundImage: `url(${avatarUrl ? avatarUrl : advgbAvatar.holder})`,
-                                                     backgroundColor: avatarColor,
-                                                     borderRadius: avatarBorderRadius + '%',
-                                                     borderWidth: avatarBorderWidth + 'px',
-                                                     borderColor: avatarBorderColor,
-                                                     width: avatarSize + 'px',
-                                                     height: avatarSize + 'px',
-                                                 } }
-                                            />
-                                        </Tooltip>
-                                        <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
-                                                  onClick={ () => setAttributes( { avatarUrl: undefined, avatarID: undefined } ) }
-                                            />
-                                        </Tooltip>
-                                    </div>
-                                ) }
-                            />
-                            <RichText
-                                tagName={ 'h4' }
-                                className={ 'advgb-testimonial-name' }
-                                value={ name }
-                                onChange={ (value) => setAttributes( { name: value } ) }
-                                isSelected={ isSelected && currentEdit === 'name' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'name' ) }
-                                style={ { color: nameColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-position' }
-                                value={ position }
-                                onChange={ (value) => setAttributes( { position: value } ) }
-                                isSelected={ isSelected && currentEdit === 'position' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'position' ) }
-                                style={ { color: positionColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-desc' }
-                                value={ desc }
-                                onChange={ (value) => setAttributes( { desc: value } ) }
-                                isSelected={ isSelected && currentEdit === 'desc' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc' ) }
-                                style={ { color: descColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                        </div>
-                        <div className="advgb-testimonial-columns-two">
-                            <MediaUpload
-                                allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( { avatarUrl2: media.sizes.thumbnail.url, avatarID2: media.id } ) }
-                                value={ avatarID2 }
-                                render={ ( { open } ) => (
-                                    <div className={ 'advgb-testimonial-avatar-group' }>
-                                        <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className={ 'advgb-testimonial-avatar' }
-                                                 onClick={ open }
-                                                 style={ {
-                                                     backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbAvatar.holder})`,
-                                                     backgroundColor: avatarColor,
-                                                     borderRadius: avatarBorderRadius + '%',
-                                                     borderWidth: avatarBorderWidth + 'px',
-                                                     borderColor: avatarBorderColor,
-                                                     width: avatarSize + 'px',
-                                                     height: avatarSize + 'px',
-                                                 } }
-                                            />
-                                        </Tooltip>
-                                        <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
-                                                  onClick={ () => setAttributes( { avatarUrl2: undefined, avatarID2: undefined } ) }
-                                            />
-                                        </Tooltip>
-                                    </div>
-                                ) }
-                            />
-                            <RichText
-                                tagName={ 'h4' }
-                                className={ 'advgb-testimonial-name' }
-                                value={ name2 }
-                                onChange={ (value) => setAttributes( { name2: value } ) }
-                                isSelected={ isSelected && currentEdit === 'name2' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'name2' ) }
-                                style={ { color: nameColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-position' }
-                                value={ position2 }
-                                onChange={ (value) => setAttributes( { position2: value } ) }
-                                isSelected={ isSelected && currentEdit === 'position2' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'position2' ) }
-                                style={ { color: positionColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-desc' }
-                                value={ desc2 }
-                                onChange={ (value) => setAttributes( { desc2: value } ) }
-                                isSelected={ isSelected && currentEdit === 'desc2' }
-                                unstableOnSetup={ ( editor ) => this.handleSetup( editor, 'desc2' ) }
-                                style={ { color: descColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                        </div>
-                        <div className="advgb-testimonial-columns-three">
-                            <MediaUpload
-                                allowedTypes={ ["image"] }
-                                onSelect={ (media) => setAttributes( { avatarUrl3: media.sizes.thumbnail.url, avatarID3: media.id } ) }
-                                value={ avatarID3 }
-                                render={ ( { open } ) => (
-                                    <div className={ 'advgb-testimonial-avatar-group' }>
-                                        <Tooltip text={ __( 'Click to change avatar' ) }>
-                                            <div className={ 'advgb-testimonial-avatar' }
-                                                 onClick={ open }
-                                                 style={ {
-                                                     backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbAvatar.holder})`,
-                                                     backgroundColor: avatarColor,
-                                                     borderRadius: avatarBorderRadius + '%',
-                                                     borderWidth: avatarBorderWidth + 'px',
-                                                     borderColor: avatarBorderColor,
-                                                     width: avatarSize + 'px',
-                                                     height: avatarSize + 'px',
-                                                 } }
-                                            />
-                                        </Tooltip>
-                                        <Tooltip text={ __( 'Remove avatar' ) }>
-                                            <span className={ 'dashicons dashicons-no advgb-testimonial-avatar-clear' }
-                                                  onClick={ () => setAttributes( { avatarUrl3: undefined, avatarID3: undefined } ) }
-                                            />
-                                        </Tooltip>
-                                    </div>
-                                ) }
-                            />
-                            <RichText
-                                tagName={ 'h4' }
-                                className={ 'advgb-testimonial-name' }
-                                value={ name3 }
-                                onChange={ (value) => setAttributes( { name3: value } ) }
-                                isSelected={ isSelected && currentEdit === 'name3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'name3' ) }
-                                style={ { color: nameColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-position' }
-                                value={ position3 }
-                                onChange={ (value) => setAttributes( { position3: value } ) }
-                                isSelected={ isSelected && currentEdit === 'position3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'position3' ) }
-                                style={ { color: positionColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                            <RichText
-                                tagName={ 'p' }
-                                className={ 'advgb-testimonial-desc' }
-                                value={ desc3 }
-                                onChange={ (value) => setAttributes( { desc3: value } ) }
-                                isSelected={ isSelected && currentEdit === 'desc3' }
-                                onSetup={ ( editor ) => this.handleSetup( editor, 'desc3' ) }
-                                style={ { color: descColor } }
-                                placeholder={ __( 'Text…' ) }
-                            />
-                        </div>
+                    <div className={ blockClass }>
+                        {items.map( (item, idx) => {
+                            i++;
+                            if (i > validCols) return false;
+                            return (
+                                <div className="advgb-testimonial-item" key={idx}>
+                                    <MediaUpload
+                                        allowedTypes={ ["image"] }
+                                        onSelect={ (media) => this.updateItems(idx, {
+                                            avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                            avatarID: media.id
+                                        } ) }
+                                        value={ item.avatarID }
+                                        render={ ( { open } ) => (
+                                            <div className="advgb-testimonial-avatar-group">
+                                                <Tooltip text={ __( 'Click to change avatar' ) }>
+                                                    <div className="advgb-testimonial-avatar"
+                                                         onClick={ open }
+                                                         style={ {
+                                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbAvatar.holder})`,
+                                                             backgroundColor: avatarColor,
+                                                             borderRadius: avatarBorderRadius + '%',
+                                                             borderWidth: avatarBorderWidth + 'px',
+                                                             borderColor: avatarBorderColor,
+                                                             width: avatarSize + 'px',
+                                                             height: avatarSize + 'px',
+                                                         } }
+                                                    />
+                                                </Tooltip>
+                                                <Tooltip text={ __( 'Remove avatar' ) }>
+                                                <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
+                                                      onClick={ () => this.updateItems(idx, { avatarUrl: undefined, avatarID: undefined } ) }
+                                                />
+                                                </Tooltip>
+                                            </div>
+                                        ) }
+                                    />
+                                    <RichText
+                                        tagName="h4"
+                                        className="advgb-testimonial-name"
+                                        value={ item.name }
+                                        isSelected={ isSelected && currentEdit === 'name' + idx }
+                                        unstableOnFocus={ () => this.setState( { currentEdit: 'name' + idx } ) }
+                                        onChange={ (value) => this.updateItems(idx, { name: value } ) }
+                                        style={ { color: nameColor } }
+                                        placeholder={ __( 'Text…' ) }
+                                    />
+                                    <RichText
+                                        tagName="p"
+                                        className="advgb-testimonial-position"
+                                        value={ item.position }
+                                        isSelected={ isSelected && currentEdit === 'pos' + idx }
+                                        unstableOnFocus={ () => this.setState( { currentEdit: 'pos' + idx } ) }
+                                        onChange={ (value) => this.updateItems(idx, { position: value } ) }
+                                        style={ { color: positionColor } }
+                                        placeholder={ __( 'Text…' ) }
+                                    />
+                                    <RichText
+                                        tagName="p"
+                                        className="advgb-testimonial-desc"
+                                        value={ item.desc }
+                                        isSelected={ isSelected && currentEdit === 'desc' + idx }
+                                        unstableOnFocus={ () => this.setState( { currentEdit: 'desc' + idx } ) }
+                                        onChange={ (value) => this.updateItems(idx, { desc: value } ) }
+                                        style={ { color: descColor } }
+                                        placeholder={ __( 'Text…' ) }
+                                    />
+                                </div>
+                        ) } ) }
                     </div>
                 </Fragment>
             )
@@ -346,14 +306,14 @@
             desc2,
             desc3,
             descColor,
-            columns,
+            columns
         } = attributes;
 
         return (
-            <div className={ 'advgb-testimonial' }>
-                <div className={ 'advgb-testimonial-columns-one' }>
-                    <div className={ 'advgb-testimonial-avatar-group' }>
-                        <div className={ 'advgb-testimonial-avatar' }
+            <div className="advgb-testimonial">
+                <div className="advgb-testimonial-columns-one">
+                    <div className="advgb-testimonial-avatar-group">
+                        <div className="advgb-testimonial-avatar"
                              style={ {
                                  backgroundImage: `url(${avatarUrl ? avatarUrl : advgbAvatar.holder})`,
                                  backgroundColor: avatarColor,
@@ -365,26 +325,26 @@
                              } }
                         />
                     </div>
-                    <h4 className={ 'advgb-testimonial-name' }
+                    <h4 className="advgb-testimonial-name"
                         style={ { color: nameColor } }
                     >
                         { name }
                     </h4>
-                    <p className={ 'advgb-testimonial-position' }
+                    <p className="advgb-testimonial-position"
                        style={ { color: positionColor } }
                     >
                         { position }
                     </p>
-                    <p className={ 'advgb-testimonial-desc' }
+                    <p className="advgb-testimonial-desc"
                        style={ { color: descColor } }
                     >
                         { desc }
                     </p>
                 </div>
-                {parseInt(columns) > 1 && (
-                    <div className={ 'advgb-testimonial-columns-two' }>
-                        <div className={ 'advgb-testimonial-avatar-group' }>
-                            <div className={ 'advgb-testimonial-avatar' }
+                {(parseInt(columns) > 1) && (
+                    <div className="advgb-testimonial-columns-two">
+                        <div className="advgb-testimonial-avatar-group">
+                            <div className="advgb-testimonial-avatar"
                                  style={ {
                                      backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbAvatar.holder})`,
                                      backgroundColor: avatarColor,
@@ -396,27 +356,27 @@
                                  } }
                             />
                         </div>
-                        <h4 className={ 'advgb-testimonial-name' }
+                        <h4 className="advgb-testimonial-name"
                             style={ { color: nameColor } }
                         >
                             { name2 }
                         </h4>
-                        <p className={ 'advgb-testimonial-position' }
+                        <p className="advgb-testimonial-position"
                            style={ { color: positionColor } }
                         >
                             { position2 }
                         </p>
-                        <p className={ 'advgb-testimonial-desc' }
+                        <p className="advgb-testimonial-desc"
                            style={ { color: descColor } }
                         >
                             { desc2 }
                         </p>
                     </div>
                 ) }
-                {parseInt(columns) > 2 && (
-                    <div className={ 'advgb-testimonial-columns-two' }>
-                        <div className={ 'advgb-testimonial-avatar-group' }>
-                            <div className={ 'advgb-testimonial-avatar' }
+                {(parseInt(columns) > 2) && (
+                    <div className="advgb-testimonial-columns-two">
+                        <div className="advgb-testimonial-avatar-group">
+                            <div className="advgb-testimonial-avatar"
                                  style={ {
                                      backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbAvatar.holder})`,
                                      backgroundColor: avatarColor,
@@ -428,17 +388,17 @@
                                  } }
                             />
                         </div>
-                        <h4 className={ 'advgb-testimonial-name' }
+                        <h4 className="advgb-testimonial-name"
                             style={ { color: nameColor } }
                         >
                             { name3 }
                         </h4>
-                        <p className={ 'advgb-testimonial-position' }
+                        <p className="advgb-testimonial-position"
                            style={ { color: positionColor } }
                         >
                             { position3 }
                         </p>
-                        <p className={ 'advgb-testimonial-desc' }
+                        <p className="advgb-testimonial-desc"
                            style={ { color: descColor } }
                         >
                             { desc3 }
@@ -456,6 +416,119 @@
         </svg>
     );
 
+    const blockAttrsOld = {
+        avatarUrl: {
+            type: 'string',
+            default: advgbAvatar.holder,
+        },
+        avatarID: {
+            type: 'number',
+        },
+        avatarUrl2: {
+            type: 'string',
+            default: advgbAvatar.holder,
+        },
+        avatarID2: {
+            type: 'number',
+        },
+        avatarUrl3: {
+            type: 'string',
+            default: advgbAvatar.holder,
+        },
+        avatarID3: {
+            type: 'number',
+        },
+        avatarUrl4: {
+            type: 'string',
+            default: advgbAvatar.holder,
+        },
+        avatarID4: {
+            type: 'number',
+        },
+        avatarColor: {
+            type: 'string',
+        },
+        avatarBorderRadius: {
+            type: 'number',
+            default: 50,
+        },
+        avatarBorderWidth: {
+            type: 'number',
+        },
+        avatarBorderColor: {
+            type: 'string',
+        },
+        avatarSize: {
+            type: 'number',
+            default: 70,
+        },
+        name: {
+            type: 'string',
+            default: __( 'Person Name' ),
+        },
+        name2: {
+            type: 'string',
+            default: __( 'Person Name' ),
+        },
+        name3: {
+            type: 'string',
+            default: __( 'Person Name' ),
+        },
+        name4: {
+            type: 'string',
+            default: __( 'Person Name' ),
+        },
+        nameColor: {
+            type: 'string',
+        },
+        position: {
+            type: 'string',
+            default: __( 'Job Position' ),
+        },
+        position2: {
+            type: 'string',
+            default: __( 'Job Position' ),
+        },
+        position3: {
+            type: 'string',
+            default: __( 'Job Position' ),
+        },
+        position4: {
+            type: 'string',
+            default: __( 'Job Position' ),
+        },
+        positionColor: {
+            type: 'string'
+        },
+        desc: {
+            type: 'string',
+            default: __( 'A little description about this person will show up here.' ),
+        },
+        desc2: {
+            type: 'string',
+            default: __( 'A little description about this person will show up here.' ),
+        },
+        desc3: {
+            type: 'string',
+            default: __( 'A little description about this person will show up here.' ),
+        },
+        desc4: {
+            type: 'string',
+            default: __( 'A little description about this person will show up here.' ),
+        },
+        descColor: {
+            type: 'string',
+        },
+        columns: {
+            type: 'number',
+            default: 1,
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+    };
+
     registerBlockType( 'advgb/testimonial', {
         title: __( 'Testimonial' ),
         description: __( 'Block for creating personal or team/group information.' ),
@@ -466,99 +539,140 @@
         category: 'common',
         keywords: [ __( 'testimonial' ), __( 'personal' ), __( 'about' ) ],
         attributes: {
-            avatarUrl: {
-                type: 'string',
-                default: advgbAvatar.holder,
+            ...blockAttrsOld,
+            items: {
+                type: 'array',
+                default: times(10, () => ( {
+                    avatarUrl: advgbAvatar.holder,
+                    avatarID: undefined,
+                    name: __( 'Person Name' ),
+                    position: __( 'Job Position' ),
+                    desc: __( 'A little description about this person will show up here.' ),
+                } ) ),
             },
-            avatarID: {
-                type: 'number',
-            },
-            avatarUrl2: {
-                type: 'string',
-                default: advgbAvatar.holder,
-            },
-            avatarID2: {
-                type: 'number',
-            },
-            avatarUrl3: {
-                type: 'string',
-                default: advgbAvatar.holder,
-            },
-            avatarID3: {
-                type: 'number',
-            },
-            avatarColor: {
-                type: 'string',
-            },
-            avatarBorderRadius: {
-                type: 'number',
-                default: 50,
-            },
-            avatarBorderWidth: {
-                type: 'number',
-            },
-            avatarBorderColor: {
-                type: 'string',
-            },
-            avatarSize: {
-                type: 'number',
-                default: 70,
-            },
-            name: {
-                type: 'string',
-                default: __( 'Person Name' ),
-            },
-            name2: {
-                type: 'string',
-                default: __( 'Person Name' ),
-            },
-            name3: {
-                type: 'string',
-                default: __( 'Person Name' ),
-            },
-            nameColor: {
-                type: 'string',
-            },
-            position: {
-                type: 'string',
-                default: __( 'Job Position' ),
-            },
-            position2: {
-                type: 'string',
-                default: __( 'Job Position' ),
-            },
-            position3: {
-                type: 'string',
-                default: __( 'Job Position' ),
-            },
-            positionColor: {
-                type: 'string'
-            },
-            desc: {
-                type: 'string',
-                default: __( 'A little description about this person will show up here.' ),
-            },
-            desc2: {
-                type: 'string',
-                default: __( 'A little description about this person will show up here.' ),
-            },
-            desc3: {
-                type: 'string',
-                default: __( 'A little description about this person will show up here.' ),
-            },
-            descColor: {
-                type: 'string',
-            },
-            columns: {
-                type: 'number',
-                default: 1,
-            },
-            changed: {
+            sliderView: {
                 type: 'boolean',
                 default: false,
             },
         },
         edit: AdvTestimonial,
-        save: AdvTestimonialSave,
+        save: function ( { attributes } ) {
+            const {
+                items,
+                sliderView,
+                avatarColor,
+                avatarBorderRadius,
+                avatarBorderWidth,
+                avatarBorderColor,
+                avatarSize,
+                nameColor,
+                positionColor,
+                descColor,
+                columns,
+            } = attributes;
+
+            const blockClass = [
+                'advgb-testimonial',
+                sliderView && 'slider-view',
+            ].filter( Boolean ).join( ' ' );
+
+            let i = 0;
+            let validCols = columns;
+            if (columns < 1) {
+                validCols = 1;
+            } else if (columns > 3 && !sliderView) {
+                validCols = 3;
+            } else if (columns < 4 && sliderView) {
+                validCols = 4;
+            } else if (columns > 10) {
+                validCols = 10;
+            }
+
+            return (
+                <div className={ blockClass }>
+                    {items.map( (item, idx) => {
+                        i++;
+                        if (i > validCols) return false;
+                        return (
+                            <div className="advgb-testimonial-item" key={idx}>
+                                <div className="advgb-testimonial-avatar-group">
+                                    <div className="advgb-testimonial-avatar"
+                                         style={ {
+                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbAvatar.holder})`,
+                                             backgroundColor: avatarColor,
+                                             borderRadius: avatarBorderRadius + '%',
+                                             borderWidth: avatarBorderWidth + 'px',
+                                             borderColor: avatarBorderColor,
+                                             width: avatarSize + 'px',
+                                             height: avatarSize + 'px',
+                                         } }
+                                    />
+                                </div>
+                                <h4 className="advgb-testimonial-name"
+                                    style={ { color: nameColor } }
+                                >
+                                    { item.name }
+                                </h4>
+                                <p className="advgb-testimonial-position"
+                                   style={ { color: positionColor } }
+                                >
+                                    { item.position }
+                                </p>
+                                <p className="advgb-testimonial-desc"
+                                   style={ { color: descColor } }
+                                >
+                                    { item.desc }
+                                </p>
+                            </div>
+                        ) } ) }
+                </div>
+            );
+        },
+        deprecated: [
+            {
+                attributes: blockAttrsOld,
+                migrate: function( attributes ) {
+                    let convertItems = [];
+                    convertItems[0] = {
+                        avatarUrl: attributes.avatarUrl,
+                        avatarID: attributes.avatarID,
+                        name: attributes.name,
+                        position: attributes.position,
+                        desc: attributes.desc,
+                    };
+
+                    convertItems[1] = {
+                        avatarUrl: attributes.avatarUrl2,
+                        avatarID: attributes.avatarID2,
+                        name: attributes.name2,
+                        position: attributes.position2,
+                        desc: attributes.desc2,
+                    };
+
+                    convertItems[2] = {
+                        avatarUrl: attributes.avatarUrl3,
+                        avatarID: attributes.avatarID3,
+                        name: attributes.name3,
+                        position: attributes.position3,
+                        desc: attributes.desc3,
+                    };
+
+                    return {
+                        ... attributes,
+                        items: [
+                            ...convertItems,
+                            ...times(7, () => ( {
+                                avatarUrl: advgbAvatar.holder,
+                                avatarID: undefined,
+                                name: __( 'Person Name' ),
+                                position: __( 'Job Position' ),
+                                desc: __( 'A little description about this person will show up here.' ),
+                            } ) ),
+                        ],
+                    };
+                },
+                save: AdvTestimonialSave,
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );

@@ -114,7 +114,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                         <label for="gallery_lightbox_caption"
                                class="ju-setting-label advgb_qtip"
                                data-qtip="<?php esc_attr_e(
-                                   'Show images caption in lightbox.',
+                                   'Display caption text on images loaded as lightbox in galleries',
                                    'advanced-gutenberg'
                                ) ?>"
                         >
@@ -138,7 +138,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                                class="ju-setting-label advgb_qtip"
                                style="float: none; margin-bottom: 10px"
                                data-qtip="<?php esc_attr_e(
-                                   'This API key is required to using Map Block.',
+                                   'A Google API key is required to use the Map block without any warning.',
                                    'advanced-gutenberg'
                                ) ?>"
                         >
@@ -221,7 +221,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                                class="ju-setting-label advgb_qtip"
                                style="line-height: 50px"
                                data-qtip="<?php esc_attr_e(
-                                   'Set color for blocks that added by Advanced Gutenberg',
+                                   'Set color for blocks icons on admin, only apply to Advanced Gutenberg blocks',
                                    'advanced-gutenberg'
                                ) ?>"
                         >

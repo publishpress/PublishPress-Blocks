@@ -19,10 +19,19 @@
     text-transform: capitalize;
 }
 
-.qtip.advgb_qtip {
+.qtip.advgb-qtip {
     background: #000000;
     color: #ffffff;
     border: 1px solid #000000;
+}
+
+.advgb_qtip:after {
+    content: "\e0cb";
+    font-family: 'Material Icons';
+    font-size: 14px;
+    vertical-align: sub;
+    margin-left: 5px;
+    color: inherit;
 }
 
 /*Search input styles*/

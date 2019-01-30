@@ -164,6 +164,10 @@ function advgbRenderBlockRecentPosts($attributes)
         $blockClass = 'slider-view';
     }
 
+    if (isset($attributes['className'])) {
+        $blockClass .= ' ' . $attributes['className'];
+    }
+
     $blockHtml = sprintf(
         '<div class="advgb-recent-posts-block %2$s"><div class="advgb-recent-posts">%1$s</div></div>',
         $postHtml,

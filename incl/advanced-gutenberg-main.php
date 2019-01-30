@@ -150,6 +150,7 @@ float: left;'
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
         add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
         add_action('rest_api_init', array($this, 'registerRestAPI'));
+        add_action('admin_print_scripts', array($this, 'disableAllAdminNotices')); // Disable all admin notice for page belong to plugin
 
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbProfile'));
@@ -169,9 +170,33 @@ float: left;'
             add_action('wp_ajax_advgb_delete_profiles', array($this, 'deleteProfiles'));
             add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
             add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
+            add_action('wp_ajax_advgb_newsletter_save', array($this, 'saveNewsletterData'));
         } else {
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
+        }
+    }
+
+    /**
+     * Disable all admin notices in our page
+     *
+     * @return void
+     */
+    public function disableAllAdminNotices()
+    {
+        global $wp_filter;
+        // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- No action, nonce is not required
+        if ((!empty($_GET['page']) && in_array($_GET['page'], array('advgb_main')))) {
+            if (is_user_admin()) {
+                if (isset($wp_filter['user_admin_notices'])) {
+                    unset($wp_filter['user_admin_notices']);
+                }
+            } elseif (isset($wp_filter['admin_notices'])) {
+                unset($wp_filter['admin_notices']);
+            }
+            if (isset($wp_filter['all_admin_notices'])) {
+                unset($wp_filter['all_admin_notices']);
+            }
         }
     }
 
@@ -279,6 +304,10 @@ float: left;'
         $blocks_config_saved = get_option('advgb_blocks_default_config');
         $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
         wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
+
+        $recaptcha_config = get_option('advgb_recaptcha_config');
+        $recaptcha_config = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
+        wp_localize_script('wp-blocks', 'advgbGRC', array('enabled' => $recaptcha_config['recaptcha_enable']));
     }
 
     /**
@@ -288,7 +317,7 @@ float: left;'
      */
     public function addEditorAndFrontendStyles()
     {
-        $custom_styles_url = wp_upload_dir();
+        $custom_styles_url = wp_get_upload_dir();
         $custom_styles_url = $custom_styles_url['baseurl'] . '/advgb/';
         wp_enqueue_style(
             'advgb_custom_styles',
@@ -308,30 +337,53 @@ float: left;'
             );
         }
 
+        if (!function_exists('advgbAddScriptAttributes')) {
+            /**
+             * Add attributes to script tag
+             *
+             * @param string $tag    Script tag
+             * @param string $handle Handle name
+             *
+             * @return mixed
+             */
+            function advgbAddScriptAttributes($tag, $handle)
+            {
+                if ('advgb_map_api' === $handle) {
+                    return str_replace(' src', ' defer src', $tag);
+                } elseif ('advgb_recaptcha_js' === $handle) {
+                    return str_replace(' src', ' async defer src', $tag);
+                }
+                return $tag;
+            }
+        }
+        add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
+
         $saved_settings = get_option('advgb_settings');
         if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
             wp_enqueue_script(
                 'advgb_map_api',
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
             );
-            add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
+        }
 
-            if (!function_exists('advgbAddScriptAttributes')) {
-                /**
-                 * Add attributes to script tag
-                 *
-                 * @param string $tag    Script tag
-                 * @param string $handle Handle name
-                 *
-                 * @return mixed
-                 */
-                function advgbAddScriptAttributes($tag, $handle)
-                {
-                    if ('map_api' !== $handle) {
-                        return $tag;
-                    }
-                    return str_replace(' src', ' defer src', $tag);
-                }
+        $recaptcha_config = get_option('advgb_recaptcha_config');
+        if (!is_admin() && isset($recaptcha_config['recaptcha_enable']) && $recaptcha_config['recaptcha_enable']) {
+            $lang = $recaptcha_config['recaptcha_language'] ? '&hl='.$recaptcha_config['recaptcha_language'] : '';
+            wp_enqueue_script(
+                'advgb_recaptcha_js',
+                'https://www.google.com/recaptcha/api.js?onload=advgbRecaptchaInit&render=explicit' . $lang
+            );
+
+            if (isset($recaptcha_config['recaptcha_site_key']) && $recaptcha_config['recaptcha_site_key']) {
+                wp_enqueue_script(
+                    'advgb_recaptcha_init_js',
+                    plugins_url('assets/js/recaptcha.js', dirname(__FILE__))
+                );
+
+                wp_localize_script('advgb_recaptcha_init_js', 'advgbGRC', array(
+                    'site_key' => $recaptcha_config['recaptcha_site_key'],
+                    'theme' => $recaptcha_config['recaptcha_theme'],
+                ));
             }
         }
     }
@@ -970,6 +1022,22 @@ float: left;'
             return false;
         }
 
+        if (isset($_POST['captcha'])) {
+            $recaptcha_config  = get_option('advgb_recaptcha_config');
+            if (!isset($recaptcha_config['recaptcha_secret_key']) || !isset($recaptcha_config['recaptcha_site_key'])) {
+                wp_send_json(__('Server error. Try again later!', 'advanced-gutenberg'), 500);
+            }
+
+            $captcha = $_POST['captcha'];
+            $secret_key = $recaptcha_config['recaptcha_secret_key'];
+            $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha}");
+            $verified = json_decode($verify);
+
+            if (!$verified->success) {
+                wp_send_json(__('Captcha validation error', 'advanced-gutenberg'), 400);
+            }
+        }
+
         $contacts_saved = get_option('advgb_contacts_saved');
         if (!$contacts_saved) $contacts_saved = array();
 
@@ -1008,6 +1076,52 @@ float: left;'
         } else {
             wp_send_json(__('Error while sending form. Try again!', 'advanced-gutenberg'), 500);
         }
+        // phpcs:enable
+    }
+
+    /**
+     * Ajax for saving newsletter form data
+     *
+     * @return boolean,void     Return false if failure, echo json on success
+     */
+    public function saveNewsletterData()
+    {
+        // phpcs:disable -- WordPress.Security.NonceVerification.NoNonceVerification - frontend form, no nonce
+        if (!isset($_POST['action'])) {
+            wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
+            return false;
+        }
+
+        if (isset($_POST['captcha'])) {
+            $recaptcha_config  = get_option('advgb_recaptcha_config');
+            if (!isset($recaptcha_config['recaptcha_secret_key']) || !isset($recaptcha_config['recaptcha_site_key'])) {
+                wp_send_json(__('Server error. Try again later!', 'advanced-gutenberg'), 500);
+            }
+
+            $captcha = $_POST['captcha'];
+            $secret_key = $recaptcha_config['recaptcha_secret_key'];
+            $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha}");
+            $verified = json_decode($verify);
+
+            if (!$verified->success) {
+                wp_send_json(__('Captcha validation error', 'advanced-gutenberg'), 400);
+            }
+        }
+
+        $newsletter_saved = get_option('advgb_newsletter_saved');
+        if (!$newsletter_saved) $newsletter_saved = array();
+
+        $newsletter_data = array(
+            'date'  => sanitize_text_field($_POST['submit_date']),
+            'fname' => sanitize_text_field($_POST['f_name']),
+            'lname' => sanitize_text_field($_POST['l_name']),
+            'email' => sanitize_email($_POST['email']),
+        );
+
+        array_push($newsletter_saved, $newsletter_data);
+
+        update_option('advgb_newsletter_saved', $newsletter_saved);
+        wp_send_json($newsletter_data, 200);
         // phpcs:enable
     }
 
@@ -1322,6 +1436,8 @@ float: left;'
             $this->saveSettings();
         } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->saveEmailSettings();
+        } elseif (isset($_POST['save_recaptcha_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+            $this->saveCaptchaSettings();
         } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
             $this->downloadBlockFormData();
         }
@@ -1535,6 +1651,7 @@ float: left;'
                         $data .= '"'.$dataVal['email'].'"'.$tab;
                         $data .= '"'.$dataVal['msg'].'"';
                         $data .= PHP_EOL;
+                        $int++;
                     }
                     $data = trim($data);
 
@@ -1554,7 +1671,47 @@ float: left;'
                     echo json_encode($dataSaved);
                     exit;
             }
+        } elseif ($dataExport === 'newsletter') {
+            $dataSaved = get_option('advgb_newsletter_saved');
+            if (!$dataSaved) {
+                return false;
+            }
+
+            switch ($dataType) {
+                case 'csv':
+                    $data .= '"#","Date","First Name","Last Name","Email",' . PHP_EOL;
+                    $tab = ',';
+                    $int = 1;
+                    foreach ($dataSaved as $dataVal) {
+                        $data .= '"'.$int.'"'.$tab;
+                        $data .= '"'.$dataVal['date'].'"'.$tab;
+                        $data .= '"'.$dataVal['fname'].'"'.$tab;
+                        $data .= '"'.$dataVal['lname'].'"'.$tab;
+                        $data .= '"'.$dataVal['email'].'"';
+                        $data .= PHP_EOL;
+                        $int++;
+                    }
+                    $data = trim($data);
+
+                    header('Content-Type: text/csv; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_newsletter-'.date('m-d-Y').'.csv');
+                    header('Pragma: no-cache');
+                    header('Expires: 0');
+
+                    echo $data; // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped
+                    exit;
+                case 'json':
+                    header('Content-Type: application/json; charset=utf-8');
+                    header('Content-Disposition: attachment; filename=advgb_newsletter-'.date('m-d-Y').'.json');
+                    header('Pragma: no-cache');
+                    header('Expires: 0');
+
+                    echo json_encode($dataSaved);
+                    exit;
+            }
         }
+
+        return false;
     }
 
     /**
@@ -1579,6 +1736,40 @@ float: left;'
         $save_config['contact_form_email_receiver'] = $_POST['contact_form_email_receiver'];
 
         update_option('advgb_email_sender', $save_config);
+
+        if (isset($_REQUEST['_wp_http_referer'])) {
+            wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
+            exit;
+        }
+    }
+
+    /**
+     * Save captcha settings
+     *
+     * @return mixed
+     */
+    private function saveCaptchaSettings()
+    {
+        if (!isset($_POST['advgb_captcha_nonce_field'])) {
+            return false;
+        }
+
+        if (!wp_verify_nonce($_POST['advgb_captcha_nonce_field'], 'advgb_captcha_nonce')) {
+            return false;
+        }
+
+        $save_config = array();
+        if (isset($_POST['recaptcha_enable'])) {
+            $save_config['recaptcha_enable'] = 1;
+        } else {
+            $save_config['recaptcha_enable'] = 0;
+        }
+        $save_config['recaptcha_site_key'] = $_POST['recaptcha_site_key'];
+        $save_config['recaptcha_secret_key'] = $_POST['recaptcha_secret_key'];
+        $save_config['recaptcha_language'] = $_POST['recaptcha_language'];
+        $save_config['recaptcha_theme'] = $_POST['recaptcha_theme'];
+
+        update_option('advgb_recaptcha_config', $save_config);
 
         if (isset($_REQUEST['_wp_http_referer'])) {
             wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_settings=success'));
@@ -1662,9 +1853,10 @@ float: left;'
     {
         $advgb_block = array(
             'accordion', 'button', 'image', 'list',
-            'table', 'video', 'count-up', 'map',
-            'social-links', 'summary', 'tabs', 'testimonial',
-            'recent-posts', 'woo-products',
+            'table', 'video', 'contact-form', 'container',
+            'count-up','images-slider', 'map', 'newsletter',
+            'recent-posts', 'social-links', 'summary', 'tabs',
+            'testimonial', 'woo-products',
         );
 
         foreach ($advgb_block as $block) {
@@ -2932,6 +3124,38 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_localize_script('advgbContactForm_js', 'advgbContactForm', array('ajax_url' => admin_url('admin-ajax.php')));
+        }
+
+        if (strpos($content, 'advgb-newsletter') !== false) {
+            wp_enqueue_script(
+                'advgbNewsletter_js',
+                plugins_url('assets/blocks/newsletter/frontend.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_localize_script('advgbNewsletter_js', 'advgbNewsletter', array('ajax_url' => admin_url('admin-ajax.php')));
+        }
+
+        if (strpos($content, 'advgb-testimonial slider-view') !== false) {
+            wp_enqueue_style('slick_style');
+            wp_enqueue_style('slick_theme_style');
+            wp_enqueue_script('slick_js');
+            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
+                $(".advgb-testimonial.slider-view:not(.slick-initialized)").slick({
+                    infinite: true,
+                    centerMode: true,
+                    centerPadding: "40px",
+                    slidesToShow: 3,
+                })
+            });');
+        }
+
+        if (strpos($content, 'advgb-testimonial') !== false) {
+            $content = preg_replace_callback(
+                '@<div[^>]*?advgb\-testimonial.*?(</p></div></div>)@s',
+                array($this, 'decodeHtmlEntity'),
+                $content
+            );
         }
 
         return $content;
