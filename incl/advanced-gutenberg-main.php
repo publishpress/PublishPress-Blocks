@@ -3150,6 +3150,14 @@ float: left;'
             });');
         }
 
+        if (strpos($content, 'advgb-testimonial') !== false) {
+            $content = preg_replace_callback(
+                '@<div[^>]*?advgb\-testimonial.*?(</p></div></div>)@s',
+                array($this, 'decodeHtmlEntity'),
+                $content
+            );
+        }
+
         return $content;
     }
 
