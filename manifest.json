@@ -41,11 +41,11 @@
     "1.10.0": [
       {
         "type": "feature",
-        "title": "New block: Container - A block for containing other blocks"
+        "title": "New container block - A block that contains other blocks"
       },
       {
         "type": "feature",
-        "title": "New block: Newsletter"
+        "title": "New block: newsletter optin, get and export newsletter emails"
       },
       {
         "type": "feature",
@@ -53,15 +53,15 @@
       },
       {
         "type": "feature",
-        "title": "Custom label for Newsletter and Contact Form block"
+        "title": "Custom error label for Newsletter and Contact Form block"
       },
       {
         "type": "feature",
-        "title": "Custom map styles for Maps block"
+        "title": "Custom map color styles for Maps block"
       },
       {
         "type": "feature",
-        "title": "New Testimonial block style: Slider - with more items"
+        "title": "New Testimonial block style: slider view"
       },
       {
         "type": "fix",
@@ -77,15 +77,15 @@
       },
       {
         "type": "fix",
-        "title": "Products block: Cannot show all products categories"
+        "title": "Products block: Cannot load show all products categories"
       },
       {
         "type": "fix",
-        "title": "Recent posts block extra classes not saved"
+        "title": "Recent posts block extra classes prevent Gutenberg save"
       },
       {
         "type": "fix",
-        "title": "Add tooltip icon to the label that has tooltip"
+        "title": "Tooltip icon to the label that has tooltip"
       }
     ],
     "1.9.2": [
