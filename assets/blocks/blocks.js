@@ -11213,6 +11213,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Toolbar = wpComponents.Toolbar,
         Placeholder = wpComponents.Placeholder,
         Button = wpComponents.Button;
+    var addQueryArgs = wp.url.addQueryArgs;
 
 
     var fetchingQueue = null;
@@ -11273,7 +11274,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 if (category === 'selected' && categoriesList.length === 0) {
-                    wp.apiFetch({ path: '/wc/v2/products/categories' }).then(function (obj) {
+                    wp.apiFetch({ path: addQueryArgs('/wc/v2/products/categories', { per_page: -1 }) }).then(function (obj) {
                         _this2.setState({ categoriesList: obj });
                     });
                 }
@@ -11315,7 +11316,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     order = _props$attributes.order,
                     orderBy = _props$attributes.orderBy,
                     numberOfProducts = _props$attributes.numberOfProducts;
-                var addQueryArgs = wp.url.addQueryArgs;
+
 
                 var query = addQueryArgs('/agwc/v1/products', {
                     order: order || undefined,
@@ -11452,7 +11453,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             category === 'selected' && React.createElement(
                                 "div",
-                                { className: "advgb-categories-list" },
+                                { className: "advgb-woo-categories-list" },
                                 categoriesList.map(function (cat, index) {
                                     return React.createElement(CheckboxControl, {
                                         key: index,

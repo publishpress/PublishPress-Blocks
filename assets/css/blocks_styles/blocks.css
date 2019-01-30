@@ -848,6 +848,11 @@ hr.wp-block-separator {
     padding-bottom: 1px;
 }
 
+.advgb-woo-categories-list {
+    max-height: 400px;
+    overflow: auto;
+}
+
 .advgb-products-wrapper {
     display: flex;
     flex-wrap: wrap;

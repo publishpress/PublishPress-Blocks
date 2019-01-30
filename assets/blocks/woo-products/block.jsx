@@ -4,6 +4,7 @@
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpEditor;
     const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner, Toolbar, Placeholder, Button } = wpComponents;
+    const { addQueryArgs } = wp.url;
 
     let fetchingQueue = null;
 
@@ -52,7 +53,7 @@
             const { category } = attributes;
 
             if (category === 'selected' && categoriesList.length === 0) {
-                wp.apiFetch( { path: '/wc/v2/products/categories' } ).then(
+                wp.apiFetch( { path: addQueryArgs('/wc/v2/products/categories', {per_page:-1} ) } ).then(
                     (obj) => {
                         this.setState( { categoriesList: obj } );
                     }
@@ -99,7 +100,6 @@
                 numberOfProducts,
             } = this.props.attributes;
 
-            const { addQueryArgs } = wp.url;
             const query = addQueryArgs(
                 '/agwc/v1/products',
                 {
@@ -224,7 +224,7 @@
                                 onChange={ ( value ) => setAttributes( { category: value } ) }
                             />
                             {category === 'selected' &&
-                                <div className="advgb-categories-list">
+                                <div className="advgb-woo-categories-list">
                                     {categoriesList.map( (cat, index) => (
                                         <CheckboxControl
                                             key={ index }
