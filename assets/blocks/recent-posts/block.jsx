@@ -338,6 +338,9 @@
         },
         category: 'widgets',
         keywords: [ __( 'latest posts' ), __( 'posts slide' ), __( 'posts grid' ) ],
+        supports: {
+            html: false,
+        },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
             const { category, order, orderBy, numberOfPosts, myToken } = props.attributes;

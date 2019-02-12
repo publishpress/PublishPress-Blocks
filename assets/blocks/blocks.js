@@ -8501,6 +8501,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'widgets',
         keywords: [__('latest posts'), __('posts slide'), __('posts grid')],
+        supports: {
+            html: false
+        },
         edit: withSelect(function (select, props) {
             var _select = select('core'),
                 getEntityRecords = _select.getEntityRecords;
