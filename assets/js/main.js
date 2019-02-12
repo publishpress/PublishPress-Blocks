@@ -67,9 +67,10 @@
             $(this).closest('.ju-notice-msg').slideUp();
         });
 
-        $('a[href=#settings]').one('click', function () {
+        $('.ju-menu-tabs li.tab a').one('click', function () {
+            var tabId = $(this).attr('href');
             setTimeout(function () {
-                $('#settings ul.tabs').itabs();
+                $(tabId).find('ul.tabs').itabs();
             }, 100);
         });
 
