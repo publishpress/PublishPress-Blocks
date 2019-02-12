@@ -347,6 +347,9 @@ jQuery(document).ready(function ($) {
                 task: 'preview',
                 nonce: nonce_val
             },
+            beforeSend: function() {
+                $('#advgb-customstyles-info').append('<div class="advgb-overlay-box"></div>');
+            },
             success: function (res, stt) {
                 if (stt === 'success') {
                     $('#advgb-customstyles-title').val(res.title);
@@ -366,12 +369,24 @@ jQuery(document).ready(function ($) {
                     }
                     myEditor.setValue(myCustomCss);
                     parseCustomStyleCss();
+
+                    $('#advgb-customstyles-info').find('.advgb-overlay-box').remove();
                 } else {
                     alert(stt);
+                    $('#advgb-customstyles-info').find('.advgb-overlay-box').css({
+                        backgroundImage: 'none',
+                        backgroundColor: '#ff0000',
+                        opacity: 0.2
+                    });
                 }
             },
             error: function(jqxhr, textStatus, error) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
+                $('#advgb-customstyles-info').find('.advgb-overlay-box').css({
+                    backgroundImage: 'none',
+                    backgroundColor: '#ff0000',
+                    opacity: 0.2
+                });
             }
         })
     }

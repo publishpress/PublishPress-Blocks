@@ -157,6 +157,7 @@ select.ju-input {
 #advgb-customstyles-info {
     background-color: #fff;
     padding: 20px;
+    position: relative;
 }
 
 #advgb-customstyles-info label {
