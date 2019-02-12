@@ -185,7 +185,7 @@ float: left;'
     public function disableAllAdminNotices()
     {
         global $wp_filter;
-        // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- No action, nonce is not required
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No action, nonce is not required
         if ((!empty($_GET['page']) && in_array($_GET['page'], array('advgb_main')))) {
             if (is_user_admin()) {
                 if (isset($wp_filter['user_admin_notices'])) {
@@ -625,7 +625,7 @@ float: left;'
             return false;
         }
 
-        // phpcs:disable WordPress.Security.NonceVerification.NoNonceVerification -- View request, no action
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended -- View request, no action
         $usersearch     = isset($_REQUEST['search']) ? wp_unslash(trim($_REQUEST['search'])) : '';
         $role           = isset($_REQUEST['role']) ? $_REQUEST['role'] : '';
         $users_per_page = 20;
@@ -1016,7 +1016,7 @@ float: left;'
      */
     public function saveContactFormData()
     {
-        // phpcs:disable -- WordPress.Security.NonceVerification.NoNonceVerification - frontend form, no nonce
+        // phpcs:disable -- WordPress.Security.NonceVerification.Recommended - frontend form, no nonce
         if (!isset($_POST['action'])) {
             wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
             return false;
@@ -1086,7 +1086,7 @@ float: left;'
      */
     public function saveNewsletterData()
     {
-        // phpcs:disable -- WordPress.Security.NonceVerification.NoNonceVerification - frontend form, no nonce
+        // phpcs:disable -- WordPress.Security.NonceVerification.Recommended - frontend form, no nonce
         if (!isset($_POST['action'])) {
             wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
             return false;
@@ -1426,19 +1426,19 @@ float: left;'
      */
     public function saveAdvgbData()
     {
-        if (isset($_GET['view']) && $_GET['view'] === 'profile' && !isset($_GET['id'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- redirect only
+        if (isset($_GET['view']) && $_GET['view'] === 'profile' && !isset($_GET['id'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- redirect only
             wp_safe_redirect(admin_url('admin.php?page=advgb_main&view=profiles'));
         }
 
-        if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+        if (isset($_POST['advgb_profile_save'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             $this->saveAdvgbProfile();
-        } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+        } elseif (isset($_POST['save_settings']) || isset($_POST['save_custom_styles'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             $this->saveSettings();
-        } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+        } elseif (isset($_POST['save_email_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             $this->saveEmailSettings();
-        } elseif (isset($_POST['save_recaptcha_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+        } elseif (isset($_POST['save_recaptcha_config'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             $this->saveCaptchaSettings();
-        } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- we check nonce below
+        } elseif (isset($_POST['block_data_export'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- we check nonce below
             $this->downloadBlockFormData();
         }
 
@@ -1790,8 +1790,8 @@ float: left;'
         $current_user_role = $current_user->roles[0];
 
         // Check if we are in profile view
-        if (isset($_GET['page']) && isset($_GET['view']) && $_GET['page'] === 'advgb_main' && $_GET['view'] === 'profile' ) { // phpcs:ignore -- WordPress.Security.NonceVerification.NoNonceVerification - view only
-            $postID = $_GET['id']; // phpcs:ignore -- WordPress.Security.NonceVerification.NoNonceVerification - view only
+        if (isset($_GET['page']) && isset($_GET['view']) && $_GET['page'] === 'advgb_main' && $_GET['view'] === 'profile' ) { // phpcs:ignore -- WordPress.Security.NonceVerification.Recommended - view only
+            $postID = $_GET['id']; // phpcs:ignore -- WordPress.Security.NonceVerification.Recommended - view only
             $blocks_saved  = get_post_meta($postID, 'blocks', true);
             if (!is_array($blocks_saved)) {
                 return array('active_blocks'=>array(), 'inactive_blocks'=>array());
@@ -1881,7 +1881,7 @@ float: left;'
     public function loadBlockConfigView($block = '')
     {
         if (!$block) {
-            $block = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- view only
+            $block = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- view only
         }
 
         wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');

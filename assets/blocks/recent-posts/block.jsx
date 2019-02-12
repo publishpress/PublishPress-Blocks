@@ -26,8 +26,20 @@
         constructor() {
             super( ...arguments );
             this.state = {
+                categoriesList: [],
                 updating: false,
             }
+        }
+
+        componentWillMount() {
+            const categoriesListQuery = {
+                per_page: -1,
+                hide_empty: true,
+            };
+
+            wp.apiFetch( {
+                path: wp.url.addQueryArgs( 'wp/v2/categories', categoriesListQuery ),
+            } ).then( ( categoriesList ) => this.setState( { categoriesList: categoriesList } ) )
         }
 
         componentWillUpdate( nextProps ) {
@@ -112,7 +124,8 @@
         };
 
         render() {
-            const { attributes, setAttributes, recentPosts, categoriesList } = this.props;
+            const { categoriesList } = this.state;
+            const { attributes, setAttributes, recentPosts } = this.props;
             const {
                 postView,
                 order,
@@ -325,6 +338,9 @@
         },
         category: 'widgets',
         keywords: [ __( 'latest posts' ), __( 'posts slide' ), __( 'posts grid' ) ],
+        supports: {
+            html: false,
+        },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
             const { category, order, orderBy, numberOfPosts, myToken } = props.attributes;
@@ -337,13 +353,8 @@
                 token: myToken,
             }, ( value ) => !isUndefined( value ) );
 
-            const categoriesListQuery = {
-                per_page: 99,
-            };
-
             return {
                 recentPosts: getEntityRecords( 'postType', 'post', recentPostsQuery ),
-                categoriesList: getEntityRecords( 'taxonomy', 'category', categoriesListQuery ),
             }
         } )( RecentPostsEdit ),
         save: function () { // Render in PHP

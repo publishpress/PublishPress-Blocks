@@ -10,7 +10,7 @@ wp_localize_script('advgb_profile_js', 'advgb', array(
 
 $all_blocks_list     = get_option('advgb_blocks_list');
 
-$postid              = $_GET['id']; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- view only
+$postid              = $_GET['id']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- view only
 $post_title          = get_the_title($postid);
 
 $roles_access_saved = get_post_meta($postid, 'roles_access', true);
@@ -70,7 +70,7 @@ wp_add_inline_script(
             </ul>
         </div>
 
-        <?php if (isset($_GET['save_profile'])) : // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- display message, no action ?>
+        <?php if (isset($_GET['save_profile'])) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
             <div class="ju-notice-msg ju-notice-success">
                 <?php esc_html_e('Profile saved successfully!', 'advanced-gutenberg') ?>
                 <a href="<?php echo esc_attr(admin_url('admin.php?page=advgb_main&view=profiles')) ?>" target="_self">
@@ -183,7 +183,7 @@ wp_add_inline_script(
                     <tbody id="advgb-users-body">
                     <?php
                     $users_per_page = 20;
-                    $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- View request, no action
+                    $pagenum        = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 1; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- View request, no action
                     $pagedd         = max(1, $pagenum);
                     $args           = array(
                         'number'  => $users_per_page,

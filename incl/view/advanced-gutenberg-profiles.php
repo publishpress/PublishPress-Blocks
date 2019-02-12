@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || die;
 
-if (isset($_GET['view']) && $_GET['view'] === 'profile') { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- view only
+if (isset($_GET['view']) && $_GET['view'] === 'profile') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- view only
     $this->loadView('profile');
     return false;
 }
