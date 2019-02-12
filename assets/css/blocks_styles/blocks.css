@@ -1237,6 +1237,14 @@ form .advgb-grecaptcha > div {
     margin: auto;
 }
 
+.advgb-grecaptcha.position-right > div {
+    margin-right: 0;
+}
+
+.advgb-grecaptcha.position-left > div {
+    margin-left: 3%;
+}
+
 /*Container block*/
 #editor .editor-inner-blocks .wp-block {
     max-width: none;
