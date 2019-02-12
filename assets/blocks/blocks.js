@@ -8131,12 +8131,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (RecentPostsEdit.__proto__ || Object.getPrototypeOf(RecentPostsEdit)).apply(this, arguments));
 
             _this.state = {
+                categoriesList: [],
                 updating: false
             };
             return _this;
         }
 
         _createClass(RecentPostsEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _this2 = this;
+
+                var categoriesListQuery = {
+                    per_page: -1,
+                    hide_empty: true
+                };
+
+                wp.apiFetch({
+                    path: wp.url.addQueryArgs('wp/v2/categories', categoriesListQuery)
+                }).then(function (categoriesList) {
+                    return _this2.setState({ categoriesList: categoriesList });
+                });
+            }
+        }, {
             key: "componentWillUpdate",
             value: function componentWillUpdate(nextProps) {
                 var nextPosts = nextProps.recentPosts;
@@ -8192,11 +8209,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
+                var categoriesList = this.state.categoriesList;
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     setAttributes = _props3.setAttributes,
-                    recentPosts = _props3.recentPosts,
-                    categoriesList = _props3.categoriesList;
+                    recentPosts = _props3.recentPosts;
                 var postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,
@@ -8506,13 +8523,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return !isUndefined(value);
             });
 
-            var categoriesListQuery = {
-                per_page: 99
-            };
-
             return {
-                recentPosts: getEntityRecords('postType', 'post', recentPostsQuery),
-                categoriesList: getEntityRecords('taxonomy', 'category', categoriesListQuery)
+                recentPosts: getEntityRecords('postType', 'post', recentPostsQuery)
             };
         })(RecentPostsEdit),
         save: function save() {
