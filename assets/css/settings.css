@@ -56,13 +56,8 @@ select.ju-input {
     position: relative;
 }
 
-#customstyles-tab > div {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
 #advgb-customstyles-list {
-    padding: 0;
+    padding: 20px 0;
 }
 
 #advgb-customstyles-list a {
