@@ -10,7 +10,7 @@
     <arg name="extensions" value="php"/>
 
     <!-- Define installed path of standards used -->
-    <config name="installed_paths" value="vendor/wp-coding-standards/wpcs,vendor/wimg/php-compatibility" />
+    <config name="installed_paths" value="vendor/wp-coding-standards/wpcs,vendor/phpcompatibility/php-compatibility" />
 
     <!-- Memory phpcs can you for this task -->
     <ini name="memory_limit" value="200M"/>
