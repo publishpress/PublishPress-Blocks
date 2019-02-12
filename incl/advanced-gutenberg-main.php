@@ -2186,6 +2186,35 @@ float: left;'
             ),
             'advgb-image' => array(
                 array(
+                    'label' =>  __('Click action', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Action on click', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'openOnClick',
+                            'options' => array(
+                                array(
+                                    'label' => __('None', 'advanced-gutenberg'),
+                                    'value' => 'none',
+                                ),
+                                array(
+                                    'label' => __('Open image in a lightbox', 'advanced-gutenberg'),
+                                    'value' => 'lightbox',
+                                ),
+                                array(
+                                    'label' => __('Open custom URL', 'advanced-gutenberg'),
+                                    'value' => 'url',
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title' => __('Open link in a new tab', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'linkInNewTab',
+                        ),
+                    )
+                ),
+                array(
                     'label'    => __('Image Size', 'advanced-gutenberg'),
                     'settings' => array(
                         array(

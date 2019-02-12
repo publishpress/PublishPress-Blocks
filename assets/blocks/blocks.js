@@ -1232,6 +1232,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isSelected = _props2.isSelected;
                 var openOnClick = attributes.openOnClick,
                     openUrl = attributes.openUrl,
+                    linkInNewTab = attributes.linkInNewTab,
                     imageUrl = attributes.imageUrl,
                     imageID = attributes.imageID,
                     title = attributes.title,
@@ -1296,18 +1297,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ openOnClick: value });
                                 }
                             }),
-                            openOnClick === 'url' && React.createElement(TextControl, {
-                                label: [__('Link URL'), openUrl && React.createElement(
-                                    'a',
-                                    { href: openUrl || '#', key: 'advgb_image_link_url', target: '_blank', style: { float: 'right' } },
-                                    __('Preview')
-                                )],
-                                value: openUrl,
-                                placeholder: __('Enter URL…'),
-                                onChange: function onChange(text) {
-                                    return setAttributes({ openUrl: text });
-                                }
-                            }),
+                            openOnClick === 'url' && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(TextControl, {
+                                    label: [__('Link URL'), openUrl && React.createElement(
+                                        'a',
+                                        { href: openUrl || '#', key: 'advgb_image_link_url', target: '_blank', style: { float: 'right' } },
+                                        __('Preview')
+                                    )],
+                                    value: openUrl,
+                                    placeholder: __('Enter URL…'),
+                                    onChange: function onChange(text) {
+                                        return setAttributes({ openUrl: text });
+                                    }
+                                }),
+                                React.createElement(ToggleControl, {
+                                    label: __('Open link in new tab'),
+                                    checked: linkInNewTab,
+                                    onChange: function onChange() {
+                                        return setAttributes({ linkInNewTab: !linkInNewTab });
+                                    }
+                                })
+                            ),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Image Size') },
@@ -1477,6 +1489,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string',
                 default: 'none'
             },
+            linkInNewTab: {
+                type: 'boolean',
+                default: true
+            },
             openUrl: {
                 type: 'string'
             },
@@ -1536,6 +1552,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref3.attributes;
             var openOnClick = attributes.openOnClick,
                 openUrl = attributes.openUrl,
+                linkInNewTab = attributes.linkInNewTab,
                 imageUrl = attributes.imageUrl,
                 title = attributes.title,
                 titleColor = attributes.titleColor,
@@ -1565,7 +1582,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 },
                 React.createElement('a', { className: 'advgb-image-overlay',
                     style: { backgroundColor: overlayColor },
-                    target: '_blank',
+                    target: linkInNewTab ? '_blank' : '_self',
                     href: linkURL
                 }),
                 React.createElement(

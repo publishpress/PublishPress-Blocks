@@ -36,6 +36,7 @@
             const {
                 openOnClick,
                 openUrl,
+                linkInNewTab,
                 imageUrl,
                 imageID,
                 title,
@@ -94,17 +95,24 @@
                                 onChange={ (value) => setAttributes( { openOnClick: value } ) }
                             />
                             {openOnClick === 'url' &&
-                            <TextControl
-                                label={ [
-                                    __( 'Link URL' ),
-                                    (openUrl && <a href={ openUrl || '#' } key="advgb_image_link_url" target="_blank" style={ { float: 'right' } }>
-                                        { __( 'Preview' ) }
-                                    </a>)
-                                ] }
-                                value={ openUrl }
-                                placeholder={ __( 'Enter URL…' ) }
-                                onChange={ ( text ) => setAttributes( { openUrl: text } ) }
-                            />
+                            <Fragment>
+                                <TextControl
+                                    label={ [
+                                        __( 'Link URL' ),
+                                        (openUrl && <a href={ openUrl || '#' } key="advgb_image_link_url" target="_blank" style={ { float: 'right' } }>
+                                            { __( 'Preview' ) }
+                                        </a>)
+                                    ] }
+                                    value={ openUrl }
+                                    placeholder={ __( 'Enter URL…' ) }
+                                    onChange={ ( text ) => setAttributes( { openUrl: text } ) }
+                                />
+                                <ToggleControl
+                                    label={ __( 'Open link in new tab' ) }
+                                    checked={ linkInNewTab }
+                                    onChange={ () => setAttributes( { linkInNewTab: !linkInNewTab } ) }
+                                />
+                            </Fragment>
                             }
                             <PanelBody title={ __( 'Image Size' ) }>
                                 <ToggleControl
@@ -250,6 +258,10 @@
                 type: 'string',
                 default: 'none',
             },
+            linkInNewTab: {
+                type: 'boolean',
+                default: true,
+            },
             openUrl: {
                 type: 'string',
             },
@@ -309,6 +321,7 @@
             const {
                 openOnClick,
                 openUrl,
+                linkInNewTab,
                 imageUrl,
                 title,
                 titleColor,
@@ -341,7 +354,7 @@
                 >
                     <a className={ 'advgb-image-overlay' }
                        style={ { backgroundColor: overlayColor } }
-                       target={ '_blank' }
+                       target={ linkInNewTab ? '_blank' : '_self' }
                        href={ linkURL }
                     />
                     <h4 className={ 'advgb-image-title' } style={ { color: titleColor } }>
