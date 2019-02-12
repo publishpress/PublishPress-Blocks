@@ -274,8 +274,6 @@ jQuery(document).ready(function ($) {
         (initTableLinks = function () {
             $('#mybootstrap .advgb-customstyles-items').unbind('click').click(function (e) {
                 id = $(this).data('id-customstyle');
-                $('#mybootstrap .advgb-customstyles-list li').removeClass('active');
-                $(this).addClass('active');
                 customStylePreview(id);
 
                 return false;
@@ -319,19 +317,25 @@ jQuery(document).ready(function ($) {
 
     });
 
+    myStyleId = advgbGetCookie('advgbCustomStyleID');
     // Fix Codemirror not displayed properly
     $('a[href="#custom-styles"]').one('click', function () {
         myEditor.refresh();
-        customStylePreview();
+        customStylePreview(myStyleId);
     });
 
-    customStylePreview();
+    customStylePreview(myStyleId);
     function customStylePreview(id_element) {
-        if (typeof (id_element) === "undefined") {
-            id_element = $('#mybootstrap ul.advgb-customstyles-list li:first-child').data('id-customstyle');
-            $('#mybootstrap ul.advgb-customstyles-list li:first-child').addClass('active');
+        if (typeof (id_element) === "undefined" || !id_element) {
+            var firstStyle = $('#mybootstrap ul.advgb-customstyles-list li:first-child');
+            id_element = firstStyle.data('id-customstyle');
+            firstStyle.addClass('active');
         }
         if (typeof (id_element) === "undefined" || id_element ==="") return;
+        $('#mybootstrap .advgb-customstyles-list li').removeClass('active');
+        $('#mybootstrap .advgb-customstyles-list li[data-id-customstyle='+id_element+']').addClass('active');
+
+        document.cookie = 'advgbCustomStyleID=' + id_element;
         var nonce_val = $('#advgb_settings_nonce_field').val();
         $.ajax({
             url: ajaxurl,
