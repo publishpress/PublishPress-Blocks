@@ -40,17 +40,17 @@
   "changelog": {
     "1.10.1": [
       {
-        "type": "fix",
-        "title": "Cannot save multi Recent Posts block"
-      },
-      {
-        "type": "fix",
+        "type": "feature",
         "title": "Posibility to edit link target type on Adv Image block"
       },
       {
-        "type": "fix",
+        "type": "feature",
         "title": "Make captcha above the submit button in Contact Form"
       },
+      {
+        "type": "fix",
+        "title": "Cannot save multi Recent Posts block"
+      },    
       {
         "type": "fix",
         "title": "Make Testimonial and Count up block more responsive"
