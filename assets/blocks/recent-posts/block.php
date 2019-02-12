@@ -62,12 +62,6 @@ HTML;
  */
 function advgbRenderBlockRecentPosts($attributes)
 {
-    global $advgb_recent_posts_saved;
-    if ($advgb_recent_posts_saved) {
-        return false;
-    }
-    $advgb_recent_posts_saved = true;
-
     $recent_posts = wp_get_recent_posts(
         array(
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
@@ -124,7 +118,7 @@ function advgbRenderBlockRecentPosts($attributes)
         $postHtml .= '<div class="advgb-post-content">';
 
         if (isset($attributes['displayExcerpt']) && $attributes['displayExcerpt']) {
-            $introText = get_the_excerpt($post->ID);
+            $introText = $post->post_excerpt;
 
             if (isset($attributes['displayExcerpt']) && $attributes['postTextAsExcerpt']) {
                 if (!is_admin()) {
@@ -187,9 +181,6 @@ function advgbRegisterBlockRecentPosts()
     if (!function_exists('register_block_type')) {
         return;
     }
-
-    global $advgb_recent_posts_saved;
-    $advgb_recent_posts_saved = false;
 
     register_block_type('advgb/recent-posts', array(
         'attributes' => array(
