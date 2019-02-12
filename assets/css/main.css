@@ -81,3 +81,17 @@ select.ju-select-options {
     padding: 15px;
     height: auto;
 }
+
+.advgb-overlay-box {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #000;
+    z-index: 99;
+    opacity: 0.5;
+    background-image: url(../images/loading.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+}

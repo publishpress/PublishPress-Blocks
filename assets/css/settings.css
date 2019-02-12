@@ -53,6 +53,7 @@ select.ju-input {
 /*Style for CustomStyle tab*/
 #customstyles-tab {
     background-color: #f9fafb;
+    position: relative;
 }
 
 #customstyles-tab > div {

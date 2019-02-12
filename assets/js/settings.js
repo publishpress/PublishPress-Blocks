@@ -54,9 +54,6 @@ jQuery(document).ready(function ($) {
     $('.minicolors-input').minicolors('settings', {
         change: function() {
             jQuery(this).trigger('change');
-        },
-        hide: function () {
-            saveCustomStyleChanges();
         }
     }).attr('maxlength', '7');
 
@@ -423,18 +420,11 @@ jQuery(document).ready(function ($) {
             clearTimeout(cssChangeWait);
             cssChangeWait = setTimeout(function() {
                 parseCustomStyleCss();
-                saveCustomStyleChanges();
             }, 500);
         });
     })();
 
-    $('#advgb-customstyles-title, #advgb-customstyles-classname').on('keypress', function (e) {
-        if (e.which === 13) {
-            e.preventDefault();
-            saveCustomStyleChanges();
-        }
-    });
-    $('#advgb-customstyles-title, #advgb-customstyles-classname').on('change', function (e) {
+    $('#save_custom_styles').click(function (e) {
         saveCustomStyleChanges();
     });
 
@@ -443,8 +433,7 @@ jQuery(document).ready(function ($) {
         var myClassname =  $('#advgb-customstyles-classname').val().trim();
         var myIdentifyColor =  $('#advgb-customstyles-identify-color').val().trim();
         var nonce_val = $('#advgb_settings_nonce_field').val();
-
-        $('#save_custom_styles').prop('disabled', true).removeClass('waves-effect');
+        parseCustomStyleCss();
 
         $.ajax({
             url: ajaxurl,
@@ -458,24 +447,20 @@ jQuery(document).ready(function ($) {
                 task: 'style_save',
                 nonce: nonce_val
             },
+            beforeSend: function () {
+                $('#customstyles-tab').append('<div class="advgb-overlay-box"></div>')
+            },
             success: function (res, stt) {
                 if (stt === 'success') {
-                    // Update list items
-                    thisStyle = $('.advgb-customstyles-list').find('li[data-id-customstyle='+myStyleId+']');
-                    thisStyle.find('.advgb-customstyles-items-class').text('('+myClassname+')');
-
-                    autosaveNotification = setTimeout(function() {
-                        $('#savedInfo').fadeIn(200).delay(2000).fadeOut(1000);
-                    }, 500);
+                    $('#advgb-customstyles-info form').submit();
                 } else {
-                    alert(stt)
+                    alert(stt);
+                    $('#customstyles-tab').find('.advgb-overlay-box').remove();
                 }
-
-                $('#save_custom_styles').prop('disabled', false).addClass('waves-effect');
             },
             error: function(jqxhr, textStatus, error) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
-                $('#save_custom_styles').prop('disabled', false).addClass('waves-effect');
+                $('#customstyles-tab').find('.advgb-overlay-box').remove();
             }
         })
     }

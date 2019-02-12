@@ -36,8 +36,8 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
                 ?>
             </ul>
             <span id="savedInfo" style="display:none;">
-                    <?php esc_html_e('All modifications were saved!', 'advanced-gutenberg') ?>
-                </span>
+                <?php esc_html_e('All modifications were saved!', 'advanced-gutenberg') ?>
+            </span>
         </div>
     </div>
 
@@ -82,11 +82,11 @@ $custom_styles_saved = get_option('advgb_custom_styles', $this::$default_custom_
         <div style="text-align: center; margin-top: 15px; margin-bottom: 15px; clear: both;">
             <form method="POST">
                 <?php wp_nonce_field('advgb_cstyles_nonce', 'advgb_cstyles_nonce_field'); ?>
+                <input type="hidden" name="save_custom_styles" value="1" />
                 <button class="ju-button orange-button waves-effect waves-light"
                         style="margin: 10px auto"
-                        type="submit"
+                        type="button"
                         id="save_custom_styles"
-                        name="save_custom_styles"
                         value="1"
                 >
                     <span><?php esc_html_e('Save styles', 'advanced-gutenberg') ?></span>
