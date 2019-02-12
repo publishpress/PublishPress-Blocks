@@ -144,8 +144,8 @@
         });
 
         function setTabFromCookie() {
-            var lastLeftTab = getCookie('advgbLeftTab');
-            var lastRightTab = getCookie('advgbRightTab');
+            var lastLeftTab = advgbGetCookie('advgbLeftTab');
+            var lastRightTab = advgbGetCookie('advgbRightTab');
 
             if (lastLeftTab !== '') {
                 var leftTab = $('.ju-menu-tabs a.link-tab[href="'+ lastLeftTab +'"]');
@@ -163,19 +163,19 @@
             setTabFromCookie();
         }
 
-        // Get cookie
-        function getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for(var i=0; i<ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0)===' ') c = c.substring(1);
-                if (c.indexOf(name) === 0) return c.substring(name.length,c.length);
-            }
-            return "";
-        }
-
         Waves.attach('.waves-effect');
         Waves.init();
     })
 })(jQuery);
+
+// Get cookie
+function advgbGetCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)===' ') c = c.substring(1);
+        if (c.indexOf(name) === 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
