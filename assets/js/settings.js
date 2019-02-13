@@ -54,9 +54,6 @@ jQuery(document).ready(function ($) {
     $('.minicolors-input').minicolors('settings', {
         change: function() {
             jQuery(this).trigger('change');
-        },
-        hide: function () {
-            saveCustomStyleChanges();
         }
     }).attr('maxlength', '7');
 
@@ -277,8 +274,6 @@ jQuery(document).ready(function ($) {
         (initTableLinks = function () {
             $('#mybootstrap .advgb-customstyles-items').unbind('click').click(function (e) {
                 id = $(this).data('id-customstyle');
-                $('#mybootstrap .advgb-customstyles-list li').removeClass('active');
-                $(this).addClass('active');
                 customStylePreview(id);
 
                 return false;
@@ -322,19 +317,25 @@ jQuery(document).ready(function ($) {
 
     });
 
+    myStyleId = advgbGetCookie('advgbCustomStyleID');
     // Fix Codemirror not displayed properly
     $('a[href="#custom-styles"]').one('click', function () {
         myEditor.refresh();
-        customStylePreview();
+        customStylePreview(myStyleId);
     });
 
-    customStylePreview();
+    customStylePreview(myStyleId);
     function customStylePreview(id_element) {
-        if (typeof (id_element) === "undefined") {
-            id_element = $('#mybootstrap ul.advgb-customstyles-list li:first-child').data('id-customstyle');
-            $('#mybootstrap ul.advgb-customstyles-list li:first-child').addClass('active');
+        if (typeof (id_element) === "undefined" || !id_element) {
+            var firstStyle = $('#mybootstrap ul.advgb-customstyles-list li:first-child');
+            id_element = firstStyle.data('id-customstyle');
+            firstStyle.addClass('active');
         }
         if (typeof (id_element) === "undefined" || id_element ==="") return;
+        $('#mybootstrap .advgb-customstyles-list li').removeClass('active');
+        $('#mybootstrap .advgb-customstyles-list li[data-id-customstyle='+id_element+']').addClass('active');
+
+        document.cookie = 'advgbCustomStyleID=' + id_element;
         var nonce_val = $('#advgb_settings_nonce_field').val();
         $.ajax({
             url: ajaxurl,
@@ -345,6 +346,9 @@ jQuery(document).ready(function ($) {
                 id: id_element,
                 task: 'preview',
                 nonce: nonce_val
+            },
+            beforeSend: function() {
+                $('#advgb-customstyles-info').append('<div class="advgb-overlay-box"></div>');
             },
             success: function (res, stt) {
                 if (stt === 'success') {
@@ -365,12 +369,24 @@ jQuery(document).ready(function ($) {
                     }
                     myEditor.setValue(myCustomCss);
                     parseCustomStyleCss();
+
+                    $('#advgb-customstyles-info').find('.advgb-overlay-box').remove();
                 } else {
                     alert(stt);
+                    $('#advgb-customstyles-info').find('.advgb-overlay-box').css({
+                        backgroundImage: 'none',
+                        backgroundColor: '#ff0000',
+                        opacity: 0.2
+                    });
                 }
             },
             error: function(jqxhr, textStatus, error) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
+                $('#advgb-customstyles-info').find('.advgb-overlay-box').css({
+                    backgroundImage: 'none',
+                    backgroundColor: '#ff0000',
+                    opacity: 0.2
+                });
             }
         })
     }
@@ -423,18 +439,11 @@ jQuery(document).ready(function ($) {
             clearTimeout(cssChangeWait);
             cssChangeWait = setTimeout(function() {
                 parseCustomStyleCss();
-                saveCustomStyleChanges();
             }, 500);
         });
     })();
 
-    $('#advgb-customstyles-title, #advgb-customstyles-classname').on('keypress', function (e) {
-        if (e.which === 13) {
-            e.preventDefault();
-            saveCustomStyleChanges();
-        }
-    });
-    $('#advgb-customstyles-title, #advgb-customstyles-classname').on('change', function (e) {
+    $('#save_custom_styles').click(function (e) {
         saveCustomStyleChanges();
     });
 
@@ -443,8 +452,7 @@ jQuery(document).ready(function ($) {
         var myClassname =  $('#advgb-customstyles-classname').val().trim();
         var myIdentifyColor =  $('#advgb-customstyles-identify-color').val().trim();
         var nonce_val = $('#advgb_settings_nonce_field').val();
-
-        $('#save_custom_styles').prop('disabled', true).removeClass('waves-effect');
+        parseCustomStyleCss();
 
         $.ajax({
             url: ajaxurl,
@@ -458,24 +466,20 @@ jQuery(document).ready(function ($) {
                 task: 'style_save',
                 nonce: nonce_val
             },
+            beforeSend: function () {
+                $('#customstyles-tab').append('<div class="advgb-overlay-box"></div>')
+            },
             success: function (res, stt) {
                 if (stt === 'success') {
-                    // Update list items
-                    thisStyle = $('.advgb-customstyles-list').find('li[data-id-customstyle='+myStyleId+']');
-                    thisStyle.find('.advgb-customstyles-items-class').text('('+myClassname+')');
-
-                    autosaveNotification = setTimeout(function() {
-                        $('#savedInfo').fadeIn(200).delay(2000).fadeOut(1000);
-                    }, 500);
+                    $('#advgb-customstyles-info form').submit();
                 } else {
-                    alert(stt)
+                    alert(stt);
+                    $('#customstyles-tab').find('.advgb-overlay-box').remove();
                 }
-
-                $('#save_custom_styles').prop('disabled', false).addClass('waves-effect');
             },
             error: function(jqxhr, textStatus, error) {
                 alert(textStatus + " : " + error + ' - ' + jqxhr.responseJSON);
-                $('#save_custom_styles').prop('disabled', false).addClass('waves-effect');
+                $('#customstyles-tab').find('.advgb-overlay-box').remove();
             }
         })
     }

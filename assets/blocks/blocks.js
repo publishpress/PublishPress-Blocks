@@ -1232,6 +1232,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isSelected = _props2.isSelected;
                 var openOnClick = attributes.openOnClick,
                     openUrl = attributes.openUrl,
+                    linkInNewTab = attributes.linkInNewTab,
                     imageUrl = attributes.imageUrl,
                     imageID = attributes.imageID,
                     title = attributes.title,
@@ -1296,18 +1297,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ openOnClick: value });
                                 }
                             }),
-                            openOnClick === 'url' && React.createElement(TextControl, {
-                                label: [__('Link URL'), openUrl && React.createElement(
-                                    'a',
-                                    { href: openUrl || '#', key: 'advgb_image_link_url', target: '_blank', style: { float: 'right' } },
-                                    __('Preview')
-                                )],
-                                value: openUrl,
-                                placeholder: __('Enter URL…'),
-                                onChange: function onChange(text) {
-                                    return setAttributes({ openUrl: text });
-                                }
-                            }),
+                            openOnClick === 'url' && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(TextControl, {
+                                    label: [__('Link URL'), openUrl && React.createElement(
+                                        'a',
+                                        { href: openUrl || '#', key: 'advgb_image_link_url', target: '_blank', style: { float: 'right' } },
+                                        __('Preview')
+                                    )],
+                                    value: openUrl,
+                                    placeholder: __('Enter URL…'),
+                                    onChange: function onChange(text) {
+                                        return setAttributes({ openUrl: text });
+                                    }
+                                }),
+                                React.createElement(ToggleControl, {
+                                    label: __('Open link in new tab'),
+                                    checked: linkInNewTab,
+                                    onChange: function onChange() {
+                                        return setAttributes({ linkInNewTab: !linkInNewTab });
+                                    }
+                                })
+                            ),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Image Size') },
@@ -1477,6 +1489,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'string',
                 default: 'none'
             },
+            linkInNewTab: {
+                type: 'boolean',
+                default: true
+            },
             openUrl: {
                 type: 'string'
             },
@@ -1536,6 +1552,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref3.attributes;
             var openOnClick = attributes.openOnClick,
                 openUrl = attributes.openUrl,
+                linkInNewTab = attributes.linkInNewTab,
                 imageUrl = attributes.imageUrl,
                 title = attributes.title,
                 titleColor = attributes.titleColor,
@@ -1565,7 +1582,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 },
                 React.createElement('a', { className: 'advgb-image-overlay',
                     style: { backgroundColor: overlayColor },
-                    target: '_blank',
+                    target: linkInNewTab ? '_blank' : '_self',
                     href: linkURL
                 }),
                 React.createElement(
@@ -4442,6 +4459,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }
                         })
                     ),
+                    React.createElement("div", { className: "advgb-grecaptcha clearfix position-" + submitPosition }),
                     React.createElement(
                         "div",
                         { className: "advgb-form-submit-wrapper",
@@ -4462,8 +4480,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             submitLabel ? submitLabel : __('Submit')
                         )
-                    ),
-                    React.createElement("div", { className: "advgb-grecaptcha clearfix" })
+                    )
                 )
             );
         },
@@ -4560,6 +4577,103 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 submitLabel ? submitLabel : __('Submit')
                             )
                         )
+                    )
+                );
+            }
+        }, {
+            attributes: contactBlockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
+                var nameLabel = attributes.nameLabel,
+                    emailLabel = attributes.emailLabel,
+                    msgLabel = attributes.msgLabel,
+                    submitLabel = attributes.submitLabel,
+                    successLabel = attributes.successLabel,
+                    bgColor = attributes.bgColor,
+                    textColor = attributes.textColor,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderRadius = attributes.borderRadius,
+                    submitColor = attributes.submitColor,
+                    submitBgColor = attributes.submitBgColor,
+                    submitRadius = attributes.submitRadius,
+                    submitPosition = attributes.submitPosition;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-contact-form" },
+                    React.createElement(
+                        "form",
+                        { method: "POST" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-form-field advgb-form-field-half" },
+                            React.createElement("input", { type: "text",
+                                className: "advgb-form-input advgb-form-input-name",
+                                placeholder: nameLabel ? nameLabel : __('Name'),
+                                name: "contact_name",
+                                style: {
+                                    backgroundColor: bgColor,
+                                    color: textColor,
+                                    borderColor: borderColor,
+                                    borderStyle: borderStyle,
+                                    borderRadius: borderRadius
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-form-field advgb-form-field-half" },
+                            React.createElement("input", { type: "email",
+                                className: "advgb-form-input advgb-form-input-email",
+                                placeholder: emailLabel ? emailLabel : __('Email address'),
+                                name: "contact_email",
+                                style: {
+                                    backgroundColor: bgColor,
+                                    color: textColor,
+                                    borderColor: borderColor,
+                                    borderStyle: borderStyle,
+                                    borderRadius: borderRadius
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-form-field advgb-form-field-full" },
+                            React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
+                                placeholder: msgLabel ? msgLabel : __('Message'),
+                                name: "contact_message",
+                                style: {
+                                    backgroundColor: bgColor,
+                                    color: textColor,
+                                    borderColor: borderColor,
+                                    borderStyle: borderStyle,
+                                    borderRadius: borderRadius
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-form-submit-wrapper",
+                                style: { textAlign: submitPosition }
+                            },
+                            React.createElement(
+                                "button",
+                                { className: "advgb-form-submit",
+                                    type: "submit",
+                                    "data-success": successLabel ? successLabel : undefined,
+                                    style: {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: submitRadius
+                                    }
+                                },
+                                submitLabel ? submitLabel : __('Submit')
+                            )
+                        ),
+                        React.createElement("div", { className: "advgb-grecaptcha clearfix" })
                     )
                 );
             }
@@ -8131,12 +8245,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (RecentPostsEdit.__proto__ || Object.getPrototypeOf(RecentPostsEdit)).apply(this, arguments));
 
             _this.state = {
+                categoriesList: [],
                 updating: false
             };
             return _this;
         }
 
         _createClass(RecentPostsEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _this2 = this;
+
+                var categoriesListQuery = {
+                    per_page: -1,
+                    hide_empty: true
+                };
+
+                wp.apiFetch({
+                    path: wp.url.addQueryArgs('wp/v2/categories', categoriesListQuery)
+                }).then(function (categoriesList) {
+                    return _this2.setState({ categoriesList: categoriesList });
+                });
+            }
+        }, {
             key: "componentWillUpdate",
             value: function componentWillUpdate(nextProps) {
                 var nextPosts = nextProps.recentPosts;
@@ -8192,11 +8323,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
+                var categoriesList = this.state.categoriesList;
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     setAttributes = _props3.setAttributes,
-                    recentPosts = _props3.recentPosts,
-                    categoriesList = _props3.categoriesList;
+                    recentPosts = _props3.recentPosts;
                 var postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,
@@ -8484,6 +8615,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'widgets',
         keywords: [__('latest posts'), __('posts slide'), __('posts grid')],
+        supports: {
+            html: false
+        },
         edit: withSelect(function (select, props) {
             var _select = select('core'),
                 getEntityRecords = _select.getEntityRecords;
@@ -8506,13 +8640,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return !isUndefined(value);
             });
 
-            var categoriesListQuery = {
-                per_page: 99
-            };
-
             return {
-                recentPosts: getEntityRecords('postType', 'post', recentPostsQuery),
-                categoriesList: getEntityRecords('taxonomy', 'category', categoriesListQuery)
+                recentPosts: getEntityRecords('postType', 'post', recentPostsQuery)
             };
         })(RecentPostsEdit),
         save: function save() {

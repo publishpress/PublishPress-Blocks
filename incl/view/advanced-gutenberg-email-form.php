@@ -43,7 +43,7 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
         </ul>
     </div>
 
-    <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification -- display message, no action ?>
+    <?php if (isset($_GET['save_settings'])) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display message, no action ?>
         <div class="ju-notice-msg ju-notice-success">
             <?php esc_html_e('Settings saved successfully', 'advanced-gutenberg'); ?>
             <i class="dashicons dashicons-dismiss ju-notice-close"></i>

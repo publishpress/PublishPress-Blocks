@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "platform": "wordpress",
   "wp_version": "5.0.3",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,32 @@
     ]
   },
   "changelog": {
+    "1.10.1": [
+      {
+        "type": "feature",
+        "title": "Posibility to edit link target type on Adv Image block"
+      },
+      {
+        "type": "feature",
+        "title": "Make captcha above the submit button in Contact Form"
+      },
+      {
+        "type": "fix",
+        "title": "Cannot save multi Recent Posts block"
+      },    
+      {
+        "type": "fix",
+        "title": "Make Testimonial and Count up block more responsive"
+      },
+      {
+        "type": "fix",
+        "title": "When open image in lightbox the page shifted"
+      },
+      {
+        "type": "fix",
+        "title": "Remove custom styles ajax saving, use Save Styles button instead"
+      }
+    ],
     "1.10.0": [
       {
         "type": "feature",

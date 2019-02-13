@@ -10,7 +10,7 @@
     <arg name="extensions" value="php"/>
 
     <!-- Define installed path of standards used -->
-    <config name="installed_paths" value="vendor/wimg/php-compatibility,vendor/wp-coding-standards/wpcs" />
+    <config name="installed_paths" value="vendor/wp-coding-standards/wpcs,vendor/phpcompatibility/php-compatibility" />
 
     <!-- Memory phpcs can you for this task -->
     <ini name="memory_limit" value="200M"/>
@@ -30,7 +30,6 @@
     Php compatibility check
     #############################################################################
     -->
-    <autoload>vendor/wimg/php-compatibility/PHPCSAliases.php</autoload>
     <rule ref="PHPCompatibility"/>
     <config name="testVersion" value="5.3-"/>
 
@@ -84,8 +83,8 @@
     <!-- Rule: The goto statement must never be used. -->
     <!-- Duplicate of upstream. Should defer to upstream version once minimum PHPCS requirement has gone up.
          https://github.com/squizlabs/PHP_CodeSniffer/pull/1664 -->
-    <rule ref="WordPress.PHP.DiscourageGoto"/>
-    <rule ref="WordPress.PHP.DiscourageGoto.Found">
+    <rule ref="Generic.PHP.DiscourageGoto"/>
+    <rule ref="Generic.PHP.DiscourageGoto.Found">
         <type>error</type>
         <message>The "goto" language construct should not be used.</message>
     </rule>
@@ -173,7 +172,6 @@
 	WordPress rules
 	#############################################################################
 	-->
-    <autoload>vendor/wp-coding-standards/wpcs/WordPress/PHPCSAliases.php</autoload>
 
     <!-- Rule: in $wpdb->prepare - only %s and %d are used as placeholders. Note that they are not "quoted"! -->
     <rule ref="WordPress.DB.PreparedSQLPlaceholders"/>

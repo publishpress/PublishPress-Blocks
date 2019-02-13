@@ -53,15 +53,11 @@ select.ju-input {
 /*Style for CustomStyle tab*/
 #customstyles-tab {
     background-color: #f9fafb;
-}
-
-#customstyles-tab > div {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    position: relative;
 }
 
 #advgb-customstyles-list {
-    padding: 0;
+    padding: 20px 0;
 }
 
 #advgb-customstyles-list a {
@@ -156,6 +152,7 @@ select.ju-input {
 #advgb-customstyles-info {
     background-color: #fff;
     padding: 20px;
+    position: relative;
 }
 
 #advgb-customstyles-info label {

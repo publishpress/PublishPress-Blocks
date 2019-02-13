@@ -645,7 +645,7 @@ div.advgb-tab-body {
 }
 
 /*Testimonial block styles*/
-.advgb-testimonial {
+.advgb-testimonial:not(.slider-view) {
     display: flex;
     margin: 20px auto;
 }
@@ -1237,7 +1237,26 @@ form .advgb-grecaptcha > div {
     margin: auto;
 }
 
+.advgb-grecaptcha.position-right > div {
+    margin-right: 0;
+}
+
+.advgb-grecaptcha.position-left > div {
+    margin-left: 3%;
+}
+
 /*Container block*/
 #editor .editor-inner-blocks .wp-block {
     max-width: none;
+}
+
+/*--- RESPONSIVE STYLES HERE ---*/
+@media screen and (max-width: 599px) {
+    .advgb-count-up {
+        flex-direction: column;
+    }
+
+    .advgb-testimonial:not(.slider-view) {
+        flex-direction: column;
+    }
 }
