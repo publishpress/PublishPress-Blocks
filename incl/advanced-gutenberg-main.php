@@ -1030,9 +1030,13 @@ float: left;'
 
             $captcha = $_POST['captcha'];
             $secret_key = $recaptcha_config['recaptcha_secret_key'];
-            $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha}");
-            $verified = json_decode($verify);
+            $verify = wp_remote_get("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha}");
 
+            if (!is_array($verify) || !isset($verify['body'])) {
+                wp_send_json(__('Cannot validate captcha', 'advanced-gutenberg'), 400);
+            }
+
+            $verified = json_decode($verify['body']);
             if (!$verified->success) {
                 wp_send_json(__('Captcha validation error', 'advanced-gutenberg'), 400);
             }
@@ -1100,9 +1104,13 @@ float: left;'
 
             $captcha = $_POST['captcha'];
             $secret_key = $recaptcha_config['recaptcha_secret_key'];
-            $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha}");
-            $verified = json_decode($verify);
+            $verify = wp_remote_get("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha}");
 
+            if (!is_array($verify) || !isset($verify['body'])) {
+                wp_send_json(__('Cannot validate captcha', 'advanced-gutenberg'), 400);
+            }
+
+            $verified = json_decode($verify);
             if (!$verified->success) {
                 wp_send_json(__('Captcha validation error', 'advanced-gutenberg'), 400);
             }
