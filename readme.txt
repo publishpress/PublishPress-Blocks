@@ -33,11 +33,13 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Advanced Button block: create button with tons of styles
 - Contact form block: get user messages and export messages
 - Advanced List block: create list with list icon, icon color
-- Map block: load a Google map position with zoom, icon, tooltip, title...
+- Map block: load a Google map position with zoom, icon, tooltip, color...
 - Advanced Table block: create tables with style like color, border
 - Accordion block: display content in a fully configurable accordion
 - Tabs block: display content in a fully tabbed UX
-- Testimonial block: define avatar, title, text, colors...
+- Testimonial block: define avatar, title, text, colors, slider
+- Contact Form block: get email and export contact form data
+- Email Opt-In block: get email and export data
 - Counter block: display numbers in a dynamic, fun and engaging way
 - Advanced Image block: hover text, overlay, colors, link and more
 - Advanced Image block: load and display local and remote video

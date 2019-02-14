@@ -159,41 +159,41 @@ class createUpdateTestBlocksCest
         $I->fillField('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()', 2);
 
         // Select first person image
-        $I->waitForElement('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-one"]//div[@class="advgb-testimonial-avatar"]');
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-one"]//div[@class="advgb-testimonial-avatar"]');
+        $I->waitForElement('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][1]//div[@class="advgb-testimonial-avatar"]');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][1]//div[@class="advgb-testimonial-avatar"]');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="man"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="man"]');
         $I->click('Select');
 
         // change first person name
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-one"]//div[2]//h4');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][1]//div[2]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('John Doe');
 
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-one"]//p[contains(@class, "advgb-testimonial-position")]');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][1]//p[contains(@class, "advgb-testimonial-position")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Chief Technical Officer');
 
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-one"]//p[contains(@class, "advgb-testimonial-desc")]');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][1]//p[contains(@class, "advgb-testimonial-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Ignea librata. Sublime faecis altae ignea ponderibus verba ulla.');
 
         // Second person
-        $I->waitForElement('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-two"]//div[@class="advgb-testimonial-avatar"]');
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-two"]//div[@class="advgb-testimonial-avatar"]');
+        $I->waitForElement('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][2]//div[@class="advgb-testimonial-avatar"]');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][2]//div[@class="advgb-testimonial-avatar"]');
         $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="woman"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="woman"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
 
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-two"]//div[2]//h4');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][2]//div[2]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Jane Doe');
 
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-two"]//p[contains(@class, "advgb-testimonial-position")]');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][2]//p[contains(@class, "advgb-testimonial-position")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Chief Executive Officer');
 
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-columns-two"]//p[contains(@class, "advgb-testimonial-desc")]');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][2]//p[contains(@class, "advgb-testimonial-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Orbe lanient quoque evolvit manebat. Figuras possedit siccis. Ut animalibus ventos terris deorum eurus.');
 
