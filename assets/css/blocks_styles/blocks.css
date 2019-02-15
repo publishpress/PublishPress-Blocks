@@ -1110,9 +1110,11 @@ hr.wp-block-separator {
 .advgb-form-field {
     float: left;
     width: 100%;
+    margin: 0;
     margin-bottom: 3%;
     padding: 0;
     padding-left: 3%;
+    box-sizing: border-box;
 }
 
 .advgb-form-field.advgb-form-field-half {
@@ -1130,12 +1132,14 @@ hr.wp-block-separator {
 .advgb-form-field textarea.advgb-form-input {
     width: 100%;
     padding: 15px;
+    margin: 0;
     border: 1px solid #ccc;
     border-radius: 2px;
     resize: vertical;
     font-size: 15px;
     background-color: #fafafa;
     color: #444;
+    box-sizing: border-box;
 }
 
 .advgb-form-submit-wrapper {
