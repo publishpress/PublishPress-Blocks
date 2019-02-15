@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "platform": "wordpress",
   "wp_version": "5.0.3",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,12 @@
     ]
   },
   "changelog": {
+    "1.10.2": [
+      {
+        "type": "fix",
+        "title": "Google recaptcha validation error"
+      }
+    ],
     "1.10.1": [
       {
         "type": "feature",
