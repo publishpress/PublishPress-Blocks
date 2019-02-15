@@ -152,6 +152,12 @@ float: left;'
         add_action('rest_api_init', array($this, 'registerRestAPI'));
         add_action('admin_print_scripts', array($this, 'disableAllAdminNotices')); // Disable all admin notice for page belong to plugin
 
+        // Front-end ajax
+        add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
+        add_action('wp_ajax_nopriv_advgb_contact_form_save', array($this, 'saveContactFormData'));
+        add_action('wp_ajax_advgb_newsletter_save', array($this, 'saveNewsletterData'));
+        add_action('wp_ajax_nopriv_advgb_newsletter_save', array($this, 'saveNewsletterData'));
+
         if (is_admin()) {
             add_action('init', array($this, 'registerAdvgbProfile'));
             add_action('admin_footer', array($this, 'initBlocksList'));
@@ -169,8 +175,6 @@ float: left;'
             add_action('wp_ajax_advgb_custom_styles_ajax', array($this, 'customStylesAjax'));
             add_action('wp_ajax_advgb_delete_profiles', array($this, 'deleteProfiles'));
             add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
-            add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
-            add_action('wp_ajax_advgb_newsletter_save', array($this, 'saveNewsletterData'));
         } else {
             // Front-end
             add_filter('the_content', array($this, 'addFrontendContentAssets'));
