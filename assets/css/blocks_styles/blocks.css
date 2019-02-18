@@ -1013,8 +1013,9 @@ hr.wp-block-separator {
     cursor: pointer;
 }
 
-.advgb-image-slider-image-list .advgb-image-slider-image-list-item {
-    margin: auto 10px;
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item,
+.advgb-image-slider-image-list .advgb-image-slider-add-item {
+    margin: 10px;
     position: relative;
 }
 

@@ -510,6 +510,7 @@
                                 >
                                         <a className="advgb-image-slider-overlay"
                                            target="_blank"
+                                           rel="noopener noreferrer"
                                            href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
                                            style={ {
                                                backgroundColor: hoverColor,
