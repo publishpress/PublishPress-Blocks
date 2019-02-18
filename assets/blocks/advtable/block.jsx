@@ -839,9 +839,9 @@
                                     max={ 10 }
                                     onChange={ ( value ) => this.updateCellsStyles( { borderWidth: value } ) }
                                 />
-                                <div className={ 'advgb-border-item-wrapper' }>
+                                <div className="advgb-border-item-wrapper">
                                     {BORDER_SELECT.map( ( item, index ) => (
-                                        <div className={ 'advgb-border-item' } key={ index }>
+                                        <div className="advgb-border-item" key={ index }>
                                             <Tooltip text={ item.title }>
                                                 <span onClick={ item.onClick }>{ item.icon }</span>
                                             </Tooltip>

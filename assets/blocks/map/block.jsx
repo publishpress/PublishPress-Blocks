@@ -1274,7 +1274,7 @@
                                             )
                                         ] }
                                         >
-                                            <Button className={ 'button button-large' }
+                                            <Button className="button button-large"
                                                     onClick={ open }
                                             >
                                                 { __( 'Choose icon' ) }
@@ -1338,8 +1338,8 @@
                     </InspectorControls>
                     }
                     {typeof google !== 'undefined' ?
-                        <div className={ 'advgb-map-block' }>
-                            <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
+                        <div className="advgb-map-block">
+                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
                         </div>
                         :
                         <Placeholder
@@ -1529,8 +1529,8 @@
                     const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${formattedTitle}</h2><p class="advgbmap-desc">${formattedDesc || ''}</p></div>`;
 
                     return (
-                        <div className={ 'advgb-map-block' } style={ { margin: '10px auto' } }>
-                            <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
+                        <div className="advgb-map-block" style={ { margin: '10px auto' } }>
+                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
                             <script type="text/javascript">
                                 {`window.addEventListener('load', function() {
                         if (typeof google === "undefined") return null;

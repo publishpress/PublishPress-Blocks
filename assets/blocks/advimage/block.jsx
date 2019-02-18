@@ -72,7 +72,7 @@
                                         <IconButton
                                             className="components-toolbar__control"
                                             label={ __( 'Change image' ) }
-                                            icon={ 'edit' }
+                                            icon="edit"
                                             onClick={ open }
                                         />
                                     ) }
@@ -80,7 +80,7 @@
                                 <IconButton
                                     className="components-toolbar__control"
                                     label={ __( 'Remove image' ) }
-                                    icon={ 'no' }
+                                    icon="no"
                                     onClick={ () => setAttributes( { imageUrl: undefined, imageID: undefined } ) }
                                 />
                             </Toolbar>
@@ -195,7 +195,7 @@
                              alignItems: hAlign,
                          } }
                     >
-                    <span className={ 'advgb-image-overlay' }
+                    <span className="advgb-image-overlay"
                           style={ { backgroundColor: overlayColor } }
                     />
                         {!imageID &&
@@ -214,8 +214,8 @@
                         />
                         }
                         <RichText
-                            tagName={ 'h4' }
-                            className={ 'advgb-image-title' }
+                            tagName="h4"
+                            className="advgb-image-title"
                             value={ title }
                             onChange={ (value) => setAttributes( { title: value } ) }
                             style={ { color: titleColor } }
@@ -225,8 +225,8 @@
                             placeholder={ __( 'Enter title…' ) }
                         />
                         <RichText
-                            tagName={ 'p' }
-                            className={ 'advgb-image-subtitle' }
+                            tagName="p"
+                            className="advgb-image-subtitle"
                             value={ subtitle }
                             onChange={ (value) => setAttributes( { subtitle: value } ) }
                             style={ { color: subtitleColor } }
@@ -358,16 +358,16 @@
                      } }
                      data-image={ imageUrl }
                 >
-                    <a className={ 'advgb-image-overlay' }
+                    <a className="advgb-image-overlay"
                        style={ { backgroundColor: overlayColor } }
                        target={ linkInNewTab ? '_blank' : '_self' }
                        rel="noopener noreferrer"
                        href={ linkURL }
                     />
-                    <h4 className={ 'advgb-image-title' } style={ { color: titleColor } }>
+                    <h4 className="advgb-image-title" style={ { color: titleColor } }>
                         {title}
                     </h4>
-                    <p className={ 'advgb-image-subtitle' } style={ { color: subtitleColor } }>
+                    <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
                         {subtitle}
                     </p>
                 </div>
@@ -411,15 +411,15 @@
                              } }
                              data-image={ imageUrl }
                         >
-                            <a className={ 'advgb-image-overlay' }
+                            <a className="advgb-image-overlay"
                                style={ { backgroundColor: overlayColor } }
                                target={ linkInNewTab ? '_blank' : '_self' }
                                href={ linkURL }
                             />
-                            <h4 className={ 'advgb-image-title' } style={ { color: titleColor } }>
+                            <h4 className="advgb-image-title" style={ { color: titleColor } }>
                                 {title}
                             </h4>
-                            <p className={ 'advgb-image-subtitle' } style={ { color: subtitleColor } }>
+                            <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
                                 {subtitle}
                             </p>
                         </div>

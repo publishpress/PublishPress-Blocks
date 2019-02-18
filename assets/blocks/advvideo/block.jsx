@@ -197,7 +197,7 @@
                                     <IconButton
                                         className="components-toolbar__control"
                                         label={ __( 'Change image preview' ) }
-                                        icon={ 'edit' }
+                                        icon="edit"
                                         onClick={ open }
                                     />
                                 ) }
@@ -205,7 +205,7 @@
                             <IconButton
                                 className="components-toolbar__control"
                                 label={ __( 'Remove image preview' ) }
-                                icon={ 'no' }
+                                icon="no"
                                 onClick={ () => setAttributes( { poster: undefined, posterID: undefined } ) }
                             />
                         </Toolbar>
@@ -288,8 +288,8 @@
                     <div className={ blockClassName }>
                         {!!openInLightbox &&
                         <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor,  width: videoWidth } }>
-                            <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
-                            <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
+                            <div className="advgb-video-poster" style={ { backgroundImage: `url(${poster})` } }/>
+                            <div className="advgb-button-wrapper" style={ { height: videoHeight } }>
                                 {!poster &&
                                 <MediaUpload
                                     allowedTypes={ ["image"] }
@@ -297,7 +297,7 @@
                                     value={ posterID }
                                     render={ ( { open } ) => (
                                         <Button
-                                            className={ 'button button-large' }
+                                            className="button button-large"
                                             onClick={ open }
                                         >
                                             { __( 'Select image preview' ) }
@@ -305,7 +305,7 @@
                                     ) }
                                 />
                                 }
-                                <div className={ 'advgb-play-button' } style={ { color: playButtonColor } }>
+                                <div className="advgb-play-button" style={ { color: playButtonColor } }>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          width={ playButtonSize }
                                          height={ playButtonSize }
@@ -338,9 +338,9 @@
                             || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />
                         ) }
                         {isSelected &&
-                        <div className={ 'advgb-video-input-block' }>
-                            <div className={ 'advgb-video-input' }>
-                                <Dashicon className="advgb-video-link-icon" icon={ 'admin-links' } />
+                        <div className="advgb-video-input-block">
+                            <div className="advgb-video-input">
+                                <Dashicon className="advgb-video-link-icon" icon="admin-links" />
                                 <TextControl
                                     placeholder={ __( 'Youtube/Vimeo video URL/ID…' ) }
                                     value={ videoID }
@@ -371,7 +371,7 @@
                                     ) }
                                 />
                             </div>
-                            <div className={ 'advgb-current-video-desc' }
+                            <div className="advgb-current-video-desc"
                                  style={ { minWidth: '50%', margin: '10px auto', textAlign: 'center' } }
                             >
                                 <strong>{ __( 'Current Video' ) }:</strong>
@@ -528,9 +528,9 @@
                     ) }
                     {!!openInLightbox &&
                     <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor, width: videoWidth } }>
-                        <div className={ 'advgb-video-poster' } style={ { backgroundImage: `url(${poster})` } }/>
-                        <div className={ 'advgb-button-wrapper' } style={ { height: videoHeight } }>
-                            <div className={ 'advgb-play-button' } style={ { color: playButtonColor } }>
+                        <div className="advgb-video-poster" style={ { backgroundImage: `url(${poster})` } }/>
+                        <div className="advgb-button-wrapper" style={ { height: videoHeight } }>
+                            <div className="advgb-play-button" style={ { color: playButtonColor } }>
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      width={ playButtonSize }
                                      height={ playButtonSize }

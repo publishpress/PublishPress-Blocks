@@ -306,7 +306,7 @@
                                             </a>
                                         </div>
                                     ) }
-                                    <div className={ 'advgb-post-wrapper' }>
+                                    <div className="advgb-post-wrapper">
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
                                         </h2>

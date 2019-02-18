@@ -3198,11 +3198,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(
                                     "div",
-                                    { className: 'advgb-border-item-wrapper' },
+                                    { className: "advgb-border-item-wrapper" },
                                     BORDER_SELECT.map(function (item, index) {
                                         return React.createElement(
                                             "div",
-                                            { className: 'advgb-border-item', key: index },
+                                            { className: "advgb-border-item", key: index },
                                             React.createElement(
                                                 Tooltip,
                                                 { text: item.title },
@@ -3752,7 +3752,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return React.createElement(IconButton, {
                                         className: "components-toolbar__control",
                                         label: __('Change image preview'),
-                                        icon: 'edit',
+                                        icon: "edit",
                                         onClick: open
                                     });
                                 }
@@ -3760,7 +3760,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(IconButton, {
                                 className: "components-toolbar__control",
                                 label: __('Remove image preview'),
-                                icon: 'no',
+                                icon: "no",
                                 onClick: function onClick() {
                                     return setAttributes({ poster: undefined, posterID: undefined });
                                 }
@@ -3874,10 +3874,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         !!openInLightbox && React.createElement(
                             "div",
                             { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
-                            React.createElement("div", { className: 'advgb-video-poster', style: { backgroundImage: "url(" + poster + ")" } }),
+                            React.createElement("div", { className: "advgb-video-poster", style: { backgroundImage: "url(" + poster + ")" } }),
                             React.createElement(
                                 "div",
-                                { className: 'advgb-button-wrapper', style: { height: videoHeight } },
+                                { className: "advgb-button-wrapper", style: { height: videoHeight } },
                                 !poster && React.createElement(MediaUpload, {
                                     allowedTypes: ["image"],
                                     onSelect: function onSelect(media) {
@@ -3889,7 +3889,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return React.createElement(
                                             Button,
                                             {
-                                                className: 'button button-large',
+                                                className: "button button-large",
                                                 onClick: open
                                             },
                                             __('Select image preview')
@@ -3898,7 +3898,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(
                                     "div",
-                                    { className: 'advgb-play-button', style: { color: playButtonColor } },
+                                    { className: "advgb-play-button", style: { color: playButtonColor } },
                                     React.createElement(
                                         "svg",
                                         { xmlns: "http://www.w3.org/2000/svg",
@@ -3927,11 +3927,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
                         isSelected && React.createElement(
                             "div",
-                            { className: 'advgb-video-input-block' },
+                            { className: "advgb-video-input-block" },
                             React.createElement(
                                 "div",
-                                { className: 'advgb-video-input' },
-                                React.createElement(Dashicon, { className: "advgb-video-link-icon", icon: 'admin-links' }),
+                                { className: "advgb-video-input" },
+                                React.createElement(Dashicon, { className: "advgb-video-link-icon", icon: "admin-links" }),
                                 React.createElement(TextControl, {
                                     placeholder: __('Youtube/Vimeo video URL/ID…'),
                                     value: videoID,
@@ -3975,7 +3975,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 "div",
-                                { className: 'advgb-current-video-desc',
+                                { className: "advgb-current-video-desc",
                                     style: { minWidth: '50%', margin: '10px auto', textAlign: 'center' }
                                 },
                                 React.createElement(
@@ -4131,13 +4131,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 !!openInLightbox && React.createElement(
                     "div",
                     { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
-                    React.createElement("div", { className: 'advgb-video-poster', style: { backgroundImage: "url(" + poster + ")" } }),
+                    React.createElement("div", { className: "advgb-video-poster", style: { backgroundImage: "url(" + poster + ")" } }),
                     React.createElement(
                         "div",
-                        { className: 'advgb-button-wrapper', style: { height: videoHeight } },
+                        { className: "advgb-button-wrapper", style: { height: videoHeight } },
                         React.createElement(
                             "div",
-                            { className: 'advgb-play-button', style: { color: playButtonColor } },
+                            { className: "advgb-play-button", style: { color: playButtonColor } },
                             React.createElement(
                                 "svg",
                                 { xmlns: "http://www.w3.org/2000/svg",
@@ -7673,7 +7673,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         },
                                         React.createElement(
                                             Button,
-                                            { className: 'button button-large',
+                                            { className: "button button-large",
                                                 onClick: open
                                             },
                                             __('Choose icon')
@@ -7736,8 +7736,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     typeof google !== 'undefined' ? React.createElement(
                         "div",
-                        { className: 'advgb-map-block' },
-                        React.createElement("div", { className: 'advgb-map-content', id: mapID, style: { height: height } })
+                        { className: "advgb-map-block" },
+                        React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } })
                     ) : React.createElement(
                         Placeholder,
                         {
@@ -7894,8 +7894,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 return React.createElement(
                     "div",
-                    { className: 'advgb-map-block', style: { margin: '10px auto' } },
-                    React.createElement("div", { className: 'advgb-map-content', id: mapID, style: { height: height } }),
+                    { className: "advgb-map-block", style: { margin: '10px auto' } },
+                    React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
                     React.createElement(
                         "script",
                         { type: "text/javascript" },
@@ -8861,7 +8861,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     ),
                                     React.createElement(
                                         "div",
-                                        { className: 'advgb-post-wrapper' },
+                                        { className: "advgb-post-wrapper" },
                                         React.createElement(
                                             "h2",
                                             { className: "advgb-post-title" },
