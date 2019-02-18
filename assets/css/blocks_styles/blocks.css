@@ -1028,6 +1028,10 @@ hr.wp-block-separator {
     padding: 2px;
 }
 
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item .advgb-image-slider-image-list-item-remove svg {
+    margin: 0;
+}
+
 .advgb-image-slider-image-list .advgb-image-slider-add-item button {
     height: 50px;
     border: 1px solid #ccc;
