@@ -510,15 +510,15 @@
                                          alignItems: hAlign,
                                      } }
                                 >
-                                        <a className="advgb-image-slider-overlay"
-                                           target="_blank"
-                                           rel="noopener noreferrer"
-                                           href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
-                                           style={ {
-                                               backgroundColor: hoverColor,
-                                               opacity: alwaysShowOverlay ? 0.5 : undefined,
-                                           } }
-                                        />
+                                    <a className="advgb-image-slider-overlay"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
+                                       style={ {
+                                           backgroundColor: hoverColor,
+                                           opacity: alwaysShowOverlay ? 0.5 : undefined,
+                                       } }
+                                    />
                                     <h4 className="advgb-image-slider-title"
                                         style={ { color: titleColor } }
                                     >
