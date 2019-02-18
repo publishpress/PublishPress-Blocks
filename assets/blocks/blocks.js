@@ -5886,14 +5886,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var prevImages = prevProps.attributes.images;
 
 
-                if (images.length !== prevImages.length && images.length) {
-                    setTimeout(function () {
-                        return _this2.initSlider();
-                    }, 100);
-                }
-
-                if (images.length === 0 && this.state.inited) {
-                    this.setState({ inited: false });
+                if (images.length !== prevImages.length) {
+                    if (images.length) {
+                        setTimeout(function () {
+                            return _this2.initSlider();
+                        }, 100);
+                    } else if (images.length === 0 && this.state.inited) {
+                        this.setState({ inited: false });
+                    }
                 }
 
                 if (!this.state.inited && isSelected) {
