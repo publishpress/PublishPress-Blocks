@@ -957,6 +957,109 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M0 0h24v24H0V0z', fill: 'none' }),
         React.createElement('path', { d: 'M5 14.5h14v-6H5v6zM11 .55V3.5h2V.55h-2zm8.04 2.5l-1.79 1.79 1.41 1.41 1.8-1.79-1.42-1.41zM13 22.45V19.5h-2v2.95h2zm7.45-3.91l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM3.55 4.46l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zm1.41 15.49l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42z' })
     );
+    var blockAttrs = {
+        id: {
+            type: 'string'
+        },
+        url: {
+            type: 'string'
+        },
+        urlOpenNewTab: {
+            type: 'boolean',
+            default: true
+        },
+        title: {
+            type: 'string'
+        },
+        text: {
+            source: 'children',
+            selector: 'a'
+        },
+        bgColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        textColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        textSize: {
+            type: 'number',
+            default: 18
+        },
+        paddingTop: {
+            type: 'number',
+            default: 6
+        },
+        paddingRight: {
+            type: 'number',
+            default: 12
+        },
+        paddingBottom: {
+            type: 'number',
+            default: 6
+        },
+        paddingLeft: {
+            type: 'number',
+            default: 12
+        },
+        borderWidth: {
+            type: 'number',
+            default: 1
+        },
+        borderColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid'
+        },
+        borderRadius: {
+            type: 'number',
+            default: 50
+        },
+        hoverTextColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        hoverBgColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        hoverShadowColor: {
+            type: 'string',
+            default: '#ccc'
+        },
+        hoverShadowH: {
+            type: 'number',
+            default: 3
+        },
+        hoverShadowV: {
+            type: 'number',
+            default: 3
+        },
+        hoverShadowBlur: {
+            type: 'number',
+            default: 1
+        },
+        hoverShadowSpread: {
+            type: 'number',
+            default: 0
+        },
+        transitionSpeed: {
+            type: 'number',
+            default: 0.2
+        },
+        align: {
+            type: 'string',
+            default: 'none'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
 
     registerBlockType('advgb/button', {
         title: __('Advanced Button'),
@@ -967,109 +1070,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'layout',
         keywords: [__('button'), __('link')],
-        attributes: {
-            id: {
-                type: 'string'
-            },
-            url: {
-                type: 'string'
-            },
-            urlOpenNewTab: {
-                type: 'boolean',
-                default: true
-            },
-            title: {
-                type: 'string'
-            },
-            text: {
-                source: 'children',
-                selector: 'a'
-            },
-            bgColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            textColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            textSize: {
-                type: 'number',
-                default: 18
-            },
-            paddingTop: {
-                type: 'number',
-                default: 6
-            },
-            paddingRight: {
-                type: 'number',
-                default: 12
-            },
-            paddingBottom: {
-                type: 'number',
-                default: 6
-            },
-            paddingLeft: {
-                type: 'number',
-                default: 12
-            },
-            borderWidth: {
-                type: 'number',
-                default: 1
-            },
-            borderColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            borderStyle: {
-                type: 'string',
-                default: 'solid'
-            },
-            borderRadius: {
-                type: 'number',
-                default: 50
-            },
-            hoverTextColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            hoverBgColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            hoverShadowColor: {
-                type: 'string',
-                default: '#ccc'
-            },
-            hoverShadowH: {
-                type: 'number',
-                default: 3
-            },
-            hoverShadowV: {
-                type: 'number',
-                default: 3
-            },
-            hoverShadowBlur: {
-                type: 'number',
-                default: 1
-            },
-            hoverShadowSpread: {
-                type: 'number',
-                default: 0
-            },
-            transitionSpeed: {
-                type: 'number',
-                default: 0.2
-            },
-            align: {
-                type: 'string',
-                default: 'none'
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         transforms: {
             from: [{
                 type: 'block',
@@ -1129,7 +1130,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     href: url || '#',
                     title: title,
                     target: !urlOpenNewTab ? '_self' : '_blank',
-                    value: text
+                    value: text,
+                    rel: 'noopener noreferrer'
                 }),
                 React.createElement(
                     'style',
@@ -1148,7 +1150,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             return props;
-        }
+        },
+
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var id = attributes.id,
+                    align = attributes.align,
+                    url = attributes.url,
+                    urlOpenNewTab = attributes.urlOpenNewTab,
+                    title = attributes.title,
+                    text = attributes.text,
+                    bgColor = attributes.bgColor,
+                    textColor = attributes.textColor,
+                    textSize = attributes.textSize,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    borderStyle = attributes.borderStyle,
+                    hoverTextColor = attributes.hoverTextColor,
+                    hoverBgColor = attributes.hoverBgColor,
+                    hoverShadowColor = attributes.hoverShadowColor,
+                    hoverShadowH = attributes.hoverShadowH,
+                    hoverShadowV = attributes.hoverShadowV,
+                    hoverShadowBlur = attributes.hoverShadowBlur,
+                    hoverShadowSpread = attributes.hoverShadowSpread,
+                    transitionSpeed = attributes.transitionSpeed;
+
+
+                return React.createElement(
+                    'div',
+                    { className: 'align' + align },
+                    React.createElement(RichText.Content, {
+                        tagName: 'a',
+                        className: 'wp-block-advgb-button_link ' + id,
+                        href: url || '#',
+                        title: title,
+                        target: !urlOpenNewTab ? '_self' : '_blank',
+                        value: text
+                    }),
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -1487,6 +1540,70 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M1 5h2v14H1zm4 0h2v14H5zm17 0H10c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1zM11 17l2.5-3.15L15.29 16l2.5-3.22L21 17H11z' })
     );
 
+    var blockAttrs = {
+        openOnClick: {
+            type: 'string',
+            default: 'none'
+        },
+        linkInNewTab: {
+            type: 'boolean',
+            default: true
+        },
+        openUrl: {
+            type: 'string'
+        },
+        imageUrl: {
+            type: 'string'
+        },
+        imageID: {
+            type: 'number'
+        },
+        title: {
+            type: 'string',
+            default: __('Image title')
+        },
+        titleColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        subtitle: {
+            type: 'string',
+            default: __('Your subtitle here')
+        },
+        subtitleColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        overlayColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        fullWidth: {
+            type: 'boolean',
+            default: false
+        },
+        width: {
+            type: 'number',
+            default: 500
+        },
+        height: {
+            type: 'number',
+            default: 500
+        },
+        vAlign: {
+            type: 'string',
+            default: 'center'
+        },
+        hAlign: {
+            type: 'string',
+            default: 'center'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/image', {
         title: __('Advanced Image'),
         description: __('Advanced image/photo block with more options and styles.'),
@@ -1496,69 +1613,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'common',
         keywords: [__('image'), __('photo'), __('box')],
-        attributes: {
-            openOnClick: {
-                type: 'string',
-                default: 'none'
-            },
-            linkInNewTab: {
-                type: 'boolean',
-                default: true
-            },
-            openUrl: {
-                type: 'string'
-            },
-            imageUrl: {
-                type: 'string'
-            },
-            imageID: {
-                type: 'number'
-            },
-            title: {
-                type: 'string',
-                default: __('Image title')
-            },
-            titleColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            subtitle: {
-                type: 'string',
-                default: __('Your subtitle here')
-            },
-            subtitleColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            overlayColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            fullWidth: {
-                type: 'boolean',
-                default: false
-            },
-            width: {
-                type: 'number',
-                default: 500
-            },
-            height: {
-                type: 'number',
-                default: 500
-            },
-            vAlign: {
-                type: 'string',
-                default: 'center'
-            },
-            hAlign: {
-                type: 'string',
-                default: 'center'
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         edit: AdvImage,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -1595,6 +1650,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement('a', { className: 'advgb-image-overlay',
                     style: { backgroundColor: overlayColor },
                     target: linkInNewTab ? '_blank' : '_self',
+                    rel: 'noopener noreferrer',
                     href: linkURL
                 }),
                 React.createElement(
@@ -1608,7 +1664,59 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     subtitle
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
+                var openOnClick = attributes.openOnClick,
+                    openUrl = attributes.openUrl,
+                    linkInNewTab = attributes.linkInNewTab,
+                    imageUrl = attributes.imageUrl,
+                    title = attributes.title,
+                    titleColor = attributes.titleColor,
+                    subtitle = attributes.subtitle,
+                    subtitleColor = attributes.subtitleColor,
+                    overlayColor = attributes.overlayColor,
+                    fullWidth = attributes.fullWidth,
+                    width = attributes.width,
+                    height = attributes.height,
+                    vAlign = attributes.vAlign,
+                    hAlign = attributes.hAlign;
+
+                var linkURL = openOnClick === 'url' && !!openUrl ? openUrl : undefined;
+                var blockClassName = ['advgb-image-block', fullWidth && 'full-width', openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    'div',
+                    { className: blockClassName,
+                        style: {
+                            backgroundImage: 'url( ' + imageUrl + ')',
+                            height: height,
+                            width: width,
+                            justifyContent: vAlign,
+                            alignItems: hAlign
+                        },
+                        'data-image': imageUrl
+                    },
+                    React.createElement('a', { className: 'advgb-image-overlay',
+                        style: { backgroundColor: overlayColor },
+                        target: linkInNewTab ? '_blank' : '_self',
+                        href: linkURL
+                    }),
+                    React.createElement(
+                        'h4',
+                        { className: 'advgb-image-title', style: { color: titleColor } },
+                        title
+                    ),
+                    React.createElement(
+                        'p',
+                        { className: 'advgb-image-subtitle', style: { color: subtitleColor } },
+                        subtitle
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -9650,6 +9758,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 className: "advgb-social-icon",
                                 href: item.link || '#',
                                 target: "_blank",
+                                rel: "noopener noreferrer",
                                 style: {
                                     width: iconSize + 'px',
                                     height: iconSize + 'px',
@@ -9676,6 +9785,51 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: socialBlockAttrs,
             save: function save(_ref3) {
                 var attributes = _ref3.attributes;
+                var items = attributes.items,
+                    align = attributes.align,
+                    iconSize = attributes.iconSize,
+                    iconSpace = attributes.iconSpace;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-social-links-block", style: { textAlign: align } },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-social-icons" },
+                        items.map(function (item, index) {
+                            return React.createElement(
+                                "a",
+                                { key: index,
+                                    className: "advgb-social-icon",
+                                    href: item.link || '#',
+                                    target: "_blank",
+                                    style: {
+                                        width: iconSize + 'px',
+                                        height: iconSize + 'px',
+                                        marginLeft: iconSpace + 'px',
+                                        marginRight: iconSpace + 'px',
+                                        color: item.iconColor
+                                    }
+                                },
+                                !!item.icon ? item.icon in ICONS_SET ? React.createElement(
+                                    "svg",
+                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
+                                    ICONS_SET_NEW[item.icon]
+                                ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
+                                    "svg",
+                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
+                                    socialBlockIconContent
+                                )
+                            );
+                        })
+                    )
+                );
+            }
+        }, {
+            attributes: socialBlockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var items = attributes.items,
                     align = attributes.align,
                     iconSize = attributes.iconSize,

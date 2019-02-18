@@ -248,6 +248,70 @@
         </svg>
     );
 
+    const blockAttrs = {
+        openOnClick: {
+            type: 'string',
+            default: 'none',
+        },
+        linkInNewTab: {
+            type: 'boolean',
+            default: true,
+        },
+        openUrl: {
+            type: 'string',
+        },
+        imageUrl: {
+            type: 'string',
+        },
+        imageID: {
+            type: 'number',
+        },
+        title: {
+            type: 'string',
+            default: __( 'Image title' ),
+        },
+        titleColor: {
+            type: 'string',
+            default: '#fff',
+        },
+        subtitle: {
+            type: 'string',
+            default: __( 'Your subtitle here' ),
+        },
+        subtitleColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        overlayColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        fullWidth: {
+            type: 'boolean',
+            default: false,
+        },
+        width: {
+            type: 'number',
+            default: 500,
+        },
+        height: {
+            type: 'number',
+            default: 500,
+        },
+        vAlign: {
+            type: 'string',
+            default: 'center',
+        },
+        hAlign: {
+            type: 'string',
+            default: 'center',
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+    };
+
     registerBlockType( 'advgb/image', {
         title: __( 'Advanced Image' ),
         description: __( 'Advanced image/photo block with more options and styles.' ),
@@ -257,69 +321,7 @@
         },
         category: 'common',
         keywords: [ __( 'image' ), __( 'photo' ), __( 'box' ) ],
-        attributes: {
-            openOnClick: {
-                type: 'string',
-                default: 'none',
-            },
-            linkInNewTab: {
-                type: 'boolean',
-                default: true,
-            },
-            openUrl: {
-                type: 'string',
-            },
-            imageUrl: {
-                type: 'string',
-            },
-            imageID: {
-                type: 'number',
-            },
-            title: {
-                type: 'string',
-                default: __( 'Image title' ),
-            },
-            titleColor: {
-                type: 'string',
-                default: '#fff',
-            },
-            subtitle: {
-                type: 'string',
-                default: __( 'Your subtitle here' ),
-            },
-            subtitleColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            overlayColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            fullWidth: {
-                type: 'boolean',
-                default: false,
-            },
-            width: {
-                type: 'number',
-                default: 500,
-            },
-            height: {
-                type: 'number',
-                default: 500,
-            },
-            vAlign: {
-                type: 'string',
-                default: 'center',
-            },
-            hAlign: {
-                type: 'string',
-                default: 'center',
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            },
-        },
+        attributes: blockAttrs,
         edit: AdvImage,
         save: ( { attributes } ) => {
             const {
@@ -359,6 +361,7 @@
                     <a className={ 'advgb-image-overlay' }
                        style={ { backgroundColor: overlayColor } }
                        target={ linkInNewTab ? '_blank' : '_self' }
+                       rel="noopener noreferrer"
                        href={ linkURL }
                     />
                     <h4 className={ 'advgb-image-title' } style={ { color: titleColor } }>
@@ -370,5 +373,59 @@
                 </div>
             );
         },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: ( { attributes } ) => {
+                    const {
+                        openOnClick,
+                        openUrl,
+                        linkInNewTab,
+                        imageUrl,
+                        title,
+                        titleColor,
+                        subtitle,
+                        subtitleColor,
+                        overlayColor,
+                        fullWidth,
+                        width,
+                        height,
+                        vAlign,
+                        hAlign,
+                    } = attributes;
+                    const linkURL = ( openOnClick === 'url' && !!openUrl ) ? openUrl : undefined;
+                    const blockClassName = [
+                        'advgb-image-block',
+                        fullWidth && 'full-width',
+                        openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClassName }
+                             style={ {
+                                 backgroundImage: `url( ${imageUrl})`,
+                                 height: height,
+                                 width: width,
+                                 justifyContent: vAlign,
+                                 alignItems: hAlign,
+                             } }
+                             data-image={ imageUrl }
+                        >
+                            <a className={ 'advgb-image-overlay' }
+                               style={ { backgroundColor: overlayColor } }
+                               target={ linkInNewTab ? '_blank' : '_self' }
+                               href={ linkURL }
+                            />
+                            <h4 className={ 'advgb-image-title' } style={ { color: titleColor } }>
+                                {title}
+                            </h4>
+                            <p className={ 'advgb-image-subtitle' } style={ { color: subtitleColor } }>
+                                {subtitle}
+                            </p>
+                        </div>
+                    );
+                },
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
