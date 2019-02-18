@@ -6292,6 +6292,57 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvImageSlider;
     }(Component);
 
+    var blockAttrs = {
+        images: {
+            type: 'array',
+            default: [] // [ { id: int, url, title, text, link: string } ]
+        },
+        actionOnClick: {
+            type: 'string'
+        },
+        fullWidth: {
+            type: 'boolean',
+            default: true
+        },
+        autoHeight: {
+            type: 'boolean',
+            default: true
+        },
+        width: {
+            type: 'number',
+            default: 700
+        },
+        height: {
+            type: 'number',
+            default: 500
+        },
+        alwaysShowOverlay: {
+            type: 'boolean',
+            default: false
+        },
+        hoverColor: {
+            type: 'string'
+        },
+        titleColor: {
+            type: 'string'
+        },
+        textColor: {
+            type: 'string'
+        },
+        vAlign: {
+            type: 'string',
+            default: 'center'
+        },
+        hAlign: {
+            type: 'string',
+            default: 'center'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/images-slider', {
         title: __('Images Slider'),
         description: __('Display your images in a slider.'),
@@ -6301,56 +6352,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'formatting',
         keywords: [__('slide'), __('gallery'), __('photos')],
-        attributes: {
-            images: {
-                type: 'array',
-                default: [] // [ { id: int, url, title, text, link: string } ]
-            },
-            actionOnClick: {
-                type: 'string'
-            },
-            fullWidth: {
-                type: 'boolean',
-                default: true
-            },
-            autoHeight: {
-                type: 'boolean',
-                default: true
-            },
-            width: {
-                type: 'number',
-                default: 700
-            },
-            height: {
-                type: 'number',
-                default: 500
-            },
-            alwaysShowOverlay: {
-                type: 'boolean',
-                default: false
-            },
-            hoverColor: {
-                type: 'string'
-            },
-            titleColor: {
-                type: 'string'
-            },
-            textColor: {
-                type: 'string'
-            },
-            vAlign: {
-                type: 'string',
-                default: 'center'
-            },
-            hAlign: {
-                type: 'string',
-                default: 'center'
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         edit: AdvImageSlider,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -6423,7 +6425,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     })
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
+                var images = attributes.images,
+                    actionOnClick = attributes.actionOnClick,
+                    fullWidth = attributes.fullWidth,
+                    autoHeight = attributes.autoHeight,
+                    width = attributes.width,
+                    height = attributes.height,
+                    alwaysShowOverlay = attributes.alwaysShowOverlay,
+                    hoverColor = attributes.hoverColor,
+                    titleColor = attributes.titleColor,
+                    textColor = attributes.textColor,
+                    hAlign = attributes.hAlign,
+                    vAlign = attributes.vAlign;
+
+                var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-images-slider" },
+                        images.map(function (image, index) {
+                            return React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-item", key: index },
+                                React.createElement("img", { src: image.url,
+                                    className: "advgb-image-slider-img",
+                                    alt: __('Slider image'),
+                                    style: {
+                                        width: fullWidth ? '100%' : width,
+                                        height: autoHeight ? 'auto' : height
+                                    }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-item-info",
+                                        style: {
+                                            justifyContent: vAlign,
+                                            alignItems: hAlign
+                                        }
+                                    },
+                                    React.createElement("a", { className: "advgb-image-slider-overlay",
+                                        target: "_blank",
+                                        href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
+                                        style: {
+                                            backgroundColor: hoverColor,
+                                            opacity: alwaysShowOverlay ? 0.5 : undefined
+                                        }
+                                    }),
+                                    React.createElement(
+                                        "h4",
+                                        { className: "advgb-image-slider-title",
+                                            style: { color: titleColor }
+                                        },
+                                        image.title
+                                    ),
+                                    React.createElement(
+                                        "p",
+                                        { className: "advgb-image-slider-text",
+                                            style: { color: textColor }
+                                        },
+                                        image.text
+                                    )
+                                )
+                            );
+                        })
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
