@@ -23,7 +23,7 @@
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
-                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
                     Object.keys(currentBlockConfig).map((attribute) => {
                         if (typeof attributes[attribute] === 'boolean') {
                             attributes[attribute] = !!currentBlockConfig[attribute];
