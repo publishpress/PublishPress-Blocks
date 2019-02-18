@@ -1250,9 +1250,6 @@ form .advgb-grecaptcha > div {
 }
 
 /*Container block*/
-#editor .editor-inner-blocks .wp-block {
-    max-width: none;
-}
 
 /*--- RESPONSIVE STYLES HERE ---*/
 @media screen and (max-width: 599px) {
