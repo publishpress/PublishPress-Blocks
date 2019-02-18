@@ -195,12 +195,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -616,12 +620,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -1212,12 +1220,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -1665,12 +1677,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -2085,9 +2101,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -2154,6 +2170,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvTable, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-table'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
             key: "componentDidMount",
             value: function componentDidMount() {
                 this.calculateRealColIndex();
@@ -2205,9 +2246,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "calculateRealColIndex",
             value: function calculateRealColIndex() {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var body = attributes.body;
 
 
@@ -2261,9 +2302,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var body = attributes.body;
                 var rowIndex = selectedCell.rowIndex;
 
@@ -2303,9 +2344,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var body = attributes.body;
                 var rowIndex = selectedCell.rowIndex;
 
@@ -2345,9 +2386,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var body = attributes.body;
                 var cI = selectedCell.cI;
 
@@ -2402,9 +2443,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes;
                 var body = attributes.body;
                 var cI = selectedCell.cI;
 
@@ -2453,9 +2494,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes;
                 var fromCell = rangeSelected.fromCell,
                     toCell = rangeSelected.toCell;
                 var body = attributes.body;
@@ -2508,9 +2549,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes;
+                var _props8 = this.props,
+                    attributes = _props8.attributes,
+                    setAttributes = _props8.setAttributes;
                 var body = attributes.body;
                 var colIndex = selectedCell.colIndex,
                     rowIndex = selectedCell.rowIndex,
@@ -2594,9 +2635,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props8 = this.props,
-                    attributes = _props8.attributes,
-                    setAttributes = _props8.setAttributes;
+                var _props9 = this.props,
+                    attributes = _props9.attributes,
+                    setAttributes = _props9.setAttributes;
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
                 var body = attributes.body;
@@ -2672,9 +2713,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props9 = this.props,
-                    attributes = _props9.attributes,
-                    setAttributes = _props9.setAttributes;
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes;
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
                 var body = attributes.body;
@@ -2705,10 +2746,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props10 = this.props,
-                    attributes = _props10.attributes,
-                    setAttributes = _props10.setAttributes,
-                    className = _props10.className;
+                var _props11 = this.props,
+                    attributes = _props11.attributes,
+                    setAttributes = _props11.setAttributes,
+                    className = _props11.className;
                 var body = attributes.body,
                     maxWidth = attributes.maxWidth;
                 var _state4 = this.state,
@@ -3441,12 +3482,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -4014,6 +4059,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4052,11 +4099,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvContactForm, [{
-            key: "render",
-            value: function render() {
+            key: "componentWillMount",
+            value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-contact-form'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var nameLabel = attributes.nameLabel,
                     emailLabel = attributes.emailLabel,
                     msgLabel = attributes.msgLabel,
@@ -4798,12 +4870,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -5687,6 +5763,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -5747,6 +5825,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvImageSlider, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-images-slider'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
             key: "componentDidMount",
             value: function componentDidMount() {
                 var attributes = this.props.attributes;
@@ -5759,9 +5862,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentWillUpdate",
             value: function componentWillUpdate(nextProps) {
-                var _props = this.props,
-                    clientId = _props.clientId,
-                    attributes = _props.attributes;
+                var _props2 = this.props,
+                    clientId = _props2.clientId,
+                    attributes = _props2.attributes;
                 var images = attributes.images;
                 var nextImages = nextProps.attributes.images;
 
@@ -5776,9 +5879,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentDidUpdate(prevProps) {
                 var _this2 = this;
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    isSelected = _props2.isSelected;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    isSelected = _props3.isSelected;
                 var images = attributes.images;
                 var prevImages = prevProps.attributes.images;
 
@@ -5826,10 +5929,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function initItemSortable() {
                 var _this4 = this;
 
-                var _props3 = this.props,
-                    clientId = _props3.clientId,
-                    setAttributes = _props3.setAttributes,
-                    attributes = _props3.attributes;
+                var _props4 = this.props,
+                    clientId = _props4.clientId,
+                    setAttributes = _props4.setAttributes,
+                    attributes = _props4.attributes;
                 var images = attributes.images;
 
 
@@ -5865,9 +5968,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var images = attributes.images;
 
 
@@ -5886,11 +5989,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this5 = this;
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes,
-                    isSelected = _props5.isSelected,
-                    clientId = _props5.clientId;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes,
+                    isSelected = _props6.isSelected,
+                    clientId = _props6.clientId;
                 var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
@@ -7041,12 +7144,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -7627,6 +7734,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7665,11 +7774,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvNewsletter, [{
-            key: "render",
-            value: function render() {
+            key: "componentWillMount",
+            value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-newsletter'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var formStyle = attributes.formStyle,
                     formWidth = attributes.formWidth,
                     fnameLabel = attributes.fnameLabel,
@@ -8192,6 +8326,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8256,10 +8392,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentWillMount() {
                 var _this2 = this;
 
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-recent-posts'];
+
                 var categoriesListQuery = {
                     per_page: -1,
                     hide_empty: true
                 };
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
 
                 wp.apiFetch({
                     path: wp.url.addQueryArgs('wp/v2/categories', categoriesListQuery)
@@ -8272,10 +8430,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentWillUpdate(nextProps) {
                 var nextPosts = nextProps.recentPosts;
                 var nextView = nextProps.attributes.postView;
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    clientId = _props.clientId,
-                    recentPosts = _props.recentPosts;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    clientId = _props2.clientId,
+                    recentPosts = _props2.recentPosts;
 
                 var $ = jQuery;
 
@@ -8298,9 +8456,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "componentDidUpdate",
             value: function componentDidUpdate(prevProps) {
                 var that = this;
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    clientId = _props2.clientId;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
                 var postView = attributes.postView;
 
                 var $ = jQuery;
@@ -8324,10 +8482,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "render",
             value: function render() {
                 var categoriesList = this.state.categoriesList;
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes,
-                    recentPosts = _props3.recentPosts;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    recentPosts = _props4.recentPosts;
                 var postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,
@@ -9096,12 +9254,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            if (attribute.indexOf('.') === -1) attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -9619,12 +9781,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -10001,12 +10167,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -10607,12 +10777,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (attributes.changed !== true) {
                     if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -11372,6 +11546,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -11433,6 +11609,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(AdvProductsEdit, [{
             key: "componentWillMount",
             value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-woo-products'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+
                 this.fetchProducts();
             }
         }, {
@@ -11546,9 +11744,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "setCategories",
             value: function setCategories(catID, willAdd) {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var categories = attributes.categories;
 
 
@@ -11572,9 +11770,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     productsList = _state.productsList,
                     loading = _state.loading,
                     error = _state.error;
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var viewType = attributes.viewType,
                     category = attributes.category,
                     categories = attributes.categories,
