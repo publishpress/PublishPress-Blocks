@@ -178,6 +178,7 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 
 .advgb-list li ul {
     margin: 5px 0;
+    padding: 0;
 }
 
 .advgb-list li:before {
