@@ -4,8 +4,13 @@
     clear: both;
 }
 
-#editor .editor-inner-blocks .wp-block {
+#editor .editor-writing-flow {
+    margin: auto;
+}
+
+#editor .wp-block {
     max-width: unset;
+    width: 100%;
 }
 
 /*Accordion block styles*/
