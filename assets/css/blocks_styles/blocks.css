@@ -476,6 +476,10 @@ span.advgb-social-icon.selected:before {
     text-align: left;
 }
 
+.advgb-social-icons .advgb-social-icon:hover {
+    opacity: 0.7;
+}
+
 /*Summary block styles*/
 #editor .editor-block-list__block[data-align=center] ul.advgb-toc {
     width: fit-content;
