@@ -3088,6 +3088,12 @@ float: left;'
                 array($this, 'decodeHtmlEntity'),
                 $content
             );
+            wp_enqueue_script(
+                'advgb_gmap_js',
+                plugins_url('assets/blocks/map/frontend.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
         }
 
         if (strpos($content, 'advgb-accordion-block') !== false) {
