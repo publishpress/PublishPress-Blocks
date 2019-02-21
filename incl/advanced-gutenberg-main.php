@@ -218,7 +218,7 @@ float: left;'
             $categories,
             array(
                 array(
-                    'slug' => 'advgb-blocks',
+                    'slug' => 'advgb-category',
                     'title' => __('Advanced Gutenberg', 'advanced-gutenberg'),
                 ),
             )
