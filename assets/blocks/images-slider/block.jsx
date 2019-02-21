@@ -27,6 +27,27 @@
             this.initItemSortable = this.initItemSortable.bind(this);
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-images-slider'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
+                    });
+                }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
+            }
+        }
+
         componentDidMount() {
             const { attributes } = this.props;
 
@@ -54,12 +75,12 @@
             const { images } = attributes;
             const { images: prevImages } = prevProps.attributes;
 
-            if (images.length !== prevImages.length && images.length) {
-                setTimeout(() => this.initSlider(), 100);
-            }
-
-            if (images.length === 0 && this.state.inited) {
-                this.setState( { inited: false } );
+            if (images.length !== prevImages.length) {
+                if (images.length) {
+                    setTimeout(() => this.initSlider(), 100);
+                } else if (images.length === 0 && this.state.inited) {
+                    this.setState( { inited: false } );
+                }
             }
 
             if (!this.state.inited && isSelected) {
@@ -388,6 +409,57 @@
         }
     }
 
+    const blockAttrs = {
+        images: {
+            type: 'array',
+            default: [], // [ { id: int, url, title, text, link: string } ]
+        },
+        actionOnClick: {
+            type: 'string',
+        },
+        fullWidth: {
+            type: 'boolean',
+            default: true,
+        },
+        autoHeight: {
+            type: 'boolean',
+            default: true,
+        },
+        width: {
+            type: 'number',
+            default: 700,
+        },
+        height: {
+            type: 'number',
+            default: 500,
+        },
+        alwaysShowOverlay: {
+            type: 'boolean',
+            default: false,
+        },
+        hoverColor: {
+            type: 'string',
+        },
+        titleColor: {
+            type: 'string',
+        },
+        textColor: {
+            type: 'string',
+        },
+        vAlign: {
+            type: 'string',
+            default: 'center',
+        },
+        hAlign: {
+            type: 'string',
+            default: 'center',
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        }
+    };
+
     registerBlockType( 'advgb/images-slider', {
         title: __( 'Images Slider' ),
         description: __( 'Display your images in a slider.' ),
@@ -395,58 +467,9 @@
             src: imageSliderBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [ __( 'slide' ), __( 'gallery' ), __( 'photos' ) ],
-        attributes: {
-            images: {
-                type: 'array',
-                default: [], // [ { id: int, url, title, text, link: string } ]
-            },
-            actionOnClick: {
-                type: 'string',
-            },
-            fullWidth: {
-                type: 'boolean',
-                default: true,
-            },
-            autoHeight: {
-                type: 'boolean',
-                default: true,
-            },
-            width: {
-                type: 'number',
-                default: 700,
-            },
-            height: {
-                type: 'number',
-                default: 500,
-            },
-            alwaysShowOverlay: {
-                type: 'boolean',
-                default: false,
-            },
-            hoverColor: {
-                type: 'string',
-            },
-            titleColor: {
-                type: 'string',
-            },
-            textColor: {
-                type: 'string',
-            },
-            vAlign: {
-                type: 'string',
-                default: 'center',
-            },
-            hAlign: {
-                type: 'string',
-                default: 'center',
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            }
-        },
+        attributes: blockAttrs,
         edit: AdvImageSlider,
         save: function ( { attributes } ) {
             const {
@@ -487,14 +510,15 @@
                                          alignItems: hAlign,
                                      } }
                                 >
-                                        <a className="advgb-image-slider-overlay"
-                                           target="_blank"
-                                           href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
-                                           style={ {
-                                               backgroundColor: hoverColor,
-                                               opacity: alwaysShowOverlay ? 0.5 : undefined,
-                                           } }
-                                        />
+                                    <a className="advgb-image-slider-overlay"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
+                                       style={ {
+                                           backgroundColor: hoverColor,
+                                           opacity: alwaysShowOverlay ? 0.5 : undefined,
+                                       } }
+                                    />
                                     <h4 className="advgb-image-slider-title"
                                         style={ { color: titleColor } }
                                     >
@@ -512,5 +536,74 @@
                 </div>
             );
         },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        images,
+                        actionOnClick,
+                        fullWidth,
+                        autoHeight,
+                        width,
+                        height,
+                        alwaysShowOverlay,
+                        hoverColor,
+                        titleColor,
+                        textColor,
+                        hAlign,
+                        vAlign,
+                    } = attributes;
+                    const blockClassName = [
+                        'advgb-images-slider-block',
+                        actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox',
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClassName }>
+                            <div className="advgb-images-slider">
+                                {images.map( (image, index) => (
+                                    <div className="advgb-image-slider-item" key={index}>
+                                        <img src={ image.url }
+                                             className="advgb-image-slider-img"
+                                             alt={ __( 'Slider image' ) }
+                                             style={ {
+                                                 width: fullWidth ? '100%' : width,
+                                                 height: autoHeight ? 'auto' : height,
+                                             } }
+                                        />
+                                        <div className="advgb-image-slider-item-info"
+                                             style={ {
+                                                 justifyContent: vAlign,
+                                                 alignItems: hAlign,
+                                             } }
+                                        >
+                                            <a className="advgb-image-slider-overlay"
+                                               target="_blank"
+                                               href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
+                                               style={ {
+                                                   backgroundColor: hoverColor,
+                                                   opacity: alwaysShowOverlay ? 0.5 : undefined,
+                                               } }
+                                            />
+                                            <h4 className="advgb-image-slider-title"
+                                                style={ { color: titleColor } }
+                                            >
+                                                { image.title }
+                                            </h4>
+                                            <p className="advgb-image-slider-text"
+                                               style={ { color: textColor } }
+                                            >
+                                                { image.text }
+                                            </p>
+                                        </div>
+                                    </div>
+                                ) ) }
+                            </div>
+                        </div>
+                    );
+                },
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );

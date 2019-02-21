@@ -249,7 +249,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                             <?php esc_html_e('Editor width', 'advanced-gutenberg') ?>
                         </label>
                         <div>
-                            <select class="ju-select-options" name="editor_width" id="editor_width">
+                            <select class="ju-input" name="editor_width" id="editor_width">
                                 <option value="" <?php echo $editor_width === '' ? 'selected' : '' ?>>Original</option>
                                 <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>Large</option>
                                 <option value="95" <?php echo $editor_width === '95' ? 'selected' : '' ?>>Full width</option>
