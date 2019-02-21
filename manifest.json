@@ -42,6 +42,10 @@
       {
         "type": "fix",
         "title": "Compatibility with Wordpress 5.1.0"
+      },
+      {
+        "type": "fix",
+        "title": "Group advanced blocks to a new category"
       }
     ],
     "1.10.2": [
