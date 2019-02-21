@@ -45,7 +45,11 @@
       },
       {
         "type": "fix",
-        "title": "Group advanced blocks to a new category"
+        "title": "Summary block broken on post page reload"
+      },
+      {
+        "type": "fix",
+        "title": "Group Advanced Gutenberg blocks to a dedicated category"
       }
     ],
     "1.10.2": [
