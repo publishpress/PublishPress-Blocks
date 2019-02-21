@@ -486,7 +486,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: accordionAttrs,
         edit: AdvAccordion,
@@ -1068,7 +1068,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'layout',
+        category: 'advgb-category',
         keywords: [__('button'), __('link')],
         attributes: blockAttrs,
         transforms: {
@@ -1611,7 +1611,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: advImageBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('image'), __('photo'), __('box')],
         attributes: blockAttrs,
         edit: AdvImage,
@@ -2075,7 +2075,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: listBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('list'), __('icon')],
         attributes: listBlockAttrs,
         transforms: {
@@ -3401,7 +3401,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: tableBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [__('table'), __('cell'), __('data')],
         attributes: {
             body: {
@@ -4029,7 +4029,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: advVideoBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('video'), __('embed'), __('media')],
         attributes: {
             videoURL: {
@@ -4563,7 +4563,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: contactBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [__('contact'), __('form')],
         attributes: contactBlockAttrs,
         edit: AdvContactForm,
@@ -4893,7 +4893,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: containerBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'layout',
+        category: 'advgb-category',
         keywords: [__('container'), __('row'), __('box')],
         attributes: {},
         supports: {
@@ -5413,7 +5413,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: countUpBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('numbers'), __('count'), __('increase')],
         attributes: {
             headerText: {
@@ -6458,7 +6458,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: imageSliderBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [__('slide'), __('gallery'), __('photos')],
         attributes: blockAttrs,
         edit: AdvImageSlider,
@@ -7819,7 +7819,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('google map'), __('location'), __('address')],
         attributes: _extends({}, mapBlockAttrs, {
             mapStyle: {
@@ -8303,7 +8303,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: newsletterBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [__('newsletter'), __('form'), __('email')],
         attributes: {
             formStyle: {
@@ -8956,7 +8956,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [__('latest posts'), __('posts slide'), __('posts grid')],
         supports: {
             html: false
@@ -9733,7 +9733,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: socialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('social icons'), __('shares'), __('icon link')],
         attributes: socialBlockAttrs,
         edit: AdvSocialBlock,
@@ -10232,7 +10232,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: summaryBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [__('summary'), __('table of content'), __('list')],
         attributes: {
             headings: {
@@ -10787,7 +10787,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: "formatting",
+        category: "advgb-category",
         keywords: [__('tabs'), __('cards')],
         attributes: tabBlockAttrs,
         edit: AdvTabsBlock,
@@ -11621,7 +11621,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: testimonialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('testimonial'), __('personal'), __('about')],
         attributes: _extends({}, blockAttrsOld, {
             items: {
@@ -12205,7 +12205,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: advProductsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [__('woo commerce'), __('products list'), __('price list')],
         attributes: {
             viewType: {

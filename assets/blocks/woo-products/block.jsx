@@ -354,7 +354,7 @@
             src: advProductsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [ __( 'woo commerce' ), __( 'products list' ), __( 'price list' ) ],
         attributes: {
             viewType: {

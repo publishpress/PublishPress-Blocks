@@ -311,7 +311,7 @@
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
         attributes: accordionAttrs,
         edit: AdvAccordion,

@@ -271,7 +271,7 @@
             src: summaryBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [ __( 'summary' ), __( 'table of content' ), __( 'list' ) ],
         attributes: {
             headings: {

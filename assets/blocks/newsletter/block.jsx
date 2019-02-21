@@ -298,7 +298,7 @@
             src: newsletterBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [ __( 'newsletter' ), __( 'form' ), __( 'email' ) ],
         attributes: {
             formStyle: {

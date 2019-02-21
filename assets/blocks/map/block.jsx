@@ -1420,7 +1420,7 @@
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'google map' ), __( 'location' ), __( 'address' ) ],
         attributes: {
             ...mapBlockAttrs,

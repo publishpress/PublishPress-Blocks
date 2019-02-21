@@ -991,7 +991,7 @@
             src: tableBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [ __( 'table' ), __( 'cell' ), __( 'data' ) ],
         attributes: {
             body: {

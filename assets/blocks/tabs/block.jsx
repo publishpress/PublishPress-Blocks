@@ -356,7 +356,7 @@
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: "formatting",
+        category: "advgb-category",
         keywords: [ __( 'tabs' ), __( 'cards' ) ],
         attributes: tabBlockAttrs,
         edit: AdvTabsBlock,

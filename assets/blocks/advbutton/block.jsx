@@ -425,7 +425,7 @@
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'layout',
+        category: 'advgb-category',
         keywords: [ __('button'), __('link') ],
         attributes: blockAttrs,
         transforms: {

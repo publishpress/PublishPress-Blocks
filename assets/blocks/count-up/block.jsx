@@ -332,7 +332,7 @@
             src: countUpBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'numbers' ), __( 'count' ), __( 'increase' ) ],
         attributes: {
             headerText: {

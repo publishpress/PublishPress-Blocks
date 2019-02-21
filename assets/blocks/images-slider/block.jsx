@@ -467,7 +467,7 @@
             src: imageSliderBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [ __( 'slide' ), __( 'gallery' ), __( 'photos' ) ],
         attributes: blockAttrs,
         edit: AdvImageSlider,

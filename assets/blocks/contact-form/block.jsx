@@ -310,7 +310,7 @@
             src: contactBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [ __( 'contact' ), __( 'form' ) ],
         attributes: contactBlockAttrs,
         edit: AdvContactForm,

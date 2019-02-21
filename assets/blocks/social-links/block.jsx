@@ -532,7 +532,7 @@
             src: socialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'social icons' ), __( 'shares' ), __( 'icon link' ) ],
         attributes: socialBlockAttrs,
         edit: AdvSocialBlock,
