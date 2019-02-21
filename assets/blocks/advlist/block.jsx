@@ -292,7 +292,7 @@
             src: listBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'list' ), __( 'icon' ) ],
         attributes: listBlockAttrs,
         transforms: {

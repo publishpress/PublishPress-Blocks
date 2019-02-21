@@ -415,7 +415,7 @@
             src: advVideoBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'video' ), __( 'embed' ), __( 'media' ) ],
         attributes: {
             videoURL: {

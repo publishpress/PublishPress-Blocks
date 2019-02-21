@@ -540,7 +540,7 @@
             src: testimonialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'testimonial' ), __( 'personal' ), __( 'about' ) ],
         attributes: {
             ...blockAttrsOld,

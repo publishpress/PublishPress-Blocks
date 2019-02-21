@@ -355,7 +355,7 @@
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [ __( 'latest posts' ), __( 'posts slide' ), __( 'posts grid' ) ],
         supports: {
             html: false,

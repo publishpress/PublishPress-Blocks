@@ -17,7 +17,7 @@
             src: containerBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'layout',
+        category: 'advgb-category',
         keywords: [ __( 'container' ), __( 'row' ), __( 'box' ) ],
         attributes: {},
         supports: {
