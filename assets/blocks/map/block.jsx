@@ -992,14 +992,18 @@
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
-                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
-                    Object.keys(currentBlockConfig).map((attribute)=>{
-                        attributes[attribute] = currentBlockConfig[attribute];
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
                     });
-
-                    // Finally set changed attribute to true, so we don't modify anything again
-                    setAttributes( { changed: true } );
                 }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
             }
         }
 
@@ -1270,7 +1274,7 @@
                                             )
                                         ] }
                                         >
-                                            <Button className={ 'button button-large' }
+                                            <Button className="button button-large"
                                                     onClick={ open }
                                             >
                                                 { __( 'Choose icon' ) }
@@ -1334,8 +1338,8 @@
                     </InspectorControls>
                     }
                     {typeof google !== 'undefined' ?
-                        <div className={ 'advgb-map-block' }>
-                            <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
+                        <div className="advgb-map-block">
+                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
                         </div>
                         :
                         <Placeholder
@@ -1416,7 +1420,7 @@
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'google map' ), __( 'location' ), __( 'address' ) ],
         attributes: {
             ...mapBlockAttrs,
@@ -1525,8 +1529,8 @@
                     const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${formattedTitle}</h2><p class="advgbmap-desc">${formattedDesc || ''}</p></div>`;
 
                     return (
-                        <div className={ 'advgb-map-block' } style={ { margin: '10px auto' } }>
-                            <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
+                        <div className="advgb-map-block" style={ { margin: '10px auto' } }>
+                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
                             <script type="text/javascript">
                                 {`window.addEventListener('load', function() {
                         if (typeof google === "undefined") return null;

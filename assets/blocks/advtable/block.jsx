@@ -28,6 +28,27 @@
             this.calculateRealColIndex = this.calculateRealColIndex.bind( this );
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-table'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
+                    });
+                }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
+            }
+        }
+
         componentDidMount() {
             this.calculateRealColIndex();
         }
@@ -818,9 +839,9 @@
                                     max={ 10 }
                                     onChange={ ( value ) => this.updateCellsStyles( { borderWidth: value } ) }
                                 />
-                                <div className={ 'advgb-border-item-wrapper' }>
+                                <div className="advgb-border-item-wrapper">
                                     {BORDER_SELECT.map( ( item, index ) => (
-                                        <div className={ 'advgb-border-item' } key={ index }>
+                                        <div className="advgb-border-item" key={ index }>
                                             <Tooltip text={ item.title }>
                                                 <span onClick={ item.onClick }>{ item.icon }</span>
                                             </Tooltip>
@@ -970,7 +991,7 @@
             src: tableBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [ __( 'table' ), __( 'cell' ), __( 'data' ) ],
         attributes: {
             body: {

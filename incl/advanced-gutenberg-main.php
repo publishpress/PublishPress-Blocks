@@ -168,6 +168,7 @@ float: left;'
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
             add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
+            add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
 
             // Ajax
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -202,6 +203,26 @@ float: left;'
                 unset($wp_filter['all_admin_notices']);
             }
         }
+    }
+
+    /**
+     * Add blocks category
+     *
+     * @param array $categories List of current blocks categories
+     *
+     * @return array New array include our category
+     */
+    public function addAdvBlocksCategory($categories)
+    {
+        return array_merge(
+            $categories,
+            array(
+                array(
+                    'slug' => 'advgb-category',
+                    'title' => __('Advanced Gutenberg', 'advanced-gutenberg'),
+                ),
+            )
+        );
     }
 
     /**
@@ -1297,7 +1318,7 @@ float: left;'
             if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                 wp_add_inline_style(
                     'dashicons',
-                    '#editor .wp-block {max-width: ' . $saved_settings['editor_width'] . '%}'
+                    '#editor .editor-writing-flow {max-width: ' . $saved_settings['editor_width'] . '%}'
                 );
             }
         }

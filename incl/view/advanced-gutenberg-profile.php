@@ -27,10 +27,10 @@ if ($postid === 'new') {
 }
 
 $blockCategories = array();
-if (function_exists('gutenberg_get_block_categories')) {
-    $blockCategories = gutenberg_get_block_categories(get_post());
-} elseif (function_exists('get_block_categories')) {
+if (function_exists('get_block_categories')) {
     $blockCategories = get_block_categories(get_post());
+} elseif (function_exists('gutenberg_get_block_categories')) {
+    $blockCategories = gutenberg_get_block_categories(get_post());
 }
 
 // In profile page we load gutenberg files to retrieve all blocks, including new ones

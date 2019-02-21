@@ -34,6 +34,18 @@
     color: inherit;
 }
 
+select.ju-input {
+    padding: 15px;
+    height: auto;
+    border-radius: 4px;
+}
+
+select.ju-input:focus {
+    border-color: #ff8726;
+    box-shadow: none;
+    outline: none;
+}
+
 /*Search input styles*/
 .advgb-search-wrapper {
     margin: 25px auto;
@@ -75,11 +87,6 @@
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-select.ju-select-options {
-    padding: 15px;
-    height: auto;
 }
 
 .advgb-overlay-box {
