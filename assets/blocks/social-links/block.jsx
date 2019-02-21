@@ -296,15 +296,18 @@
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
-                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
-                    Object.keys(currentBlockConfig).map((attribute)=>{
-                        if (attribute.indexOf('.') === -1)
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
                             attributes[attribute] = currentBlockConfig[attribute];
+                        }
                     });
-
-                    // Finally set changed attribute to true, so we don't modify anything again
-                    setAttributes( { changed: true } );
                 }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
             }
         }
 
@@ -544,6 +547,7 @@
                                className={ `advgb-social-icon` }
                                href={ item.link || '#' }
                                target="_blank"
+                               rel="noopener noreferrer"
                                style={ {
                                    width: iconSize + 'px',
                                    height: iconSize + 'px',
@@ -567,6 +571,42 @@
             );
         },
         deprecated: [
+            {
+                attributes: socialBlockAttrs,
+                save: function ( { attributes } ) {
+                    const { items, align, iconSize, iconSpace } = attributes;
+
+                    return (
+                        <div className="advgb-social-links-block" style={ { textAlign: align } }>
+                            <div className="advgb-social-icons">
+                                {items.map( ( item, index ) => (
+                                    <a key={ index }
+                                       className={ `advgb-social-icon` }
+                                       href={ item.link || '#' }
+                                       target="_blank"
+                                       style={ {
+                                           width: iconSize + 'px',
+                                           height: iconSize + 'px',
+                                           marginLeft: iconSpace + 'px',
+                                           marginRight: iconSpace + 'px',
+                                           color: item.iconColor,
+                                       } }
+                                    >
+                                        {!!item.icon
+                                            ? (item.icon in ICONS_SET)
+                                                ? <svg width={iconSize-6} height={iconSize-6} viewBox="0 0 50 50">{ICONS_SET_NEW[item.icon]}</svg>
+                                                : <img src={ item.icon } alt={ __( 'Social link icon' ) } />
+                                            : <svg width={iconSize-6} height={iconSize-6} viewBox="0 0 24 24">
+                                                {socialBlockIconContent}
+                                            </svg>
+                                        }
+                                    </a>
+                                ) ) }
+                            </div>
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: socialBlockAttrs,
                 save: function ( { attributes } ) {

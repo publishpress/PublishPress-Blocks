@@ -19,14 +19,18 @@
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
-                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
-                    Object.keys(currentBlockConfig).map((attribute)=>{
-                        attributes[attribute] = currentBlockConfig[attribute];
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
                     });
-
-                    // Finally set changed attribute to true, so we don't modify anything again
-                    setAttributes( { changed: true } );
                 }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
             }
         }
 
@@ -97,7 +101,7 @@
                             />
                             <div>{ __( 'Counter Up Symbol' ) }</div>
                             {
-                                <div className={ 'advgb-col-3' }>
+                                <div className="advgb-col-3">
                                     <TextControl
                                         value={ countUpSymbol }
                                         onChange={ (value) => setAttributes( { countUpSymbol: value } ) }
@@ -110,7 +114,7 @@
                                 </div>
                             }
                             {parseInt(columns) > 1 &&
-                            <div className={ 'advgb-col-3' }>
+                            <div className="advgb-col-3">
                                 <TextControl
                                     value={ countUpSymbol2 }
                                     onChange={ (value) => setAttributes( { countUpSymbol2: value } ) }
@@ -123,7 +127,7 @@
                             </div>
                             }
                             {parseInt(columns) > 2 &&
-                            <div className={ 'advgb-col-3' }>
+                            <div className="advgb-col-3">
                                 <TextControl
                                     value={ countUpSymbol3 }
                                     onChange={ (value) => setAttributes( { countUpSymbol3: value } ) }
@@ -143,7 +147,7 @@
                     <div className={`advgb-count-up advgb-column-${columns}`} style={ { display: 'flex' } }>
                         <div className="advgb-count-up-columns-one" style={ { textAlign: 'center' } }>
                             <RichText
-                                tagName={ 'h4' }
+                                tagName="h4"
                                 value={ headerText }
                                 onChange={ (value) => setAttributes( { headerText: value } ) }
                                 isSelected={ isSelected && currentEdit === 'header' }
@@ -152,7 +156,7 @@
                                 placeholder={ __( 'Enter text…' ) }
                             />
                             <RichText
-                                tagName={ 'div' }
+                                tagName="div"
                                 value={ countUpNumber }
                                 onChange={ (value) => setAttributes( { countUpNumber: value } ) }
                                 isSelected={ isSelected && currentEdit === 'countUp' }
@@ -160,7 +164,7 @@
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                             />
                             <RichText
-                                tagName={ 'p' }
+                                tagName="p"
                                 value={ descText }
                                 onChange={ (value) => setAttributes( { descText: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc' }
@@ -171,7 +175,7 @@
                         </div>
                         <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
                             <RichText
-                                tagName={ 'h4' }
+                                tagName="h4"
                                 value={ headerText2 }
                                 onChange={ (value) => setAttributes( { headerText2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'header2' }
@@ -180,7 +184,7 @@
                                 placeholder={ __( 'Enter text…' ) }
                             />
                             <RichText
-                                tagName={ 'div' }
+                                tagName="div"
                                 value={ countUpNumber2 }
                                 onChange={ (value) => setAttributes( { countUpNumber2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'countUp2' }
@@ -188,7 +192,7 @@
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                             />
                             <RichText
-                                tagName={ 'p' }
+                                tagName="p"
                                 value={ descText2 }
                                 onChange={ (value) => setAttributes( { descText2: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc2' }
@@ -199,7 +203,7 @@
                         </div>
                         <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
                             <RichText
-                                tagName={ 'h4' }
+                                tagName="h4"
                                 value={ headerText3 }
                                 onChange={ (value) => setAttributes( { headerText3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'header3' }
@@ -208,7 +212,7 @@
                                 placeholder={ __( 'Enter text…' ) }
                             />
                             <RichText
-                                tagName={ 'div' }
+                                tagName="div"
                                 value={ countUpNumber3 }
                                 onChange={ (value) => setAttributes( { countUpNumber3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'countUp3' }
@@ -216,7 +220,7 @@
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
                             />
                             <RichText
-                                tagName={ 'p' }
+                                tagName="p"
                                 value={ descText3 }
                                 onChange={ (value) => setAttributes( { descText3: value } ) }
                                 isSelected={ isSelected && currentEdit === 'desc3' }
@@ -255,57 +259,57 @@
             columns,
         } = attributes;
 
-        const countSymbolElm = countUpSymbol ? <span className={ 'advgb-counter-symbol' }>{ countUpSymbol }</span> : '';
-        const countSymbolElm2 = countUpSymbol2 ? <span className={ 'advgb-counter-symbol' }>{ countUpSymbol2 }</span> : '';
-        const countSymbolElm3 = countUpSymbol3 ? <span className={ 'advgb-counter-symbol' }>{ countUpSymbol3 }</span> : '';
+        const countSymbolElm = countUpSymbol ? <span className="advgb-counter-symbol">{ countUpSymbol }</span> : '';
+        const countSymbolElm2 = countUpSymbol2 ? <span className="advgb-counter-symbol">{ countUpSymbol2 }</span> : '';
+        const countSymbolElm3 = countUpSymbol3 ? <span className="advgb-counter-symbol">{ countUpSymbol3 }</span> : '';
 
         return (
-            <div className={ 'advgb-count-up' } style={ { display: 'flex' } }>
-                <div className={ 'advgb-count-up-columns-one' } style={ { textAlign: 'center' } }>
-                    <h4 className={ 'advgb-count-up-header' } style={ { color: headerTextColor } }>
+            <div className="advgb-count-up" style={ { display: 'flex' } }>
+                <div className="advgb-count-up-columns-one" style={ { textAlign: 'center' } }>
+                    <h4 className="advgb-count-up-header" style={ { color: headerTextColor } }>
                         { headerText }
                     </h4>
-                    <div className={ 'advgb-counter' }
+                    <div className="advgb-counter"
                          style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                     >
                         {!countUpSymbolAfter && countSymbolElm}
-                        <span className={ 'advgb-counter-number' }>{ countUpNumber }</span>
+                        <span className="advgb-counter-number">{ countUpNumber }</span>
                         {!!countUpSymbolAfter && countSymbolElm}
                     </div>
-                    <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
+                    <p className="advgb-count-up-desc" style={ { color: descTextColor } }>
                         { descText }
                     </p>
                 </div>
                 {parseInt(columns) > 1 && (
-                    <div className={ 'advgb-count-up-columns-two' } style={ { textAlign: 'center' } }>
-                        <h4 className={ 'advgb-count-up-header' } style={ { color: headerTextColor } }>
+                    <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
+                        <h4 className="advgb-count-up-header" style={ { color: headerTextColor } }>
                             { headerText2 }
                         </h4>
-                        <div className={ 'advgb-counter' }
+                        <div className="advgb-counter"
                              style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                         >
                             {!countUpSymbolAfter2 && countSymbolElm2}
-                            <span className={ 'advgb-counter-number' }>{ countUpNumber2 }</span>
+                            <span className="advgb-counter-number">{ countUpNumber2 }</span>
                             {!!countUpSymbolAfter2 && countSymbolElm2}
                         </div>
-                        <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
+                        <p className="advgb-count-up-desc" style={ { color: descTextColor } }>
                             { descText2 }
                         </p>
                     </div>
                 ) }
                 {parseInt(columns) > 2 && (
-                    <div className={ 'advgb-count-up-columns-three' } style={ { textAlign: 'center' } }>
-                        <h4 className={ 'advgb-count-up-header' } style={ { color: headerTextColor } }>
+                    <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
+                        <h4 className="advgb-count-up-header" style={ { color: headerTextColor } }>
                             { headerText3 }
                         </h4>
-                        <div className={ 'advgb-counter' }
+                        <div className="advgb-counter"
                              style={ { color: countUpNumberColor, fontSize: countUpNumberSize + 'px' } }
                         >
                             {!countUpSymbolAfter3 && countSymbolElm3}
-                            <span className={ 'advgb-counter-number' }>{ countUpNumber3 }</span>
+                            <span className="advgb-counter-number">{ countUpNumber3 }</span>
                             {!!countUpSymbolAfter3 && countSymbolElm3}
                         </div>
-                        <p className={ 'advgb-count-up-desc' } style={ { color: descTextColor } }>
+                        <p className="advgb-count-up-desc" style={ { color: descTextColor } }>
                             { descText3 }
                         </p>
                     </div>

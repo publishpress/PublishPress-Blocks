@@ -32,10 +32,29 @@
         }
 
         componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-recent-posts'];
+
             const categoriesListQuery = {
                 per_page: -1,
                 hide_empty: true,
             };
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
+                    });
+                }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
+            }
 
             wp.apiFetch( {
                 path: wp.url.addQueryArgs( 'wp/v2/categories', categoriesListQuery ),
@@ -287,7 +306,7 @@
                                             </a>
                                         </div>
                                     ) }
-                                    <div className={ 'advgb-post-wrapper' }>
+                                    <div className="advgb-post-wrapper">
                                         <h2 className="advgb-post-title">
                                             <a href={ post.link } target="_blank">{ decodeEntities( post.title.rendered ) }</a>
                                         </h2>

@@ -6,11 +6,6 @@
     padding-left: 40px;
 }
 
-select.ju-input {
-    padding: 15px;
-    height: auto;
-}
-
 .ju-settings-option.settings-separator > * {
     margin: 0;
     padding: 5px;
