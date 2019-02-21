@@ -2619,6 +2619,19 @@ float: left;'
                             'min'   => 300,
                             'max'   => 1000,
                         ),
+                        array(
+                            'title' => __('Map style', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'mapStyle',
+                            'options' => array(
+                                array('label' => __('Silver', 'advanced-gutenberg'), 'value' => 'silver'),
+                                array('label' => __('Retro', 'advanced-gutenberg'), 'value' => 'retro'),
+                                array('label' => __('Dark', 'advanced-gutenberg'), 'value' => 'dark'),
+                                array('label' => __('Night', 'advanced-gutenberg'), 'value' => 'night'),
+                                array('label' => __('Aubergine', 'advanced-gutenberg'), 'value' => 'aubergine'),
+                                array('label' => __('Custom', 'advanced-gutenberg'), 'value' => 'custom'),
+                            )
+                        ),
                     ),
                 ),
                 array(
