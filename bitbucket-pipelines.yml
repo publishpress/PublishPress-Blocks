@@ -70,34 +70,34 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress
-    codeception_49_install:
-    - step: &shared_codeception_49_install
-        name: Codeception WP 4.9 plugin install
+    codeception_50_install:
+    - step: &shared_codeception_50_install
+        name: Codeception WP 5.0 plugin install
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - export WP_VERSION="4.9" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="install"
+        - export WP_VERSION="5.0" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="install"
         - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
         services:
         - chromedriver
         - mysql
-        - wordpress49
-    codeception_49_update:
-    - step: &shared_codeception_49_update
-        name: Codeception WP 4.9 plugin update
+        - wordpress50
+    codeception_50_update:
+    - step: &shared_codeception_50_update
+        name: Codeception WP 5.0 plugin update
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - export WP_VERSION="4.9" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="update"
+        - export WP_VERSION="5.0" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="update"
         - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
         services:
         - chromedriver
         - mysql
-        - wordpress49
+        - wordpress50
     generate_package:
     - step: &shared_generate_package
         name: Create package
@@ -151,8 +151,8 @@ pipelines:
       - step: *shared_codeception_core_install
       - step: *shared_codeception_plugin_update
       - step: *shared_codeception_plugin_install
-      - step: *shared_codeception_49_update
-      - step: *shared_codeception_49_install
+      - step: *shared_codeception_50_update
+      - step: *shared_codeception_50_install
       - step: *shared_generate_package
     'master':
     - step: *shared_deployment_production
@@ -167,5 +167,5 @@ definitions:
         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     wordpress:
       image: joomunited/wordpress_cgi:latest
-    wordpress49:
-      image: joomunited/wordpress_cgi:4.9
+    wordpress50:
+      image: joomunited/wordpress_cgi:5.0

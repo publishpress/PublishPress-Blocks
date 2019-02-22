@@ -112,11 +112,6 @@ function copy_plugin_to_www () {
 prepare_tests
 
 for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
-    # Skip php 7.3 tests for WP version lower than 5.0
-    if [[ $PHP_VERSION = "7.3" && $WP_VERSION != "latest" ]]; then
-        continue
-    fi
-
     # Export php version so codeception can get it through env variables
     export PHP_VERSION=$PHP_VERSION
 
@@ -125,9 +120,6 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
         echo -e "\n\e[34m\e[1m##### Run $INSTALL_TYPE tests under WP $WP_VERSION, PHP $PHP_VERSION, Gutenberg plugin #####\e[0m\n"
         sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "cd /var/www/html/; wp plugin install gutenberg --activate --allow-root 2>/dev/null "
     elif [[ $GUTENBERG_TYPE = "core" ]]; then
-        if [[ $WP_VERSION != "latest" ]]; then
-            continue
-        fi
         echo -e "\n\e[34m\e[1m##### Run $INSTALL_TYPE tests under WP $WP_VERSION, PHP $PHP_VERSION, Gutenberg core #####\e[0m\n"
     fi
 
