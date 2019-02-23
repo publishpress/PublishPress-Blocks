@@ -152,6 +152,7 @@ float: left;'
         add_action('rest_api_init', array($this, 'registerRestAPI'));
         add_action('admin_print_scripts', array($this, 'disableAllAdminNotices')); // Disable all admin notice for page belong to plugin
         add_filter('safe_style_css', array($this, 'addAllowedInlineStyles'), 10, 1);
+        add_filter('wp_kses_allowed_html', array($this, 'addAllowedTags'), 1);
 
         // Front-end ajax
         add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
@@ -227,7 +228,7 @@ float: left;'
     }
 
     /**
-     * Add inline styles allowed for user without unfiltered_html capabilitty
+     * Add inline styles allowed for user without unfiltered_html capability
      *
      * @param array $styles List of current allowed styles
      *
@@ -239,6 +240,40 @@ float: left;'
             $styles,
             array('justify-content', 'align-items')
         );
+    }
+
+    /**
+     * Add allowed tags for user without unfiltered_html capability
+     *
+     * @param array $tags List of current allowed tags
+     *
+     * @return array New list of allowed tags
+     */
+    public function addAllowedTags($tags)
+    {
+        $tags['svg'] = array(
+            'width'                 => true,
+            'height'                => true,
+            'viewbox'               => true,
+            'xmlns'                 => true,
+            'fill'                  => true,
+            'styles'                => true,
+            'preserveAspectRatio'   => true,
+        );
+        $tags['g'] = array(
+            'fill'          => true,
+            'fill-rule'     => true,
+            'fill-opacity'  => true,
+            'stroke'        => true,
+            'stroke-width'  => true,
+        );
+        $tags['path'] = array(
+            'd'             => true,
+            'fill'          => true,
+            'fill-opacity'  => true,
+        );
+
+        return $tags;
     }
 
     /**
