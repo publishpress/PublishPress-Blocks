@@ -3296,7 +3296,7 @@ float: left;'
                     $pd_top         = isset($style_data_array['paddingTop']) ? intval($style_data_array['paddingTop']) : 6;
                     $pd_right       = isset($style_data_array['paddingRight']) ? intval($style_data_array['paddingRight']) : 12;
                     $pd_bottom      = isset($style_data_array['paddingBottom']) ? intval($style_data_array['paddingBottom']) : 6;
-                    $pd_left        = isset($style_data_array['paddingLeft']) ? intval($style_data_array['paddingLeft']) : 6;
+                    $pd_left        = isset($style_data_array['paddingLeft']) ? intval($style_data_array['paddingLeft']) : 12;
                     $border_width   = isset($style_data_array['borderWidth']) ? intval($style_data_array['borderWidth']) : 1;
                     $border_color   = isset($style_data_array['borderColor']) ? $style_data_array['borderColor'] : '#2196f3';
                     $border_style   = isset($style_data_array['borderStyle']) ? $style_data_array['borderStyle'] : 'solid';
