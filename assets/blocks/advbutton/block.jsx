@@ -463,25 +463,6 @@
                 urlOpenNewTab,
                 title,
                 text,
-                bgColor,
-                textColor,
-                textSize,
-                paddingTop,
-                paddingRight,
-                paddingBottom,
-                paddingLeft,
-                borderWidth,
-                borderColor,
-                borderRadius,
-                borderStyle,
-                hoverTextColor,
-                hoverBgColor,
-                hoverShadowColor,
-                hoverShadowH,
-                hoverShadowV,
-                hoverShadowBlur,
-                hoverShadowSpread,
-                transitionSpeed,
             } = attributes;
 
             return (
@@ -495,8 +476,64 @@
                         value={ text }
                         rel="noopener noreferrer"
                     />
-                    <style>
-                        {`.${id} {
+                </div>
+            );
+        },
+        getEditWrapperProps( attributes ) {
+            const { align } = attributes;
+            const props = { 'data-resized': true };
+
+            if ( 'left' === align || 'right' === align || 'center' === align ) {
+                props[ 'data-align' ] = align;
+            }
+
+            return props;
+        },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        align,
+                        url,
+                        urlOpenNewTab,
+                        title,
+                        text,
+                        bgColor,
+                        textColor,
+                        textSize,
+                        paddingTop,
+                        paddingRight,
+                        paddingBottom,
+                        paddingLeft,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        borderStyle,
+                        hoverTextColor,
+                        hoverBgColor,
+                        hoverShadowColor,
+                        hoverShadowH,
+                        hoverShadowV,
+                        hoverShadowBlur,
+                        hoverShadowSpread,
+                        transitionSpeed,
+                    } = attributes;
+
+                    return (
+                        <div className={ `align${align}` }>
+                            <RichText.Content
+                                tagName="a"
+                                className={ `wp-block-advgb-button_link ${id}` }
+                                href={ url || '#' }
+                                title={ title }
+                                target={ !urlOpenNewTab ? '_self' : '_blank' }
+                                value={ text }
+                                rel="noopener noreferrer"
+                            />
+                            <style>
+                                {`.${id} {
                         font-size: ${textSize}px;
                         color: ${textColor};
                         background-color: ${bgColor};
@@ -512,21 +549,11 @@
                         box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
                         transition: all ${transitionSpeed}s ease;
                     }`}
-                    </style>
-                </div>
-            );
-        },
-        getEditWrapperProps( attributes ) {
-            const { align } = attributes;
-            const props = { 'data-resized': true };
-
-            if ( 'left' === align || 'right' === align || 'center' === align ) {
-                props[ 'data-align' ] = align;
-            }
-
-            return props;
-        },
-        deprecated: [
+                            </style>
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: blockAttrs,
                 save: function ( { attributes } ) {
