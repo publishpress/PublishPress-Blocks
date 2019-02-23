@@ -178,7 +178,7 @@ float: left;'
             add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
         } else {
             // Front-end
-            add_filter('the_content', array($this, 'addFrontendContentAssets'));
+            add_filter('the_content', array($this, 'addFrontendContentAssets'), 5);
         }
     }
 
@@ -3239,7 +3239,103 @@ float: left;'
             );
         }
 
+        $addition_styles = preg_replace_callback(
+            '/(<!-- wp:advgb\/(list|button)).*?(\/wp:advgb\/(list|button) -->)/mis',
+            array($this, 'addBlocksStyles'),
+            $content
+        );
+        $addition_styles = preg_replace('/\s\s+/', '', $addition_styles);
+        $content .= $addition_styles;
+
         return $content;
+    }
+
+    /**
+     * Add styles for Adv Button and Adv List
+     *
+     * @param array $match Matched string
+     *
+     * @return string HTML style
+     */
+    public function addBlocksStyles($match)
+    {
+        preg_match('/{.*?}/', $match[0], $style_data);
+        $style_html = '';
+        if ($style_data && count($style_data)) {
+            $style_html .= '<style>';
+            try {
+                $style_data_array = json_decode($style_data[0], true);
+
+                if ($match[2] === 'list') {
+                    $block_class    = $style_data_array['id'];
+                    $font_size      = isset($style_data_array['fontSize']) ? intval($style_data_array['fontSize']) : 16;
+                    $icon_size      = isset($style_data_array['iconSize']) ? intval($style_data_array['iconSize']) : 16;
+                    $icon_color     = isset($style_data_array['iconColor']) ? $style_data_array['iconColor'] : '#000';
+                    $margin         = isset($style_data_array['margin']) ? intval($style_data_array['margin']) : 2;
+                    $padding        = isset($style_data_array['padding']) ? intval($style_data_array['padding']) : 2;
+                    $line_height    = isset($style_data_array['lineHeight']) ? intval($style_data_array['lineHeight']) : 18;
+
+                    $style_html .= '.'. $block_class . ' li{';
+                    $style_html .= 'font-size:'.$font_size.'px;margin-left:'.($icon_size + $padding).'px';
+                    $style_html .= '}';
+                    if (!isset($style_data_array['icon']) || (isset($style_data_array['icon']) && !!$style_data_array['icon'])) {
+                        $style_html .= '.'. $block_class . ' li:before{';
+                        $style_html .= 'font-size:'.$icon_size.'px;';
+                        $style_html .= 'color:'.$icon_color.';';
+                        $style_html .= 'line-height:'.$line_height.'px;';
+                        $style_html .= 'margin:'.$margin.'px;';
+                        $style_html .= 'padding:'.$padding.'px;';
+                        $style_html .= 'margin-left:-'.($icon_size + $padding + $margin).'px';
+                        $style_html .= '}';
+                    }
+                } elseif ($match[2] === 'button') {
+                    $block_class    = $style_data_array['id'];
+                    $font_size      = isset($style_data_array['textSize']) ? intval($style_data_array['textSize']) : 18;
+                    $color          = isset($style_data_array['textColor']) ? $style_data_array['textColor'] : '#fff';
+                    $bg_color       = isset($style_data_array['bgColor']) ? $style_data_array['bgColor'] : '#2196f3';
+                    $pd_top         = isset($style_data_array['paddingTop']) ? intval($style_data_array['paddingTop']) : 6;
+                    $pd_right       = isset($style_data_array['paddingRight']) ? intval($style_data_array['paddingRight']) : 12;
+                    $pd_bottom      = isset($style_data_array['paddingBottom']) ? intval($style_data_array['paddingBottom']) : 6;
+                    $pd_left        = isset($style_data_array['paddingLeft']) ? intval($style_data_array['paddingLeft']) : 6;
+                    $border_width   = isset($style_data_array['borderWidth']) ? intval($style_data_array['borderWidth']) : 1;
+                    $border_color   = isset($style_data_array['borderColor']) ? $style_data_array['borderColor'] : '#2196f3';
+                    $border_style   = isset($style_data_array['borderStyle']) ? $style_data_array['borderStyle'] : 'solid';
+                    $border_radius  = isset($style_data_array['borderRadius']) ? intval($style_data_array['borderRadius']) : 50;
+                    $hover_t_color  = isset($style_data_array['hoverTextColor']) ? $style_data_array['hoverTextColor'] : '#fff';
+                    $hover_bg_color = isset($style_data_array['hoverBgColor']) ? $style_data_array['hoverBgColor'] : '#2196f3';
+                    $hover_sh_color = isset($style_data_array['hoverShadowColor']) ? $style_data_array['hoverShadowColor'] : '#ccc';
+                    $hover_sh_h     = isset($style_data_array['hoverShadowH']) ? intval($style_data_array['hoverShadowH']) : 3;
+                    $hover_sh_v     = isset($style_data_array['hoverShadowV']) ? intval($style_data_array['hoverShadowV']) : 3;
+                    $hover_sh_blur  = isset($style_data_array['hoverShadowBlur']) ? intval($style_data_array['hoverShadowBlur']) : 1;
+                    $hover_sh_sprd  = isset($style_data_array['hoverShadowSpread']) ? intval($style_data_array['hoverShadowSpread']) : 1;
+                    $transition_spd = isset($style_data_array['transitionSpeed']) ? floatval($style_data_array['transitionSpeed']) : 0.2;
+
+                    $style_html .= '.'. $block_class . '{';
+                    $style_html .= 'font-size:'.$font_size.'px;';
+                    $style_html .= 'color:'.$color.';';
+                    $style_html .= 'background-color:'.$bg_color.';';
+                    $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
+                    $style_html .= 'border-width:'.$border_width.'px;';
+                    $style_html .= 'border-color:'.$border_color.';';
+                    $style_html .= 'border-style:'.$border_style.';';
+                    $style_html .= 'border-radius:'.$border_radius.'px;';
+                    $style_html .= '}';
+                    $style_html .= '.'. $block_class . ':hover{';
+                    $style_html .= 'color:'.$hover_t_color.';';
+                    $style_html .= 'background-color:'.$hover_bg_color.';';
+                    $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.';';
+                    $style_html .= 'transition:all'.$transition_spd.'s ease;';
+                    $style_html .= '}';
+                }
+                $style_html .= '</style>';
+            } catch (Exception $e) {
+                return '';
+            }
+        } else {
+            return '';
+        }
+
+        return $style_html;
     }
 
     /**
