@@ -151,6 +151,7 @@ float: left;'
         add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
         add_action('rest_api_init', array($this, 'registerRestAPI'));
         add_action('admin_print_scripts', array($this, 'disableAllAdminNotices')); // Disable all admin notice for page belong to plugin
+        add_filter('safe_style_css', array($this, 'addAllowedInlineStyles'), 10, 1);
 
         // Front-end ajax
         add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
@@ -222,6 +223,21 @@ float: left;'
                     'title' => __('Advanced Gutenberg', 'advanced-gutenberg'),
                 ),
             )
+        );
+    }
+
+    /**
+     * Add inline styles allowed for user without unfiltered_html capabilitty
+     *
+     * @param array $styles List of current allowed styles
+     *
+     * @return array New list of allowed styles
+     */
+    public function addAllowedInlineStyles($styles)
+    {
+        return array_merge(
+            $styles,
+            array('justify-content', 'align-items')
         );
     }
 
