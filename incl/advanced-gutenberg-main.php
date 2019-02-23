@@ -3168,11 +3168,6 @@ float: left;'
         }
 
         if (strpos($content, 'advgb-map-block') !== false) {
-            $content = preg_replace_callback(
-                '@<div[^>]*?advgb\-map\-block.*?(</script)@s',
-                array($this, 'decodeHtmlEntity'),
-                $content
-            );
             wp_enqueue_script(
                 'advgb_gmap_js',
                 plugins_url('assets/blocks/map/frontend.js', dirname(__FILE__)),
