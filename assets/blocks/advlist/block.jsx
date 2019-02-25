@@ -344,12 +344,6 @@
                 id,
                 values,
                 icon,
-                iconSize,
-                iconColor,
-                margin,
-                padding,
-                lineHeight,
-                fontSize,
             } = attributes;
             const listClassName = [
                 id,
@@ -357,20 +351,47 @@
                 icon && `advgb-list-${icon}`
             ].filter( Boolean ).join( ' ' );
 
-            const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
-            const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
-            const padd = typeof padding != 'undefined' ? parseInt(padding)*2 : 4;
-
             return <div>
                 <ul className={listClassName}>
                     {values}
                 </ul>
-                <style>
-                    {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
-                </style>
-                {icon &&
-                <style>
-                    {`.${id} li:before {
+            </div>
+        },
+        deprecated: [
+            {
+                attributes: listBlockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        values,
+                        icon,
+                        iconSize,
+                        iconColor,
+                        margin,
+                        padding,
+                        lineHeight,
+                        fontSize,
+                    } = attributes;
+                    const listClassName = [
+                        id,
+                        icon && 'advgb-list',
+                        icon && `advgb-list-${icon}`
+                    ].filter( Boolean ).join( ' ' );
+
+                    const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+                    const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+                    const padd = typeof padding != 'undefined' ? parseInt(padding)*2 : 4;
+
+                    return <div>
+                        <ul className={listClassName}>
+                            {values}
+                        </ul>
+                        <style>
+                            {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
+                        </style>
+                        {icon &&
+                        <style>
+                            {`.${id} li:before {
                             font-size: ${iconSize}px;
                             color: ${iconColor};
                             line-height: ${lineHeight}px;
@@ -378,11 +399,11 @@
                             padding: ${padding}px;
                             margin-left: -${size + padd + marg}px;
                         }`}
-                </style>
-                }
-            </div>
-        },
-        deprecated: [
+                        </style>
+                        }
+                    </div>
+                },
+            },
             {
                 attributes: listBlockAttrs,
                 save: function ( { attributes } ) {

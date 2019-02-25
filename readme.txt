@@ -1,7 +1,7 @@
 === Advanced Gutenberg ===
 Contributors: JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
-Requires at least: 4.9
+Requires at least: 5.0
 Tested up to: {{wp_version}}
 Stable tag: {{version}}
 Requires PHP: 5.6
@@ -147,4 +147,4 @@ Update through the automatic WordPress updater, all Advanced Gutenberg content a
 
 == Requirements ==
 
-PHP 5.6+, 7, 7.1, 7.2 & 7.3 recommended for better performance, WordPress 4.9+
+PHP 5.6+, 7, 7.1, 7.2 & 7.3 recommended for better performance, WordPress 5.0+
