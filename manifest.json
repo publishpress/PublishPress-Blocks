@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.3",
+  "version": "1.10.4",
   "platform": "wordpress",
   "wp_version": "5.1.0",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,12 @@
     ]
   },
   "changelog": {
+    "1.10.4": [
+      {
+        "type": "fix",
+        "title": "Blocks validation error on multisite and author users"
+      }
+    ],
     "1.10.3": [
       {
         "type": "fix",

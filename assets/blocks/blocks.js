@@ -1099,26 +1099,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 url = attributes.url,
                 urlOpenNewTab = attributes.urlOpenNewTab,
                 title = attributes.title,
-                text = attributes.text,
-                bgColor = attributes.bgColor,
-                textColor = attributes.textColor,
-                textSize = attributes.textSize,
-                paddingTop = attributes.paddingTop,
-                paddingRight = attributes.paddingRight,
-                paddingBottom = attributes.paddingBottom,
-                paddingLeft = attributes.paddingLeft,
-                borderWidth = attributes.borderWidth,
-                borderColor = attributes.borderColor,
-                borderRadius = attributes.borderRadius,
-                borderStyle = attributes.borderStyle,
-                hoverTextColor = attributes.hoverTextColor,
-                hoverBgColor = attributes.hoverBgColor,
-                hoverShadowColor = attributes.hoverShadowColor,
-                hoverShadowH = attributes.hoverShadowH,
-                hoverShadowV = attributes.hoverShadowV,
-                hoverShadowBlur = attributes.hoverShadowBlur,
-                hoverShadowSpread = attributes.hoverShadowSpread,
-                transitionSpeed = attributes.transitionSpeed;
+                text = attributes.text;
 
 
             return React.createElement(
@@ -1132,12 +1113,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     target: !urlOpenNewTab ? '_self' : '_blank',
                     value: text,
                     rel: 'noopener noreferrer'
-                }),
-                React.createElement(
-                    'style',
-                    null,
-                    '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
-                )
+                })
             );
         },
         getEditWrapperProps: function getEditWrapperProps(attributes) {
@@ -1156,6 +1132,56 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: blockAttrs,
             save: function save(_ref2) {
                 var attributes = _ref2.attributes;
+                var id = attributes.id,
+                    align = attributes.align,
+                    url = attributes.url,
+                    urlOpenNewTab = attributes.urlOpenNewTab,
+                    title = attributes.title,
+                    text = attributes.text,
+                    bgColor = attributes.bgColor,
+                    textColor = attributes.textColor,
+                    textSize = attributes.textSize,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    borderStyle = attributes.borderStyle,
+                    hoverTextColor = attributes.hoverTextColor,
+                    hoverBgColor = attributes.hoverBgColor,
+                    hoverShadowColor = attributes.hoverShadowColor,
+                    hoverShadowH = attributes.hoverShadowH,
+                    hoverShadowV = attributes.hoverShadowV,
+                    hoverShadowBlur = attributes.hoverShadowBlur,
+                    hoverShadowSpread = attributes.hoverShadowSpread,
+                    transitionSpeed = attributes.transitionSpeed;
+
+
+                return React.createElement(
+                    'div',
+                    { className: 'align' + align },
+                    React.createElement(RichText.Content, {
+                        tagName: 'a',
+                        className: 'wp-block-advgb-button_link ' + id,
+                        href: url || '#',
+                        title: title,
+                        target: !urlOpenNewTab ? '_self' : '_blank',
+                        value: text,
+                        rel: 'noopener noreferrer'
+                    }),
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
                 var id = attributes.id,
                     align = attributes.align,
                     url = attributes.url,
@@ -2123,19 +2149,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref3.attributes;
             var id = attributes.id,
                 values = attributes.values,
-                icon = attributes.icon,
-                iconSize = attributes.iconSize,
-                iconColor = attributes.iconColor,
-                margin = attributes.margin,
-                padding = attributes.padding,
-                lineHeight = attributes.lineHeight,
-                fontSize = attributes.fontSize;
+                icon = attributes.icon;
 
             var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
-
-            var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
-            var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
-            var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
 
             return React.createElement(
                 'div',
@@ -2144,16 +2160,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     'ul',
                     { className: listClassName },
                     values
-                ),
-                React.createElement(
-                    'style',
-                    null,
-                    '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
-                ),
-                icon && React.createElement(
-                    'style',
-                    null,
-                    '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                            margin-left: -' + (size + padd + marg) + 'px;\n                        }'
                 )
             );
         },
@@ -2161,6 +2167,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: listBlockAttrs,
             save: function save(_ref4) {
                 var attributes = _ref4.attributes;
+                var id = attributes.id,
+                    values = attributes.values,
+                    icon = attributes.icon,
+                    iconSize = attributes.iconSize,
+                    iconColor = attributes.iconColor,
+                    margin = attributes.margin,
+                    padding = attributes.padding,
+                    lineHeight = attributes.lineHeight,
+                    fontSize = attributes.fontSize;
+
+                var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
+
+                var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+                var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+                var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
+
+                return React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'ul',
+                        { className: listClassName },
+                        values
+                    ),
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
+                    ),
+                    icon && React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                            margin-left: -' + (size + padd + marg) + 'px;\n                        }'
+                    )
+                );
+            }
+        }, {
+            attributes: listBlockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
                 var id = attributes.id,
                     values = attributes.values,
                     icon = attributes.icon,
@@ -7865,18 +7911,76 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return React.createElement(
                 "div",
                 { className: "advgb-map-block", style: { margin: '10px auto' } },
-                React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
-                React.createElement(
-                    "script",
-                    { type: "text/javascript" },
-                    "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var contentHtml = '" + infoWindowHtml + "';\n                        var mapStyle = '" + mapStyleApply + "';\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: contentHtml\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
-                )
+                React.createElement("div", { className: "advgb-map-content",
+                    id: mapID,
+                    style: { height: height },
+                    "data-default": DEFAULT_MARKER,
+                    "data-lat": lat,
+                    "data-lng": lng,
+                    "data-zoom": zoom,
+                    "data-title": formattedTitle,
+                    "data-icon": markerIcon,
+                    "data-info": encodeURIComponent(infoWindowHtml),
+                    "data-style": encodeURIComponent(mapStyleApply)
+                })
             );
         },
         deprecated: [{
-            attributes: mapBlockAttrs,
+            attributes: _extends({}, mapBlockAttrs, {
+                mapStyle: {
+                    type: 'string'
+                },
+                mapStyleCustom: {
+                    type: 'string'
+                }
+            }),
             save: function save(_ref3) {
                 var attributes = _ref3.attributes;
+                var mapID = attributes.mapID,
+                    lat = attributes.lat,
+                    lng = attributes.lng,
+                    zoom = attributes.zoom,
+                    height = attributes.height,
+                    markerIcon = attributes.markerIcon,
+                    markerTitle = attributes.markerTitle,
+                    markerDesc = attributes.markerDesc,
+                    mapStyle = attributes.mapStyle,
+                    mapStyleCustom = attributes.mapStyleCustom;
+
+
+                var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
+                var formattedTitle = markerTitle.replace(/'/, '\\\'');
+                var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
+                var infoWindowHtml = '' + '<div class="advgbmap-wrapper">' + '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' + '<p class="advgbmap-desc">' + formattedDesc + '</p>' + '</div>';
+                var mapStyleApply = MAP_STYLES[mapStyle];
+                if (mapStyle === 'custom') {
+                    try {
+                        mapStyleApply = JSON.parse(mapStyleCustom);
+                    } catch (e) {
+                        mapStyleApply = '';
+                    }
+                }
+                if (mapStyleApply) {
+                    mapStyleApply = JSON.stringify(mapStyleApply);
+                } else {
+                    mapStyleApply = '';
+                }
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-map-block", style: { margin: '10px auto' } },
+                    React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
+                    React.createElement(
+                        "script",
+                        { type: "text/javascript" },
+                        "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var contentHtml = '" + infoWindowHtml + "';\n                        var mapStyle = '" + mapStyleApply + "';\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: contentHtml\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
+                    )
+                );
+            }
+        }, {
+            attributes: mapBlockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var mapID = attributes.mapID,
                     lat = attributes.lat,
                     lng = attributes.lng,
