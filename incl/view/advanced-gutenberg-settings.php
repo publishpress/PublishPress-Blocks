@@ -7,6 +7,7 @@ wp_enqueue_style('codemirror_css');
 wp_enqueue_style('codemirror_hint_style');
 wp_enqueue_style('advgb_settings_style');
 
+wp_enqueue_media();
 wp_enqueue_script('qtip_js');
 wp_enqueue_script('less_js');
 wp_enqueue_script('minicolors_js');
@@ -149,7 +150,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                                    name="google_api_key"
                                    id="google_api_key"
                                    class="ju-input"
-                                   style="margin-left: 10px; width: 370px; display: block;"
+                                   style="margin-left: 10px; width: 370px; display: block; max-width: 100%"
                                    value="<?php echo esc_html($google_api_key_saved) ?>"
                             >
                             <a target="_blank"
@@ -251,6 +252,27 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                                 <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>Large</option>
                                 <option value="95" <?php echo $editor_width === '95' ? 'selected' : '' ?>>Full width</option>
                             </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="editor_width"
+                               class="ju-setting-label advgb_qtip"
+                               data-qtip="<?php esc_attr_e(
+                                   'Set the default post thumbnail to use in Recent Posts blocks.',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Default thumbnail', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="setting-actions-wrapper">
+                            <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="" />
+                            <div class="setting-actions" id="post_default_thumb_actions">
+                                <img class="thumb-selected" src="" alt="" />
+                                <i class="dashicons dashicons-edit ju-button thumb_edit" title="<?php esc_html_e('Edit', 'advanced-gutenberg'); ?>"></i>
+                                <i class="dashicons dashicons-no ju-button orange-button thumb_remove" title="<?php esc_html_e('Remove', 'advanced-gutenberg'); ?>"></i>
+                            </div>
                         </div>
                     </div>
                 </li>
