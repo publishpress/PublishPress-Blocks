@@ -151,6 +151,8 @@ float: left;'
         add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
         add_action('rest_api_init', array($this, 'registerRestAPI'));
         add_action('admin_print_scripts', array($this, 'disableAllAdminNotices')); // Disable all admin notice for page belong to plugin
+        add_filter('safe_style_css', array($this, 'addAllowedInlineStyles'), 10, 1);
+        add_filter('wp_kses_allowed_html', array($this, 'addAllowedTags'), 1);
 
         // Front-end ajax
         add_action('wp_ajax_advgb_contact_form_save', array($this, 'saveContactFormData'));
@@ -168,6 +170,7 @@ float: left;'
             add_action('enqueue_block_editor_assets', array($this, 'addEditorAssets'), 9999);
             add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
             add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
+            add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
 
             // Ajax
             add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -177,7 +180,7 @@ float: left;'
             add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
         } else {
             // Front-end
-            add_filter('the_content', array($this, 'addFrontendContentAssets'));
+            add_filter('the_content', array($this, 'addFrontendContentAssets'), 5);
         }
     }
 
@@ -202,6 +205,75 @@ float: left;'
                 unset($wp_filter['all_admin_notices']);
             }
         }
+    }
+
+    /**
+     * Add blocks category
+     *
+     * @param array $categories List of current blocks categories
+     *
+     * @return array New array include our category
+     */
+    public function addAdvBlocksCategory($categories)
+    {
+        return array_merge(
+            $categories,
+            array(
+                array(
+                    'slug' => 'advgb-category',
+                    'title' => __('Advanced Gutenberg', 'advanced-gutenberg'),
+                ),
+            )
+        );
+    }
+
+    /**
+     * Add inline styles allowed for user without unfiltered_html capability
+     *
+     * @param array $styles List of current allowed styles
+     *
+     * @return array New list of allowed styles
+     */
+    public function addAllowedInlineStyles($styles)
+    {
+        return array_merge(
+            $styles,
+            array('justify-content', 'align-items')
+        );
+    }
+
+    /**
+     * Add allowed tags for user without unfiltered_html capability
+     *
+     * @param array $tags List of current allowed tags
+     *
+     * @return array New list of allowed tags
+     */
+    public function addAllowedTags($tags)
+    {
+        $tags['svg'] = array(
+            'width'                 => true,
+            'height'                => true,
+            'viewbox'               => true,
+            'xmlns'                 => true,
+            'fill'                  => true,
+            'styles'                => true,
+            'preserveAspectRatio'   => true,
+        );
+        $tags['g'] = array(
+            'fill'          => true,
+            'fill-rule'     => true,
+            'fill-opacity'  => true,
+            'stroke'        => true,
+            'stroke-width'  => true,
+        );
+        $tags['path'] = array(
+            'd'             => true,
+            'fill'          => true,
+            'fill-opacity'  => true,
+        );
+
+        return $tags;
     }
 
     /**
@@ -1297,7 +1369,7 @@ float: left;'
             if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                 wp_add_inline_style(
                     'dashicons',
-                    '#editor .wp-block {max-width: ' . $saved_settings['editor_width'] . '%}'
+                    '#editor .editor-writing-flow {max-width: ' . $saved_settings['editor_width'] . '%}'
                 );
             }
         }
@@ -2619,6 +2691,19 @@ float: left;'
                             'min'   => 300,
                             'max'   => 1000,
                         ),
+                        array(
+                            'title' => __('Map style', 'advanced-gutenberg'),
+                            'type'  => 'select',
+                            'name'  => 'mapStyle',
+                            'options' => array(
+                                array('label' => __('Silver', 'advanced-gutenberg'), 'value' => 'silver'),
+                                array('label' => __('Retro', 'advanced-gutenberg'), 'value' => 'retro'),
+                                array('label' => __('Dark', 'advanced-gutenberg'), 'value' => 'dark'),
+                                array('label' => __('Night', 'advanced-gutenberg'), 'value' => 'night'),
+                                array('label' => __('Aubergine', 'advanced-gutenberg'), 'value' => 'aubergine'),
+                                array('label' => __('Custom', 'advanced-gutenberg'), 'value' => 'custom'),
+                            )
+                        ),
                     ),
                 ),
                 array(
@@ -3083,10 +3168,11 @@ float: left;'
         }
 
         if (strpos($content, 'advgb-map-block') !== false) {
-            $content = preg_replace_callback(
-                '@<div[^>]*?advgb\-map\-block.*?(</script)@s',
-                array($this, 'decodeHtmlEntity'),
-                $content
+            wp_enqueue_script(
+                'advgb_gmap_js',
+                plugins_url('assets/blocks/map/frontend.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
             );
         }
 
@@ -3199,7 +3285,108 @@ float: left;'
             );
         }
 
+        // Search for Button and List blocks then add styles to it
+        preg_match_all(
+            '/(<!-- wp:advgb\/(list|button)).*?(\/wp:advgb\/(list|button) -->)/mis',
+            $content,
+            $matches
+        );
+
+        $content .= $this->addBlocksStyles($matches);
+
         return $content;
+    }
+
+    /**
+     * Add styles for Adv Button and Adv List
+     *
+     * @param array $matches Matched string
+     *
+     * @return string HTML style
+     */
+    public function addBlocksStyles($matches)
+    {
+        $style_html = '';
+        if ($matches && count($matches)) {
+            foreach ($matches[0] as $key => $match) {
+                preg_match('/{.*?}/', $match, $style_data);
+                if ($style_data && count($style_data)) {
+                    $style_html .= '<style>';
+                    try {
+                        $style_data_array = json_decode($style_data[0], true);
+
+                        if ($matches[2][$key] === 'list') {
+                            $block_class    = $style_data_array['id'];
+                            $font_size      = isset($style_data_array['fontSize']) ? intval($style_data_array['fontSize']) : 16;
+                            $icon_size      = isset($style_data_array['iconSize']) ? intval($style_data_array['iconSize']) : 16;
+                            $icon_color     = isset($style_data_array['iconColor']) ? $style_data_array['iconColor'] : '#000';
+                            $margin         = isset($style_data_array['margin']) ? intval($style_data_array['margin']) : 2;
+                            $padding        = isset($style_data_array['padding']) ? intval($style_data_array['padding']) : 2;
+                            $line_height    = isset($style_data_array['lineHeight']) ? intval($style_data_array['lineHeight']) : 18;
+
+                            $style_html .= '.'. $block_class . ' li{';
+                            $style_html .= 'font-size:'.$font_size.'px;margin-left:'.($icon_size + $padding).'px';
+                            $style_html .= '}';
+                            if (!isset($style_data_array['icon']) || (isset($style_data_array['icon']) && !!$style_data_array['icon'])) {
+                                $style_html .= '.'. $block_class . ' li:before{';
+                                $style_html .= 'font-size:'.$icon_size.'px;';
+                                $style_html .= 'color:'.$icon_color.';';
+                                $style_html .= 'line-height:'.$line_height.'px;';
+                                $style_html .= 'margin:'.$margin.'px;';
+                                $style_html .= 'padding:'.$padding.'px;';
+                                $style_html .= 'margin-left:-'.($icon_size + $padding + $margin).'px';
+                                $style_html .= '}';
+                            }
+                        } elseif ($matches[2][$key] === 'button') {
+                            $block_class    = $style_data_array['id'];
+                            $font_size      = isset($style_data_array['textSize']) ? intval($style_data_array['textSize']) : 18;
+                            $color          = isset($style_data_array['textColor']) ? $style_data_array['textColor'] : '#fff';
+                            $bg_color       = isset($style_data_array['bgColor']) ? $style_data_array['bgColor'] : '#2196f3';
+                            $pd_top         = isset($style_data_array['paddingTop']) ? intval($style_data_array['paddingTop']) : 6;
+                            $pd_right       = isset($style_data_array['paddingRight']) ? intval($style_data_array['paddingRight']) : 12;
+                            $pd_bottom      = isset($style_data_array['paddingBottom']) ? intval($style_data_array['paddingBottom']) : 6;
+                            $pd_left        = isset($style_data_array['paddingLeft']) ? intval($style_data_array['paddingLeft']) : 12;
+                            $border_width   = isset($style_data_array['borderWidth']) ? intval($style_data_array['borderWidth']) : 1;
+                            $border_color   = isset($style_data_array['borderColor']) ? $style_data_array['borderColor'] : '#2196f3';
+                            $border_style   = isset($style_data_array['borderStyle']) ? $style_data_array['borderStyle'] : 'solid';
+                            $border_radius  = isset($style_data_array['borderRadius']) ? intval($style_data_array['borderRadius']) : 50;
+                            $hover_t_color  = isset($style_data_array['hoverTextColor']) ? $style_data_array['hoverTextColor'] : '#fff';
+                            $hover_bg_color = isset($style_data_array['hoverBgColor']) ? $style_data_array['hoverBgColor'] : '#2196f3';
+                            $hover_sh_color = isset($style_data_array['hoverShadowColor']) ? $style_data_array['hoverShadowColor'] : '#ccc';
+                            $hover_sh_h     = isset($style_data_array['hoverShadowH']) ? intval($style_data_array['hoverShadowH']) : 3;
+                            $hover_sh_v     = isset($style_data_array['hoverShadowV']) ? intval($style_data_array['hoverShadowV']) : 3;
+                            $hover_sh_blur  = isset($style_data_array['hoverShadowBlur']) ? intval($style_data_array['hoverShadowBlur']) : 1;
+                            $hover_sh_sprd  = isset($style_data_array['hoverShadowSpread']) ? intval($style_data_array['hoverShadowSpread']) : 1;
+                            $transition_spd = isset($style_data_array['transitionSpeed']) ? floatval($style_data_array['transitionSpeed']) : 0.2;
+
+                            $style_html .= '.'. $block_class . '{';
+                            $style_html .= 'font-size:'.$font_size.'px;';
+                            $style_html .= 'color:'.$color.';';
+                            $style_html .= 'background-color:'.$bg_color.';';
+                            $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
+                            $style_html .= 'border-width:'.$border_width.'px;';
+                            $style_html .= 'border-color:'.$border_color.';';
+                            $style_html .= 'border-style:'.$border_style.';';
+                            $style_html .= 'border-radius:'.$border_radius.'px;';
+                            $style_html .= '}';
+                            $style_html .= '.'. $block_class . ':hover{';
+                            $style_html .= 'color:'.$hover_t_color.';';
+                            $style_html .= 'background-color:'.$hover_bg_color.';';
+                            $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.';';
+                            $style_html .= 'transition:all'.$transition_spd.'s ease;';
+                            $style_html .= '}';
+                        }
+                        $style_html .= '</style>';
+                    } catch (Exception $e) {
+                        $style_html = '';
+                    }
+                } else {
+                    $style_html = '';
+                }
+            }
+        }
+
+        return preg_replace('/\s\s+/', '', $style_html);
     }
 
     /**

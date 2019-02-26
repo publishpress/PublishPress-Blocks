@@ -16,14 +16,18 @@
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
-                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
-                    Object.keys(currentBlockConfig).map((attribute)=>{
-                        attributes[attribute] = currentBlockConfig[attribute];
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
                     });
-
-                    // Finally set changed attribute to true, so we don't modify anything again
-                    setAttributes( { changed: true } );
                 }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
             }
         }
 
@@ -288,7 +292,7 @@
             src: listBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'list' ), __( 'icon' ) ],
         attributes: listBlockAttrs,
         transforms: {
@@ -340,12 +344,6 @@
                 id,
                 values,
                 icon,
-                iconSize,
-                iconColor,
-                margin,
-                padding,
-                lineHeight,
-                fontSize,
             } = attributes;
             const listClassName = [
                 id,
@@ -353,20 +351,47 @@
                 icon && `advgb-list-${icon}`
             ].filter( Boolean ).join( ' ' );
 
-            const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
-            const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
-            const padd = typeof padding != 'undefined' ? parseInt(padding)*2 : 4;
-
             return <div>
                 <ul className={listClassName}>
                     {values}
                 </ul>
-                <style>
-                    {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
-                </style>
-                {icon &&
-                <style>
-                    {`.${id} li:before {
+            </div>
+        },
+        deprecated: [
+            {
+                attributes: listBlockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        values,
+                        icon,
+                        iconSize,
+                        iconColor,
+                        margin,
+                        padding,
+                        lineHeight,
+                        fontSize,
+                    } = attributes;
+                    const listClassName = [
+                        id,
+                        icon && 'advgb-list',
+                        icon && `advgb-list-${icon}`
+                    ].filter( Boolean ).join( ' ' );
+
+                    const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+                    const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+                    const padd = typeof padding != 'undefined' ? parseInt(padding)*2 : 4;
+
+                    return <div>
+                        <ul className={listClassName}>
+                            {values}
+                        </ul>
+                        <style>
+                            {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
+                        </style>
+                        {icon &&
+                        <style>
+                            {`.${id} li:before {
                             font-size: ${iconSize}px;
                             color: ${iconColor};
                             line-height: ${lineHeight}px;
@@ -374,11 +399,11 @@
                             padding: ${padding}px;
                             margin-left: -${size + padd + marg}px;
                         }`}
-                </style>
-                }
-            </div>
-        },
-        deprecated: [
+                        </style>
+                        }
+                    </div>
+                },
+            },
             {
                 attributes: listBlockAttrs,
                 save: function ( { attributes } ) {

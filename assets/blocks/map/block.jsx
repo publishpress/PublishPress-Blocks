@@ -992,14 +992,18 @@
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
-                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
-                    Object.keys(currentBlockConfig).map((attribute)=>{
-                        attributes[attribute] = currentBlockConfig[attribute];
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
                     });
-
-                    // Finally set changed attribute to true, so we don't modify anything again
-                    setAttributes( { changed: true } );
                 }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
             }
         }
 
@@ -1270,7 +1274,7 @@
                                             )
                                         ] }
                                         >
-                                            <Button className={ 'button button-large' }
+                                            <Button className="button button-large"
                                                     onClick={ open }
                                             >
                                                 { __( 'Choose icon' ) }
@@ -1334,8 +1338,8 @@
                     </InspectorControls>
                     }
                     {typeof google !== 'undefined' ?
-                        <div className={ 'advgb-map-block' }>
-                            <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
+                        <div className="advgb-map-block">
+                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
                         </div>
                         :
                         <Placeholder
@@ -1416,7 +1420,7 @@
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [ __( 'google map' ), __( 'location' ), __( 'address' ) ],
         attributes: {
             ...mapBlockAttrs,
@@ -1466,9 +1470,73 @@
 
             return (
                 <div className="advgb-map-block" style={ { margin: '10px auto' } }>
-                    <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
-                    <script type="text/javascript">
-                        {`window.addEventListener('load', function() {
+                    <div className="advgb-map-content"
+                         id={ mapID }
+                         style={ { height: height } }
+                         data-default={ DEFAULT_MARKER }
+                         data-lat={ lat }
+                         data-lng={ lng }
+                         data-zoom={ zoom }
+                         data-title={ formattedTitle }
+                         data-icon={ markerIcon }
+                         data-info={ encodeURIComponent(infoWindowHtml) }
+                         data-style={ encodeURIComponent(mapStyleApply) }
+                    />
+                </div>
+            );
+        },
+        deprecated: [
+            {
+                attributes: {
+                    ...mapBlockAttrs,
+                    mapStyle: {
+                        type: 'string',
+                    },
+                    mapStyleCustom: {
+                        type: 'string',
+                    }
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        mapID,
+                        lat,
+                        lng,
+                        zoom,
+                        height,
+                        markerIcon,
+                        markerTitle,
+                        markerDesc,
+                        mapStyle,
+                        mapStyleCustom,
+                    } = attributes;
+
+                    const formattedDesc = markerDesc.replace( /\n/g, '<br/>' ).replace( /'/, '\\\'' );
+                    const formattedTitle = markerTitle.replace( /'/, '\\\'' );
+                    const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
+                    const infoWindowHtml = ''+
+                        '<div class="advgbmap-wrapper">' +
+                        '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' +
+                        '<p class="advgbmap-desc">'+ formattedDesc +'</p>' +
+                        '</div>';
+                    let mapStyleApply = MAP_STYLES[mapStyle];
+                    if (mapStyle === 'custom') {
+                        try {
+                            mapStyleApply = JSON.parse(mapStyleCustom);
+                        } catch (e) {
+                            mapStyleApply = '';
+                        }
+                    }
+                    if (mapStyleApply) {
+                        mapStyleApply = JSON.stringify(mapStyleApply);
+                    } else {
+                        mapStyleApply = '';
+                    }
+
+                    return (
+                        <div className="advgb-map-block" style={ { margin: '10px auto' } }>
+                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
+                            <script type="text/javascript">
+                                {`window.addEventListener('load', function() {
                         if (typeof google === "undefined") return null;
                         var location = {
                             lat: parseFloat(${lat}),
@@ -1496,15 +1564,15 @@
                             },
                         });
                         ${markerTitle &&
-                        `marker.addListener('click', function() {
+                                `marker.addListener('click', function() {
                             infoWindow.open(map, marker);
                         });`}
                     })`}
-                    </script>
-                </div>
-            );
-        },
-        deprecated: [
+                            </script>
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: mapBlockAttrs,
                 save: function ( { attributes } ) {
@@ -1525,8 +1593,8 @@
                     const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${formattedTitle}</h2><p class="advgbmap-desc">${formattedDesc || ''}</p></div>`;
 
                     return (
-                        <div className={ 'advgb-map-block' } style={ { margin: '10px auto' } }>
-                            <div className={ 'advgb-map-content' } id={ mapID } style={ { height: height } }/>
+                        <div className="advgb-map-block" style={ { margin: '10px auto' } }>
+                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
                             <script type="text/javascript">
                                 {`window.addEventListener('load', function() {
                         if (typeof google === "undefined") return null;

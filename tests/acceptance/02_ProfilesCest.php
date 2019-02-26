@@ -40,6 +40,8 @@ class ProfilesCest
 
         $I->see('Edit Profile');
 
+        $I->fillField('//input[contains(@class,"blocks-search-input")]', 'Count Up');
+
         // Switch off Count Up block
         $I->click(['xpath'=>'//li[contains(@data-type, \'advgb/count-up\')]//label[contains(@class,\'switch\')]']);
 
@@ -74,6 +76,9 @@ class ProfilesCest
         $I->click('.profile-title a');
 
         $I->see('Edit Profile');
+
+        // Search Count Up block
+        $I->fillField('.//input[contains(@class,"blocks-search-input")]', 'Count Up');
 
         // Switch off Count Up block
         $I->click(['xpath'=>'//li[contains(@data-type, \'advgb/count-up\')]//label[contains(@class,\'switch\')]']);

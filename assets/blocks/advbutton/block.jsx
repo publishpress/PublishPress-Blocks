@@ -16,19 +16,24 @@
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
-                if (currentBlockConfig !== undefined && typeof currentBlockConfig === 'object') {
-                    Object.keys(currentBlockConfig).map((attribute)=>{
-                        attributes[attribute] = currentBlockConfig[attribute];
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
                     });
-
-                    // Finally set changed attribute to true, so we don't modify anything again
-                    setAttributes( { changed: true } );
                 }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
             }
         }
 
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
+
 
             if ( !attributes.id ) {
                 setAttributes( { id: 'advgbbtn-' + clientId } );
@@ -309,6 +314,109 @@
             <path d="M5 14.5h14v-6H5v6zM11 .55V3.5h2V.55h-2zm8.04 2.5l-1.79 1.79 1.41 1.41 1.8-1.79-1.42-1.41zM13 22.45V19.5h-2v2.95h2zm7.45-3.91l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM3.55 4.46l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zm1.41 15.49l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42z"/>
         </svg>
     );
+    const blockAttrs = {
+        id: {
+            type: 'string',
+        },
+        url: {
+            type: 'string',
+        },
+        urlOpenNewTab: {
+            type: 'boolean',
+            default: true,
+        },
+        title: {
+            type: 'string',
+        },
+        text: {
+            source: 'children',
+            selector: 'a',
+        },
+        bgColor: {
+            type: 'string',
+            default: '#2196f3',
+        },
+        textColor: {
+            type: 'string',
+            default: '#fff',
+        },
+        textSize: {
+            type: 'number',
+            default: 18,
+        },
+        paddingTop: {
+            type: 'number',
+            default: 6,
+        },
+        paddingRight: {
+            type: 'number',
+            default: 12,
+        },
+        paddingBottom: {
+            type: 'number',
+            default: 6,
+        },
+        paddingLeft: {
+            type: 'number',
+            default: 12,
+        },
+        borderWidth: {
+            type: 'number',
+            default: 1,
+        },
+        borderColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid',
+        },
+        borderRadius: {
+            type: 'number',
+            default: 50
+        },
+        hoverTextColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        hoverBgColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        hoverShadowColor: {
+            type: 'string',
+            default: '#ccc'
+        },
+        hoverShadowH: {
+            type: 'number',
+            default: 3,
+        },
+        hoverShadowV: {
+            type: 'number',
+            default: 3,
+        },
+        hoverShadowBlur: {
+            type: 'number',
+            default: 1,
+        },
+        hoverShadowSpread: {
+            type: 'number',
+            default: 0,
+        },
+        transitionSpeed: {
+            type: 'number',
+            default: 0.2,
+        },
+        align: {
+            type: 'string',
+            default: 'none',
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+    };
 
     registerBlockType( 'advgb/button', {
         title: __( 'Advanced Button' ),
@@ -317,111 +425,9 @@
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
-        category: 'layout',
+        category: 'advgb-category',
         keywords: [ __('button'), __('link') ],
-        attributes: {
-            id: {
-                type: 'string',
-            },
-            url: {
-                type: 'string',
-            },
-            urlOpenNewTab: {
-                type: 'boolean',
-                default: true,
-            },
-            title: {
-                type: 'string',
-            },
-            text: {
-                source: 'children',
-                selector: 'a',
-            },
-            bgColor: {
-                type: 'string',
-                default: '#2196f3',
-            },
-            textColor: {
-                type: 'string',
-                default: '#fff',
-            },
-            textSize: {
-                type: 'number',
-                default: 18,
-            },
-            paddingTop: {
-                type: 'number',
-                default: 6,
-            },
-            paddingRight: {
-                type: 'number',
-                default: 12,
-            },
-            paddingBottom: {
-                type: 'number',
-                default: 6,
-            },
-            paddingLeft: {
-                type: 'number',
-                default: 12,
-            },
-            borderWidth: {
-                type: 'number',
-                default: 1,
-            },
-            borderColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            borderStyle: {
-                type: 'string',
-                default: 'solid',
-            },
-            borderRadius: {
-                type: 'number',
-                default: 50
-            },
-            hoverTextColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            hoverBgColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            hoverShadowColor: {
-                type: 'string',
-                default: '#ccc'
-            },
-            hoverShadowH: {
-                type: 'number',
-                default: 3,
-            },
-            hoverShadowV: {
-                type: 'number',
-                default: 3,
-            },
-            hoverShadowBlur: {
-                type: 'number',
-                default: 1,
-            },
-            hoverShadowSpread: {
-                type: 'number',
-                default: 0,
-            },
-            transitionSpeed: {
-                type: 'number',
-                default: 0.2,
-            },
-            align: {
-                type: 'string',
-                default: 'none',
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            },
-        },
+        attributes: blockAttrs,
         transforms: {
             from: [
                 {
@@ -457,25 +463,6 @@
                 urlOpenNewTab,
                 title,
                 text,
-                bgColor,
-                textColor,
-                textSize,
-                paddingTop,
-                paddingRight,
-                paddingBottom,
-                paddingLeft,
-                borderWidth,
-                borderColor,
-                borderRadius,
-                borderStyle,
-                hoverTextColor,
-                hoverBgColor,
-                hoverShadowColor,
-                hoverShadowH,
-                hoverShadowV,
-                hoverShadowBlur,
-                hoverShadowSpread,
-                transitionSpeed,
             } = attributes;
 
             return (
@@ -487,9 +474,66 @@
                         title={ title }
                         target={ !urlOpenNewTab ? '_self' : '_blank' }
                         value={ text }
+                        rel="noopener noreferrer"
                     />
-                    <style>
-                        {`.${id} {
+                </div>
+            );
+        },
+        getEditWrapperProps( attributes ) {
+            const { align } = attributes;
+            const props = { 'data-resized': true };
+
+            if ( 'left' === align || 'right' === align || 'center' === align ) {
+                props[ 'data-align' ] = align;
+            }
+
+            return props;
+        },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        align,
+                        url,
+                        urlOpenNewTab,
+                        title,
+                        text,
+                        bgColor,
+                        textColor,
+                        textSize,
+                        paddingTop,
+                        paddingRight,
+                        paddingBottom,
+                        paddingLeft,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        borderStyle,
+                        hoverTextColor,
+                        hoverBgColor,
+                        hoverShadowColor,
+                        hoverShadowH,
+                        hoverShadowV,
+                        hoverShadowBlur,
+                        hoverShadowSpread,
+                        transitionSpeed,
+                    } = attributes;
+
+                    return (
+                        <div className={ `align${align}` }>
+                            <RichText.Content
+                                tagName="a"
+                                className={ `wp-block-advgb-button_link ${id}` }
+                                href={ url || '#' }
+                                title={ title }
+                                target={ !urlOpenNewTab ? '_self' : '_blank' }
+                                value={ text }
+                                rel="noopener noreferrer"
+                            />
+                            <style>
+                                {`.${id} {
                         font-size: ${textSize}px;
                         color: ${textColor};
                         background-color: ${bgColor};
@@ -505,19 +549,74 @@
                         box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
                         transition: all ${transitionSpeed}s ease;
                     }`}
-                    </style>
-                </div>
-            );
-        },
-        getEditWrapperProps( attributes ) {
-            const { align } = attributes;
-            const props = { 'data-resized': true };
+                            </style>
+                        </div>
+                    );
+                },
+            },
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        align,
+                        url,
+                        urlOpenNewTab,
+                        title,
+                        text,
+                        bgColor,
+                        textColor,
+                        textSize,
+                        paddingTop,
+                        paddingRight,
+                        paddingBottom,
+                        paddingLeft,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        borderStyle,
+                        hoverTextColor,
+                        hoverBgColor,
+                        hoverShadowColor,
+                        hoverShadowH,
+                        hoverShadowV,
+                        hoverShadowBlur,
+                        hoverShadowSpread,
+                        transitionSpeed,
+                    } = attributes;
 
-            if ( 'left' === align || 'right' === align || 'center' === align ) {
-                props[ 'data-align' ] = align;
+                    return (
+                        <div className={ `align${align}` }>
+                            <RichText.Content
+                                tagName="a"
+                                className={ `wp-block-advgb-button_link ${id}` }
+                                href={ url || '#' }
+                                title={ title }
+                                target={ !urlOpenNewTab ? '_self' : '_blank' }
+                                value={ text }
+                            />
+                            <style>
+                                {`.${id} {
+                        font-size: ${textSize}px;
+                        color: ${textColor};
+                        background-color: ${bgColor};
+                        padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
+                        border-width: ${borderWidth}px;
+                        border-color: ${borderColor};
+                        border-radius: ${borderRadius}px;
+                        border-style: ${borderStyle};
+                    }
+                    .${id}:hover {
+                        color: ${hoverTextColor};
+                        background-color: ${hoverBgColor};
+                        box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
+                        transition: all ${transitionSpeed}s ease;
+                    }`}
+                            </style>
+                        </div>
+                    );
+                }
             }
-
-            return props;
-        },
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );

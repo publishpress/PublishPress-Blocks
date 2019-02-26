@@ -193,14 +193,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -482,7 +486,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: accordionAttrs,
         edit: AdvAccordion,
@@ -614,14 +618,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -949,6 +957,109 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M0 0h24v24H0V0z', fill: 'none' }),
         React.createElement('path', { d: 'M5 14.5h14v-6H5v6zM11 .55V3.5h2V.55h-2zm8.04 2.5l-1.79 1.79 1.41 1.41 1.8-1.79-1.42-1.41zM13 22.45V19.5h-2v2.95h2zm7.45-3.91l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM3.55 4.46l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zm1.41 15.49l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42z' })
     );
+    var blockAttrs = {
+        id: {
+            type: 'string'
+        },
+        url: {
+            type: 'string'
+        },
+        urlOpenNewTab: {
+            type: 'boolean',
+            default: true
+        },
+        title: {
+            type: 'string'
+        },
+        text: {
+            source: 'children',
+            selector: 'a'
+        },
+        bgColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        textColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        textSize: {
+            type: 'number',
+            default: 18
+        },
+        paddingTop: {
+            type: 'number',
+            default: 6
+        },
+        paddingRight: {
+            type: 'number',
+            default: 12
+        },
+        paddingBottom: {
+            type: 'number',
+            default: 6
+        },
+        paddingLeft: {
+            type: 'number',
+            default: 12
+        },
+        borderWidth: {
+            type: 'number',
+            default: 1
+        },
+        borderColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid'
+        },
+        borderRadius: {
+            type: 'number',
+            default: 50
+        },
+        hoverTextColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        hoverBgColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        hoverShadowColor: {
+            type: 'string',
+            default: '#ccc'
+        },
+        hoverShadowH: {
+            type: 'number',
+            default: 3
+        },
+        hoverShadowV: {
+            type: 'number',
+            default: 3
+        },
+        hoverShadowBlur: {
+            type: 'number',
+            default: 1
+        },
+        hoverShadowSpread: {
+            type: 'number',
+            default: 0
+        },
+        transitionSpeed: {
+            type: 'number',
+            default: 0.2
+        },
+        align: {
+            type: 'string',
+            default: 'none'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
 
     registerBlockType('advgb/button', {
         title: __('Advanced Button'),
@@ -957,111 +1068,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'layout',
+        category: 'advgb-category',
         keywords: [__('button'), __('link')],
-        attributes: {
-            id: {
-                type: 'string'
-            },
-            url: {
-                type: 'string'
-            },
-            urlOpenNewTab: {
-                type: 'boolean',
-                default: true
-            },
-            title: {
-                type: 'string'
-            },
-            text: {
-                source: 'children',
-                selector: 'a'
-            },
-            bgColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            textColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            textSize: {
-                type: 'number',
-                default: 18
-            },
-            paddingTop: {
-                type: 'number',
-                default: 6
-            },
-            paddingRight: {
-                type: 'number',
-                default: 12
-            },
-            paddingBottom: {
-                type: 'number',
-                default: 6
-            },
-            paddingLeft: {
-                type: 'number',
-                default: 12
-            },
-            borderWidth: {
-                type: 'number',
-                default: 1
-            },
-            borderColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            borderStyle: {
-                type: 'string',
-                default: 'solid'
-            },
-            borderRadius: {
-                type: 'number',
-                default: 50
-            },
-            hoverTextColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            hoverBgColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            hoverShadowColor: {
-                type: 'string',
-                default: '#ccc'
-            },
-            hoverShadowH: {
-                type: 'number',
-                default: 3
-            },
-            hoverShadowV: {
-                type: 'number',
-                default: 3
-            },
-            hoverShadowBlur: {
-                type: 'number',
-                default: 1
-            },
-            hoverShadowSpread: {
-                type: 'number',
-                default: 0
-            },
-            transitionSpeed: {
-                type: 'number',
-                default: 0.2
-            },
-            align: {
-                type: 'string',
-                default: 'none'
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         transforms: {
             from: [{
                 type: 'block',
@@ -1090,26 +1099,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 url = attributes.url,
                 urlOpenNewTab = attributes.urlOpenNewTab,
                 title = attributes.title,
-                text = attributes.text,
-                bgColor = attributes.bgColor,
-                textColor = attributes.textColor,
-                textSize = attributes.textSize,
-                paddingTop = attributes.paddingTop,
-                paddingRight = attributes.paddingRight,
-                paddingBottom = attributes.paddingBottom,
-                paddingLeft = attributes.paddingLeft,
-                borderWidth = attributes.borderWidth,
-                borderColor = attributes.borderColor,
-                borderRadius = attributes.borderRadius,
-                borderStyle = attributes.borderStyle,
-                hoverTextColor = attributes.hoverTextColor,
-                hoverBgColor = attributes.hoverBgColor,
-                hoverShadowColor = attributes.hoverShadowColor,
-                hoverShadowH = attributes.hoverShadowH,
-                hoverShadowV = attributes.hoverShadowV,
-                hoverShadowBlur = attributes.hoverShadowBlur,
-                hoverShadowSpread = attributes.hoverShadowSpread,
-                transitionSpeed = attributes.transitionSpeed;
+                text = attributes.text;
 
 
             return React.createElement(
@@ -1121,13 +1111,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     href: url || '#',
                     title: title,
                     target: !urlOpenNewTab ? '_self' : '_blank',
-                    value: text
-                }),
-                React.createElement(
-                    'style',
-                    null,
-                    '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
-                )
+                    value: text,
+                    rel: 'noopener noreferrer'
+                })
             );
         },
         getEditWrapperProps: function getEditWrapperProps(attributes) {
@@ -1140,7 +1126,108 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             return props;
-        }
+        },
+
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var id = attributes.id,
+                    align = attributes.align,
+                    url = attributes.url,
+                    urlOpenNewTab = attributes.urlOpenNewTab,
+                    title = attributes.title,
+                    text = attributes.text,
+                    bgColor = attributes.bgColor,
+                    textColor = attributes.textColor,
+                    textSize = attributes.textSize,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    borderStyle = attributes.borderStyle,
+                    hoverTextColor = attributes.hoverTextColor,
+                    hoverBgColor = attributes.hoverBgColor,
+                    hoverShadowColor = attributes.hoverShadowColor,
+                    hoverShadowH = attributes.hoverShadowH,
+                    hoverShadowV = attributes.hoverShadowV,
+                    hoverShadowBlur = attributes.hoverShadowBlur,
+                    hoverShadowSpread = attributes.hoverShadowSpread,
+                    transitionSpeed = attributes.transitionSpeed;
+
+
+                return React.createElement(
+                    'div',
+                    { className: 'align' + align },
+                    React.createElement(RichText.Content, {
+                        tagName: 'a',
+                        className: 'wp-block-advgb-button_link ' + id,
+                        href: url || '#',
+                        title: title,
+                        target: !urlOpenNewTab ? '_self' : '_blank',
+                        value: text,
+                        rel: 'noopener noreferrer'
+                    }),
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
+                var id = attributes.id,
+                    align = attributes.align,
+                    url = attributes.url,
+                    urlOpenNewTab = attributes.urlOpenNewTab,
+                    title = attributes.title,
+                    text = attributes.text,
+                    bgColor = attributes.bgColor,
+                    textColor = attributes.textColor,
+                    textSize = attributes.textSize,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    borderStyle = attributes.borderStyle,
+                    hoverTextColor = attributes.hoverTextColor,
+                    hoverBgColor = attributes.hoverBgColor,
+                    hoverShadowColor = attributes.hoverShadowColor,
+                    hoverShadowH = attributes.hoverShadowH,
+                    hoverShadowV = attributes.hoverShadowV,
+                    hoverShadowBlur = attributes.hoverShadowBlur,
+                    hoverShadowSpread = attributes.hoverShadowSpread,
+                    transitionSpeed = attributes.transitionSpeed;
+
+
+                return React.createElement(
+                    'div',
+                    { className: 'align' + align },
+                    React.createElement(RichText.Content, {
+                        tagName: 'a',
+                        className: 'wp-block-advgb-button_link ' + id,
+                        href: url || '#',
+                        title: title,
+                        target: !urlOpenNewTab ? '_self' : '_blank',
+                        value: text
+                    }),
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -1210,14 +1297,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -1475,6 +1566,70 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M1 5h2v14H1zm4 0h2v14H5zm17 0H10c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1zM11 17l2.5-3.15L15.29 16l2.5-3.22L21 17H11z' })
     );
 
+    var blockAttrs = {
+        openOnClick: {
+            type: 'string',
+            default: 'none'
+        },
+        linkInNewTab: {
+            type: 'boolean',
+            default: true
+        },
+        openUrl: {
+            type: 'string'
+        },
+        imageUrl: {
+            type: 'string'
+        },
+        imageID: {
+            type: 'number'
+        },
+        title: {
+            type: 'string',
+            default: __('Image title')
+        },
+        titleColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        subtitle: {
+            type: 'string',
+            default: __('Your subtitle here')
+        },
+        subtitleColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        overlayColor: {
+            type: 'string',
+            default: '#2196f3'
+        },
+        fullWidth: {
+            type: 'boolean',
+            default: false
+        },
+        width: {
+            type: 'number',
+            default: 500
+        },
+        height: {
+            type: 'number',
+            default: 500
+        },
+        vAlign: {
+            type: 'string',
+            default: 'center'
+        },
+        hAlign: {
+            type: 'string',
+            default: 'center'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/image', {
         title: __('Advanced Image'),
         description: __('Advanced image/photo block with more options and styles.'),
@@ -1482,71 +1637,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: advImageBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('image'), __('photo'), __('box')],
-        attributes: {
-            openOnClick: {
-                type: 'string',
-                default: 'none'
-            },
-            linkInNewTab: {
-                type: 'boolean',
-                default: true
-            },
-            openUrl: {
-                type: 'string'
-            },
-            imageUrl: {
-                type: 'string'
-            },
-            imageID: {
-                type: 'number'
-            },
-            title: {
-                type: 'string',
-                default: __('Image title')
-            },
-            titleColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            subtitle: {
-                type: 'string',
-                default: __('Your subtitle here')
-            },
-            subtitleColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            overlayColor: {
-                type: 'string',
-                default: '#2196f3'
-            },
-            fullWidth: {
-                type: 'boolean',
-                default: false
-            },
-            width: {
-                type: 'number',
-                default: 500
-            },
-            height: {
-                type: 'number',
-                default: 500
-            },
-            vAlign: {
-                type: 'string',
-                default: 'center'
-            },
-            hAlign: {
-                type: 'string',
-                default: 'center'
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         edit: AdvImage,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -1583,6 +1676,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement('a', { className: 'advgb-image-overlay',
                     style: { backgroundColor: overlayColor },
                     target: linkInNewTab ? '_blank' : '_self',
+                    rel: 'noopener noreferrer',
                     href: linkURL
                 }),
                 React.createElement(
@@ -1596,7 +1690,59 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     subtitle
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
+                var openOnClick = attributes.openOnClick,
+                    openUrl = attributes.openUrl,
+                    linkInNewTab = attributes.linkInNewTab,
+                    imageUrl = attributes.imageUrl,
+                    title = attributes.title,
+                    titleColor = attributes.titleColor,
+                    subtitle = attributes.subtitle,
+                    subtitleColor = attributes.subtitleColor,
+                    overlayColor = attributes.overlayColor,
+                    fullWidth = attributes.fullWidth,
+                    width = attributes.width,
+                    height = attributes.height,
+                    vAlign = attributes.vAlign,
+                    hAlign = attributes.hAlign;
+
+                var linkURL = openOnClick === 'url' && !!openUrl ? openUrl : undefined;
+                var blockClassName = ['advgb-image-block', fullWidth && 'full-width', openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    'div',
+                    { className: blockClassName,
+                        style: {
+                            backgroundImage: 'url( ' + imageUrl + ')',
+                            height: height,
+                            width: width,
+                            justifyContent: vAlign,
+                            alignItems: hAlign
+                        },
+                        'data-image': imageUrl
+                    },
+                    React.createElement('a', { className: 'advgb-image-overlay',
+                        style: { backgroundColor: overlayColor },
+                        target: linkInNewTab ? '_blank' : '_self',
+                        href: linkURL
+                    }),
+                    React.createElement(
+                        'h4',
+                        { className: 'advgb-image-title', style: { color: titleColor } },
+                        title
+                    ),
+                    React.createElement(
+                        'p',
+                        { className: 'advgb-image-subtitle', style: { color: subtitleColor } },
+                        subtitle
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -1663,14 +1809,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -1951,7 +2101,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: listBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('list'), __('icon')],
         attributes: listBlockAttrs,
         transforms: {
@@ -1999,19 +2149,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref3.attributes;
             var id = attributes.id,
                 values = attributes.values,
-                icon = attributes.icon,
-                iconSize = attributes.iconSize,
-                iconColor = attributes.iconColor,
-                margin = attributes.margin,
-                padding = attributes.padding,
-                lineHeight = attributes.lineHeight,
-                fontSize = attributes.fontSize;
+                icon = attributes.icon;
 
             var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
-
-            var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
-            var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
-            var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
 
             return React.createElement(
                 'div',
@@ -2020,16 +2160,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     'ul',
                     { className: listClassName },
                     values
-                ),
-                React.createElement(
-                    'style',
-                    null,
-                    '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
-                ),
-                icon && React.createElement(
-                    'style',
-                    null,
-                    '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                            margin-left: -' + (size + padd + marg) + 'px;\n                        }'
                 )
             );
         },
@@ -2037,6 +2167,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: listBlockAttrs,
             save: function save(_ref4) {
                 var attributes = _ref4.attributes;
+                var id = attributes.id,
+                    values = attributes.values,
+                    icon = attributes.icon,
+                    iconSize = attributes.iconSize,
+                    iconColor = attributes.iconColor,
+                    margin = attributes.margin,
+                    padding = attributes.padding,
+                    lineHeight = attributes.lineHeight,
+                    fontSize = attributes.fontSize;
+
+                var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
+
+                var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
+                var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
+                var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
+
+                return React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'ul',
+                        { className: listClassName },
+                        values
+                    ),
+                    React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
+                    ),
+                    icon && React.createElement(
+                        'style',
+                        null,
+                        '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                            margin-left: -' + (size + padd + marg) + 'px;\n                        }'
+                    )
+                );
+            }
+        }, {
+            attributes: listBlockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
                 var id = attributes.id,
                     values = attributes.values,
                     icon = attributes.icon,
@@ -2085,9 +2255,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -2154,6 +2324,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvTable, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-table'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
             key: "componentDidMount",
             value: function componentDidMount() {
                 this.calculateRealColIndex();
@@ -2205,9 +2400,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "calculateRealColIndex",
             value: function calculateRealColIndex() {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var body = attributes.body;
 
 
@@ -2261,9 +2456,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var body = attributes.body;
                 var rowIndex = selectedCell.rowIndex;
 
@@ -2303,9 +2498,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var body = attributes.body;
                 var rowIndex = selectedCell.rowIndex;
 
@@ -2345,9 +2540,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var body = attributes.body;
                 var cI = selectedCell.cI;
 
@@ -2402,9 +2597,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes;
                 var body = attributes.body;
                 var cI = selectedCell.cI;
 
@@ -2453,9 +2648,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes;
                 var fromCell = rangeSelected.fromCell,
                     toCell = rangeSelected.toCell;
                 var body = attributes.body;
@@ -2508,9 +2703,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes;
+                var _props8 = this.props,
+                    attributes = _props8.attributes,
+                    setAttributes = _props8.setAttributes;
                 var body = attributes.body;
                 var colIndex = selectedCell.colIndex,
                     rowIndex = selectedCell.rowIndex,
@@ -2594,9 +2789,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props8 = this.props,
-                    attributes = _props8.attributes,
-                    setAttributes = _props8.setAttributes;
+                var _props9 = this.props,
+                    attributes = _props9.attributes,
+                    setAttributes = _props9.setAttributes;
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
                 var body = attributes.body;
@@ -2672,9 +2867,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props9 = this.props,
-                    attributes = _props9.attributes,
-                    setAttributes = _props9.setAttributes;
+                var _props10 = this.props,
+                    attributes = _props10.attributes,
+                    setAttributes = _props10.setAttributes;
                 var rowIndex = selectedCell.rowIndex,
                     colIndex = selectedCell.colIndex;
                 var body = attributes.body;
@@ -2705,10 +2900,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props10 = this.props,
-                    attributes = _props10.attributes,
-                    setAttributes = _props10.setAttributes,
-                    className = _props10.className;
+                var _props11 = this.props,
+                    attributes = _props11.attributes,
+                    setAttributes = _props11.setAttributes,
+                    className = _props11.className;
                 var body = attributes.body,
                     maxWidth = attributes.maxWidth;
                 var _state4 = this.state,
@@ -3049,11 +3244,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(
                                     "div",
-                                    { className: 'advgb-border-item-wrapper' },
+                                    { className: "advgb-border-item-wrapper" },
                                     BORDER_SELECT.map(function (item, index) {
                                         return React.createElement(
                                             "div",
-                                            { className: 'advgb-border-item', key: index },
+                                            { className: "advgb-border-item", key: index },
                                             React.createElement(
                                                 Tooltip,
                                                 { text: item.title },
@@ -3252,7 +3447,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: tableBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [__('table'), __('cell'), __('data')],
         attributes: {
             body: {
@@ -3439,14 +3634,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -3599,7 +3798,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return React.createElement(IconButton, {
                                         className: "components-toolbar__control",
                                         label: __('Change image preview'),
-                                        icon: 'edit',
+                                        icon: "edit",
                                         onClick: open
                                     });
                                 }
@@ -3607,7 +3806,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(IconButton, {
                                 className: "components-toolbar__control",
                                 label: __('Remove image preview'),
-                                icon: 'no',
+                                icon: "no",
                                 onClick: function onClick() {
                                     return setAttributes({ poster: undefined, posterID: undefined });
                                 }
@@ -3721,10 +3920,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         !!openInLightbox && React.createElement(
                             "div",
                             { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
-                            React.createElement("div", { className: 'advgb-video-poster', style: { backgroundImage: "url(" + poster + ")" } }),
+                            React.createElement("div", { className: "advgb-video-poster", style: { backgroundImage: "url(" + poster + ")" } }),
                             React.createElement(
                                 "div",
-                                { className: 'advgb-button-wrapper', style: { height: videoHeight } },
+                                { className: "advgb-button-wrapper", style: { height: videoHeight } },
                                 !poster && React.createElement(MediaUpload, {
                                     allowedTypes: ["image"],
                                     onSelect: function onSelect(media) {
@@ -3736,7 +3935,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return React.createElement(
                                             Button,
                                             {
-                                                className: 'button button-large',
+                                                className: "button button-large",
                                                 onClick: open
                                             },
                                             __('Select image preview')
@@ -3745,7 +3944,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(
                                     "div",
-                                    { className: 'advgb-play-button', style: { color: playButtonColor } },
+                                    { className: "advgb-play-button", style: { color: playButtonColor } },
                                     React.createElement(
                                         "svg",
                                         { xmlns: "http://www.w3.org/2000/svg",
@@ -3774,11 +3973,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
                         isSelected && React.createElement(
                             "div",
-                            { className: 'advgb-video-input-block' },
+                            { className: "advgb-video-input-block" },
                             React.createElement(
                                 "div",
-                                { className: 'advgb-video-input' },
-                                React.createElement(Dashicon, { className: "advgb-video-link-icon", icon: 'admin-links' }),
+                                { className: "advgb-video-input" },
+                                React.createElement(Dashicon, { className: "advgb-video-link-icon", icon: "admin-links" }),
                                 React.createElement(TextControl, {
                                     placeholder: __('Youtube/Vimeo video URL/ID…'),
                                     value: videoID,
@@ -3822,7 +4021,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 "div",
-                                { className: 'advgb-current-video-desc',
+                                { className: "advgb-current-video-desc",
                                     style: { minWidth: '50%', margin: '10px auto', textAlign: 'center' }
                                 },
                                 React.createElement(
@@ -3876,7 +4075,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: advVideoBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('video'), __('embed'), __('media')],
         attributes: {
             videoURL: {
@@ -3978,13 +4177,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 !!openInLightbox && React.createElement(
                     "div",
                     { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
-                    React.createElement("div", { className: 'advgb-video-poster', style: { backgroundImage: "url(" + poster + ")" } }),
+                    React.createElement("div", { className: "advgb-video-poster", style: { backgroundImage: "url(" + poster + ")" } }),
                     React.createElement(
                         "div",
-                        { className: 'advgb-button-wrapper', style: { height: videoHeight } },
+                        { className: "advgb-button-wrapper", style: { height: videoHeight } },
                         React.createElement(
                             "div",
-                            { className: 'advgb-play-button', style: { color: playButtonColor } },
+                            { className: "advgb-play-button", style: { color: playButtonColor } },
                             React.createElement(
                                 "svg",
                                 { xmlns: "http://www.w3.org/2000/svg",
@@ -4013,6 +4212,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 "use strict";
 
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -4052,11 +4253,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvContactForm, [{
-            key: "render",
-            value: function render() {
+            key: "componentWillMount",
+            value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-contact-form'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var nameLabel = attributes.nameLabel,
                     emailLabel = attributes.emailLabel,
                     msgLabel = attributes.msgLabel,
@@ -4383,7 +4609,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: contactBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [__('contact'), __('form')],
         attributes: contactBlockAttrs,
         edit: AdvContactForm,
@@ -4713,7 +4939,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: containerBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'layout',
+        category: 'advgb-category',
         keywords: [__('container'), __('row'), __('box')],
         attributes: {},
         supports: {
@@ -4796,14 +5022,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -5229,7 +5459,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: countUpBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('numbers'), __('count'), __('increase')],
         attributes: {
             headerText: {
@@ -5687,6 +5917,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -5747,6 +5979,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvImageSlider, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-images-slider'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
             key: "componentDidMount",
             value: function componentDidMount() {
                 var attributes = this.props.attributes;
@@ -5759,9 +6016,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentWillUpdate",
             value: function componentWillUpdate(nextProps) {
-                var _props = this.props,
-                    clientId = _props.clientId,
-                    attributes = _props.attributes;
+                var _props2 = this.props,
+                    clientId = _props2.clientId,
+                    attributes = _props2.attributes;
                 var images = attributes.images;
                 var nextImages = nextProps.attributes.images;
 
@@ -5776,21 +6033,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentDidUpdate(prevProps) {
                 var _this2 = this;
 
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    isSelected = _props2.isSelected;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    isSelected = _props3.isSelected;
                 var images = attributes.images;
                 var prevImages = prevProps.attributes.images;
 
 
-                if (images.length !== prevImages.length && images.length) {
-                    setTimeout(function () {
-                        return _this2.initSlider();
-                    }, 100);
-                }
-
-                if (images.length === 0 && this.state.inited) {
-                    this.setState({ inited: false });
+                if (images.length !== prevImages.length) {
+                    if (images.length) {
+                        setTimeout(function () {
+                            return _this2.initSlider();
+                        }, 100);
+                    } else if (images.length === 0 && this.state.inited) {
+                        this.setState({ inited: false });
+                    }
                 }
 
                 if (!this.state.inited && isSelected) {
@@ -5826,10 +6083,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function initItemSortable() {
                 var _this4 = this;
 
-                var _props3 = this.props,
-                    clientId = _props3.clientId,
-                    setAttributes = _props3.setAttributes,
-                    attributes = _props3.attributes;
+                var _props4 = this.props,
+                    clientId = _props4.clientId,
+                    setAttributes = _props4.setAttributes,
+                    attributes = _props4.attributes;
                 var images = attributes.images;
 
 
@@ -5865,9 +6122,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var images = attributes.images;
 
 
@@ -5886,11 +6143,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this5 = this;
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes,
-                    isSelected = _props5.isSelected,
-                    clientId = _props5.clientId;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes,
+                    isSelected = _props6.isSelected,
+                    clientId = _props6.clientId;
                 var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
@@ -6189,6 +6446,57 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvImageSlider;
     }(Component);
 
+    var blockAttrs = {
+        images: {
+            type: 'array',
+            default: [] // [ { id: int, url, title, text, link: string } ]
+        },
+        actionOnClick: {
+            type: 'string'
+        },
+        fullWidth: {
+            type: 'boolean',
+            default: true
+        },
+        autoHeight: {
+            type: 'boolean',
+            default: true
+        },
+        width: {
+            type: 'number',
+            default: 700
+        },
+        height: {
+            type: 'number',
+            default: 500
+        },
+        alwaysShowOverlay: {
+            type: 'boolean',
+            default: false
+        },
+        hoverColor: {
+            type: 'string'
+        },
+        titleColor: {
+            type: 'string'
+        },
+        textColor: {
+            type: 'string'
+        },
+        vAlign: {
+            type: 'string',
+            default: 'center'
+        },
+        hAlign: {
+            type: 'string',
+            default: 'center'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/images-slider', {
         title: __('Images Slider'),
         description: __('Display your images in a slider.'),
@@ -6196,58 +6504,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: imageSliderBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [__('slide'), __('gallery'), __('photos')],
-        attributes: {
-            images: {
-                type: 'array',
-                default: [] // [ { id: int, url, title, text, link: string } ]
-            },
-            actionOnClick: {
-                type: 'string'
-            },
-            fullWidth: {
-                type: 'boolean',
-                default: true
-            },
-            autoHeight: {
-                type: 'boolean',
-                default: true
-            },
-            width: {
-                type: 'number',
-                default: 700
-            },
-            height: {
-                type: 'number',
-                default: 500
-            },
-            alwaysShowOverlay: {
-                type: 'boolean',
-                default: false
-            },
-            hoverColor: {
-                type: 'string'
-            },
-            titleColor: {
-                type: 'string'
-            },
-            textColor: {
-                type: 'string'
-            },
-            vAlign: {
-                type: 'string',
-                default: 'center'
-            },
-            hAlign: {
-                type: 'string',
-                default: 'center'
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         edit: AdvImageSlider,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -6294,6 +6553,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 React.createElement("a", { className: "advgb-image-slider-overlay",
                                     target: "_blank",
+                                    rel: "noopener noreferrer",
                                     href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
                                     style: {
                                         backgroundColor: hoverColor,
@@ -6319,7 +6579,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     })
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
+                var images = attributes.images,
+                    actionOnClick = attributes.actionOnClick,
+                    fullWidth = attributes.fullWidth,
+                    autoHeight = attributes.autoHeight,
+                    width = attributes.width,
+                    height = attributes.height,
+                    alwaysShowOverlay = attributes.alwaysShowOverlay,
+                    hoverColor = attributes.hoverColor,
+                    titleColor = attributes.titleColor,
+                    textColor = attributes.textColor,
+                    hAlign = attributes.hAlign,
+                    vAlign = attributes.vAlign;
+
+                var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-images-slider" },
+                        images.map(function (image, index) {
+                            return React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-item", key: index },
+                                React.createElement("img", { src: image.url,
+                                    className: "advgb-image-slider-img",
+                                    alt: __('Slider image'),
+                                    style: {
+                                        width: fullWidth ? '100%' : width,
+                                        height: autoHeight ? 'auto' : height
+                                    }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-item-info",
+                                        style: {
+                                            justifyContent: vAlign,
+                                            alignItems: hAlign
+                                        }
+                                    },
+                                    React.createElement("a", { className: "advgb-image-slider-overlay",
+                                        target: "_blank",
+                                        href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
+                                        style: {
+                                            backgroundColor: hoverColor,
+                                            opacity: alwaysShowOverlay ? 0.5 : undefined
+                                        }
+                                    }),
+                                    React.createElement(
+                                        "h4",
+                                        { className: "advgb-image-slider-title",
+                                            style: { color: titleColor }
+                                        },
+                                        image.title
+                                    ),
+                                    React.createElement(
+                                        "p",
+                                        { className: "advgb-image-slider-text",
+                                            style: { color: textColor }
+                                        },
+                                        image.text
+                                    )
+                                )
+                            );
+                        })
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -7039,14 +7373,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -7381,7 +7719,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         },
                                         React.createElement(
                                             Button,
-                                            { className: 'button button-large',
+                                            { className: "button button-large",
                                                 onClick: open
                                             },
                                             __('Choose icon')
@@ -7444,8 +7782,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     typeof google !== 'undefined' ? React.createElement(
                         "div",
-                        { className: 'advgb-map-block' },
-                        React.createElement("div", { className: 'advgb-map-content', id: mapID, style: { height: height } })
+                        { className: "advgb-map-block" },
+                        React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } })
                     ) : React.createElement(
                         Placeholder,
                         {
@@ -7527,7 +7865,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('google map'), __('location'), __('address')],
         attributes: _extends({}, mapBlockAttrs, {
             mapStyle: {
@@ -7573,18 +7911,76 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return React.createElement(
                 "div",
                 { className: "advgb-map-block", style: { margin: '10px auto' } },
-                React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
-                React.createElement(
-                    "script",
-                    { type: "text/javascript" },
-                    "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var contentHtml = '" + infoWindowHtml + "';\n                        var mapStyle = '" + mapStyleApply + "';\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: contentHtml\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
-                )
+                React.createElement("div", { className: "advgb-map-content",
+                    id: mapID,
+                    style: { height: height },
+                    "data-default": DEFAULT_MARKER,
+                    "data-lat": lat,
+                    "data-lng": lng,
+                    "data-zoom": zoom,
+                    "data-title": formattedTitle,
+                    "data-icon": markerIcon,
+                    "data-info": encodeURIComponent(infoWindowHtml),
+                    "data-style": encodeURIComponent(mapStyleApply)
+                })
             );
         },
         deprecated: [{
-            attributes: mapBlockAttrs,
+            attributes: _extends({}, mapBlockAttrs, {
+                mapStyle: {
+                    type: 'string'
+                },
+                mapStyleCustom: {
+                    type: 'string'
+                }
+            }),
             save: function save(_ref3) {
                 var attributes = _ref3.attributes;
+                var mapID = attributes.mapID,
+                    lat = attributes.lat,
+                    lng = attributes.lng,
+                    zoom = attributes.zoom,
+                    height = attributes.height,
+                    markerIcon = attributes.markerIcon,
+                    markerTitle = attributes.markerTitle,
+                    markerDesc = attributes.markerDesc,
+                    mapStyle = attributes.mapStyle,
+                    mapStyleCustom = attributes.mapStyleCustom;
+
+
+                var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
+                var formattedTitle = markerTitle.replace(/'/, '\\\'');
+                var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
+                var infoWindowHtml = '' + '<div class="advgbmap-wrapper">' + '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' + '<p class="advgbmap-desc">' + formattedDesc + '</p>' + '</div>';
+                var mapStyleApply = MAP_STYLES[mapStyle];
+                if (mapStyle === 'custom') {
+                    try {
+                        mapStyleApply = JSON.parse(mapStyleCustom);
+                    } catch (e) {
+                        mapStyleApply = '';
+                    }
+                }
+                if (mapStyleApply) {
+                    mapStyleApply = JSON.stringify(mapStyleApply);
+                } else {
+                    mapStyleApply = '';
+                }
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-map-block", style: { margin: '10px auto' } },
+                    React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
+                    React.createElement(
+                        "script",
+                        { type: "text/javascript" },
+                        "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var contentHtml = '" + infoWindowHtml + "';\n                        var mapStyle = '" + mapStyleApply + "';\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: contentHtml\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
+                    )
+                );
+            }
+        }, {
+            attributes: mapBlockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var mapID = attributes.mapID,
                     lat = attributes.lat,
                     lng = attributes.lng,
@@ -7602,8 +7998,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 return React.createElement(
                     "div",
-                    { className: 'advgb-map-block', style: { margin: '10px auto' } },
-                    React.createElement("div", { className: 'advgb-map-content', id: mapID, style: { height: height } }),
+                    { className: "advgb-map-block", style: { margin: '10px auto' } },
+                    React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
                     React.createElement(
                         "script",
                         { type: "text/javascript" },
@@ -7626,6 +8022,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 "use strict";
 
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -7665,11 +8063,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvNewsletter, [{
-            key: "render",
-            value: function render() {
+            key: "componentWillMount",
+            value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-newsletter'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var formStyle = attributes.formStyle,
                     formWidth = attributes.formWidth,
                     fnameLabel = attributes.fnameLabel,
@@ -7984,7 +8407,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: newsletterBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [__('newsletter'), __('form'), __('email')],
         attributes: {
             formStyle: {
@@ -8192,6 +8615,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8256,10 +8681,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentWillMount() {
                 var _this2 = this;
 
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-recent-posts'];
+
                 var categoriesListQuery = {
                     per_page: -1,
                     hide_empty: true
                 };
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
 
                 wp.apiFetch({
                     path: wp.url.addQueryArgs('wp/v2/categories', categoriesListQuery)
@@ -8272,10 +8719,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentWillUpdate(nextProps) {
                 var nextPosts = nextProps.recentPosts;
                 var nextView = nextProps.attributes.postView;
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    clientId = _props.clientId,
-                    recentPosts = _props.recentPosts;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    clientId = _props2.clientId,
+                    recentPosts = _props2.recentPosts;
 
                 var $ = jQuery;
 
@@ -8298,9 +8745,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "componentDidUpdate",
             value: function componentDidUpdate(prevProps) {
                 var that = this;
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    clientId = _props2.clientId;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
                 var postView = attributes.postView;
 
                 var $ = jQuery;
@@ -8324,10 +8771,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "render",
             value: function render() {
                 var categoriesList = this.state.categoriesList;
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes,
-                    recentPosts = _props3.recentPosts;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    recentPosts = _props4.recentPosts;
                 var postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,
@@ -8518,7 +8965,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     ),
                                     React.createElement(
                                         "div",
-                                        { className: 'advgb-post-wrapper' },
+                                        { className: "advgb-post-wrapper" },
                                         React.createElement(
                                             "h2",
                                             { className: "advgb-post-title" },
@@ -8613,7 +9060,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [__('latest posts'), __('posts slide'), __('posts grid')],
         supports: {
             html: false
@@ -9094,14 +9541,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            if (attribute.indexOf('.') === -1) attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -9386,7 +9837,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: socialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('social icons'), __('shares'), __('icon link')],
         attributes: socialBlockAttrs,
         edit: AdvSocialBlock,
@@ -9411,6 +9862,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 className: "advgb-social-icon",
                                 href: item.link || '#',
                                 target: "_blank",
+                                rel: "noopener noreferrer",
                                 style: {
                                     width: iconSize + 'px',
                                     height: iconSize + 'px',
@@ -9437,6 +9889,51 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: socialBlockAttrs,
             save: function save(_ref3) {
                 var attributes = _ref3.attributes;
+                var items = attributes.items,
+                    align = attributes.align,
+                    iconSize = attributes.iconSize,
+                    iconSpace = attributes.iconSpace;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-social-links-block", style: { textAlign: align } },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-social-icons" },
+                        items.map(function (item, index) {
+                            return React.createElement(
+                                "a",
+                                { key: index,
+                                    className: "advgb-social-icon",
+                                    href: item.link || '#',
+                                    target: "_blank",
+                                    style: {
+                                        width: iconSize + 'px',
+                                        height: iconSize + 'px',
+                                        marginLeft: iconSpace + 'px',
+                                        marginRight: iconSpace + 'px',
+                                        color: item.iconColor
+                                    }
+                                },
+                                !!item.icon ? item.icon in ICONS_SET ? React.createElement(
+                                    "svg",
+                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
+                                    ICONS_SET_NEW[item.icon]
+                                ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
+                                    "svg",
+                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
+                                    socialBlockIconContent
+                                )
+                            );
+                        })
+                    )
+                );
+            }
+        }, {
+            attributes: socialBlockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var items = attributes.items,
                     align = attributes.align,
                     iconSize = attributes.iconSize,
@@ -9617,14 +10114,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -9835,7 +10336,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: summaryBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'formatting',
+        category: 'advgb-category',
         keywords: [__('summary'), __('table of content'), __('list')],
         attributes: {
             headings: {
@@ -9999,14 +10500,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -10386,7 +10891,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: "formatting",
+        category: "advgb-category",
         keywords: [__('tabs'), __('cards')],
         attributes: tabBlockAttrs,
         edit: AdvTabsBlock,
@@ -10605,14 +11110,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if (currentBlockConfig !== undefined && (typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object') {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
-                            attributes[attribute] = currentBlockConfig[attribute];
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
                         });
-
-                        // Finally set changed attribute to true, so we don't modify anything again
-                        setAttributes({ changed: true });
                     }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
                 }
             }
         }, {
@@ -11216,7 +11725,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: testimonialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'common',
+        category: 'advgb-category',
         keywords: [__('testimonial'), __('personal'), __('about')],
         attributes: _extends({}, blockAttrsOld, {
             items: {
@@ -11372,6 +11881,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -11433,6 +11944,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(AdvProductsEdit, [{
             key: "componentWillMount",
             value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-woo-products'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+
                 this.fetchProducts();
             }
         }, {
@@ -11546,9 +12079,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "setCategories",
             value: function setCategories(catID, willAdd) {
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
                 var categories = attributes.categories;
 
 
@@ -11572,9 +12105,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     productsList = _state.productsList,
                     loading = _state.loading,
                     error = _state.error;
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var viewType = attributes.viewType,
                     category = attributes.category,
                     categories = attributes.categories,
@@ -11776,7 +12309,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: advProductsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
-        category: 'widgets',
+        category: 'advgb-category',
         keywords: [__('woo commerce'), __('products list'), __('price list')],
         attributes: {
             viewType: {

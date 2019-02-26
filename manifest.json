@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.2",
+  "version": "1.10.4",
   "platform": "wordpress",
-  "wp_version": "5.0.3",
+  "wp_version": "5.1.0",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,26 @@
     ]
   },
   "changelog": {
+    "1.10.4": [
+      {
+        "type": "fix",
+        "title": "Blocks validation error on multisite and author users"
+      }
+    ],
+    "1.10.3": [
+      {
+        "type": "fix",
+        "title": "Compatibility with Wordpress 5.1.0"
+      },
+      {
+        "type": "fix",
+        "title": "Summary block broken on post page reload"
+      },
+      {
+        "type": "fix",
+        "title": "Group Advanced Gutenberg blocks to a dedicated category"
+      }
+    ],
     "1.10.2": [
       {
         "type": "fix",
