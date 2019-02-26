@@ -194,7 +194,6 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_spacing"
                                class="ju-setting-label advgb_qtip"
-                               style="line-height: 50px"
                                data-qtip="<?php esc_attr_e(
                                    'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
                                    'advanced-gutenberg'
@@ -219,7 +218,6 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_icon_color"
                                class="ju-setting-label advgb_qtip"
-                               style="line-height: 50px"
                                data-qtip="<?php esc_attr_e(
                                    'Set color for blocks icons on admin, only apply to Advanced Gutenberg blocks',
                                    'advanced-gutenberg'
@@ -240,7 +238,6 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                     <div class="settings-option-wrapper clearfix">
                         <label for="editor_width"
                                class="ju-setting-label advgb_qtip"
-                               style="line-height: 50px"
                                data-qtip="<?php esc_attr_e(
                                    'Define the admin Gutenberg editor width size',
                                    'advanced-gutenberg'
@@ -249,7 +246,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                             <?php esc_html_e('Editor width', 'advanced-gutenberg') ?>
                         </label>
                         <div>
-                            <select class="ju-input" name="editor_width" id="editor_width">
+                            <select class="ju-select" name="editor_width" id="editor_width">
                                 <option value="" <?php echo $editor_width === '' ? 'selected' : '' ?>>Original</option>
                                 <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>Large</option>
                                 <option value="95" <?php echo $editor_width === '95' ? 'selected' : '' ?>>Full width</option>

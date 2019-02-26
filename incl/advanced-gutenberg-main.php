@@ -3470,7 +3470,7 @@ float: left;'
                         $html .= '<input type="text" class="minicolors minicolors-input ju-input block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" value="'. $settingValue .'" />';
                         break;
                     case 'select':
-                        $html .= '<select class="block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
+                        $html .= '<select class="block-config-input ju-select" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
                         $html .= '<option value="">'. __('Default', 'advanced-gutenberg') .'</option>';
 
                         foreach ($setting['options'] as $option) {
