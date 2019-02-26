@@ -231,7 +231,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                             <input type="text"
                                    name="blocks_icon_color"
                                    id="blocks_icon_color"
-                                   class="ju-input"
+                                   class="ju-input minicolors minicolors-input"
                                    value="<?php echo esc_html($blocks_icon_color) ?>"/>
                         </span>
                     </div>
