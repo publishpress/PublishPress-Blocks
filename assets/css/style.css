@@ -403,6 +403,7 @@ input.ju-radiobox:focus {
     background-image: linear-gradient(to bottom, #6465e2, #60c3ef);
     position: fixed;
     overflow: auto;
+    z-index: 15;
     -webkit-box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.1);
     -moz-box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.1);
     box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.1);
@@ -603,6 +604,32 @@ input.ju-radiobox:focus {
     z-index: 10;
 }
 
+.ju-main-wrapper .ju-left-panel-toggle {
+    display: none;
+    position: fixed;
+    top: 120px;
+    left: 35px;
+    cursor: pointer;
+    background-color: #fff;
+    width: auto;
+    height: auto;
+    padding: 25px 5px;
+    border: 1px solid #ddd;
+    opacity: 0.5;
+    z-index: 15;
+    -webkit-border-radius: 0 25px 25px 0;
+    -moz-border-radius: 0 25px 25px 0;
+    border-radius: 0 25px 25px 0;
+}
+
+.ju-main-wrapper .ju-left-panel-toggle:hover, .ju-main-wrapper .ju-left-panel-toggle:focus {
+    opacity: 1;
+}
+
+.ju-main-wrapper .ju-left-panel-toggle .ju-left-panel-toggle-icon {
+    color: #ff8726;
+}
+
 .search-result {
     outline: 1px solid #ff8726;
     -webkit-box-shadow: 1px 1px 12px #ccc;
@@ -610,7 +637,26 @@ input.ju-radiobox:focus {
     box-shadow: 1px 1px 12px #ccc;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 960px) {
+    .ju-main-wrapper .ju-left-panel {
+        display: none;
+    }
+
+    .ju-main-wrapper .ju-right-panel {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .ju-main-wrapper .ju-left-panel-toggle {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 782px) {
+    .ju-main-wrapper .ju-left-panel-toggle {
+        left: 0;
+    }
+
     .ju-settings-option {
         width: 98%;
     }
