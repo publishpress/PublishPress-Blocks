@@ -56,6 +56,8 @@ $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
 $editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
+$default_thumb                    = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+$rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : $default_thumb;
 ?>
 
 <div id="advgb-settings-container">
@@ -267,11 +269,11 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                             <?php esc_html_e('Default thumbnail', 'advanced-gutenberg') ?>
                         </label>
                         <div class="setting-actions-wrapper">
-                            <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="" />
+                            <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="<?php echo esc_attr($rp_default_thumb); ?>" />
                             <div class="setting-actions" id="post_default_thumb_actions">
-                                <img class="thumb-selected" src="" alt="" />
-                                <i class="dashicons dashicons-edit ju-button thumb_edit" title="<?php esc_html_e('Edit', 'advanced-gutenberg'); ?>"></i>
-                                <i class="dashicons dashicons-no ju-button orange-button thumb_remove" title="<?php esc_html_e('Remove', 'advanced-gutenberg'); ?>"></i>
+                                <img class="thumb-selected" src="<?php echo esc_attr($rp_default_thumb); ?>" alt="thumb" />
+                                <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_html_e('Edit', 'advanced-gutenberg'); ?>"></i>
+                                <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_html_e('Remove', 'advanced-gutenberg'); ?>"></i>
                             </div>
                         </div>
                     </div>
