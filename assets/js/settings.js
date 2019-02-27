@@ -62,7 +62,10 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         var media_frame;
-        if (media_frame) media_frame.open();
+        if (media_frame) {
+            media_frame.open();
+            return true;
+        }
 
         media_frame = wp.media({
             title: 'Select an image',
