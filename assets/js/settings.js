@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
         var thumbImg = $('.thumb-selected');
         var thumbDefault = thumbImg.data('default');
 
-        $('#post_default_thumb_id').val('');
+        $('#post_default_thumb_id').val(0);
         $('#post_default_thumb').val(thumbDefault);
         thumbImg.attr('src', thumbDefault);
     });
