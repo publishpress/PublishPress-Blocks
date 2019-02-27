@@ -147,10 +147,15 @@ function advgbRenderBlockRecentPosts($attributes)
         }
 
         if (isset($attributes['displayReadMore']) && $attributes['displayReadMore']) {
+            $readMoreText = __('Read More', 'advanced-gutenberg');
+            if (isset($attributes['readMoreLbl']) && $attributes['readMoreLbl']) {
+                $readMoreText = $attributes['readMoreLbl'];
+            }
+
             $postHtml .= sprintf(
                 '<div class="advgb-post-readmore"><a href="%1$s">%2$s</a></div>',
                 get_permalink($post->ID),
-                __('Read More', 'advanced-gutenberg')
+                $readMoreText
             );
         }
 
@@ -250,6 +255,9 @@ function advgbRegisterBlockRecentPosts()
             ),
             'myToken' => array(
                 'type' => 'number',
+            ),
+            'readMoreLbl' => array(
+                'type' => 'string',
             )
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',

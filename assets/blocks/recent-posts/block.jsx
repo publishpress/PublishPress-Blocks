@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpEditor;
-    const { PanelBody, RangeControl, ToggleControl, QueryControls, Spinner, Toolbar, Placeholder, IconButton } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, Spinner, Toolbar, Placeholder, IconButton } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -159,6 +159,7 @@
                 postTextAsExcerpt,
                 postTextExcerptLength,
                 displayReadMore,
+                readMoreLbl,
             } = attributes;
 
             const inspectorControls = (
@@ -203,6 +204,13 @@
                             checked={ displayReadMore }
                             onChange={ () => setAttributes( { displayReadMore: !displayReadMore } ) }
                         />
+                        {displayReadMore &&
+                            <TextControl
+                                label={ __('Read more text') }
+                                value={ readMoreLbl }
+                                onChange={ (value) => setAttributes( { readMoreLbl: value } ) }
+                            />
+                        }
                         <ToggleControl
                             label={ __( 'Display Post Excerpt' ) }
                             checked={ displayExcerpt }
@@ -329,12 +337,12 @@
                                             {displayExcerpt && (
                                                 <div className="advgb-post-excerpt"
                                                      dangerouslySetInnerHTML={ {
-                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.rendered
+                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                      } } />
                                             ) }
                                             {displayReadMore && (
                                                 <div className="advgb-post-readmore">
-                                                    <a href={ post.link } target="_blank">{ __( 'Read More' ) }</a>
+                                                    <a href={ post.link } target="_blank">{ readMoreLbl ? readMoreLbl : __( 'Read More' ) }</a>
                                                 </div>
                                             ) }
                                         </div>
