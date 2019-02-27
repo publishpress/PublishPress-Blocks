@@ -337,7 +337,7 @@
                                             {displayExcerpt && (
                                                 <div className="advgb-post-excerpt"
                                                      dangerouslySetInnerHTML={ {
-                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.rendered
+                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                      } } />
                                             ) }
                                             {displayReadMore && (
