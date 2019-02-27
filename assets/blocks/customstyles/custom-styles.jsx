@@ -22,8 +22,8 @@
     } );
 
     // Add option to return to default style
-    if (typeof advGb_CS !== 'undefined' && advGb_CS) {
-        advGb_CS.unshift( {
+    if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
+        advgbBlocks.customStyles.unshift( {
             id: 0,
             label: __( 'Paragraph' ),
             value: '',
@@ -56,14 +56,14 @@
                         ] }
                         help={__( 'This option let you add custom style for current paragraph. (Front-end only!)' )}
                         value={props.attributes.customStyle}
-                        options={advGb_CS.map( ( cstyle, index ) => {
-                            if (cstyle.title) advGb_CS[ index ].label = cstyle.title;
-                            if (cstyle.name) advGb_CS[ index ].value = cstyle.name;
+                        options={advgbBlocks.customStyles.map( ( cstyle, index ) => {
+                            if (cstyle.title) advgbBlocks.customStyles[ index ].label = cstyle.title;
+                            if (cstyle.name) advgbBlocks.customStyles[ index ].value = cstyle.name;
 
                             return cstyle;
                         } )}
                         onChange={( cstyle ) => {
-                            const { identifyColor } = advGb_CS.filter( ( style ) => style.value === cstyle )[0];
+                            const { identifyColor } = advgbBlocks.customStyles.filter( ( style ) => style.value === cstyle )[0];
                             props.setAttributes( {
                                 customStyle: cstyle,
                                 identifyColor: identifyColor,

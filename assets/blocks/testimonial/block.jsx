@@ -232,7 +232,7 @@
                                                     <div className="advgb-testimonial-avatar"
                                                          onClick={ open }
                                                          style={ {
-                                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbAvatar.holder})`,
+                                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
                                                              backgroundColor: avatarColor,
                                                              borderRadius: avatarBorderRadius + '%',
                                                              borderWidth: avatarBorderWidth + 'px',
@@ -319,7 +319,7 @@
                     <div className="advgb-testimonial-avatar-group">
                         <div className="advgb-testimonial-avatar"
                              style={ {
-                                 backgroundImage: `url(${avatarUrl ? avatarUrl : advgbAvatar.holder})`,
+                                 backgroundImage: `url(${avatarUrl ? avatarUrl : advgbBlocks.avatarHolder})`,
                                  backgroundColor: avatarColor,
                                  borderRadius: avatarBorderRadius + '%',
                                  borderWidth: avatarBorderWidth + 'px',
@@ -350,7 +350,7 @@
                         <div className="advgb-testimonial-avatar-group">
                             <div className="advgb-testimonial-avatar"
                                  style={ {
-                                     backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbAvatar.holder})`,
+                                     backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbBlocks.avatarHolder})`,
                                      backgroundColor: avatarColor,
                                      borderRadius: avatarBorderRadius + '%',
                                      borderWidth: avatarBorderWidth + 'px',
@@ -382,7 +382,7 @@
                         <div className="advgb-testimonial-avatar-group">
                             <div className="advgb-testimonial-avatar"
                                  style={ {
-                                     backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbAvatar.holder})`,
+                                     backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbBlocks.avatarHolder})`,
                                      backgroundColor: avatarColor,
                                      borderRadius: avatarBorderRadius + '%',
                                      borderWidth: avatarBorderWidth + 'px',
@@ -423,28 +423,28 @@
     const blockAttrsOld = {
         avatarUrl: {
             type: 'string',
-            default: advgbAvatar.holder,
+            default: advgbBlocks.avatarHolder,
         },
         avatarID: {
             type: 'number',
         },
         avatarUrl2: {
             type: 'string',
-            default: advgbAvatar.holder,
+            default: advgbBlocks.avatarHolder,
         },
         avatarID2: {
             type: 'number',
         },
         avatarUrl3: {
             type: 'string',
-            default: advgbAvatar.holder,
+            default: advgbBlocks.avatarHolder,
         },
         avatarID3: {
             type: 'number',
         },
         avatarUrl4: {
             type: 'string',
-            default: advgbAvatar.holder,
+            default: advgbBlocks.avatarHolder,
         },
         avatarID4: {
             type: 'number',
@@ -547,7 +547,7 @@
             items: {
                 type: 'array',
                 default: times(10, () => ( {
-                    avatarUrl: advgbAvatar.holder,
+                    avatarUrl: advgbBlocks.avatarHolder,
                     avatarID: undefined,
                     name: __( 'Person Name' ),
                     position: __( 'Job Position' ),
@@ -602,7 +602,7 @@
                                 <div className="advgb-testimonial-avatar-group">
                                     <div className="advgb-testimonial-avatar"
                                          style={ {
-                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbAvatar.holder})`,
+                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
                                              backgroundColor: avatarColor,
                                              borderRadius: avatarBorderRadius + '%',
                                              borderWidth: avatarBorderWidth + 'px',
@@ -666,7 +666,7 @@
                         items: [
                             ...convertItems,
                             ...times(7, () => ( {
-                                avatarUrl: advgbAvatar.holder,
+                                avatarUrl: advgbBlocks.avatarHolder,
                                 avatarID: undefined,
                                 name: __( 'Person Name' ),
                                 position: __( 'Job Position' ),

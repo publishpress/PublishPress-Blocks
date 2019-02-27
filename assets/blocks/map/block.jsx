@@ -1351,7 +1351,7 @@
                         >
                             <a target="_blank"
                                className="button button-large"
-                               href={advgbSettings.config_url + '#settings'}
+                               href={advgbBlocks.config_url + '#settings'}
                             >
                                 { __( 'Add Google API Key' ) }
                             </a>
