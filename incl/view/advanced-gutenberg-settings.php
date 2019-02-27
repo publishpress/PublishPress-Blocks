@@ -272,9 +272,13 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                             <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="<?php echo esc_attr($rp_default_thumb['url']); ?>" />
                             <input type="hidden" id="post_default_thumb_id" name="post_default_thumb_id" value="<?php echo esc_attr($rp_default_thumb['id']); ?>" />
                             <div class="setting-actions" id="post_default_thumb_actions">
-                                <img class="thumb-selected" src="<?php echo esc_attr($rp_default_thumb['url']); ?>" alt="thumb" />
+                                <img class="thumb-selected"
+                                     src="<?php echo esc_attr($rp_default_thumb['url']); ?>"
+                                     alt="thumb"
+                                     data-default="<?php echo esc_attr($default_thumb); ?>"
+                                />
                                 <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_html_e('Edit', 'advanced-gutenberg'); ?>"></i>
-                                <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_html_e('Remove', 'advanced-gutenberg'); ?>"></i>
+                                <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_html_e('Reset to default', 'advanced-gutenberg'); ?>"></i>
                             </div>
                         </div>
                     </div>

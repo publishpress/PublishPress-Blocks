@@ -57,6 +57,51 @@ jQuery(document).ready(function ($) {
         }
     }).attr('maxlength', '7');
 
+    // Post default thumbnail selector
+    $('#thumb_edit').click(function (e) {
+        e.preventDefault();
+
+        var media_frame;
+        if (media_frame) media_frame.open();
+
+        media_frame = wp.media({
+            title: 'Select an image',
+            multiple: false,
+            library: {type: 'image'}
+        });
+
+        media_frame.on('select', function () {
+            var selection = media_frame.state().get('selection').first();
+            var media_id = selection.id;
+            var media_url = selection.attributes.url;
+
+            $('#post_default_thumb_id').val(media_id);
+            $('#post_default_thumb').val(media_url);
+            $('.thumb-selected').attr('src', media_url);
+        });
+
+        media_frame.on('open', function () {
+            var selection = media_frame.state().get('selection');
+            var media_id = $('#post_default_thumb_id').val();
+            var media = wp.media.attachment(parseInt(media_id));
+            media.fetch();
+            selection.add(media ? [media] : []);
+        });
+
+        media_frame.open();
+    });
+
+    // Post default thumbnail remove
+    $('#thumb_remove').click(function (e) {
+        e.preventDefault();
+        var thumbImg = $('.thumb-selected');
+        var thumbDefault = thumbImg.data('default');
+
+        $('#post_default_thumb_id').val('');
+        $('#post_default_thumb').val(thumbDefault);
+        thumbImg.attr('src', thumbDefault);
+    });
+
     // Function for Custom Style tab
     initCustomStyleMenu();
 
