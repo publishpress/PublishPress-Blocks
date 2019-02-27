@@ -3380,7 +3380,7 @@ float: left;'
                             $style_html .= 'color:'.$hover_t_color.';';
                             $style_html .= 'background-color:'.$hover_bg_color.';';
                             $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.';';
-                            $style_html .= 'transition:all'.$transition_spd.'s ease;';
+                            $style_html .= 'transition:all '.$transition_spd.'s ease;';
                             $style_html .= '}';
                         }
                         $style_html .= '</style>';
