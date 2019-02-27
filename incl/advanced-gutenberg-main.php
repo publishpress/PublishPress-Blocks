@@ -1564,6 +1564,10 @@ float: left;'
             $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
             $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
             $save_config['editor_width'] = $_POST['editor_width'];
+            $save_config['rp_default_thumb'] = array(
+                'url' => $_POST['post_default_thumb'],
+                'id'  => $_POST['post_default_thumb_id']
+            );
 
             update_option('advgb_settings', $save_config);
 
