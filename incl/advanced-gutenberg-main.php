@@ -372,9 +372,15 @@ float: left;'
         wp_localize_script('advgb_blocks', 'advGb_CS', $custom_styles_data);
 
         // Set blocks icon color
-        $saved_settings = get_option('advgb_settings');
+        $saved_settings    = get_option('advgb_settings');
         $blocks_icon_color = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
-        wp_localize_script('wp-blocks', 'advgbBlocks', array('color' => $blocks_icon_color));
+        $default_thumb     = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+        $rp_default_thumb  = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
+
+        wp_localize_script('wp-blocks', 'advgbBlocks', array(
+            'color' => $blocks_icon_color,
+            'post_thumb' => $rp_default_thumb['url']
+        ));
 
         // Setup default config data for blocks
         $blocks_config_saved = get_option('advgb_blocks_default_config');

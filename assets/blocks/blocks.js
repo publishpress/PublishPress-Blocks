@@ -8954,13 +8954,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "article",
                                     { key: index, className: "advgb-recent-post" },
-                                    displayFeaturedImage && post.featured_img && React.createElement(
+                                    displayFeaturedImage && React.createElement(
                                         "div",
                                         { className: "advgb-post-thumbnail" },
                                         React.createElement(
                                             "a",
                                             { href: post.link, target: "_blank" },
-                                            React.createElement("img", { src: post.featured_img, alt: __('Post Image') })
+                                            React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image') })
                                         )
                                     ),
                                     React.createElement(
