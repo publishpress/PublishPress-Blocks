@@ -3280,6 +3280,9 @@ float: left;'
                     centerMode: true,
                     centerPadding: "40px",
                     slidesToShow: 3,
+                    responsive: [
+                        {breakpoint: 480, settings: {slidesToShow: 1}}
+                    ]
                 })
             });');
         }
