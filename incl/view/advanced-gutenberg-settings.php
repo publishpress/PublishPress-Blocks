@@ -7,6 +7,7 @@ wp_enqueue_style('codemirror_css');
 wp_enqueue_style('codemirror_hint_style');
 wp_enqueue_style('advgb_settings_style');
 
+wp_enqueue_media();
 wp_enqueue_script('qtip_js');
 wp_enqueue_script('less_js');
 wp_enqueue_script('minicolors_js');
@@ -55,6 +56,8 @@ $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
 $editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
+$default_thumb                    = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+$rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
 ?>
 
 <div id="advgb-settings-container">
@@ -149,7 +152,7 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                                    name="google_api_key"
                                    id="google_api_key"
                                    class="ju-input"
-                                   style="margin-left: 10px; width: 370px; display: block;"
+                                   style="margin-left: 10px; width: 370px; display: block; max-width: 100%"
                                    value="<?php echo esc_html($google_api_key_saved) ?>"
                             >
                             <a target="_blank"
@@ -194,7 +197,6 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_spacing"
                                class="ju-setting-label advgb_qtip"
-                               style="line-height: 50px"
                                data-qtip="<?php esc_attr_e(
                                    'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
                                    'advanced-gutenberg'
@@ -219,7 +221,6 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_icon_color"
                                class="ju-setting-label advgb_qtip"
-                               style="line-height: 50px"
                                data-qtip="<?php esc_attr_e(
                                    'Set color for blocks icons on admin, only apply to Advanced Gutenberg blocks',
                                    'advanced-gutenberg'
@@ -240,7 +241,6 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                     <div class="settings-option-wrapper clearfix">
                         <label for="editor_width"
                                class="ju-setting-label advgb_qtip"
-                               style="line-height: 50px"
                                data-qtip="<?php esc_attr_e(
                                    'Define the admin Gutenberg editor width size',
                                    'advanced-gutenberg'
@@ -249,11 +249,37 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
                             <?php esc_html_e('Editor width', 'advanced-gutenberg') ?>
                         </label>
                         <div>
-                            <select class="ju-input" name="editor_width" id="editor_width">
+                            <select class="ju-select" name="editor_width" id="editor_width">
                                 <option value="" <?php echo $editor_width === '' ? 'selected' : '' ?>>Original</option>
                                 <option value="75" <?php echo $editor_width === '75' ? 'selected' : '' ?>>Large</option>
                                 <option value="95" <?php echo $editor_width === '95' ? 'selected' : '' ?>>Full width</option>
                             </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="editor_width"
+                               class="ju-setting-label advgb_qtip"
+                               data-qtip="<?php esc_attr_e(
+                                   'Set the default post thumbnail to use in Recent Posts blocks.',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Default thumbnail', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="setting-actions-wrapper">
+                            <input type="hidden" id="post_default_thumb" name="post_default_thumb" value="<?php echo esc_attr($rp_default_thumb['url']); ?>" />
+                            <input type="hidden" id="post_default_thumb_id" name="post_default_thumb_id" value="<?php echo esc_attr($rp_default_thumb['id']); ?>" />
+                            <div class="setting-actions" id="post_default_thumb_actions">
+                                <img class="thumb-selected"
+                                     src="<?php echo esc_attr($rp_default_thumb['url']); ?>"
+                                     alt="thumb"
+                                     data-default="<?php echo esc_attr($default_thumb); ?>"
+                                />
+                                <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_html_e('Edit', 'advanced-gutenberg'); ?>"></i>
+                                <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_html_e('Reset to default', 'advanced-gutenberg'); ?>"></i>
+                            </div>
                         </div>
                     </div>
                 </li>

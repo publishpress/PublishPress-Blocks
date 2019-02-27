@@ -63,11 +63,11 @@
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Newsletter Settings' ) }>
-                            {(typeof advgbGRC !== 'undefined' && !parseInt(advgbGRC.enabled)) && (
+                            {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled)) && (
                                 <PanelBody title={ __( 'Notice' ) }>
                                     <p style={ { fontStyle: 'italic' } }>
                                         { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in' ) }
-                                        <a href={advgbSettings.config_url + '#email-form'} target="_blank"> { __( 'settings' ) }.</a>
+                                        <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings' ) }.</a>
                                     </p>
                                 </PanelBody>
                             ) }

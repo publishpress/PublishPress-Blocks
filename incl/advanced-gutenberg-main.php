@@ -350,10 +350,6 @@ float: left;'
         wp_enqueue_style('slick_style');
         wp_enqueue_style('slick_theme_style');
 
-        $avatarHolder = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
-        wp_localize_script('advgb_blocks', 'advgbAvatar', array('holder' => $avatarHolder));
-        wp_localize_script('advgb_blocks', 'advgbSettings', array('config_url' => admin_url('admin.php?page=advgb_main')));
-
         $advgb_blocks_vars = array();
         $advgb_blocks_vars['blocks'] = $this->getUserBlocksForGutenberg();
 
@@ -368,22 +364,29 @@ float: left;'
         $advgb_blocks_vars['nonce'] = wp_create_nonce('advgb_update_blocks_list');
         wp_localize_script('advgb_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
 
+        // Set variable needed by blocks editor
+        $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
+        $default_thumb      = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+        $saved_settings     = get_option('advgb_settings');
         $custom_styles_data = get_option('advgb_custom_styles');
-        wp_localize_script('advgb_blocks', 'advGb_CS', $custom_styles_data);
+        $recaptcha_config   = get_option('advgb_recaptcha_config');
+        $recaptcha_config   = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
+        $blocks_icon_color  = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
+        $rp_default_thumb   = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
 
-        // Set blocks icon color
-        $saved_settings = get_option('advgb_settings');
-        $blocks_icon_color = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
-        wp_localize_script('wp-blocks', 'advgbBlocks', array('color' => $blocks_icon_color));
+        wp_localize_script('wp-blocks', 'advgbBlocks', array(
+            'color' => $blocks_icon_color,
+            'post_thumb' => $rp_default_thumb['url'],
+            'avatarHolder' => $avatarHolder,
+            'config_url' => admin_url('admin.php?page=advgb_main'),
+            'customStyles' => $custom_styles_data,
+            'captchaEnabled' => $recaptcha_config['recaptcha_enable']
+        ));
 
         // Setup default config data for blocks
         $blocks_config_saved = get_option('advgb_blocks_default_config');
         $blocks_config_saved = $blocks_config_saved !== false ? $blocks_config_saved : array();
         wp_localize_script('wp-blocks', 'advgbDefaultConfig', $blocks_config_saved);
-
-        $recaptcha_config = get_option('advgb_recaptcha_config');
-        $recaptcha_config = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
-        wp_localize_script('wp-blocks', 'advgbGRC', array('enabled' => $recaptcha_config['recaptcha_enable']));
     }
 
     /**
@@ -1564,6 +1567,10 @@ float: left;'
             $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
             $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
             $save_config['editor_width'] = $_POST['editor_width'];
+            $save_config['rp_default_thumb'] = array(
+                'url' => $_POST['post_default_thumb'],
+                'id'  => $_POST['post_default_thumb_id']
+            );
 
             update_option('advgb_settings', $save_config);
 
@@ -3470,7 +3477,7 @@ float: left;'
                         $html .= '<input type="text" class="minicolors minicolors-input ju-input block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '" value="'. $settingValue .'" />';
                         break;
                     case 'select':
-                        $html .= '<select class="block-config-input" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
+                        $html .= '<select class="block-config-input ju-select" id="setting-'. $setting['name'] .'" name="' . $setting['name'] . '">';
                         $html .= '<option value="">'. __('Default', 'advanced-gutenberg') .'</option>';
 
                         foreach ($setting['options'] as $option) {

@@ -1,12 +1,34 @@
 (function ( $ ) {
-    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
-        return function( elem ) {
+    $.expr[":"].contains = $.expr.createPseudo(function (arg) {
+        return function ( elem ) {
             return $(elem).text().toLowerCase().indexOf(arg.toLowerCase()) >= 0;
         };
     });
 
     $(document).ready(function ( $ ) {
         $('.ju-main-wrapper').show();
+
+        // Toggle left panel on small screen
+        $('.ju-left-panel-toggle').unbind('click').click(function () {
+            var leftPanel = $('.ju-left-panel');
+            var wpLeftPanel = $('#adminmenuwrap');
+
+            if (leftPanel.is(':visible')) {
+                if (wpLeftPanel.is(':visible')) {
+                    $(this).css('left', 35);
+                } else {
+                    $(this).css('left', 0);
+                }
+            } else {
+                if (wpLeftPanel.is(':visible')) {
+                    $(this).css('left', 335);
+                } else {
+                    $(this).css('left', 290);
+                }
+            }
+
+            leftPanel.toggle()
+        });
 
         // Function for searching menus
         $('.ju-menu-search-input').on('input', function () {

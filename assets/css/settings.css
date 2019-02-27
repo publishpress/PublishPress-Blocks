@@ -40,6 +40,19 @@
     margin-left: 10px;
 }
 
+.setting-actions i {
+    min-width: unset;
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+}
+
+img.thumb-selected {
+    width: auto;
+    height: 50px;
+    margin-right: 10px;
+}
+
 /*Save setting button*/
 .save-settings-block {
     margin-top: 20px;
