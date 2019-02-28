@@ -36,6 +36,9 @@ $tabs_data = array(
 ?>
 
 <div class="ju-main-wrapper" style="display: none">
+    <div class="ju-left-panel-toggle">
+        <i class="dashicons dashicons-leftright ju-left-panel-toggle-icon"></i>
+    </div>
     <div class="ju-left-panel">
         <div class="ju-logo">
             <a href="https://www.joomunited.com/" target="_blank">

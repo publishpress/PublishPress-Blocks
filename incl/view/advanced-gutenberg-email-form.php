@@ -244,7 +244,7 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
                             <?php esc_html_e('reCAPTCHA Theme', 'advanced-gutenberg') ?>
                         </label>
                         <div>
-                            <select class="ju-input full-width" name="recaptcha_theme" id="recaptcha_theme">
+                            <select class="ju-select full-width" name="recaptcha_theme" id="recaptcha_theme">
                                 <option value="light" <?php echo $recaptcha_theme === 'light' ? 'selected' : '' ?>>Light</option>
                                 <option value="dark" <?php echo $recaptcha_theme === 'dark' ? 'selected' : '' ?>>Dark</option>
                                 <option value="invisible" <?php echo $recaptcha_theme === 'invisible' ? 'selected' : '' ?>>Invisible</option>

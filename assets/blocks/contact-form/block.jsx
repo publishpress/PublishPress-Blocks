@@ -62,18 +62,18 @@
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Form Settings' ) }>
-                            {(typeof advgbGRC !== 'undefined' && !parseInt(advgbGRC.enabled)) && (
+                            {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled)) && (
                                 <PanelBody title={ __( 'Notice' ) }>
                                     <p style={ { fontStyle: 'italic' } }>
                                         { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in' ) }
-                                        <a href={advgbSettings.config_url + '#email-form'} target="_blank"> { __( 'settings' ) }.</a>
+                                        <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings' ) }.</a>
                                     </p>
                                 </PanelBody>
                             ) }
                             <PanelBody title={ __( 'Email sender' ) } initialOpen={ false }>
                                 <p style={ { fontStyle: 'italic' } }>
                                     { __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in ') }
-                                    <a href={advgbSettings.config_url + '#settings'} target="_blank"> { __( 'settings' ) }.</a>
+                                    <a href={advgbBlocks.config_url + '#settings'} target="_blank"> { __( 'settings' ) }.</a>
                                 </p>
                             </PanelBody>
                             <PanelBody title={ __( 'Text Label' ) }>

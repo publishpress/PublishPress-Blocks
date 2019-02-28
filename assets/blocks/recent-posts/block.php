@@ -73,6 +73,10 @@ function advgbRenderBlockRecentPosts($attributes)
         OBJECT
     );
 
+    $saved_settings    = get_option('advgb_settings');
+    $default_thumb     = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+    $rp_default_thumb  = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
+
     $postHtml = '';
 
     foreach ($recent_posts as $post) {
@@ -80,11 +84,20 @@ function advgbRenderBlockRecentPosts($attributes)
 
         $postHtml .= '<article class="advgb-recent-post">';
 
-        if (isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage'] && $postThumbID) {
+        if (isset($attributes['displayFeaturedImage']) && $attributes['displayFeaturedImage']) {
+            $postThumb = '<img src="'.$rp_default_thumb['url'].'" />';
+            if ($postThumbID) {
+                $postThumb = wp_get_attachment_image($postThumbID, 'large');
+            } else {
+                if ($rp_default_thumb['id']) {
+                    $postThumb = wp_get_attachment_image($rp_default_thumb['id'], 'large');
+                }
+            }
+
             $postHtml .= sprintf(
                 '<div class="advgb-post-thumbnail"><a href="%1$s">%2$s</a></div>',
                 get_permalink($post->ID),
-                wp_get_attachment_image($postThumbID, 'large')
+                $postThumb
             );
         }
 
@@ -134,10 +147,15 @@ function advgbRenderBlockRecentPosts($attributes)
         }
 
         if (isset($attributes['displayReadMore']) && $attributes['displayReadMore']) {
+            $readMoreText = __('Read More', 'advanced-gutenberg');
+            if (isset($attributes['readMoreLbl']) && $attributes['readMoreLbl']) {
+                $readMoreText = $attributes['readMoreLbl'];
+            }
+
             $postHtml .= sprintf(
                 '<div class="advgb-post-readmore"><a href="%1$s">%2$s</a></div>',
                 get_permalink($post->ID),
-                __('Read More', 'advanced-gutenberg')
+                $readMoreText
             );
         }
 
@@ -237,6 +255,9 @@ function advgbRegisterBlockRecentPosts()
             ),
             'myToken' => array(
                 'type' => 'number',
+            ),
+            'readMoreLbl' => array(
+                'type' => 'string',
             )
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',

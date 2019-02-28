@@ -4309,7 +4309,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Form Settings') },
-                            typeof advgbGRC !== 'undefined' && !parseInt(advgbGRC.enabled) && React.createElement(
+                            typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
                                 PanelBody,
                                 { title: __('Notice') },
                                 React.createElement(
@@ -4318,7 +4318,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
                                     React.createElement(
                                         "a",
-                                        { href: advgbSettings.config_url + '#email-form', target: "_blank" },
+                                        { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
                                         " ",
                                         __('settings'),
                                         "."
@@ -4334,7 +4334,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in '),
                                     React.createElement(
                                         "a",
-                                        { href: advgbSettings.config_url + '#settings', target: "_blank" },
+                                        { href: advgbBlocks.config_url + '#settings', target: "_blank" },
                                         " ",
                                         __('settings'),
                                         "."
@@ -5834,8 +5834,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     });
 
     // Add option to return to default style
-    if (typeof advGb_CS !== 'undefined' && advGb_CS) {
-        advGb_CS.unshift({
+    if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
+        advgbBlocks.customStyles.unshift({
             id: 0,
             label: __('Paragraph'),
             value: '',
@@ -5864,14 +5864,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         } })],
                     help: __('This option let you add custom style for current paragraph. (Front-end only!)'),
                     value: props.attributes.customStyle,
-                    options: advGb_CS.map(function (cstyle, index) {
-                        if (cstyle.title) advGb_CS[index].label = cstyle.title;
-                        if (cstyle.name) advGb_CS[index].value = cstyle.name;
+                    options: advgbBlocks.customStyles.map(function (cstyle, index) {
+                        if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
+                        if (cstyle.name) advgbBlocks.customStyles[index].value = cstyle.name;
 
                         return cstyle;
                     }),
                     onChange: function onChange(cstyle) {
-                        var identifyColor = advGb_CS.filter(function (style) {
+                        var identifyColor = advgbBlocks.customStyles.filter(function (style) {
                             return style.value === cstyle;
                         })[0].identifyColor;
 
@@ -7795,7 +7795,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "a",
                             { target: "_blank",
                                 className: "button button-large",
-                                href: advgbSettings.config_url + '#settings'
+                                href: advgbBlocks.config_url + '#settings'
                             },
                             __('Add Google API Key')
                         )
@@ -8120,7 +8120,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Newsletter Settings') },
-                            typeof advgbGRC !== 'undefined' && !parseInt(advgbGRC.enabled) && React.createElement(
+                            typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
                                 PanelBody,
                                 { title: __('Notice') },
                                 React.createElement(
@@ -8129,7 +8129,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
                                     React.createElement(
                                         "a",
-                                        { href: advgbSettings.config_url + '#email-form', target: "_blank" },
+                                        { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
                                         " ",
                                         __('settings'),
                                         "."
@@ -8635,6 +8635,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
+        TextControl = wpComponents.TextControl,
         QueryControls = wpComponents.QueryControls,
         Spinner = wpComponents.Spinner,
         Toolbar = wpComponents.Toolbar,
@@ -8787,7 +8788,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayExcerpt = attributes.displayExcerpt,
                     postTextAsExcerpt = attributes.postTextAsExcerpt,
                     postTextExcerptLength = attributes.postTextExcerptLength,
-                    displayReadMore = attributes.displayReadMore;
+                    displayReadMore = attributes.displayReadMore,
+                    readMoreLbl = attributes.readMoreLbl;
 
 
                 var inspectorControls = React.createElement(
@@ -8848,6 +8850,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             checked: displayReadMore,
                             onChange: function onChange() {
                                 return setAttributes({ displayReadMore: !displayReadMore });
+                            }
+                        }),
+                        displayReadMore && React.createElement(TextControl, {
+                            label: __('Read more text'),
+                            value: readMoreLbl,
+                            onChange: function onChange(value) {
+                                return setAttributes({ readMoreLbl: value });
                             }
                         }),
                         React.createElement(ToggleControl, {
@@ -8954,13 +8963,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "article",
                                     { key: index, className: "advgb-recent-post" },
-                                    displayFeaturedImage && post.featured_img && React.createElement(
+                                    displayFeaturedImage && React.createElement(
                                         "div",
                                         { className: "advgb-post-thumbnail" },
                                         React.createElement(
                                             "a",
                                             { href: post.link, target: "_blank" },
-                                            React.createElement("img", { src: post.featured_img, alt: __('Post Image') })
+                                            React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image') })
                                         )
                                     ),
                                     React.createElement(
@@ -8997,7 +9006,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: "advgb-post-content" },
                                             displayExcerpt && React.createElement("div", { className: "advgb-post-excerpt",
                                                 dangerouslySetInnerHTML: {
-                                                    __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.rendered
+                                                    __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                 } }),
                                             displayReadMore && React.createElement(
                                                 "div",
@@ -9005,7 +9014,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 React.createElement(
                                                     "a",
                                                     { href: post.link, target: "_blank" },
-                                                    __('Read More')
+                                                    readMoreLbl ? readMoreLbl : __('Read More')
                                                 )
                                             )
                                         )
@@ -11373,7 +11382,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 React.createElement('div', { className: 'advgb-testimonial-avatar',
                                                     onClick: open,
                                                     style: {
-                                                        backgroundImage: 'url(' + (item.avatarUrl ? item.avatarUrl : advgbAvatar.holder) + ')',
+                                                        backgroundImage: 'url(' + (item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder) + ')',
                                                         backgroundColor: avatarColor,
                                                         borderRadius: avatarBorderRadius + '%',
                                                         borderWidth: avatarBorderWidth + 'px',
@@ -11483,7 +11492,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { className: 'advgb-testimonial-avatar-group' },
                     React.createElement('div', { className: 'advgb-testimonial-avatar',
                         style: {
-                            backgroundImage: 'url(' + (avatarUrl ? avatarUrl : advgbAvatar.holder) + ')',
+                            backgroundImage: 'url(' + (avatarUrl ? avatarUrl : advgbBlocks.avatarHolder) + ')',
                             backgroundColor: avatarColor,
                             borderRadius: avatarBorderRadius + '%',
                             borderWidth: avatarBorderWidth + 'px',
@@ -11523,7 +11532,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { className: 'advgb-testimonial-avatar-group' },
                     React.createElement('div', { className: 'advgb-testimonial-avatar',
                         style: {
-                            backgroundImage: 'url(' + (avatarUrl2 ? avatarUrl2 : advgbAvatar.holder) + ')',
+                            backgroundImage: 'url(' + (avatarUrl2 ? avatarUrl2 : advgbBlocks.avatarHolder) + ')',
                             backgroundColor: avatarColor,
                             borderRadius: avatarBorderRadius + '%',
                             borderWidth: avatarBorderWidth + 'px',
@@ -11563,7 +11572,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { className: 'advgb-testimonial-avatar-group' },
                     React.createElement('div', { className: 'advgb-testimonial-avatar',
                         style: {
-                            backgroundImage: 'url(' + (avatarUrl3 ? avatarUrl3 : advgbAvatar.holder) + ')',
+                            backgroundImage: 'url(' + (avatarUrl3 ? avatarUrl3 : advgbBlocks.avatarHolder) + ')',
                             backgroundColor: avatarColor,
                             borderRadius: avatarBorderRadius + '%',
                             borderWidth: avatarBorderWidth + 'px',
@@ -11608,28 +11617,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var blockAttrsOld = {
         avatarUrl: {
             type: 'string',
-            default: advgbAvatar.holder
+            default: advgbBlocks.avatarHolder
         },
         avatarID: {
             type: 'number'
         },
         avatarUrl2: {
             type: 'string',
-            default: advgbAvatar.holder
+            default: advgbBlocks.avatarHolder
         },
         avatarID2: {
             type: 'number'
         },
         avatarUrl3: {
             type: 'string',
-            default: advgbAvatar.holder
+            default: advgbBlocks.avatarHolder
         },
         avatarID3: {
             type: 'number'
         },
         avatarUrl4: {
             type: 'string',
-            default: advgbAvatar.holder
+            default: advgbBlocks.avatarHolder
         },
         avatarID4: {
             type: 'number'
@@ -11732,7 +11741,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'array',
                 default: times(10, function () {
                     return {
-                        avatarUrl: advgbAvatar.holder,
+                        avatarUrl: advgbBlocks.avatarHolder,
                         avatarID: undefined,
                         name: __('Person Name'),
                         position: __('Job Position'),
@@ -11789,7 +11798,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: 'advgb-testimonial-avatar-group' },
                             React.createElement('div', { className: 'advgb-testimonial-avatar',
                                 style: {
-                                    backgroundImage: 'url(' + (item.avatarUrl ? item.avatarUrl : advgbAvatar.holder) + ')',
+                                    backgroundImage: 'url(' + (item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder) + ')',
                                     backgroundColor: avatarColor,
                                     borderRadius: avatarBorderRadius + '%',
                                     borderWidth: avatarBorderWidth + 'px',
@@ -11855,7 +11864,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return _extends({}, attributes, {
                     items: [].concat(convertItems, _toConsumableArray(times(7, function () {
                         return {
-                            avatarUrl: advgbAvatar.holder,
+                            avatarUrl: advgbBlocks.avatarHolder,
                             avatarID: undefined,
                             name: __('Person Name'),
                             position: __('Job Position'),

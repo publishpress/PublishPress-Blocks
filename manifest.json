@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.4",
+  "version": "1.10.5",
   "platform": "wordpress",
   "wp_version": "5.1.0",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,28 @@
     ]
   },
   "changelog": {
+    "1.10.5": [
+      {
+        "type": "feature",
+        "title": "Left panel responsive in plugin settings"
+      },
+      {
+        "type": "feature",
+        "title": "Recent Posts block: add default post thumbnail"
+      },
+      {
+        "type": "feature",
+        "title": "Recent Posts block: allow to custom read more label"
+      },
+      {
+        "type": "fix",
+        "title": "Recent Posts block: slider view not loaded on frontend"
+      },
+      {
+        "type": "fix",
+        "title": "Testimonial block: add responsive for slider view"
+      }
+    ],
     "1.10.4": [
       {
         "type": "fix",

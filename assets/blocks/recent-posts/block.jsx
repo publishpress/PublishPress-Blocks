@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpEditor;
-    const { PanelBody, RangeControl, ToggleControl, QueryControls, Spinner, Toolbar, Placeholder, IconButton } = wpComponents;
+    const { PanelBody, RangeControl, ToggleControl, TextControl, QueryControls, Spinner, Toolbar, Placeholder, IconButton } = wpComponents;
     const { withSelect } = wpData;
     const { pickBy, isUndefined } = lodash;
     const { decodeEntities } = wpHtmlEntities;
@@ -159,6 +159,7 @@
                 postTextAsExcerpt,
                 postTextExcerptLength,
                 displayReadMore,
+                readMoreLbl,
             } = attributes;
 
             const inspectorControls = (
@@ -203,6 +204,13 @@
                             checked={ displayReadMore }
                             onChange={ () => setAttributes( { displayReadMore: !displayReadMore } ) }
                         />
+                        {displayReadMore &&
+                            <TextControl
+                                label={ __('Read more text') }
+                                value={ readMoreLbl }
+                                onChange={ (value) => setAttributes( { readMoreLbl: value } ) }
+                            />
+                        }
                         <ToggleControl
                             label={ __( 'Display Post Excerpt' ) }
                             checked={ displayExcerpt }
@@ -299,10 +307,10 @@
                         <div className="advgb-recent-posts">
                             {recentPosts.map( ( post, index ) => (
                                 <article key={ index } className="advgb-recent-post" >
-                                    {displayFeaturedImage && post.featured_img && (
+                                    {displayFeaturedImage && (
                                         <div className="advgb-post-thumbnail">
                                             <a href={ post.link } target="_blank">
-                                                <img src={ post.featured_img } alt={ __( 'Post Image' ) } />
+                                                <img src={ post.featured_img ? post.featured_img : advgbBlocks.post_thumb } alt={ __( 'Post Image' ) } />
                                             </a>
                                         </div>
                                     ) }
@@ -329,12 +337,12 @@
                                             {displayExcerpt && (
                                                 <div className="advgb-post-excerpt"
                                                      dangerouslySetInnerHTML={ {
-                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.rendered
+                                                         __html: postTextAsExcerpt ? RecentPostsEdit.extractContent(post.content.rendered, postTextExcerptLength) : post.excerpt.raw
                                                      } } />
                                             ) }
                                             {displayReadMore && (
                                                 <div className="advgb-post-readmore">
-                                                    <a href={ post.link } target="_blank">{ __( 'Read More' ) }</a>
+                                                    <a href={ post.link } target="_blank">{ readMoreLbl ? readMoreLbl : __( 'Read More' ) }</a>
                                                 </div>
                                             ) }
                                         </div>
