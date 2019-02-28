@@ -41,23 +41,23 @@
     "1.10.5": [
       {
         "type": "feature",
-        "title": "Add responsive for plugin main page"
+        "title": "Left panel responsive in plugin settings"
       },
       {
         "type": "feature",
-        "title": "Recent Posts block: Add default post thumbnail"
+        "title": "Recent Posts block: add default post thumbnail"
       },
       {
         "type": "feature",
-        "title": "Recent Posts block: Allow to custom read more label"
+        "title": "Recent Posts block: allow to custom read more label"
       },
       {
         "type": "fix",
-        "title": "Recent Posts block: Slider view not loaded on frontend"
+        "title": "Recent Posts block: slider view not loaded on frontend"
       },
       {
         "type": "fix",
-        "title": "Testimonial block: Add responsive for slider view"
+        "title": "Testimonial block: add responsive for slider view"
       }
     ],
     "1.10.4": [
