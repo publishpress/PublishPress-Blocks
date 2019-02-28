@@ -3202,7 +3202,7 @@ float: left;'
             });');
         }
 
-        if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
+        if (strpos($content, 'wp:advgb/recent-posts') !== false) {
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
             wp_enqueue_script('slick_js');
