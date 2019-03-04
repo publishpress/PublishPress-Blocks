@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.5",
+  "version": "1.10.6",
   "platform": "wordpress",
   "wp_version": "5.1.0",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,28 @@
     ]
   },
   "changelog": {
+    "1.10.6": [
+      {
+        "type": "fix",
+        "title": "Paragraph block error"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Video block: custom width for remote video not work in some theme"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Video block: display error if fetching remote video fail"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Video block: video full width not working without lightbox"
+      },
+      {
+        "type": "fix",
+        "title": "Testimonial block: odd behaviour if columns value is empty"
+      }
+    ],
     "1.10.5": [
       {
         "type": "feature",

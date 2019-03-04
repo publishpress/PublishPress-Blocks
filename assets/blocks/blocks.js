@@ -1522,7 +1522,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             className: 'advgb-image-title',
                             value: title,
                             onChange: function onChange(value) {
-                                return setAttributes({ title: value });
+                                return setAttributes({ title: value.trim() });
                             },
                             style: { color: titleColor },
                             isSelected: isSelected && currentEdit === 'title',
@@ -1539,7 +1539,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             className: 'advgb-image-subtitle',
                             value: subtitle,
                             onChange: function onChange(value) {
-                                return setAttributes({ subtitle: value });
+                                return setAttributes({ subtitle: value.trim() });
                             },
                             style: { color: subtitleColor },
                             isSelected: isSelected && currentEdit === 'subtitle',
@@ -3684,6 +3684,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         realID = realID[realID.length - 1];
                     }
 
+                    if (!realID) realID = '';
+
                     if (realID.indexOf('&') > -1) realID = realID.substring(0, realID.indexOf('&'));
 
                     wp.apiFetch({ path: wp.url.addQueryArgs("/oembed/1.0/proxy?url=" + encodeURIComponent(url)) }).then(function (obj) {
@@ -3716,6 +3718,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 poster: ''
                             });
                         }
+                    }).catch(function (error) {
+                        _this2.setState({ fetching: false });
+                        setAttributes({
+                            videoTitle: 'ADVGB_FAIL_TO_LOAD',
+                            poster: ''
+                        });
                     });
                 }
             }
@@ -3744,7 +3752,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockClassName = ['advgb-video-block', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
 
-                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
+                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width', !openInLightbox && 'no-lightbox'].filter(Boolean).join(' ');
 
                 var videoHostIcon = {
                     youtube: React.createElement(
@@ -3957,20 +3965,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 )
                             )
                         ),
-                        !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
-                            width: videoWidth,
-                            height: videoHeight,
-                            frameBorder: "0",
-                            allowFullScreen: true }) || videoSourceType === 'local' && React.createElement(
-                            "video",
-                            { width: videoWidth,
-                                height: videoHeight,
-                                poster: poster,
-                                controls: true
-                            },
-                            React.createElement("source", { src: videoURL }),
-                            __('Your browser does not support HTML5 video.')
-                        ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
+                        !openInLightbox && React.createElement(
+                            "div",
+                            { className: videoWrapperClass },
+                            (videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
+                                frameBorder: "0",
+                                allowFullScreen: true,
+                                style: { width: videoWidth, height: videoHeight }
+                            }) || videoSourceType === 'local' && React.createElement(
+                                "video",
+                                { width: videoWidth,
+                                    height: videoHeight,
+                                    poster: poster,
+                                    controls: true
+                                },
+                                React.createElement("source", { src: videoURL }),
+                                __('Your browser does not support HTML5 video.')
+                            ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
+                        ),
                         isSelected && React.createElement(
                             "div",
                             { className: "advgb-video-input-block" },
@@ -4067,6 +4079,61 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
         React.createElement("path", { d: "M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" })
     );
+    var blockAttrs = {
+        videoURL: {
+            type: 'string'
+        },
+        videoID: {
+            type: 'string'
+        },
+        videoSourceType: {
+            type: 'string'
+        },
+        videoTitle: {
+            type: 'string'
+        },
+        videoFullWidth: {
+            type: 'boolean',
+            default: true
+        },
+        videoWidth: {
+            type: 'number'
+        },
+        videoHeight: {
+            type: 'number',
+            default: 450
+        },
+        playButtonIcon: {
+            type: 'string',
+            default: 'normal'
+        },
+        playButtonSize: {
+            type: 'number',
+            default: 80
+        },
+        playButtonColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        overlayColor: {
+            type: 'string',
+            default: '#EEEEEE'
+        },
+        poster: {
+            type: 'string'
+        },
+        posterID: {
+            type: 'number'
+        },
+        openInLightbox: {
+            type: 'boolean',
+            default: true
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
 
     registerBlockType('advgb/video', {
         title: __('Advanced Video'),
@@ -4077,61 +4144,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('video'), __('embed'), __('media')],
-        attributes: {
-            videoURL: {
-                type: 'string'
-            },
-            videoID: {
-                type: 'string'
-            },
-            videoSourceType: {
-                type: 'string'
-            },
-            videoTitle: {
-                type: 'string'
-            },
-            videoFullWidth: {
-                type: 'boolean',
-                default: true
-            },
-            videoWidth: {
-                type: 'number'
-            },
-            videoHeight: {
-                type: 'number',
-                default: 450
-            },
-            playButtonIcon: {
-                type: 'string',
-                default: 'normal'
-            },
-            playButtonSize: {
-                type: 'number',
-                default: 80
-            },
-            playButtonColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            overlayColor: {
-                type: 'string',
-                default: '#EEEEEE'
-            },
-            poster: {
-                type: 'string'
-            },
-            posterID: {
-                type: 'number'
-            },
-            openInLightbox: {
-                type: 'boolean',
-                default: true
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         edit: AdvVideo,
         save: function save(_ref4) {
             var attributes = _ref4.attributes;
@@ -4151,7 +4164,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
 
-            var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
+            var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width', !openInLightbox && 'no-lightbox'].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
@@ -4159,21 +4172,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     "data-video": videoURL,
                     "data-source": videoSourceType
                 },
-                !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
-                    width: videoWidth,
-                    height: videoHeight,
-                    frameBorder: "0",
-                    allowFullScreen: true }) || videoSourceType === 'local' && React.createElement(
-                    "video",
-                    { className: videoFullWidth && 'full-width',
+                !openInLightbox && React.createElement(
+                    "div",
+                    { className: videoWrapperClass },
+                    (videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
                         width: videoWidth,
                         height: videoHeight,
-                        poster: poster,
-                        controls: true
-                    },
-                    React.createElement("source", { src: videoURL }),
-                    __('Your browser does not support HTML5 video.')
-                ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
+                        frameBorder: "0",
+                        allowFullScreen: true
+                    }) || videoSourceType === 'local' && React.createElement(
+                        "video",
+                        { className: videoFullWidth && 'full-width',
+                            width: videoWidth,
+                            height: videoHeight,
+                            poster: poster,
+                            controls: true
+                        },
+                        React.createElement("source", { src: videoURL }),
+                        __('Your browser does not support HTML5 video.')
+                    ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
+                ),
                 !!openInLightbox && React.createElement(
                     "div",
                     { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
@@ -4197,7 +4215,76 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
+                var videoURL = attributes.videoURL,
+                    videoSourceType = attributes.videoSourceType,
+                    videoTitle = attributes.videoTitle,
+                    videoFullWidth = attributes.videoFullWidth,
+                    videoWidth = attributes.videoWidth,
+                    videoHeight = attributes.videoHeight,
+                    playButtonIcon = attributes.playButtonIcon,
+                    playButtonSize = attributes.playButtonSize,
+                    playButtonColor = attributes.playButtonColor,
+                    overlayColor = attributes.overlayColor,
+                    poster = attributes.poster,
+                    openInLightbox = attributes.openInLightbox;
+
+
+                var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
+
+                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName,
+                        "data-video": videoURL,
+                        "data-source": videoSourceType
+                    },
+                    !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
+                        width: videoWidth,
+                        height: videoHeight,
+                        frameBorder: "0",
+                        allowFullScreen: true
+                    }) || videoSourceType === 'local' && React.createElement(
+                        "video",
+                        { className: videoFullWidth && 'full-width',
+                            width: videoWidth,
+                            height: videoHeight,
+                            poster: poster,
+                            controls: true
+                        },
+                        React.createElement("source", { src: videoURL }),
+                        __('Your browser does not support HTML5 video.')
+                    ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
+                    !!openInLightbox && React.createElement(
+                        "div",
+                        { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
+                        React.createElement("div", { className: "advgb-video-poster", style: { backgroundImage: "url(" + poster + ")" } }),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-button-wrapper", style: { height: videoHeight } },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-play-button", style: { color: playButtonColor } },
+                                React.createElement(
+                                    "svg",
+                                    { xmlns: "http://www.w3.org/2000/svg",
+                                        width: playButtonSize,
+                                        height: playButtonSize,
+                                        viewBox: "0 0 24 24"
+                                    },
+                                    PLAY_BUTTON_STYLE[playButtonIcon]
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -11252,6 +11339,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 } else if (columns > 10) {
                     validCols = 10;
                     setAttributes({ columns: 10 });
+                } else {
+                    validCols = sliderView ? 4 : 1;
                 }
 
                 return React.createElement(
