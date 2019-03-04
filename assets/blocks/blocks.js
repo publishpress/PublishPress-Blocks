@@ -3958,10 +3958,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             )
                         ),
                         !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
-                            width: videoWidth,
-                            height: videoHeight,
                             frameBorder: "0",
-                            allowFullScreen: true }) || videoSourceType === 'local' && React.createElement(
+                            allowFullScreen: true,
+                            style: { width: videoWidth, height: videoHeight }
+                        }) || videoSourceType === 'local' && React.createElement(
                             "video",
                             { width: videoWidth,
                                 height: videoHeight,
@@ -4163,7 +4163,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     width: videoWidth,
                     height: videoHeight,
                     frameBorder: "0",
-                    allowFullScreen: true }) || videoSourceType === 'local' && React.createElement(
+                    allowFullScreen: true
+                }) || videoSourceType === 'local' && React.createElement(
                     "video",
                     { className: videoFullWidth && 'full-width',
                         width: videoWidth,

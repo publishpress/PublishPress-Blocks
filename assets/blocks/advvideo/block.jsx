@@ -320,10 +320,10 @@
                         {!openInLightbox && (
                             ( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
                                 <iframe src={videoURL}
-                                        width={videoWidth}
-                                        height={videoHeight}
                                         frameBorder="0"
-                                        allowFullScreen/>
+                                        allowFullScreen
+                                        style={ { width: videoWidth, height: videoHeight } }
+                                />
                             )
                             || (videoSourceType === 'local' &&
                                 <video width={videoWidth}
@@ -511,7 +511,8 @@
                                     width={videoWidth}
                                     height={videoHeight}
                                     frameBorder="0"
-                                    allowFullScreen/>
+                                    allowFullScreen
+                            />
                         )
                         || (videoSourceType === 'local' &&
                             <video className={ videoFullWidth && 'full-width' }
