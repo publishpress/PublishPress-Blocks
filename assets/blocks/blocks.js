@@ -3684,6 +3684,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         realID = realID[realID.length - 1];
                     }
 
+                    if (!realID) realID = '';
+
                     if (realID.indexOf('&') > -1) realID = realID.substring(0, realID.indexOf('&'));
 
                     wp.apiFetch({ path: wp.url.addQueryArgs("/oembed/1.0/proxy?url=" + encodeURIComponent(url)) }).then(function (obj) {
@@ -3716,6 +3718,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 poster: ''
                             });
                         }
+                    }).catch(function (error) {
+                        _this2.setState({ fetching: false });
+                        setAttributes({
+                            videoTitle: 'ADVGB_FAIL_TO_LOAD',
+                            poster: ''
+                        });
                     });
                 }
             }

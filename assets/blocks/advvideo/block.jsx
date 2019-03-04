@@ -90,6 +90,8 @@
                     realID = realID[ realID.length - 1 ];
                 }
 
+                if (!realID) realID = '';
+
                 if (realID.indexOf( '&' ) > -1)
                     realID = realID.substring( 0, realID.indexOf( '&' ) );
 
@@ -125,7 +127,13 @@
                             } );
                         }
                     }
-                )
+                ).catch( ( error ) => {
+                    this.setState( { fetching: false } );
+                    setAttributes( {
+                        videoTitle: 'ADVGB_FAIL_TO_LOAD',
+                        poster: '',
+                    } );
+                } )
             }
         }
 
