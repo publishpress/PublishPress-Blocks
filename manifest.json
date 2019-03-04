@@ -49,7 +49,11 @@
       },
       {
         "type": "fix",
-        "title": "Testimonial block: odd behaviour if columns is empty"
+        "title": "Adv Video block: display error if fetching remote video fail"
+      },
+      {
+        "type": "fix",
+        "title": "Testimonial block: odd behaviour if columns value is empty"
       }
     ],
     "1.10.5": [
