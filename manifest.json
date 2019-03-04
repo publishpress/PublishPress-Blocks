@@ -53,6 +53,10 @@
       },
       {
         "type": "fix",
+        "title": "Adv Video block: video full width not working without lightbox"
+      },
+      {
+        "type": "fix",
         "title": "Testimonial block: odd behaviour if columns value is empty"
       }
     ],
