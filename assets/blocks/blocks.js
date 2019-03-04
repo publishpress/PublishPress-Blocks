@@ -1522,7 +1522,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             className: 'advgb-image-title',
                             value: title,
                             onChange: function onChange(value) {
-                                return setAttributes({ title: value });
+                                return setAttributes({ title: value.trim() });
                             },
                             style: { color: titleColor },
                             isSelected: isSelected && currentEdit === 'title',
@@ -1539,7 +1539,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             className: 'advgb-image-subtitle',
                             value: subtitle,
                             onChange: function onChange(value) {
-                                return setAttributes({ subtitle: value });
+                                return setAttributes({ subtitle: value.trim() });
                             },
                             style: { color: subtitleColor },
                             isSelected: isSelected && currentEdit === 'subtitle',

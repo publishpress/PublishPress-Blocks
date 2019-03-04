@@ -217,7 +217,7 @@
                             tagName="h4"
                             className="advgb-image-title"
                             value={ title }
-                            onChange={ (value) => setAttributes( { title: value } ) }
+                            onChange={ (value) => setAttributes( { title: value.trim() } ) }
                             style={ { color: titleColor } }
                             isSelected={ isSelected && currentEdit === 'title' }
                             unstableOnFocus={ () => this.setState( { currentEdit: 'title' } ) }
@@ -228,7 +228,7 @@
                             tagName="p"
                             className="advgb-image-subtitle"
                             value={ subtitle }
-                            onChange={ (value) => setAttributes( { subtitle: value } ) }
+                            onChange={ (value) => setAttributes( { subtitle: value.trim() } ) }
                             style={ { color: subtitleColor } }
                             isSelected={ isSelected && currentEdit === 'subtitle' }
                             unstableOnFocus={ () => this.setState( { currentEdit: 'subtitle' } ) }
