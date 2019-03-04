@@ -744,6 +744,10 @@ button.advgb-testimonial-preview {
     transform: scale(1.3);
 }
 
+.advgb-testimonial button.slick-arrow {
+    background-color: transparent;
+}
+
 /*Separator styles*/
 hr.wp-block-separator {
     background-color: transparent;
