@@ -379,7 +379,7 @@ float: left;'
             'post_thumb' => $rp_default_thumb['url'],
             'avatarHolder' => $avatarHolder,
             'config_url' => admin_url('admin.php?page=advgb_main'),
-            'customStyles' => $custom_styles_data,
+            'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
             'captchaEnabled' => $recaptcha_config['recaptcha_enable']
         ));
 

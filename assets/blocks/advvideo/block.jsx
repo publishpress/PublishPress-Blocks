@@ -90,6 +90,8 @@
                     realID = realID[ realID.length - 1 ];
                 }
 
+                if (!realID) realID = '';
+
                 if (realID.indexOf( '&' ) > -1)
                     realID = realID.substring( 0, realID.indexOf( '&' ) );
 
@@ -125,7 +127,13 @@
                             } );
                         }
                     }
-                )
+                ).catch( ( error ) => {
+                    this.setState( { fetching: false } );
+                    setAttributes( {
+                        videoTitle: 'ADVGB_FAIL_TO_LOAD',
+                        poster: '',
+                    } );
+                } )
             }
         }
 
@@ -156,6 +164,7 @@
             const videoWrapperClass = [
                 'advgb-video-wrapper',
                 !!videoFullWidth && 'full-width',
+                !openInLightbox && 'no-lightbox',
             ].filter( Boolean ).join( ' ' );
 
             const videoHostIcon = {
@@ -318,24 +327,26 @@
                         </div>
                         }
                         {!openInLightbox && (
-                            ( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
-                                <iframe src={videoURL}
-                                        width={videoWidth}
-                                        height={videoHeight}
-                                        frameBorder="0"
-                                        allowFullScreen/>
-                            )
-                            || (videoSourceType === 'local' &&
-                                <video width={videoWidth}
-                                       height={videoHeight}
-                                       poster={poster}
-                                       controls
-                                >
-                                    <source src={videoURL}/>
-                                    { __( 'Your browser does not support HTML5 video.' ) }
-                                </video>
-                            )
-                            || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />
+                            <div className={ videoWrapperClass }>
+                                {( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
+                                    <iframe src={videoURL}
+                                            frameBorder="0"
+                                            allowFullScreen
+                                            style={ { width: videoWidth, height: videoHeight } }
+                                    />
+                                )
+                                || (videoSourceType === 'local' &&
+                                    <video width={videoWidth}
+                                           height={videoHeight}
+                                           poster={poster}
+                                           controls
+                                    >
+                                        <source src={videoURL}/>
+                                        { __( 'Your browser does not support HTML5 video.' ) }
+                                    </video>
+                                )
+                                || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />}
+                            </div>
                         ) }
                         {isSelected &&
                         <div className="advgb-video-input-block">
@@ -407,6 +418,61 @@
             <path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
         </svg>
     );
+    const blockAttrs = {
+        videoURL: {
+            type: 'string',
+        },
+        videoID: {
+            type: 'string',
+        },
+        videoSourceType: {
+            type: 'string',
+        },
+        videoTitle: {
+            type: 'string',
+        },
+        videoFullWidth: {
+            type: 'boolean',
+            default: true,
+        },
+        videoWidth: {
+            type: 'number',
+        },
+        videoHeight: {
+            type: 'number',
+            default: 450,
+        },
+        playButtonIcon: {
+            type: 'string',
+            default: 'normal'
+        },
+        playButtonSize: {
+            type: 'number',
+            default: 80,
+        },
+        playButtonColor: {
+            type: 'string',
+            default: '#fff',
+        },
+        overlayColor: {
+            type: 'string',
+            default: '#EEEEEE',
+        },
+        poster: {
+            type: 'string',
+        },
+        posterID: {
+            type: 'number',
+        },
+        openInLightbox: {
+            type: 'boolean',
+            default: true,
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+    };
 
     registerBlockType( 'advgb/video', {
         title: __( 'Advanced Video' ),
@@ -417,61 +483,7 @@
         },
         category: 'advgb-category',
         keywords: [ __( 'video' ), __( 'embed' ), __( 'media' ) ],
-        attributes: {
-            videoURL: {
-                type: 'string',
-            },
-            videoID: {
-                type: 'string',
-            },
-            videoSourceType: {
-                type: 'string',
-            },
-            videoTitle: {
-                type: 'string',
-            },
-            videoFullWidth: {
-                type: 'boolean',
-                default: true,
-            },
-            videoWidth: {
-                type: 'number',
-            },
-            videoHeight: {
-                type: 'number',
-                default: 450,
-            },
-            playButtonIcon: {
-                type: 'string',
-                default: 'normal'
-            },
-            playButtonSize: {
-                type: 'number',
-                default: 80,
-            },
-            playButtonColor: {
-                type: 'string',
-                default: '#fff',
-            },
-            overlayColor: {
-                type: 'string',
-                default: '#EEEEEE',
-            },
-            poster: {
-                type: 'string',
-            },
-            posterID: {
-                type: 'number',
-            },
-            openInLightbox: {
-                type: 'boolean',
-                default: true,
-            },
-            changed: {
-                type: 'boolean',
-                default: false,
-            },
-        },
+        attributes: blockAttrs,
         edit: AdvVideo,
         save: function ( { attributes } ) {
             const {
@@ -498,6 +510,7 @@
             const videoWrapperClass = [
                 'advgb-video-wrapper',
                 !!videoFullWidth && 'full-width',
+                !openInLightbox && 'no-lightbox',
             ].filter( Boolean ).join( ' ' );
 
             return (
@@ -506,25 +519,28 @@
                      data-source={ videoSourceType }
                 >
                     {!openInLightbox && (
-                        ( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
-                            <iframe src={videoURL}
-                                    width={videoWidth}
-                                    height={videoHeight}
-                                    frameBorder="0"
-                                    allowFullScreen/>
-                        )
-                        || (videoSourceType === 'local' &&
-                            <video className={ videoFullWidth && 'full-width' }
-                                   width={videoWidth}
-                                   height={videoHeight}
-                                   poster={poster}
-                                   controls
-                            >
-                                <source src={videoURL}/>
-                                { __( 'Your browser does not support HTML5 video.' ) }
-                            </video>
-                        )
-                        || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />
+                        <div className={ videoWrapperClass }>
+                            {( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
+                                <iframe src={videoURL}
+                                        width={videoWidth}
+                                        height={videoHeight}
+                                        frameBorder="0"
+                                        allowFullScreen
+                                />
+                            )
+                            || (videoSourceType === 'local' &&
+                                <video className={ videoFullWidth && 'full-width' }
+                                       width={videoWidth}
+                                       height={videoHeight}
+                                       poster={poster}
+                                       controls
+                                >
+                                    <source src={videoURL}/>
+                                    { __( 'Your browser does not support HTML5 video.' ) }
+                                </video>
+                            )
+                            || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />}
+                        </div>
                     ) }
                     {!!openInLightbox &&
                     <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor, width: videoWidth } }>
@@ -544,6 +560,84 @@
                     }
                 </div>
             );
-        }
+        },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        videoURL,
+                        videoSourceType,
+                        videoTitle,
+                        videoFullWidth,
+                        videoWidth,
+                        videoHeight,
+                        playButtonIcon,
+                        playButtonSize,
+                        playButtonColor,
+                        overlayColor,
+                        poster,
+                        openInLightbox,
+                    } = attributes;
+
+                    const blockClassName = [
+                        'advgb-video-block',
+                        !!videoFullWidth && 'full-width',
+                        !!openInLightbox && !!videoURL && 'advgb-video-lightbox',
+                    ].filter( Boolean ).join( ' ' );
+
+                    const videoWrapperClass = [
+                        'advgb-video-wrapper',
+                        !!videoFullWidth && 'full-width',
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClassName }
+                             data-video={ videoURL }
+                             data-source={ videoSourceType }
+                        >
+                            {!openInLightbox && (
+                                ( (videoSourceType === 'youtube' || videoSourceType === 'vimeo') &&
+                                    <iframe src={videoURL}
+                                            width={videoWidth}
+                                            height={videoHeight}
+                                            frameBorder="0"
+                                            allowFullScreen
+                                    />
+                                )
+                                || (videoSourceType === 'local' &&
+                                    <video className={ videoFullWidth && 'full-width' }
+                                           width={videoWidth}
+                                           height={videoHeight}
+                                           poster={poster}
+                                           controls
+                                    >
+                                        <source src={videoURL}/>
+                                        { __( 'Your browser does not support HTML5 video.' ) }
+                                    </video>
+                                )
+                                || !videoSourceType && <div style={ { width: videoWidth, height: videoHeight } } />
+                            ) }
+                            {!!openInLightbox &&
+                            <div className={ videoWrapperClass } style={ { backgroundColor: overlayColor, width: videoWidth } }>
+                                <div className="advgb-video-poster" style={ { backgroundImage: `url(${poster})` } }/>
+                                <div className="advgb-button-wrapper" style={ { height: videoHeight } }>
+                                    <div className="advgb-play-button" style={ { color: playButtonColor } }>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             width={ playButtonSize }
+                                             height={ playButtonSize }
+                                             viewBox="0 0 24 24"
+                                        >
+                                            {PLAY_BUTTON_STYLE[playButtonIcon]}
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    );
+                },
+            }
+        ],
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
