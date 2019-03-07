@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.6",
+  "version": "1.10.7",
   "platform": "wordpress",
   "wp_version": "5.1.0",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,16 @@
     ]
   },
   "changelog": {
+    "1.10.7": [
+      {
+        "type": "fix",
+        "title": "Reusable block not loaded properly on frontend"
+      },
+      {
+        "type": "fix",
+        "title": "Testimonial block: cannot add columns"
+      }
+    ],
     "1.10.6": [
       {
         "type": "fix",
