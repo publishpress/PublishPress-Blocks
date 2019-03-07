@@ -135,7 +135,9 @@ function advgbRenderBlockRecentPosts($attributes)
 
             if (isset($attributes['displayExcerpt']) && $attributes['postTextAsExcerpt']) {
                 if (!is_admin()) {
-                    $postContent = apply_filters('the_content', get_post_field('post_content', $post->ID));
+                    $postContent = get_post_field('post_content', $post->ID);
+                    $postContent = strip_shortcodes($postContent);
+                    $postContent = preg_replace('/<!--(.*)-->/is', '', $postContent);
                     $introText = advgbExtractHtml($postContent, $attributes['postTextExcerptLength']);
                 }
             }
