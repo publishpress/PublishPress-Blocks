@@ -41,7 +41,7 @@
     "1.10.7": [
       {
         "type": "fix",
-        "title": "Block functions not work properly on frontend when use as reusable block"
+        "title": "Reusable block not loaded properly on frontend"
       },
       {
         "type": "fix",
