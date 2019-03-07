@@ -132,7 +132,7 @@
             } else if (columns > 10) {
                 validCols = 10;
                 setAttributes( { columns: 10 } );
-            } else {
+            } else if (columns === '' || !columns) {
                 validCols = sliderView ? 4 : 1;
             }
 
