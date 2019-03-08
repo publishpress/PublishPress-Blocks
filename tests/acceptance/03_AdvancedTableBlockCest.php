@@ -138,19 +138,21 @@ class AdvancedTableBlockCest
 
         // Change background color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]');
-        $I->click('//span[text()="Background Color"]/following-sibling::node()//div[last()]//*[first()]');
+        $I->click('//span[text()="Background Color"]/following-sibling::node()//div[last()]//*[1]');
         $I->click('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys('#ff006a');
+        $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]'); // Click back on the cell to hide popup
         $colors[2] = '#ff006a';
 
         // Change text color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]');
-        $I->click('//span[text()="Text Color"]/following-sibling::node()//div[last()]//*[first()]');
+        $I->click('//span[text()="Text Color"]/following-sibling::node()//div[last()]//*[1]');
         $I->click('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys('#335e77');
+        $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]'); // Click back on the cell to hide popup
         $colors[3] = '#335e77';
         $I->wait(0.1);
