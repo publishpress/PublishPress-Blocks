@@ -395,7 +395,7 @@ class createUpdateTestBlocksCest
 
         $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');
-        $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
+        $I->clickAndWait('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
         $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Vineyard');
         $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Effervescere proxima habitandae nullo titan.');
 
@@ -403,7 +403,7 @@ class createUpdateTestBlocksCest
         $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="road"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="road"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
-        $I->click('//div[contains(@class, "advgb-image-slider-image-list-item")][2]');
+        $I->clickAndWait('//div[contains(@class, "advgb-image-slider-image-list-item")][2]');
         $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Road');
         $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Utramque locoque summaque congestaque.');
 
