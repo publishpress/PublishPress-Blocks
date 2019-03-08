@@ -36,6 +36,7 @@ class createUpdateTestBlocksCest
         $I->fillField('.editor-post-title__input', 'Update test');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Recent Posts');
 
         $I->waitForText('Recent Posts');
@@ -59,6 +60,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Table');
 
         $I->waitForText('Advanced Table');
@@ -102,6 +104,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Map');
 
         $I->waitForText('Map');
@@ -113,6 +116,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Image');
 
         $I->waitForText('Advanced Image');
@@ -137,6 +141,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Button');
 
         $I->waitForText('Advanced Button');
@@ -150,6 +155,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Testimonial');
 
         $I->waitForText('Testimonial');
@@ -202,6 +208,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Social Links');
 
         $I->waitForText('Social Links');
@@ -223,6 +230,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Count Up');
 
         $I->waitForText('Count Up');
@@ -275,6 +283,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced List');
 
         $I->waitForText('Advanced List');
@@ -291,6 +300,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Video');
 
         $I->waitForText('Advanced Video');
@@ -304,7 +314,7 @@ class createUpdateTestBlocksCest
         /***** Add Accordion *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Accordion');
 
         $I->waitForText('Accordion');
@@ -317,7 +327,7 @@ class createUpdateTestBlocksCest
         $I->pressKeys(\WebDriverKeys::DOWN);
 
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Accordion');
 
         $I->waitForText('Accordion');
@@ -332,7 +342,7 @@ class createUpdateTestBlocksCest
         /***** Add Tabs *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Tabs');
 
         $I->waitForText('Tabs');
@@ -341,18 +351,18 @@ class createUpdateTestBlocksCest
         /***** Add some heading *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Heading');
-        sleep(2);
 
         $I->waitForText('Heading');
         $I->click('Heading');
 
         $I->waitForElement('//div[@class="wp-block-heading editor-rich-text"]//h2');
         $I->pressKeys('I am');
+        $I->wait(0.1);
 
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Heading');
 
         $I->waitForText('Heading');
@@ -362,9 +372,10 @@ class createUpdateTestBlocksCest
         $I->pressKeys('your father');
         $I->click('//p[text()="Level"]/following-sibling::node()//div[3]');
 
+
         /***** Add summary *****/
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Summary');
 
         $I->waitForText('Summary');
@@ -373,7 +384,7 @@ class createUpdateTestBlocksCest
         /***** Add Image slider *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-
+        $I->wait(0.2);
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Images Slider');
 
         $I->waitForText('Images Slider');
@@ -403,6 +414,7 @@ class createUpdateTestBlocksCest
         $I->click('//div[contains(@class, "advgb-image-slider-image-list-item")][3]');
         $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Field');
         $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Pectent caecoque semine regio.');
+        $I->wait(0.1);
 
         /***** Publish Post *****/
         $I->click('Publish…');
