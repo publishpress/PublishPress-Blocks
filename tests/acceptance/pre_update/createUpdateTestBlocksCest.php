@@ -411,7 +411,7 @@ class createUpdateTestBlocksCest
         $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="field"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="field"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
-        $I->click('//div[contains(@class, "advgb-image-slider-image-list-item")][3]');
+        $I->clickAndWait('//div[contains(@class, "advgb-image-slider-image-list-item")][3]');
         $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Field');
         $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Pectent caecoque semine regio.');
         $I->wait(0.1);
