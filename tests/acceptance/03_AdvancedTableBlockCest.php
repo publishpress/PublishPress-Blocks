@@ -146,6 +146,8 @@ class AdvancedTableBlockCest
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]'); // Click back on the cell to hide popup
         $colors[2] = '#ff006a';
 
+        $I->wait(0.5);
+
         // Change text color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]');
         $I->click('//span[text()="Text Color"]/following-sibling::node()//div[last()]//*[1]');
@@ -155,12 +157,15 @@ class AdvancedTableBlockCest
         $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]'); // Click back on the cell to hide popup
         $colors[3] = '#335e77';
-        $I->wait(0.1);
+
+        $I->wait(0.5);
+
         $I->click('Update');
         $I->waitForText('Post updated.');
 
         $I->click('View Post');
 
+        $I->waitForElementVisible('.advgb-table-frontend', 5);
         $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[3 and contains(@style, "background-color:'.$colors[0].'")]');
         $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[3]//td[3 and contains(@style, "color:'.$colors[1].'")]');
         $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[5 and contains(@style, "background-color:'.$colors[2].'")]');
