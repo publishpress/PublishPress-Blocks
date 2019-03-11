@@ -312,6 +312,11 @@ ul.blocks-list li.block-item .ju-switch-button input:checked + .slider:before {
     float: right;
 }
 
+.rtl #advgb-users-name {
+    left: unset;
+    right: 0;
+}
+
 @media screen and (max-width: 1065px) {
     .ju-button {
         display: block;
