@@ -190,6 +190,7 @@ img.thumb-selected {
 .advgb-customstyles-css .CodeMirror {
     height: 200px;
     border: 1px solid #ccc;
+    direction: ltr !important;
 }
 
 .CodeMirror.CodeMirror-focused {
@@ -256,4 +257,27 @@ span.advgb-field-required {
 .advgb-captcha-intro {
     padding: 10px 0;
     margin: 10px 0;
+}
+
+/*Support RTL*/
+.rtl .ju-settings-option .ju-setting-label + * {
+    float: left;
+    margin-right: 0;
+    margin-left: 30px;
+}
+
+.rtl li.block-config-item .block-config-button {
+    float: left;
+}
+
+.rtl .indicator {
+    display: none;
+}
+
+@media screen and (max-width: 782px) {
+    .rtl .ju-settings-option .ju-setting-label + *,
+    .ju-settings-option .ju-setting-label + * {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 }
