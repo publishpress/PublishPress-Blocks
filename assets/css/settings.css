@@ -274,6 +274,11 @@ span.advgb-field-required {
     display: none;
 }
 
+.rtl img.thumb-selected {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
 @media screen and (max-width: 782px) {
     .rtl .ju-settings-option .ju-setting-label + *,
     .ju-settings-option .ju-setting-label + * {
