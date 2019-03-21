@@ -13,6 +13,8 @@
         </svg>
     );
 
+    let willSetContent = null;
+
     class AdvTable extends Component {
         constructor() {
             super( ...arguments );
@@ -510,14 +512,22 @@
             setAttributes( { body: newBody } );
         }
 
-        updateCellContent( content ) {
+        updateCellContent( content, cell = null ) {
             const { selectedCell } = this.state;
-            if (!selectedCell) {
+            if (!selectedCell && !cell) {
                 return null;
             }
 
+            let rowIndex, colIndex;
+            if (cell) {
+                rowIndex = cell.rowIndex;
+                colIndex = cell.colIndex;
+            } else {
+                rowIndex = selectedCell.rowIndex;
+                colIndex = selectedCell.colIndex;
+            }
+
             const { attributes, setAttributes } = this.props;
-            const { rowIndex, colIndex } = selectedCell;
             const { body } = attributes;
 
             const newBody = body.map( ( row, curRowIndex ) => {
@@ -969,7 +979,10 @@
                                                 <RichText
                                                     className="wp-block-table__cell-content"
                                                     value={ content }
-                                                    onChange={ ( value ) => this.updateCellContent( value ) }
+                                                    onChange={ ( value ) => {
+                                                        if (willSetContent) clearTimeout(willSetContent);
+                                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1500);
+                                                    } }
                                                     unstableOnFocus={ () => this.setState( { selectedCell: cell } ) }
                                                 />
                                             </td>

@@ -2302,6 +2302,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
 
+    var willSetContent = null;
+
     var AdvTable = function (_Component) {
         _inherits(AdvTable, _Component);
 
@@ -2861,17 +2863,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateCellContent",
             value: function updateCellContent(content) {
+                var cell = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
                 var selectedCell = this.state.selectedCell;
 
-                if (!selectedCell) {
+                if (!selectedCell && !cell) {
                     return null;
+                }
+
+                var rowIndex = void 0,
+                    colIndex = void 0;
+                if (cell) {
+                    rowIndex = cell.rowIndex;
+                    colIndex = cell.colIndex;
+                } else {
+                    rowIndex = selectedCell.rowIndex;
+                    colIndex = selectedCell.colIndex;
                 }
 
                 var _props10 = this.props,
                     attributes = _props10.attributes,
                     setAttributes = _props10.setAttributes;
-                var rowIndex = selectedCell.rowIndex,
-                    colIndex = selectedCell.colIndex;
                 var body = attributes.body;
 
 
@@ -3404,7 +3415,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "wp-block-table__cell-content",
                                                 value: content,
                                                 onChange: function onChange(value) {
-                                                    return _this2.updateCellContent(value);
+                                                    if (willSetContent) clearTimeout(willSetContent);
+                                                    willSetContent = setTimeout(function () {
+                                                        return _this2.updateCellContent(value, selectedCell);
+                                                    }, 1500);
                                                 },
                                                 unstableOnFocus: function unstableOnFocus() {
                                                     return _this2.setState({ selectedCell: cell });
