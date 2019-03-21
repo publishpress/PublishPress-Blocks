@@ -3247,7 +3247,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(RangeControl, {
                                     label: __('Border width'),
-                                    value: this.getCellStyles('borderWidth'),
+                                    value: this.getCellStyles('borderWidth') || 0,
                                     min: 1,
                                     max: 10,
                                     onChange: function onChange(value) {
@@ -3273,6 +3273,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         );
                                     })
                                 )
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Padding'), initialOpen: false },
+                                React.createElement(RangeControl, {
+                                    label: __('Padding Top'),
+                                    value: this.getCellStyles('paddingTop') || 0,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ paddingTop: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Padding Right'),
+                                    value: this.getCellStyles('paddingRight') || 0,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ paddingRight: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Padding Bottom'),
+                                    value: this.getCellStyles('paddingBottom') || 0,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ paddingBottom: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Padding Left'),
+                                    value: this.getCellStyles('paddingLeft') || 0,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ paddingLeft: value });
+                                    }
+                                })
                             ),
                             React.createElement(
                                 PanelBody,

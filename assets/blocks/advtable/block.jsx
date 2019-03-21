@@ -845,7 +845,7 @@
                                 />
                                 <RangeControl
                                     label={ __( 'Border width' ) }
-                                    value={ this.getCellStyles( 'borderWidth' ) }
+                                    value={ this.getCellStyles( 'borderWidth' ) || 0 }
                                     min={ 1 }
                                     max={ 10 }
                                     onChange={ ( value ) => this.updateCellsStyles( { borderWidth: value } ) }
@@ -859,6 +859,36 @@
                                         </div>
                                     ) ) }
                                 </div>
+                            </PanelBody>
+                            <PanelBody title={ __( 'Padding' ) } initialOpen={ false }>
+                                <RangeControl
+                                    label={ __( 'Padding Top' ) }
+                                    value={ this.getCellStyles('paddingTop') || 0 }
+                                    min={ 0 }
+                                    max={ 100 }
+                                    onChange={ (value) => this.updateCellsStyles( { paddingTop: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Padding Right' ) }
+                                    value={ this.getCellStyles('paddingRight') || 0 }
+                                    min={ 0 }
+                                    max={ 100 }
+                                    onChange={ (value) => this.updateCellsStyles( { paddingRight: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Padding Bottom' ) }
+                                    value={ this.getCellStyles('paddingBottom') || 0 }
+                                    min={ 0 }
+                                    max={ 100 }
+                                    onChange={ (value) => this.updateCellsStyles( { paddingBottom: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Padding Left' ) }
+                                    value={ this.getCellStyles('paddingLeft') || 0 }
+                                    min={ 0 }
+                                    max={ 100 }
+                                    onChange={ (value) => this.updateCellsStyles( { paddingLeft: value } ) }
+                                />
                             </PanelBody>
                             <PanelBody title={ __( 'Text Alignment' ) } initialOpen={ false }>
                                 <BaseControl label={ __( 'Horizontal Align' ) }>
