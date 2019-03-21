@@ -14,6 +14,7 @@
     );
 
     let willSetContent = null;
+    let lastValue = '';
 
     class AdvTable extends Component {
         constructor() {
@@ -981,9 +982,10 @@
                                                     value={ content }
                                                     onChange={ ( value ) => {
                                                         if (willSetContent) clearTimeout(willSetContent);
-                                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1500);
+                                                        lastValue = value;
+                                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1000);
                                                     } }
-                                                    unstableOnFocus={ () => this.setState( { selectedCell: cell } ) }
+                                                    unstableOnFocus={ () => { if (willSetContent) this.updateCellContent(lastValue, selectedCell); this.setState( { selectedCell: cell } )  } }
                                                 />
                                             </td>
                                         )

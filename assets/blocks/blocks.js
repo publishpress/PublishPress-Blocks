@@ -2303,6 +2303,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     var willSetContent = null;
+    var lastValue = '';
 
     var AdvTable = function (_Component) {
         _inherits(AdvTable, _Component);
@@ -3416,12 +3417,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 value: content,
                                                 onChange: function onChange(value) {
                                                     if (willSetContent) clearTimeout(willSetContent);
+                                                    lastValue = value;
                                                     willSetContent = setTimeout(function () {
                                                         return _this2.updateCellContent(value, selectedCell);
-                                                    }, 1500);
+                                                    }, 1000);
                                                 },
                                                 unstableOnFocus: function unstableOnFocus() {
-                                                    return _this2.setState({ selectedCell: cell });
+                                                    if (willSetContent) _this2.updateCellContent(lastValue, selectedCell);_this2.setState({ selectedCell: cell });
                                                 }
                                             })
                                         );
