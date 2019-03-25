@@ -3122,6 +3122,7 @@ float: left;'
      */
     public function addFrontendContentAssets($content)
     {
+        wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
         if (strpos($content, 'wp-block-gallery') !== false) {
             $saved_settings = get_option('advgb_settings');
 

@@ -137,7 +137,7 @@ function advgbRenderBlockRecentPosts($attributes)
                 if (!is_admin()) {
                     $postContent = get_post_field('post_content', $post->ID);
                     $postContent = strip_shortcodes($postContent);
-                    $postContent = preg_replace('/<!--(.*)-->/is', '', $postContent);
+                    $postContent = preg_replace('/<!--(.*?-->)/is', '', $postContent);
                     $introText = advgbExtractHtml($postContent, $attributes['postTextExcerptLength']);
                 }
             }
