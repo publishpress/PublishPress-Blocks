@@ -46,9 +46,9 @@ class RecentPostsBlockCest
     {
         $I->click('Edit Post');
 
-        $I->click('.editor-block-navigation');
+        $I->clickAndWait('.editor-block-navigation');
 
-        $I->click('Recent Posts');
+        $I->clickAndWait('Recent Posts');
         $I->waitForText('Recent Posts');
 
         $I->waitForElementVisible('//label[text()="Number of items"]/following-sibling::input[@type="number"][@value="8"]');

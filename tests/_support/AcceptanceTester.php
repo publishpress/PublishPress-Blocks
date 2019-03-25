@@ -59,4 +59,14 @@ class AcceptanceTester extends \Codeception\Actor
             $I->see('Plugin deactivated.');
         } catch (Exception $e) {}
     }
+
+    /**
+     * Click and wait for javascript run
+     */
+    public function clickAndWait($selector, $wait = 0.1)
+    {
+        $I = $this;
+        $I->click($selector);
+        $I->wait($wait);
+    }
 }
