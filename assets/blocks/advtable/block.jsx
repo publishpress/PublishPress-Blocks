@@ -1015,7 +1015,14 @@
                                                         lastValue = value;
                                                         willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1000);
                                                     } }
-                                                    unstableOnFocus={ () => { if (willSetContent) this.updateCellContent(lastValue, selectedCell); this.setState( { selectedCell: cell } )  } }
+                                                    unstableOnFocus={ () => {
+                                                        if (willSetContent) {
+                                                            this.updateCellContent(lastValue, selectedCell);
+                                                            clearTimeout(willSetContent);
+                                                            willSetContent = null;
+                                                        }
+                                                        this.setState( { selectedCell: cell } )
+                                                    } }
                                                 />
                                             </td>
                                         )
