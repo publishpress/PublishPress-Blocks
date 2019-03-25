@@ -52,6 +52,7 @@ class AdvancedTableBlockCest
             }
         }
 
+        $I->wait(2);
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
 
