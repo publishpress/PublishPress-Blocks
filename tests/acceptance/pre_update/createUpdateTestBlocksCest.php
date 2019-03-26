@@ -121,7 +121,7 @@ class createUpdateTestBlocksCest
         $I->click('//div[@class="advgb-image-block"]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
-        $I->click('//div[@class="advgb-image-block"]//div[@class="editor-rich-text"][2]//p');
+        $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
         $I->selectCurrentElementText();
         $I->pressKeys('Lorem ipsum');
 
@@ -304,7 +304,7 @@ class createUpdateTestBlocksCest
         $I->click('Accordion');
 
         $I->fillField('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 1');
-        $I->click('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[@class="editor-inner-blocks"]');
+        $I->click('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
         $I->pressKeys('Flexi umentia agitabilis bene. Circumdare orbis iuga in locis convexi. Vesper mentisque alto neu. Levius circumdare perpetuum ventis aethere.');
 
         $I->pressKeys(\WebDriverKeys::DOWN);
@@ -317,7 +317,7 @@ class createUpdateTestBlocksCest
         $I->click('Accordion');
 
         $I->fillField('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 2');
-        $I->click('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[@class="editor-inner-blocks"]');
+        $I->click('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
         $I->pressKeys('Dextra galeae moles. Erat: ponderibus valles circumdare tuti sic? Orbis limitibus recens titan inmensa extendi valles nisi aera.');
 
         $I->pressKeys(\WebDriverKeys::DOWN);
@@ -340,7 +340,7 @@ class createUpdateTestBlocksCest
         $I->waitForText('Heading');
         $I->click('Heading');
 
-        $I->waitForElement('//div[@class="wp-block-heading editor-rich-text"]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"]//div[contains(@class, "wp-block-heading")]//h2');
         $I->pressKeys('I am');
         $I->wait(0.1);
 
@@ -351,7 +351,7 @@ class createUpdateTestBlocksCest
         $I->waitForText('Heading');
         $I->click('Heading');
 
-        $I->waitForElement('//div[@class="wp-block-heading editor-rich-text"]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"][2]//div[contains(@class, "wp-block-heading")]//h2');
         $I->pressKeys('your father');
         $I->click('//p[text()="Level"]/following-sibling::node()//div[3]');
 
