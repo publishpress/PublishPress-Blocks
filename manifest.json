@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.5",
+  "version": "1.10.8",
   "platform": "wordpress",
-  "wp_version": "5.1.0",
+  "wp_version": "5.1.1",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,26 +38,72 @@
     ]
   },
   "changelog": {
+    "1.10.8": [
+      {
+        "type": "fix",
+        "title": "Adv Table block: bring back padding setting to cell"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Table block: Improve typing experience"
+      },
+      {
+        "type": "fix",
+        "title": "Recent Posts block: post text as excerpt not showing correctly on frontend"
+      }
+    ],
+    "1.10.7": [
+      {
+        "type": "fix",
+        "title": "Block functions not work properly on frontend when use as reusable block"
+      },
+      {
+        "type": "fix",
+        "title": "Testimonial block: cannot add columns"
+      }
+    ],
+    "1.10.6": [
+      {
+        "type": "fix",
+        "title": "Paragraph block error"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Video block: custom width for remote video not work in some theme"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Video block: display error if fetching remote video fail"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Video block: video full width not working without lightbox"
+      },
+      {
+        "type": "fix",
+        "title": "Testimonial block: odd behaviour if columns value is empty"
+      }
+    ],
     "1.10.5": [
       {
         "type": "feature",
-        "title": "Add responsive for plugin main page"
+        "title": "Left panel responsive in plugin settings"
       },
       {
         "type": "feature",
-        "title": "Recent Posts block: Add default post thumbnail"
+        "title": "Recent Posts block: add default post thumbnail"
       },
       {
         "type": "feature",
-        "title": "Recent Posts block: Allow to custom read more label"
+        "title": "Recent Posts block: allow to custom read more label"
       },
       {
         "type": "fix",
-        "title": "Recent Posts block: Slider view not loaded on frontend"
+        "title": "Recent Posts block: slider view not loaded on frontend"
       },
       {
         "type": "fix",
-        "title": "Testimonial block: Add responsive for slider view"
+        "title": "Testimonial block: add responsive for slider view"
       }
     ],
     "1.10.4": [

@@ -52,6 +52,7 @@ class AdvancedTableBlockCest
             }
         }
 
+        $I->wait(2);
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
 
@@ -73,29 +74,31 @@ class AdvancedTableBlockCest
         // Add a row after
         $I->waitForElement('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
-        $I->click('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
-        $I->click('Add Row After');
+        $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
+        $I->clickAndWait('Add Row After');
 
         // Add a column after
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
-        $I->click('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
-        $I->click('Add Column After');
+        $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
+        $I->clickAndWait('Add Column After');
 
         // Add a row before
         $I->waitForElement('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
-        $I->click('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
-        $I->click('Add Row Before');
+        $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
+        $I->clickAndWait('Add Row Before');
 
         // Add a column before
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[2]');
-        $I->click('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
-        $I->click('Add Column Before');
+        $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
+        $I->clickAndWait('Add Column Before');
 
         $I->click('Update');
         $I->waitForText('Post updated.');
 
         $I->click('View Post');
+
+        $I->waitForElement('.advgb-table-frontend');
 
         $I->seeNumberOfElements('.advgb-table-frontend td', 36);
 
@@ -136,27 +139,34 @@ class AdvancedTableBlockCest
 
         // Change background color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]');
-        $I->click('//span[text()="Background Color"]/following-sibling::node()//div[last()]');
-        $I->click('.components-color-picker__inputs-wrapper input');
+        $I->clickAndWait('//span[text()="Background Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys('#ff006a');
+        $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]'); // Click back on the cell to hide popup
         $colors[2] = '#ff006a';
 
+        $I->wait(0.5);
+
         // Change text color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]');
-        $I->click('//span[text()="Text Color"]/following-sibling::node()//div[last()]');
-        $I->click('.components-color-picker__inputs-wrapper input');
+        $I->clickAndWait('//span[text()="Text Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys('#335e77');
+        $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]'); // Click back on the cell to hide popup
         $colors[3] = '#335e77';
+
+        $I->wait(0.5);
 
         $I->click('Update');
         $I->waitForText('Post updated.');
 
         $I->click('View Post');
 
+        $I->waitForElementVisible('.advgb-table-frontend', 5);
         $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[3 and contains(@style, "background-color:'.$colors[0].'")]');
         $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[3]//td[3 and contains(@style, "color:'.$colors[1].'")]');
         $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[5 and contains(@style, "background-color:'.$colors[2].'")]');
@@ -169,23 +179,25 @@ class AdvancedTableBlockCest
 
         $I->click('Edit Post');
 
+        $I->wait(0.1);
+
         // Remove a row
         $I->waitForElement('//*[@class="wp-block-advgb-table"]//tr[2]/td[6]');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[6]');
-        $I->click('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
-        $I->click('Delete Row');
+        $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
+        $I->clickAndWait('Delete Row');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[3]');
-        $I->click('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
-        $I->click('Delete Row');
+        $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
+        $I->clickAndWait('Delete Row');
 
         // Remove a columns
         $I->waitForElement('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
-        $I->click('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
-        $I->click('Delete Column');
+        $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
+        $I->clickAndWait('Delete Column');
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[3]');
-        $I->click('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
-        $I->click('Delete Column');
+        $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
+        $I->clickAndWait('Delete Column');
 
         $I->click('Update');
         $I->waitForText('Post updated.');

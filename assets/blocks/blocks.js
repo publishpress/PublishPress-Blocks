@@ -1522,7 +1522,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             className: 'advgb-image-title',
                             value: title,
                             onChange: function onChange(value) {
-                                return setAttributes({ title: value });
+                                return setAttributes({ title: value.trim() });
                             },
                             style: { color: titleColor },
                             isSelected: isSelected && currentEdit === 'title',
@@ -1539,7 +1539,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             className: 'advgb-image-subtitle',
                             value: subtitle,
                             onChange: function onChange(value) {
-                                return setAttributes({ subtitle: value });
+                                return setAttributes({ subtitle: value.trim() });
                             },
                             style: { color: subtitleColor },
                             isSelected: isSelected && currentEdit === 'subtitle',
@@ -2302,6 +2302,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
 
+    var willSetContent = null;
+    var lastValue = '';
+
     var AdvTable = function (_Component) {
         _inherits(AdvTable, _Component);
 
@@ -2861,17 +2864,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateCellContent",
             value: function updateCellContent(content) {
+                var cell = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
                 var selectedCell = this.state.selectedCell;
 
-                if (!selectedCell) {
+                if (!selectedCell && !cell) {
                     return null;
+                }
+
+                var rowIndex = void 0,
+                    colIndex = void 0;
+                if (cell) {
+                    rowIndex = cell.rowIndex;
+                    colIndex = cell.colIndex;
+                } else {
+                    rowIndex = selectedCell.rowIndex;
+                    colIndex = selectedCell.colIndex;
                 }
 
                 var _props10 = this.props,
                     attributes = _props10.attributes,
                     setAttributes = _props10.setAttributes;
-                var rowIndex = selectedCell.rowIndex,
-                    colIndex = selectedCell.colIndex;
                 var body = attributes.body;
 
 
@@ -3235,7 +3247,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(RangeControl, {
                                     label: __('Border width'),
-                                    value: this.getCellStyles('borderWidth'),
+                                    value: this.getCellStyles('borderWidth') || 0,
                                     min: 1,
                                     max: 10,
                                     onChange: function onChange(value) {
@@ -3261,6 +3273,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         );
                                     })
                                 )
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Padding'), initialOpen: false },
+                                React.createElement(RangeControl, {
+                                    label: __('Padding Top'),
+                                    value: this.getCellStyles('paddingTop') || 0,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ paddingTop: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Padding Right'),
+                                    value: this.getCellStyles('paddingRight') || 0,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ paddingRight: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Padding Bottom'),
+                                    value: this.getCellStyles('paddingBottom') || 0,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ paddingBottom: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Padding Left'),
+                                    value: this.getCellStyles('paddingLeft') || 0,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateCellsStyles({ paddingLeft: value });
+                                    }
+                                })
                             ),
                             React.createElement(
                                 PanelBody,
@@ -3404,10 +3456,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "wp-block-table__cell-content",
                                                 value: content,
                                                 onChange: function onChange(value) {
-                                                    return _this2.updateCellContent(value);
+                                                    if (willSetContent) clearTimeout(willSetContent);
+                                                    lastValue = value;
+                                                    willSetContent = setTimeout(function () {
+                                                        return _this2.updateCellContent(value, selectedCell);
+                                                    }, 1000);
                                                 },
                                                 unstableOnFocus: function unstableOnFocus() {
-                                                    return _this2.setState({ selectedCell: cell });
+                                                    if (willSetContent) {
+                                                        _this2.updateCellContent(lastValue, selectedCell);
+                                                        clearTimeout(willSetContent);
+                                                        willSetContent = null;
+                                                    }
+                                                    _this2.setState({ selectedCell: cell });
                                                 }
                                             })
                                         );
@@ -3684,6 +3745,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         realID = realID[realID.length - 1];
                     }
 
+                    if (!realID) realID = '';
+
                     if (realID.indexOf('&') > -1) realID = realID.substring(0, realID.indexOf('&'));
 
                     wp.apiFetch({ path: wp.url.addQueryArgs("/oembed/1.0/proxy?url=" + encodeURIComponent(url)) }).then(function (obj) {
@@ -3716,6 +3779,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 poster: ''
                             });
                         }
+                    }).catch(function (error) {
+                        _this2.setState({ fetching: false });
+                        setAttributes({
+                            videoTitle: 'ADVGB_FAIL_TO_LOAD',
+                            poster: ''
+                        });
                     });
                 }
             }
@@ -3744,7 +3813,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockClassName = ['advgb-video-block', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
 
-                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
+                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width', !openInLightbox && 'no-lightbox'].filter(Boolean).join(' ');
 
                 var videoHostIcon = {
                     youtube: React.createElement(
@@ -3957,20 +4026,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 )
                             )
                         ),
-                        !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
-                            width: videoWidth,
-                            height: videoHeight,
-                            frameBorder: "0",
-                            allowFullScreen: true }) || videoSourceType === 'local' && React.createElement(
-                            "video",
-                            { width: videoWidth,
-                                height: videoHeight,
-                                poster: poster,
-                                controls: true
-                            },
-                            React.createElement("source", { src: videoURL }),
-                            __('Your browser does not support HTML5 video.')
-                        ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
+                        !openInLightbox && React.createElement(
+                            "div",
+                            { className: videoWrapperClass },
+                            (videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
+                                frameBorder: "0",
+                                allowFullScreen: true,
+                                style: { width: videoWidth, height: videoHeight }
+                            }) || videoSourceType === 'local' && React.createElement(
+                                "video",
+                                { width: videoWidth,
+                                    height: videoHeight,
+                                    poster: poster,
+                                    controls: true
+                                },
+                                React.createElement("source", { src: videoURL }),
+                                __('Your browser does not support HTML5 video.')
+                            ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
+                        ),
                         isSelected && React.createElement(
                             "div",
                             { className: "advgb-video-input-block" },
@@ -4067,6 +4140,61 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
         React.createElement("path", { d: "M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" })
     );
+    var blockAttrs = {
+        videoURL: {
+            type: 'string'
+        },
+        videoID: {
+            type: 'string'
+        },
+        videoSourceType: {
+            type: 'string'
+        },
+        videoTitle: {
+            type: 'string'
+        },
+        videoFullWidth: {
+            type: 'boolean',
+            default: true
+        },
+        videoWidth: {
+            type: 'number'
+        },
+        videoHeight: {
+            type: 'number',
+            default: 450
+        },
+        playButtonIcon: {
+            type: 'string',
+            default: 'normal'
+        },
+        playButtonSize: {
+            type: 'number',
+            default: 80
+        },
+        playButtonColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        overlayColor: {
+            type: 'string',
+            default: '#EEEEEE'
+        },
+        poster: {
+            type: 'string'
+        },
+        posterID: {
+            type: 'number'
+        },
+        openInLightbox: {
+            type: 'boolean',
+            default: true
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
 
     registerBlockType('advgb/video', {
         title: __('Advanced Video'),
@@ -4077,61 +4205,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('video'), __('embed'), __('media')],
-        attributes: {
-            videoURL: {
-                type: 'string'
-            },
-            videoID: {
-                type: 'string'
-            },
-            videoSourceType: {
-                type: 'string'
-            },
-            videoTitle: {
-                type: 'string'
-            },
-            videoFullWidth: {
-                type: 'boolean',
-                default: true
-            },
-            videoWidth: {
-                type: 'number'
-            },
-            videoHeight: {
-                type: 'number',
-                default: 450
-            },
-            playButtonIcon: {
-                type: 'string',
-                default: 'normal'
-            },
-            playButtonSize: {
-                type: 'number',
-                default: 80
-            },
-            playButtonColor: {
-                type: 'string',
-                default: '#fff'
-            },
-            overlayColor: {
-                type: 'string',
-                default: '#EEEEEE'
-            },
-            poster: {
-                type: 'string'
-            },
-            posterID: {
-                type: 'number'
-            },
-            openInLightbox: {
-                type: 'boolean',
-                default: true
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         edit: AdvVideo,
         save: function save(_ref4) {
             var attributes = _ref4.attributes;
@@ -4151,7 +4225,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
 
-            var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
+            var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width', !openInLightbox && 'no-lightbox'].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
@@ -4159,21 +4233,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     "data-video": videoURL,
                     "data-source": videoSourceType
                 },
-                !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
-                    width: videoWidth,
-                    height: videoHeight,
-                    frameBorder: "0",
-                    allowFullScreen: true }) || videoSourceType === 'local' && React.createElement(
-                    "video",
-                    { className: videoFullWidth && 'full-width',
+                !openInLightbox && React.createElement(
+                    "div",
+                    { className: videoWrapperClass },
+                    (videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
                         width: videoWidth,
                         height: videoHeight,
-                        poster: poster,
-                        controls: true
-                    },
-                    React.createElement("source", { src: videoURL }),
-                    __('Your browser does not support HTML5 video.')
-                ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
+                        frameBorder: "0",
+                        allowFullScreen: true
+                    }) || videoSourceType === 'local' && React.createElement(
+                        "video",
+                        { className: videoFullWidth && 'full-width',
+                            width: videoWidth,
+                            height: videoHeight,
+                            poster: poster,
+                            controls: true
+                        },
+                        React.createElement("source", { src: videoURL }),
+                        __('Your browser does not support HTML5 video.')
+                    ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
+                ),
                 !!openInLightbox && React.createElement(
                     "div",
                     { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
@@ -4197,7 +4276,76 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
+                var videoURL = attributes.videoURL,
+                    videoSourceType = attributes.videoSourceType,
+                    videoTitle = attributes.videoTitle,
+                    videoFullWidth = attributes.videoFullWidth,
+                    videoWidth = attributes.videoWidth,
+                    videoHeight = attributes.videoHeight,
+                    playButtonIcon = attributes.playButtonIcon,
+                    playButtonSize = attributes.playButtonSize,
+                    playButtonColor = attributes.playButtonColor,
+                    overlayColor = attributes.overlayColor,
+                    poster = attributes.poster,
+                    openInLightbox = attributes.openInLightbox;
+
+
+                var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
+
+                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName,
+                        "data-video": videoURL,
+                        "data-source": videoSourceType
+                    },
+                    !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
+                        width: videoWidth,
+                        height: videoHeight,
+                        frameBorder: "0",
+                        allowFullScreen: true
+                    }) || videoSourceType === 'local' && React.createElement(
+                        "video",
+                        { className: videoFullWidth && 'full-width',
+                            width: videoWidth,
+                            height: videoHeight,
+                            poster: poster,
+                            controls: true
+                        },
+                        React.createElement("source", { src: videoURL }),
+                        __('Your browser does not support HTML5 video.')
+                    ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
+                    !!openInLightbox && React.createElement(
+                        "div",
+                        { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
+                        React.createElement("div", { className: "advgb-video-poster", style: { backgroundImage: "url(" + poster + ")" } }),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-button-wrapper", style: { height: videoHeight } },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-play-button", style: { color: playButtonColor } },
+                                React.createElement(
+                                    "svg",
+                                    { xmlns: "http://www.w3.org/2000/svg",
+                                        width: playButtonSize,
+                                        height: playButtonSize,
+                                        viewBox: "0 0 24 24"
+                                    },
+                                    PLAY_BUTTON_STYLE[playButtonIcon]
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -9157,7 +9305,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment,
         null,
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
+        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11 C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81 C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65 c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1 s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
     );
 
     var socialBlockIcon = React.createElement(
@@ -11252,6 +11400,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 } else if (columns > 10) {
                     validCols = 10;
                     setAttributes({ columns: 10 });
+                } else if (columns === '' || !columns) {
+                    validCols = sliderView ? 4 : 1;
                 }
 
                 return React.createElement(

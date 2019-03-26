@@ -180,7 +180,8 @@ float: left;'
             add_action('wp_ajax_advgb_block_config_save', array($this, 'saveBlockConfig'));
         } else {
             // Front-end
-            add_filter('the_content', array($this, 'addFrontendContentAssets'), 5);
+            add_filter('the_content', array($this, 'contentPreRender'), 5);
+            add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
         }
     }
 
@@ -307,8 +308,9 @@ float: left;'
         }
 
         $current_screen = get_current_screen();
-        if (method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor() && !defined('GUTENBERG_VERSION')) {
-            // WP 5 fires enqueue_block_editor_assets before block_editor_settings, Gutenberg plugin do the contrary
+        if (method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor()
+            && (!defined('GUTENBERG_VERSION') || (defined('GUTENBERG_VERSION') && version_compare(GUTENBERG_VERSION, '5.3.0', '>=')))) {
+            // WP 5 and Gutenberg 5.3.0 fires enqueue_block_editor_assets before block_editor_settings, Gutenberg plugin do the contrary
             // Gutenberg WP5 core feature is used and we are in the block editor page, we must enqueue our assets after retrieving editor settings
             $this->addEditorAssets(true);
         }
@@ -326,9 +328,10 @@ float: left;'
     public function addEditorAssets($force_loading = false)
     {
         $current_screen = get_current_screen();
-        if (!$force_loading && method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor() && !defined('GUTENBERG_VERSION')) {
+        if (!$force_loading && method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor()
+            && (!defined('GUTENBERG_VERSION') || (defined('GUTENBERG_VERSION') && version_compare(GUTENBERG_VERSION, '5.3.0', '>=')))) {
             // This function will be called manually in the block_editor_settings filter
-            // WP 5 fires enqueue_block_editor_assets before block_editor_settings, Gutenberg plugin do the contrary
+            // WP 5 and Gutenberg 5.3.0 fires enqueue_block_editor_assets before block_editor_settings, Gutenberg plugin do the contrary
             return;
         }
 
@@ -379,7 +382,7 @@ float: left;'
             'post_thumb' => $rp_default_thumb['url'],
             'avatarHolder' => $avatarHolder,
             'config_url' => admin_url('admin.php?page=advgb_main'),
-            'customStyles' => $custom_styles_data,
+            'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
             'captchaEnabled' => $recaptcha_config['recaptcha_enable']
         ));
 
@@ -3092,7 +3095,28 @@ float: left;'
     }
 
     /**
-     * Function to load assets for post/page on front-end
+     * Function to load assets for post/page on front-end before gutenberg rendering
+     *
+     * @param string $content Post content
+     *
+     * @return string
+     */
+    public function contentPreRender($content)
+    {
+        // Search for Button and List blocks then add styles to it
+        preg_match_all(
+            '/(<!-- wp:advgb\/(list|button)).*?(\/wp:advgb\/(list|button) -->)/mis',
+            $content,
+            $matches
+        );
+
+        $content .= $this->addBlocksStyles($matches);
+
+        return $content;
+    }
+
+    /**
+     * Function to load assets for post/page on front-end after gutenberg rendering
      *
      * @param string $content Post content
      *
@@ -3100,6 +3124,7 @@ float: left;'
      */
     public function addFrontendContentAssets($content)
     {
+        wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
         if (strpos($content, 'wp-block-gallery') !== false) {
             $saved_settings = get_option('advgb_settings');
 
@@ -3202,7 +3227,7 @@ float: left;'
             });');
         }
 
-        if (strpos($content, 'wp:advgb/recent-posts') !== false) {
+        if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
             wp_enqueue_script('slick_js');
@@ -3294,15 +3319,6 @@ float: left;'
                 $content
             );
         }
-
-        // Search for Button and List blocks then add styles to it
-        preg_match_all(
-            '/(<!-- wp:advgb\/(list|button)).*?(\/wp:advgb\/(list|button) -->)/mis',
-            $content,
-            $matches
-        );
-
-        $content .= $this->addBlocksStyles($matches);
 
         return $content;
     }
