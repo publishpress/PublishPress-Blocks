@@ -122,7 +122,7 @@ class createUpdateTestBlocksCest
         $I->click('//div[@class="advgb-image-block"]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
-        $I->click('//div[@class="advgb-image-block"]//div[@class="editor-rich-text"][2]//p');
+        $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
         $I->selectCurrentElementText();
         $I->pressKeys('Lorem ipsum');
 
