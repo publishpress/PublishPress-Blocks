@@ -340,7 +340,7 @@ class createUpdateTestBlocksCest
         $I->waitForText('Heading');
         $I->click('Heading');
 
-        $I->waitForElement('//div[@class="wp-block-heading editor-rich-text"]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"]//div[contains(@class, "wp-block-heading")]//h2');
         $I->pressKeys('I am');
         $I->wait(0.1);
 
@@ -351,7 +351,7 @@ class createUpdateTestBlocksCest
         $I->waitForText('Heading');
         $I->click('Heading');
 
-        $I->waitForElement('//div[@class="wp-block-heading editor-rich-text"]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"][2]//div[contains(@class, "wp-block-heading")]//h2');
         $I->pressKeys('your father');
         $I->click('//p[text()="Level"]/following-sibling::node()//div[3]');
 
