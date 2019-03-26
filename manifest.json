@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.7",
+  "version": "1.10.8",
   "platform": "wordpress",
-  "wp_version": "5.1.0",
+  "wp_version": "5.1.1",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,20 @@
     ]
   },
   "changelog": {
+    "1.10.8": [
+      {
+        "type": "fix",
+        "title": "Adv Table block: bring back padding setting to cell"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Table block: Improve typing experience"
+      },
+      {
+        "type": "fix",
+        "title": "Recent Posts block: post text as excerpt not displayed properly (frontend)"
+      }
+    ],
     "1.10.7": [
       {
         "type": "fix",

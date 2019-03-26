@@ -21,7 +21,8 @@ modules:
       adminUsername: admin
       adminPassword: password
       adminUrl: /wp-admin
-      clear_cookies : false
+      clear_cookies: false
+      log_js_errors: true
     \Helper\Acceptance:
       php-version: %PHP_VERSION%
       map-api-key: %MAP_API_KEY%
