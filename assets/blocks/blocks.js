@@ -119,7 +119,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
-        Tooltip = wpComponents.Tooltip;
+        ToggleControl = wpComponents.ToggleControl;
 
 
     var HEADER_ICONS = {
@@ -225,7 +225,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderWidth = attributes.borderWidth,
                     borderColor = attributes.borderColor,
                     borderRadius = attributes.borderRadius,
-                    marginBottom = attributes.marginBottom;
+                    marginBottom = attributes.marginBottom,
+                    collapsedAll = attributes.collapsedAll;
 
 
                 return React.createElement(
@@ -245,6 +246,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 50,
                                 onChange: function onChange(value) {
                                     return setAttributes({ marginBottom: value });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Initial Collapsed'),
+                                help: __('Make all accordions collapsed by default, only need to enable this on the first accordion to take effect.'),
+                                checked: collapsedAll,
+                                onChange: function onChange() {
+                                    return setAttributes({ collapsedAll: !collapsedAll });
                                 }
                             })
                         ),
@@ -473,6 +482,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 15
         },
+        collapsedAll: {
+            type: 'boolean',
+            default: false
+        },
         changed: {
             type: 'boolean',
             default: false
@@ -503,12 +516,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
-                marginBottom = attributes.marginBottom;
+                marginBottom = attributes.marginBottom,
+                collapsedAll = attributes.collapsedAll;
 
 
             return React.createElement(
                 "div",
-                { className: "advgb-accordion-block", style: { marginBottom: marginBottom } },
+                { className: "advgb-accordion-block", style: { marginBottom: marginBottom }, "data-collapsed": collapsedAll ? collapsedAll : undefined },
                 React.createElement(
                     "div",
                     { className: "advgb-accordion-header",

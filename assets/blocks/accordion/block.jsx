@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpEditor;
-    const { RangeControl, PanelBody, BaseControl , SelectControl, Tooltip } = wpComponents;
+    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl } = wpComponents;
 
     const HEADER_ICONS = {
         plus: (
@@ -95,6 +95,7 @@
                 borderColor,
                 borderRadius,
                 marginBottom,
+                collapsedAll,
             } = attributes;
 
             return (
@@ -108,6 +109,12 @@
                                 min={ 0 }
                                 max={ 50 }
                                 onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Initial Collapsed' ) }
+                                help={ __( 'Make all accordions collapsed by default, only need to enable this on the first accordion to take effect.' ) }
+                                checked={ collapsedAll }
+                                onChange={ () => setAttributes( { collapsedAll: !collapsedAll } ) }
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Header Settings' ) }>
@@ -298,10 +305,14 @@
             type: 'number',
             default: 15,
         },
+        collapsedAll: {
+            type: 'boolean',
+            default: false,
+        },
         changed: {
             type: 'boolean',
             default: false,
-        }
+        },
     };
 
     registerBlockType( 'advgb/accordion', {
@@ -329,10 +340,11 @@
                 borderColor,
                 borderRadius,
                 marginBottom,
+                collapsedAll,
             } = attributes;
 
             return (
-                <div className="advgb-accordion-block" style={ { marginBottom } }>
+                <div className="advgb-accordion-block" style={ { marginBottom } } data-collapsed={ collapsedAll ? collapsedAll : undefined }>
                     <div className="advgb-accordion-header"
                          style={ {
                              backgroundColor: headerBgColor,
