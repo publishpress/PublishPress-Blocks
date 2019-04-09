@@ -110,12 +110,6 @@
                                 max={ 50 }
                                 onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
                             />
-                            <ToggleControl
-                                label={ __( 'Initial Collapsed' ) }
-                                help={ __( 'Make all accordions collapsed by default, only need to enable this on the first accordion to take effect.' ) }
-                                checked={ collapsedAll }
-                                onChange={ () => setAttributes( { collapsedAll: !collapsedAll } ) }
-                            />
                         </PanelBody>
                         <PanelBody title={ __( 'Header Settings' ) }>
                             <BaseControl label={ __( 'Header Icon Style' ) }>
@@ -205,6 +199,14 @@
                                 min={ 0 }
                                 max={ 100 }
                                 onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                            />
+                        </PanelBody>
+                        <PanelBody title={ __( 'Accordions State' ) } initialOpen={  false }>
+                            <ToggleControl
+                                label={ __( 'Initial Collapsed' ) }
+                                help={ __( 'Make all accordions collapsed by default, enable this setting to apply to all accordions.' ) }
+                                checked={ collapsedAll }
+                                onChange={ () => setAttributes( { collapsedAll: !collapsedAll } ) }
                             />
                         </PanelBody>
                     </InspectorControls>

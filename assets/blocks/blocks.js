@@ -247,14 +247,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onChange: function onChange(value) {
                                     return setAttributes({ marginBottom: value });
                                 }
-                            }),
-                            React.createElement(ToggleControl, {
-                                label: __('Initial Collapsed'),
-                                help: __('Make all accordions collapsed by default, only need to enable this on the first accordion to take effect.'),
-                                checked: collapsedAll,
-                                onChange: function onChange() {
-                                    return setAttributes({ collapsedAll: !collapsedAll });
-                                }
                             })
                         ),
                         React.createElement(
@@ -365,6 +357,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 100,
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderRadius: value });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Accordions State'), initialOpen: false },
+                            React.createElement(ToggleControl, {
+                                label: __('Initial Collapsed'),
+                                help: __('Make all accordions collapsed by default, enable this setting to apply to all accordions.'),
+                                checked: collapsedAll,
+                                onChange: function onChange() {
+                                    return setAttributes({ collapsedAll: !collapsedAll });
                                 }
                             })
                         )
