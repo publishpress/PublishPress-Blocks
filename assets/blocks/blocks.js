@@ -402,6 +402,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 unstableOnSplit: function unstableOnSplit() {
                                     return null;
                                 },
+                                className: "advgb-accordion-header-title",
                                 placeholder: __('Enter header…')
                             })
                         ),

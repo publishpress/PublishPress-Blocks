@@ -229,6 +229,7 @@
                                 value={ header }
                                 onChange={ ( value ) => setAttributes( { header: value } ) }
                                 unstableOnSplit={ () => null }
+                                className="advgb-accordion-header-title"
                                 placeholder={ __( 'Enter header…' ) }
                             />
                         </div>
