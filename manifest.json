@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.8",
+  "version": "1.10.9",
   "platform": "wordpress",
   "wp_version": "5.1.1",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,16 @@
     ]
   },
   "changelog": {
+    "1.10.9": [
+      {
+        "type": "feature",
+        "title": "Accordion block: allow to make all accordion collapsed by default"
+      },
+      {
+        "type": "fix",
+        "title": "Improve compatibility with other plugins (slider revolution)"
+      }
+    ],
     "1.10.8": [
       {
         "type": "fix",

@@ -1331,7 +1331,7 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_register_script(
-                'codemirror_js',
+                'advgb_codemirror_js',
                 plugins_url('assets/js/codemirror/lib/codemirror.js', dirname(__FILE__)),
                 array(),
                 ADVANCED_GUTENBERG_VERSION
@@ -3211,10 +3211,13 @@ float: left;'
         if (strpos($content, 'advgb-accordion-block') !== false) {
             wp_enqueue_script('jquery-ui-accordion');
             wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
-                $(".advgb-accordion-block").parent().accordion({
-                    header: ".advgb-accordion-header",
-                    heightStyle: "content",
-                    collapsible: true,
+                $(".advgb-accordion-block").parent().each(function() {
+                    $(this).accordion({
+                        header: ".advgb-accordion-header",
+                        heightStyle: "content",
+                        collapsible: true,
+                        active: $(this).find(".advgb-accordion-block:first").data("collapsed") ? false : 0,
+                    });
                 });
             });');
         }

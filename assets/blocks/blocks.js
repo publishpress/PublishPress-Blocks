@@ -119,7 +119,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
-        Tooltip = wpComponents.Tooltip;
+        ToggleControl = wpComponents.ToggleControl;
 
 
     var HEADER_ICONS = {
@@ -225,7 +225,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderWidth = attributes.borderWidth,
                     borderColor = attributes.borderColor,
                     borderRadius = attributes.borderRadius,
-                    marginBottom = attributes.marginBottom;
+                    marginBottom = attributes.marginBottom,
+                    collapsedAll = attributes.collapsedAll;
 
 
                 return React.createElement(
@@ -358,6 +359,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ borderRadius: value });
                                 }
                             })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Accordions State'), initialOpen: false },
+                            React.createElement(ToggleControl, {
+                                label: __('Initial Collapsed'),
+                                help: __('Make all accordions collapsed by default, enable this setting to apply to all accordions.'),
+                                checked: collapsedAll,
+                                onChange: function onChange() {
+                                    return setAttributes({ collapsedAll: !collapsedAll });
+                                }
+                            })
                         )
                     ),
                     React.createElement(
@@ -393,6 +406,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 unstableOnSplit: function unstableOnSplit() {
                                     return null;
                                 },
+                                className: "advgb-accordion-header-title",
                                 placeholder: __('Enter header…')
                             })
                         ),
@@ -473,6 +487,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 15
         },
+        collapsedAll: {
+            type: 'boolean',
+            default: false
+        },
         changed: {
             type: 'boolean',
             default: false
@@ -503,12 +521,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
-                marginBottom = attributes.marginBottom;
+                marginBottom = attributes.marginBottom,
+                collapsedAll = attributes.collapsedAll;
 
 
             return React.createElement(
                 "div",
-                { className: "advgb-accordion-block", style: { marginBottom: marginBottom } },
+                { className: "advgb-accordion-block", style: { marginBottom: marginBottom }, "data-collapsed": collapsedAll ? collapsedAll : undefined },
                 React.createElement(
                     "div",
                     { className: "advgb-accordion-header",
