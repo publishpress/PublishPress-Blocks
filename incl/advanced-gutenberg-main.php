@@ -1331,7 +1331,7 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_register_script(
-                'codemirror_js',
+                'advgb_codemirror_js',
                 plugins_url('assets/js/codemirror/lib/codemirror.js', dirname(__FILE__)),
                 array(),
                 ADVANCED_GUTENBERG_VERSION

@@ -11,7 +11,7 @@ wp_enqueue_media();
 wp_enqueue_script('qtip_js');
 wp_enqueue_script('less_js');
 wp_enqueue_script('minicolors_js');
-wp_enqueue_script('codemirror_js');
+wp_enqueue_script('advgb_codemirror_js');
 wp_enqueue_script('codemirror_hint');
 wp_enqueue_script('codemirror_mode_css');
 wp_enqueue_script('codemirror_hint_css');
