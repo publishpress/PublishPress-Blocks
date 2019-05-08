@@ -311,7 +311,7 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                 if (isset($block['iconColor'])) :
                     $iconColor = 'style=color:' . $block['iconColor'];
                 endif; ?>
-            <li class="block-config-item ju-settings-option">
+            <li class="block-config-item ju-settings-option" title="<?php echo esc_attr($block['title']); ?>">
                 <span class="block-icon" <?php echo esc_attr($iconColor) ?>>
                     <?php echo html_entity_decode(html_entity_decode(stripslashes($block['icon']))); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
                 </span>

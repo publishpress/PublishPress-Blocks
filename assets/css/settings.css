@@ -224,6 +224,15 @@ li.block-config-item {
     padding: 20px 10px;
 }
 
+li.block-config-item .block-title {
+    display: inline-block;
+    max-width: 130px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
 li.block-config-item .block-icon svg {
     vertical-align: middle;
     width: auto;
@@ -235,6 +244,7 @@ li.block-config-item .block-config-button {
     line-height: 30px;
     float: right;
     font-size: 25px;
+    margin: 0;
     margin-right: 10px;
     cursor: pointer;
     color: #888;
