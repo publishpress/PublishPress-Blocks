@@ -637,6 +637,36 @@ input.ju-radiobox:focus {
     box-shadow: 1px 1px 12px #ccc;
 }
 
+.rtl .ju-main-wrapper {
+    margin-left: 0;
+    margin-right: -20px;
+}
+
+.rtl .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab {
+    text-align: inherit;
+}
+
+.rtl .ju-main-wrapper .ju-right-panel {
+    margin-left: 0;
+    margin-right: 300px;
+}
+
+.rtl .ju-main-wrapper .ju-left-panel-toggle {
+    left: unset;
+    right: 35px;
+    -webkit-border-radius: 25px 0 0 25px;
+    -moz-border-radius: 25px 0 0 25px;
+    border-radius: 25px 0 0 25px;
+}
+
+.rtl .ju-setting-label {
+    float: right;
+}
+
+.rtl .ju-switch-button {
+    float: left;
+}
+
 @media screen and (max-width: 960px) {
     .ju-main-wrapper .ju-left-panel {
         display: none;
@@ -650,6 +680,10 @@ input.ju-radiobox:focus {
     .ju-main-wrapper .ju-left-panel-toggle {
         display: block;
     }
+
+    .rtl .ju-main-wrapper .ju-right-panel {
+        margin-right: 0;
+    }
 }
 
 @media screen and (max-width: 782px) {
@@ -659,6 +693,10 @@ input.ju-radiobox:focus {
 
     .ju-settings-option {
         width: 98%;
+    }
+
+    .rtl .ju-main-wrapper .ju-left-panel-toggle {
+        right: 0;
     }
 }
 

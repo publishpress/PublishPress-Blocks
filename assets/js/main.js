@@ -12,18 +12,35 @@
         $('.ju-left-panel-toggle').unbind('click').click(function () {
             var leftPanel = $('.ju-left-panel');
             var wpLeftPanel = $('#adminmenuwrap');
+            var rtl = $('body').hasClass('rtl');
 
             if (leftPanel.is(':visible')) {
                 if (wpLeftPanel.is(':visible')) {
-                    $(this).css('left', 35);
+                    if (!rtl) {
+                        $(this).css('left', 35);
+                    } else {
+                        $(this).css('right', 35);
+                    }
                 } else {
-                    $(this).css('left', 0);
+                    if (!rtl) {
+                        $(this).css('left', 0);
+                    } else {
+                        $(this).css('right', 0);
+                    }
                 }
             } else {
                 if (wpLeftPanel.is(':visible')) {
-                    $(this).css('left', 335);
+                    if (!rtl) {
+                        $(this).css('left', 335);
+                    } else {
+                        $(this).css('right', 335);
+                    }
                 } else {
-                    $(this).css('left', 290);
+                    if (!rtl) {
+                        $(this).css('left', 290);
+                    } else {
+                        $(this).css('right', 290);
+                    }
                 }
             }
 
