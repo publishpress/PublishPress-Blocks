@@ -239,7 +239,7 @@ float: left;'
     {
         return array_merge(
             $styles,
-            array('justify-content', 'align-items')
+            array('justify-content', 'align-items', 'border-radius')
         );
     }
 
