@@ -239,7 +239,7 @@ float: left;'
     {
         return array_merge(
             $styles,
-            array('justify-content', 'align-items')
+            array('justify-content', 'align-items', 'border-radius')
         );
     }
 
@@ -1564,6 +1564,12 @@ float: left;'
                 $save_config['enable_blocks_spacing'] = 1;
             } else {
                 $save_config['enable_blocks_spacing'] = 0;
+            }
+
+            if (isset($_POST['disable_wpautop'])) {
+                $save_config['disable_wpautop'] = 1;
+            } else {
+                $save_config['disable_wpautop'] = 0;
             }
 
             $save_config['google_api_key'] = $_POST['google_api_key'];
@@ -3124,9 +3130,23 @@ float: left;'
      */
     public function addFrontendContentAssets($content)
     {
+        // Check to disable autop
+        $saved_settings = false;
+        if (has_filter('the_content', 'wpautop')) {
+            if (!$saved_settings) {
+                $saved_settings = get_option('advgb_settings');
+            }
+
+            if (!empty($saved_settings['disable_wpautop']) || !isset($saved_settings['disable_wpautop'])) {
+                remove_filter('the_content', 'wpautop');
+            }
+        }
+
         wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
         if (strpos($content, 'wp-block-gallery') !== false) {
-            $saved_settings = get_option('advgb_settings');
+            if (!$saved_settings) {
+                $saved_settings = get_option('advgb_settings');
+            }
 
             if ($saved_settings['gallery_lightbox']) {
                 wp_enqueue_style('colorbox_style');
