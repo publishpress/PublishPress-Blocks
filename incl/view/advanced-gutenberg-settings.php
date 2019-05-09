@@ -51,7 +51,7 @@ usort($advgb_blocks, sortBy('title'));
 
 $gallery_lightbox_checked         = $saved_settings['gallery_lightbox'] ? 'checked' : '';
 $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] ? 'checked' : '';
-$disable_wpautop                  = !empty($saved_settings['disable_wpautop']) ? 'checked' : '';
+$disable_wpautop_checked          = !empty($saved_settings['disable_wpautop']) ? 'checked' : '';
 $google_api_key_saved             = isset($saved_settings['google_api_key']) ? $saved_settings['google_api_key'] : '';
 $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
@@ -59,6 +59,10 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
 $editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
 $default_thumb                    = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
 $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
+
+if (!isset($saved_settings['disable_wpautop'])) {
+    $disable_wpautop_checked = 'checked';
+}
 ?>
 
 <div id="advgb-settings-container">
@@ -152,7 +156,7 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                                 <input type="checkbox" name="disable_wpautop"
                                        id="ag_disable_wpautop"
                                        value="1"
-                                    <?php echo esc_attr($disable_wpautop) ?>
+                                    <?php echo esc_attr($disable_wpautop_checked) ?>
                                 />
                                 <span class="slider"></span>
                             </label>
