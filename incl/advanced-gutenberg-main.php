@@ -1566,6 +1566,12 @@ float: left;'
                 $save_config['enable_blocks_spacing'] = 0;
             }
 
+            if (isset($_POST['disable_wpautop'])) {
+                $save_config['disable_wpautop'] = 1;
+            } else {
+                $save_config['disable_wpautop'] = 0;
+            }
+
             $save_config['google_api_key'] = $_POST['google_api_key'];
             $save_config['blocks_spacing'] = $_POST['blocks_spacing'];
             $save_config['blocks_icon_color'] = $_POST['blocks_icon_color'];
