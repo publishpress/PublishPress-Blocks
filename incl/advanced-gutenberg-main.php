@@ -3130,9 +3130,23 @@ float: left;'
      */
     public function addFrontendContentAssets($content)
     {
+        // Check to disable autop
+        $saved_settings = false;
+        if (has_filter('the_content', 'wpautop')) {
+            if (!$saved_settings) {
+                $saved_settings = get_option('advgb_settings');
+            }
+
+            if (!empty($saved_settings['disable_wpautop'])) {
+                remove_filter('the_content', 'wpautop');
+            }
+        }
+
         wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js');
         if (strpos($content, 'wp-block-gallery') !== false) {
-            $saved_settings = get_option('advgb_settings');
+            if (!$saved_settings) {
+                $saved_settings = get_option('advgb_settings');
+            }
 
             if ($saved_settings['gallery_lightbox']) {
                 wp_enqueue_style('colorbox_style');
