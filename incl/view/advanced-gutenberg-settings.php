@@ -51,6 +51,7 @@ usort($advgb_blocks, sortBy('title'));
 
 $gallery_lightbox_checked         = $saved_settings['gallery_lightbox'] ? 'checked' : '';
 $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] ? 'checked' : '';
+$disable_wpautop                  = !empty($saved_settings['disable_wpautop']) ? 'checked' : '';
 $google_api_key_saved             = isset($saved_settings['google_api_key']) ? $saved_settings['google_api_key'] : '';
 $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
@@ -129,6 +130,29 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                                        id="gallery_lightbox_caption"
                                        value="1"
                                     <?php echo esc_attr($gallery_lightbox_caption_checked) ?>
+                                />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="ag_disable_wpautop"
+                               class="ju-setting-label advgb_qtip"
+                               data-qtip="<?php esc_attr_e(
+                                   'Remove the WordPress function autop, used to prevent unwanted paragraph to be added in some blocks',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Remove Autop', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="ju-switch-button">
+                            <label class="switch">
+                                <input type="checkbox" name="disable_wpautop"
+                                       id="ag_disable_wpautop"
+                                       value="1"
+                                    <?php echo esc_attr($disable_wpautop) ?>
                                 />
                                 <span class="slider"></span>
                             </label>
