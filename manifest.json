@@ -41,15 +41,15 @@
     "1.10.10": [
       {
         "type": "feature",
-        "title": "Add option to disable wpautop"
+        "title": "Add option to disable wpautop (automatic paragraph)"
       },
       {
         "type": "fix",
-        "title": "Support RTL language"
+        "title": "Support RTL language in blocks"
       },
       {
         "type": "fix",
-        "title": "Image lightbox with multi-galleries in one page not group correctly"
+        "title": "Lightbox with multi-galleries per page load group image only"
       }
     ],
     "1.10.9": [
