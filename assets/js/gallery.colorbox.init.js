@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+    var galGroup = 1;
     $('.wp-block-gallery').each(function () {
         // Add lightbox for images
         $(this).find('.blocks-gallery-item').colorbox({
@@ -14,7 +15,7 @@ jQuery(document).ready(function ($) {
             maxHeight: '85%',
             fixed: true,
             className: 'advgb_lightbox',
-            rel: 'gallery',
+            rel: 'gallery' + galGroup,
             href: function () {
                 return $(this).find('img').attr('src');
             },
@@ -23,6 +24,7 @@ jQuery(document).ready(function ($) {
                     .attr('alt', $(this).find('img').attr('alt'))
                     .attr('title', $(this).find('img').attr('title'));
             }
-        })
+        });
+        galGroup++;
     });
 });

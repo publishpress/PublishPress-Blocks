@@ -9,10 +9,7 @@
 }
 
 #profiles-list th {
-    text-align: left;
-}
-
-#profiles-list th {
+    text-align: inherit;
     padding: 10px;
 }
 
