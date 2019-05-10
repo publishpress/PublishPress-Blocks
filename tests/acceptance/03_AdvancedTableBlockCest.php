@@ -48,6 +48,8 @@ class AdvancedTableBlockCest
         foreach([97, 98, 99, 100] as $column) {
             foreach([1, 2, 3, 4] as $row) {
                 $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr['.$row.']/td['.($column-96).']');
+                $I->wait(0.5);
+                $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr['.$row.']/td['.($column-96).']');
                 $I->pressKeys(chr($column).$row);
                 $I->wait(0.5);
             }
