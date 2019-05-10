@@ -151,8 +151,6 @@ pipelines:
       - step: *shared_codeception_core_install
       - step: *shared_codeception_plugin_update
       - step: *shared_codeception_plugin_install
-      - step: *shared_codeception_50_update
-      - step: *shared_codeception_50_install
       - step: *shared_generate_package
     'master':
     - step: *shared_deployment_production

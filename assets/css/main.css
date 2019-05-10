@@ -105,3 +105,8 @@ button:disabled {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+/*Support RTL*/
+.rtl .advgb-header .header-title {
+    margin-right: 10px;
+}

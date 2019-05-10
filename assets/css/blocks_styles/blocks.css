@@ -608,6 +608,10 @@ li.advgb-tab a, li.advgb-tab a:focus, li.advgb-tab a:hover {
     box-shadow: none;
 }
 
+li.advgb-tab a p {
+    margin: 0;
+}
+
 li.advgb-tab.ui-tabs-active {
     background-color: #2196f3 !important;
     border-bottom-color: transparent !important;
