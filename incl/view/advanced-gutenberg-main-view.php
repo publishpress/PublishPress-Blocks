@@ -5,6 +5,7 @@ if (!function_exists('register_block_type') && !defined('GUTENBERG_DEVELOPMENT_M
     echo '<div class="ju-notice-msg ju-notice-error">'. esc_html__('You need to activate Gutenberg to use our plugin!', 'advanced-gutenberg') .'</div>';
     return false;
 }
+$phpver = phpversion();
 
 $tabs_data = array(
     array(
@@ -89,6 +90,15 @@ $tabs_data = array(
                  . '<i class="dashicons dashicons-dismiss ju-notice-close"></i>'
              . '</div>';
         } ?>
+
+        <?php if (version_compare($phpver, '5.6.20', '<')) : ?>
+        <div class="ju-notice-msg ju-notice-error">
+            <?php echo sprintf(
+                'Advanced Gutenberg plugin will drop the support of PHP versions lower than 5.6.20 in the next versions. You are currently on PHP %1$s, please update your PHP version.',
+                esc_html($phpver)
+            ) ?>
+        </div>
+        <?php endif; ?>
 
         <?php foreach ($tabs_data as $thisTab) : ?>
             <?php if ($thisTab['id'] === 'translation') continue; // phpcs:ignore Generic.ControlStructures.InlineControlStructure.NotAllowed -- inline is ok ?>
