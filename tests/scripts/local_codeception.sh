@@ -24,11 +24,11 @@ if [[ -z "$INSTALL_TYPES" ]]; then
 fi
 
 if [[ -z "$PHP_VERSIONS" ]]; then
-    PHP_VERSIONS=('5.6' '7.0' '7.1' '7.2' '7.3')
+    PHP_VERSIONS=('5.2' '5.5' '5.6' '7.0' '7.1' '7.2' '7.3')
 fi
 
 if [[ -z "$WP_VERSIONS" ]]; then
-    WP_VERSIONS=("latest")
+    WP_VERSIONS=("5.1" "latest")
 fi
 
 if [[ -z "$GUTENBERG_TYPES" ]]; then
