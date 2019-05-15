@@ -29,6 +29,8 @@
             };
 
             this.calculateRealColIndex = this.calculateRealColIndex.bind( this );
+            this.isMultiSelected = this.isMultiSelected.bind( this );
+            this.isRangeSelected = this.isRangeSelected.bind( this );
         }
 
         componentWillMount() {
@@ -86,6 +88,18 @@
                     } ) )
                 } ) )
             } );
+        }
+
+        // Check if is multi cells selected
+        isMultiSelected() {
+            const { multiSelected } = this.state;
+            return ( multiSelected && multiSelected.length > 1 );
+        }
+
+        // Check if is range cells selected
+        isRangeSelected() {
+            const { rangeSelected } = this.state;
+            return (rangeSelected && rangeSelected.toCell);
         }
 
         calculateRealColIndex() {
@@ -304,7 +318,7 @@
         mergeCells() {
             const { rangeSelected } = this.state;
 
-            if (!rangeSelected.toCell) {
+            if (!this.isRangeSelected()) {
                 return null;
             }
 
@@ -446,7 +460,7 @@
 
         updateCellsStyles( style ) {
             const { selectedCell, rangeSelected, multiSelected } = this.state;
-            if (!selectedCell && !rangeSelected.toCell && !multiSelected ) {
+            if (!selectedCell && !this.isRangeSelected() && !this.isMultiSelected() ) {
                 return null;
             }
 
@@ -455,7 +469,7 @@
             const { body } = attributes;
             let minRowIdx, maxRowIdx, minColIdx, maxColIdx;
 
-            if (rangeSelected && rangeSelected.toCell) {
+            if (this.isRangeSelected()) {
                 const { fromCell, toCell } = rangeSelected;
                 const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
                 const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
@@ -470,18 +484,18 @@
             }
 
             const newBody = body.map( ( row, curRowIndex ) => {
-                if ((!rangeSelected || (rangeSelected && !rangeSelected.toCell)) && multiSelected.length < 2 && curRowIndex !== rowIndex
-                    || (rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
-                    || (multiSelected && multiSelected.length > 1 && multiSelected.findIndex( (c) => c.rowIndex === curRowIndex ) === -1)
+                if (!this.isRangeSelected() && !this.isMultiSelected() && curRowIndex !== rowIndex
+                    || (this.isRangeSelected() && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
+                    || (this.isMultiSelected() && multiSelected.findIndex( (c) => c.rowIndex === curRowIndex ) === -1)
                 ) {
                     return row;
                 }
 
                 return {
                     cells: row.cells.map( ( cell, curColIndex ) => {
-                        if ((!rangeSelected || (rangeSelected && !rangeSelected.toCell)) && multiSelected.length < 2 && curColIndex === colIndex
-                            || (rangeSelected && rangeSelected.toCell && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
-                            || (multiSelected && multiSelected.length > 1 && multiSelected.findIndex( (c) => c.colIndex === curColIndex && c.rowIndex === curRowIndex ) > -1)
+                        if (!this.isRangeSelected() && !this.isMultiSelected() && curColIndex === colIndex
+                            || (this.isRangeSelected() && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
+                            || (this.isMultiSelected() && multiSelected.findIndex( (c) => c.colIndex === curColIndex && c.rowIndex === curRowIndex ) > -1)
                         ) {
                             cell.styles = AdvTable.parseStyles( cell.styles );
 
@@ -592,37 +606,37 @@
                 {
                     icon: 'table-row-before',
                     title: __( 'Add Row Before' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.insertRow( 0 ),
                 },
                 {
                     icon: 'table-row-after',
                     title: __( 'Add Row After' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.insertRow( 1 ),
                 },
                 {
                     icon: 'table-row-delete',
                     title: __( 'Delete Row' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.deleteRow(),
                 },
                 {
                     icon: 'table-col-before',
                     title: __( 'Add Column Before' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.insertColumn( 0 ),
                 },
                 {
                     icon: 'table-col-after',
                     title: __( 'Add Column After' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.insertColumn( 1 ),
                 },
                 {
                     icon: 'table-col-delete',
                     title: __( 'Delete Column' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.deleteColumn(),
                 },
                 {
@@ -635,8 +649,8 @@
                     title: __( 'Split Merged Cells' ),
                     isDisabled: ! selectedCell
                         || (currentCell && !currentCell.rowSpan && !currentCell.colSpan)
-                        || (rangeSelected && rangeSelected.toCell)
-                        || (multiSelected && multiSelected.length > 1),
+                        || this.isRangeSelected()
+                        || this.isMultiSelected(),
                     onClick: () => this.splitMergedCells(),
                 },
                 {
@@ -649,12 +663,12 @@
                         </svg>
                     ),
                     title: __( 'Merge Cells' ),
-                    isDisabled: !rangeSelected || (rangeSelected && ! rangeSelected.toCell),
+                    isDisabled: !this.isRangeSelected(),
                     onClick: () => this.mergeCells(),
                 },
             ];
 
-            const BORDER_SELECT = [
+            let BORDER_SELECT = [
                 {
                     title: __( 'Border Top' ),
                     icon: (
@@ -699,7 +713,7 @@
                     title: __( 'Border All' ),
                     icon: (
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z"/>
+                            <path d="M3 3v18h18V3H3zm8 16H5v-6h6v6zm0-8H5V5h6v6zm8 8h-6v-6h6v6zm0-8h-6V5h6v6z"/>
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
@@ -931,7 +945,7 @@
                                             && selectedCell.rowIndex === rowIndex
                                             && selectedCell.colIndex === colIndex;
 
-                                        if (rangeSelected && rangeSelected.toCell) {
+                                        if (this.isRangeSelected()) {
                                             const { fromCell, toCell } = rangeSelected;
                                             const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
                                             const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
@@ -946,7 +960,7 @@
                                                 && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
                                         }
 
-                                        if (multiSelected && multiSelected.length > 1) {
+                                        if (this.isMultiSelected()) {
                                             isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1;
                                         }
 

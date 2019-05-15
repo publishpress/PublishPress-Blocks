@@ -2342,6 +2342,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             };
 
             _this.calculateRealColIndex = _this.calculateRealColIndex.bind(_this);
+            _this.isMultiSelected = _this.isMultiSelected.bind(_this);
+            _this.isRangeSelected = _this.isRangeSelected.bind(_this);
             return _this;
         }
 
@@ -2418,6 +2420,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         };
                     })
                 });
+            }
+
+            // Check if is multi cells selected
+
+        }, {
+            key: "isMultiSelected",
+            value: function isMultiSelected() {
+                var multiSelected = this.state.multiSelected;
+
+                return multiSelected && multiSelected.length > 1;
+            }
+
+            // Check if is range cells selected
+
+        }, {
+            key: "isRangeSelected",
+            value: function isRangeSelected() {
+                var rangeSelected = this.state.rangeSelected;
+
+                return rangeSelected && rangeSelected.toCell;
             }
         }, {
             key: "calculateRealColIndex",
@@ -2666,7 +2688,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var rangeSelected = this.state.rangeSelected;
 
 
-                if (!rangeSelected.toCell) {
+                if (!this.isRangeSelected()) {
                     return null;
                 }
 
@@ -2802,12 +2824,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateCellsStyles",
             value: function updateCellsStyles(style) {
+                var _this2 = this;
+
                 var _state3 = this.state,
                     selectedCell = _state3.selectedCell,
                     rangeSelected = _state3.rangeSelected,
                     multiSelected = _state3.multiSelected;
 
-                if (!selectedCell && !rangeSelected.toCell && !multiSelected) {
+                if (!selectedCell && !this.isRangeSelected() && !this.isMultiSelected()) {
                     return null;
                 }
 
@@ -2823,7 +2847,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     minColIdx = void 0,
                     maxColIdx = void 0;
 
-                if (rangeSelected && rangeSelected.toCell) {
+                if (this.isRangeSelected()) {
                     var fromCell = rangeSelected.fromCell,
                         toCell = rangeSelected.toCell;
 
@@ -2840,7 +2864,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 var newBody = body.map(function (row, curRowIndex) {
-                    if ((!rangeSelected || rangeSelected && !rangeSelected.toCell) && multiSelected.length < 2 && curRowIndex !== rowIndex || rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) || multiSelected && multiSelected.length > 1 && multiSelected.findIndex(function (c) {
+                    if (!_this2.isRangeSelected() && !_this2.isMultiSelected() && curRowIndex !== rowIndex || _this2.isRangeSelected() && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) || _this2.isMultiSelected() && multiSelected.findIndex(function (c) {
                         return c.rowIndex === curRowIndex;
                     }) === -1) {
                         return row;
@@ -2848,7 +2872,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     return {
                         cells: row.cells.map(function (cell, curColIndex) {
-                            if ((!rangeSelected || rangeSelected && !rangeSelected.toCell) && multiSelected.length < 2 && curColIndex === colIndex || rangeSelected && rangeSelected.toCell && cell.cI >= minColIdx && cell.cI <= maxColIdx || multiSelected && multiSelected.length > 1 && multiSelected.findIndex(function (c) {
+                            if (!_this2.isRangeSelected() && !_this2.isMultiSelected() && curColIndex === colIndex || _this2.isRangeSelected() && cell.cI >= minColIdx && cell.cI <= maxColIdx || _this2.isMultiSelected() && multiSelected.findIndex(function (c) {
                                 return c.colIndex === curColIndex && c.rowIndex === curRowIndex;
                             }) > -1) {
                                 cell.styles = AdvTable.parseStyles(cell.styles);
@@ -2929,7 +2953,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _this2 = this;
+                var _this3 = this;
 
                 var _props11 = this.props,
                     attributes = _props11.attributes,
@@ -2960,7 +2984,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Column Count'),
                                 value: initCol,
                                 onChange: function onChange(value) {
-                                    return _this2.setState({ initCol: value });
+                                    return _this3.setState({ initCol: value });
                                 },
                                 min: "1"
                             }),
@@ -2969,14 +2993,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Row Count'),
                                 value: initRow,
                                 onChange: function onChange(value) {
-                                    return _this2.setState({ initRow: value });
+                                    return _this3.setState({ initRow: value });
                                 },
                                 min: "1"
                             }),
                             React.createElement(
                                 Button,
                                 { isPrimary: true, onClick: function onClick() {
-                                        return _this2.createTable();
+                                        return _this3.createTable();
                                     } },
                                 __('Create')
                             ),
@@ -2996,44 +3020,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var TABLE_CONTROLS = [{
                     icon: 'table-row-before',
                     title: __('Add Row Before'),
-                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
-                        return _this2.insertRow(0);
+                        return _this3.insertRow(0);
                     }
                 }, {
                     icon: 'table-row-after',
                     title: __('Add Row After'),
-                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
-                        return _this2.insertRow(1);
+                        return _this3.insertRow(1);
                     }
                 }, {
                     icon: 'table-row-delete',
                     title: __('Delete Row'),
-                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
-                        return _this2.deleteRow();
+                        return _this3.deleteRow();
                     }
                 }, {
                     icon: 'table-col-before',
                     title: __('Add Column Before'),
-                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
-                        return _this2.insertColumn(0);
+                        return _this3.insertColumn(0);
                     }
                 }, {
                     icon: 'table-col-after',
                     title: __('Add Column After'),
-                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
-                        return _this2.insertColumn(1);
+                        return _this3.insertColumn(1);
                     }
                 }, {
                     icon: 'table-col-delete',
                     title: __('Delete Column'),
-                    isDisabled: !selectedCell || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
-                        return _this2.deleteColumn();
+                        return _this3.deleteColumn();
                     }
                 }, {
                     icon: React.createElement(
@@ -3043,9 +3067,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M4,5v13h17V5H4z M14,7v9h-3V7H14z M6,7h3v9H6V7z M19,16h-3V7h3V16z" })
                     ),
                     title: __('Split Merged Cells'),
-                    isDisabled: !selectedCell || currentCell && !currentCell.rowSpan && !currentCell.colSpan || rangeSelected && rangeSelected.toCell || multiSelected && multiSelected.length > 1,
+                    isDisabled: !selectedCell || currentCell && !currentCell.rowSpan && !currentCell.colSpan || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
-                        return _this2.splitMergedCells();
+                        return _this3.splitMergedCells();
                     }
                 }, {
                     icon: React.createElement(
@@ -3057,9 +3081,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("polygon", { points: "21,4 2,4 2,6 21,6 21,4" })
                     ),
                     title: __('Merge Cells'),
-                    isDisabled: !rangeSelected || rangeSelected && !rangeSelected.toCell,
+                    isDisabled: !this.isRangeSelected(),
                     onClick: function onClick() {
-                        return _this2.mergeCells();
+                        return _this3.mergeCells();
                     }
                 }];
 
@@ -3072,7 +3096,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        return _this2.updateCellsStyles({ borderTopColor: _this2.getCellStyles('borderColor') });
+                        return _this3.updateCellsStyles({ borderTopColor: _this3.getCellStyles('borderColor') });
                     }
                 }, {
                     title: __('Border Right'),
@@ -3083,7 +3107,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        return _this2.updateCellsStyles({ borderRightColor: _this2.getCellStyles('borderColor') });
+                        return _this3.updateCellsStyles({ borderRightColor: _this3.getCellStyles('borderColor') });
                     }
                 }, {
                     title: __('Border Bottom'),
@@ -3094,7 +3118,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        return _this2.updateCellsStyles({ borderBottomColor: _this2.getCellStyles('borderColor') });
+                        return _this3.updateCellsStyles({ borderBottomColor: _this3.getCellStyles('borderColor') });
                     }
                 }, {
                     title: __('Border Left'),
@@ -3105,22 +3129,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        return _this2.updateCellsStyles({ borderLeftColor: _this2.getCellStyles('borderColor') });
+                        return _this3.updateCellsStyles({ borderLeftColor: _this3.getCellStyles('borderColor') });
                     }
                 }, {
                     title: __('Border All'),
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z" }),
+                        React.createElement("path", { d: "M3 3v18h18V3H3zm8 16H5v-6h6v6zm0-8H5V5h6v6zm8 8h-6v-6h6v6zm0-8h-6V5h6v6z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        return _this2.updateCellsStyles({
-                            borderTopColor: _this2.getCellStyles('borderColor'),
-                            borderRightColor: _this2.getCellStyles('borderColor'),
-                            borderBottomColor: _this2.getCellStyles('borderColor'),
-                            borderLeftColor: _this2.getCellStyles('borderColor')
+                        return _this3.updateCellsStyles({
+                            borderTopColor: _this3.getCellStyles('borderColor'),
+                            borderRightColor: _this3.getCellStyles('borderColor'),
+                            borderBottomColor: _this3.getCellStyles('borderColor'),
+                            borderLeftColor: _this3.getCellStyles('borderColor')
                         });
                     }
                 }, {
@@ -3132,7 +3156,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        return _this2.updateCellsStyles({
+                        return _this3.updateCellsStyles({
                             borderTopColor: undefined,
                             borderRightColor: undefined,
                             borderBottomColor: undefined,
@@ -3206,7 +3230,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 icon: "update",
                                 label: __('Refresh table (Use this after using undo or redo)'),
                                 onClick: function onClick() {
-                                    return _this2.calculateRealColIndex();
+                                    return _this3.calculateRealColIndex();
                                 }
                             })
                         )
@@ -3237,19 +3261,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Background Color'),
                                     value: this.getCellStyles('backgroundColor'),
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ backgroundColor: value });
+                                        return _this3.updateCellsStyles({ backgroundColor: value });
                                     }
                                 }, {
                                     label: __('Text Color'),
                                     value: this.getCellStyles('color'),
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ color: value });
+                                        return _this3.updateCellsStyles({ color: value });
                                     }
                                 }, {
                                     label: __('Border Color'),
                                     value: this.getCellStyles('borderColor'),
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ borderColor: value });
+                                        return _this3.updateCellsStyles({ borderColor: value });
                                     }
                                 }]
                             }),
@@ -3261,7 +3285,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     value: this.getCellStyles('borderStyle'),
                                     options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }, { label: __('None'), value: 'none' }],
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ borderStyle: value });
+                                        return _this3.updateCellsStyles({ borderStyle: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
@@ -3270,7 +3294,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 1,
                                     max: 10,
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ borderWidth: value });
+                                        return _this3.updateCellsStyles({ borderWidth: value });
                                     }
                                 }),
                                 React.createElement(
@@ -3302,7 +3326,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 0,
                                     max: 100,
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ paddingTop: value });
+                                        return _this3.updateCellsStyles({ paddingTop: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
@@ -3311,7 +3335,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 0,
                                     max: 100,
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ paddingRight: value });
+                                        return _this3.updateCellsStyles({ paddingRight: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
@@ -3320,7 +3344,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 0,
                                     max: 100,
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ paddingBottom: value });
+                                        return _this3.updateCellsStyles({ paddingBottom: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
@@ -3329,7 +3353,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 0,
                                     max: 100,
                                     onChange: function onChange(value) {
-                                        return _this2.updateCellsStyles({ paddingLeft: value });
+                                        return _this3.updateCellsStyles({ paddingLeft: value });
                                     }
                                 })
                             ),
@@ -3341,12 +3365,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { label: __('Horizontal Align') },
                                     React.createElement(Toolbar, {
                                         controls: HORZ_ALIGNMENT_CONTROLS.map(function (control) {
-                                            var isActive = _this2.getCellStyles('textAlign') === control.align;
+                                            var isActive = _this3.getCellStyles('textAlign') === control.align;
 
                                             return _extends({}, control, {
                                                 isActive: isActive,
                                                 onClick: function onClick() {
-                                                    return _this2.updateCellsStyles({ textAlign: isActive ? undefined : control.align });
+                                                    return _this3.updateCellsStyles({ textAlign: isActive ? undefined : control.align });
                                                 }
                                             });
                                         })
@@ -3357,12 +3381,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { label: __('Vertical Align') },
                                     React.createElement(Toolbar, {
                                         controls: VERT_ALIGNMENT_CONTROLS.map(function (control) {
-                                            var isActive = _this2.getCellStyles('verticalAlign') === control.align;
+                                            var isActive = _this3.getCellStyles('verticalAlign') === control.align;
 
                                             return _extends({}, control, {
                                                 isActive: isActive,
                                                 onClick: function onClick() {
-                                                    return _this2.updateCellsStyles({ verticalAlign: isActive ? undefined : control.align });
+                                                    return _this3.updateCellsStyles({ verticalAlign: isActive ? undefined : control.align });
                                                 }
                                             });
                                         })
@@ -3393,7 +3417,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                         var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex;
 
-                                        if (rangeSelected && rangeSelected.toCell) {
+                                        if (_this3.isRangeSelected()) {
                                             var fromCell = rangeSelected.fromCell,
                                                 toCell = rangeSelected.toCell;
 
@@ -3407,7 +3431,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
                                         }
 
-                                        if (multiSelected && multiSelected.length > 1) {
+                                        if (_this3.isMultiSelected()) {
                                             isSelected = multiSelected.findIndex(function (c) {
                                                 return c.rowIndex === rowIndex && c.colIndex === colIndex;
                                             }) > -1;
@@ -3437,7 +3461,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                             RCI: cI
                                                         };
 
-                                                        _this2.setState({
+                                                        _this3.setState({
                                                             rangeSelected: { fromCell: _fromCell, toCell: _toCell },
                                                             multiSelected: null
                                                         });
@@ -3453,12 +3477,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                             multiCells.splice(existCell, 1);
                                                         }
 
-                                                        _this2.setState({
+                                                        _this3.setState({
                                                             multiSelected: multiCells,
                                                             rangeSelected: null
                                                         });
                                                     } else {
-                                                        _this2.setState({
+                                                        _this3.setState({
                                                             rangeSelected: {
                                                                 fromCell: {
                                                                     rowIdx: rowIndex,
@@ -3478,16 +3502,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     if (willSetContent) clearTimeout(willSetContent);
                                                     lastValue = value;
                                                     willSetContent = setTimeout(function () {
-                                                        return _this2.updateCellContent(value, selectedCell);
+                                                        return _this3.updateCellContent(value, selectedCell);
                                                     }, 1000);
                                                 },
                                                 unstableOnFocus: function unstableOnFocus() {
                                                     if (willSetContent) {
-                                                        _this2.updateCellContent(lastValue, selectedCell);
+                                                        _this3.updateCellContent(lastValue, selectedCell);
                                                         clearTimeout(willSetContent);
                                                         willSetContent = null;
                                                     }
-                                                    _this2.setState({ selectedCell: cell });
+                                                    _this3.setState({ selectedCell: cell });
                                                 }
                                             })
                                         );
