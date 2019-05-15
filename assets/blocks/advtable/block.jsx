@@ -500,6 +500,7 @@
                             cell.styles = AdvTable.parseStyles( cell.styles );
 
                             if (style.borderColor) {
+                                // Set border color
                                 if (cell.styles.borderTopColor) {
                                     cell.styles = { ...cell.styles, borderTopColor: style.borderColor };
                                 }
@@ -514,6 +515,36 @@
                                 }
 
                                 cell.borderColorSaved = style.borderColor;
+                            } else if (style.setBorder) {
+                                // Set border
+                                const cellBorderColor = cell.borderColorSaved || '#000';
+                                switch (style.setBorder) {
+                                    case 'top':
+                                        cell.styles = { ...cell.styles, borderTopColor: cellBorderColor };
+                                        break;
+                                    case 'right':
+                                        cell.styles = { ...cell.styles, borderRightColor: cellBorderColor };
+                                        break;
+                                    case 'bottom':
+                                        cell.styles = { ...cell.styles, borderBottomColor: cellBorderColor };
+                                        break;
+                                    case 'left':
+                                        cell.styles = { ...cell.styles, borderLeftColor: cellBorderColor };
+                                        break;
+                                    case 'all':
+                                        cell.styles = {
+                                            ...cell.styles,
+                                            borderTopColor: cellBorderColor,
+                                            borderRightColor: cellBorderColor,
+                                            borderBottomColor: cellBorderColor,
+                                            borderLeftColor: cellBorderColor,
+                                        };
+                                        break;
+                                    case 'vert':
+                                        break;
+                                    default: // Nothing
+                                        break;
+                                }
                             } else {
                                 cell.styles = { ...cell.styles, ...style };
                             }
@@ -677,7 +708,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( { borderTopColor: this.getCellStyles( 'borderColor' ) } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'top' } ),
                 },
                 {
                     title: __( 'Border Right' ),
@@ -687,7 +718,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( { borderRightColor: this.getCellStyles( 'borderColor' ) } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'right' } ),
                 },
                 {
                     title: __( 'Border Bottom' ),
@@ -697,7 +728,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( { borderBottomColor: this.getCellStyles( 'borderColor' ) } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'bottom' } ),
                 },
                 {
                     title: __( 'Border Left' ),
@@ -707,7 +738,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( { borderLeftColor: this.getCellStyles( 'borderColor' ) } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'left' } ),
                 },
                 {
                     title: __( 'Border All' ),
@@ -717,12 +748,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( {
-                        borderTopColor: this.getCellStyles( 'borderColor' ),
-                        borderRightColor: this.getCellStyles( 'borderColor' ),
-                        borderBottomColor: this.getCellStyles( 'borderColor' ),
-                        borderLeftColor: this.getCellStyles( 'borderColor' ),
-                    } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'all' } ),
                 },
                 {
                     title: __( 'Border None' ),
@@ -740,6 +766,53 @@
                     } ),
                 },
             ];
+
+            if (this.isRangeSelected()) {
+                const EXTRA_BORDER_SELECT = [
+                    {
+                        title: __( 'Border Vertical' ),
+                        icon: (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3 9h2V7H3v2zm0-4h2V3H3v2zm4 16h2v-2H7v2zm0-8h2v-2H7v2zm-4 0h2v-2H3v2zm0 8h2v-2H3v2zm0-4h2v-2H3v2zM7 5h2V3H7v2zm12 12h2v-2h-2v2zm-8 4h2V3h-2v18zm8 0h2v-2h-2v2zm0-8h2v-2h-2v2zm0-10v2h2V3h-2zm0 6h2V7h-2v2zm-4-4h2V3h-2v2zm0 16h2v-2h-2v2zm0-8h2v-2h-2v2z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                        ),
+                        onClick: () => this.updateCellsStyles( { setBorder: 'vert' } ),
+                    },
+                    {
+                        title: __( 'Border Horizontal' ),
+                        icon: (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3 21h2v-2H3v2zM5 7H3v2h2V7zM3 17h2v-2H3v2zm4 4h2v-2H7v2zM5 3H3v2h2V3zm4 0H7v2h2V3zm8 0h-2v2h2V3zm-4 4h-2v2h2V7zm0-4h-2v2h2V3zm6 14h2v-2h-2v2zm-8 4h2v-2h-2v2zm-8-8h18v-2H3v2zM19 3v2h2V3h-2zm0 6h2V7h-2v2zm-8 8h2v-2h-2v2zm4 4h2v-2h-2v2zm4 0h2v-2h-2v2z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                        ),
+                        onClick: () => this.updateCellsStyles( { setBorder: 'horz' } ),
+                    },
+                    {
+                        title: __( 'Border Inner' ),
+                        icon: (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                        ),
+                        onClick: () => this.updateCellsStyles( { setBorder: 'inner' } ),
+                    },
+                    {
+                        title: __( 'Border Outer' ),
+                        icon: (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                        ),
+                        onClick: () => this.updateCellsStyles( { setBorder: 'outer' } ),
+                    },
+                ];
+
+                BORDER_SELECT = [...BORDER_SELECT, ...EXTRA_BORDER_SELECT];
+            }
 
             const HORZ_ALIGNMENT_CONTROLS = [
                 {
