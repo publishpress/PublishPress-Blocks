@@ -2896,6 +2896,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 } else if (style.setBorder) {
                                     // Set border
                                     var cellBorderColor = cell.borderColorSaved || '#000';
+                                    var cellColSpan = !cell.colSpan ? 0 : parseInt(cell.colSpan) - 1;
+                                    var cellRowSpan = !cell.rowSpan ? 0 : parseInt(cell.rowSpan) - 1;
                                     switch (style.setBorder) {
                                         case 'top':
                                             cell.styles = _extends({}, cell.styles, { borderTopColor: cellBorderColor });
@@ -2917,7 +2919,97 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderLeftColor: cellBorderColor
                                             });
                                             break;
+                                        case 'none':
+                                            cell.styles = _extends({}, cell.styles, {
+                                                borderTopColor: undefined,
+                                                borderRightColor: undefined,
+                                                borderBottomColor: undefined,
+                                                borderLeftColor: undefined
+                                            });
+                                            break;
                                         case 'vert':
+                                            if (cell.cI === minColIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderRightColor: cellBorderColor
+                                                });
+                                            } else if (cell.cI + cellColSpan === maxColIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderLeftColor: cellBorderColor
+                                                });
+                                            } else {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderRightColor: cellBorderColor,
+                                                    borderLeftColor: cellBorderColor
+                                                });
+                                            }
+                                            break;
+                                        case 'horz':
+                                            if (curRowIndex === minRowIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderBottomColor: cellBorderColor
+                                                });
+                                            } else if (curRowIndex + cellRowSpan === maxRowIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderTopColor: cellBorderColor
+                                                });
+                                            } else {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderTopColor: cellBorderColor,
+                                                    borderBottomColor: cellBorderColor
+                                                });
+                                            }
+                                            break;
+                                        case 'inner':
+                                            if (curRowIndex === minRowIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderBottomColor: cellBorderColor
+                                                });
+                                            } else if (curRowIndex + cellRowSpan === maxRowIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderTopColor: cellBorderColor
+                                                });
+                                            } else {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderTopColor: cellBorderColor,
+                                                    borderBottomColor: cellBorderColor
+                                                });
+                                            }
+
+                                            if (cell.cI === minColIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderRightColor: cellBorderColor
+                                                });
+                                            } else if (cell.cI + cellColSpan === maxColIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderLeftColor: cellBorderColor
+                                                });
+                                            } else {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderRightColor: cellBorderColor,
+                                                    borderLeftColor: cellBorderColor
+                                                });
+                                            }
+                                            break;
+                                        case 'outer':
+                                            if (curRowIndex === minRowIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderTopColor: cellBorderColor
+                                                });
+                                            } else if (curRowIndex + cellRowSpan === maxRowIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderBottomColor: cellBorderColor
+                                                });
+                                            }
+
+                                            if (cell.cI === minColIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderLeftColor: cellBorderColor
+                                                });
+                                            } else if (cell.cI + cellColSpan === maxColIdx) {
+                                                cell.styles = _extends({}, cell.styles, {
+                                                    borderRightColor: cellBorderColor
+                                                });
+                                            }
                                             break;
                                         default:
                                             // Nothing
@@ -3182,12 +3274,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
-                        return _this3.updateCellsStyles({
-                            borderTopColor: undefined,
-                            borderRightColor: undefined,
-                            borderBottomColor: undefined,
-                            borderLeftColor: undefined
-                        });
+                        return _this3.updateCellsStyles({ setBorder: 'none' });
                     }
                 }];
 
@@ -3219,7 +3306,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                            React.createElement("path", { d: "M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z" }),
+                            React.createElement("path", { d: "M3 21h2v-2H3v2zm4 0h2v-2H7v2zM5 7H3v2h2V7zM3 17h2v-2H3v2zM9 3H7v2h2V3zM5 3H3v2h2V3zm12 0h-2v2h2V3zm2 6h2V7h-2v2zm0-6v2h2V3h-2zm-4 18h2v-2h-2v2zM13 3h-2v8H3v2h8v8h2v-8h8v-2h-8V3zm6 18h2v-2h-2v2zm0-4h2v-2h-2v2z" }),
                             React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                         ),
                         onClick: function onClick() {
