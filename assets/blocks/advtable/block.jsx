@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, PanelColorSettings } = wpEditor;
-    const { PanelBody, BaseControl, RangeControl, SelectControl, TextControl, IconButton, Button, Toolbar, DropdownMenu, Tooltip } = wpComponents;
+    const { PanelBody, BaseControl, RangeControl, SelectControl, ToggleControl, TextControl, IconButton, Button, Toolbar, DropdownMenu, Tooltip } = wpComponents;
     const { times } = lodash;
 
     const tableBlockIcon = (
@@ -709,7 +709,7 @@
 
         render() {
             const { attributes, setAttributes, className } = this.props;
-            const { body, maxWidth } = attributes;
+            const { head, body, foot, maxWidth } = attributes;
             const { initRow, initCol, selectedCell, rangeSelected, multiSelected } = this.state;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
             const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
@@ -1000,6 +1000,16 @@
                                 value={ maxWidth }
                                 onChange={ ( value ) => setAttributes( { maxWidth: value } ) }
                             />
+                            <ToggleControl
+                                label={ __( 'Use table header' ) }
+                                checked={ head && head.length }
+                                onChange={ () => null }
+                            />
+                            <ToggleControl
+                                label={ __( 'Use table footer' ) }
+                                checked={ foot && foot.length }
+                                onChange={ () => null }
+                            />
                         </PanelBody>
                         <PanelBody title={ __( 'Cell Settings' ) }>
                             <PanelColorSettings
@@ -1237,6 +1247,40 @@
         category: 'advgb-category',
         keywords: [ __( 'table' ), __( 'cell' ), __( 'data' ) ],
         attributes: {
+            head: {
+                type: 'array',
+                default: [],
+                source: 'query',
+                selector: 'thead tr',
+                query: {
+                    cells: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'td, th',
+                        query: {
+                            content: {
+                                source: 'html',
+                            },
+                            styles: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'style',
+                            },
+                            colSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'colspan',
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color',
+                            }
+                        },
+                    },
+                },
+            },
             body: {
                 type: 'array',
                 default: [],
@@ -1266,6 +1310,40 @@
                                 type: 'string',
                                 source: 'attribute',
                                 attribute: 'rowspan',
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color',
+                            }
+                        },
+                    },
+                },
+            },
+            foot: {
+                type: 'array',
+                default: [],
+                source: 'query',
+                selector: 'tfoot tr',
+                query: {
+                    cells: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'td, th',
+                        query: {
+                            content: {
+                                source: 'html',
+                            },
+                            styles: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'style',
+                            },
+                            colSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'colspan',
                             },
                             borderColorSaved: {
                                 type: 'string',

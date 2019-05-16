@@ -2304,6 +2304,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
+        ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
         Button = wpComponents.Button,
@@ -3082,7 +3083,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props11.attributes,
                     setAttributes = _props11.setAttributes,
                     className = _props11.className;
-                var body = attributes.body,
+                var head = attributes.head,
+                    body = attributes.body,
+                    foot = attributes.foot,
                     maxWidth = attributes.maxWidth;
                 var _state4 = this.state,
                     initRow = _state4.initRow,
@@ -3413,6 +3416,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onChange: function onChange(value) {
                                     return setAttributes({ maxWidth: value });
                                 }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Use table header'),
+                                checked: head && head.length,
+                                onChange: function onChange() {
+                                    return null;
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Use table footer'),
+                                checked: foot && foot.length,
+                                onChange: function onChange() {
+                                    return null;
+                                }
                             })
                         ),
                         React.createElement(
@@ -3717,6 +3734,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'advgb-category',
         keywords: [__('table'), __('cell'), __('data')],
         attributes: {
+            head: {
+                type: 'array',
+                default: [],
+                source: 'query',
+                selector: 'thead tr',
+                query: {
+                    cells: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'td, th',
+                        query: {
+                            content: {
+                                source: 'html'
+                            },
+                            styles: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'style'
+                            },
+                            colSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'colspan'
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color'
+                            }
+                        }
+                    }
+                }
+            },
             body: {
                 type: 'array',
                 default: [],
@@ -3746,6 +3797,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 type: 'string',
                                 source: 'attribute',
                                 attribute: 'rowspan'
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color'
+                            }
+                        }
+                    }
+                }
+            },
+            foot: {
+                type: 'array',
+                default: [],
+                source: 'query',
+                selector: 'tfoot tr',
+                query: {
+                    cells: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'td, th',
+                        query: {
+                            content: {
+                                source: 'html'
+                            },
+                            styles: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'style'
+                            },
+                            colSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'colspan'
                             },
                             borderColorSaved: {
                                 type: 'string',
