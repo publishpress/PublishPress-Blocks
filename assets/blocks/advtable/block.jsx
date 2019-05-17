@@ -731,7 +731,8 @@
 
                         let isSelected = selectedCell
                             && selectedCell.rowIndex === rowIndex
-                            && selectedCell.colIndex === colIndex;
+                            && selectedCell.colIndex === colIndex
+                            && sectionSelected === section;
 
                         if (this.isRangeSelected()) {
                             const { fromCell, toCell } = rangeSelected;
@@ -823,7 +824,10 @@
                                             clearTimeout(willSetContent);
                                             willSetContent = null;
                                         }
-                                        this.setState( { selectedCell: cell } )
+                                        this.setState( {
+                                            selectedCell: cell,
+                                            sectionSelected: section,
+                                        } )
                                     } }
                                 />
                             </td>

@@ -3120,7 +3120,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                             var cell = { rowIndex: rowIndex, colIndex: colIndex, cI: cI };
 
-                            var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex;
+                            var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex && sectionSelected === section;
 
                             if (_this3.isRangeSelected()) {
                                 var fromCell = rangeSelected.fromCell,
@@ -3216,7 +3216,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             clearTimeout(willSetContent);
                                             willSetContent = null;
                                         }
-                                        _this3.setState({ selectedCell: cell });
+                                        _this3.setState({
+                                            selectedCell: cell,
+                                            sectionSelected: section
+                                        });
                                     }
                                 })
                             );
