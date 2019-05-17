@@ -3903,40 +3903,56 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvTable,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
-            var body = attributes.body,
+            var head = attributes.head,
+                body = attributes.body,
+                foot = attributes.foot,
                 maxWidth = attributes.maxWidth;
 
             var maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
+            function renderSection(section) {
+                return attributes[section].map(function (_ref4, rowIndex) {
+                    var cells = _ref4.cells;
+                    return React.createElement(
+                        "tr",
+                        { key: rowIndex },
+                        cells.map(function (_ref5, colIndex) {
+                            var content = _ref5.content,
+                                styles = _ref5.styles,
+                                colSpan = _ref5.colSpan,
+                                rowSpan = _ref5.rowSpan,
+                                borderColorSaved = _ref5.borderColorSaved;
+                            return React.createElement(RichText.Content, {
+                                tagName: "td",
+                                value: content,
+                                key: colIndex,
+                                style: styles,
+                                colSpan: colSpan,
+                                rowSpan: rowSpan,
+                                "data-border-color": borderColorSaved
+                            });
+                        })
+                    );
+                });
+            }
+
             return React.createElement(
                 "table",
                 { className: "advgb-table-frontend", style: { maxWidth: maxWidthVal } },
+                !!head.length && React.createElement(
+                    "thead",
+                    null,
+                    renderSection('head')
+                ),
                 React.createElement(
                     "tbody",
                     null,
-                    body.map(function (_ref4, rowIndex) {
-                        var cells = _ref4.cells;
-                        return React.createElement(
-                            "tr",
-                            { key: rowIndex },
-                            cells.map(function (_ref5, colIndex) {
-                                var content = _ref5.content,
-                                    styles = _ref5.styles,
-                                    colSpan = _ref5.colSpan,
-                                    rowSpan = _ref5.rowSpan,
-                                    borderColorSaved = _ref5.borderColorSaved;
-                                return React.createElement(RichText.Content, {
-                                    tagName: "td",
-                                    value: content,
-                                    key: colIndex,
-                                    style: styles,
-                                    colSpan: colSpan,
-                                    rowSpan: rowSpan,
-                                    "data-border-color": borderColorSaved
-                                });
-                            })
-                        );
-                    })
+                    renderSection('body')
+                ),
+                !!foot.length && React.createElement(
+                    "tfoot",
+                    null,
+                    renderSection('foot')
                 )
             );
         },

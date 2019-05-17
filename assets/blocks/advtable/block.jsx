@@ -1396,28 +1396,36 @@
         },
         edit: AdvTable,
         save: function ( { attributes } ) {
-            const { body, maxWidth } = attributes;
+            const { head, body, foot, maxWidth } = attributes;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
+
+            function renderSection( section ) {
+                return attributes[ section ].map( ( { cells }, rowIndex ) => (
+                    <tr key={ rowIndex }>
+                        { cells.map( ( { content, styles, colSpan, rowSpan, borderColorSaved }, colIndex ) => (
+                            <RichText.Content
+                                tagName="td"
+                                value={ content }
+                                key={ colIndex }
+                                style={ styles }
+                                colSpan={ colSpan }
+                                rowSpan={ rowSpan }
+                                data-border-color={ borderColorSaved }
+                            />
+                        ) ) }
+                    </tr>
+                ) )
+            }
 
             return (
                 <table className="advgb-table-frontend" style={ { maxWidth: maxWidthVal } }>
-                    <tbody>
-                    { body.map( ( { cells }, rowIndex ) => (
-                        <tr key={ rowIndex }>
-                            { cells.map( ( { content, styles, colSpan, rowSpan, borderColorSaved }, colIndex ) => (
-                                <RichText.Content
-                                    tagName="td"
-                                    value={ content }
-                                    key={ colIndex }
-                                    style={ styles }
-                                    colSpan={ colSpan }
-                                    rowSpan={ rowSpan }
-                                    data-border-color={ borderColorSaved }
-                                />
-                            ) ) }
-                        </tr>
-                    ) ) }
-                    </tbody>
+                    {!!head.length && (
+                        <thead>{ renderSection( 'head' ) }</thead>
+                    ) }
+                    <tbody>{ renderSection( 'body' ) }</tbody>
+                    {!!foot.length && (
+                        <tfoot>{ renderSection( 'foot' ) }</tfoot>
+                    ) }
                 </table>
             );
         },
