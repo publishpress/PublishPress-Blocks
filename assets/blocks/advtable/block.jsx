@@ -56,7 +56,7 @@
         }
 
         componentDidMount() {
-            this.calculateRealColIndex();
+            this.calculateRealColIndex( 'head' );
         }
 
         componentDidUpdate() {
@@ -105,49 +105,50 @@
 
         calculateRealColIndex() {
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
 
-            if (!body.length) return null;
+            [ 'head', 'body', 'foot' ].forEach( ( section ) => {
+                if (!attributes[section].length) return null;
 
-            const newBody = body.map( (row, cRow) => {
-                return {
-                    cells: row.cells.map( (cell, cCol) => {
-                        cell.cI = cCol;
-                        for (let i=0;i < cRow; i++) {
-                            for (let j=0; j < body[i].cells.length; j++) {
-                                if (body[i].cells[j] && body[i].cells[j].colSpan) {
-                                    if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
-                                        if (cCol === 0) {
-                                            if (body[i].cells[j].cI <= cell.cI) {
-                                                cell.cI += parseInt( body[i].cells[j].colSpan );
-                                            }
-                                        } else {
-                                            const lastColSpan = !isNaN(parseInt(row.cells[cCol-1].colSpan)) ? parseInt(row.cells[cCol-1].colSpan) : 0;
-                                            if (body[i].cells[j].cI === row.cells[cCol - 1].cI + 1
-                                                || body[i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan
-                                            ) {
-                                                cell.cI += parseInt( body[i].cells[j].colSpan );
+                const newSection = attributes[section].map( (row, cRow) => {
+                    return {
+                        cells: row.cells.map( (cell, cCol) => {
+                            cell.cI = cCol;
+                            for (let i=0;i < cRow; i++) {
+                                for (let j=0; j < attributes[section][i].cells.length; j++) {
+                                    if (attributes[section][i].cells[j] && attributes[section][i].cells[j].colSpan) {
+                                        if (attributes[section][i].cells[j].rowSpan && i + parseInt(attributes[section][i].cells[j].rowSpan) > cRow) {
+                                            if (cCol === 0) {
+                                                if (attributes[section][i].cells[j].cI <= cell.cI) {
+                                                    cell.cI += parseInt( attributes[section][i].cells[j].colSpan );
+                                                }
+                                            } else {
+                                                const lastColSpan = !isNaN(parseInt(row.cells[cCol-1].colSpan)) ? parseInt(row.cells[cCol-1].colSpan) : 0;
+                                                if (attributes[section][i].cells[j].cI === row.cells[cCol - 1].cI + 1
+                                                    || attributes[section][i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan
+                                                ) {
+                                                    cell.cI += parseInt( attributes[section][i].cells[j].colSpan );
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        for (let j=0; j < cCol; j++) {
-                            if (row.cells[j]) {
-                                if (row.cells[j].colSpan) {
-                                    cell.cI += parseInt( row.cells[j].colSpan ) - 1;
+                            for (let j=0; j < cCol; j++) {
+                                if (row.cells[j]) {
+                                    if (row.cells[j].colSpan) {
+                                        cell.cI += parseInt( row.cells[j].colSpan ) - 1;
+                                    }
                                 }
                             }
-                        }
 
-                        return cell;
-                    } )
-                }
-            } );
+                            return cell;
+                        } )
+                    }
+                } );
 
-            setAttributes( { body: newBody } );
+                setAttributes( { [section] : newSection } );
+            } )
         }
 
         insertRow( offset ) {
@@ -727,7 +728,7 @@
             return attributes[ section ].map( ( { cells }, rowIndex ) => (
                 <tr key={ rowIndex }>
                     {cells.map( ( { content, styles, colSpan, rowSpan, cI }, colIndex ) => {
-                        const cell = { rowIndex, colIndex, cI };
+                        const cell = { rowIndex, colIndex, cI, section };
 
                         let isSelected = selectedCell
                             && selectedCell.rowIndex === rowIndex
@@ -736,8 +737,8 @@
 
                         if (this.isRangeSelected()) {
                             const { fromCell, toCell } = rangeSelected;
-                            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
-                            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                            const fCell = attributes[ sectionSelected ][fromCell.rowIdx].cells[fromCell.colIdx];
+                            const tCell = attributes[ sectionSelected ][toCell.rowIdx].cells[toCell.colIdx];
                             const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
                             const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
                             const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
@@ -747,10 +748,12 @@
                                 && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
                                 && cI >= Math.min(fromCell.RCI, toCell.RCI)
                                 && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
+                                && section === sectionSelected
                         }
 
                         if (this.isMultiSelected()) {
-                            isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1;
+                            isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1
+                                && multiSelected[0].section === section;
                         }
 
 
@@ -772,10 +775,15 @@
                                         if (!rangeSelected.fromCell) return;
 
                                         const { fromCell } = rangeSelected;
+                                        if (section !== fromCell.section) {
+                                            alert( __( 'Cannot select multi cells from difference section!' ) );
+                                            return;
+                                        }
                                         const toCell = {
                                             rowIdx: rowIndex,
                                             colIdx: colIndex,
                                             RCI: cI,
+                                            section: section,
                                         };
 
                                         this.setState( {
@@ -785,6 +793,11 @@
                                     } else if (e.ctrlKey || e.metaKey) {
                                         const multiCells = multiSelected ? multiSelected : [];
                                         const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
+
+                                        if (multiCells.length && section !== multiCells[0].section) {
+                                            alert( __( 'Cannot select multi cells from difference section!' ) );
+                                            return;
+                                        }
 
                                         if (existCell === -1) {
                                             multiCells.push(cell);
@@ -803,6 +816,7 @@
                                                     rowIdx: rowIndex,
                                                     colIdx: colIndex,
                                                     RCI: cI,
+                                                    section: section,
                                                 },
                                             },
                                             multiSelected: [ cell ],

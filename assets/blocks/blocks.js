@@ -2280,9 +2280,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2377,7 +2377,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidMount",
             value: function componentDidMount() {
-                this.calculateRealColIndex();
+                this.calculateRealColIndex('head');
             }
         }, {
             key: "componentDidUpdate",
@@ -2449,48 +2449,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
-                var body = attributes.body;
 
 
-                if (!body.length) return null;
+                ['head', 'body', 'foot'].forEach(function (section) {
+                    if (!attributes[section].length) return null;
 
-                var newBody = body.map(function (row, cRow) {
-                    return {
-                        cells: row.cells.map(function (cell, cCol) {
-                            cell.cI = cCol;
-                            for (var i = 0; i < cRow; i++) {
-                                for (var j = 0; j < body[i].cells.length; j++) {
-                                    if (body[i].cells[j] && body[i].cells[j].colSpan) {
-                                        if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
-                                            if (cCol === 0) {
-                                                if (body[i].cells[j].cI <= cell.cI) {
-                                                    cell.cI += parseInt(body[i].cells[j].colSpan);
-                                                }
-                                            } else {
-                                                var lastColSpan = !isNaN(parseInt(row.cells[cCol - 1].colSpan)) ? parseInt(row.cells[cCol - 1].colSpan) : 0;
-                                                if (body[i].cells[j].cI === row.cells[cCol - 1].cI + 1 || body[i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan) {
-                                                    cell.cI += parseInt(body[i].cells[j].colSpan);
+                    var newSection = attributes[section].map(function (row, cRow) {
+                        return {
+                            cells: row.cells.map(function (cell, cCol) {
+                                cell.cI = cCol;
+                                for (var i = 0; i < cRow; i++) {
+                                    for (var j = 0; j < attributes[section][i].cells.length; j++) {
+                                        if (attributes[section][i].cells[j] && attributes[section][i].cells[j].colSpan) {
+                                            if (attributes[section][i].cells[j].rowSpan && i + parseInt(attributes[section][i].cells[j].rowSpan) > cRow) {
+                                                if (cCol === 0) {
+                                                    if (attributes[section][i].cells[j].cI <= cell.cI) {
+                                                        cell.cI += parseInt(attributes[section][i].cells[j].colSpan);
+                                                    }
+                                                } else {
+                                                    var lastColSpan = !isNaN(parseInt(row.cells[cCol - 1].colSpan)) ? parseInt(row.cells[cCol - 1].colSpan) : 0;
+                                                    if (attributes[section][i].cells[j].cI === row.cells[cCol - 1].cI + 1 || attributes[section][i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan) {
+                                                        cell.cI += parseInt(attributes[section][i].cells[j].colSpan);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
 
-                            for (var _j = 0; _j < cCol; _j++) {
-                                if (row.cells[_j]) {
-                                    if (row.cells[_j].colSpan) {
-                                        cell.cI += parseInt(row.cells[_j].colSpan) - 1;
+                                for (var _j = 0; _j < cCol; _j++) {
+                                    if (row.cells[_j]) {
+                                        if (row.cells[_j].colSpan) {
+                                            cell.cI += parseInt(row.cells[_j].colSpan) - 1;
+                                        }
                                     }
                                 }
-                            }
 
-                            return cell;
-                        })
-                    };
+                                return cell;
+                            })
+                        };
+                    });
+
+                    setAttributes(_defineProperty({}, section, newSection));
                 });
-
-                setAttributes({ body: newBody });
             }
         }, {
             key: "insertRow",
@@ -3118,7 +3119,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 rowSpan = _ref2.rowSpan,
                                 cI = _ref2.cI;
 
-                            var cell = { rowIndex: rowIndex, colIndex: colIndex, cI: cI };
+                            var cell = { rowIndex: rowIndex, colIndex: colIndex, cI: cI, section: section };
 
                             var isSelected = selectedCell && selectedCell.rowIndex === rowIndex && selectedCell.colIndex === colIndex && sectionSelected === section;
 
@@ -3126,20 +3127,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 var fromCell = rangeSelected.fromCell,
                                     toCell = rangeSelected.toCell;
 
-                                var fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
-                                var tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                                var fCell = attributes[sectionSelected][fromCell.rowIdx].cells[fromCell.colIdx];
+                                var tCell = attributes[sectionSelected][toCell.rowIdx].cells[toCell.colIdx];
                                 var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
                                 var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
                                 var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
                                 var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
 
-                                isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
+                                isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan) && section === sectionSelected;
                             }
 
                             if (_this3.isMultiSelected()) {
                                 isSelected = multiSelected.findIndex(function (c) {
                                     return c.rowIndex === rowIndex && c.colIndex === colIndex;
-                                }) > -1;
+                                }) > -1 && multiSelected[0].section === section;
                             }
 
                             var cellClassName = [isSelected && 'cell-selected'].filter(Boolean).join(' ');
@@ -3160,10 +3161,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                             var _fromCell = rangeSelected.fromCell;
 
+                                            if (section !== _fromCell.section) {
+                                                alert(__('Cannot select multi cells from difference section!'));
+                                                return;
+                                            }
                                             var _toCell = {
                                                 rowIdx: rowIndex,
                                                 colIdx: colIndex,
-                                                RCI: cI
+                                                RCI: cI,
+                                                section: section
                                             };
 
                                             _this3.setState({
@@ -3175,6 +3181,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             var existCell = multiCells.findIndex(function (cel) {
                                                 return cel.rowIndex === rowIndex && cel.colIndex === colIndex;
                                             });
+
+                                            if (multiCells.length && section !== multiCells[0].section) {
+                                                alert(__('Cannot select multi cells from difference section!'));
+                                                return;
+                                            }
 
                                             if (existCell === -1) {
                                                 multiCells.push(cell);
@@ -3192,7 +3203,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     fromCell: {
                                                         rowIdx: rowIndex,
                                                         colIdx: colIndex,
-                                                        RCI: cI
+                                                        RCI: cI,
+                                                        section: section
                                                     }
                                                 },
                                                 multiSelected: [cell]
