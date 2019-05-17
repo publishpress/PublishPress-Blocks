@@ -670,7 +670,7 @@
         }
 
         updateCellContent( content, cell = null ) {
-            const { selectedCell } = this.state;
+            const { selectedCell, sectionSelected } = this.state;
             if (!selectedCell && !cell) {
                 return null;
             }
@@ -685,9 +685,8 @@
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
 
-            const newBody = body.map( ( row, curRowIndex ) => {
+            const newSection = attributes[ sectionSelected ].map( ( row, curRowIndex ) => {
                 if (curRowIndex !== rowIndex) {
                     return row;
                 }
@@ -706,7 +705,7 @@
                 }
             } );
 
-            setAttributes( { body: newBody } );
+            setAttributes( { [ sectionSelected ]: newSection } );
         }
 
         toggleSection( section ) {
