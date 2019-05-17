@@ -261,7 +261,7 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 }
 
 .wp-block-advgb-table td.cell-selected {
-    outline: 1px solid #2196f3;
+    outline: 2px solid #2196f3;
 }
 
 .advgb-border-item-wrapper {

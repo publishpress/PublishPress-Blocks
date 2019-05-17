@@ -25,6 +25,7 @@
                 selectedCell: null,
                 rangeSelected: null,
                 multiSelected: null,
+                sectionSelected: null,
                 updated: false,
             };
 
@@ -707,6 +708,131 @@
             setAttributes( { body: newBody } );
         }
 
+        toggleSection( section ) {
+            const { attributes, setAttributes } = this.props;
+            const { body } = attributes;
+            const cellsToAdd = [ { cells: body[0].cells.map( (cell) => ( { cI: cell.cI, colSpan: cell.colSpan } ) ) } ];
+
+            if (!attributes[section].length) {
+                return setAttributes( { [section] : cellsToAdd } );
+            }
+
+            return setAttributes( { [section] : [] } );
+        }
+
+        renderSection( section ) {
+            const { attributes } = this.props;
+            const { selectedCell, multiSelected, rangeSelected, sectionSelected } = this.state;
+
+            return attributes[ section ].map( ( { cells }, rowIndex ) => (
+                <tr key={ rowIndex }>
+                    {cells.map( ( { content, styles, colSpan, rowSpan, cI }, colIndex ) => {
+                        const cell = { rowIndex, colIndex, cI };
+
+                        let isSelected = selectedCell
+                            && selectedCell.rowIndex === rowIndex
+                            && selectedCell.colIndex === colIndex;
+
+                        if (this.isRangeSelected()) {
+                            const { fromCell, toCell } = rangeSelected;
+                            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
+                            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+
+                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx)
+                                && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
+                                && cI >= Math.min(fromCell.RCI, toCell.RCI)
+                                && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
+                        }
+
+                        if (this.isMultiSelected()) {
+                            isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1;
+                        }
+
+
+                        const cellClassName = [
+                            isSelected && 'cell-selected',
+                        ].filter( Boolean ).join( ' ' );
+
+                        styles = AdvTable.parseStyles( styles );
+
+                        return (
+                            <td key={ colIndex }
+                                className={ cellClassName }
+                                style={ styles }
+                                colSpan={ colSpan }
+                                rowSpan={ rowSpan }
+                                onClick={ (e) => {
+                                    if (e.shiftKey) {
+                                        if (!rangeSelected) return;
+                                        if (!rangeSelected.fromCell) return;
+
+                                        const { fromCell } = rangeSelected;
+                                        const toCell = {
+                                            rowIdx: rowIndex,
+                                            colIdx: colIndex,
+                                            RCI: cI,
+                                        };
+
+                                        this.setState( {
+                                            rangeSelected: { fromCell, toCell },
+                                            multiSelected: null,
+                                        } );
+                                    } else if (e.ctrlKey || e.metaKey) {
+                                        const multiCells = multiSelected ? multiSelected : [];
+                                        const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
+
+                                        if (existCell === -1) {
+                                            multiCells.push(cell);
+                                        } else {
+                                            multiCells.splice(existCell, 1);
+                                        }
+
+                                        this.setState( {
+                                            multiSelected: multiCells,
+                                            rangeSelected: null,
+                                        } );
+                                    } else {
+                                        this.setState( {
+                                            rangeSelected: {
+                                                fromCell: {
+                                                    rowIdx: rowIndex,
+                                                    colIdx: colIndex,
+                                                    RCI: cI,
+                                                },
+                                            },
+                                            multiSelected: [ cell ],
+                                        } );
+                                    }
+                                } }
+                            >
+                                <RichText
+                                    className="wp-block-table__cell-content"
+                                    value={ content }
+                                    onChange={ ( value ) => {
+                                        if (willSetContent) clearTimeout(willSetContent);
+                                        lastValue = value;
+                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1000);
+                                    } }
+                                    unstableOnFocus={ () => {
+                                        if (willSetContent) {
+                                            this.updateCellContent(lastValue, selectedCell);
+                                            clearTimeout(willSetContent);
+                                            willSetContent = null;
+                                        }
+                                        this.setState( { selectedCell: cell } )
+                                    } }
+                                />
+                            </td>
+                        )
+                    } ) }
+                </tr>
+            ) );
+        }
+
         render() {
             const { attributes, setAttributes, className } = this.props;
             const { head, body, foot, maxWidth } = attributes;
@@ -1003,12 +1129,12 @@
                             <ToggleControl
                                 label={ __( 'Use table header' ) }
                                 checked={ head && head.length }
-                                onChange={ () => null }
+                                onChange={ () => this.toggleSection( 'head' ) }
                             />
                             <ToggleControl
                                 label={ __( 'Use table footer' ) }
                                 checked={ foot && foot.length }
-                                onChange={ () => null }
+                                onChange={ () => this.toggleSection( 'foot' ) }
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Cell Settings' ) }>
@@ -1122,115 +1248,13 @@
                         </PanelBody>
                     </InspectorControls>
                     <table className={ className } style={ { maxWidth: maxWidthVal } }>
-                        <tbody>
-                            {body.map( ( { cells }, rowIndex ) => (
-                                <tr key={ rowIndex }>
-                                    {cells.map( ( { content, styles, colSpan, rowSpan, cI }, colIndex ) => {
-                                        const cell = { rowIndex, colIndex, cI };
-
-                                        let isSelected = selectedCell
-                                            && selectedCell.rowIndex === rowIndex
-                                            && selectedCell.colIndex === colIndex;
-
-                                        if (this.isRangeSelected()) {
-                                            const { fromCell, toCell } = rangeSelected;
-                                            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
-                                            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
-                                            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
-                                            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
-                                            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
-                                            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
-
-                                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx)
-                                                && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
-                                                && cI >= Math.min(fromCell.RCI, toCell.RCI)
-                                                && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
-                                        }
-
-                                        if (this.isMultiSelected()) {
-                                            isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1;
-                                        }
-
-
-                                        const cellClassName = [
-                                            isSelected && 'cell-selected',
-                                        ].filter( Boolean ).join( ' ' );
-
-                                        styles = AdvTable.parseStyles( styles );
-
-                                        return (
-                                            <td key={ colIndex }
-                                                className={ cellClassName }
-                                                style={ styles }
-                                                colSpan={ colSpan }
-                                                rowSpan={ rowSpan }
-                                                onClick={ (e) => {
-                                                    if (e.shiftKey) {
-                                                        if (!rangeSelected) return;
-                                                        if (!rangeSelected.fromCell) return;
-
-                                                        const { fromCell } = rangeSelected;
-                                                        const toCell = {
-                                                            rowIdx: rowIndex,
-                                                            colIdx: colIndex,
-                                                            RCI: cI,
-                                                        };
-
-                                                        this.setState( {
-                                                            rangeSelected: { fromCell, toCell },
-                                                            multiSelected: null,
-                                                        } );
-                                                    } else if (e.ctrlKey || e.metaKey) {
-                                                        const multiCells = multiSelected ? multiSelected : [];
-                                                        const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
-
-                                                        if (existCell === -1) {
-                                                            multiCells.push(cell);
-                                                        } else {
-                                                            multiCells.splice(existCell, 1);
-                                                        }
-
-                                                        this.setState( {
-                                                            multiSelected: multiCells,
-                                                            rangeSelected: null,
-                                                        } );
-                                                    } else {
-                                                        this.setState( {
-                                                            rangeSelected: {
-                                                                fromCell: {
-                                                                    rowIdx: rowIndex,
-                                                                    colIdx: colIndex,
-                                                                    RCI: cI,
-                                                                },
-                                                            },
-                                                            multiSelected: [ cell ],
-                                                        } );
-                                                    }
-                                                } }
-                                            >
-                                                <RichText
-                                                    className="wp-block-table__cell-content"
-                                                    value={ content }
-                                                    onChange={ ( value ) => {
-                                                        if (willSetContent) clearTimeout(willSetContent);
-                                                        lastValue = value;
-                                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1000);
-                                                    } }
-                                                    unstableOnFocus={ () => {
-                                                        if (willSetContent) {
-                                                            this.updateCellContent(lastValue, selectedCell);
-                                                            clearTimeout(willSetContent);
-                                                            willSetContent = null;
-                                                        }
-                                                        this.setState( { selectedCell: cell } )
-                                                    } }
-                                                />
-                                            </td>
-                                        )
-                                    } ) }
-                                </tr>
-                            ) ) }
-                        </tbody>
+                        {!!head.length && (
+                            <thead>{ this.renderSection( 'head' ) }</thead>
+                        ) }
+                        <tbody>{ this.renderSection( 'body' ) }</tbody>
+                        {!!foot.length && (
+                            <tfoot>{ this.renderSection( 'foot' ) }</tfoot>
+                        ) }
                     </table>
                 </Fragment>
             )
