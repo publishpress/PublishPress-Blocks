@@ -431,17 +431,17 @@
         }
 
         getCellStyles( style ) {
-            const { selectedCell } = this.state;
-            const { body } = this.props.attributes;
+            const { selectedCell, sectionSelected } = this.state;
+            const section = this.props.attributes[ sectionSelected ];
 
             if (!selectedCell) return undefined;
 
             const { rowIndex, colIndex } = selectedCell;
 
             if (style === 'borderColor') {
-                return body[rowIndex].cells[colIndex].borderColorSaved;
+                return section[rowIndex].cells[colIndex].borderColorSaved;
             }
-            const styles = AdvTable.parseStyles(body[rowIndex].cells[colIndex].styles);
+            const styles = AdvTable.parseStyles(section[rowIndex].cells[colIndex].styles);
 
             if (typeof styles === 'object') {
                 let convertedStyles = styles[style];
@@ -461,20 +461,20 @@
         }
 
         updateCellsStyles( style ) {
-            const { selectedCell, rangeSelected, multiSelected } = this.state;
+            const { selectedCell, rangeSelected, multiSelected, sectionSelected } = this.state;
             if (!selectedCell && !this.isRangeSelected() && !this.isMultiSelected() ) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
             const { rowIndex, colIndex } = selectedCell;
-            const { body } = attributes;
+            const section = attributes[ sectionSelected ];
             let minRowIdx, maxRowIdx, minColIdx, maxColIdx;
 
             if (this.isRangeSelected()) {
                 const { fromCell, toCell } = rangeSelected;
-                const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
-                const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                const fCell = section[fromCell.rowIdx].cells[fromCell.colIdx];
+                const tCell = section[toCell.rowIdx].cells[toCell.colIdx];
                 const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
                 const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
                 const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
@@ -485,7 +485,7 @@
                 maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
             }
 
-            const newBody = body.map( ( row, curRowIndex ) => {
+            const newSection = section.map( ( row, curRowIndex ) => {
                 if (!this.isRangeSelected() && !this.isMultiSelected() && curRowIndex !== rowIndex
                     || (this.isRangeSelected() && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
                     || (this.isMultiSelected() && multiSelected.findIndex( (c) => c.rowIndex === curRowIndex ) === -1)
@@ -666,7 +666,7 @@
                 }
             } );
 
-            setAttributes( { body: newBody } );
+            setAttributes( { [ section ]: newSection } );
         }
 
         updateCellContent( content, cell = null ) {
