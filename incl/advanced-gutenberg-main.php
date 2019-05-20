@@ -3137,7 +3137,7 @@ float: left;'
                 $saved_settings = get_option('advgb_settings');
             }
 
-            if (!empty($saved_settings['disable_wpautop']) || !isset($saved_settings['disable_wpautop'])) {
+            if (!empty($saved_settings['disable_wpautop'])) {
                 remove_filter('the_content', 'wpautop');
             }
         }
