@@ -2496,7 +2496,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "insertRow",
             value: function insertRow(offset) {
-                var selectedCell = this.state.selectedCell;
+                var _state3 = this.state,
+                    selectedCell = _state3.selectedCell,
+                    sectionSelected = _state3.sectionSelected;
 
 
                 if (!selectedCell) {
@@ -2506,10 +2508,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     setAttributes = _props3.setAttributes;
-                var body = attributes.body;
+
+                var currentSection = attributes[sectionSelected];
                 var rowIndex = selectedCell.rowIndex;
 
-                var newRow = jQuery.extend(true, {}, body[rowIndex]);
+                var newRow = jQuery.extend(true, {}, currentSection[rowIndex]);
                 newRow.cells.map(function (cell) {
                     cell.content = '';
 
@@ -2519,7 +2522,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return !cCell.rowSpan;
                 });
 
-                var newBody = [].concat(_toConsumableArray(body.slice(0, rowIndex + offset)), [newRow], _toConsumableArray(body.slice(rowIndex + offset))).map(function (row, rowIdx) {
+                var newSection = [].concat(_toConsumableArray(currentSection.slice(0, rowIndex + offset)), [newRow], _toConsumableArray(currentSection.slice(rowIndex + offset))).map(function (row, rowIdx) {
                     return {
                         cells: row.cells.map(function (cell) {
                             if (cell.rowSpan) {
@@ -2532,13 +2535,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     };
                 });
 
-                this.setState({ selectedCell: null, updated: true });
-                setAttributes({ body: newBody });
+                this.setState({
+                    selectedCell: null,
+                    sectionSelected: null,
+                    updated: true
+                });
+                setAttributes(_defineProperty({}, sectionSelected, newSection));
             }
         }, {
             key: "deleteRow",
             value: function deleteRow() {
-                var selectedCell = this.state.selectedCell;
+                var _state4 = this.state,
+                    selectedCell = _state4.selectedCell,
+                    sectionSelected = _state4.sectionSelected;
 
 
                 if (!selectedCell) {
@@ -2548,21 +2557,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     setAttributes = _props4.setAttributes;
-                var body = attributes.body;
+
+                var currentSection = attributes[sectionSelected];
                 var rowIndex = selectedCell.rowIndex;
 
 
-                var newBody = body.map(function (row, cRowIdx) {
+                var newSection = currentSection.map(function (row, cRowIdx) {
                     return {
                         cells: row.cells.map(function (cell) {
                             if (cell.rowSpan) {
                                 if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
                                     cell.rowSpan = parseInt(cell.rowSpan) - 1;
                                     if (cRowIdx === rowIndex) {
-                                        var findColIdx = body[cRowIdx + 1].cells.findIndex(function (elm) {
+                                        var findColIdx = currentSection[cRowIdx + 1].cells.findIndex(function (elm) {
                                             return elm.cI === cell.cI || elm.cI > cell.cI;
                                         });
-                                        body[cRowIdx + 1].cells.splice(findColIdx, 0, cell);
+                                        currentSection[cRowIdx + 1].cells.splice(findColIdx, 0, cell);
                                     }
                                 }
                             }
@@ -2572,10 +2582,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     };
                 });
 
-                this.setState({ selectedCell: null, updated: true });
-                setAttributes({ body: newBody.filter(function (row, index) {
-                        return index !== rowIndex;
-                    }) });
+                this.setState({
+                    selectedCell: null,
+                    sectionSelected: null,
+                    updated: true
+                });
+
+                if (newSection.length < 2) {
+                    alert(__('At least 1 row of current section must present.'));
+                    return false;
+                }
+
+                setAttributes(_defineProperty({}, sectionSelected, newSection.filter(function (row, index) {
+                    return index !== rowIndex;
+                })));
             }
         }, {
             key: "insertColumn",
@@ -2686,9 +2706,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "mergeCells",
             value: function mergeCells() {
-                var _state3 = this.state,
-                    rangeSelected = _state3.rangeSelected,
-                    sectionSelected = _state3.sectionSelected;
+                var _state5 = this.state,
+                    rangeSelected = _state5.rangeSelected,
+                    sectionSelected = _state5.sectionSelected;
 
 
                 if (!this.isRangeSelected()) {
@@ -2748,9 +2768,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "splitMergedCells",
             value: function splitMergedCells() {
-                var _state4 = this.state,
-                    selectedCell = _state4.selectedCell,
-                    sectionSelected = _state4.sectionSelected;
+                var _state6 = this.state,
+                    selectedCell = _state6.selectedCell,
+                    sectionSelected = _state6.sectionSelected;
 
 
                 if (!selectedCell) {
@@ -2803,9 +2823,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "getCellStyles",
             value: function getCellStyles(style) {
-                var _state5 = this.state,
-                    selectedCell = _state5.selectedCell,
-                    sectionSelected = _state5.sectionSelected;
+                var _state7 = this.state,
+                    selectedCell = _state7.selectedCell,
+                    sectionSelected = _state7.sectionSelected;
 
                 var section = this.props.attributes[sectionSelected];
 
@@ -2841,11 +2861,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function updateCellsStyles(style) {
                 var _this2 = this;
 
-                var _state6 = this.state,
-                    selectedCell = _state6.selectedCell,
-                    rangeSelected = _state6.rangeSelected,
-                    multiSelected = _state6.multiSelected,
-                    sectionSelected = _state6.sectionSelected;
+                var _state8 = this.state,
+                    selectedCell = _state8.selectedCell,
+                    rangeSelected = _state8.rangeSelected,
+                    multiSelected = _state8.multiSelected,
+                    sectionSelected = _state8.sectionSelected;
 
                 if (!selectedCell && !this.isRangeSelected() && !this.isMultiSelected()) {
                     return null;
@@ -3047,9 +3067,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "updateCellContent",
             value: function updateCellContent(content) {
                 var cell = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-                var _state7 = this.state,
-                    selectedCell = _state7.selectedCell,
-                    sectionSelected = _state7.sectionSelected;
+                var _state9 = this.state,
+                    selectedCell = _state9.selectedCell,
+                    sectionSelected = _state9.sectionSelected;
 
                 if (!selectedCell && !cell) {
                     return null;
@@ -3122,11 +3142,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _this3 = this;
 
                 var attributes = this.props.attributes;
-                var _state8 = this.state,
-                    selectedCell = _state8.selectedCell,
-                    multiSelected = _state8.multiSelected,
-                    rangeSelected = _state8.rangeSelected,
-                    sectionSelected = _state8.sectionSelected;
+                var _state10 = this.state,
+                    selectedCell = _state10.selectedCell,
+                    multiSelected = _state10.multiSelected,
+                    rangeSelected = _state10.rangeSelected,
+                    sectionSelected = _state10.sectionSelected;
 
 
                 return attributes[section].map(function (_ref, rowIndex) {
@@ -3274,12 +3294,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     body = attributes.body,
                     foot = attributes.foot,
                     maxWidth = attributes.maxWidth;
-                var _state9 = this.state,
-                    initRow = _state9.initRow,
-                    initCol = _state9.initCol,
-                    selectedCell = _state9.selectedCell,
-                    rangeSelected = _state9.rangeSelected,
-                    multiSelected = _state9.multiSelected;
+                var _state11 = this.state,
+                    initRow = _state11.initRow,
+                    initCol = _state11.initCol,
+                    selectedCell = _state11.selectedCell,
+                    rangeSelected = _state11.rangeSelected,
+                    multiSelected = _state11.multiSelected;
 
                 var maxWidthVal = !!maxWidth ? maxWidth : undefined;
                 var currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;

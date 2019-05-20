@@ -152,16 +152,16 @@
         }
 
         insertRow( offset ) {
-            const { selectedCell } = this.state;
+            const { selectedCell, sectionSelected } = this.state;
 
             if (!selectedCell) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
+            const currentSection = attributes[ sectionSelected ];
             const { rowIndex } = selectedCell;
-            const newRow = jQuery.extend( true, {}, body[rowIndex] );
+            const newRow = jQuery.extend( true, {}, currentSection[rowIndex] );
             newRow.cells.map( ( cell ) => {
                 cell.content = '';
 
@@ -169,10 +169,10 @@
             } );
             newRow.cells = newRow.cells.filter( ( cCell ) => !cCell.rowSpan );
 
-            const newBody = [
-                ...body.slice( 0, rowIndex + offset ),
+            const newSection = [
+                ...currentSection.slice( 0, rowIndex + offset ),
                 newRow,
-                ...body.slice( rowIndex + offset ),
+                ...currentSection.slice( rowIndex + offset ),
             ].map( ( row, rowIdx ) => ( {
                 cells: row.cells.map( ( cell ) => {
                     if (cell.rowSpan) {
@@ -184,29 +184,33 @@
                 } )
             } ) );
 
-            this.setState( { selectedCell: null, updated: true } );
-            setAttributes( { body: newBody } );
+            this.setState( {
+                selectedCell: null,
+                sectionSelected: null,
+                updated: true,
+            } );
+            setAttributes( { [ sectionSelected ]: newSection } );
         }
 
         deleteRow() {
-            const { selectedCell } = this.state;
+            const { selectedCell, sectionSelected } = this.state;
 
             if (!selectedCell) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
+            const currentSection = attributes[ sectionSelected ];
             const { rowIndex } = selectedCell;
 
-            const newBody = body.map( (row, cRowIdx) => ( {
+            const newSection = currentSection.map( (row, cRowIdx) => ( {
                 cells: row.cells.map( (cell) => {
                     if (cell.rowSpan) {
                         if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
                             cell.rowSpan = parseInt(cell.rowSpan) - 1;
                             if (cRowIdx === rowIndex) {
-                                const findColIdx = body[cRowIdx + 1].cells.findIndex( (elm) => elm.cI === cell.cI || elm.cI > cell.cI );
-                                body[cRowIdx + 1].cells.splice( findColIdx, 0, cell );
+                                const findColIdx = currentSection[cRowIdx + 1].cells.findIndex( (elm) => elm.cI === cell.cI || elm.cI > cell.cI );
+                                currentSection[cRowIdx + 1].cells.splice( findColIdx, 0, cell );
                             }
                         }
                     }
@@ -215,8 +219,20 @@
                 } )
             } ) );
 
-            this.setState( { selectedCell: null, updated: true } );
-            setAttributes( { body: newBody.filter( (row, index) => index !== rowIndex ) } );
+            this.setState( {
+                selectedCell: null,
+                sectionSelected: null,
+                updated: true,
+            } );
+
+            if (newSection.length < 2) {
+                alert( __( 'At least 1 row of current section must present.' ) );
+                return false;
+            }
+
+            setAttributes( {
+                [ sectionSelected ]: newSection.filter( (row, index) => index !== rowIndex ),
+            } );
         }
 
         insertColumn( offset ) {
