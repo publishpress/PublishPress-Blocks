@@ -59,7 +59,7 @@
       },
       {
         "type": "fix",
-        "title": "Improve compatibility with other plugins"
+        "title": "Improve compatibility with other plugins (slider revolution)"
       }
     ],
     "1.10.8": [
@@ -73,13 +73,13 @@
       },
       {
         "type": "fix",
-        "title": "Recent Posts block: post text as excerpt not showing correctly on frontend"
+        "title": "Recent Posts block: post text as excerpt not displayed properly (frontend)"
       }
     ],
     "1.10.7": [
       {
         "type": "fix",
-        "title": "Block functions not work properly on frontend when use as reusable block"
+        "title": "Reusable block not loaded properly on frontend"
       },
       {
         "type": "fix",
