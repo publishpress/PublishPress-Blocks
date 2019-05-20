@@ -2590,14 +2590,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props5 = this.props,
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes;
-                var body = attributes.body;
                 var cI = selectedCell.cI;
 
                 var countRowSpan = 0;
 
                 this.setState({ selectedCell: null, updated: true });
-                setAttributes({
-                    body: body.map(function (row) {
+                ['head', 'body', 'foot'].forEach(function (section) {
+                    return setAttributes(_defineProperty({}, section, attributes[section].map(function (row) {
                         if (countRowSpan > 0) {
                             // Skip if previous cell has row span
                             countRowSpan--;
@@ -2631,7 +2630,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 cells: [].concat(_toConsumableArray(row.cells.slice(0, findColIdx + realOffset)), [{ content: '' }], _toConsumableArray(row.cells.slice(findColIdx + realOffset)))
                             };
                         }
-                    })
+                    })));
                 });
             }
         }, {

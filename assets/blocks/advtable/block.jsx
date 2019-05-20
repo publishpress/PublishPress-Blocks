@@ -227,52 +227,53 @@
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
             const { cI } = selectedCell;
             let countRowSpan = 0;
 
             this.setState( { selectedCell: null, updated: true } );
-            setAttributes( {
-                body: body.map( ( row ) => {
-                    if (countRowSpan > 0) { // Skip if previous cell has row span
-                        countRowSpan--;
-                        return row;
-                    }
-
-                    let findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
-                    if (findColIdx === -1) {
-                        findColIdx = row.cells.length - 1;
-                    }
-
-                    if (row.cells[findColIdx].colSpan
-                        && row.cells[findColIdx].cI < cI + offset
-                        && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset
-                    ) {
-                        row.cells[findColIdx].colSpan++;
-
-                        if (row.cells[findColIdx].rowSpan) {
-                            countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+            [ 'head', 'body', 'foot' ].forEach( ( section ) => (
+                setAttributes( {
+                    [ section ]: attributes[ section ].map( ( row ) => {
+                        if (countRowSpan > 0) { // Skip if previous cell has row span
+                            countRowSpan--;
+                            return row;
                         }
 
-                        return row;
-                    } else {
-                        let realOffset = offset;
-                        if (row.cells[findColIdx].cI > cI && offset === 1) {
-                            realOffset = 0;
-                        } else if (row.cells[findColIdx].cI < cI && offset === 0) {
-                            realOffset = 1;
+                        let findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
+                        if (findColIdx === -1) {
+                            findColIdx = row.cells.length - 1;
                         }
 
-                        return {
-                            cells: [
-                                ...row.cells.slice( 0, findColIdx + realOffset ),
-                                { content: '' },
-                                ...row.cells.slice( findColIdx + realOffset ),
-                            ],
+                        if (row.cells[findColIdx].colSpan
+                            && row.cells[findColIdx].cI < cI + offset
+                            && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset
+                        ) {
+                            row.cells[findColIdx].colSpan++;
+
+                            if (row.cells[findColIdx].rowSpan) {
+                                countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                            }
+
+                            return row;
+                        } else {
+                            let realOffset = offset;
+                            if (row.cells[findColIdx].cI > cI && offset === 1) {
+                                realOffset = 0;
+                            } else if (row.cells[findColIdx].cI < cI && offset === 0) {
+                                realOffset = 1;
+                            }
+
+                            return {
+                                cells: [
+                                    ...row.cells.slice( 0, findColIdx + realOffset ),
+                                    { content: '' },
+                                    ...row.cells.slice( findColIdx + realOffset ),
+                                ],
+                            }
                         }
-                    }
-                } ),
-            } );
+                    } ),
+                } )
+            ) )
         }
 
         deleteColumn() {
