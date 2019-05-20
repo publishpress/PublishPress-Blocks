@@ -2743,7 +2743,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "splitMergedCells",
             value: function splitMergedCells() {
-                var selectedCell = this.state.selectedCell;
+                var _state3 = this.state,
+                    selectedCell = _state3.selectedCell,
+                    sectionSelected = _state3.sectionSelected;
 
 
                 if (!selectedCell) {
@@ -2753,18 +2755,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props8 = this.props,
                     attributes = _props8.attributes,
                     setAttributes = _props8.setAttributes;
-                var body = attributes.body;
                 var colIndex = selectedCell.colIndex,
                     rowIndex = selectedCell.rowIndex,
                     cI = selectedCell.cI;
 
 
-                var cellColSpan = body[rowIndex].cells[colIndex].colSpan ? parseInt(body[rowIndex].cells[colIndex].colSpan) : 1;
-                var cellRowSpan = body[rowIndex].cells[colIndex].rowSpan ? parseInt(body[rowIndex].cells[colIndex].rowSpan) : 1;
-                body[rowIndex].cells[colIndex].colSpan = undefined;
-                body[rowIndex].cells[colIndex].rowSpan = undefined;
+                var cellColSpan = attributes[sectionSelected][rowIndex].cells[colIndex].colSpan ? parseInt(attributes[sectionSelected][rowIndex].cells[colIndex].colSpan) : 1;
+                var cellRowSpan = attributes[sectionSelected][rowIndex].cells[colIndex].rowSpan ? parseInt(attributes[sectionSelected][rowIndex].cells[colIndex].rowSpan) : 1;
+                attributes[sectionSelected][rowIndex].cells[colIndex].colSpan = undefined;
+                attributes[sectionSelected][rowIndex].cells[colIndex].rowSpan = undefined;
 
-                var newBody = body.map(function (row, curRowIndex) {
+                var newSection = attributes[sectionSelected].map(function (row, curRowIndex) {
                     if (curRowIndex >= rowIndex && curRowIndex < rowIndex + cellRowSpan) {
                         var findColIdx = row.cells.findIndex(function (cell) {
                             return cell.cI >= cI;
@@ -2784,8 +2785,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return row;
                 });
 
-                setAttributes({ body: newBody });
-                this.setState({ selectedCell: null, updated: true });
+                setAttributes(_defineProperty({}, sectionSelected, newSection));
+                this.setState({
+                    selectedCell: null,
+                    sectionSelected: null,
+                    updated: true
+                });
             }
 
             // Parse styles from HTML form to React styles object
@@ -2793,9 +2798,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "getCellStyles",
             value: function getCellStyles(style) {
-                var _state3 = this.state,
-                    selectedCell = _state3.selectedCell,
-                    sectionSelected = _state3.sectionSelected;
+                var _state4 = this.state,
+                    selectedCell = _state4.selectedCell,
+                    sectionSelected = _state4.sectionSelected;
 
                 var section = this.props.attributes[sectionSelected];
 
@@ -2831,11 +2836,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function updateCellsStyles(style) {
                 var _this2 = this;
 
-                var _state4 = this.state,
-                    selectedCell = _state4.selectedCell,
-                    rangeSelected = _state4.rangeSelected,
-                    multiSelected = _state4.multiSelected,
-                    sectionSelected = _state4.sectionSelected;
+                var _state5 = this.state,
+                    selectedCell = _state5.selectedCell,
+                    rangeSelected = _state5.rangeSelected,
+                    multiSelected = _state5.multiSelected,
+                    sectionSelected = _state5.sectionSelected;
 
                 if (!selectedCell && !this.isRangeSelected() && !this.isMultiSelected()) {
                     return null;
@@ -3037,9 +3042,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "updateCellContent",
             value: function updateCellContent(content) {
                 var cell = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-                var _state5 = this.state,
-                    selectedCell = _state5.selectedCell,
-                    sectionSelected = _state5.sectionSelected;
+                var _state6 = this.state,
+                    selectedCell = _state6.selectedCell,
+                    sectionSelected = _state6.sectionSelected;
 
                 if (!selectedCell && !cell) {
                     return null;
@@ -3104,11 +3109,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _this3 = this;
 
                 var attributes = this.props.attributes;
-                var _state6 = this.state,
-                    selectedCell = _state6.selectedCell,
-                    multiSelected = _state6.multiSelected,
-                    rangeSelected = _state6.rangeSelected,
-                    sectionSelected = _state6.sectionSelected;
+                var _state7 = this.state,
+                    selectedCell = _state7.selectedCell,
+                    multiSelected = _state7.multiSelected,
+                    rangeSelected = _state7.rangeSelected,
+                    sectionSelected = _state7.sectionSelected;
 
 
                 return attributes[section].map(function (_ref, rowIndex) {
@@ -3256,12 +3261,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     body = attributes.body,
                     foot = attributes.foot,
                     maxWidth = attributes.maxWidth;
-                var _state7 = this.state,
-                    initRow = _state7.initRow,
-                    initCol = _state7.initCol,
-                    selectedCell = _state7.selectedCell,
-                    rangeSelected = _state7.rangeSelected,
-                    multiSelected = _state7.multiSelected;
+                var _state8 = this.state,
+                    initRow = _state8.initRow,
+                    initCol = _state8.initCol,
+                    selectedCell = _state8.selectedCell,
+                    rangeSelected = _state8.rangeSelected,
+                    multiSelected = _state8.multiSelected;
 
                 var maxWidthVal = !!maxWidth ? maxWidth : undefined;
                 var currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;

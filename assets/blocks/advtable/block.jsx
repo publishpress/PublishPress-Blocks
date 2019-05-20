@@ -372,22 +372,21 @@
         }
 
         splitMergedCells() {
-            const { selectedCell } = this.state;
+            const { selectedCell, sectionSelected } = this.state;
 
             if (!selectedCell) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
             const { colIndex, rowIndex, cI } = selectedCell;
 
-            const cellColSpan = body[rowIndex].cells[colIndex].colSpan ? parseInt(body[rowIndex].cells[colIndex].colSpan) : 1;
-            const cellRowSpan = body[rowIndex].cells[colIndex].rowSpan ? parseInt(body[rowIndex].cells[colIndex].rowSpan) : 1;
-            body[rowIndex].cells[colIndex].colSpan = undefined;
-            body[rowIndex].cells[colIndex].rowSpan = undefined;
+            const cellColSpan = attributes[ sectionSelected ][rowIndex].cells[colIndex].colSpan ? parseInt(attributes[ sectionSelected ][rowIndex].cells[colIndex].colSpan) : 1;
+            const cellRowSpan = attributes[ sectionSelected ][rowIndex].cells[colIndex].rowSpan ? parseInt(attributes[ sectionSelected ][rowIndex].cells[colIndex].rowSpan) : 1;
+            attributes[ sectionSelected ][rowIndex].cells[colIndex].colSpan = undefined;
+            attributes[ sectionSelected ][rowIndex].cells[colIndex].rowSpan = undefined;
 
-            const newBody = body.map( (row, curRowIndex) => {
+            const newSection = attributes[ sectionSelected ].map( (row, curRowIndex) => {
                 if (curRowIndex >= rowIndex && curRowIndex < (rowIndex + cellRowSpan) ) {
                     const findColIdx = row.cells.findIndex( (cell) => cell.cI >= cI );
                     let startRowFix = 0;
@@ -407,8 +406,12 @@
                 return row;
             } );
 
-            setAttributes( { body: newBody } );
-            this.setState( { selectedCell: null, updated: true } );
+            setAttributes( { [ sectionSelected ]: newSection } );
+            this.setState( {
+                selectedCell: null,
+                sectionSelected: null,
+                updated: true,
+            } );
         }
 
         // Parse styles from HTML form to React styles object
