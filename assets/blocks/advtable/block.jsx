@@ -713,8 +713,16 @@
 
         toggleSection( section ) {
             const { attributes, setAttributes } = this.props;
+            const { sectionSelected } = this.state;
             const { body } = attributes;
             const cellsToAdd = [ { cells: body[0].cells.map( (cell) => ( { cI: cell.cI, colSpan: cell.colSpan } ) ) } ];
+
+            if (sectionSelected === section) {
+                this.setState( {
+                    selectedCell: null,
+                    sectionSelected: null,
+                } )
+            }
 
             if (!attributes[section].length) {
                 return setAttributes( { [section] : cellsToAdd } );

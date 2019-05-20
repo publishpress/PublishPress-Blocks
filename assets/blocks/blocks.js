@@ -3091,11 +3091,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props11 = this.props,
                     attributes = _props11.attributes,
                     setAttributes = _props11.setAttributes;
+                var sectionSelected = this.state.sectionSelected;
                 var body = attributes.body;
 
                 var cellsToAdd = [{ cells: body[0].cells.map(function (cell) {
                         return { cI: cell.cI, colSpan: cell.colSpan };
                     }) }];
+
+                if (sectionSelected === section) {
+                    this.setState({
+                        selectedCell: null,
+                        sectionSelected: null
+                    });
+                }
 
                 if (!attributes[section].length) {
                     return setAttributes(_defineProperty({}, section, cellsToAdd));
