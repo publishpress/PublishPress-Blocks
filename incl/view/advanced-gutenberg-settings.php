@@ -59,10 +59,6 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
 $editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
 $default_thumb                    = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
 $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
-
-if (!isset($saved_settings['disable_wpautop'])) {
-    $disable_wpautop_checked = 'checked';
-}
 ?>
 
 <div id="advgb-settings-container">

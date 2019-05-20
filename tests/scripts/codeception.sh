@@ -115,6 +115,11 @@ prepare_tests
 for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
     # Export php version so codeception can get it through env variables
     export PHP_VERSION=$PHP_VERSION
+    # Skip php 5.2 5.3 5.4 5.5 tests for WP version above 5.2
+    EXCLUDE_PHP=("5.2" "5.3" "5.4" "5.5")
+    if [[ " ${EXCLUDE_PHP[*]} " == *"$PHP_VERSION"* && $WP_VERSION == "latest" ]]; then
+        continue
+    fi
 
     if [[ $GUTENBERG_TYPE = "plugin" ]]; then
         # Install gutenberg plugin
