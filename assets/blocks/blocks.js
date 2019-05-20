@@ -2647,14 +2647,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props6 = this.props,
                     attributes = _props6.attributes,
                     setAttributes = _props6.setAttributes;
-                var body = attributes.body;
                 var cI = selectedCell.cI;
 
                 var countRowSpan = 0;
 
                 this.setState({ selectedCell: null, updated: true });
-                setAttributes({
-                    body: body.map(function (row) {
+                ['head', 'body', 'foot'].forEach(function (section) {
+                    return setAttributes(_defineProperty({}, section, attributes[section].map(function (row) {
                         if (countRowSpan > 0) {
                             countRowSpan--;
                             return row;
@@ -2682,7 +2681,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return index !== findColIdx;
                             })
                         };
-                    })
+                    })));
                 });
             }
         }, {
