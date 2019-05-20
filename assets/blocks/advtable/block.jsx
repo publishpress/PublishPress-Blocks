@@ -318,7 +318,7 @@
         }
 
         mergeCells() {
-            const { rangeSelected } = this.state;
+            const { rangeSelected, sectionSelected } = this.state;
 
             if (!this.isRangeSelected()) {
                 return null;
@@ -326,9 +326,9 @@
 
             const { attributes, setAttributes } = this.props;
             const { fromCell, toCell } = rangeSelected;
-            const { body } = attributes;
-            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
-            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+            const currentSection = attributes[ sectionSelected ];
+            const fCell = currentSection[fromCell.rowIdx].cells[fromCell.colIdx];
+            const tCell = currentSection[toCell.rowIdx].cells[toCell.colIdx];
             const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
             const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
             const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
@@ -338,7 +338,7 @@
             const minColIdx = Math.min(fromCell.RCI, toCell.RCI);
             const maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
 
-            const newBody = body.map( ( row, curRowIndex ) => {
+            const newSection = currentSection.map( ( row, curRowIndex ) => {
                 if (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) {
                     return row;
                 }
@@ -367,8 +367,13 @@
                 }
             } );
 
-            setAttributes( { body: newBody } );
-            this.setState( { selectedCell: null, rangeSelected: null, updated: true } );
+            setAttributes( { [ sectionSelected ]: newSection } );
+            this.setState( {
+                selectedCell: null,
+                sectionSelected: null,
+                rangeSelected: null,
+                updated: true,
+            } );
         }
 
         splitMergedCells() {
