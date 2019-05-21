@@ -1224,7 +1224,7 @@
                                 <RangeControl
                                     label={ __( 'Border width' ) }
                                     value={ this.getCellStyles( 'borderWidth' ) || 0 }
-                                    min={ 1 }
+                                    min={ 0 }
                                     max={ 10 }
                                     onChange={ ( value ) => this.updateCellsStyles( { borderWidth: value } ) }
                                 />

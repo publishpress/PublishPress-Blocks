@@ -3678,7 +3678,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(RangeControl, {
                                     label: __('Border width'),
                                     value: this.getCellStyles('borderWidth') || 0,
-                                    min: 1,
+                                    min: 0,
                                     max: 10,
                                     onChange: function onChange(value) {
                                         return _this4.updateCellsStyles({ borderWidth: value });
