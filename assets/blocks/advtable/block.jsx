@@ -1178,12 +1178,12 @@
                                 onChange={ ( value ) => setAttributes( { maxWidth: value } ) }
                             />
                             <ToggleControl
-                                label={ __( 'Use table header' ) }
+                                label={ __( 'Table header' ) }
                                 checked={ head && head.length }
                                 onChange={ () => this.toggleSection( 'head' ) }
                             />
                             <ToggleControl
-                                label={ __( 'Use table footer' ) }
+                                label={ __( 'Table footer' ) }
                                 checked={ foot && foot.length }
                                 onChange={ () => this.toggleSection( 'foot' ) }
                             />

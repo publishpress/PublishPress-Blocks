@@ -3626,14 +3626,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Use table header'),
+                                label: __('Table header'),
                                 checked: head && head.length,
                                 onChange: function onChange() {
                                     return _this4.toggleSection('head');
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Use table footer'),
+                                label: __('Table footer'),
                                 checked: foot && foot.length,
                                 onChange: function onChange() {
                                     return _this4.toggleSection('foot');
