@@ -6218,7 +6218,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 if (!this.state.inited && isSelected) {
-                    this.initItemSortable();
+                    // this.initItemSortable();
                     this.setState({ inited: true });
                 }
 
@@ -6248,8 +6248,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "initItemSortable",
             value: function initItemSortable() {
-                var _this4 = this;
-
                 var _props4 = this.props,
                     clientId = _props4.clientId,
                     setAttributes = _props4.setAttributes,
@@ -6275,9 +6273,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return idx !== oldIndex;
                             }).slice(newIndex)))
                         });
-                        _this4.initItemSortable();
+                        // this.initItemSortable();
                         $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('setPosition');
                     }
+                });
+            }
+        }, {
+            key: "moveImage",
+            value: function moveImage(currentIndex, newIndex) {
+                var _props5 = this.props,
+                    setAttributes = _props5.setAttributes,
+                    attributes = _props5.attributes;
+                var images = attributes.images;
+
+
+                var image = images[currentIndex];
+                setAttributes({
+                    images: [].concat(_toConsumableArray(images.filter(function (img, idx) {
+                        return idx !== currentIndex;
+                    }).slice(0, newIndex)), [image], _toConsumableArray(images.filter(function (img, idx) {
+                        return idx !== currentIndex;
+                    }).slice(newIndex)))
                 });
             }
         }, {
@@ -6289,9 +6305,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes;
                 var images = attributes.images;
 
 
@@ -6308,13 +6324,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _this5 = this;
+                var _this4 = this;
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes,
-                    isSelected = _props6.isSelected,
-                    clientId = _props6.clientId;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes,
+                    isSelected = _props7.isSelected,
+                    clientId = _props7.clientId;
                 var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
@@ -6526,7 +6542,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Title'),
                                     value: images[currentSelected] ? images[currentSelected].title || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this5.updateImagesData({ title: value || '' });
+                                        return _this4.updateImagesData({ title: value || '' });
                                     }
                                 })
                             ),
@@ -6537,7 +6553,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Text'),
                                     value: images[currentSelected] ? images[currentSelected].text || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this5.updateImagesData({ text: value || '' });
+                                        return _this4.updateImagesData({ text: value || '' });
                                     }
                                 })
                             ),
@@ -6548,7 +6564,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Link'),
                                     value: images[currentSelected] ? images[currentSelected].link || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this5.updateImagesData({ link: value || '' });
+                                        return _this4.updateImagesData({ link: value || '' });
                                     }
                                 })
                             ),
@@ -6566,7 +6582,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 { className: "advgb-move-arrow advgb-move-left",
                                                     onClick: function onClick() {
-                                                        return null;
+                                                        return _this4.moveImage(index, index - 1);
                                                     }
                                                 },
                                                 React.createElement(
@@ -6582,7 +6598,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             alt: __('Remove'),
                                             onClick: function onClick() {
                                                 $("#block-" + clientId + " .advgb-images-slider").slick('slickGoTo', index, false);
-                                                _this5.setState({ currentSelected: index });
+                                                _this4.setState({ currentSelected: index });
                                             }
                                         }),
                                         React.createElement(
@@ -6592,7 +6608,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 { className: "advgb-move-arrow advgb-move-right",
                                                     onClick: function onClick() {
-                                                        return null;
+                                                        return _this4.moveImage(index, index + 1);
                                                     }
                                                 },
                                                 React.createElement(
@@ -6610,7 +6626,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "advgb-image-slider-image-list-item-remove",
                                                 icon: "no",
                                                 onClick: function onClick() {
-                                                    if (index === currentSelected) _this5.setState({ currentSelected: null });
+                                                    if (index === currentSelected) _this4.setState({ currentSelected: null });
                                                     setAttributes({ images: images.filter(function (img, idx) {
                                                             return idx !== index;
                                                         }) });
