@@ -6592,9 +6592,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement(MediaUpload, {
                                         allowedTypes: ['image'],
                                         value: currentSelected,
-                                        onSelect: function onSelect(image) {
+                                        multiple: true,
+                                        onSelect: function onSelect(imgs) {
                                             return setAttributes({
-                                                images: [].concat(_toConsumableArray(images), [{ id: image.id, url: image.url }])
+                                                images: [].concat(_toConsumableArray(images), _toConsumableArray(imgs.map(function (img) {
+                                                    return lodash.pick(img, 'id', 'url');
+                                                })))
                                             });
                                         },
                                         render: function render(_ref2) {

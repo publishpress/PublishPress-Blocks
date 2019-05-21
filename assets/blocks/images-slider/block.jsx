@@ -386,8 +386,9 @@
                                     <MediaUpload
                                         allowedTypes={ ['image'] }
                                         value={ currentSelected }
-                                        onSelect={ (image) => setAttributes( {
-                                            images: [...images, { id: image.id, url: image.url, } ],
+                                        multiple
+                                        onSelect={ (imgs) => setAttributes( {
+                                            images: [...images, ...imgs.map( (img) => lodash.pick( img, 'id', 'url' ) ) ],
                                         } ) }
                                         render={ ( { open } ) => (
                                             <IconButton
