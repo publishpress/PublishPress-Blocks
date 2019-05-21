@@ -6206,7 +6206,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     if (images.length) {
                         setTimeout(function () {
                             return _this2.initSlider();
-                        }, 100);
+                        }, 10);
                     }
                 }
             }
@@ -6526,7 +6526,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return React.createElement(
                                         "div",
                                         { className: "advgb-image-slider-image-list-item", key: index },
-                                        React.createElement(
+                                        index > 0 && React.createElement(
                                             Tooltip,
                                             { text: __('Move Left') },
                                             React.createElement(
@@ -6552,7 +6552,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 _this4.setState({ currentSelected: index });
                                             }
                                         }),
-                                        React.createElement(
+                                        index + 1 < images.length && React.createElement(
                                             Tooltip,
                                             { text: __('Move Right') },
                                             React.createElement(
