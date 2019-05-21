@@ -14,7 +14,7 @@
 .ju-settings-option .ju-setting-label + * {
     float: right;
     margin-right: 30px;
-    line-height: 50px;
+    line-height: 49px;
 }
 
 .settings-option-wrapper {

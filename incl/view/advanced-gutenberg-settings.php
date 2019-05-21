@@ -163,7 +163,7 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                     <div class="settings-option-wrapper clearfix">
                         <label for="google_api_key"
                                class="ju-setting-label advgb_qtip"
-                               style="float: none; margin-bottom: 10px"
+                               style="float: none; margin-bottom: 10px;"
                                data-qtip="<?php esc_attr_e(
                                    'A Google API key is required to use the Map block without any warning.',
                                    'advanced-gutenberg'
@@ -181,7 +181,7 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                             >
                             <a target="_blank"
                                href="https://developers.google.com/maps/documentation/javascript/get-api-key"
-                               style="display: inline-block; margin: 15px; margin-left: 10px; color: #ff8726;">
+                               style="display: inline-block; margin: 15px; margin-left: 10px; color: #ff8726; line-height: 1;">
                                 <?php esc_html_e('How to create a Google API Key', 'advanced-gutenberg') ?>
                             </a>
                         </span>

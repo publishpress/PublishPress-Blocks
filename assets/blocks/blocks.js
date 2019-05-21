@@ -6532,8 +6532,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Tooltip = wpComponents.Tooltip;
 
     var $ = jQuery;
-    var oldIndex = void 0,
-        newIndex = void 0;
 
     var imageSliderBlockIcon = React.createElement(
         "svg",
@@ -6557,7 +6555,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             };
 
             _this.initSlider = _this.initSlider.bind(_this);
-            _this.initItemSortable = _this.initItemSortable.bind(_this);
             return _this;
         }
 
@@ -6616,9 +6613,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentDidUpdate(prevProps) {
                 var _this2 = this;
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    isSelected = _props3.isSelected;
+                var attributes = this.props.attributes;
                 var images = attributes.images;
                 var prevImages = prevProps.attributes.images;
 
@@ -6627,19 +6622,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     if (images.length) {
                         setTimeout(function () {
                             return _this2.initSlider();
-                        }, 100);
-                    } else if (images.length === 0 && this.state.inited) {
-                        this.setState({ inited: false });
+                        }, 10);
                     }
-                }
-
-                if (!this.state.inited && isSelected) {
-                    this.initItemSortable();
-                    this.setState({ inited: true });
-                }
-
-                if (!isSelected && this.state.inited) {
-                    this.setState({ inited: false });
                 }
             }
         }, {
@@ -6662,38 +6646,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "initItemSortable",
-            value: function initItemSortable() {
-                var _this4 = this;
-
-                var _props4 = this.props,
-                    clientId = _props4.clientId,
-                    setAttributes = _props4.setAttributes,
-                    attributes = _props4.attributes;
+            key: "moveImage",
+            value: function moveImage(currentIndex, newIndex) {
+                var _props3 = this.props,
+                    setAttributes = _props3.setAttributes,
+                    attributes = _props3.attributes;
                 var images = attributes.images;
 
 
-                $("#block-" + clientId + " .advgb-image-slider-image-list:not(.ui-sortable)").sortable({
-                    items: "> .advgb-image-slider-image-list-item",
-                    placeholder: 'advgb-slider-image-dragholder',
-                    start: function start(e, ui) {
-                        oldIndex = ui.item.index();
-                    },
-                    update: function update(e, ui) {
-                        newIndex = ui.item.index();
-                        var image = images[oldIndex];
-
-                        $("#block-" + clientId + " .advgb-image-slider-image-list.ui-sortable").sortable('cancel').sortable('destroy');
-                        setAttributes({
-                            images: [].concat(_toConsumableArray(images.filter(function (img, idx) {
-                                return idx !== oldIndex;
-                            }).slice(0, newIndex)), [image], _toConsumableArray(images.filter(function (img, idx) {
-                                return idx !== oldIndex;
-                            }).slice(newIndex)))
-                        });
-                        _this4.initItemSortable();
-                        $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('setPosition');
-                    }
+                var image = images[currentIndex];
+                setAttributes({
+                    images: [].concat(_toConsumableArray(images.filter(function (img, idx) {
+                        return idx !== currentIndex;
+                    }).slice(0, newIndex)), [image], _toConsumableArray(images.filter(function (img, idx) {
+                        return idx !== currentIndex;
+                    }).slice(newIndex)))
                 });
             }
         }, {
@@ -6705,9 +6672,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var images = attributes.images;
 
 
@@ -6724,13 +6691,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _this5 = this;
+                var _this4 = this;
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes,
-                    isSelected = _props6.isSelected,
-                    clientId = _props6.clientId;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    isSelected = _props5.isSelected,
+                    clientId = _props5.clientId;
                 var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
@@ -6942,7 +6909,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Title'),
                                     value: images[currentSelected] ? images[currentSelected].title || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this5.updateImagesData({ title: value || '' });
+                                        return _this4.updateImagesData({ title: value || '' });
                                     }
                                 })
                             ),
@@ -6953,7 +6920,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Text'),
                                     value: images[currentSelected] ? images[currentSelected].text || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this5.updateImagesData({ text: value || '' });
+                                        return _this4.updateImagesData({ text: value || '' });
                                     }
                                 })
                             ),
@@ -6964,7 +6931,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Link'),
                                     value: images[currentSelected] ? images[currentSelected].link || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this5.updateImagesData({ link: value || '' });
+                                        return _this4.updateImagesData({ link: value || '' });
                                     }
                                 })
                             ),
@@ -6975,13 +6942,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return React.createElement(
                                         "div",
                                         { className: "advgb-image-slider-image-list-item", key: index },
+                                        index > 0 && React.createElement(
+                                            Tooltip,
+                                            { text: __('Move Left') },
+                                            React.createElement(
+                                                "span",
+                                                { className: "advgb-move-arrow advgb-move-left",
+                                                    onClick: function onClick() {
+                                                        return _this4.moveImage(index, index - 1);
+                                                    }
+                                                },
+                                                React.createElement(
+                                                    "svg",
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+                                                    React.createElement("path", { d: "M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" })
+                                                )
+                                            )
+                                        ),
                                         React.createElement("img", { src: image.url,
                                             className: "advgb-image-slider-image-list-img",
+                                            alt: __('Remove'),
                                             onClick: function onClick() {
                                                 $("#block-" + clientId + " .advgb-images-slider").slick('slickGoTo', index, false);
-                                                _this5.setState({ currentSelected: index });
+                                                _this4.setState({ currentSelected: index });
                                             }
                                         }),
+                                        index + 1 < images.length && React.createElement(
+                                            Tooltip,
+                                            { text: __('Move Right') },
+                                            React.createElement(
+                                                "span",
+                                                { className: "advgb-move-arrow advgb-move-right",
+                                                    onClick: function onClick() {
+                                                        return _this4.moveImage(index, index + 1);
+                                                    }
+                                                },
+                                                React.createElement(
+                                                    "svg",
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+                                                    React.createElement("path", { d: "M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" })
+                                                )
+                                            )
+                                        ),
                                         React.createElement(
                                             Tooltip,
                                             { text: __('Remove image') },
@@ -6989,7 +6993,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "advgb-image-slider-image-list-item-remove",
                                                 icon: "no",
                                                 onClick: function onClick() {
-                                                    if (index === currentSelected) _this5.setState({ currentSelected: null });
+                                                    if (index === currentSelected) _this4.setState({ currentSelected: null });
                                                     setAttributes({ images: images.filter(function (img, idx) {
                                                             return idx !== index;
                                                         }) });
@@ -7004,9 +7008,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement(MediaUpload, {
                                         allowedTypes: ['image'],
                                         value: currentSelected,
-                                        onSelect: function onSelect(image) {
+                                        multiple: true,
+                                        onSelect: function onSelect(imgs) {
                                             return setAttributes({
-                                                images: [].concat(_toConsumableArray(images), [{ id: image.id, url: image.url }])
+                                                images: [].concat(_toConsumableArray(images), _toConsumableArray(imgs.map(function (img) {
+                                                    return lodash.pick(img, 'id', 'url');
+                                                })))
                                             });
                                         },
                                         render: function render(_ref2) {
