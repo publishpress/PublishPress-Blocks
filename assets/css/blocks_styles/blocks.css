@@ -261,7 +261,7 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 }
 
 .wp-block-advgb-table td.cell-selected {
-    outline: 1px solid #2196f3;
+    outline: 2px solid #2196f3;
 }
 
 .advgb-border-item-wrapper {
@@ -297,6 +297,14 @@ table.advgb-table-frontend {
 table.advgb-table-frontend td, table.advgb-table-frontend tr {
     border: 1px solid transparent;
     padding: .5em;
+}
+
+.wp-block-advgb-table thead tr:last-child td {
+    border-bottom: 2px solid #000;
+}
+
+.wp-block-advgb-table tfoot tr:first-child td {
+    border-top: 2px solid #000;
 }
 
 /*Advanced Video styles*/
