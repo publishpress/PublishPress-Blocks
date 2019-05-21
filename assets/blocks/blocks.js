@@ -3656,34 +3656,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return _this4.updateCellsStyles({ color: value });
                                     }
-                                }, {
-                                    label: __('Border Color'),
-                                    value: this.getCellStyles('borderColor'),
-                                    onChange: function onChange(value) {
-                                        return _this4.updateCellsStyles({ borderColor: value });
-                                    }
                                 }]
                             }),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Border'), initialOpen: false },
-                                React.createElement(SelectControl, {
-                                    label: __('Border Style'),
-                                    value: this.getCellStyles('borderStyle'),
-                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }, { label: __('None'), value: 'none' }],
-                                    onChange: function onChange(value) {
-                                        return _this4.updateCellsStyles({ borderStyle: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Border width'),
-                                    value: this.getCellStyles('borderWidth') || 0,
-                                    min: 0,
-                                    max: 10,
-                                    onChange: function onChange(value) {
-                                        return _this4.updateCellsStyles({ borderWidth: value });
-                                    }
-                                }),
                                 React.createElement(
                                     "div",
                                     { className: "advgb-border-item-wrapper" },
@@ -3702,7 +3679,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             )
                                         );
                                     })
-                                )
+                                ),
+                                React.createElement(SelectControl, {
+                                    label: __('Border Style'),
+                                    value: this.getCellStyles('borderStyle'),
+                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }, { label: __('None'), value: 'none' }],
+                                    onChange: function onChange(value) {
+                                        return _this4.updateCellsStyles({ borderStyle: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Border width'),
+                                    value: this.getCellStyles('borderWidth') || 0,
+                                    min: 0,
+                                    max: 10,
+                                    onChange: function onChange(value) {
+                                        return _this4.updateCellsStyles({ borderWidth: value });
+                                    }
+                                }),
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Border Color'),
+                                    colorSettings: [{
+                                        label: __('Border Color'),
+                                        value: this.getCellStyles('borderColor'),
+                                        onChange: function onChange(value) {
+                                            return _this4.updateCellsStyles({ borderColor: value });
+                                        }
+                                    }]
+                                })
                             ),
                             React.createElement(
                                 PanelBody,

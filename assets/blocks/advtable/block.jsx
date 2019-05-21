@@ -1202,14 +1202,18 @@
                                         value: this.getCellStyles( 'color' ),
                                         onChange: ( value ) => this.updateCellsStyles( { color: value } ),
                                     },
-                                    {
-                                        label: __( 'Border Color' ),
-                                        value: this.getCellStyles( 'borderColor' ),
-                                        onChange: ( value ) => this.updateCellsStyles( { borderColor: value } ),
-                                    },
                                 ] }
                             />
                             <PanelBody title={ __( 'Border' ) } initialOpen={ false }>
+                                <div className="advgb-border-item-wrapper">
+                                    {BORDER_SELECT.map( ( item, index ) => (
+                                        <div className="advgb-border-item" key={ index }>
+                                            <Tooltip text={ item.title }>
+                                                <span onClick={ item.onClick }>{ item.icon }</span>
+                                            </Tooltip>
+                                        </div>
+                                    ) ) }
+                                </div>
                                 <SelectControl
                                     label={ __( 'Border Style' ) }
                                     value={ this.getCellStyles( 'borderStyle' ) }
@@ -1228,15 +1232,16 @@
                                     max={ 10 }
                                     onChange={ ( value ) => this.updateCellsStyles( { borderWidth: value } ) }
                                 />
-                                <div className="advgb-border-item-wrapper">
-                                    {BORDER_SELECT.map( ( item, index ) => (
-                                        <div className="advgb-border-item" key={ index }>
-                                            <Tooltip text={ item.title }>
-                                                <span onClick={ item.onClick }>{ item.icon }</span>
-                                            </Tooltip>
-                                        </div>
-                                    ) ) }
-                                </div>
+                                <PanelColorSettings
+                                    title={ __( 'Border Color' ) }
+                                    colorSettings={ [
+                                        {
+                                            label: __( 'Border Color' ),
+                                            value: this.getCellStyles( 'borderColor' ),
+                                            onChange: ( value ) => this.updateCellsStyles( { borderColor: value } ),
+                                        },
+                                    ] }
+                                />
                             </PanelBody>
                             <PanelBody title={ __( 'Padding' ) } initialOpen={ false }>
                                 <RangeControl
