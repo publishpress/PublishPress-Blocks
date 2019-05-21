@@ -365,13 +365,34 @@
                             <div className="advgb-image-slider-image-list">
                                 {images.map( (image, index) => (
                                     <div className="advgb-image-slider-image-list-item" key={index}>
+                                        <Tooltip text={ __( 'Move Left' ) }>
+                                            <span className="advgb-move-arrow advgb-move-left"
+                                                  onClick={ () => null }
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    <path fill="none" d="M0 0h24v24H0V0z"/>
+                                                    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+                                                </svg>
+                                            </span>
+                                        </Tooltip>
                                         <img src={ image.url }
                                              className="advgb-image-slider-image-list-img"
+                                             alt={ __( 'Remove' ) }
                                              onClick={ () => {
                                                  $(`#block-${clientId} .advgb-images-slider`).slick('slickGoTo', index, false);
                                                  this.setState( { currentSelected: index } )
                                              } }
                                         />
+                                        <Tooltip text={ __( 'Move Right' ) }>
+                                            <span className="advgb-move-arrow advgb-move-right"
+                                                  onClick={ () => null }
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    <path fill="none" d="M0 0h24v24H0V0z"/>
+                                                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                                                </svg>
+                                            </span>
+                                        </Tooltip>
                                         <Tooltip text={ __( 'Remove image' ) }>
                                             <IconButton
                                                 className="advgb-image-slider-image-list-item-remove"

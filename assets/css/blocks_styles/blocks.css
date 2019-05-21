@@ -1053,11 +1053,48 @@ hr.wp-block-separator {
 
 .advgb-image-slider-image-list .advgb-image-slider-image-list-item .advgb-image-slider-image-list-item-remove svg {
     margin: 0;
+    width: 15px;
+    height: 15px;
+    display: block;
 }
 
 .advgb-image-slider-image-list .advgb-image-slider-add-item button {
     height: 50px;
     border: 1px solid #ccc;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item > *:not(img) {
+    display: none;
+}
+
+.advgb-image-slider-image-list .advgb-image-slider-image-list-item:hover > * {
+    display: block;
+}
+
+.advgb-move-arrow {
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+    background-color: #fff;
+    opacity: 0.5;
+}
+
+.advgb-move-right {
+    right: 0;
+}
+
+.advgb-move-left {
+    left: 0;
+}
+
+.advgb-move-arrow svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.advgb-move-arrow:hover {
+    opacity: 1;
 }
 
 /*Custom blocks options*/
