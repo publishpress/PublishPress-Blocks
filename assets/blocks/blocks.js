@@ -3293,7 +3293,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var head = attributes.head,
                     body = attributes.body,
                     foot = attributes.foot,
-                    maxWidth = attributes.maxWidth;
+                    maxWidth = attributes.maxWidth,
+                    tableCollapsed = attributes.tableCollapsed;
                 var _state11 = this.state,
                     initRow = _state11.initRow,
                     initCol = _state11.initCol,
@@ -3637,6 +3638,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onChange: function onChange() {
                                     return _this4.toggleSection('foot');
                                 }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Border collapsed'),
+                                checked: tableCollapsed,
+                                onChange: function onChange() {
+                                    return setAttributes({ tableCollapsed: !tableCollapsed });
+                                }
                             })
                         ),
                         React.createElement(
@@ -3788,7 +3796,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "table",
-                        { className: className, style: { maxWidth: maxWidthVal } },
+                        { className: className,
+                            style: {
+                                maxWidth: maxWidthVal,
+                                borderCollapse: tableCollapsed ? 'collapse' : undefined
+                            }
+                        },
                         !!head.length && React.createElement(
                             "thead",
                             null,
@@ -3950,6 +3963,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'number',
                 default: 0
             },
+            tableCollapsed: {
+                type: 'boolean',
+                default: false
+            },
             changed: {
                 type: 'boolean',
                 default: false
@@ -3964,7 +3981,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var head = attributes.head,
                 body = attributes.body,
                 foot = attributes.foot,
-                maxWidth = attributes.maxWidth;
+                maxWidth = attributes.maxWidth,
+                tableCollapsed = attributes.tableCollapsed;
 
             var maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
@@ -3996,7 +4014,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             return React.createElement(
                 "table",
-                { className: "advgb-table-frontend", style: { maxWidth: maxWidthVal } },
+                { className: "advgb-table-frontend",
+                    style: {
+                        maxWidth: maxWidthVal,
+                        borderCollapse: tableCollapsed ? 'collapse' : undefined
+                    }
+                },
                 !!head.length && React.createElement(
                     "thead",
                     null,

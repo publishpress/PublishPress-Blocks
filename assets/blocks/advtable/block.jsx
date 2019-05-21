@@ -886,7 +886,7 @@
 
         render() {
             const { attributes, setAttributes, className } = this.props;
-            const { head, body, foot, maxWidth } = attributes;
+            const { head, body, foot, maxWidth, tableCollapsed } = attributes;
             const { initRow, initCol, selectedCell, rangeSelected, multiSelected } = this.state;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
             const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
@@ -1187,6 +1187,11 @@
                                 checked={ foot && foot.length }
                                 onChange={ () => this.toggleSection( 'foot' ) }
                             />
+                            <ToggleControl
+                                label={ __( 'Border collapsed' ) }
+                                checked={ tableCollapsed }
+                                onChange={ () => setAttributes( { tableCollapsed: !tableCollapsed } ) }
+                            />
                         </PanelBody>
                         <PanelBody title={ __( 'Cell Settings' ) }>
                             <PanelColorSettings
@@ -1303,7 +1308,12 @@
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
-                    <table className={ className } style={ { maxWidth: maxWidthVal } }>
+                    <table className={ className }
+                           style={ {
+                               maxWidth: maxWidthVal,
+                               borderCollapse: tableCollapsed ? 'collapse' : undefined
+                           } }
+                    >
                         {!!head.length && (
                             <thead>{ this.renderSection( 'head' ) }</thead>
                         ) }
@@ -1438,6 +1448,10 @@
                 type: 'number',
                 default: 0
             },
+            tableCollapsed: {
+                type: 'boolean',
+                default: false,
+            },
             changed: {
                 type: 'boolean',
                 default: false,
@@ -1448,7 +1462,7 @@
         },
         edit: AdvTable,
         save: function ( { attributes } ) {
-            const { head, body, foot, maxWidth } = attributes;
+            const { head, body, foot, maxWidth, tableCollapsed } = attributes;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
             function renderSection( section ) {
@@ -1470,7 +1484,12 @@
             }
 
             return (
-                <table className="advgb-table-frontend" style={ { maxWidth: maxWidthVal } }>
+                <table className="advgb-table-frontend"
+                       style={ {
+                           maxWidth: maxWidthVal,
+                           borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                       } }
+                >
                     {!!head.length && (
                         <thead>{ renderSection( 'head' ) }</thead>
                     ) }
