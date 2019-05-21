@@ -6116,8 +6116,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Tooltip = wpComponents.Tooltip;
 
     var $ = jQuery;
-    var oldIndex = void 0,
-        newIndex = void 0;
 
     var imageSliderBlockIcon = React.createElement(
         "svg",
@@ -6141,7 +6139,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             };
 
             _this.initSlider = _this.initSlider.bind(_this);
-            _this.initItemSortable = _this.initItemSortable.bind(_this);
             return _this;
         }
 
@@ -6200,9 +6197,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function componentDidUpdate(prevProps) {
                 var _this2 = this;
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    isSelected = _props3.isSelected;
+                var attributes = this.props.attributes;
                 var images = attributes.images;
                 var prevImages = prevProps.attributes.images;
 
@@ -6212,18 +6207,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         setTimeout(function () {
                             return _this2.initSlider();
                         }, 100);
-                    } else if (images.length === 0 && this.state.inited) {
-                        this.setState({ inited: false });
                     }
-                }
-
-                if (!this.state.inited && isSelected) {
-                    // this.initItemSortable();
-                    this.setState({ inited: true });
-                }
-
-                if (!isSelected && this.state.inited) {
-                    this.setState({ inited: false });
                 }
             }
         }, {
@@ -6246,44 +6230,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "initItemSortable",
-            value: function initItemSortable() {
-                var _props4 = this.props,
-                    clientId = _props4.clientId,
-                    setAttributes = _props4.setAttributes,
-                    attributes = _props4.attributes;
-                var images = attributes.images;
-
-
-                $("#block-" + clientId + " .advgb-image-slider-image-list:not(.ui-sortable)").sortable({
-                    items: "> .advgb-image-slider-image-list-item",
-                    placeholder: 'advgb-slider-image-dragholder',
-                    start: function start(e, ui) {
-                        oldIndex = ui.item.index();
-                    },
-                    update: function update(e, ui) {
-                        newIndex = ui.item.index();
-                        var image = images[oldIndex];
-
-                        $("#block-" + clientId + " .advgb-image-slider-image-list.ui-sortable").sortable('cancel').sortable('destroy');
-                        setAttributes({
-                            images: [].concat(_toConsumableArray(images.filter(function (img, idx) {
-                                return idx !== oldIndex;
-                            }).slice(0, newIndex)), [image], _toConsumableArray(images.filter(function (img, idx) {
-                                return idx !== oldIndex;
-                            }).slice(newIndex)))
-                        });
-                        // this.initItemSortable();
-                        $("#block-" + clientId + " .advgb-images-slider.slick-initialized").slick('setPosition');
-                    }
-                });
-            }
-        }, {
             key: "moveImage",
             value: function moveImage(currentIndex, newIndex) {
-                var _props5 = this.props,
-                    setAttributes = _props5.setAttributes,
-                    attributes = _props5.attributes;
+                var _props3 = this.props,
+                    setAttributes = _props3.setAttributes,
+                    attributes = _props3.attributes;
                 var images = attributes.images;
 
 
@@ -6305,9 +6256,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var images = attributes.images;
 
 
@@ -6326,11 +6277,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this4 = this;
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes,
-                    isSelected = _props7.isSelected,
-                    clientId = _props7.clientId;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    isSelected = _props5.isSelected,
+                    clientId = _props5.clientId;
                 var currentSelected = this.state.currentSelected;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
