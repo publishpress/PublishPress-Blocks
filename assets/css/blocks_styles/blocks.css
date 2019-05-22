@@ -17,6 +17,10 @@
     pointer-events: none;
 }
 
+.slick-arrow:focus {
+    background: transparent;
+}
+
 /*Accordion block styles*/
 #editor .advgb-accordion-block .advgb-accordion-header p.mce-content-body,
 #editor .advgb-accordion-block .advgb-accordion-body p.mce-content-body {
