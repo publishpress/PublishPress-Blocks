@@ -1,30 +1,4 @@
 jQuery(document).ready(function ($) {
-    // Show/hide the images caption option
-    $('#gallery_lightbox').on('change', function () {
-        if (this.checked) {
-            $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
-        } else {
-            $('#gallery_lightbox_caption_wrapper').addClass('hidden-item');
-        }
-    });
-
-    if ($('#gallery_lightbox').is(':checked')) {
-        $('#gallery_lightbox_caption_wrapper').removeClass('hidden-item');
-    }
-
-    // Show/hide blocks spacing option
-    $('#enable_blocks_spacing').on('change', function () {
-        if (this.checked) {
-            $('#blocks_spacing_wrapper').removeClass('hidden-item');
-        } else {
-            $('#blocks_spacing_wrapper').addClass('hidden-item');
-        }
-    });
-
-    if ($('#enable_blocks_spacing').is(':checked')) {
-        $('#blocks_spacing_wrapper').removeClass('hidden-item');
-    }
-
     $('.ju-top-tabs .tab a').click(function () {
         var currentText = $(this).text().trim();
         $(this).closest('.ju-content-wrapper').find('.advgb-settings-header').text(currentText);

@@ -205,8 +205,9 @@ input.ju-input.minicolors .minicolors-grid .minicolors-picker > div {
 }
 
 select.ju-select {
-    padding: 15px;
-    height: auto;
+    padding: 0 15px;
+    height: 50px;
+    vertical-align: middle;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -336,8 +337,13 @@ input.ju-radiobox:focus {
     transform: translateX(20px);
 }
 
+.settings-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex: auto;
+}
+
 .ju-settings-option {
-    float: left;
     width: 48%;
     margin-bottom: 20px;
     margin-right: 2%;
@@ -675,6 +681,28 @@ input.ju-radiobox:focus {
     .ju-main-wrapper .ju-right-panel {
         width: 100%;
         margin-left: 0;
+    }
+
+    .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs {
+        width: 100% !important;
+        flex-wrap: wrap;
+    }
+
+    .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab {
+        flex: 0 0 100%;
+    }
+
+    .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab.active {
+        background-color: #ff8726;
+        color: #fff;
+    }
+
+    .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab.active:before {
+        display: none;
+    }
+
+    .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs .indicator {
+        display: none;
     }
 
     .ju-main-wrapper .ju-left-panel-toggle {

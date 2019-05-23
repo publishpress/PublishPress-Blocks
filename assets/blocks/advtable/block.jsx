@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, PanelColorSettings } = wpEditor;
-    const { PanelBody, BaseControl, RangeControl, SelectControl, TextControl, IconButton, Button, Toolbar, DropdownMenu, Tooltip } = wpComponents;
+    const { PanelBody, BaseControl, RangeControl, SelectControl, ToggleControl, TextControl, IconButton, Button, Toolbar, DropdownMenu, Tooltip } = wpComponents;
     const { times } = lodash;
 
     const tableBlockIcon = (
@@ -25,10 +25,13 @@
                 selectedCell: null,
                 rangeSelected: null,
                 multiSelected: null,
+                sectionSelected: null,
                 updated: false,
             };
 
             this.calculateRealColIndex = this.calculateRealColIndex.bind( this );
+            this.isMultiSelected = this.isMultiSelected.bind( this );
+            this.isRangeSelected = this.isRangeSelected.bind( this );
         }
 
         componentWillMount() {
@@ -53,7 +56,7 @@
         }
 
         componentDidMount() {
-            this.calculateRealColIndex();
+            this.calculateRealColIndex( 'head' );
         }
 
         componentDidUpdate() {
@@ -88,64 +91,77 @@
             } );
         }
 
+        // Check if is multi cells selected
+        isMultiSelected() {
+            const { multiSelected } = this.state;
+            return ( multiSelected && multiSelected.length > 1 );
+        }
+
+        // Check if is range cells selected
+        isRangeSelected() {
+            const { rangeSelected } = this.state;
+            return (rangeSelected && rangeSelected.toCell);
+        }
+
         calculateRealColIndex() {
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
 
-            if (!body.length) return null;
+            [ 'head', 'body', 'foot' ].forEach( ( section ) => {
+                if (!attributes[section].length) return null;
 
-            const newBody = body.map( (row, cRow) => {
-                return {
-                    cells: row.cells.map( (cell, cCol) => {
-                        cell.cI = cCol;
-                        for (let i=0;i < cRow; i++) {
-                            for (let j=0; j < body[i].cells.length; j++) {
-                                if (body[i].cells[j] && body[i].cells[j].colSpan) {
-                                    if (body[i].cells[j].rowSpan && i + parseInt(body[i].cells[j].rowSpan) > cRow) {
-                                        if (cCol === 0) {
-                                            if (body[i].cells[j].cI <= cell.cI) {
-                                                cell.cI += parseInt( body[i].cells[j].colSpan );
-                                            }
-                                        } else {
-                                            const lastColSpan = !isNaN(parseInt(row.cells[cCol-1].colSpan)) ? parseInt(row.cells[cCol-1].colSpan) : 0;
-                                            if (body[i].cells[j].cI === row.cells[cCol - 1].cI + 1
-                                                || body[i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan
-                                            ) {
-                                                cell.cI += parseInt( body[i].cells[j].colSpan );
+                const newSection = attributes[section].map( (row, cRow) => {
+                    return {
+                        cells: row.cells.map( (cell, cCol) => {
+                            cell.cI = cCol;
+                            for (let i=0;i < cRow; i++) {
+                                for (let j=0; j < attributes[section][i].cells.length; j++) {
+                                    if (attributes[section][i].cells[j] && attributes[section][i].cells[j].colSpan) {
+                                        if (attributes[section][i].cells[j].rowSpan && i + parseInt(attributes[section][i].cells[j].rowSpan) > cRow) {
+                                            if (cCol === 0) {
+                                                if (attributes[section][i].cells[j].cI <= cell.cI) {
+                                                    cell.cI += parseInt( attributes[section][i].cells[j].colSpan );
+                                                }
+                                            } else {
+                                                const lastColSpan = !isNaN(parseInt(row.cells[cCol-1].colSpan)) ? parseInt(row.cells[cCol-1].colSpan) : 0;
+                                                if (attributes[section][i].cells[j].cI === row.cells[cCol - 1].cI + 1
+                                                    || attributes[section][i].cells[j].cI <= row.cells[cCol - 1].cI + lastColSpan
+                                                ) {
+                                                    cell.cI += parseInt( attributes[section][i].cells[j].colSpan );
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        for (let j=0; j < cCol; j++) {
-                            if (row.cells[j]) {
-                                if (row.cells[j].colSpan) {
-                                    cell.cI += parseInt( row.cells[j].colSpan ) - 1;
+                            for (let j=0; j < cCol; j++) {
+                                if (row.cells[j]) {
+                                    if (row.cells[j].colSpan) {
+                                        cell.cI += parseInt( row.cells[j].colSpan ) - 1;
+                                    }
                                 }
                             }
-                        }
 
-                        return cell;
-                    } )
-                }
-            } );
+                            return cell;
+                        } )
+                    }
+                } );
 
-            setAttributes( { body: newBody } );
+                setAttributes( { [section] : newSection } );
+            } )
         }
 
         insertRow( offset ) {
-            const { selectedCell } = this.state;
+            const { selectedCell, sectionSelected } = this.state;
 
             if (!selectedCell) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
+            const currentSection = attributes[ sectionSelected ];
             const { rowIndex } = selectedCell;
-            const newRow = jQuery.extend( true, {}, body[rowIndex] );
+            const newRow = jQuery.extend( true, {}, currentSection[rowIndex] );
             newRow.cells.map( ( cell ) => {
                 cell.content = '';
 
@@ -153,10 +169,10 @@
             } );
             newRow.cells = newRow.cells.filter( ( cCell ) => !cCell.rowSpan );
 
-            const newBody = [
-                ...body.slice( 0, rowIndex + offset ),
+            const newSection = [
+                ...currentSection.slice( 0, rowIndex + offset ),
                 newRow,
-                ...body.slice( rowIndex + offset ),
+                ...currentSection.slice( rowIndex + offset ),
             ].map( ( row, rowIdx ) => ( {
                 cells: row.cells.map( ( cell ) => {
                     if (cell.rowSpan) {
@@ -168,29 +184,33 @@
                 } )
             } ) );
 
-            this.setState( { selectedCell: null, updated: true } );
-            setAttributes( { body: newBody } );
+            this.setState( {
+                selectedCell: null,
+                sectionSelected: null,
+                updated: true,
+            } );
+            setAttributes( { [ sectionSelected ]: newSection } );
         }
 
         deleteRow() {
-            const { selectedCell } = this.state;
+            const { selectedCell, sectionSelected } = this.state;
 
             if (!selectedCell) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
+            const currentSection = attributes[ sectionSelected ];
             const { rowIndex } = selectedCell;
 
-            const newBody = body.map( (row, cRowIdx) => ( {
+            const newSection = currentSection.map( (row, cRowIdx) => ( {
                 cells: row.cells.map( (cell) => {
                     if (cell.rowSpan) {
                         if (cRowIdx <= rowIndex && parseInt(cell.rowSpan) + cRowIdx > rowIndex) {
                             cell.rowSpan = parseInt(cell.rowSpan) - 1;
                             if (cRowIdx === rowIndex) {
-                                const findColIdx = body[cRowIdx + 1].cells.findIndex( (elm) => elm.cI === cell.cI || elm.cI > cell.cI );
-                                body[cRowIdx + 1].cells.splice( findColIdx, 0, cell );
+                                const findColIdx = currentSection[cRowIdx + 1].cells.findIndex( (elm) => elm.cI === cell.cI || elm.cI > cell.cI );
+                                currentSection[cRowIdx + 1].cells.splice( findColIdx, 0, cell );
                             }
                         }
                     }
@@ -199,8 +219,20 @@
                 } )
             } ) );
 
-            this.setState( { selectedCell: null, updated: true } );
-            setAttributes( { body: newBody.filter( (row, index) => index !== rowIndex ) } );
+            this.setState( {
+                selectedCell: null,
+                sectionSelected: null,
+                updated: true,
+            } );
+
+            if (newSection.length < 2) {
+                alert( __( 'At least 1 row of current section must present.' ) );
+                return false;
+            }
+
+            setAttributes( {
+                [ sectionSelected ]: newSection.filter( (row, index) => index !== rowIndex ),
+            } );
         }
 
         insertColumn( offset ) {
@@ -211,52 +243,53 @@
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
             const { cI } = selectedCell;
             let countRowSpan = 0;
 
             this.setState( { selectedCell: null, updated: true } );
-            setAttributes( {
-                body: body.map( ( row ) => {
-                    if (countRowSpan > 0) { // Skip if previous cell has row span
-                        countRowSpan--;
-                        return row;
-                    }
-
-                    let findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
-                    if (findColIdx === -1) {
-                        findColIdx = row.cells.length - 1;
-                    }
-
-                    if (row.cells[findColIdx].colSpan
-                        && row.cells[findColIdx].cI < cI + offset
-                        && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset
-                    ) {
-                        row.cells[findColIdx].colSpan++;
-
-                        if (row.cells[findColIdx].rowSpan) {
-                            countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+            [ 'head', 'body', 'foot' ].forEach( ( section ) => (
+                setAttributes( {
+                    [ section ]: attributes[ section ].map( ( row ) => {
+                        if (countRowSpan > 0) { // Skip if previous cell has row span
+                            countRowSpan--;
+                            return row;
                         }
 
-                        return row;
-                    } else {
-                        let realOffset = offset;
-                        if (row.cells[findColIdx].cI > cI && offset === 1) {
-                            realOffset = 0;
-                        } else if (row.cells[findColIdx].cI < cI && offset === 0) {
-                            realOffset = 1;
+                        let findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
+                        if (findColIdx === -1) {
+                            findColIdx = row.cells.length - 1;
                         }
 
-                        return {
-                            cells: [
-                                ...row.cells.slice( 0, findColIdx + realOffset ),
-                                { content: '' },
-                                ...row.cells.slice( findColIdx + realOffset ),
-                            ],
+                        if (row.cells[findColIdx].colSpan
+                            && row.cells[findColIdx].cI < cI + offset
+                            && row.cells[findColIdx].cI + parseInt(row.cells[findColIdx].colSpan) > cI + offset
+                        ) {
+                            row.cells[findColIdx].colSpan++;
+
+                            if (row.cells[findColIdx].rowSpan) {
+                                countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                            }
+
+                            return row;
+                        } else {
+                            let realOffset = offset;
+                            if (row.cells[findColIdx].cI > cI && offset === 1) {
+                                realOffset = 0;
+                            } else if (row.cells[findColIdx].cI < cI && offset === 0) {
+                                realOffset = 1;
+                            }
+
+                            return {
+                                cells: [
+                                    ...row.cells.slice( 0, findColIdx + realOffset ),
+                                    { content: '' },
+                                    ...row.cells.slice( findColIdx + realOffset ),
+                                ],
+                            }
                         }
-                    }
-                } ),
-            } );
+                    } ),
+                } )
+            ) )
         }
 
         deleteColumn() {
@@ -267,52 +300,53 @@
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
             const { cI } = selectedCell;
             let countRowSpan = 0;
 
             this.setState( { selectedCell: null, updated: true } );
-            setAttributes( {
-                body: body.map( ( row ) => {
-                    if (countRowSpan > 0) {
-                        countRowSpan--;
-                        return row;
-                    }
-
-                    const findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
-
-                    if (row.cells[findColIdx].rowSpan) {
-                        countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
-                    }
-
-                    if (row.cells[findColIdx].colSpan) {
-                        row.cells[findColIdx].colSpan--;
-                        if (row.cells[findColIdx].colSpan <= 1) {
-                            delete row.cells[findColIdx].colSpan;
+            [ 'head', 'body', 'foot' ].forEach( ( section ) => (
+                setAttributes( {
+                    [ section ]: attributes[ section ].map( ( row ) => {
+                        if (countRowSpan > 0) {
+                            countRowSpan--;
+                            return row;
                         }
 
-                        return row;
-                    }
+                        const findColIdx = row.cells.findIndex( (cell, idx) => cell.cI === cI || (row.cells[idx + 1] && row.cells[idx + 1].cI > cI) );
 
-                    return {
-                        cells: row.cells.filter( ( cell, index ) => index !== findColIdx ),
-                    }
-                } ),
-            } );
+                        if (row.cells[findColIdx].rowSpan) {
+                            countRowSpan = parseInt(row.cells[findColIdx].rowSpan) - 1;
+                        }
+
+                        if (row.cells[findColIdx].colSpan) {
+                            row.cells[findColIdx].colSpan--;
+                            if (row.cells[findColIdx].colSpan <= 1) {
+                                delete row.cells[findColIdx].colSpan;
+                            }
+
+                            return row;
+                        }
+
+                        return {
+                            cells: row.cells.filter( ( cell, index ) => index !== findColIdx ),
+                        }
+                    } ),
+                } )
+            ) )
         }
 
         mergeCells() {
-            const { rangeSelected } = this.state;
+            const { rangeSelected, sectionSelected } = this.state;
 
-            if (!rangeSelected.toCell) {
+            if (!this.isRangeSelected()) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
             const { fromCell, toCell } = rangeSelected;
-            const { body } = attributes;
-            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
-            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+            const currentSection = attributes[ sectionSelected ];
+            const fCell = currentSection[fromCell.rowIdx].cells[fromCell.colIdx];
+            const tCell = currentSection[toCell.rowIdx].cells[toCell.colIdx];
             const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
             const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
             const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
@@ -322,7 +356,7 @@
             const minColIdx = Math.min(fromCell.RCI, toCell.RCI);
             const maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
 
-            const newBody = body.map( ( row, curRowIndex ) => {
+            const newSection = currentSection.map( ( row, curRowIndex ) => {
                 if (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) {
                     return row;
                 }
@@ -351,27 +385,31 @@
                 }
             } );
 
-            setAttributes( { body: newBody } );
-            this.setState( { selectedCell: null, rangeSelected: null, updated: true } );
+            setAttributes( { [ sectionSelected ]: newSection } );
+            this.setState( {
+                selectedCell: null,
+                sectionSelected: null,
+                rangeSelected: null,
+                updated: true,
+            } );
         }
 
         splitMergedCells() {
-            const { selectedCell } = this.state;
+            const { selectedCell, sectionSelected } = this.state;
 
             if (!selectedCell) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
             const { colIndex, rowIndex, cI } = selectedCell;
 
-            const cellColSpan = body[rowIndex].cells[colIndex].colSpan ? parseInt(body[rowIndex].cells[colIndex].colSpan) : 1;
-            const cellRowSpan = body[rowIndex].cells[colIndex].rowSpan ? parseInt(body[rowIndex].cells[colIndex].rowSpan) : 1;
-            body[rowIndex].cells[colIndex].colSpan = undefined;
-            body[rowIndex].cells[colIndex].rowSpan = undefined;
+            const cellColSpan = attributes[ sectionSelected ][rowIndex].cells[colIndex].colSpan ? parseInt(attributes[ sectionSelected ][rowIndex].cells[colIndex].colSpan) : 1;
+            const cellRowSpan = attributes[ sectionSelected ][rowIndex].cells[colIndex].rowSpan ? parseInt(attributes[ sectionSelected ][rowIndex].cells[colIndex].rowSpan) : 1;
+            attributes[ sectionSelected ][rowIndex].cells[colIndex].colSpan = undefined;
+            attributes[ sectionSelected ][rowIndex].cells[colIndex].rowSpan = undefined;
 
-            const newBody = body.map( (row, curRowIndex) => {
+            const newSection = attributes[ sectionSelected ].map( (row, curRowIndex) => {
                 if (curRowIndex >= rowIndex && curRowIndex < (rowIndex + cellRowSpan) ) {
                     const findColIdx = row.cells.findIndex( (cell) => cell.cI >= cI );
                     let startRowFix = 0;
@@ -391,8 +429,12 @@
                 return row;
             } );
 
-            setAttributes( { body: newBody } );
-            this.setState( { selectedCell: null, updated: true } );
+            setAttributes( { [ sectionSelected ]: newSection } );
+            this.setState( {
+                selectedCell: null,
+                sectionSelected: null,
+                updated: true,
+            } );
         }
 
         // Parse styles from HTML form to React styles object
@@ -415,17 +457,17 @@
         }
 
         getCellStyles( style ) {
-            const { selectedCell } = this.state;
-            const { body } = this.props.attributes;
+            const { selectedCell, sectionSelected } = this.state;
+            const section = this.props.attributes[ sectionSelected ];
 
             if (!selectedCell) return undefined;
 
             const { rowIndex, colIndex } = selectedCell;
 
             if (style === 'borderColor') {
-                return body[rowIndex].cells[colIndex].borderColorSaved;
+                return section[rowIndex].cells[colIndex].borderColorSaved;
             }
-            const styles = AdvTable.parseStyles(body[rowIndex].cells[colIndex].styles);
+            const styles = AdvTable.parseStyles(section[rowIndex].cells[colIndex].styles);
 
             if (typeof styles === 'object') {
                 let convertedStyles = styles[style];
@@ -445,20 +487,20 @@
         }
 
         updateCellsStyles( style ) {
-            const { selectedCell, rangeSelected, multiSelected } = this.state;
-            if (!selectedCell && !rangeSelected.toCell && !multiSelected ) {
+            const { selectedCell, rangeSelected, multiSelected, sectionSelected } = this.state;
+            if (!selectedCell && !this.isRangeSelected() && !this.isMultiSelected() ) {
                 return null;
             }
 
             const { attributes, setAttributes } = this.props;
             const { rowIndex, colIndex } = selectedCell;
-            const { body } = attributes;
+            const section = attributes[ sectionSelected ];
             let minRowIdx, maxRowIdx, minColIdx, maxColIdx;
 
-            if (rangeSelected && rangeSelected.toCell) {
+            if (this.isRangeSelected()) {
                 const { fromCell, toCell } = rangeSelected;
-                const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
-                const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
+                const fCell = section[fromCell.rowIdx].cells[fromCell.colIdx];
+                const tCell = section[toCell.rowIdx].cells[toCell.colIdx];
                 const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
                 const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
                 const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
@@ -469,23 +511,24 @@
                 maxColIdx = Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan);
             }
 
-            const newBody = body.map( ( row, curRowIndex ) => {
-                if ((!rangeSelected || (rangeSelected && !rangeSelected.toCell)) && multiSelected.length < 2 && curRowIndex !== rowIndex
-                    || (rangeSelected && rangeSelected.toCell && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
-                    || (multiSelected && multiSelected.length > 1 && multiSelected.findIndex( (c) => c.rowIndex === curRowIndex ) === -1)
+            const newSection = section.map( ( row, curRowIndex ) => {
+                if (!this.isRangeSelected() && !this.isMultiSelected() && curRowIndex !== rowIndex
+                    || (this.isRangeSelected() && (curRowIndex < minRowIdx || curRowIndex > maxRowIdx) )
+                    || (this.isMultiSelected() && multiSelected.findIndex( (c) => c.rowIndex === curRowIndex ) === -1)
                 ) {
                     return row;
                 }
 
                 return {
                     cells: row.cells.map( ( cell, curColIndex ) => {
-                        if ((!rangeSelected || (rangeSelected && !rangeSelected.toCell)) && multiSelected.length < 2 && curColIndex === colIndex
-                            || (rangeSelected && rangeSelected.toCell && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
-                            || (multiSelected && multiSelected.length > 1 && multiSelected.findIndex( (c) => c.colIndex === curColIndex && c.rowIndex === curRowIndex ) > -1)
+                        if (!this.isRangeSelected() && !this.isMultiSelected() && curColIndex === colIndex
+                            || (this.isRangeSelected() && (cell.cI >= minColIdx && cell.cI <= maxColIdx) )
+                            || (this.isMultiSelected() && multiSelected.findIndex( (c) => c.colIndex === curColIndex && c.rowIndex === curRowIndex ) > -1)
                         ) {
                             cell.styles = AdvTable.parseStyles( cell.styles );
 
                             if (style.borderColor) {
+                                // Set border color
                                 if (cell.styles.borderTopColor) {
                                     cell.styles = { ...cell.styles, borderTopColor: style.borderColor };
                                 }
@@ -500,6 +543,145 @@
                                 }
 
                                 cell.borderColorSaved = style.borderColor;
+                            } else if (style.setBorder) {
+                                // Set border
+                                const cellBorderColor = cell.borderColorSaved || '#000';
+                                const cellColSpan = !cell.colSpan ? 0 : parseInt(cell.colSpan) - 1;
+                                const cellRowSpan = !cell.rowSpan ? 0 : parseInt(cell.rowSpan) - 1;
+                                switch (style.setBorder) {
+                                    case 'top':
+                                        cell.styles = { ...cell.styles, borderTopColor: cellBorderColor };
+                                        break;
+                                    case 'right':
+                                        cell.styles = { ...cell.styles, borderRightColor: cellBorderColor };
+                                        break;
+                                    case 'bottom':
+                                        cell.styles = { ...cell.styles, borderBottomColor: cellBorderColor };
+                                        break;
+                                    case 'left':
+                                        cell.styles = { ...cell.styles, borderLeftColor: cellBorderColor };
+                                        break;
+                                    case 'all':
+                                        cell.styles = {
+                                            ...cell.styles,
+                                            borderTopColor: cellBorderColor,
+                                            borderRightColor: cellBorderColor,
+                                            borderBottomColor: cellBorderColor,
+                                            borderLeftColor: cellBorderColor,
+                                        };
+                                        break;
+                                    case 'none':
+                                        cell.styles = {
+                                            ...cell.styles,
+                                            borderTopColor: undefined,
+                                            borderRightColor: undefined,
+                                            borderBottomColor: undefined,
+                                            borderLeftColor: undefined,
+                                        };
+                                        break;
+                                    case 'vert':
+                                        if (cell.cI === minColIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderRightColor: cellBorderColor,
+                                            };
+                                        } else if (cell.cI + cellColSpan === maxColIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderLeftColor: cellBorderColor,
+                                            };
+                                        } else {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderRightColor: cellBorderColor,
+                                                borderLeftColor: cellBorderColor,
+                                            };
+                                        }
+                                        break;
+                                    case 'horz':
+                                        if (curRowIndex === minRowIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderBottomColor: cellBorderColor,
+                                            };
+                                        } else if (curRowIndex + cellRowSpan === maxRowIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderTopColor: cellBorderColor,
+                                            };
+                                        } else {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderTopColor: cellBorderColor,
+                                                borderBottomColor: cellBorderColor,
+                                            };
+                                        }
+                                        break;
+                                    case 'inner':
+                                        if (curRowIndex === minRowIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderBottomColor: cellBorderColor,
+                                            };
+                                        } else if (curRowIndex + cellRowSpan === maxRowIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderTopColor: cellBorderColor,
+                                            };
+                                        } else {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderTopColor: cellBorderColor,
+                                                borderBottomColor: cellBorderColor,
+                                            };
+                                        }
+
+                                        if (cell.cI === minColIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderRightColor: cellBorderColor,
+                                            };
+                                        } else if (cell.cI + cellColSpan === maxColIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderLeftColor: cellBorderColor,
+                                            };
+                                        } else {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderRightColor: cellBorderColor,
+                                                borderLeftColor: cellBorderColor,
+                                            };
+                                        }
+                                        break;
+                                    case 'outer':
+                                        if (curRowIndex === minRowIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderTopColor: cellBorderColor,
+                                            };
+                                        } else if (curRowIndex + cellRowSpan === maxRowIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderBottomColor: cellBorderColor,
+                                            };
+                                        }
+
+                                        if (cell.cI === minColIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderLeftColor: cellBorderColor,
+                                            };
+                                        } else if (cell.cI + cellColSpan === maxColIdx) {
+                                            cell.styles = {
+                                                ...cell.styles,
+                                                borderRightColor: cellBorderColor,
+                                            };
+                                        }
+                                        break;
+                                    default: // Nothing
+                                        break;
+                                }
                             } else {
                                 cell.styles = { ...cell.styles, ...style };
                             }
@@ -510,11 +692,11 @@
                 }
             } );
 
-            setAttributes( { body: newBody } );
+            setAttributes( { [ section ]: newSection } );
         }
 
         updateCellContent( content, cell = null ) {
-            const { selectedCell } = this.state;
+            const { selectedCell, sectionSelected } = this.state;
             if (!selectedCell && !cell) {
                 return null;
             }
@@ -529,9 +711,8 @@
             }
 
             const { attributes, setAttributes } = this.props;
-            const { body } = attributes;
 
-            const newBody = body.map( ( row, curRowIndex ) => {
+            const newSection = attributes[ sectionSelected ].map( ( row, curRowIndex ) => {
                 if (curRowIndex !== rowIndex) {
                     return row;
                 }
@@ -550,12 +731,162 @@
                 }
             } );
 
-            setAttributes( { body: newBody } );
+            setAttributes( { [ sectionSelected ]: newSection } );
+        }
+
+        toggleSection( section ) {
+            const { attributes, setAttributes } = this.props;
+            const { sectionSelected } = this.state;
+            const { body } = attributes;
+            const cellsToAdd = [ { cells: body[0].cells.map( (cell) => ( { cI: cell.cI, colSpan: cell.colSpan } ) ) } ];
+
+            if (sectionSelected === section) {
+                this.setState( {
+                    selectedCell: null,
+                    sectionSelected: null,
+                } )
+            }
+
+            if (!attributes[section].length) {
+                return setAttributes( { [section] : cellsToAdd } );
+            }
+
+            return setAttributes( { [section] : [] } );
+        }
+
+        renderSection( section ) {
+            const { attributes } = this.props;
+            const { selectedCell, multiSelected, rangeSelected, sectionSelected } = this.state;
+
+            return attributes[ section ].map( ( { cells }, rowIndex ) => (
+                <tr key={ rowIndex }>
+                    {cells.map( ( { content, styles, colSpan, rowSpan, cI }, colIndex ) => {
+                        const cell = { rowIndex, colIndex, cI, section };
+
+                        let isSelected = selectedCell
+                            && selectedCell.rowIndex === rowIndex
+                            && selectedCell.colIndex === colIndex
+                            && sectionSelected === section;
+
+                        if (this.isRangeSelected()) {
+                            const { fromCell, toCell } = rangeSelected;
+                            const fCell = attributes[ sectionSelected ][fromCell.rowIdx].cells[fromCell.colIdx];
+                            const tCell = attributes[ sectionSelected ][toCell.rowIdx].cells[toCell.colIdx];
+                            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+
+                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx)
+                                && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
+                                && cI >= Math.min(fromCell.RCI, toCell.RCI)
+                                && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
+                                && section === sectionSelected
+                        }
+
+                        if (this.isMultiSelected()) {
+                            isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1
+                                && multiSelected[0].section === section;
+                        }
+
+
+                        const cellClassName = [
+                            isSelected && 'cell-selected',
+                        ].filter( Boolean ).join( ' ' );
+
+                        styles = AdvTable.parseStyles( styles );
+
+                        return (
+                            <td key={ colIndex }
+                                className={ cellClassName }
+                                style={ styles }
+                                colSpan={ colSpan }
+                                rowSpan={ rowSpan }
+                                onClick={ (e) => {
+                                    if (e.shiftKey) {
+                                        if (!rangeSelected) return;
+                                        if (!rangeSelected.fromCell) return;
+
+                                        const { fromCell } = rangeSelected;
+                                        if (section !== fromCell.section) {
+                                            alert( __( 'Cannot select multi cells from difference section!' ) );
+                                            return;
+                                        }
+                                        const toCell = {
+                                            rowIdx: rowIndex,
+                                            colIdx: colIndex,
+                                            RCI: cI,
+                                            section: section,
+                                        };
+
+                                        this.setState( {
+                                            rangeSelected: { fromCell, toCell },
+                                            multiSelected: null,
+                                        } );
+                                    } else if (e.ctrlKey || e.metaKey) {
+                                        const multiCells = multiSelected ? multiSelected : [];
+                                        const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
+
+                                        if (multiCells.length && section !== multiCells[0].section) {
+                                            alert( __( 'Cannot select multi cells from difference section!' ) );
+                                            return;
+                                        }
+
+                                        if (existCell === -1) {
+                                            multiCells.push(cell);
+                                        } else {
+                                            multiCells.splice(existCell, 1);
+                                        }
+
+                                        this.setState( {
+                                            multiSelected: multiCells,
+                                            rangeSelected: null,
+                                        } );
+                                    } else {
+                                        this.setState( {
+                                            rangeSelected: {
+                                                fromCell: {
+                                                    rowIdx: rowIndex,
+                                                    colIdx: colIndex,
+                                                    RCI: cI,
+                                                    section: section,
+                                                },
+                                            },
+                                            multiSelected: [ cell ],
+                                        } );
+                                    }
+                                } }
+                            >
+                                <RichText
+                                    className="wp-block-table__cell-content"
+                                    value={ content }
+                                    onChange={ ( value ) => {
+                                        if (willSetContent) clearTimeout(willSetContent);
+                                        lastValue = value;
+                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1000);
+                                    } }
+                                    unstableOnFocus={ () => {
+                                        if (willSetContent) {
+                                            this.updateCellContent(lastValue, selectedCell);
+                                            clearTimeout(willSetContent);
+                                            willSetContent = null;
+                                        }
+                                        this.setState( {
+                                            selectedCell: cell,
+                                            sectionSelected: section,
+                                        } )
+                                    } }
+                                />
+                            </td>
+                        )
+                    } ) }
+                </tr>
+            ) );
         }
 
         render() {
             const { attributes, setAttributes, className } = this.props;
-            const { body, maxWidth } = attributes;
+            const { head, body, foot, maxWidth, tableCollapsed, hasFixedLayout } = attributes;
             const { initRow, initCol, selectedCell, rangeSelected, multiSelected } = this.state;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
             const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
@@ -592,37 +923,37 @@
                 {
                     icon: 'table-row-before',
                     title: __( 'Add Row Before' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.insertRow( 0 ),
                 },
                 {
                     icon: 'table-row-after',
                     title: __( 'Add Row After' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.insertRow( 1 ),
                 },
                 {
                     icon: 'table-row-delete',
                     title: __( 'Delete Row' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.deleteRow(),
                 },
                 {
                     icon: 'table-col-before',
                     title: __( 'Add Column Before' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.insertColumn( 0 ),
                 },
                 {
                     icon: 'table-col-after',
                     title: __( 'Add Column After' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.insertColumn( 1 ),
                 },
                 {
                     icon: 'table-col-delete',
                     title: __( 'Delete Column' ),
-                    isDisabled: ! selectedCell || (rangeSelected && rangeSelected.toCell) || (multiSelected && multiSelected.length > 1),
+                    isDisabled: ! selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: () => this.deleteColumn(),
                 },
                 {
@@ -635,8 +966,8 @@
                     title: __( 'Split Merged Cells' ),
                     isDisabled: ! selectedCell
                         || (currentCell && !currentCell.rowSpan && !currentCell.colSpan)
-                        || (rangeSelected && rangeSelected.toCell)
-                        || (multiSelected && multiSelected.length > 1),
+                        || this.isRangeSelected()
+                        || this.isMultiSelected(),
                     onClick: () => this.splitMergedCells(),
                 },
                 {
@@ -649,12 +980,12 @@
                         </svg>
                     ),
                     title: __( 'Merge Cells' ),
-                    isDisabled: !rangeSelected || (rangeSelected && ! rangeSelected.toCell),
+                    isDisabled: !this.isRangeSelected(),
                     onClick: () => this.mergeCells(),
                 },
             ];
 
-            const BORDER_SELECT = [
+            let BORDER_SELECT = [
                 {
                     title: __( 'Border Top' ),
                     icon: (
@@ -663,7 +994,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( { borderTopColor: this.getCellStyles( 'borderColor' ) } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'top' } ),
                 },
                 {
                     title: __( 'Border Right' ),
@@ -673,7 +1004,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( { borderRightColor: this.getCellStyles( 'borderColor' ) } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'right' } ),
                 },
                 {
                     title: __( 'Border Bottom' ),
@@ -683,7 +1014,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( { borderBottomColor: this.getCellStyles( 'borderColor' ) } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'bottom' } ),
                 },
                 {
                     title: __( 'Border Left' ),
@@ -693,22 +1024,17 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( { borderLeftColor: this.getCellStyles( 'borderColor' ) } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'left' } ),
                 },
                 {
                     title: __( 'Border All' ),
                     icon: (
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z"/>
+                            <path d="M3 3v18h18V3H3zm8 16H5v-6h6v6zm0-8H5V5h6v6zm8 8h-6v-6h6v6zm0-8h-6V5h6v6z"/>
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( {
-                        borderTopColor: this.getCellStyles( 'borderColor' ),
-                        borderRightColor: this.getCellStyles( 'borderColor' ),
-                        borderBottomColor: this.getCellStyles( 'borderColor' ),
-                        borderLeftColor: this.getCellStyles( 'borderColor' ),
-                    } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'all' } ),
                 },
                 {
                     title: __( 'Border None' ),
@@ -718,14 +1044,56 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
                     ),
-                    onClick: () => this.updateCellsStyles( {
-                        borderTopColor: undefined,
-                        borderRightColor: undefined,
-                        borderBottomColor: undefined,
-                        borderLeftColor: undefined,
-                    } ),
+                    onClick: () => this.updateCellsStyles( { setBorder: 'none' } ),
                 },
             ];
+
+            if (this.isRangeSelected()) {
+                const EXTRA_BORDER_SELECT = [
+                    {
+                        title: __( 'Border Vertical' ),
+                        icon: (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3 9h2V7H3v2zm0-4h2V3H3v2zm4 16h2v-2H7v2zm0-8h2v-2H7v2zm-4 0h2v-2H3v2zm0 8h2v-2H3v2zm0-4h2v-2H3v2zM7 5h2V3H7v2zm12 12h2v-2h-2v2zm-8 4h2V3h-2v18zm8 0h2v-2h-2v2zm0-8h2v-2h-2v2zm0-10v2h2V3h-2zm0 6h2V7h-2v2zm-4-4h2V3h-2v2zm0 16h2v-2h-2v2zm0-8h2v-2h-2v2z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                        ),
+                        onClick: () => this.updateCellsStyles( { setBorder: 'vert' } ),
+                    },
+                    {
+                        title: __( 'Border Horizontal' ),
+                        icon: (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3 21h2v-2H3v2zM5 7H3v2h2V7zM3 17h2v-2H3v2zm4 4h2v-2H7v2zM5 3H3v2h2V3zm4 0H7v2h2V3zm8 0h-2v2h2V3zm-4 4h-2v2h2V7zm0-4h-2v2h2V3zm6 14h2v-2h-2v2zm-8 4h2v-2h-2v2zm-8-8h18v-2H3v2zM19 3v2h2V3h-2zm0 6h2V7h-2v2zm-8 8h2v-2h-2v2zm4 4h2v-2h-2v2zm4 0h2v-2h-2v2z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                        ),
+                        onClick: () => this.updateCellsStyles( { setBorder: 'horz' } ),
+                    },
+                    {
+                        title: __( 'Border Inner' ),
+                        icon: (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3 21h2v-2H3v2zm4 0h2v-2H7v2zM5 7H3v2h2V7zM3 17h2v-2H3v2zM9 3H7v2h2V3zM5 3H3v2h2V3zm12 0h-2v2h2V3zm2 6h2V7h-2v2zm0-6v2h2V3h-2zm-4 18h2v-2h-2v2zM13 3h-2v8H3v2h8v8h2v-8h8v-2h-8V3zm6 18h2v-2h-2v2zm0-4h2v-2h-2v2z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                        ),
+                        onClick: () => this.updateCellsStyles( { setBorder: 'inner' } ),
+                    },
+                    {
+                        title: __( 'Border Outer' ),
+                        icon: (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z"/>
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                            </svg>
+                        ),
+                        onClick: () => this.updateCellsStyles( { setBorder: 'outer' } ),
+                    },
+                ];
+
+                BORDER_SELECT = [...BORDER_SELECT, ...EXTRA_BORDER_SELECT];
+            }
 
             const HORZ_ALIGNMENT_CONTROLS = [
                 {
@@ -809,6 +1177,26 @@
                                 value={ maxWidth }
                                 onChange={ ( value ) => setAttributes( { maxWidth: value } ) }
                             />
+                            <ToggleControl
+                                label={ __( 'Fixed width table cells' ) }
+                                checked={ hasFixedLayout }
+                                onChange={ () => setAttributes( { hasFixedLayout: !hasFixedLayout } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Table header' ) }
+                                checked={ head && head.length }
+                                onChange={ () => this.toggleSection( 'head' ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Table footer' ) }
+                                checked={ foot && foot.length }
+                                onChange={ () => this.toggleSection( 'foot' ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Border collapsed' ) }
+                                checked={ tableCollapsed }
+                                onChange={ () => setAttributes( { tableCollapsed: !tableCollapsed } ) }
+                            />
                         </PanelBody>
                         <PanelBody title={ __( 'Cell Settings' ) }>
                             <PanelColorSettings
@@ -824,14 +1212,18 @@
                                         value: this.getCellStyles( 'color' ),
                                         onChange: ( value ) => this.updateCellsStyles( { color: value } ),
                                     },
-                                    {
-                                        label: __( 'Border Color' ),
-                                        value: this.getCellStyles( 'borderColor' ),
-                                        onChange: ( value ) => this.updateCellsStyles( { borderColor: value } ),
-                                    },
                                 ] }
                             />
                             <PanelBody title={ __( 'Border' ) } initialOpen={ false }>
+                                <div className="advgb-border-item-wrapper">
+                                    {BORDER_SELECT.map( ( item, index ) => (
+                                        <div className="advgb-border-item" key={ index }>
+                                            <Tooltip text={ item.title }>
+                                                <span onClick={ item.onClick }>{ item.icon }</span>
+                                            </Tooltip>
+                                        </div>
+                                    ) ) }
+                                </div>
                                 <SelectControl
                                     label={ __( 'Border Style' ) }
                                     value={ this.getCellStyles( 'borderStyle' ) }
@@ -846,19 +1238,20 @@
                                 <RangeControl
                                     label={ __( 'Border width' ) }
                                     value={ this.getCellStyles( 'borderWidth' ) || 0 }
-                                    min={ 1 }
+                                    min={ 0 }
                                     max={ 10 }
                                     onChange={ ( value ) => this.updateCellsStyles( { borderWidth: value } ) }
                                 />
-                                <div className="advgb-border-item-wrapper">
-                                    {BORDER_SELECT.map( ( item, index ) => (
-                                        <div className="advgb-border-item" key={ index }>
-                                            <Tooltip text={ item.title }>
-                                                <span onClick={ item.onClick }>{ item.icon }</span>
-                                            </Tooltip>
-                                        </div>
-                                    ) ) }
-                                </div>
+                                <PanelColorSettings
+                                    title={ __( 'Border Color' ) }
+                                    colorSettings={ [
+                                        {
+                                            label: __( 'Border Color' ),
+                                            value: this.getCellStyles( 'borderColor' ),
+                                            onChange: ( value ) => this.updateCellsStyles( { borderColor: value } ),
+                                        },
+                                    ] }
+                                />
                             </PanelBody>
                             <PanelBody title={ __( 'Padding' ) } initialOpen={ false }>
                                 <RangeControl
@@ -920,116 +1313,20 @@
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
-                    <table className={ className } style={ { maxWidth: maxWidthVal } }>
-                        <tbody>
-                            {body.map( ( { cells }, rowIndex ) => (
-                                <tr key={ rowIndex }>
-                                    {cells.map( ( { content, styles, colSpan, rowSpan, cI }, colIndex ) => {
-                                        const cell = { rowIndex, colIndex, cI };
-
-                                        let isSelected = selectedCell
-                                            && selectedCell.rowIndex === rowIndex
-                                            && selectedCell.colIndex === colIndex;
-
-                                        if (rangeSelected && rangeSelected.toCell) {
-                                            const { fromCell, toCell } = rangeSelected;
-                                            const fCell = body[fromCell.rowIdx].cells[fromCell.colIdx];
-                                            const tCell = body[toCell.rowIdx].cells[toCell.colIdx];
-                                            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
-                                            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
-                                            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
-                                            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
-
-                                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx)
-                                                && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
-                                                && cI >= Math.min(fromCell.RCI, toCell.RCI)
-                                                && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
-                                        }
-
-                                        if (multiSelected && multiSelected.length > 1) {
-                                            isSelected = multiSelected.findIndex( (c) => c.rowIndex === rowIndex && c.colIndex === colIndex ) > -1;
-                                        }
-
-
-                                        const cellClassName = [
-                                            isSelected && 'cell-selected',
-                                        ].filter( Boolean ).join( ' ' );
-
-                                        styles = AdvTable.parseStyles( styles );
-
-                                        return (
-                                            <td key={ colIndex }
-                                                className={ cellClassName }
-                                                style={ styles }
-                                                colSpan={ colSpan }
-                                                rowSpan={ rowSpan }
-                                                onClick={ (e) => {
-                                                    if (e.shiftKey) {
-                                                        if (!rangeSelected) return;
-                                                        if (!rangeSelected.fromCell) return;
-
-                                                        const { fromCell } = rangeSelected;
-                                                        const toCell = {
-                                                            rowIdx: rowIndex,
-                                                            colIdx: colIndex,
-                                                            RCI: cI,
-                                                        };
-
-                                                        this.setState( {
-                                                            rangeSelected: { fromCell, toCell },
-                                                            multiSelected: null,
-                                                        } );
-                                                    } else if (e.ctrlKey || e.metaKey) {
-                                                        const multiCells = multiSelected ? multiSelected : [];
-                                                        const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
-
-                                                        if (existCell === -1) {
-                                                            multiCells.push(cell);
-                                                        } else {
-                                                            multiCells.splice(existCell, 1);
-                                                        }
-
-                                                        this.setState( {
-                                                            multiSelected: multiCells,
-                                                            rangeSelected: null,
-                                                        } );
-                                                    } else {
-                                                        this.setState( {
-                                                            rangeSelected: {
-                                                                fromCell: {
-                                                                    rowIdx: rowIndex,
-                                                                    colIdx: colIndex,
-                                                                    RCI: cI,
-                                                                },
-                                                            },
-                                                            multiSelected: [ cell ],
-                                                        } );
-                                                    }
-                                                } }
-                                            >
-                                                <RichText
-                                                    className="wp-block-table__cell-content"
-                                                    value={ content }
-                                                    onChange={ ( value ) => {
-                                                        if (willSetContent) clearTimeout(willSetContent);
-                                                        lastValue = value;
-                                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1000);
-                                                    } }
-                                                    unstableOnFocus={ () => {
-                                                        if (willSetContent) {
-                                                            this.updateCellContent(lastValue, selectedCell);
-                                                            clearTimeout(willSetContent);
-                                                            willSetContent = null;
-                                                        }
-                                                        this.setState( { selectedCell: cell } )
-                                                    } }
-                                                />
-                                            </td>
-                                        )
-                                    } ) }
-                                </tr>
-                            ) ) }
-                        </tbody>
+                    <table className={ className }
+                           style={ {
+                               maxWidth: maxWidthVal,
+                               borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                               tableLayout: hasFixedLayout ? 'fixed' : undefined,
+                           } }
+                    >
+                        {!!head.length && (
+                            <thead>{ this.renderSection( 'head' ) }</thead>
+                        ) }
+                        <tbody>{ this.renderSection( 'body' ) }</tbody>
+                        {!!foot.length && (
+                            <tfoot>{ this.renderSection( 'foot' ) }</tfoot>
+                        ) }
                     </table>
                 </Fragment>
             )
@@ -1046,6 +1343,40 @@
         category: 'advgb-category',
         keywords: [ __( 'table' ), __( 'cell' ), __( 'data' ) ],
         attributes: {
+            head: {
+                type: 'array',
+                default: [],
+                source: 'query',
+                selector: 'thead tr',
+                query: {
+                    cells: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'td, th',
+                        query: {
+                            content: {
+                                source: 'html',
+                            },
+                            styles: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'style',
+                            },
+                            colSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'colspan',
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color',
+                            }
+                        },
+                    },
+                },
+            },
             body: {
                 type: 'array',
                 default: [],
@@ -1085,9 +1416,51 @@
                     },
                 },
             },
+            foot: {
+                type: 'array',
+                default: [],
+                source: 'query',
+                selector: 'tfoot tr',
+                query: {
+                    cells: {
+                        type: 'array',
+                        default: [],
+                        source: 'query',
+                        selector: 'td, th',
+                        query: {
+                            content: {
+                                source: 'html',
+                            },
+                            styles: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'style',
+                            },
+                            colSpan: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'colspan',
+                            },
+                            borderColorSaved: {
+                                type: 'string',
+                                source: 'attribute',
+                                attribute: 'data-border-color',
+                            }
+                        },
+                    },
+                },
+            },
             maxWidth: {
                 type: 'number',
                 default: 0
+            },
+            hasFixedLayout: {
+                type: 'boolean',
+                default: false,
+            },
+            tableCollapsed: {
+                type: 'boolean',
+                default: false,
             },
             changed: {
                 type: 'boolean',
@@ -1097,30 +1470,48 @@
         supports: {
             align: true,
         },
+        styles: [
+            { name: 'default', label: __( 'Default' ), isDefault: true },
+            { name: 'stripes', label: __( 'Stripes' ) },
+        ],
         edit: AdvTable,
         save: function ( { attributes } ) {
-            const { body, maxWidth } = attributes;
+            const { head, body, foot, maxWidth, tableCollapsed, hasFixedLayout } = attributes;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
+            function renderSection( section ) {
+                return attributes[ section ].map( ( { cells }, rowIndex ) => (
+                    <tr key={ rowIndex }>
+                        { cells.map( ( { content, styles, colSpan, rowSpan, borderColorSaved }, colIndex ) => (
+                            <RichText.Content
+                                tagName="td"
+                                value={ content }
+                                key={ colIndex }
+                                style={ styles }
+                                colSpan={ colSpan }
+                                rowSpan={ rowSpan }
+                                data-border-color={ borderColorSaved }
+                            />
+                        ) ) }
+                    </tr>
+                ) )
+            }
+
             return (
-                <table className="advgb-table-frontend" style={ { maxWidth: maxWidthVal } }>
-                    <tbody>
-                    { body.map( ( { cells }, rowIndex ) => (
-                        <tr key={ rowIndex }>
-                            { cells.map( ( { content, styles, colSpan, rowSpan, borderColorSaved }, colIndex ) => (
-                                <RichText.Content
-                                    tagName="td"
-                                    value={ content }
-                                    key={ colIndex }
-                                    style={ styles }
-                                    colSpan={ colSpan }
-                                    rowSpan={ rowSpan }
-                                    data-border-color={ borderColorSaved }
-                                />
-                            ) ) }
-                        </tr>
-                    ) ) }
-                    </tbody>
+                <table className="advgb-table-frontend"
+                       style={ {
+                           maxWidth: maxWidthVal,
+                           borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                           tableLayout: hasFixedLayout ? 'fixed' : undefined,
+                       } }
+                >
+                    {!!head.length && (
+                        <thead>{ renderSection( 'head' ) }</thead>
+                    ) }
+                    <tbody>{ renderSection( 'body' ) }</tbody>
+                    {!!foot.length && (
+                        <tfoot>{ renderSection( 'foot' ) }</tfoot>
+                    ) }
                 </table>
             );
         },
