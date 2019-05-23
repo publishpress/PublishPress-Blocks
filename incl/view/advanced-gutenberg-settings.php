@@ -196,6 +196,53 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
 
                 <li class="ju-settings-option clearfix">
                     <div class="settings-option-wrapper clearfix">
+                        <label for="enable_blocks_spacing"
+                               class="advgb_qtip ju-setting-label"
+                               data-qtip="<?php esc_attr_e(
+                                   'Enable block spacing settings',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Enable blocks spacing', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="ju-switch-button">
+                            <label class="switch">
+                                <input type="checkbox" name="enable_blocks_spacing"
+                                       id="enable_blocks_spacing"
+                                       value="1"
+                                    <?php echo esc_attr($enable_blocks_spacing) ?>
+                                />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix hidden-item" id="blocks_spacing_wrapper">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="blocks_spacing"
+                               class="ju-setting-label advgb_qtip"
+                               data-qtip="<?php esc_attr_e(
+                                   'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Blocks spacing', 'advanced-gutenberg') ?>
+                            <span> (px)</span>
+                        </label>
+                        <span>
+                            <input type="number"
+                                   min="0"
+                                   name="blocks_spacing"
+                                   id="blocks_spacing"
+                                   class="ju-input"
+                                   style="margin-left: 10px; width: 80px"
+                                   value="<?php echo esc_html($blocks_spacing) ?>"
+                            >
+                        </span>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
                         <label for="blocks_icon_color"
                                class="ju-setting-label advgb_qtip"
                                data-qtip="<?php esc_attr_e(
@@ -258,53 +305,6 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                                 <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_html_e('Reset to default', 'advanced-gutenberg'); ?>"></i>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="enable_blocks_spacing"
-                               class="advgb_qtip ju-setting-label"
-                               data-qtip="<?php esc_attr_e(
-                                   'Enable block spacing settings',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e('Enable blocks spacing', 'advanced-gutenberg') ?>
-                        </label>
-                        <div class="ju-switch-button">
-                            <label class="switch">
-                                <input type="checkbox" name="enable_blocks_spacing"
-                                       id="enable_blocks_spacing"
-                                       value="1"
-                                    <?php echo esc_attr($enable_blocks_spacing) ?>
-                                />
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </li>
-                <li class="ju-settings-option clearfix hidden-item" id="blocks_spacing_wrapper">
-                    <div class="settings-option-wrapper clearfix">
-                        <label for="blocks_spacing"
-                               class="ju-setting-label advgb_qtip"
-                               data-qtip="<?php esc_attr_e(
-                                   'Apply a minimal vertical block spacing automatically. Default is None. Values in pixels',
-                                   'advanced-gutenberg'
-                               ) ?>"
-                        >
-                            <?php esc_html_e('Blocks spacing', 'advanced-gutenberg') ?>
-                            <span> (px)</span>
-                        </label>
-                        <span>
-                            <input type="number"
-                                   min="0"
-                                   name="blocks_spacing"
-                                   id="blocks_spacing"
-                                   class="ju-input"
-                                   style="margin-left: 10px; width: 80px"
-                                   value="<?php echo esc_html($blocks_spacing) ?>"
-                            >
-                        </span>
                     </div>
                 </li>
             </ul>
