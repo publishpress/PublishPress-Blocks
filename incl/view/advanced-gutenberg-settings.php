@@ -113,7 +113,7 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                         </div>
                     </div>
                 </li>
-                <li class="ju-settings-option hidden-item clearfix" id="gallery_lightbox_caption_wrapper">
+                <li class="ju-settings-option clearfix" id="gallery_lightbox_caption_wrapper">
                     <div class="settings-option-wrapper clearfix">
                         <label for="gallery_lightbox_caption"
                                class="ju-setting-label advgb_qtip"
@@ -217,7 +217,7 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                         </div>
                     </div>
                 </li>
-                <li class="ju-settings-option clearfix hidden-item" id="blocks_spacing_wrapper">
+                <li class="ju-settings-option clearfix" id="blocks_spacing_wrapper">
                     <div class="settings-option-wrapper clearfix">
                         <label for="blocks_spacing"
                                class="ju-setting-label advgb_qtip"
