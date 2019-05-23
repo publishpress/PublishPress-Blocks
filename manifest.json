@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.11",
+  "version": "1.10.12",
   "platform": "wordpress",
-  "wp_version": "5.2.0",
+  "wp_version": "5.2.1",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,32 @@
     ]
   },
   "changelog": {
+    "1.10.12": [
+      {
+        "type": "feature",
+        "title": "Adv Table block: Add more border options on range selection"
+      },
+      {
+        "type": "feature",
+        "title": "Adv Table block: Allow to enable table header and footer"
+      },
+      {
+        "type": "feature",
+        "title": "Adv Table block: Add table predefined styles choosing"
+      },
+      {
+        "type": "feature",
+        "title": "Adv Table block: Add option to enable cells fixed width and table border collapsed"
+      },
+      {
+        "type": "fix",
+        "title": "Images Slider block: Replace drag and drop ordering by arrow button"
+      },
+      {
+        "type": "fix",
+        "title": "Click on slider item of the block not focused on it"
+      }
+    ],
     "1.10.11": [
       {
         "type": "feature",

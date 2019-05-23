@@ -5,7 +5,6 @@
     const { InspectorControls, PanelColorSettings, MediaUpload } = wpEditor;
     const { PanelBody, RangeControl, ToggleControl , SelectControl, TextControl, TextareaControl, IconButton, Button, Placeholder, Tooltip } = wpComponents;
     const $ = jQuery;
-    let oldIndex, newIndex;
 
     const imageSliderBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22" className="dashicon">
@@ -24,7 +23,6 @@
             };
 
             this.initSlider = this.initSlider.bind(this);
-            this.initItemSortable = this.initItemSortable.bind(this);
         }
 
         componentWillMount() {
@@ -71,25 +69,14 @@
         }
 
         componentDidUpdate( prevProps ) {
-            const { attributes, isSelected } = this.props;
+            const { attributes } = this.props;
             const { images } = attributes;
             const { images: prevImages } = prevProps.attributes;
 
             if (images.length !== prevImages.length) {
                 if (images.length) {
-                    setTimeout(() => this.initSlider(), 100);
-                } else if (images.length === 0 && this.state.inited) {
-                    this.setState( { inited: false } );
+                    setTimeout(() => this.initSlider(), 10);
                 }
-            }
-
-            if (!this.state.inited && isSelected) {
-                this.initItemSortable();
-                this.setState( { inited: true } );
-            }
-
-            if (!isSelected && this.state.inited) {
-                this.setState( { inited: false } );
             }
         }
 
@@ -108,31 +95,17 @@
             } );
         }
 
-        initItemSortable() {
-            const { clientId, setAttributes, attributes } = this.props;
+        moveImage( currentIndex, newIndex ) {
+            const { setAttributes, attributes } = this.props;
             const { images } = attributes;
 
-            $(`#block-${clientId} .advgb-image-slider-image-list:not(.ui-sortable)`).sortable( {
-                items: "> .advgb-image-slider-image-list-item",
-                placeholder: 'advgb-slider-image-dragholder',
-                start: (e, ui) => {
-                    oldIndex = ui.item.index();
-                },
-                update: (e, ui) => {
-                    newIndex = ui.item.index();
-                    const image = images[oldIndex];
-
-                    $(`#block-${clientId} .advgb-image-slider-image-list.ui-sortable`).sortable('cancel').sortable('destroy');
-                    setAttributes( {
-                        images: [
-                            ...images.filter( (img, idx) => idx !== oldIndex ).slice(0, newIndex),
-                            image,
-                            ...images.filter( (img, idx) => idx !== oldIndex ).slice(newIndex),
-                        ]
-                    } );
-                    this.initItemSortable();
-                    $(`#block-${clientId} .advgb-images-slider.slick-initialized`).slick('setPosition');
-                },
+            const image = images[currentIndex];
+            setAttributes( {
+                images: [
+                    ...images.filter( (img, idx) => idx !== currentIndex ).slice(0, newIndex),
+                    image,
+                    ...images.filter( (img, idx) => idx !== currentIndex ).slice(newIndex),
+                ]
             } );
         }
 
@@ -365,13 +338,38 @@
                             <div className="advgb-image-slider-image-list">
                                 {images.map( (image, index) => (
                                     <div className="advgb-image-slider-image-list-item" key={index}>
+                                        {index > 0 && (
+                                            <Tooltip text={ __( 'Move Left' ) }>
+                                                <span className="advgb-move-arrow advgb-move-left"
+                                                      onClick={ () => this.moveImage( index, index - 1 ) }
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        <path fill="none" d="M0 0h24v24H0V0z"/>
+                                                        <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+                                                    </svg>
+                                                </span>
+                                            </Tooltip>
+                                        ) }
                                         <img src={ image.url }
                                              className="advgb-image-slider-image-list-img"
+                                             alt={ __( 'Remove' ) }
                                              onClick={ () => {
                                                  $(`#block-${clientId} .advgb-images-slider`).slick('slickGoTo', index, false);
                                                  this.setState( { currentSelected: index } )
                                              } }
                                         />
+                                        {index + 1 < images.length && (
+                                            <Tooltip text={ __( 'Move Right' ) }>
+                                                <span className="advgb-move-arrow advgb-move-right"
+                                                      onClick={ () => this.moveImage( index, index + 1 ) }
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        <path fill="none" d="M0 0h24v24H0V0z"/>
+                                                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                                                    </svg>
+                                                </span>
+                                            </Tooltip>
+                                        ) }
                                         <Tooltip text={ __( 'Remove image' ) }>
                                             <IconButton
                                                 className="advgb-image-slider-image-list-item-remove"
@@ -388,8 +386,9 @@
                                     <MediaUpload
                                         allowedTypes={ ['image'] }
                                         value={ currentSelected }
-                                        onSelect={ (image) => setAttributes( {
-                                            images: [...images, { id: image.id, url: image.url, } ],
+                                        multiple
+                                        onSelect={ (imgs) => setAttributes( {
+                                            images: [...images, ...imgs.map( (img) => lodash.pick( img, 'id', 'url' ) ) ],
                                         } ) }
                                         render={ ( { open } ) => (
                                             <IconButton
