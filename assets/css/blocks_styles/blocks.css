@@ -315,6 +315,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
     border-top: 2px solid #000;
 }
 
+.wp-block-advgb-table.is-style-stripes tbody tr:nth-child(odd) {
+    background-color: #f3f4f5;
+}
+
 /*Advanced Video styles*/
 .advgb-video-block iframe {
     display: block;

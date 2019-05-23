@@ -1470,6 +1470,10 @@
         supports: {
             align: true,
         },
+        styles: [
+            { name: 'default', label: __( 'Default' ), isDefault: true },
+            { name: 'stripes', label: __( 'Stripes' ) },
+        ],
         edit: AdvTable,
         save: function ( { attributes } ) {
             const { head, body, foot, maxWidth, tableCollapsed, hasFixedLayout } = attributes;

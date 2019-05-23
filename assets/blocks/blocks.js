@@ -3988,6 +3988,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             align: true
         },
+        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'stripes', label: __('Stripes') }],
         edit: AdvTable,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
