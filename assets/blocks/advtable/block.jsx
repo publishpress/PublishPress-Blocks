@@ -886,7 +886,7 @@
 
         render() {
             const { attributes, setAttributes, className } = this.props;
-            const { head, body, foot, maxWidth, tableCollapsed } = attributes;
+            const { head, body, foot, maxWidth, tableCollapsed, hasFixedLayout } = attributes;
             const { initRow, initCol, selectedCell, rangeSelected, multiSelected } = this.state;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
             const currentCell = selectedCell ? body[selectedCell.rowIndex].cells[selectedCell.colIndex] : null;
@@ -1178,6 +1178,11 @@
                                 onChange={ ( value ) => setAttributes( { maxWidth: value } ) }
                             />
                             <ToggleControl
+                                label={ __( 'Fixed width table cells' ) }
+                                checked={ hasFixedLayout }
+                                onChange={ () => setAttributes( { hasFixedLayout: !hasFixedLayout } ) }
+                            />
+                            <ToggleControl
                                 label={ __( 'Table header' ) }
                                 checked={ head && head.length }
                                 onChange={ () => this.toggleSection( 'head' ) }
@@ -1311,7 +1316,8 @@
                     <table className={ className }
                            style={ {
                                maxWidth: maxWidthVal,
-                               borderCollapse: tableCollapsed ? 'collapse' : undefined
+                               borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                               tableLayout: hasFixedLayout ? 'fixed' : undefined,
                            } }
                     >
                         {!!head.length && (
@@ -1448,6 +1454,10 @@
                 type: 'number',
                 default: 0
             },
+            hasFixedLayout: {
+                type: 'boolean',
+                default: false,
+            },
             tableCollapsed: {
                 type: 'boolean',
                 default: false,
@@ -1460,9 +1470,13 @@
         supports: {
             align: true,
         },
+        styles: [
+            { name: 'default', label: __( 'Default' ), isDefault: true },
+            { name: 'stripes', label: __( 'Stripes' ) },
+        ],
         edit: AdvTable,
         save: function ( { attributes } ) {
-            const { head, body, foot, maxWidth, tableCollapsed } = attributes;
+            const { head, body, foot, maxWidth, tableCollapsed, hasFixedLayout } = attributes;
             const maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
             function renderSection( section ) {
@@ -1488,6 +1502,7 @@
                        style={ {
                            maxWidth: maxWidthVal,
                            borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                           tableLayout: hasFixedLayout ? 'fixed' : undefined,
                        } }
                 >
                     {!!head.length && (

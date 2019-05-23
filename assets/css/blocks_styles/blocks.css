@@ -17,6 +17,10 @@
     pointer-events: none;
 }
 
+.slick-arrow:focus {
+    background: transparent;
+}
+
 /*Accordion block styles*/
 #editor .advgb-accordion-block .advgb-accordion-header p.mce-content-body,
 #editor .advgb-accordion-block .advgb-accordion-body p.mce-content-body {
@@ -309,6 +313,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 
 .wp-block-advgb-table tfoot tr:first-child td {
     border-top: 2px solid #000;
+}
+
+.wp-block-advgb-table.is-style-stripes tbody tr:nth-child(odd) {
+    background-color: #f3f4f5;
 }
 
 /*Advanced Video styles*/

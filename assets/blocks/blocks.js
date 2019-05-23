@@ -3294,7 +3294,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     body = attributes.body,
                     foot = attributes.foot,
                     maxWidth = attributes.maxWidth,
-                    tableCollapsed = attributes.tableCollapsed;
+                    tableCollapsed = attributes.tableCollapsed,
+                    hasFixedLayout = attributes.hasFixedLayout;
                 var _state11 = this.state,
                     initRow = _state11.initRow,
                     initCol = _state11.initCol,
@@ -3626,6 +3627,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(ToggleControl, {
+                                label: __('Fixed width table cells'),
+                                checked: hasFixedLayout,
+                                onChange: function onChange() {
+                                    return setAttributes({ hasFixedLayout: !hasFixedLayout });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
                                 label: __('Table header'),
                                 checked: head && head.length,
                                 onChange: function onChange() {
@@ -3799,7 +3807,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: className,
                             style: {
                                 maxWidth: maxWidthVal,
-                                borderCollapse: tableCollapsed ? 'collapse' : undefined
+                                borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                                tableLayout: hasFixedLayout ? 'fixed' : undefined
                             }
                         },
                         !!head.length && React.createElement(
@@ -3963,6 +3972,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'number',
                 default: 0
             },
+            hasFixedLayout: {
+                type: 'boolean',
+                default: false
+            },
             tableCollapsed: {
                 type: 'boolean',
                 default: false
@@ -3975,6 +3988,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             align: true
         },
+        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'stripes', label: __('Stripes') }],
         edit: AdvTable,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -3982,7 +3996,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 body = attributes.body,
                 foot = attributes.foot,
                 maxWidth = attributes.maxWidth,
-                tableCollapsed = attributes.tableCollapsed;
+                tableCollapsed = attributes.tableCollapsed,
+                hasFixedLayout = attributes.hasFixedLayout;
 
             var maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
@@ -4017,7 +4032,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: "advgb-table-frontend",
                     style: {
                         maxWidth: maxWidthVal,
-                        borderCollapse: tableCollapsed ? 'collapse' : undefined
+                        borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                        tableLayout: hasFixedLayout ? 'fixed' : undefined
                     }
                 },
                 !!head.length && React.createElement(
