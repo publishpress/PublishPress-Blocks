@@ -138,6 +138,10 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
         # Run PHP 5.2 tests
         copy_plugin_to_www
         codecept run functional -g php5.2 --env=$DOCKER_ENV --fail-fast
+	elif [[ "$PHP_VERSION" = "5.5" ]]; then
+        # Run PHP 5.5 tests
+        copy_plugin_to_www
+        codecept run functional -g php5.5 --env=$DOCKER_ENV --fail-fast
     elif [[ "$INSTALL_TYPE" = "install" ]]; then
         copy_plugin_to_www
         do_install_tests
