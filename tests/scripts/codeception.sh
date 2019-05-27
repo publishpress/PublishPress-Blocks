@@ -69,7 +69,7 @@ EOF
 }
 
 function do_install_tests () {
-    codecept run functional --skip-group php5.2 --env=$DOCKER_ENV --fail-fast
+    codecept run functional --skip-group php5.2 --skip-group php5.5 --env=$DOCKER_ENV --fail-fast
 }
 
 function prepare_update_tests() {
@@ -98,7 +98,7 @@ function do_update_tests () {
 }
 
 function do_general_tests () {
-    codecept run acceptance --skip-group php5.2 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast
+    codecept run acceptance --skip-group php5.2 --skip-group php5.5 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast
 
     check_php_errors
 }
