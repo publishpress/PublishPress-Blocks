@@ -20,27 +20,111 @@
 
         render() {
             const { attributes, setAttributes, clientId } = this.props;
+            const {
+                width,
+                borderColor,
+                borderStyle,
+                borderWidth,
+                borderRadius,
+                marginTop, marginRight, marginBottom, marginLeft,
+                marginTopM, marginRightM, marginBottomM, marginLeftM,
+                paddingTop, paddingRight, paddingBottom, paddingLeft,
+                paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
+            } = attributes;
             const { getBlockOrder } = select( 'core/block-editor' );
             const hasChildBlocks = getBlockOrder( clientId ).length > 0;
 
             const blockClasses = [
-                'advgb-columns'
+                'advgb-column'
             ].filter( Boolean ).join( ' ' );
 
             return (
-                <div className={ blockClasses }>
-                    <InnerBlocks
-                        templateLock={ false }
-                        renderAppender={ (
-                            hasChildBlocks ?
-                                undefined :
-                                () => <InnerBlocks.ButtonBlockAppender />
-                        ) }
-                    />
-                </div>
+                <Fragment>
+                    <InspectorControls>
+                        <PanelBody title={ __( 'Column Settings' ) }>
+
+                        </PanelBody>
+                    </InspectorControls>
+                    <div className={ blockClasses }>
+                        <InnerBlocks
+                            templateLock={ false }
+                            renderAppender={ (
+                                hasChildBlocks ?
+                                    undefined :
+                                    () => <InnerBlocks.ButtonBlockAppender />
+                            ) }
+                        />
+                    </div>
+                </Fragment>
             )
         }
     }
+
+    const blockAttrs = {
+        width: {
+            type: 'number',
+        },
+        borderColor: {
+            type: 'string',
+        },
+        borderStyle: {
+            type: 'string',
+        },
+        borderWidth: {
+            type: 'number',
+        },
+        borderRadius: {
+            type: 'number',
+        },
+        marginTop: {
+            type: 'number',
+        },
+        marginTopM: {
+            type: 'number',
+        },
+        marginRight: {
+            type: 'number',
+        },
+        marginRightM: {
+            type: 'number',
+        },
+        marginBottom: {
+            type: 'number',
+        },
+        marginBottomM: {
+            type: 'number',
+        },
+        marginLeft: {
+            type: 'number',
+        },
+        marginLeftM: {
+            type: 'number',
+        },
+        paddingTop: {
+            type: 'number',
+        },
+        paddingTopM: {
+            type: 'number',
+        },
+        paddingRight: {
+            type: 'number',
+        },
+        paddingRightM: {
+            type: 'number',
+        },
+        paddingBottom: {
+            type: 'number',
+        },
+        paddingBottomM: {
+            type: 'number',
+        },
+        paddingLeft: {
+            type: 'number',
+        },
+        paddingLeftM: {
+            type: 'number',
+        },
+    };
 
     registerBlockType( 'advgb/column', {
         title: __( 'Adv. Column' ),
@@ -57,9 +141,7 @@
             reusable: false,
             html: false,
         },
-        attributes: {
-
-        },
+        attributes: blockAttrs,
         edit: AdvColumnEdit,
         save: function ( props ) {
             return null;

@@ -4949,29 +4949,125 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,
                     clientId = _props.clientId;
+                var width = attributes.width,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderRadius = attributes.borderRadius,
+                    marginTop = attributes.marginTop,
+                    marginRight = attributes.marginRight,
+                    marginBottom = attributes.marginBottom,
+                    marginLeft = attributes.marginLeft,
+                    marginTopM = attributes.marginTopM,
+                    marginRightM = attributes.marginRightM,
+                    marginBottomM = attributes.marginBottomM,
+                    marginLeftM = attributes.marginLeftM,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    paddingTopM = attributes.paddingTopM,
+                    paddingRightM = attributes.paddingRightM,
+                    paddingBottomM = attributes.paddingBottomM,
+                    paddingLeftM = attributes.paddingLeftM;
 
                 var _select = select('core/block-editor'),
                     getBlockOrder = _select.getBlockOrder;
 
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
 
-                var blockClasses = ['advgb-columns'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-column'].filter(Boolean).join(' ');
 
                 return React.createElement(
-                    "div",
-                    { className: blockClasses },
-                    React.createElement(InnerBlocks, {
-                        templateLock: false,
-                        renderAppender: hasChildBlocks ? undefined : function () {
-                            return React.createElement(InnerBlocks.ButtonBlockAppender, null);
-                        }
-                    })
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(PanelBody, { title: __('Column Settings') })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: blockClasses },
+                        React.createElement(InnerBlocks, {
+                            templateLock: false,
+                            renderAppender: hasChildBlocks ? undefined : function () {
+                                return React.createElement(InnerBlocks.ButtonBlockAppender, null);
+                            }
+                        })
+                    )
                 );
             }
         }]);
 
         return AdvColumnEdit;
     }(Component);
+
+    var blockAttrs = {
+        width: {
+            type: 'number'
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string'
+        },
+        borderWidth: {
+            type: 'number'
+        },
+        borderRadius: {
+            type: 'number'
+        },
+        marginTop: {
+            type: 'number'
+        },
+        marginTopM: {
+            type: 'number'
+        },
+        marginRight: {
+            type: 'number'
+        },
+        marginRightM: {
+            type: 'number'
+        },
+        marginBottom: {
+            type: 'number'
+        },
+        marginBottomM: {
+            type: 'number'
+        },
+        marginLeft: {
+            type: 'number'
+        },
+        marginLeftM: {
+            type: 'number'
+        },
+        paddingTop: {
+            type: 'number'
+        },
+        paddingTopM: {
+            type: 'number'
+        },
+        paddingRight: {
+            type: 'number'
+        },
+        paddingRightM: {
+            type: 'number'
+        },
+        paddingBottom: {
+            type: 'number'
+        },
+        paddingBottomM: {
+            type: 'number'
+        },
+        paddingLeft: {
+            type: 'number'
+        },
+        paddingLeftM: {
+            type: 'number'
+        }
+    };
 
     registerBlockType('advgb/column', {
         title: __('Adv. Column'),
@@ -4988,7 +5084,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             reusable: false,
             html: false
         },
-        attributes: {},
+        attributes: blockAttrs,
         edit: AdvColumnEdit,
         save: function save(props) {
             return null;
