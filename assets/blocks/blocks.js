@@ -4832,6 +4832,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl;
+    var _lodash = lodash,
+        times = _lodash.times;
 
 
     var columnsBlockIcon = React.createElement(
@@ -4856,23 +4858,179 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
+                var columns = attributes.columns,
+                    columnsLayout = attributes.columnsLayout,
+                    columnsLayoutT = attributes.columnsLayoutT,
+                    columnsLayoutM = attributes.columnsLayoutM,
+                    marginTop = attributes.marginTop,
+                    marginRight = attributes.marginRight,
+                    marginBottom = attributes.marginBottom,
+                    marginLeft = attributes.marginLeft,
+                    marginTopT = attributes.marginTopT,
+                    marginRightT = attributes.marginRightT,
+                    marginBottomT = attributes.marginBottomT,
+                    marginLeftT = attributes.marginLeftT,
+                    marginTopM = attributes.marginTopM,
+                    marginRightM = attributes.marginRightM,
+                    marginBottomM = attributes.marginBottomM,
+                    marginLeftM = attributes.marginLeftM,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    paddingTopT = attributes.paddingTopT,
+                    paddingRightT = attributes.paddingRightT,
+                    paddingBottomT = attributes.paddingBottomT,
+                    paddingLeftT = attributes.paddingLeftT,
+                    paddingTopM = attributes.paddingTopM,
+                    paddingRightM = attributes.paddingRightM,
+                    paddingBottomM = attributes.paddingBottomM,
+                    paddingLeftM = attributes.paddingLeftM,
+                    vAlign = attributes.vAlign,
+                    gutter = attributes.gutter,
+                    contentMaxWidth = attributes.contentMaxWidth,
+                    contentMinHeight = attributes.contentMinHeight,
+                    wrapperTag = attributes.wrapperTag;
+
 
                 var blockClasses = ['advgb-columns'].filter(Boolean).join(' ');
 
                 return React.createElement(
-                    "div",
-                    { className: blockClasses },
-                    React.createElement(InnerBlocks, {
-                        template: [['advgb/column'], ['advgb/column'], ['advgb/column']],
-                        templateLock: "all",
-                        allowdBlockType: ['advgb/column']
-                    })
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Columns Settings') },
+                            React.createElement(PanelBody, { title: __('Responsive Settings') }),
+                            React.createElement(PanelBody, { title: __('Row Settings'), initialOpen: false })
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-columns-wrapper" },
+                        React.createElement(
+                            "div",
+                            { className: blockClasses },
+                            React.createElement(InnerBlocks, {
+                                template: [['advgb/column'], ['advgb/column'], ['advgb/column']],
+                                templateLock: "all",
+                                allowdBlockType: ['advgb/column']
+                            })
+                        )
+                    )
                 );
             }
         }]);
 
         return AdvColumnsEdit;
     }(Component);
+
+    var blockAttrs = {
+        columns: {
+            type: 'number'
+        },
+        columnsLayout: {
+            type: 'string'
+        },
+        columnsLayoutT: {
+            type: 'string'
+        },
+        columnsLayoutM: {
+            type: 'string'
+        },
+        marginTop: {
+            type: 'number'
+        },
+        marginTopT: {
+            type: 'number'
+        },
+        marginTopM: {
+            type: 'number'
+        },
+        marginRight: {
+            type: 'number'
+        },
+        marginRightT: {
+            type: 'number'
+        },
+        marginRightM: {
+            type: 'number'
+        },
+        marginBottom: {
+            type: 'number'
+        },
+        marginBottomT: {
+            type: 'number'
+        },
+        marginBottomM: {
+            type: 'number'
+        },
+        marginLeft: {
+            type: 'number'
+        },
+        marginLeftT: {
+            type: 'number'
+        },
+        marginLeftM: {
+            type: 'number'
+        },
+        paddingTop: {
+            type: 'number'
+        },
+        paddingTopT: {
+            type: 'number'
+        },
+        paddingTopM: {
+            type: 'number'
+        },
+        paddingRight: {
+            type: 'number'
+        },
+        paddingRightT: {
+            type: 'number'
+        },
+        paddingRightM: {
+            type: 'number'
+        },
+        paddingBottom: {
+            type: 'number'
+        },
+        paddingBottomT: {
+            type: 'number'
+        },
+        paddingBottomM: {
+            type: 'number'
+        },
+        paddingLeft: {
+            type: 'number'
+        },
+        paddingLeftT: {
+            type: 'number'
+        },
+        paddingLeftM: {
+            type: 'number'
+        },
+        vAlign: {
+            type: 'string'
+        },
+        gutter: {
+            type: 'number',
+            default: 10
+        },
+        contentMaxWidth: {
+            type: 'number'
+        },
+        contentMinHeight: {
+            type: 'number'
+        },
+        wrapperTag: {
+            type: 'string',
+            default: 'div'
+        }
+    };
 
     registerBlockType('advgb/columns', {
         title: __('Columns Manager'),
@@ -4883,7 +5041,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('columns'), __('row'), __('layout')],
-        attributes: {},
+        supports: {
+            align: ['wide', 'full'],
+            html: false
+        },
+        attributes: blockAttrs,
         edit: AdvColumnsEdit,
         save: function save(props) {
             return null;
