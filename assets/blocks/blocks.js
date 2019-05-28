@@ -4814,6 +4814,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -4831,7 +4833,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
-        TextControl = wpComponents.TextControl;
+        TextControl = wpComponents.TextControl,
+        Tooltip = wpComponents.Tooltip;
     var _lodash = lodash,
         times = _lodash.times;
 
@@ -4843,21 +4846,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
 
+    var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '50-50', icon: '50-50', title: __('Two: 50-50') }, { columns: 2, layout: '66-33', icon: '66-33', title: __('Two: 66-33') }, { columns: 2, layout: '33-66', icon: '33-66', title: __('Two: 33-66') }, { columns: 3, layout: '33-33-33', icon: '33-33-33', title: __('Three: 33-33-33') }, { columns: 3, layout: '50-25-25', icon: '50-25-25', title: __('Three: 50-25-25') }, { columns: 3, layout: '25-25-50', icon: '25-25-50', title: __('Three: 25-25-50') }, { columns: 3, layout: '25-50-25', icon: '25-50-25', title: __('Three: 25-50-25') }, { columns: 3, layout: '20-60-20', icon: '20-60-20', title: __('Three: 20-60-20') }, { columns: 3, layout: '15-70-15', icon: '15-70-15', title: __('Three: 15-70-15') }, { columns: 4, layout: '25-25-25-25', icon: '25-25-25-25', title: __('Four: 25-25-25-25') }, { columns: 4, layout: '40-20-20-20', icon: '40-20-20-20', title: __('Four: 40-20-20-20') }, { columns: 4, layout: '20-20-20-40', icon: '20-20-20-40', title: __('Four: 20-20-20-40') }, { columns: 5, layout: 'five', icon: 'five', title: __('Five') }, { columns: 6, layout: 'six', icon: 'six', title: __('Six') }];
+
     var AdvColumnsEdit = function (_Component) {
         _inherits(AdvColumnsEdit, _Component);
 
         function AdvColumnsEdit() {
             _classCallCheck(this, AdvColumnsEdit);
 
-            return _possibleConstructorReturn(this, (AdvColumnsEdit.__proto__ || Object.getPrototypeOf(AdvColumnsEdit)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (AdvColumnsEdit.__proto__ || Object.getPrototypeOf(AdvColumnsEdit)).apply(this, arguments));
+
+            _this.state = {
+                tabSelected: 'desktop'
+            };
+            return _this;
         }
 
         _createClass(AdvColumnsEdit, [{
             key: "render",
             value: function render() {
+                var _this2 = this;
+
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes;
+                var tabSelected = this.state.tabSelected;
                 var columns = attributes.columns,
                     columnsLayout = attributes.columnsLayout,
                     columnsLayoutT = attributes.columnsLayoutT,
@@ -4895,6 +4908,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockClasses = ['advgb-columns'].filter(Boolean).join(' ');
 
+                if (!columns) {
+                    return React.createElement(
+                        "div",
+                        { className: "advgb-columns-select-wrapper" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-columns-select-title" },
+                            __('CHOOSE LAYOUT')
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-columns-select-layout" },
+                            COLUMNS_LAYOUTS.map(function (layout, index) {
+                                return React.createElement(
+                                    Tooltip,
+                                    { text: layout.title },
+                                    React.createElement(
+                                        "div",
+                                        { key: index,
+                                            className: "advgb-columns-layout",
+                                            onClick: function onClick() {
+                                                return setAttributes({
+                                                    columns: layout.columns,
+                                                    columnsLayout: layout.layout
+                                                });
+                                            }
+                                        },
+                                        layout.icon
+                                    )
+                                );
+                            })
+                        )
+                    );
+                }
+
+                var COLUMNS_LAYOUTS_FILTERED = COLUMNS_LAYOUTS.filter(function (item) {
+                    return item.columns === columns;
+                });
+
                 return React.createElement(
                     Fragment,
                     null,
@@ -4904,7 +4956,66 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Columns Settings') },
-                            React.createElement(PanelBody, { title: __('Responsive Settings') }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Responsive Settings') },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-columns-responsive-items" },
+                                    ['desktop', 'tablet', 'mobile'].map(function (device, index) {
+                                        var itemClasses = ["advgb-columns-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
+
+                                        return React.createElement(
+                                            "div",
+                                            { className: itemClasses,
+                                                key: index,
+                                                onClick: function onClick() {
+                                                    return _this2.setState({ tabSelected: device });
+                                                }
+                                            },
+                                            device
+                                        );
+                                    })
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-columns-select-layout on-inspector" },
+                                    COLUMNS_LAYOUTS_FILTERED.length > 1 && COLUMNS_LAYOUTS_FILTERED.map(function (layout, index) {
+                                        var layoutClasses = ['advgb-columns-layout', tabSelected === 'desktop' && layout.layout === columnsLayout && 'is-selected', tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected', tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected'].filter(Boolean).join(' ');
+                                        var deviceLetter = '';
+                                        if (tabSelected === 'tablet') deviceLetter = 'T';
+                                        if (tabSelected === 'mobile') deviceLetter = 'M';
+
+                                        return React.createElement(
+                                            Tooltip,
+                                            { text: layout.title },
+                                            React.createElement(
+                                                "div",
+                                                { key: index,
+                                                    className: layoutClasses,
+                                                    onClick: function onClick() {
+                                                        return setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                    }
+                                                },
+                                                layout.icon
+                                            )
+                                        );
+                                    }),
+                                    tabSelected === 'mobile' && React.createElement(
+                                        Tooltip,
+                                        { text: __('Stacked') },
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-columns-layout " + (columnsLayoutM === 'stacked' && 'is-selected'),
+                                                onClick: function onClick() {
+                                                    return setAttributes({ columnsLayoutM: 'stacked' });
+                                                }
+                                            },
+                                            'Stacked'
+                                        )
+                                    )
+                                )
+                            ),
                             React.createElement(PanelBody, { title: __('Row Settings'), initialOpen: false })
                         )
                     ),
@@ -4915,7 +5026,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "div",
                             { className: blockClasses },
                             React.createElement(InnerBlocks, {
-                                template: [['advgb/column'], ['advgb/column'], ['advgb/column']],
+                                template: times(parseInt(columns), function () {
+                                    return ['advgb/column'];
+                                }),
                                 templateLock: "all",
                                 allowdBlockType: ['advgb/column']
                             })
@@ -4939,7 +5052,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string'
         },
         columnsLayoutM: {
-            type: 'string'
+            type: 'string',
+            default: 'stacked'
         },
         marginTop: {
             type: 'number'

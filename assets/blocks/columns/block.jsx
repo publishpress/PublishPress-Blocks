@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, PanelColorSettings, InnerBlocks } = wpEditor;
-    const { PanelBody, RangeControl, SelectControl, TextControl } = wpComponents;
+    const { PanelBody, RangeControl, SelectControl, TextControl, Tooltip } = wpComponents;
     const { times } = lodash;
 
     const columnsBlockIcon = (
@@ -13,13 +13,35 @@
         </svg>
     );
 
+    const COLUMNS_LAYOUTS = [
+        { columns: 1, layout: '100', icon: '100', title: __( 'One' ) },
+        { columns: 2, layout: '50-50', icon: '50-50', title: __( 'Two: 50-50' ) },
+        { columns: 2, layout: '66-33', icon: '66-33', title: __( 'Two: 66-33' ) },
+        { columns: 2, layout: '33-66', icon: '33-66', title: __( 'Two: 33-66' ) },
+        { columns: 3, layout: '33-33-33', icon: '33-33-33', title: __( 'Three: 33-33-33' ) },
+        { columns: 3, layout: '50-25-25', icon: '50-25-25', title: __( 'Three: 50-25-25' ) },
+        { columns: 3, layout: '25-25-50', icon: '25-25-50', title: __( 'Three: 25-25-50' ) },
+        { columns: 3, layout: '25-50-25', icon: '25-50-25', title: __( 'Three: 25-50-25' ) },
+        { columns: 3, layout: '20-60-20', icon: '20-60-20', title: __( 'Three: 20-60-20' ) },
+        { columns: 3, layout: '15-70-15', icon: '15-70-15', title: __( 'Three: 15-70-15' ) },
+        { columns: 4, layout: '25-25-25-25', icon: '25-25-25-25', title: __( 'Four: 25-25-25-25' ) },
+        { columns: 4, layout: '40-20-20-20', icon: '40-20-20-20', title: __( 'Four: 40-20-20-20' ) },
+        { columns: 4, layout: '20-20-20-40', icon: '20-20-20-40', title: __( 'Four: 20-20-20-40' ) },
+        { columns: 5, layout: 'five', icon: 'five', title: __( 'Five' ) },
+        { columns: 6, layout: 'six', icon: 'six', title: __( 'Six' ) },
+    ];
+
     class AdvColumnsEdit extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                tabSelected: 'desktop',
+            }
         }
 
         render() {
             const { attributes, setAttributes } = this.props;
+            const { tabSelected } = this.state;
             const {
                 columns,
                 columnsLayout, columnsLayoutT, columnsLayoutM,
@@ -40,11 +62,92 @@
                 'advgb-columns'
             ].filter( Boolean ).join( ' ' );
 
+            if (!columns) {
+                return (
+                    <div className="advgb-columns-select-wrapper">
+                        <div className="advgb-columns-select-title">
+                            { __( 'CHOOSE LAYOUT' ) }
+                        </div>
+                        <div className="advgb-columns-select-layout">
+                            {COLUMNS_LAYOUTS.map( (layout, index) => {
+                                return (
+                                    <Tooltip text={ layout.title }>
+                                        <div key={ index }
+                                             className="advgb-columns-layout"
+                                             onClick={ () => setAttributes( {
+                                                 columns: layout.columns,
+                                                 columnsLayout: layout.layout
+                                             } ) }
+                                        >
+                                            { layout.icon }
+                                        </div>
+                                    </Tooltip>
+                                )
+                            } ) }
+                        </div>
+                    </div>
+                )
+            }
+
+            const COLUMNS_LAYOUTS_FILTERED = COLUMNS_LAYOUTS.filter( (item) => item.columns === columns );
+
             return (
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Columns Settings' ) }>
                             <PanelBody title={ __( 'Responsive Settings' ) }>
+                                <div className="advgb-columns-responsive-items">
+                                    {['desktop', 'tablet', 'mobile'].map( (device, index) => {
+                                        const itemClasses = [
+                                            "advgb-columns-responsive-item",
+                                            tabSelected === device && 'is-selected',
+                                        ].filter( Boolean ).join( ' ' );
+
+                                        return (
+                                            <div className={ itemClasses }
+                                                 key={ index }
+                                                 onClick={ () => this.setState( { tabSelected: device } ) }
+                                            >
+                                                {device}
+                                            </div>
+                                        )
+                                    } ) }
+                                </div>
+                                <div className="advgb-columns-select-layout on-inspector">
+                                    {COLUMNS_LAYOUTS_FILTERED.length > 1 && COLUMNS_LAYOUTS_FILTERED.map( (layout, index) => {
+                                        const layoutClasses = [
+                                            'advgb-columns-layout',
+                                            tabSelected === 'desktop' && layout.layout === columnsLayout && 'is-selected',
+                                            tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected',
+                                            tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected',
+                                        ].filter( Boolean ).join( ' ' );
+                                        let deviceLetter = '';
+                                        if (tabSelected === 'tablet') deviceLetter = 'T';
+                                        if (tabSelected === 'mobile') deviceLetter = 'M';
+
+                                        return (
+                                            <Tooltip text={ layout.title }>
+                                                <div key={ index }
+                                                     className={ layoutClasses }
+                                                     onClick={ () => setAttributes( {
+                                                         ['columnsLayout' + deviceLetter]: layout.layout
+                                                     } ) }
+                                                >
+                                                    { layout.icon }
+                                                </div>
+                                            </Tooltip>
+                                        )
+                                    } ) }
+                                    {tabSelected === 'mobile' && (
+                                        <Tooltip text={ __( 'Stacked' ) }>
+                                            <div className={ `advgb-columns-layout ${columnsLayoutM === 'stacked' && 'is-selected'}` }
+                                                 onClick={ () => setAttributes( { columnsLayoutM: 'stacked' } ) }
+                                            >
+                                                { 'Stacked' }
+                                            </div>
+                                        </Tooltip>
+                                    ) }
+                                </div>
                             </PanelBody>
                             <PanelBody title={ __( 'Row Settings' ) } initialOpen={ false }>
                             </PanelBody>
@@ -53,7 +156,7 @@
                     <div className="advgb-columns-wrapper">
                         <div className={ blockClasses }>
                             <InnerBlocks
-                                template={ [ ['advgb/column'], ['advgb/column'], ['advgb/column'] ] }
+                                template={ times( parseInt(columns), () => [ 'advgb/column' ] ) }
                                 templateLock="all"
                                 allowdBlockType={ [ 'advgb/column' ] }
                             />
@@ -76,6 +179,7 @@
         },
         columnsLayoutM: {
             type: 'string',
+            default: 'stacked',
         },
         marginTop: {
             type: 'number',

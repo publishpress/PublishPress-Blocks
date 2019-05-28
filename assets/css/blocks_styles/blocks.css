@@ -1340,6 +1340,57 @@ form .advgb-grecaptcha > div {
 
 /*Container block*/
 
+/*Columns Manager block*/
+.advgb-columns-select-wrapper {
+    border: 2px dashed #eee;
+    padding: 20px;
+}
+
+.advgb-columns-select-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.advgb-columns-select-layout,
+.advgb-columns-responsive-items {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.advgb-columns-responsive-items .advgb-columns-responsive-item {
+    flex-grow: 1;
+    flex-basis: 33.3%;
+    padding: 10px 5px;
+    text-align: center;
+    text-transform: capitalize;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.advgb-columns-responsive-items .advgb-columns-responsive-item.is-selected {
+    background-color: #2196f3;
+    color: #fff;
+}
+
+.advgb-columns-select-layout .advgb-columns-layout {
+    margin: 5px;
+    padding: 5px;
+    flex-basis: calc(20% - 10px);
+    text-align: center;
+    cursor: pointer;
+}
+
+.advgb-columns-select-layout.on-inspector .advgb-columns-layout {
+    flex-basis: calc(33.3% - 10px);
+}
+
+.advgb-columns-layout:hover,
+.advgb-columns-layout.is-selected {
+    background-color: #2196f3;
+    color: #fff;
+}
+
 /*--- RESPONSIVE STYLES HERE ---*/
 @media screen and (max-width: 599px) {
     .advgb-count-up {
