@@ -1361,7 +1361,7 @@ form .advgb-grecaptcha > div {
 .advgb-columns-responsive-items .advgb-columns-responsive-item {
     flex-grow: 1;
     flex-basis: 33.3%;
-    padding: 10px 5px;
+    padding: 5px;
     text-align: center;
     text-transform: capitalize;
     background-color: #eee;
@@ -1385,8 +1385,8 @@ form .advgb-grecaptcha > div {
     flex-basis: calc(33.3% - 10px);
 }
 
-.advgb-columns-layout:hover,
-.advgb-columns-layout.is-selected {
+.advgb-columns-select-layout .advgb-columns-layout:hover,
+.advgb-columns-select-layout .advgb-columns-layout.is-selected {
     background-color: #2196f3;
     color: #fff;
 }

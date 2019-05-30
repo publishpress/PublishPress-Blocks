@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, PanelColorSettings, InnerBlocks } = wpEditor;
-    const { PanelBody, RangeControl, SelectControl, TextControl, Tooltip } = wpComponents;
+    const { PanelBody, RangeControl, SelectControl, ToggleControl, Tooltip } = wpComponents;
     const { times } = lodash;
 
     const columnsBlockIcon = (
@@ -30,6 +30,17 @@
         { columns: 5, layout: 'five', icon: 'five', title: __( 'Five' ) },
         { columns: 6, layout: 'six', icon: 'six', title: __( 'Six' ) },
     ];
+    const COLUMNS_LAYOUTS_RESPONSIVE = [
+        { columns: 3, layout: '100-50-50', icon: '100-50-50', title: __( 'Three: 100-50-50' ) },
+        { columns: 3, layout: '50-50-100', icon: '50-50-100', title: __( 'Three: 50-50-100' ) },
+        { columns: 4, layout: '50-50-50-50', icon: '50-50-50-50', title: __( 'Four: 50-50-50-50' ) },
+        { columns: 6, layout: '2x50', icon: '2x50', title: __( 'Six: Two Columns' ) },
+        { columns: 6, layout: '3x33', icon: '3x33', title: __( 'Six: Three Columns' ) },
+    ];
+    const COLUMNS_LAYOUTS_STACKED = {
+        columns: 1, layout: 'stacked', icon: 'Stacked', title: __( 'Stacked' )
+    };
+
 
     class AdvColumnsEdit extends Component {
         constructor() {
@@ -53,13 +64,19 @@
                 paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
                 vAlign,
                 gutter,
+                collapsedGutter,
+                collapsedRtl,
                 contentMaxWidth,
                 contentMinHeight,
                 wrapperTag,
             } = attributes;
 
             const blockClasses = [
-                'advgb-columns'
+                'advgb-columns',
+                columns && `advgb-columns-${columns}`,
+                columnsLayout && `layout-${columnsLayout}`,
+                columnsLayoutT && `tbl-layout-${columnsLayoutT}`,
+                columnsLayoutM && `mbl-layout-${columnsLayoutM}`,
             ].filter( Boolean ).join( ' ' );
 
             if (!columns) {
@@ -90,6 +107,12 @@
             }
 
             const COLUMNS_LAYOUTS_FILTERED = COLUMNS_LAYOUTS.filter( (item) => item.columns === columns );
+            const COLUMNS_LAYOUTS_RESPONSIVE_FILTERED = COLUMNS_LAYOUTS_RESPONSIVE.filter( (item) => item.columns === columns );
+            COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.push( COLUMNS_LAYOUTS_STACKED );
+
+            let deviceLetter = '';
+            if (tabSelected === 'tablet') deviceLetter = 'T';
+            if (tabSelected === 'mobile') deviceLetter = 'M';
 
             return (
                 <Fragment>
@@ -114,21 +137,17 @@
                                     } ) }
                                 </div>
                                 <div className="advgb-columns-select-layout on-inspector">
-                                    {COLUMNS_LAYOUTS_FILTERED.length > 1 && COLUMNS_LAYOUTS_FILTERED.map( (layout, index) => {
+                                    {COLUMNS_LAYOUTS_FILTERED.map( (layout, index) => {
                                         const layoutClasses = [
                                             'advgb-columns-layout',
                                             tabSelected === 'desktop' && layout.layout === columnsLayout && 'is-selected',
                                             tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected',
                                             tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected',
                                         ].filter( Boolean ).join( ' ' );
-                                        let deviceLetter = '';
-                                        if (tabSelected === 'tablet') deviceLetter = 'T';
-                                        if (tabSelected === 'mobile') deviceLetter = 'M';
 
                                         return (
-                                            <Tooltip text={ layout.title }>
-                                                <div key={ index }
-                                                     className={ layoutClasses }
+                                            <Tooltip text={ layout.title } key={ index }>
+                                                <div className={ layoutClasses }
                                                      onClick={ () => setAttributes( {
                                                          ['columnsLayout' + deviceLetter]: layout.layout
                                                      } ) }
@@ -138,16 +157,51 @@
                                             </Tooltip>
                                         )
                                     } ) }
-                                    {tabSelected === 'mobile' && (
-                                        <Tooltip text={ __( 'Stacked' ) }>
-                                            <div className={ `advgb-columns-layout ${columnsLayoutM === 'stacked' && 'is-selected'}` }
-                                                 onClick={ () => setAttributes( { columnsLayoutM: 'stacked' } ) }
-                                            >
-                                                { 'Stacked' }
-                                            </div>
-                                        </Tooltip>
-                                    ) }
+                                    {tabSelected !== 'desktop' && COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.map( (layout, index) => {
+                                        const layoutClasses = [
+                                            'advgb-columns-layout',
+                                            tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected',
+                                            tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected',
+                                        ].filter( Boolean ).join( ' ' );
+
+                                        return (
+                                            <Tooltip text={ layout.title } key={ index }>
+                                                <div className={ layoutClasses }
+                                                     onClick={ () => setAttributes( {
+                                                         ['columnsLayout' + deviceLetter]: layout.layout
+                                                     } ) }
+                                                >
+                                                    { layout.icon }
+                                                </div>
+                                            </Tooltip>
+                                        )
+                                    } ) }
                                 </div>
+                                {tabSelected === 'desktop' && (
+                                    <RangeControl
+                                        label={ __( 'Columns Gutter' ) }
+                                        value={ gutter }
+                                        min={ 0 }
+                                        max={ 100 }
+                                        onChange={ ( value ) => setAttributes( { gutter: value } ) }
+                                    />
+                                ) }
+                                {tabSelected === 'mobile' && columnsLayoutM === 'stacked' && (
+                                    <Fragment>
+                                        <RangeControl
+                                            label={ __( 'Columns Vertical Gutter' ) }
+                                            value={ collapsedGutter }
+                                            min={ 0 }
+                                            max={ 100 }
+                                            onChange={ ( value ) => setAttributes( { collapsedGutter: value } ) }
+                                        />
+                                        <ToggleControl
+                                            label={ __( 'Collapsed Order RTL' ) }
+                                            checked={ collapsedRtl }
+                                            onChange={ () => setAttributes( { collapsedRtl: !collapsedRtl } ) }
+                                        />
+                                    </Fragment>
+                                ) }
                             </PanelBody>
                             <PanelBody title={ __( 'Row Settings' ) } initialOpen={ false }>
                             </PanelBody>
@@ -259,6 +313,14 @@
         gutter: {
             type: 'number',
             default: 10,
+        },
+        collapsedGutter: {
+            type: 'number',
+            default: 10,
+        },
+        collapsedRtl: {
+            type: 'boolean',
+            default: false,
         },
         contentMaxWidth: {
             type: 'number',

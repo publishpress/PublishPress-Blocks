@@ -4833,7 +4833,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
-        TextControl = wpComponents.TextControl,
+        ToggleControl = wpComponents.ToggleControl,
         Tooltip = wpComponents.Tooltip;
     var _lodash = lodash,
         times = _lodash.times;
@@ -4847,6 +4847,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '50-50', icon: '50-50', title: __('Two: 50-50') }, { columns: 2, layout: '66-33', icon: '66-33', title: __('Two: 66-33') }, { columns: 2, layout: '33-66', icon: '33-66', title: __('Two: 33-66') }, { columns: 3, layout: '33-33-33', icon: '33-33-33', title: __('Three: 33-33-33') }, { columns: 3, layout: '50-25-25', icon: '50-25-25', title: __('Three: 50-25-25') }, { columns: 3, layout: '25-25-50', icon: '25-25-50', title: __('Three: 25-25-50') }, { columns: 3, layout: '25-50-25', icon: '25-50-25', title: __('Three: 25-50-25') }, { columns: 3, layout: '20-60-20', icon: '20-60-20', title: __('Three: 20-60-20') }, { columns: 3, layout: '15-70-15', icon: '15-70-15', title: __('Three: 15-70-15') }, { columns: 4, layout: '25-25-25-25', icon: '25-25-25-25', title: __('Four: 25-25-25-25') }, { columns: 4, layout: '40-20-20-20', icon: '40-20-20-20', title: __('Four: 40-20-20-20') }, { columns: 4, layout: '20-20-20-40', icon: '20-20-20-40', title: __('Four: 20-20-20-40') }, { columns: 5, layout: 'five', icon: 'five', title: __('Five') }, { columns: 6, layout: 'six', icon: 'six', title: __('Six') }];
+    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '100-50-50', icon: '100-50-50', title: __('Three: 100-50-50') }, { columns: 3, layout: '50-50-100', icon: '50-50-100', title: __('Three: 50-50-100') }, { columns: 4, layout: '50-50-50-50', icon: '50-50-50-50', title: __('Four: 50-50-50-50') }, { columns: 6, layout: '2x50', icon: '2x50', title: __('Six: Two Columns') }, { columns: 6, layout: '3x33', icon: '3x33', title: __('Six: Three Columns') }];
+    var COLUMNS_LAYOUTS_STACKED = {
+        columns: 1, layout: 'stacked', icon: 'Stacked', title: __('Stacked')
+    };
 
     var AdvColumnsEdit = function (_Component) {
         _inherits(AdvColumnsEdit, _Component);
@@ -4901,12 +4905,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     paddingLeftM = attributes.paddingLeftM,
                     vAlign = attributes.vAlign,
                     gutter = attributes.gutter,
+                    collapsedGutter = attributes.collapsedGutter,
+                    collapsedRtl = attributes.collapsedRtl,
                     contentMaxWidth = attributes.contentMaxWidth,
                     contentMinHeight = attributes.contentMinHeight,
                     wrapperTag = attributes.wrapperTag;
 
 
-                var blockClasses = ['advgb-columns'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
@@ -4946,6 +4952,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var COLUMNS_LAYOUTS_FILTERED = COLUMNS_LAYOUTS.filter(function (item) {
                     return item.columns === columns;
                 });
+                var COLUMNS_LAYOUTS_RESPONSIVE_FILTERED = COLUMNS_LAYOUTS_RESPONSIVE.filter(function (item) {
+                    return item.columns === columns;
+                });
+                COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.push(COLUMNS_LAYOUTS_STACKED);
+
+                var deviceLetter = '';
+                if (tabSelected === 'tablet') deviceLetter = 'T';
+                if (tabSelected === 'mobile') deviceLetter = 'M';
 
                 return React.createElement(
                     Fragment,
@@ -4980,19 +4994,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "div",
                                     { className: "advgb-columns-select-layout on-inspector" },
-                                    COLUMNS_LAYOUTS_FILTERED.length > 1 && COLUMNS_LAYOUTS_FILTERED.map(function (layout, index) {
+                                    COLUMNS_LAYOUTS_FILTERED.map(function (layout, index) {
                                         var layoutClasses = ['advgb-columns-layout', tabSelected === 'desktop' && layout.layout === columnsLayout && 'is-selected', tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected', tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected'].filter(Boolean).join(' ');
-                                        var deviceLetter = '';
-                                        if (tabSelected === 'tablet') deviceLetter = 'T';
-                                        if (tabSelected === 'mobile') deviceLetter = 'M';
 
                                         return React.createElement(
                                             Tooltip,
-                                            { text: layout.title },
+                                            { text: layout.title, key: index },
                                             React.createElement(
                                                 "div",
-                                                { key: index,
-                                                    className: layoutClasses,
+                                                { className: layoutClasses,
                                                     onClick: function onClick() {
                                                         return setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
                                                     }
@@ -5001,19 +5011,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             )
                                         );
                                     }),
-                                    tabSelected === 'mobile' && React.createElement(
-                                        Tooltip,
-                                        { text: __('Stacked') },
-                                        React.createElement(
-                                            "div",
-                                            { className: "advgb-columns-layout " + (columnsLayoutM === 'stacked' && 'is-selected'),
-                                                onClick: function onClick() {
-                                                    return setAttributes({ columnsLayoutM: 'stacked' });
-                                                }
-                                            },
-                                            'Stacked'
-                                        )
-                                    )
+                                    tabSelected !== 'desktop' && COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.map(function (layout, index) {
+                                        var layoutClasses = ['advgb-columns-layout', tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected', tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected'].filter(Boolean).join(' ');
+
+                                        return React.createElement(
+                                            Tooltip,
+                                            { text: layout.title, key: index },
+                                            React.createElement(
+                                                "div",
+                                                { className: layoutClasses,
+                                                    onClick: function onClick() {
+                                                        return setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                    }
+                                                },
+                                                layout.icon
+                                            )
+                                        );
+                                    })
+                                ),
+                                tabSelected === 'desktop' && React.createElement(RangeControl, {
+                                    label: __('Columns Gutter'),
+                                    value: gutter,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ gutter: value });
+                                    }
+                                }),
+                                tabSelected === 'mobile' && columnsLayoutM === 'stacked' && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(RangeControl, {
+                                        label: __('Columns Vertical Gutter'),
+                                        value: collapsedGutter,
+                                        min: 0,
+                                        max: 100,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ collapsedGutter: value });
+                                        }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Collapsed Order RTL'),
+                                        checked: collapsedRtl,
+                                        onChange: function onChange() {
+                                            return setAttributes({ collapsedRtl: !collapsedRtl });
+                                        }
+                                    })
                                 )
                             ),
                             React.createElement(PanelBody, { title: __('Row Settings'), initialOpen: false })
@@ -5133,6 +5176,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         gutter: {
             type: 'number',
             default: 10
+        },
+        collapsedGutter: {
+            type: 'number',
+            default: 10
+        },
+        collapsedRtl: {
+            type: 'boolean',
+            default: false
         },
         contentMaxWidth: {
             type: 'number'
