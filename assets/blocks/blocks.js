@@ -5170,9 +5170,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         paddingLeftM: {
             type: 'number'
         },
-        vAlign: {
-            type: 'string'
-        },
         gutter: {
             type: 'number',
             default: 10
@@ -5184,6 +5181,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         collapsedRtl: {
             type: 'boolean',
             default: false
+        },
+        vAlign: {
+            type: 'string'
         },
         contentMaxWidth: {
             type: 'number'

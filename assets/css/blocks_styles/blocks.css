@@ -1394,6 +1394,7 @@ form .advgb-grecaptcha > div {
     /*Backend columns*/
 .advgb-columns > .editor-inner-blocks > .editor-block-list__layout {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {

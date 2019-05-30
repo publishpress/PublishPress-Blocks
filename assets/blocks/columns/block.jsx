@@ -307,9 +307,6 @@
         paddingLeftM: {
             type: 'number',
         },
-        vAlign: {
-            type: 'string',
-        },
         gutter: {
             type: 'number',
             default: 10,
@@ -321,6 +318,9 @@
         collapsedRtl: {
             type: 'boolean',
             default: false,
+        },
+        vAlign: {
+            type: 'string',
         },
         contentMaxWidth: {
             type: 'number',
