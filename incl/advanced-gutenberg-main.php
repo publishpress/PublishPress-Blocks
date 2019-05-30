@@ -406,6 +406,10 @@ float: left;'
             $custom_styles_url . 'custom_styles.css'
         );
         wp_enqueue_style('dashicons');
+        wp_enqueue_style(
+            'advgb-bulma-styles',
+            plugins_url('assets/css/bulma.min.css', dirname(__FILE__))
+        );
 
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
             wp_enqueue_style(
