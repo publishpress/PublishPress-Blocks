@@ -1398,6 +1398,10 @@ form .advgb-grecaptcha > div {
     justify-content: space-between;
 }
 
+.advgb-columns.columns-wrapped > .editor-inner-blocks > .editor-block-list__layout {
+    flex-wrap: wrap;
+}
+
 .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     flex: 1;
 }

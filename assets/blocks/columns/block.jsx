@@ -66,6 +66,7 @@
                 gutter,
                 collapsedGutter,
                 collapsedRtl,
+                columnsWrapped,
                 contentMaxWidth,
                 contentMinHeight,
                 wrapperTag,
@@ -77,7 +78,8 @@
                 columnsLayout && `layout-${columnsLayout}`,
                 columnsLayoutT && `tbl-layout-${columnsLayoutT}`,
                 columnsLayoutM && `mbl-layout-${columnsLayoutM}`,
-                collapsedRtl && `order-rtl`,
+                collapsedRtl && 'order-rtl',
+                columnsWrapped && 'columns-wrapped',
             ].filter( Boolean ).join( ' ' );
 
             if (!columns) {
@@ -205,6 +207,12 @@
                                 ) }
                             </PanelBody>
                             <PanelBody title={ __( 'Row Settings' ) } initialOpen={ false }>
+                                <ToggleControl
+                                    label={ __( 'Columns Wrapped' ) }
+                                    help={ __( 'If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Gutter).' ) }
+                                    checked={ columnsWrapped }
+                                    onChange={ () => setAttributes( { columnsWrapped: !columnsWrapped } ) }
+                                />
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
@@ -327,6 +335,10 @@
         },
         vAlign: {
             type: 'string',
+        },
+        columnsWrapped: {
+            type: 'boolean',
+            default: false,
         },
         contentMaxWidth: {
             type: 'number',

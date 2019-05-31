@@ -4908,12 +4908,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     gutter = attributes.gutter,
                     collapsedGutter = attributes.collapsedGutter,
                     collapsedRtl = attributes.collapsedRtl,
+                    columnsWrapped = attributes.columnsWrapped,
                     contentMaxWidth = attributes.contentMaxWidth,
                     contentMinHeight = attributes.contentMinHeight,
                     wrapperTag = attributes.wrapperTag;
 
 
-                var blockClasses = ['advgb-columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, collapsedRtl && "order-rtl"].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
@@ -5060,7 +5061,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     })
                                 )
                             ),
-                            React.createElement(PanelBody, { title: __('Row Settings'), initialOpen: false })
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Row Settings'), initialOpen: false },
+                                React.createElement(ToggleControl, {
+                                    label: __('Columns Wrapped'),
+                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Gutter).'),
+                                    checked: columnsWrapped,
+                                    onChange: function onChange() {
+                                        return setAttributes({ columnsWrapped: !columnsWrapped });
+                                    }
+                                })
+                            )
                         )
                     ),
                     React.createElement(
@@ -5190,6 +5202,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         vAlign: {
             type: 'string'
+        },
+        columnsWrapped: {
+            type: 'boolean',
+            default: false
         },
         contentMaxWidth: {
             type: 'number'
