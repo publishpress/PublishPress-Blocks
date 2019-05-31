@@ -4913,7 +4913,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     wrapperTag = attributes.wrapperTag;
 
 
-                var blockClasses = ['advgb-columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, collapsedRtl && "order-rtl"].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
@@ -5081,7 +5081,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "style",
                         null,
-                        "#block-" + clientId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {\n                            margin-right: " + gutter + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-columns.tbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout {\n                                flex-direction: column;\n                            }\n                        }\n                        @media screen and (max-width: 479px) {\n                            #block-" + clientId + " .advgb-columns.mbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout {\n                                flex-direction: column;\n                            }\n                        }"
+                        "#block-" + clientId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {\n                            margin-right: " + gutter + "px;\n                        }"
                     )
                 );
             }
