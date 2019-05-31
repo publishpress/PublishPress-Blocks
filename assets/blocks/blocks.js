@@ -4873,7 +4873,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var _props = this.props,
                     attributes = _props.attributes,
-                    setAttributes = _props.setAttributes;
+                    setAttributes = _props.setAttributes,
+                    clientId = _props.clientId;
                 var tabSelected = this.state.tabSelected;
                 var columns = attributes.columns,
                     columnsLayout = attributes.columnsLayout,
@@ -5076,6 +5077,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 allowdBlockType: ['advgb/column']
                             })
                         )
+                    ),
+                    React.createElement(
+                        "style",
+                        null,
+                        "#block-" + clientId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {\n                            margin-right: " + gutter + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-columns.tbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout {\n                                flex-direction: column;\n                            }\n                        }\n                        @media screen and (max-width: 479px) {\n                            #block-" + clientId + " .advgb-columns.mbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout {\n                                flex-direction: column;\n                            }\n                        }"
                     )
                 );
             }

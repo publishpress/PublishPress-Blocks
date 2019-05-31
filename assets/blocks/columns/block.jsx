@@ -51,7 +51,7 @@
         }
 
         render() {
-            const { attributes, setAttributes } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
             const { tabSelected } = this.state;
             const {
                 columns,
@@ -216,6 +216,21 @@
                             />
                         </div>
                     </div>
+                    <style>
+                        {`#block-${clientId} .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
+                            margin-right: ${gutter}px;
+                        }
+                        @media screen and (max-width: 767px) {
+                            #block-${clientId} .advgb-columns.tbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout {
+                                flex-direction: column;
+                            }
+                        }
+                        @media screen and (max-width: 479px) {
+                            #block-${clientId} .advgb-columns.mbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout {
+                                flex-direction: column;
+                            }
+                        }`}
+                    </style>
                 </Fragment>
             )
         }
