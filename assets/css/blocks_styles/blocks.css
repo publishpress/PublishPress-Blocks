@@ -1433,7 +1433,8 @@ form .advgb-grecaptcha > div {
     flex: 1;
 }
 
-.advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block:last-child {
+.advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block:last-child,
+.advgb-columns > .advgb-column:last-child {
     margin-right: 0 !important;
     margin-bottom: 0 !important;
 }
@@ -1537,7 +1538,8 @@ form .advgb-grecaptcha > div {
 
 @media screen and (max-width: 1023px) {
     .advgb-columns.tbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-    .advgb-columns.mbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
+    .advgb-columns.mbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
+    .advgb-columns.mbl-layout-stacked > .advgb-column {
         margin-right: 0 !important;
     }
 
