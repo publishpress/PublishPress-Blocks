@@ -4812,6 +4812,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4867,14 +4869,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvColumnsEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-columns'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+
+
+                if (!attributes.id) {
+                    setAttributes({ colId: 'advgb-cols-' + clientId });
+                }
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    clientId = _props.clientId;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    clientId = _props3.clientId;
                 var tabSelected = this.state.tabSelected;
                 var columns = attributes.columns,
                     columnsLayout = attributes.columnsLayout,
@@ -5216,6 +5256,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         wrapperTag: {
             type: 'string',
             default: 'div'
+        },
+        colId: {
+            type: 'string'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
         }
     };
 
@@ -5235,7 +5282,59 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: blockAttrs,
         edit: AdvColumnsEdit,
         save: function save(props) {
-            return null;
+            var attributes = props.attributes,
+                setAttributes = props.setAttributes,
+                clientId = props.clientId;
+            var columns = attributes.columns,
+                columnsLayout = attributes.columnsLayout,
+                columnsLayoutT = attributes.columnsLayoutT,
+                columnsLayoutM = attributes.columnsLayoutM,
+                marginTop = attributes.marginTop,
+                marginRight = attributes.marginRight,
+                marginBottom = attributes.marginBottom,
+                marginLeft = attributes.marginLeft,
+                marginTopT = attributes.marginTopT,
+                marginRightT = attributes.marginRightT,
+                marginBottomT = attributes.marginBottomT,
+                marginLeftT = attributes.marginLeftT,
+                marginTopM = attributes.marginTopM,
+                marginRightM = attributes.marginRightM,
+                marginBottomM = attributes.marginBottomM,
+                marginLeftM = attributes.marginLeftM,
+                paddingTop = attributes.paddingTop,
+                paddingRight = attributes.paddingRight,
+                paddingBottom = attributes.paddingBottom,
+                paddingLeft = attributes.paddingLeft,
+                paddingTopT = attributes.paddingTopT,
+                paddingRightT = attributes.paddingRightT,
+                paddingBottomT = attributes.paddingBottomT,
+                paddingLeftT = attributes.paddingLeftT,
+                paddingTopM = attributes.paddingTopM,
+                paddingRightM = attributes.paddingRightM,
+                paddingBottomM = attributes.paddingBottomM,
+                paddingLeftM = attributes.paddingLeftM,
+                vAlign = attributes.vAlign,
+                gutter = attributes.gutter,
+                collapsedGutter = attributes.collapsedGutter,
+                collapsedRtl = attributes.collapsedRtl,
+                columnsWrapped = attributes.columnsWrapped,
+                contentMaxWidth = attributes.contentMaxWidth,
+                contentMinHeight = attributes.contentMinHeight,
+                wrapperTag = attributes.wrapperTag,
+                colId = attributes.colId;
+
+
+            var blockClasses = ['advgb-columns', 'columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+
+            return React.createElement(
+                "div",
+                { className: "advgb-columns-wrapper" },
+                React.createElement(
+                    "div",
+                    { className: blockClasses, id: colId },
+                    React.createElement(InnerBlocks.Content, null)
+                )
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
@@ -5325,7 +5424,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
 
-                var blockClasses = ['advgb-column'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-column', 'column'].filter(Boolean).join(' ');
 
                 return React.createElement(
                     Fragment,
@@ -5436,7 +5535,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: blockAttrs,
         edit: AdvColumnEdit,
         save: function save(props) {
-            return null;
+            return React.createElement(
+                "div",
+                { className: "advgb-column column" },
+                React.createElement(
+                    "div",
+                    { className: "advgb-column-inner" },
+                    React.createElement(InnerBlocks.Content, null)
+                )
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);

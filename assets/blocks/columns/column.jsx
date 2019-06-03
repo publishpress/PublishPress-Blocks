@@ -35,7 +35,8 @@
             const hasChildBlocks = getBlockOrder( clientId ).length > 0;
 
             const blockClasses = [
-                'advgb-column'
+                'advgb-column',
+                'column',
             ].filter( Boolean ).join( ' ' );
 
             return (
@@ -144,7 +145,13 @@
         attributes: blockAttrs,
         edit: AdvColumnEdit,
         save: function ( props ) {
-            return null;
+            return (
+                <div className="advgb-column column">
+                    <div className="advgb-column-inner">
+                        <InnerBlocks.Content />
+                    </div>
+                </div>
+            );
         },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );

@@ -50,6 +50,35 @@
             }
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-columns'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
+                    });
+                }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
+            }
+        }
+
+        componentDidMount() {
+            const { attributes, setAttributes, clientId } = this.props;
+
+            if ( !attributes.id ) {
+                setAttributes( { colId: 'advgb-cols-' + clientId, } )
+            }
+        }
+
         render() {
             const { attributes, setAttributes, clientId } = this.props;
             const { tabSelected } = this.state;
@@ -350,6 +379,13 @@
             type: 'string',
             default: 'div',
         },
+        colId: {
+            type: 'string',
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        }
     };
 
     registerBlockType( 'advgb/columns', {
@@ -368,7 +404,45 @@
         attributes: blockAttrs,
         edit: AdvColumnsEdit,
         save: function ( props ) {
-            return null;
+            const { attributes, setAttributes, clientId } = props;
+            const {
+                columns,
+                columnsLayout, columnsLayoutT, columnsLayoutM,
+                marginTop, marginRight, marginBottom, marginLeft,
+                marginTopT, marginRightT, marginBottomT, marginLeftT,
+                marginTopM, marginRightM, marginBottomM, marginLeftM,
+                paddingTop, paddingRight, paddingBottom, paddingLeft,
+                paddingTopT, paddingRightT, paddingBottomT, paddingLeftT,
+                paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
+                vAlign,
+                gutter,
+                collapsedGutter,
+                collapsedRtl,
+                columnsWrapped,
+                contentMaxWidth,
+                contentMinHeight,
+                wrapperTag,
+                colId,
+            } = attributes;
+
+            const blockClasses = [
+                'advgb-columns',
+                'columns',
+                columns && `advgb-columns-${columns}`,
+                columnsLayout && `layout-${columnsLayout}`,
+                columnsLayoutT && `tbl-layout-${columnsLayoutT}`,
+                columnsLayoutM && `mbl-layout-${columnsLayoutM}`,
+                collapsedRtl && 'order-rtl',
+                columnsWrapped && 'columns-wrapped',
+            ].filter( Boolean ).join( ' ' );
+
+            return (
+                <div className="advgb-columns-wrapper">
+                    <div className={ blockClasses } id={ colId }>
+                        <InnerBlocks.Content />
+                    </div>
+                </div>
+            );
         },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
