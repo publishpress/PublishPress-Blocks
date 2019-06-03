@@ -242,6 +242,20 @@
                                     checked={ columnsWrapped }
                                     onChange={ () => setAttributes( { columnsWrapped: !columnsWrapped } ) }
                                 />
+                                <SelectControl
+                                    label={ __( 'Wrapper Tag' ) }
+                                    value={ wrapperTag }
+                                    options={ [
+                                        { label: 'Div', value: 'div' },
+                                        { label: 'Header', value: 'header' },
+                                        { label: 'Section', value: 'section' },
+                                        { label: 'Main', value: 'main' },
+                                        { label: 'Article', value: 'article' },
+                                        { label: 'Aside', value: 'aside' },
+                                        { label: 'Footer', value: 'footer' },
+                                    ] }
+                                    onChange={ (value) => setAttributes( { wrapperTag: value } ) }
+                                />
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
@@ -424,6 +438,7 @@
                 wrapperTag,
                 colId,
             } = attributes;
+            const Tag = wrapperTag;
 
             const blockClasses = [
                 'advgb-columns',
@@ -437,11 +452,11 @@
             ].filter( Boolean ).join( ' ' );
 
             return (
-                <div className="advgb-columns-wrapper">
+                <Tag className="advgb-columns-wrapper">
                     <div className={ blockClasses } id={ colId }>
                         <InnerBlocks.Content />
                     </div>
-                </div>
+                </Tag>
             );
         },
     } );

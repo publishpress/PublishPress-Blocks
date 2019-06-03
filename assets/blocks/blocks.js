@@ -5111,6 +5111,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange() {
                                         return setAttributes({ columnsWrapped: !columnsWrapped });
                                     }
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Wrapper Tag'),
+                                    value: wrapperTag,
+                                    options: [{ label: 'Div', value: 'div' }, { label: 'Header', value: 'header' }, { label: 'Section', value: 'section' }, { label: 'Main', value: 'main' }, { label: 'Article', value: 'article' }, { label: 'Aside', value: 'aside' }, { label: 'Footer', value: 'footer' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ wrapperTag: value });
+                                    }
                                 })
                             )
                         )
@@ -5323,11 +5331,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 wrapperTag = attributes.wrapperTag,
                 colId = attributes.colId;
 
+            var Tag = wrapperTag;
 
             var blockClasses = ['advgb-columns', 'columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
-                "div",
+                Tag,
                 { className: "advgb-columns-wrapper" },
                 React.createElement(
                     "div",
