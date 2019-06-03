@@ -4830,13 +4830,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
+        BlockControls = wpEditor.BlockControls,
         PanelColorSettings = wpEditor.PanelColorSettings,
         InnerBlocks = wpEditor.InnerBlocks;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
         ToggleControl = wpComponents.ToggleControl,
-        Tooltip = wpComponents.Tooltip;
+        Tooltip = wpComponents.Tooltip,
+        Toolbar = wpComponents.Toolbar;
     var _lodash = lodash,
         times = _lodash.times;
 
@@ -4957,7 +4959,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     wrapperTag = attributes.wrapperTag;
 
 
-                var blockClasses = ['advgb-columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
@@ -5001,6 +5003,43 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return item.columns === columns;
                 });
                 COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.push(COLUMNS_LAYOUTS_STACKED);
+                var VERT_ALIGNMENT_CONTROLS = [{
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Vertical Align Top'),
+                    isActive: vAlign === 'top',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'top' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Vertical Align Middle'),
+                    isActive: vAlign === 'middle',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'middle' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Vertical Align Bottom'),
+                    isActive: vAlign === 'bottom',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'bottom' });
+                    }
+                }];
 
                 var deviceLetter = '';
                 if (tabSelected === 'tablet') deviceLetter = 'T';
@@ -5009,6 +5048,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return React.createElement(
                     Fragment,
                     null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(Toolbar, { controls: VERT_ALIGNMENT_CONTROLS })
+                    ),
                     React.createElement(
                         InspectorControls,
                         null,
@@ -5390,7 +5434,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,
