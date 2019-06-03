@@ -4853,6 +4853,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var COLUMNS_LAYOUTS_STACKED = {
         columns: 1, layout: 'stacked', icon: 'Stacked', title: __('Stacked')
     };
+    var GUTTER_OPTIONS = [{ label: __('No Gutter'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }, { label: '70px', value: 70 }, { label: '90px', value: 90 }];
 
     var AdvColumnsEdit = function (_Component) {
         _inherits(AdvColumnsEdit, _Component);
@@ -4956,7 +4957,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     wrapperTag = attributes.wrapperTag;
 
 
-                var blockClasses = ['advgb-columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
@@ -5073,25 +5074,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         );
                                     })
                                 ),
-                                tabSelected === 'desktop' && React.createElement(RangeControl, {
+                                tabSelected === 'desktop' && React.createElement(SelectControl, {
                                     label: __('Columns Gutter'),
                                     value: gutter,
-                                    min: 0,
-                                    max: 100,
+                                    options: GUTTER_OPTIONS,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ gutter: value });
+                                        return setAttributes({ gutter: parseInt(value) });
                                     }
                                 }),
                                 tabSelected === 'mobile' && columnsLayoutM === 'stacked' && React.createElement(
                                     Fragment,
                                     null,
-                                    React.createElement(RangeControl, {
-                                        label: __('Columns Vertical Gutter'),
+                                    React.createElement(SelectControl, {
+                                        label: __('Collapsed Vertical Gutter'),
                                         value: collapsedGutter,
-                                        min: 0,
-                                        max: 100,
+                                        options: GUTTER_OPTIONS,
                                         onChange: function onChange(value) {
-                                            return setAttributes({ collapsedGutter: value });
+                                            return setAttributes({ collapsedGutter: parseInt(value) });
                                         }
                                     }),
                                     React.createElement(ToggleControl, {
@@ -5190,11 +5189,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 allowdBlockType: ['advgb/column']
                             })
                         )
-                    ),
-                    React.createElement(
-                        "style",
-                        null,
-                        "#block-" + clientId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {\n                            margin-right: " + gutter + "px;\n                        }"
                     )
                 );
             }
@@ -5396,7 +5390,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'columns', columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,

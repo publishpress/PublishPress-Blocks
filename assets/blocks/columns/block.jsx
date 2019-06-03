@@ -40,7 +40,16 @@
     const COLUMNS_LAYOUTS_STACKED = {
         columns: 1, layout: 'stacked', icon: 'Stacked', title: __( 'Stacked' )
     };
-
+    const GUTTER_OPTIONS = [
+        {label: __( 'No Gutter' ), value: 0},
+        {label: '10px', value: 10},
+        {label: '20px', value: 20},
+        {label: '30px', value: 30},
+        {label: '40px', value: 40},
+        {label: '50px', value: 50},
+        {label: '70px', value: 70},
+        {label: '90px', value: 90},
+    ];
 
     class AdvColumnsEdit extends Component {
         constructor() {
@@ -109,6 +118,8 @@
                 columnsLayout && `layout-${columnsLayout}`,
                 columnsLayoutT && `tbl-layout-${columnsLayoutT}`,
                 columnsLayoutM && `mbl-layout-${columnsLayoutM}`,
+                !!gutter && `gutter-${gutter}`,
+                !!collapsedGutter && `vgutter-${collapsedGutter}`,
                 collapsedRtl && 'order-rtl',
                 columnsWrapped && 'columns-wrapped',
             ].filter( Boolean ).join( ' ' );
@@ -212,22 +223,20 @@
                                     } ) }
                                 </div>
                                 {tabSelected === 'desktop' && (
-                                    <RangeControl
+                                    <SelectControl
                                         label={ __( 'Columns Gutter' ) }
                                         value={ gutter }
-                                        min={ 0 }
-                                        max={ 100 }
-                                        onChange={ ( value ) => setAttributes( { gutter: value } ) }
+                                        options={ GUTTER_OPTIONS }
+                                        onChange={ (value) => setAttributes( { gutter: parseInt(value) } ) }
                                     />
                                 ) }
                                 {tabSelected === 'mobile' && columnsLayoutM === 'stacked' && (
                                     <Fragment>
-                                        <RangeControl
-                                            label={ __( 'Columns Vertical Gutter' ) }
+                                        <SelectControl
+                                            label={ __( 'Collapsed Vertical Gutter' ) }
                                             value={ collapsedGutter }
-                                            min={ 0 }
-                                            max={ 100 }
-                                            onChange={ ( value ) => setAttributes( { collapsedGutter: value } ) }
+                                            options={ GUTTER_OPTIONS }
+                                            onChange={ (value) => setAttributes( { collapsedGutter: parseInt(value) } ) }
                                         />
                                         <ToggleControl
                                             label={ __( 'Collapsed Order RTL' ) }
@@ -311,11 +320,6 @@
                             />
                         </div>
                     </div>
-                    <style>
-                        {`#block-${clientId} .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
-                            margin-right: ${gutter}px;
-                        }`}
-                    </style>
                 </Fragment>
             )
         }
@@ -500,6 +504,8 @@
                 columnsLayout && `layout-${columnsLayout}`,
                 columnsLayoutT && `tbl-layout-${columnsLayoutT}`,
                 columnsLayoutM && `mbl-layout-${columnsLayoutM}`,
+                !!gutter && `gutter-${gutter}`,
+                !!collapsedGutter && `vgutter-${collapsedGutter}`,
                 collapsedRtl && 'order-rtl',
                 columnsWrapped && 'columns-wrapped',
             ].filter( Boolean ).join( ' ' );
