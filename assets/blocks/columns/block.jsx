@@ -97,7 +97,9 @@
                 collapsedRtl,
                 columnsWrapped,
                 contentMaxWidth,
+                contentMaxWidthUnit,
                 contentMinHeight,
+                contentMinHeightUnit,
                 wrapperTag,
             } = attributes;
 
@@ -256,11 +258,52 @@
                                     ] }
                                     onChange={ (value) => setAttributes( { wrapperTag: value } ) }
                                 />
+                                <RangeControl
+                                    label={ [
+                                        __( 'Content Max Width' ),
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            { ['px', 'vw', '%'].map( (unit) => (
+                                                <span className={`advgb-unit ${contentMaxWidthUnit === unit ? 'selected' : ''}`}
+                                                      onClick={ () => setAttributes( { contentMaxWidthUnit: unit } ) }
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) ) }
+                                        </div>
+                                    ] }
+                                    value={ contentMaxWidth }
+                                    min={ 0 }
+                                    max={ contentMaxWidthUnit === 'px' ? 2000 : 100 }
+                                    onChange={ (value) => setAttributes( { contentMaxWidth: value } ) }
+                                />
+                                <RangeControl
+                                    label={ [
+                                        __( 'Content Min Height' ),
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            { ['px', 'vw', 'vh'].map( (unit) => (
+                                                <span className={`advgb-unit ${contentMinHeightUnit === unit ? 'selected' : ''}`}
+                                                      onClick={ () => setAttributes( { contentMinHeightUnit: unit } ) }
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) ) }
+                                        </div>
+                                    ] }
+                                    value={ contentMinHeight }
+                                    min={ 0 }
+                                    max={ contentMinHeightUnit === 'px' ? 2000 : 200 }
+                                    onChange={ (value) => setAttributes( { contentMinHeight: value } ) }
+                                />
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
                     <div className="advgb-columns-wrapper">
-                        <div className={ blockClasses }>
+                        <div className={ blockClasses }
+                             style={ {
+                                 maxWidth: !!contentMaxWidth ? `${contentMaxWidth}${contentMaxWidthUnit}` : undefined,
+                                 minHeight: !!contentMinHeight ? `${contentMinHeight}${contentMinHeightUnit}` : undefined,
+                             } }
+                        >
                             <InnerBlocks
                                 template={ times( parseInt(columns), () => [ 'advgb/column' ] ) }
                                 templateLock="all"
@@ -386,8 +429,16 @@
         contentMaxWidth: {
             type: 'number',
         },
+        contentMaxWidthUnit: {
+            type: 'string',
+            default: 'px',
+        },
         contentMinHeight: {
             type: 'number',
+        },
+        contentMinHeightUnit: {
+            type: 'string',
+            default: 'px',
         },
         wrapperTag: {
             type: 'string',
@@ -434,7 +485,9 @@
                 collapsedRtl,
                 columnsWrapped,
                 contentMaxWidth,
+                contentMaxWidthUnit,
                 contentMinHeight,
+                contentMinHeightUnit,
                 wrapperTag,
                 colId,
             } = attributes;
@@ -453,7 +506,12 @@
 
             return (
                 <Tag className="advgb-columns-wrapper">
-                    <div className={ blockClasses } id={ colId }>
+                    <div className={ blockClasses } id={ colId }
+                         style={ {
+                             maxWidth: !!contentMaxWidth ? `${contentMaxWidth}${contentMaxWidthUnit}` : undefined,
+                             minHeight: !!contentMinHeight ? `${contentMinHeight}${contentMinHeightUnit}` : undefined,
+                         } }
+                    >
                         <InnerBlocks.Content />
                     </div>
                 </Tag>

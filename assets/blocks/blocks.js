@@ -4950,7 +4950,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     collapsedRtl = attributes.collapsedRtl,
                     columnsWrapped = attributes.columnsWrapped,
                     contentMaxWidth = attributes.contentMaxWidth,
+                    contentMaxWidthUnit = attributes.contentMaxWidthUnit,
                     contentMinHeight = attributes.contentMinHeight,
+                    contentMinHeightUnit = attributes.contentMinHeightUnit,
                     wrapperTag = attributes.wrapperTag;
 
 
@@ -5119,6 +5121,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return setAttributes({ wrapperTag: value });
                                     }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: [__('Content Max Width'), React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'vw', '%'].map(function (unit) {
+                                            return React.createElement(
+                                                "span",
+                                                { className: "advgb-unit " + (contentMaxWidthUnit === unit ? 'selected' : ''),
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ contentMaxWidthUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )],
+                                    value: contentMaxWidth,
+                                    min: 0,
+                                    max: contentMaxWidthUnit === 'px' ? 2000 : 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ contentMaxWidth: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: [__('Content Min Height'), React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'vw', 'vh'].map(function (unit) {
+                                            return React.createElement(
+                                                "span",
+                                                { className: "advgb-unit " + (contentMinHeightUnit === unit ? 'selected' : ''),
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ contentMinHeightUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )],
+                                    value: contentMinHeight,
+                                    min: 0,
+                                    max: contentMinHeightUnit === 'px' ? 2000 : 200,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ contentMinHeight: value });
+                                    }
                                 })
                             )
                         )
@@ -5128,7 +5176,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-columns-wrapper" },
                         React.createElement(
                             "div",
-                            { className: blockClasses },
+                            { className: blockClasses,
+                                style: {
+                                    maxWidth: !!contentMaxWidth ? "" + contentMaxWidth + contentMaxWidthUnit : undefined,
+                                    minHeight: !!contentMinHeight ? "" + contentMinHeight + contentMinHeightUnit : undefined
+                                }
+                            },
                             React.createElement(InnerBlocks, {
                                 template: times(parseInt(columns), function () {
                                     return ['advgb/column'];
@@ -5258,8 +5311,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         contentMaxWidth: {
             type: 'number'
         },
+        contentMaxWidthUnit: {
+            type: 'string',
+            default: 'px'
+        },
         contentMinHeight: {
             type: 'number'
+        },
+        contentMinHeightUnit: {
+            type: 'string',
+            default: 'px'
         },
         wrapperTag: {
             type: 'string',
@@ -5327,7 +5388,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 collapsedRtl = attributes.collapsedRtl,
                 columnsWrapped = attributes.columnsWrapped,
                 contentMaxWidth = attributes.contentMaxWidth,
+                contentMaxWidthUnit = attributes.contentMaxWidthUnit,
                 contentMinHeight = attributes.contentMinHeight,
+                contentMinHeightUnit = attributes.contentMinHeightUnit,
                 wrapperTag = attributes.wrapperTag,
                 colId = attributes.colId;
 
@@ -5340,7 +5403,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: "advgb-columns-wrapper" },
                 React.createElement(
                     "div",
-                    { className: blockClasses, id: colId },
+                    { className: blockClasses, id: colId,
+                        style: {
+                            maxWidth: !!contentMaxWidth ? "" + contentMaxWidth + contentMaxWidthUnit : undefined,
+                            minHeight: !!contentMinHeight ? "" + contentMinHeight + contentMinHeightUnit : undefined
+                        }
+                    },
                     React.createElement(InnerBlocks.Content, null)
                 )
             );

@@ -1391,6 +1391,33 @@ form .advgb-grecaptcha > div {
     color: #fff;
 }
 
+.advgb-unit-wrapper {
+    float: right;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+}
+
+.advgb-unit-wrapper .advgb-unit {
+    display: inline-block;
+    margin: 0 2px;
+    opacity: 0.7;
+}
+
+.advgb-unit-wrapper .advgb-unit.selected {
+    font-weight: bold;
+    opacity: 1;
+}
+
+.advgb-unit-wrapper .advgb-unit:hover {
+    text-decoration: underline;
+}
+
+.advgb-columns-wrapper .advgb-columns {
+    margin: 0 auto;
+    justify-content: center;
+}
+
     /*Backend columns*/
 .advgb-columns > .editor-inner-blocks > .editor-block-list__layout {
     display: flex;
