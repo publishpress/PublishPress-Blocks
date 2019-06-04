@@ -101,10 +101,8 @@
                 columnsLayout, columnsLayoutT, columnsLayoutM,
                 marginUnit,
                 marginTop, marginRight, marginBottom, marginLeft,
-                marginTopT, marginRightT, marginBottomT, marginLeftT,
                 marginTopM, marginRightM, marginBottomM, marginLeftM,
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
-                paddingTopT, paddingRightT, paddingBottomT, paddingLeftT,
                 paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
                 vAlign,
                 gutter,
@@ -591,17 +589,10 @@
         },
         attributes: blockAttrs,
         edit: AdvColumnsEdit,
-        save: function ( props ) {
-            const { attributes, setAttributes, clientId } = props;
+        save: function ( { attributes } ) {
             const {
                 columns,
                 columnsLayout, columnsLayoutT, columnsLayoutM,
-                marginTop, marginRight, marginBottom, marginLeft,
-                marginTopT, marginRightT, marginBottomT, marginLeftT,
-                marginTopM, marginRightM, marginBottomM, marginLeftM,
-                paddingTop, paddingRight, paddingBottom, paddingLeft,
-                paddingTopT, paddingRightT, paddingBottomT, paddingLeftT,
-                paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
                 vAlign,
                 gutter,
                 collapsedGutter,
