@@ -411,6 +411,30 @@
                             />
                         </div>
                     </div>
+                    <style>
+                        {`#block-${clientId} .advgb-columns-wrapper .advgb-columns {
+                            margin-top: ${marginTop}px;
+                            margin-right: ${marginRight}px;
+                            margin-bottom: ${marginBottom}px;
+                            margin-left: ${marginLeft}px;
+                            padding-top: ${paddingTop}px;
+                            padding-right: ${paddingRight}px;
+                            padding-bottom: ${paddingBottom}px;
+                            padding-left: ${paddingLeft}px;
+                        }
+                        @media screen and (max-width: 767px) {
+                            #block-${clientId} .advgb-columns-wrapper .advgb-columns {
+                                margin-top: ${marginTopM}px;
+                                margin-right: ${marginRightM}px;
+                                margin-bottom: ${marginBottomM}px;
+                                margin-left: ${marginLeftM}px;
+                                padding-top: ${paddingTopM}px;
+                                padding-right: ${paddingRightM}px;
+                                padding-bottom: ${paddingBottomM}px;
+                                padding-left: ${paddingLeftM}px;
+                            }
+                        }`}
+                    </style>
                 </Fragment>
             )
         }

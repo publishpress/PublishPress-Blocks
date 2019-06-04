@@ -5299,6 +5299,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 allowdBlockType: ['advgb/column']
                             })
                         )
+                    ),
+                    React.createElement(
+                        "style",
+                        null,
+                        "#block-" + clientId + " .advgb-columns-wrapper .advgb-columns {\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-columns-wrapper .advgb-columns {\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }"
                     )
                 );
             }
