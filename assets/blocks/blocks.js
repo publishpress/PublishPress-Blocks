@@ -4923,6 +4923,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columnsLayout = attributes.columnsLayout,
                     columnsLayoutT = attributes.columnsLayoutT,
                     columnsLayoutM = attributes.columnsLayoutM,
+                    marginUnit = attributes.marginUnit,
                     marginTop = attributes.marginTop,
                     marginRight = attributes.marginRight,
                     marginBottom = attributes.marginBottom,
@@ -4976,11 +4977,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             COLUMNS_LAYOUTS.map(function (layout, index) {
                                 return React.createElement(
                                     Tooltip,
-                                    { text: layout.title },
+                                    { text: layout.title, key: index },
                                     React.createElement(
                                         "div",
-                                        { key: index,
-                                            className: "advgb-columns-layout",
+                                        { className: "advgb-columns-layout",
                                             onClick: function onClick() {
                                                 return setAttributes({
                                                     columns: layout.columns,
@@ -5040,6 +5040,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return setAttributes({ vAlign: 'bottom' });
                     }
                 }];
+                var MARGIN_PADDING_CONTROLS = [{ label: 'Top', icon: 'arrow-up-alt2' }, { label: 'Right', icon: 'arrow-right-alt2' }, { label: 'Bottom', icon: 'arrow-down-alt2' }, { label: 'Left', icon: 'arrow-left-alt2' }];
 
                 var deviceLetter = '';
                 if (tabSelected === 'tablet') deviceLetter = 'T';
@@ -5144,6 +5145,71 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return setAttributes({ collapsedRtl: !collapsedRtl });
                                         }
                                     })
+                                ),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding'),
+                                        initialOpen: false
+                                    },
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-controls-title" },
+                                        __('Unit (px)')
+                                    ),
+                                    MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                        return React.createElement(RangeControl, {
+                                            key: idx,
+                                            beforeIcon: pos.icon,
+                                            value: attributes['padding' + pos.label + deviceLetter] || 0,
+                                            min: 0,
+                                            max: 50,
+                                            onChange: function onChange(value) {
+                                                return setAttributes(_defineProperty({}, 'padding' + pos.label + deviceLetter, value));
+                                            }
+                                        });
+                                    })
+                                ),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin'),
+                                        initialOpen: false
+                                    },
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-controls-title" },
+                                        React.createElement(
+                                            "span",
+                                            null,
+                                            __('Unit')
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-unit-wrapper", key: "unit" },
+                                            ['px', 'em', 'vh', '%'].map(function (unit, idx) {
+                                                return React.createElement(
+                                                    "span",
+                                                    { className: "advgb-unit " + (marginUnit === unit ? 'selected' : ''), key: idx,
+                                                        onClick: function onClick() {
+                                                            return setAttributes({ marginUnit: unit });
+                                                        }
+                                                    },
+                                                    unit
+                                                );
+                                            })
+                                        )
+                                    ),
+                                    MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                        return React.createElement(RangeControl, {
+                                            key: idx,
+                                            beforeIcon: pos.icon,
+                                            value: attributes['margin' + pos.label + deviceLetter] || 0,
+                                            min: 0,
+                                            max: 50,
+                                            onChange: function onChange(value) {
+                                                return setAttributes(_defineProperty({}, 'margin' + pos.label + deviceLetter, value));
+                                            }
+                                        });
+                                    })
                                 )
                             ),
                             React.createElement(
@@ -5169,10 +5235,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: [__('Content Max Width'), React.createElement(
                                         "div",
                                         { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'vw', '%'].map(function (unit) {
+                                        ['px', 'vw', '%'].map(function (unit, idx) {
                                             return React.createElement(
                                                 "span",
-                                                { className: "advgb-unit " + (contentMaxWidthUnit === unit ? 'selected' : ''),
+                                                { className: "advgb-unit " + (contentMaxWidthUnit === unit ? 'selected' : ''), key: idx,
                                                     onClick: function onClick() {
                                                         return setAttributes({ contentMaxWidthUnit: unit });
                                                     }
@@ -5192,10 +5258,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: [__('Content Min Height'), React.createElement(
                                         "div",
                                         { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'vw', 'vh'].map(function (unit) {
+                                        ['px', 'vw', 'vh'].map(function (unit, idx) {
                                             return React.createElement(
                                                 "span",
-                                                { className: "advgb-unit " + (contentMinHeightUnit === unit ? 'selected' : ''),
+                                                { className: "advgb-unit " + (contentMinHeightUnit === unit ? 'selected' : ''), key: idx,
                                                     onClick: function onClick() {
                                                         return setAttributes({ contentMinHeightUnit: unit });
                                                     }
@@ -5235,6 +5301,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         )
                     )
                 );
+            }
+        }], [{
+            key: "jsUcfirst",
+            value: function jsUcfirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
             }
         }]);
 
@@ -5290,6 +5361,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         marginLeftM: {
             type: 'number'
+        },
+        marginUnit: {
+            type: 'string',
+            default: 'px'
         },
         paddingTop: {
             type: 'number'

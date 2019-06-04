@@ -88,12 +88,18 @@
             }
         }
 
+
+        static jsUcfirst(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
         render() {
             const { attributes, setAttributes, clientId } = this.props;
             const { tabSelected } = this.state;
             const {
                 columns,
                 columnsLayout, columnsLayoutT, columnsLayoutM,
+                marginUnit,
                 marginTop, marginRight, marginBottom, marginLeft,
                 marginTopT, marginRightT, marginBottomT, marginLeftT,
                 marginTopM, marginRightM, marginBottomM, marginLeftM,
@@ -134,9 +140,8 @@
                         <div className="advgb-columns-select-layout">
                             {COLUMNS_LAYOUTS.map( (layout, index) => {
                                 return (
-                                    <Tooltip text={ layout.title }>
-                                        <div key={ index }
-                                             className="advgb-columns-layout"
+                                    <Tooltip text={ layout.title } key={ index }>
+                                        <div className="advgb-columns-layout"
                                              onClick={ () => setAttributes( {
                                                  columns: layout.columns,
                                                  columnsLayout: layout.layout
@@ -189,6 +194,12 @@
                     isActive: vAlign === 'bottom',
                     onClick: () => setAttributes( { vAlign: 'bottom' } )
                 },
+            ];
+            const MARGIN_PADDING_CONTROLS = [
+                {label:'Top', icon: 'arrow-up-alt2'},
+                {label:'Right', icon: 'arrow-right-alt2'},
+                {label:'Bottom', icon: 'arrow-down-alt2'},
+                {label:'Left', icon: 'arrow-left-alt2'},
             ];
 
             let deviceLetter = '';
@@ -284,6 +295,47 @@
                                         />
                                     </Fragment>
                                 ) }
+                                <PanelBody title={ tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding') }
+                                           initialOpen={false}
+                                >
+                                    <div className="advgb-controls-title">{ __( 'Unit (px)' ) }</div>
+                                    {MARGIN_PADDING_CONTROLS.map((pos, idx) => (
+                                        <RangeControl
+                                            key={ idx }
+                                            beforeIcon={ pos.icon }
+                                            value={ attributes['padding' + pos.label + deviceLetter] || 0 }
+                                            min={ 0 }
+                                            max={ 50 }
+                                            onChange={ (value) => setAttributes( { ['padding' + pos.label + deviceLetter]: value } ) }
+                                        />
+                                    ) ) }
+                                </PanelBody>
+                                <PanelBody title={ tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin') }
+                                           initialOpen={false}
+                                >
+                                    <div className="advgb-controls-title">
+                                        <span>{ __( 'Unit' ) }</span>
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            { ['px', 'em', 'vh', '%'].map( (unit, idx) => (
+                                                <span className={`advgb-unit ${marginUnit === unit ? 'selected' : ''}`} key={idx}
+                                                      onClick={ () => setAttributes( { marginUnit: unit } ) }
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) ) }
+                                        </div>
+                                    </div>
+                                    {MARGIN_PADDING_CONTROLS.map((pos, idx) => (
+                                        <RangeControl
+                                            key={ idx }
+                                            beforeIcon={ pos.icon }
+                                            value={ attributes['margin' + pos.label + deviceLetter] || 0 }
+                                            min={ 0 }
+                                            max={ 50 }
+                                            onChange={ (value) => setAttributes( { ['margin' + pos.label + deviceLetter]: value } ) }
+                                        />
+                                    ) ) }
+                                </PanelBody>
                             </PanelBody>
                             <PanelBody title={ __( 'Row Settings' ) } initialOpen={ false }>
                                 <ToggleControl
@@ -310,8 +362,8 @@
                                     label={ [
                                         __( 'Content Max Width' ),
                                         <div className="advgb-unit-wrapper" key="unit">
-                                            { ['px', 'vw', '%'].map( (unit) => (
-                                                <span className={`advgb-unit ${contentMaxWidthUnit === unit ? 'selected' : ''}`}
+                                            { ['px', 'vw', '%'].map( (unit, idx) => (
+                                                <span className={`advgb-unit ${contentMaxWidthUnit === unit ? 'selected' : ''}`} key={idx}
                                                       onClick={ () => setAttributes( { contentMaxWidthUnit: unit } ) }
                                                 >
                                                     {unit}
@@ -328,8 +380,8 @@
                                     label={ [
                                         __( 'Content Min Height' ),
                                         <div className="advgb-unit-wrapper" key="unit">
-                                            { ['px', 'vw', 'vh'].map( (unit) => (
-                                                <span className={`advgb-unit ${contentMinHeightUnit === unit ? 'selected' : ''}`}
+                                            { ['px', 'vw', 'vh'].map( (unit, idx) => (
+                                                <span className={`advgb-unit ${contentMinHeightUnit === unit ? 'selected' : ''}`} key={idx}
                                                       onClick={ () => setAttributes( { contentMinHeightUnit: unit } ) }
                                                 >
                                                     {unit}
@@ -413,6 +465,10 @@
         },
         marginLeftM: {
             type: 'number',
+        },
+        marginUnit: {
+            type: 'string',
+            default: 'px',
         },
         paddingTop: {
             type: 'number',
