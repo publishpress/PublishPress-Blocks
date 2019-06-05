@@ -5,6 +5,7 @@
     const { InspectorControls, BlockControls, PanelColorSettings, InnerBlocks } = wpEditor;
     const { PanelBody, RangeControl, SelectControl, ToggleControl, Tooltip, Toolbar } = wpComponents;
     const { times } = lodash;
+    const { dispatch, select } = wp.data;
 
     const columnsBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -93,6 +94,74 @@
             }
         }
 
+        componentDidUpdate( prevProps ) {
+            const { columnsLayout: prevLayout } = prevProps.attributes;
+            const { attributes, clientId } = this.props;
+            const { columnsLayout } = attributes;
+            const { getBlockOrder } = select( 'core/block-editor' );
+            const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+            let shouldUpdate = false;
+            let classes = times( 6, () => [] );
+
+            if (prevLayout !== columnsLayout ) {
+                shouldUpdate = true;
+                switch (columnsLayout) {
+                    case '23-13':
+                        classes[0].push('is-two-thirds');
+                        break;
+                    case '13-23':
+                        classes[1].push('is-two-thirds');
+                        break;
+                    case '34-14':
+                        classes[0].push('is-three-quarters');
+                        break;
+                    case '14-34':
+                        classes[1].push('is-three-quarters');
+                        break;
+                    case '45-15':
+                        classes[0].push('is-four-fifths');
+                        break;
+                    case '15-45':
+                        classes[1].push('is-four-fifths');
+                        break;
+                    case '12-14-14':
+                        classes[0].push('is-half');
+                        break;
+                    case '14-14-12':
+                        classes[2].push('is-half');
+                        break;
+                    case '14-12-14':
+                        classes[1].push('is-half');
+                        break;
+                    case '15-35-15':
+                        classes[1].push('is-three-fifths');
+                        break;
+                    case '35-15-15':
+                        classes[0].push('is-three-fifths');
+                        break;
+                    case '15-15-35':
+                        classes[2].push('is-three-fifths');
+                        break;
+                    case '36-16-16-16':
+                        classes[0].push('is-half');
+                        break;
+                    case '16-16-16-36':
+                        classes[3].push('is-half');
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (shouldUpdate) {
+                classes = classes.map((cls) => cls.filter( Boolean ).join( ' ' ));
+                classes.map(
+                    ( cls, idx ) =>
+                        (!!childBlocks[idx]) && updateBlockAttributes( childBlocks[idx], { columnClasses: cls } )
+                );
+            }
+        }
 
         static jsUcfirst(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
@@ -248,9 +317,12 @@
                                         return (
                                             <Tooltip text={ layout.title } key={ index }>
                                                 <div className={ layoutClasses }
-                                                     onClick={ () => setAttributes( {
-                                                         ['columnsLayout' + deviceLetter]: layout.layout
-                                                     } ) }
+                                                     onClick={ () => {
+                                                         setAttributes( {
+                                                             ['columnsLayout' + deviceLetter]: layout.layout
+                                                         } );
+                                                         this.setState( { random: Math.random() } );
+                                                     } }
                                                 >
                                                     <img src={advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png'}
                                                          alt={ layout.layout }
@@ -269,9 +341,12 @@
                                         return (
                                             <Tooltip text={ layout.title } key={ index }>
                                                 <div className={ layoutClasses }
-                                                     onClick={ () => setAttributes( {
-                                                         ['columnsLayout' + deviceLetter]: layout.layout
-                                                     } ) }
+                                                     onClick={ () => {
+                                                         setAttributes( {
+                                                             ['columnsLayout' + deviceLetter]: layout.layout
+                                                         } );
+                                                         this.setState( { random: Math.random() } );
+                                                     } }
                                                 >
                                                     { layout.icon }
                                                 </div>
@@ -415,6 +490,7 @@
                                 template={ times( parseInt(columns), () => [ 'advgb/column' ] ) }
                                 templateLock="all"
                                 allowdBlockType={ [ 'advgb/column' ] }
+                                random={ this.state.random }
                             />
                         </div>
                     </div>

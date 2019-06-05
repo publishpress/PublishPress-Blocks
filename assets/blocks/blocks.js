@@ -4841,6 +4841,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Toolbar = wpComponents.Toolbar;
     var _lodash = lodash,
         times = _lodash.times;
+    var _wp$data = wp.data,
+        dispatch = _wp$data.dispatch,
+        select = _wp$data.select;
 
 
     var columnsBlockIcon = React.createElement(
@@ -4910,14 +4913,94 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate(prevProps) {
+                var prevLayout = prevProps.attributes.columnsLayout;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
+                var columnsLayout = attributes.columnsLayout;
+
+                var _select = select('core/block-editor'),
+                    getBlockOrder = _select.getBlockOrder;
+
+                var _dispatch = dispatch('core/block-editor'),
+                    updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+                var childBlocks = getBlockOrder(clientId);
+                var shouldUpdate = false;
+                var classes = times(6, function () {
+                    return [];
+                });
+
+                if (prevLayout !== columnsLayout) {
+                    shouldUpdate = true;
+                    switch (columnsLayout) {
+                        case '23-13':
+                            classes[0].push('is-two-thirds');
+                            break;
+                        case '13-23':
+                            classes[1].push('is-two-thirds');
+                            break;
+                        case '34-14':
+                            classes[0].push('is-three-quarters');
+                            break;
+                        case '14-34':
+                            classes[1].push('is-three-quarters');
+                            break;
+                        case '45-15':
+                            classes[0].push('is-four-fifths');
+                            break;
+                        case '15-45':
+                            classes[1].push('is-four-fifths');
+                            break;
+                        case '12-14-14':
+                            classes[0].push('is-half');
+                            break;
+                        case '14-14-12':
+                            classes[2].push('is-half');
+                            break;
+                        case '14-12-14':
+                            classes[1].push('is-half');
+                            break;
+                        case '15-35-15':
+                            classes[1].push('is-three-fifths');
+                            break;
+                        case '35-15-15':
+                            classes[0].push('is-three-fifths');
+                            break;
+                        case '15-15-35':
+                            classes[2].push('is-three-fifths');
+                            break;
+                        case '36-16-16-16':
+                            classes[0].push('is-half');
+                            break;
+                        case '16-16-16-36':
+                            classes[3].push('is-half');
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                if (shouldUpdate) {
+                    classes = classes.map(function (cls) {
+                        return cls.filter(Boolean).join(' ');
+                    });
+                    classes.map(function (cls, idx) {
+                        return !!childBlocks[idx] && updateBlockAttributes(childBlocks[idx], { columnClasses: cls });
+                    });
+                }
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes,
-                    clientId = _props3.clientId;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    clientId = _props4.clientId;
                 var tabSelected = this.state.tabSelected;
                 var columns = attributes.columns,
                     columnsLayout = attributes.columnsLayout,
@@ -5088,7 +5171,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "div",
                                                 { className: layoutClasses,
                                                     onClick: function onClick() {
-                                                        return setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                        setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                        _this2.setState({ random: Math.random() });
                                                     }
                                                 },
                                                 React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
@@ -5107,7 +5191,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "div",
                                                 { className: layoutClasses,
                                                     onClick: function onClick() {
-                                                        return setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                        setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                        _this2.setState({ random: Math.random() });
                                                     }
                                                 },
                                                 layout.icon
@@ -5292,7 +5377,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return ['advgb/column'];
                                 }),
                                 templateLock: "all",
-                                allowdBlockType: ['advgb/column']
+                                allowdBlockType: ['advgb/column'],
+                                random: this.state.random
                             })
                         )
                     ),
@@ -5620,6 +5706,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         width: {
             type: 'number'
         },
+        columnClasses: {
+            type: 'string'
+        },
         borderColor: {
             type: 'string'
         },
@@ -5699,10 +5788,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         attributes: blockAttrs,
         edit: AdvColumnEdit,
-        save: function save(props) {
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var width = attributes.width,
+                columnClasses = attributes.columnClasses,
+                borderColor = attributes.borderColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                borderRadius = attributes.borderRadius,
+                marginTop = attributes.marginTop,
+                marginRight = attributes.marginRight,
+                marginBottom = attributes.marginBottom,
+                marginLeft = attributes.marginLeft,
+                marginTopM = attributes.marginTopM,
+                marginRightM = attributes.marginRightM,
+                marginBottomM = attributes.marginBottomM,
+                marginLeftM = attributes.marginLeftM,
+                paddingTop = attributes.paddingTop,
+                paddingRight = attributes.paddingRight,
+                paddingBottom = attributes.paddingBottom,
+                paddingLeft = attributes.paddingLeft,
+                paddingTopM = attributes.paddingTopM,
+                paddingRightM = attributes.paddingRightM,
+                paddingBottomM = attributes.paddingBottomM,
+                paddingLeftM = attributes.paddingLeftM;
+
+
+            var blockClasses = ['advgb-column', 'column', columnClasses].filter(Boolean).join(' ');
+
             return React.createElement(
                 "div",
-                { className: "advgb-column column" },
+                { className: blockClasses },
                 React.createElement(
                     "div",
                     { className: "advgb-column-inner" },
