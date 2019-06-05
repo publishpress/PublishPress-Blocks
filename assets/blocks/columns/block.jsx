@@ -15,20 +15,25 @@
 
     const COLUMNS_LAYOUTS = [
         { columns: 1, layout: '100', icon: '100', title: __( 'One' ) },
-        { columns: 2, layout: '50-50', icon: '50-50', title: __( 'Two: 50-50' ) },
-        { columns: 2, layout: '66-33', icon: '66-33', title: __( 'Two: 66-33' ) },
-        { columns: 2, layout: '33-66', icon: '33-66', title: __( 'Two: 33-66' ) },
-        { columns: 3, layout: '33-33-33', icon: '33-33-33', title: __( 'Three: 33-33-33' ) },
-        { columns: 3, layout: '50-25-25', icon: '50-25-25', title: __( 'Three: 50-25-25' ) },
-        { columns: 3, layout: '25-25-50', icon: '25-25-50', title: __( 'Three: 25-25-50' ) },
-        { columns: 3, layout: '25-50-25', icon: '25-50-25', title: __( 'Three: 25-50-25' ) },
-        { columns: 3, layout: '20-60-20', icon: '20-60-20', title: __( 'Three: 20-60-20' ) },
-        { columns: 3, layout: '15-70-15', icon: '15-70-15', title: __( 'Three: 15-70-15' ) },
-        { columns: 4, layout: '25-25-25-25', icon: '25-25-25-25', title: __( 'Four: 25-25-25-25' ) },
-        { columns: 4, layout: '40-20-20-20', icon: '40-20-20-20', title: __( 'Four: 40-20-20-20' ) },
-        { columns: 4, layout: '20-20-20-40', icon: '20-20-20-40', title: __( 'Four: 20-20-20-40' ) },
-        { columns: 5, layout: 'five', icon: 'five', title: __( 'Five' ) },
-        { columns: 6, layout: 'six', icon: 'six', title: __( 'Six' ) },
+        { columns: 2, layout: '12-12', icon: '12-12', title: __( 'Two: 1/2 - 1/2' ) },
+        { columns: 2, layout: '23-13', icon: '23-13', title: __( 'Two: 2/3 - 1/3' ) },
+        { columns: 2, layout: '13-23', icon: '13-23', title: __( 'Two: 1/3 - 2/3' ) },
+        { columns: 2, layout: '14-34', icon: '14-34', title: __( 'Two: 1/4 - 3/4' ) },
+        { columns: 2, layout: '34-14', icon: '34-14', title: __( 'Two: 3/4 - 1/4' ) },
+        { columns: 2, layout: '15-45', icon: '15-45', title: __( 'Two: 1/5 - 4/5' ) },
+        { columns: 2, layout: '45-15', icon: '45-15', title: __( 'Two: 4/5 - 1/5' ) },
+        { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __( 'Three: 1/3 - 1/3 - 1/3' ) },
+        { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __( 'Three: 1/2 - 1/4 - 1/4' ) },
+        { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __( 'Three: 1/4 - 1/4 - 1/2' ) },
+        { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __( 'Three: 1/4 - 1/2 - 1/4' ) },
+        { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __( 'Three: 1/5 - 3/5 - 1/5' ) },
+        { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __( 'Three: 3/5 - 1/5 - 1/5' ) },
+        { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __( 'Three: 1/5 - 1/5 - 3/5' ) },
+        { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __( 'Four: 1/4 - 1/4 - 1/4 - 1/4' ) },
+        { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __( 'Four: 3/6 - 1/6 - 1/6 - 1/6' ) },
+        { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __( 'Four: 1/6 - 1/6 - 1/6 - 3/6' ) },
+        { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __( 'Five' ) },
+        { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __( 'Six' ) },
     ];
     const COLUMNS_LAYOUTS_RESPONSIVE = [
         { columns: 3, layout: '100-50-50', icon: '100-50-50', title: __( 'Three: 100-50-50' ) },
@@ -145,7 +150,9 @@
                                                  columnsLayout: layout.layout
                                              } ) }
                                         >
-                                            { layout.icon }
+                                            <img src={advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png'}
+                                                 alt={ layout.layout }
+                                            />
                                         </div>
                                     </Tooltip>
                                 )
@@ -245,7 +252,9 @@
                                                          ['columnsLayout' + deviceLetter]: layout.layout
                                                      } ) }
                                                 >
-                                                    { layout.icon }
+                                                    <img src={advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png'}
+                                                         alt={ layout.layout }
+                                                    />
                                                 </div>
                                             </Tooltip>
                                         )
