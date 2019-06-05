@@ -59,7 +59,9 @@
 
                         </PanelBody>
                     </InspectorControls>
-                    <div className={ blockClasses }>
+                    <div className={ blockClasses } style={ {
+                        width: width ? width + '%' : undefined,
+                    } }>
                         <InnerBlocks
                             templateLock={ false }
                             renderAppender={ (
@@ -185,7 +187,7 @@
 
             return (
                 <div className={ blockClasses } style={ {
-                    width: width ? width + '%' : undefined
+                    width: width ? width + '%' : undefined,
                 } }>
                     <div className="advgb-column-inner">
                         <InnerBlocks.Content />

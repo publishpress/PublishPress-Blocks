@@ -5712,7 +5712,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: blockClasses },
+                        { className: blockClasses, style: {
+                                width: width ? width + '%' : undefined
+                            } },
                         React.createElement(InnerBlocks, {
                             templateLock: false,
                             renderAppender: hasChildBlocks ? undefined : function () {
