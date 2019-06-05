@@ -5617,7 +5617,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         PanelColorSettings = wpEditor.PanelColorSettings,
-        InnerBlocks = wpEditor.InnerBlocks;
+        InnerBlocks = wpEditor.InnerBlocks,
+        AlignmentToolbar = wpEditor.AlignmentToolbar;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
@@ -5638,12 +5639,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AdvColumnEdit() {
             _classCallCheck(this, AdvColumnEdit);
 
-            return _possibleConstructorReturn(this, (AdvColumnEdit.__proto__ || Object.getPrototypeOf(AdvColumnEdit)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (AdvColumnEdit.__proto__ || Object.getPrototypeOf(AdvColumnEdit)).apply(this, arguments));
+
+            _this.state = {
+                tabSelected: 'desktop'
+            };
+            return _this;
         }
 
         _createClass(AdvColumnEdit, [{
             key: "render",
             value: function render() {
+                var tabSelected = this.state.tabSelected;
                 var _props = this.props,
                     attributes = _props.attributes,
                     setAttributes = _props.setAttributes,
@@ -5653,6 +5660,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderStyle = attributes.borderStyle,
                     borderWidth = attributes.borderWidth,
                     borderRadius = attributes.borderRadius,
+                    textAlign = attributes.textAlign,
+                    textAlignM = attributes.textAlignM,
                     marginTop = attributes.marginTop,
                     marginRight = attributes.marginRight,
                     marginBottom = attributes.marginBottom,
@@ -5677,13 +5686,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockClasses = ['advgb-column', 'column'].filter(Boolean).join(' ');
 
+                var deviceLetter = '';
+                if (tabSelected === 'mobile') deviceLetter = 'M';
+
                 return React.createElement(
                     Fragment,
                     null,
                     React.createElement(
                         InspectorControls,
                         null,
-                        React.createElement(PanelBody, { title: __('Column Settings') })
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Column Settings') },
+                            React.createElement(RangeControl, {
+                                label: __('Width (%)'),
+                                help: __('Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!'),
+                                value: width,
+                                min: 0,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ width: value });
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         "div",
@@ -5720,6 +5745,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         borderRadius: {
             type: 'number'
+        },
+        textAlign: {
+            type: 'string'
+        },
+        textAlignM: {
+            type: 'string'
         },
         marginTop: {
             type: 'number'
@@ -5818,7 +5849,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             return React.createElement(
                 "div",
-                { className: blockClasses },
+                { className: blockClasses, style: {
+                        width: width ? width + '%' : undefined
+                    } },
                 React.createElement(
                     "div",
                     { className: "advgb-column-inner" },

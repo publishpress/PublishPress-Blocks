@@ -2,7 +2,7 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, PanelColorSettings, InnerBlocks } = wpEditor;
+    const { InspectorControls, PanelColorSettings, InnerBlocks, AlignmentToolbar } = wpEditor;
     const { PanelBody, RangeControl, SelectControl, TextControl } = wpComponents;
     const { select } = wp.data;
 
@@ -16,13 +16,18 @@
     class AdvColumnEdit extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                tabSelected: 'desktop',
+            };
         }
 
         render() {
+            const { tabSelected } = this.state;
             const { attributes, setAttributes, clientId } = this.props;
             const {
                 width,
                 borderColor, borderStyle, borderWidth, borderRadius,
+                textAlign, textAlignM,
                 marginTop, marginRight, marginBottom, marginLeft,
                 marginTopM, marginRightM, marginBottomM, marginLeftM,
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
@@ -36,10 +41,21 @@
                 'column',
             ].filter( Boolean ).join( ' ' );
 
+            let deviceLetter = '';
+            if (tabSelected === 'mobile') deviceLetter = 'M';
+
             return (
                 <Fragment>
                     <InspectorControls>
                         <PanelBody title={ __( 'Column Settings' ) }>
+                            <RangeControl
+                                label={ __( 'Width (%)' ) }
+                                help={ __( 'Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!' ) }
+                                value={ width }
+                                min={ 0 }
+                                max={ 100 }
+                                onChange={ (value) => setAttributes( { width: value } ) }
+                            />
 
                         </PanelBody>
                     </InspectorControls>
@@ -76,6 +92,12 @@
         },
         borderRadius: {
             type: 'number',
+        },
+        textAlign: {
+            type: 'string',
+        },
+        textAlignM: {
+            type: 'string',
         },
         marginTop: {
             type: 'number',
@@ -162,7 +184,9 @@
             ].filter( Boolean ).join( ' ' );
 
             return (
-                <div className={ blockClasses }>
+                <div className={ blockClasses } style={ {
+                    width: width ? width + '%' : undefined
+                } }>
                     <div className="advgb-column-inner">
                         <InnerBlocks.Content />
                     </div>
