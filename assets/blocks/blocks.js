@@ -5621,8 +5621,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         AlignmentToolbar = wpEditor.AlignmentToolbar;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
-        SelectControl = wpComponents.SelectControl,
-        TextControl = wpComponents.TextControl;
+        BaseControl = wpComponents.BaseControl,
+        SelectControl = wpComponents.SelectControl;
     var select = wp.data.select;
 
 
@@ -5680,9 +5680,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     paddingLeftM = attributes.paddingLeftM;
 
                 var _select = select('core/block-editor'),
-                    getBlockOrder = _select.getBlockOrder;
+                    getBlockOrder = _select.getBlockOrder,
+                    getBlockRootClientId = _select.getBlockRootClientId;
 
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
+                var rootBlockId = getBlockRootClientId(clientId);
 
                 var blockClasses = ['advgb-column', 'column'].filter(Boolean).join(' ');
 
@@ -5712,15 +5714,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: blockClasses, style: {
-                                width: width ? width + '%' : undefined
-                            } },
+                        { className: blockClasses },
                         React.createElement(InnerBlocks, {
                             templateLock: false,
                             renderAppender: hasChildBlocks ? undefined : function () {
                                 return React.createElement(InnerBlocks.ButtonBlockAppender, null);
                             }
                         })
+                    ),
+                    React.createElement(
+                        "style",
+                        null,
+                        "#block-" + clientId + " {\n                            " + (width ? "flex-basis: " + width + "%;" : '') + "\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}" : '')
                     )
                 );
             }
@@ -5852,7 +5857,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return React.createElement(
                 "div",
                 { className: blockClasses, style: {
-                        width: width ? width + '%' : undefined
+                        width: width ? width + '%' : undefined,
+                        flex: width ? 'none' : undefined
                     } },
                 React.createElement(
                     "div",

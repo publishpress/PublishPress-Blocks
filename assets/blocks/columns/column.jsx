@@ -3,7 +3,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, PanelColorSettings, InnerBlocks, AlignmentToolbar } = wpEditor;
-    const { PanelBody, RangeControl, SelectControl, TextControl } = wpComponents;
+    const { PanelBody, RangeControl, BaseControl, SelectControl } = wpComponents;
     const { select } = wp.data;
 
     const columnsBlockIcon = (
@@ -33,8 +33,9 @@
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
             } = attributes;
-            const { getBlockOrder  } = select( 'core/block-editor' );
+            const { getBlockOrder, getBlockRootClientId  } = select( 'core/block-editor' );
             const hasChildBlocks = getBlockOrder( clientId ).length > 0;
+            const rootBlockId = getBlockRootClientId( clientId );
 
             const blockClasses = [
                 'advgb-column',
@@ -59,9 +60,7 @@
 
                         </PanelBody>
                     </InspectorControls>
-                    <div className={ blockClasses } style={ {
-                        width: width ? width + '%' : undefined,
-                    } }>
+                    <div className={ blockClasses }>
                         <InnerBlocks
                             templateLock={ false }
                             renderAppender={ (
@@ -71,6 +70,14 @@
                             ) }
                         />
                     </div>
+                    <style>
+                        {`#block-${clientId} {
+                            ${width ? `flex-basis: ${width}%;` : ''}
+                        }
+                        ${width ?
+                            `#block-${rootBlockId} .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}` : ''}`
+                        }
+                    </style>
                 </Fragment>
             )
         }
@@ -188,6 +195,7 @@
             return (
                 <div className={ blockClasses } style={ {
                     width: width ? width + '%' : undefined,
+                    flex: width ? 'none' : undefined,
                 } }>
                     <div className="advgb-column-inner">
                         <InnerBlocks.Content />
