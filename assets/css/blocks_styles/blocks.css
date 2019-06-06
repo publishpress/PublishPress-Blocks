@@ -1439,7 +1439,8 @@ form .advgb-grecaptcha > div {
     justify-content: space-between;
 }
 
-.advgb-columns.columns-wrapped > .editor-inner-blocks > .editor-block-list__layout {
+.advgb-columns.columns-wrapped > .editor-inner-blocks > .editor-block-list__layout,
+.advgb-columns.columns-wrapped {
     flex-wrap: wrap;
 }
 
@@ -1563,7 +1564,48 @@ form .advgb-grecaptcha > div {
     flex-basis: 16.67%;
 }
 
+    /*Responsive for Columns*/
+@media screen and (min-width: 1088px) {
+    .column.is-default-desktop {
+        flex: 1;
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1087px) {
+    .column.is-default-tablet {
+        flex: 1;
+        width: auto;
+    }
+
+    .advgb-columns.tbl-layout-1-12-12,
+    .advgb-columns.tbl-layout-12-12-1,
+    .advgb-columns.tbl-layout-12x4,
+    .advgb-columns.tbl-layout-12x6,
+    .advgb-columns.tbl-layout-13x6,
+    .advgb-columns.tbl-layout-stacked {
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .column.is-default-mobile {
+        flex: 1;
+        width: auto;
+    }
+
+    .advgb-columns.mbl-layout-1-12-12,
+    .advgb-columns.mbl-layout-12-12-1,
+    .advgb-columns.mbl-layout-12x4,
+    .advgb-columns.mbl-layout-12x6,
+    .advgb-columns.mbl-layout-13x6 {
+        flex-wrap: wrap;
+    }
+}
+
+/*------------------------------*/
 /*--- RESPONSIVE STYLES HERE ---*/
+/*------------------------------*/
 @media screen and (max-width: 599px) {
     .advgb-count-up {
         flex-direction: column;
