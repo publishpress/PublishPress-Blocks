@@ -4854,9 +4854,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '12-12', icon: '12-12', title: __('Two: 1/2 - 1/2') }, { columns: 2, layout: '23-13', icon: '23-13', title: __('Two: 2/3 - 1/3') }, { columns: 2, layout: '13-23', icon: '13-23', title: __('Two: 1/3 - 2/3') }, { columns: 2, layout: '14-34', icon: '14-34', title: __('Two: 1/4 - 3/4') }, { columns: 2, layout: '34-14', icon: '34-14', title: __('Two: 3/4 - 1/4') }, { columns: 2, layout: '15-45', icon: '15-45', title: __('Two: 1/5 - 4/5') }, { columns: 2, layout: '45-15', icon: '45-15', title: __('Two: 4/5 - 1/5') }, { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __('Three: 1/3 - 1/3 - 1/3') }, { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __('Three: 1/2 - 1/4 - 1/4') }, { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __('Three: 1/4 - 1/4 - 1/2') }, { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __('Three: 1/4 - 1/2 - 1/4') }, { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __('Three: 1/5 - 3/5 - 1/5') }, { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __('Three: 3/5 - 1/5 - 1/5') }, { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __('Three: 1/5 - 1/5 - 3/5') }, { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __('Four: 1/4 - 1/4 - 1/4 - 1/4') }, { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __('Four: 3/6 - 1/6 - 1/6 - 1/6') }, { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __('Four: 1/6 - 1/6 - 1/6 - 3/6') }, { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __('Five') }, { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __('Six') }];
-    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '1-12-12', title: __('Three: 100-50-50') }, { columns: 3, layout: '12-12-1', icon: '12-12-1', title: __('Three: 50-50-100') }, { columns: 4, layout: '12x4', icon: '12x4', title: __('Four: 50-50-50-50') }, { columns: 6, layout: '12x6', icon: '12x6', title: __('Six: Two Columns') }, { columns: 6, layout: '13x6', icon: '13x6', title: __('Six: Three Columns') }];
+    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '100-12-12', title: __('Three: 100-50-50') }, { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __('Three: 50-50-100') }, { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __('Four: 50-50-50-50') }, { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __('Six: Two Columns') }, { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __('Six: Three Columns') }];
     var COLUMNS_LAYOUTS_STACKED = {
-        columns: 1, layout: 'stacked', icon: 'Stacked', title: __('Stacked')
+        columns: 1, layout: 'stacked', icon: 'stacked', title: __('Stacked')
     };
     var GUTTER_OPTIONS = [{ label: __('No Gutter'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }, { label: '70px', value: 70 }, { label: '90px', value: 90 }];
 
@@ -4943,7 +4943,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var extraClassT = '-tablet';
                 var extraClassM = '-mobile';
 
-                if (prevLayout !== columnsLayout || prevLayoutT !== columnsLayoutT) {
+                if (prevLayout !== columnsLayout || prevLayoutT !== columnsLayoutT || prevLayoutM !== columnsLayoutM) {
                     shouldUpdate = true;
                     switch (columnsLayout) {
                         case '12-12':
@@ -5348,7 +5348,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         _this2.setState({ random: Math.random() });
                                                     }
                                                 },
-                                                layout.icon
+                                                React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                                    alt: layout.layout
+                                                })
                                             )
                                         );
                                     })
@@ -5723,7 +5725,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,

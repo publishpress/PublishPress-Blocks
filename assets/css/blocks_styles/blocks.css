@@ -1598,7 +1598,8 @@ form .advgb-grecaptcha > div {
     .advgb-columns.mbl-layout-12-12-1,
     .advgb-columns.mbl-layout-12x4,
     .advgb-columns.mbl-layout-12x6,
-    .advgb-columns.mbl-layout-13x6 {
+    .advgb-columns.mbl-layout-13x6,
+    .advgb-columns.mbl-layout-stacked {
         flex-wrap: wrap;
     }
 }

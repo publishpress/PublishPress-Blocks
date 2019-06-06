@@ -37,14 +37,14 @@
         { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __( 'Six' ) },
     ];
     const COLUMNS_LAYOUTS_RESPONSIVE = [
-        { columns: 3, layout: '1-12-12', icon: '1-12-12', title: __( 'Three: 100-50-50' ) },
-        { columns: 3, layout: '12-12-1', icon: '12-12-1', title: __( 'Three: 50-50-100' ) },
-        { columns: 4, layout: '12x4', icon: '12x4', title: __( 'Four: 50-50-50-50' ) },
-        { columns: 6, layout: '12x6', icon: '12x6', title: __( 'Six: Two Columns' ) },
-        { columns: 6, layout: '13x6', icon: '13x6', title: __( 'Six: Three Columns' ) },
+        { columns: 3, layout: '1-12-12', icon: '100-12-12', title: __( 'Three: 100-50-50' ) },
+        { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __( 'Three: 50-50-100' ) },
+        { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __( 'Four: 50-50-50-50' ) },
+        { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __( 'Six: Two Columns' ) },
+        { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __( 'Six: Three Columns' ) },
     ];
     const COLUMNS_LAYOUTS_STACKED = {
-        columns: 1, layout: 'stacked', icon: 'Stacked', title: __( 'Stacked' )
+        columns: 1, layout: 'stacked', icon: 'stacked', title: __( 'Stacked' )
     };
     const GUTTER_OPTIONS = [
         {label: __( 'No Gutter' ), value: 0},
@@ -112,7 +112,10 @@
             const extraClassT = '-tablet';
             const extraClassM = '-mobile';
 
-            if (prevLayout !== columnsLayout || prevLayoutT !== columnsLayoutT) {
+            if (prevLayout !== columnsLayout
+                || prevLayoutT !== columnsLayoutT
+                || prevLayoutM !== columnsLayoutM
+            ) {
                 shouldUpdate = true;
                 switch (columnsLayout) {
                     case '12-12':
@@ -499,7 +502,9 @@
                                                          this.setState( { random: Math.random() } );
                                                      } }
                                                 >
-                                                    { layout.icon }
+                                                    <img src={advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png'}
+                                                         alt={ layout.layout }
+                                                    />
                                                 </div>
                                             </Tooltip>
                                         )
@@ -845,7 +850,7 @@
 
             const blockClasses = [
                 'advgb-columns',
-                'columns',
+                'columns is-mobile',
                 vAlign && `columns-valign-${vAlign}`,
                 columns && `advgb-columns-${columns}`,
                 columnsLayout && `layout-${columnsLayout}`,
