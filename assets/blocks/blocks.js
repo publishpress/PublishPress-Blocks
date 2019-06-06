@@ -5604,6 +5604,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -5650,6 +5652,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(AdvColumnEdit, [{
             key: "render",
             value: function render() {
+                var _this2 = this;
+
                 var tabSelected = this.state.tabSelected;
                 var _props = this.props,
                     attributes = _props.attributes,
@@ -5709,7 +5713,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onChange: function onChange(value) {
                                     return setAttributes({ width: value });
                                 }
-                            })
+                            }),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-columns-responsive-items",
+                                    style: { borderTop: '2px solid #aaa', paddingTop: 10 }
+                                },
+                                ['desktop', 'mobile'].map(function (device, index) {
+                                    var itemClasses = ["advgb-columns-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
+
+                                    return React.createElement(
+                                        "div",
+                                        { className: itemClasses,
+                                            key: index,
+                                            onClick: function onClick() {
+                                                return _this2.setState({ tabSelected: device });
+                                            }
+                                        },
+                                        device
+                                    );
+                                })
+                            ),
+                            React.createElement(
+                                BaseControl,
+                                {
+                                    label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' Text Alignment')
+                                },
+                                React.createElement(AlignmentToolbar, {
+                                    value: attributes['textAlign' + deviceLetter],
+                                    onChange: function onChange(align) {
+                                        return setAttributes(_defineProperty({}, 'textAlign' + deviceLetter, align));
+                                    }
+                                })
+                            )
                         )
                     ),
                     React.createElement(
@@ -5725,9 +5761,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "style",
                         null,
-                        "#block-" + clientId + " {\n                            " + (width ? "flex-basis: " + width + "%;" : '') + "\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}" : '')
+                        "#block-" + clientId + " {\n                            " + (width ? "flex-basis: " + width + "%;" : '') + "\n                            text-align: " + textAlign + ";\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " {\n                                text-align: " + textAlignM + ";\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}" : '')
                     )
                 );
+            }
+        }], [{
+            key: "jsUcfirst",
+            value: function jsUcfirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
             }
         }]);
 

@@ -21,6 +21,10 @@
             };
         }
 
+        static jsUcfirst(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
         render() {
             const { tabSelected } = this.state;
             const { attributes, setAttributes, clientId } = this.props;
@@ -58,6 +62,33 @@
                                 onChange={ (value) => setAttributes( { width: value } ) }
                             />
 
+                            <div className="advgb-columns-responsive-items"
+                                 style={ { borderTop: '2px solid #aaa', paddingTop: 10 } }
+                            >
+                                {['desktop', 'mobile'].map( (device, index) => {
+                                    const itemClasses = [
+                                        "advgb-columns-responsive-item",
+                                        tabSelected === device && 'is-selected',
+                                    ].filter( Boolean ).join( ' ' );
+
+                                    return (
+                                        <div className={ itemClasses }
+                                             key={ index }
+                                             onClick={ () => this.setState( { tabSelected: device } ) }
+                                        >
+                                            {device}
+                                        </div>
+                                    )
+                                } ) }
+                            </div>
+                            <BaseControl
+                                label={ AdvColumnEdit.jsUcfirst(tabSelected) + __( ' Text Alignment' ) }
+                            >
+                                <AlignmentToolbar
+                                    value={ attributes[ 'textAlign' + deviceLetter ] }
+                                    onChange={ (align) => setAttributes( { ['textAlign' + deviceLetter]: align } ) }
+                                />
+                            </BaseControl>
                         </PanelBody>
                     </InspectorControls>
                     <div className={ blockClasses }>
@@ -73,6 +104,12 @@
                     <style>
                         {`#block-${clientId} {
                             ${width ? `flex-basis: ${width}%;` : ''}
+                            text-align: ${textAlign};
+                        }
+                        @media screen and (max-width: 767px) {
+                            #block-${clientId} {
+                                text-align: ${textAlignM};
+                            }
                         }
                         ${width ?
                             `#block-${rootBlockId} .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}` : ''}`
