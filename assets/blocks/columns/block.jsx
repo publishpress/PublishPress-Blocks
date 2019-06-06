@@ -41,7 +41,7 @@
         { columns: 3, layout: '12-12-1', icon: '12-12-1', title: __( 'Three: 50-50-100' ) },
         { columns: 4, layout: '12x4', icon: '12x4', title: __( 'Four: 50-50-50-50' ) },
         { columns: 6, layout: '12x6', icon: '12x6', title: __( 'Six: Two Columns' ) },
-        { columns: 6, layout: '13x6', icon: '12x6', title: __( 'Six: Three Columns' ) },
+        { columns: 6, layout: '13x6', icon: '13x6', title: __( 'Six: Three Columns' ) },
     ];
     const COLUMNS_LAYOUTS_STACKED = {
         columns: 1, layout: 'stacked', icon: 'Stacked', title: __( 'Stacked' )
@@ -101,7 +101,7 @@
                 columnsLayoutM: prevLayoutM,
             } = prevProps.attributes;
             const { attributes, clientId } = this.props;
-            const { columnsLayout, columnsLayoutT, columnsLayoutM } = attributes;
+            const { columns, columnsLayout, columnsLayoutT, columnsLayoutM } = attributes;
             const { getBlockOrder } = select( 'core/block-editor' );
             const { updateBlockAttributes } = dispatch( 'core/block-editor' );
             const childBlocks = getBlockOrder(clientId);
@@ -115,6 +115,15 @@
             if (prevLayout !== columnsLayout || prevLayoutT !== columnsLayoutT) {
                 shouldUpdate = true;
                 switch (columnsLayout) {
+                    case '12-12':
+                    case '13-13-13':
+                    case '14-14-14-14':
+                    case 'five':
+                    case 'six':
+                        for ( let i = 0; i < columns; i++) {
+                            classes[i].push('is-default-desktop');
+                        }
+                        break;
                     case '23-13':
                         classes[0].push('is-two-thirds' + extraClassD);
                         classes[1].push('is-default-desktop');
@@ -186,6 +195,15 @@
                 }
 
                 switch (columnsLayoutT) {
+                    case '12-12':
+                    case '13-13-13':
+                    case '14-14-14-14':
+                    case 'five':
+                    case 'six':
+                        for ( let i = 0; i < columns; i++) {
+                            classes[i].push('is-default-tablet');
+                        }
+                        break;
                     case '23-13':
                         classes[0].push('is-two-thirds' + extraClassT);
                         classes[1].push('is-default-tablet');
@@ -262,10 +280,25 @@
                         classes[1].push('is-half' + extraClassT);
                         classes[2].push('is-full' + extraClassT);
                         break;
+                    case '12x4':
+                        for ( let i = 0; i < columns; i++) {
+                            classes[i].push('is-half' + extraClassT);
+                        }
+                        break;
+                    case '12x6':
+                        for ( let i = 0; i < columns; i++) {
+                            classes[i].push('is-half' + extraClassT);
+                        }
+                        break;
+                    case '13x6':
+                        for ( let i = 0; i < columns; i++) {
+                            classes[i].push('is-one-third' + extraClassT);
+                        }
+                        break;
                     case 'stacked':
-                        classes[0].push('is-full' + extraClassT);
-                        classes[1].push('is-full' + extraClassT);
-                        classes[2].push('is-full' + extraClassT);
+                        for ( let i = 0; i < columns; i++) {
+                            classes[i].push('is-full' + extraClassT);
+                        }
                         break;
                     default:
                         break;
@@ -733,7 +766,7 @@
         },
         gutter: {
             type: 'number',
-            default: 10,
+            default: 0,
         },
         collapsedGutter: {
             type: 'number',
