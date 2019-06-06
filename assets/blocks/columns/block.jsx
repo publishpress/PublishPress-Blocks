@@ -97,7 +97,7 @@
         componentDidUpdate( prevProps ) {
             const { columnsLayout: prevLayout } = prevProps.attributes;
             const { attributes, clientId } = this.props;
-            const { columnsLayout } = attributes;
+            const { columnsLayout, columnsLayoutT, columnsLayoutM } = attributes;
             const { getBlockOrder } = select( 'core/block-editor' );
             const { updateBlockAttributes } = dispatch( 'core/block-editor' );
             const childBlocks = getBlockOrder(clientId);
@@ -106,48 +106,49 @@
 
             if (prevLayout !== columnsLayout ) {
                 shouldUpdate = true;
+                const extraClass = !!columnsLayoutT ? '-desktop' : '-tablet';
                 switch (columnsLayout) {
                     case '23-13':
-                        classes[0].push('is-two-thirds');
+                        classes[0].push('is-two-thirds' + extraClass);
                         break;
                     case '13-23':
-                        classes[1].push('is-two-thirds');
+                        classes[1].push('is-two-thirds' + extraClass);
                         break;
                     case '34-14':
-                        classes[0].push('is-three-quarters');
+                        classes[0].push('is-three-quarters' + extraClass);
                         break;
                     case '14-34':
-                        classes[1].push('is-three-quarters');
+                        classes[1].push('is-three-quarters' + extraClass);
                         break;
                     case '45-15':
-                        classes[0].push('is-four-fifths');
+                        classes[0].push('is-four-fifths' + extraClass);
                         break;
                     case '15-45':
-                        classes[1].push('is-four-fifths');
+                        classes[1].push('is-four-fifths' + extraClass);
                         break;
                     case '12-14-14':
-                        classes[0].push('is-half');
+                        classes[0].push('is-half' + extraClass);
                         break;
                     case '14-14-12':
-                        classes[2].push('is-half');
+                        classes[2].push('is-half' + extraClass);
                         break;
                     case '14-12-14':
-                        classes[1].push('is-half');
+                        classes[1].push('is-half' + extraClass);
                         break;
                     case '15-35-15':
-                        classes[1].push('is-three-fifths');
+                        classes[1].push('is-three-fifths' + extraClass);
                         break;
                     case '35-15-15':
-                        classes[0].push('is-three-fifths');
+                        classes[0].push('is-three-fifths' + extraClass);
                         break;
                     case '15-15-35':
-                        classes[2].push('is-three-fifths');
+                        classes[2].push('is-three-fifths' + extraClass);
                         break;
                     case '36-16-16-16':
-                        classes[0].push('is-half');
+                        classes[0].push('is-half' + extraClass);
                         break;
                     case '16-16-16-36':
-                        classes[3].push('is-half');
+                        classes[3].push('is-half' + extraClass);
                         break;
                     default:
                         break;
