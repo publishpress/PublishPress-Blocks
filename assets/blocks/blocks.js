@@ -6305,23 +6305,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderColor = attributes.borderColor,
                 borderStyle = attributes.borderStyle,
                 borderWidth = attributes.borderWidth,
-                borderRadius = attributes.borderRadius,
-                marginTop = attributes.marginTop,
-                marginRight = attributes.marginRight,
-                marginBottom = attributes.marginBottom,
-                marginLeft = attributes.marginLeft,
-                marginTopM = attributes.marginTopM,
-                marginRightM = attributes.marginRightM,
-                marginBottomM = attributes.marginBottomM,
-                marginLeftM = attributes.marginLeftM,
-                paddingTop = attributes.paddingTop,
-                paddingRight = attributes.paddingRight,
-                paddingBottom = attributes.paddingBottom,
-                paddingLeft = attributes.paddingLeft,
-                paddingTopM = attributes.paddingTopM,
-                paddingRightM = attributes.paddingRightM,
-                paddingBottomM = attributes.paddingBottomM,
-                paddingLeftM = attributes.paddingLeftM;
+                borderRadius = attributes.borderRadius;
 
 
             var blockClasses = ['advgb-column', 'column', columnClasses].filter(Boolean).join(' ');

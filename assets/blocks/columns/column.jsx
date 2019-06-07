@@ -333,10 +333,6 @@
                 width,
                 columnClasses, colId,
                 borderColor, borderStyle, borderWidth, borderRadius,
-                marginTop, marginRight, marginBottom, marginLeft,
-                marginTopM, marginRightM, marginBottomM, marginLeftM,
-                paddingTop, paddingRight, paddingBottom, paddingLeft,
-                paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
             } = attributes;
 
             const blockClasses = [
