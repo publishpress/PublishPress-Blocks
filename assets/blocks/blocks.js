@@ -5977,7 +5977,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 if (!attributes.id) {
-                    setAttributes({ colId: 'advgb-cols-' + clientId });
+                    setAttributes({ colId: 'advgb-col-' + clientId });
                 }
             }
         }, {
@@ -6301,6 +6301,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref.attributes;
             var width = attributes.width,
                 columnClasses = attributes.columnClasses,
+                colId = attributes.colId,
                 borderColor = attributes.borderColor,
                 borderStyle = attributes.borderStyle,
                 borderWidth = attributes.borderWidth,
@@ -6327,11 +6328,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             return React.createElement(
                 "div",
-                { className: blockClasses, style: {
+                { className: blockClasses,
+                    id: colId,
+                    style: {
                         width: width ? width + '%' : undefined,
                         flex: width ? 'none' : undefined,
                         borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius
-                    } },
+                    }
+                },
                 React.createElement(
                     "div",
                     { className: "advgb-column-inner" },

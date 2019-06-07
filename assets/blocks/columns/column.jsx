@@ -42,7 +42,7 @@
             const { attributes, setAttributes, clientId } = this.props;
 
             if ( !attributes.id ) {
-                setAttributes( { colId: 'advgb-cols-' + clientId, } )
+                setAttributes( { colId: 'advgb-col-' + clientId, } )
             }
         }
 
@@ -331,7 +331,7 @@
         save: function ( { attributes } ) {
             const {
                 width,
-                columnClasses,
+                columnClasses, colId,
                 borderColor, borderStyle, borderWidth, borderRadius,
                 marginTop, marginRight, marginBottom, marginLeft,
                 marginTopM, marginRightM, marginBottomM, marginLeftM,
@@ -346,11 +346,14 @@
             ].filter( Boolean ).join( ' ' );
 
             return (
-                <div className={ blockClasses } style={ {
-                    width: width ? width + '%' : undefined,
-                    flex: width ? 'none' : undefined,
-                    borderStyle, borderColor, borderWidth, borderRadius,
-                } }>
+                <div className={ blockClasses }
+                     id={ colId }
+                     style={ {
+                         width: width ? width + '%' : undefined,
+                         flex: width ? 'none' : undefined,
+                         borderStyle, borderColor, borderWidth, borderRadius,
+                     } }
+                >
                     <div className="advgb-column-inner">
                         <InnerBlocks.Content />
                     </div>
