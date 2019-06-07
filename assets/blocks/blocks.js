@@ -5950,6 +5950,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M10 18h5V5h-5v13zm-6 0h5V5H4v13zM16 5v13h5V5h-5z" }),
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
+    var listBorderStyles = [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }];
+    var MARGIN_PADDING_CONTROLS = [{ label: 'Top', icon: 'arrow-up-alt2' }, { label: 'Right', icon: 'arrow-right-alt2' }, { label: 'Bottom', icon: 'arrow-down-alt2' }, { label: 'Left', icon: 'arrow-left-alt2' }];
 
     var AdvColumnEdit = function (_Component) {
         _inherits(AdvColumnEdit, _Component);
@@ -5966,15 +5968,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvColumnEdit, [{
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes,
+                    clientId = _props.clientId;
+
+
+                if (!attributes.id) {
+                    setAttributes({ colId: 'advgb-cols-' + clientId });
+                }
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
                 var tabSelected = this.state.tabSelected;
-                var _props = this.props,
-                    attributes = _props.attributes,
-                    setAttributes = _props.setAttributes,
-                    clientId = _props.clientId;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
                 var width = attributes.width,
                     borderColor = attributes.borderColor,
                     borderStyle = attributes.borderStyle,
@@ -6005,7 +6020,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
                 var rootBlockId = getBlockRootClientId(clientId);
-                var listBorderStyles = [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }];
 
                 var blockClasses = ['advgb-column', 'column'].filter(Boolean).join(' ');
 
@@ -6107,6 +6121,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return setAttributes(_defineProperty({}, 'textAlign' + deviceLetter, align));
                                     }
                                 })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    __('Unit (px)')
+                                ),
+                                MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                    return React.createElement(RangeControl, {
+                                        key: idx,
+                                        beforeIcon: pos.icon,
+                                        value: attributes['padding' + pos.label + deviceLetter] || '',
+                                        min: 0,
+                                        max: 50,
+                                        onChange: function onChange(value) {
+                                            return setAttributes(_defineProperty({}, 'padding' + pos.label + deviceLetter, value));
+                                        }
+                                    });
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    __('Unit (px)')
+                                ),
+                                MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                    return React.createElement(RangeControl, {
+                                        key: idx,
+                                        beforeIcon: pos.icon,
+                                        value: attributes['margin' + pos.label + deviceLetter] || '',
+                                        min: 0,
+                                        max: 50,
+                                        onChange: function onChange(value) {
+                                            return setAttributes(_defineProperty({}, 'margin' + pos.label + deviceLetter, value));
+                                        }
+                                    });
+                                })
                             )
                         )
                     ),
@@ -6127,7 +6187,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "style",
                         null,
-                        "#block-" + clientId + " {\n                            " + (width ? "flex-basis: " + width + "%;" : '') + "\n                            text-align: " + textAlign + ";\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " {\n                                text-align: " + textAlignM + ";\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}" : '')
+                        "#block-" + clientId + " .advgb-column.column {\n                            text-align: " + textAlign + ";\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-column.column {\n                                text-align: " + textAlignM + ";\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}\n                            #block-" + clientId + " {flex-basis: " + width + "%;}" : '')
                     )
                 );
             }
@@ -6146,6 +6206,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number'
         },
         columnClasses: {
+            type: 'string'
+        },
+        colId: {
             type: 'string'
         },
         borderStyle: {

@@ -12,6 +12,23 @@
             <path d="M0 0h24v24H0z" fill="none"/>
         </svg>
     );
+    const listBorderStyles = [
+        { label: __( 'None' ), value: 'none' },
+        { label: __( 'Solid' ), value: 'solid' },
+        { label: __( 'Dotted' ), value: 'dotted' },
+        { label: __( 'Dashed' ), value: 'dashed' },
+        { label: __( 'Double' ), value: 'double' },
+        { label: __( 'Groove' ), value: 'groove' },
+        { label: __( 'Ridge' ), value: 'ridge' },
+        { label: __( 'Inset' ), value: 'inset' },
+        { label: __( 'Outset' ), value: 'outset' },
+    ];
+    const MARGIN_PADDING_CONTROLS = [
+        {label:'Top', icon: 'arrow-up-alt2'},
+        {label:'Right', icon: 'arrow-right-alt2'},
+        {label:'Bottom', icon: 'arrow-down-alt2'},
+        {label:'Left', icon: 'arrow-left-alt2'},
+    ];
 
     class AdvColumnEdit extends Component {
         constructor() {
@@ -19,6 +36,14 @@
             this.state = {
                 tabSelected: 'desktop',
             };
+        }
+
+        componentDidMount() {
+            const { attributes, setAttributes, clientId } = this.props;
+
+            if ( !attributes.id ) {
+                setAttributes( { colId: 'advgb-cols-' + clientId, } )
+            }
         }
 
         static jsUcfirst(string) {
@@ -40,17 +65,6 @@
             const { getBlockOrder, getBlockRootClientId  } = select( 'core/block-editor' );
             const hasChildBlocks = getBlockOrder( clientId ).length > 0;
             const rootBlockId = getBlockRootClientId( clientId );
-            const listBorderStyles = [
-                { label: __( 'None' ), value: 'none' },
-                { label: __( 'Solid' ), value: 'solid' },
-                { label: __( 'Dotted' ), value: 'dotted' },
-                { label: __( 'Dashed' ), value: 'dashed' },
-                { label: __( 'Double' ), value: 'double' },
-                { label: __( 'Groove' ), value: 'groove' },
-                { label: __( 'Ridge' ), value: 'ridge' },
-                { label: __( 'Inset' ), value: 'inset' },
-                { label: __( 'Outset' ), value: 'outset' },
-            ];
 
             const blockClasses = [
                 'advgb-column',
@@ -137,6 +151,36 @@
                                     onChange={ (align) => setAttributes( { ['textAlign' + deviceLetter]: align } ) }
                                 />
                             </BaseControl>
+                            <PanelBody title={ tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding') }
+                                       initialOpen={false}
+                            >
+                                <div className="advgb-controls-title">{ __( 'Unit (px)' ) }</div>
+                                {MARGIN_PADDING_CONTROLS.map((pos, idx) => (
+                                    <RangeControl
+                                        key={ idx }
+                                        beforeIcon={ pos.icon }
+                                        value={ attributes['padding' + pos.label + deviceLetter] || '' }
+                                        min={ 0 }
+                                        max={ 50 }
+                                        onChange={ (value) => setAttributes( { ['padding' + pos.label + deviceLetter]: value } ) }
+                                    />
+                                ) ) }
+                            </PanelBody>
+                            <PanelBody title={ tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin') }
+                                       initialOpen={false}
+                            >
+                                <div className="advgb-controls-title">{ __( 'Unit (px)' ) }</div>
+                                {MARGIN_PADDING_CONTROLS.map((pos, idx) => (
+                                    <RangeControl
+                                        key={ idx }
+                                        beforeIcon={ pos.icon }
+                                        value={ attributes['margin' + pos.label + deviceLetter] || '' }
+                                        min={ 0 }
+                                        max={ 50 }
+                                        onChange={ (value) => setAttributes( { ['margin' + pos.label + deviceLetter]: value } ) }
+                                    />
+                                ) ) }
+                            </PanelBody>
                         </PanelBody>
                     </InspectorControls>
                     <div className={ blockClasses }
@@ -154,17 +198,33 @@
                         />
                     </div>
                     <style>
-                        {`#block-${clientId} {
-                            ${width ? `flex-basis: ${width}%;` : ''}
+                        {`#block-${clientId} .advgb-column.column {
                             text-align: ${textAlign};
+                            margin-top: ${marginTop}px;
+                            margin-right: ${marginRight}px;
+                            margin-bottom: ${marginBottom}px;
+                            margin-left: ${marginLeft}px;
+                            padding-top: ${paddingTop}px;
+                            padding-right: ${paddingRight}px;
+                            padding-bottom: ${paddingBottom}px;
+                            padding-left: ${paddingLeft}px;
                         }
                         @media screen and (max-width: 767px) {
-                            #block-${clientId} {
+                            #block-${clientId} .advgb-column.column {
                                 text-align: ${textAlignM};
+                                margin-top: ${marginTopM}px;
+                                margin-right: ${marginRightM}px;
+                                margin-bottom: ${marginBottomM}px;
+                                margin-left: ${marginLeftM}px;
+                                padding-top: ${paddingTopM}px;
+                                padding-right: ${paddingRightM}px;
+                                padding-bottom: ${paddingBottomM}px;
+                                padding-left: ${paddingLeftM}px;
                             }
                         }
                         ${width ?
-                            `#block-${rootBlockId} .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}` : ''}`
+                            `#block-${rootBlockId} .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}
+                            #block-${clientId} {flex-basis: ${width}%;}` : ''}`
                         }
                     </style>
                 </Fragment>
@@ -177,6 +237,9 @@
             type: 'number',
         },
         columnClasses: {
+            type: 'string',
+        },
+        colId: {
             type: 'string',
         },
         borderStyle: {
