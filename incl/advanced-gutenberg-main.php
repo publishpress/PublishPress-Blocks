@@ -3548,7 +3548,7 @@ float: left;'
                     continue;
                 }
 
-                $html .= '<li class="ju-settings-option full-width block-config-option">';
+                $html .= '<li class="ju-settings-option full-width block-config-option clearfix">';
                 $html .= '<label for="setting-'. $setting['name'] .'" class="ju-setting-label">' . $setting['title'] . '</label>';
                 $html .= '<div class="block-config-input-wrapper">';
 
