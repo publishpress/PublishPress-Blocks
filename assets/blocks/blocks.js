@@ -6063,10 +6063,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return setAttributes({ borderWidth: value });
                                         },
                                         min: 0,
-                                        max: 100
+                                        max: 20
                                     }),
                                     React.createElement(RangeControl, {
-                                        label: __('Border radius'),
+                                        label: __('Border radius (px)'),
                                         value: borderRadius || '',
                                         onChange: function onChange(value) {
                                             return setAttributes({ borderRadius: value });
@@ -6112,7 +6112,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: blockClasses },
+                        { className: blockClasses,
+                            style: {
+                                borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius
+                            }
+                        },
                         React.createElement(InnerBlocks, {
                             templateLock: false,
                             renderAppender: hasChildBlocks ? undefined : function () {
@@ -6262,7 +6266,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 "div",
                 { className: blockClasses, style: {
                         width: width ? width + '%' : undefined,
-                        flex: width ? 'none' : undefined
+                        flex: width ? 'none' : undefined,
+                        borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius
                     } },
                 React.createElement(
                     "div",

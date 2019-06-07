@@ -97,10 +97,10 @@
                                             value={ borderWidth || '' }
                                             onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
                                             min={ 0 }
-                                            max={ 100 }
+                                            max={ 20 }
                                         />
                                         <RangeControl
-                                            label={ __( 'Border radius' ) }
+                                            label={ __( 'Border radius (px)' ) }
                                             value={ borderRadius || '' }
                                             onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
                                             min={ 0 }
@@ -139,7 +139,11 @@
                             </BaseControl>
                         </PanelBody>
                     </InspectorControls>
-                    <div className={ blockClasses }>
+                    <div className={ blockClasses }
+                         style={ {
+                             borderStyle, borderColor, borderWidth, borderRadius,
+                         } }
+                    >
                         <InnerBlocks
                             templateLock={ false }
                             renderAppender={ (
@@ -282,6 +286,7 @@
                 <div className={ blockClasses } style={ {
                     width: width ? width + '%' : undefined,
                     flex: width ? 'none' : undefined,
+                    borderStyle, borderColor, borderWidth, borderRadius,
                 } }>
                     <div className="advgb-column-inner">
                         <InnerBlocks.Content />
