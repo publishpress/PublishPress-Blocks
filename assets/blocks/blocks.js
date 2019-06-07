@@ -6005,6 +6005,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
                 var rootBlockId = getBlockRootClientId(clientId);
+                var listBorderStyles = [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }];
 
                 var blockClasses = ['advgb-column', 'column'].filter(Boolean).join(' ');
 
@@ -6030,6 +6031,51 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ width: value });
                                 }
                             }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Border Settings') },
+                                React.createElement(SelectControl, {
+                                    label: __('Border style'),
+                                    value: borderStyle,
+                                    options: listBorderStyles,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderStyle: value });
+                                    }
+                                }),
+                                borderStyle !== 'none' && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(PanelColorSettings, {
+                                        title: __('Border Color'),
+                                        initialOpen: false,
+                                        colorSettings: [{
+                                            label: __('Border Color'),
+                                            value: borderColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ borderColor: value });
+                                            }
+                                        }]
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border width'),
+                                        value: borderWidth || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderWidth: value });
+                                        },
+                                        min: 0,
+                                        max: 100
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border radius'),
+                                        value: borderRadius || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderRadius: value });
+                                        },
+                                        min: 0,
+                                        max: 100
+                                    })
+                                )
+                            ),
                             React.createElement(
                                 "div",
                                 { className: "advgb-columns-responsive-items",
@@ -6098,10 +6144,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         columnClasses: {
             type: 'string'
         },
-        borderColor: {
-            type: 'string'
-        },
         borderStyle: {
+            type: 'string',
+            default: 'none'
+        },
+        borderColor: {
             type: 'string'
         },
         borderWidth: {

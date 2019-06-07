@@ -40,6 +40,17 @@
             const { getBlockOrder, getBlockRootClientId  } = select( 'core/block-editor' );
             const hasChildBlocks = getBlockOrder( clientId ).length > 0;
             const rootBlockId = getBlockRootClientId( clientId );
+            const listBorderStyles = [
+                { label: __( 'None' ), value: 'none' },
+                { label: __( 'Solid' ), value: 'solid' },
+                { label: __( 'Dotted' ), value: 'dotted' },
+                { label: __( 'Dashed' ), value: 'dashed' },
+                { label: __( 'Double' ), value: 'double' },
+                { label: __( 'Groove' ), value: 'groove' },
+                { label: __( 'Ridge' ), value: 'ridge' },
+                { label: __( 'Inset' ), value: 'inset' },
+                { label: __( 'Outset' ), value: 'outset' },
+            ];
 
             const blockClasses = [
                 'advgb-column',
@@ -61,6 +72,43 @@
                                 max={ 100 }
                                 onChange={ (value) => setAttributes( { width: value } ) }
                             />
+                            <PanelBody title={ __( 'Border Settings' ) }>
+                                <SelectControl
+                                    label={ __( 'Border style' ) }
+                                    value={ borderStyle }
+                                    options={ listBorderStyles }
+                                    onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
+                                />
+                                {borderStyle !== 'none' && (
+                                    <Fragment>
+                                        <PanelColorSettings
+                                            title={ __( 'Border Color' ) }
+                                            initialOpen={ false }
+                                            colorSettings={ [
+                                                {
+                                                    label: __( 'Border Color' ),
+                                                    value: borderColor,
+                                                    onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                                },
+                                            ] }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Border width' ) }
+                                            value={ borderWidth || '' }
+                                            onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+                                            min={ 0 }
+                                            max={ 100 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Border radius' ) }
+                                            value={ borderRadius || '' }
+                                            onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                                            min={ 0 }
+                                            max={ 100 }
+                                        />
+                                    </Fragment>
+                                ) }
+                            </PanelBody>
 
                             <div className="advgb-columns-responsive-items"
                                  style={ { borderTop: '2px solid #aaa', paddingTop: 10 } }
@@ -127,10 +175,11 @@
         columnClasses: {
             type: 'string',
         },
-        borderColor: {
-            type: 'string',
-        },
         borderStyle: {
+            type: 'string',
+            default: 'none',
+        },
+        borderColor: {
             type: 'string',
         },
         borderWidth: {
