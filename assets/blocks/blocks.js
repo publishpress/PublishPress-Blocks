@@ -4853,8 +4853,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
 
-    var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '12-12', icon: '12-12', title: __('Two: 1/2 - 1/2') }, { columns: 2, layout: '23-13', icon: '23-13', title: __('Two: 2/3 - 1/3') }, { columns: 2, layout: '13-23', icon: '13-23', title: __('Two: 1/3 - 2/3') }, { columns: 2, layout: '14-34', icon: '14-34', title: __('Two: 1/4 - 3/4') }, { columns: 2, layout: '34-14', icon: '34-14', title: __('Two: 3/4 - 1/4') }, { columns: 2, layout: '15-45', icon: '15-45', title: __('Two: 1/5 - 4/5') }, { columns: 2, layout: '45-15', icon: '45-15', title: __('Two: 4/5 - 1/5') }, { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __('Three: 1/3 - 1/3 - 1/3') }, { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __('Three: 1/2 - 1/4 - 1/4') }, { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __('Three: 1/4 - 1/4 - 1/2') }, { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __('Three: 1/4 - 1/2 - 1/4') }, { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __('Three: 1/5 - 3/5 - 1/5') }, { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __('Three: 3/5 - 1/5 - 1/5') }, { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __('Three: 1/5 - 1/5 - 3/5') }, { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __('Four: 1/4 - 1/4 - 1/4 - 1/4') }, { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __('Four: 3/6 - 1/6 - 1/6 - 1/6') }, { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __('Four: 1/6 - 1/6 - 1/6 - 3/6') }, { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __('Five') }, { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __('Six') }];
-    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '100-12-12', title: __('Three: 100-50-50') }, { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __('Three: 50-50-100') }, { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __('Four: 50-50-50-50') }, { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __('Six: Two Columns') }, { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __('Six: Three Columns') }];
+    var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '12-12', icon: '12-12', title: __('Two: 1/2 - 1/2') }, { columns: 2, layout: '23-13', icon: '23-13', title: __('Two: 2/3 - 1/3') }, { columns: 2, layout: '13-23', icon: '13-23', title: __('Two: 1/3 - 2/3') }, { columns: 2, layout: '14-34', icon: '14-34', title: __('Two: 1/4 - 3/4') }, { columns: 2, layout: '34-14', icon: '34-14', title: __('Two: 3/4 - 1/4') }, { columns: 2, layout: '15-45', icon: '15-45', title: __('Two: 1/5 - 4/5') }, { columns: 2, layout: '45-15', icon: '45-15', title: __('Two: 4/5 - 1/5') }, { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __('Three: 1/3 - 1/3 - 1/3') }, { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __('Three: 1/2 - 1/4 - 1/4') }, { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __('Three: 1/4 - 1/4 - 1/2') }, { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __('Three: 1/4 - 1/2 - 1/4') }, { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __('Three: 1/5 - 3/5 - 1/5') }, { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __('Three: 3/5 - 1/5 - 1/5') }, { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __('Three: 1/5 - 1/5 - 3/5') }, { columns: 3, layout: '16-46-16', icon: '16-46-16', title: __('Three: 1/6 - 4/6 - 1/6') }, { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __('Four: 1/4 - 1/4 - 1/4 - 1/4') }, { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __('Four: 3/6 - 1/6 - 1/6 - 1/6') }, { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __('Four: 1/6 - 1/6 - 1/6 - 3/6') }, { columns: 4, layout: '15-15-15-25', icon: '15-15-15-25', title: __('Four: 1/5 - 1/5 - 1/5 - 2/5') }, { columns: 4, layout: '25-15-15-15', icon: '25-15-15-15', title: __('Four: 2/5 - 1/5 - 1/5 - 1/5') }, { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __('Five') }, { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __('Six') }];
+    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '100-12-12', title: __('Three: 100 - 1/2 - 1/2') }, { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __('Three: 1/2 - 1/2 - 100') }, { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __('Four: Two Columns') }, { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __('Six: Two Columns') }, { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __('Six: Three Columns') }];
     var COLUMNS_LAYOUTS_STACKED = {
         columns: 1, layout: 'stacked', icon: 'stacked', title: __('Stacked')
     };
@@ -5009,6 +5009,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             classes[1].push('is-default-desktop');
                             classes[2].push('is-three-fifths' + extraClassD);
                             break;
+                        case '16-46-16':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-8' + extraClassD);
+                            classes[2].push('is-default-desktop');
+                            break;
                         case '36-16-16-16':
                             classes[0].push('is-half' + extraClassD);
                             classes[1].push('is-default-desktop');
@@ -5020,6 +5025,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             classes[1].push('is-default-desktop');
                             classes[2].push('is-default-desktop');
                             classes[3].push('is-half' + extraClassD);
+                            break;
+                        case '25-15-15-15':
+                            classes[0].push('is-two-fifths' + extraClassD);
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-default-desktop');
+                            classes[3].push('is-default-desktop');
+                            break;
+                        case '15-15-15-25':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-default-desktop');
+                            classes[3].push('is-two-fifths' + extraClassD);
                             break;
                         default:
                             break;
@@ -5089,6 +5106,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             classes[1].push('is-default-tablet');
                             classes[2].push('is-three-fifths' + extraClassT);
                             break;
+                        case '16-46-16':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-8' + extraClassT);
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '1-12-12':
+                            classes[0].push('is-full' + extraClassT);
+                            classes[1].push('is-half' + extraClassT);
+                            classes[2].push('is-half' + extraClassT);
+                            break;
+                        case '12-12-1':
+                            classes[0].push('is-half' + extraClassT);
+                            classes[1].push('is-half' + extraClassT);
+                            classes[2].push('is-full' + extraClassT);
+                            break;
                         case '36-16-16-16':
                             classes[0].push('is-half' + extraClassT);
                             classes[1].push('is-default-tablet');
@@ -5101,15 +5133,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             classes[2].push('is-default-tablet');
                             classes[3].push('is-half' + extraClassT);
                             break;
-                        case '1-12-12':
-                            classes[0].push('is-full' + extraClassT);
-                            classes[1].push('is-half' + extraClassT);
-                            classes[2].push('is-half' + extraClassT);
+                        case '25-15-15-15':
+                            classes[0].push('is-two-fifths' + extraClassT);
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-default-tablet');
+                            classes[3].push('is-default-tablet');
                             break;
-                        case '12-12-1':
-                            classes[0].push('is-half' + extraClassT);
-                            classes[1].push('is-half' + extraClassT);
-                            classes[2].push('is-full' + extraClassT);
+                        case '15-15-15-25':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-default-tablet');
+                            classes[3].push('is-two-fifths' + extraClassT);
                             break;
                         case '12x4':
                             for (var _i2 = 0; _i2 < columns; _i2++) {
@@ -5129,6 +5163,133 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         case 'stacked':
                             for (var _i5 = 0; _i5 < columns; _i5++) {
                                 classes[_i5].push('is-full' + extraClassT);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    switch (columnsLayoutM) {
+                        case '12-12':
+                        case '13-13-13':
+                        case '14-14-14-14':
+                        case 'five':
+                        case 'six':
+                            for (var _i6 = 0; _i6 < columns; _i6++) {
+                                classes[_i6].push('is-default-mobile');
+                            }
+                            break;
+                        case '23-13':
+                            classes[0].push('is-two-thirds' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            break;
+                        case '13-23':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-two-thirds' + extraClassM);
+                            break;
+                        case '34-14':
+                            classes[0].push('is-three-quarters' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            break;
+                        case '14-34':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-three-quarters' + extraClassM);
+                            break;
+                        case '45-15':
+                            classes[0].push('is-four-fifths' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            break;
+                        case '15-45':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-four-fifths' + extraClassM);
+                            break;
+                        case '12-14-14':
+                            classes[0].push('is-half' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            break;
+                        case '14-14-12':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-half' + extraClassM);
+                            break;
+                        case '14-12-14':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-half' + extraClassM);
+                            classes[2].push('is-default-mobile');
+                            break;
+                        case '15-35-15':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-three-fifths' + extraClassM);
+                            classes[2].push('is-default-mobile');
+                            break;
+                        case '35-15-15':
+                            classes[0].push('is-three-fifths' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            break;
+                        case '15-15-35':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-three-fifths' + extraClassM);
+                            break;
+                        case '16-46-16':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-8' + extraClassM);
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '1-12-12':
+                            classes[0].push('is-full' + extraClassM);
+                            classes[1].push('is-half' + extraClassM);
+                            classes[2].push('is-half' + extraClassM);
+                            break;
+                        case '12-12-1':
+                            classes[0].push('is-half' + extraClassM);
+                            classes[1].push('is-half' + extraClassM);
+                            classes[2].push('is-full' + extraClassM);
+                            break;
+                        case '36-16-16-16':
+                            classes[0].push('is-half' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            classes[3].push('is-default-mobile');
+                            break;
+                        case '16-16-16-36':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            classes[3].push('is-half' + extraClassM);
+                            break;
+                        case '25-15-15-15':
+                            classes[0].push('is-two-fifths' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            classes[3].push('is-default-mobile');
+                            break;
+                        case '15-15-15-25':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            classes[3].push('is-two-fifths' + extraClassM);
+                            break;
+                        case '12x4':
+                            for (var _i7 = 0; _i7 < columns; _i7++) {
+                                classes[_i7].push('is-half' + extraClassM);
+                            }
+                            break;
+                        case '12x6':
+                            for (var _i8 = 0; _i8 < columns; _i8++) {
+                                classes[_i8].push('is-half' + extraClassM);
+                            }
+                            break;
+                        case '13x6':
+                            for (var _i9 = 0; _i9 < columns; _i9++) {
+                                classes[_i9].push('is-one-third' + extraClassM);
+                            }
+                            break;
+                        case 'stacked':
+                            for (var _i10 = 0; _i10 < columns; _i10++) {
+                                classes[_i10].push('is-full' + extraClassM);
                             }
                             break;
                         default:
