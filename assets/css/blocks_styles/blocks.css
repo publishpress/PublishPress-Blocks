@@ -1356,7 +1356,6 @@ form .advgb-grecaptcha > div {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 10px;
-    justify-content: space-between;
 }
 
 .advgb-columns-responsive-items .advgb-columns-responsive-item {
