@@ -3116,7 +3116,7 @@ float: left;'
     {
         // Search for Button and List blocks then add styles to it
         preg_match_all(
-            '/(<!-- wp:advgb\/(list|button|columns)).*?(\/wp:advgb\/(list|button|columns) -->)/mis',
+            '/(<!-- wp:advgb\/(list|button|column)).*?(\/wp:advgb\/(list|button|column) -->)/mis',
             $content,
             $matches
         );
@@ -3365,7 +3365,6 @@ float: left;'
             foreach ($matches[0] as $key => $match) {
                 preg_match('/{.*?}/', $match, $style_data);
                 if ($style_data && count($style_data)) {
-                    $style_html .= '<style>';
                     try {
                         $style_data_array = json_decode($style_data[0], true);
 
@@ -3429,7 +3428,7 @@ float: left;'
                             $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.';';
                             $style_html .= 'transition:all '.$transition_spd.'s ease;';
                             $style_html .= '}';
-                        } elseif ($matches[2][$key] === 'columns') {
+                        } elseif ($matches[2][$key] === 'columns' || $matches[2][$key] === 'column') {
                             $colID      = $style_data_array['colId'];
 
                             $style_html .= '#'. $colID . '{';
@@ -3471,7 +3470,6 @@ float: left;'
                             $style_html .=  '}';
                             $style_html .= '}';
                         }
-                        $style_html .= '</style>';
                     } catch (Exception $e) {
                         $style_html = '';
                     }
@@ -3480,6 +3478,8 @@ float: left;'
                 }
             }
         }
+
+        $style_html = '<style type="text/css" class="advgb-blocks-styles-renderer">' . $style_html . '</style>';
 
         return preg_replace('/\s\s+/', '', $style_html);
     }
