@@ -3430,6 +3430,9 @@ float: left;'
                             $style_html .= '}';
                         } elseif ($matches[2][$key] === 'columns' || $matches[2][$key] === 'column') {
                             $colID      = $style_data_array['colId'];
+                            if ($matches[2][$key] === 'column') {
+                                $colID = $colID . '>.advgb-column-inner';
+                            }
 
                             $style_html .= '#'. $colID . '{';
                             $style_html .= isset($style_data_array['marginTop']) ? 'margin-top:'.$style_data_array['marginTop'].'px;' : '';

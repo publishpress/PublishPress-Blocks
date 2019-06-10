@@ -200,7 +200,7 @@
                         </div>
                     </div>
                     <style>
-                        {`#block-${clientId} .advgb-column.column {
+                        {`#block-${clientId} .advgb-column.column > .advgb-column-inner {
                             text-align: ${textAlign};
                             margin-top: ${marginTop}px;
                             margin-right: ${marginRight}px;
@@ -212,7 +212,7 @@
                             padding-left: ${paddingLeft}px;
                         }
                         @media screen and (max-width: 767px) {
-                            #block-${clientId} .advgb-column.column {
+                            #block-${clientId} .advgb-column.column > .advgb-column-inner {
                                 text-align: ${textAlignM};
                                 margin-top: ${marginTopM}px;
                                 margin-right: ${marginRightM}px;
