@@ -1145,108 +1145,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             return props;
-        },
-
-        deprecated: [{
-            attributes: blockAttrs,
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
-                var id = attributes.id,
-                    align = attributes.align,
-                    url = attributes.url,
-                    urlOpenNewTab = attributes.urlOpenNewTab,
-                    title = attributes.title,
-                    text = attributes.text,
-                    bgColor = attributes.bgColor,
-                    textColor = attributes.textColor,
-                    textSize = attributes.textSize,
-                    paddingTop = attributes.paddingTop,
-                    paddingRight = attributes.paddingRight,
-                    paddingBottom = attributes.paddingBottom,
-                    paddingLeft = attributes.paddingLeft,
-                    borderWidth = attributes.borderWidth,
-                    borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius,
-                    borderStyle = attributes.borderStyle,
-                    hoverTextColor = attributes.hoverTextColor,
-                    hoverBgColor = attributes.hoverBgColor,
-                    hoverShadowColor = attributes.hoverShadowColor,
-                    hoverShadowH = attributes.hoverShadowH,
-                    hoverShadowV = attributes.hoverShadowV,
-                    hoverShadowBlur = attributes.hoverShadowBlur,
-                    hoverShadowSpread = attributes.hoverShadowSpread,
-                    transitionSpeed = attributes.transitionSpeed;
-
-
-                return React.createElement(
-                    'div',
-                    { className: 'align' + align },
-                    React.createElement(RichText.Content, {
-                        tagName: 'a',
-                        className: 'wp-block-advgb-button_link ' + id,
-                        href: url || '#',
-                        title: title,
-                        target: !urlOpenNewTab ? '_self' : '_blank',
-                        value: text,
-                        rel: 'noopener noreferrer'
-                    }),
-                    React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
-                    )
-                );
-            }
-        }, {
-            attributes: blockAttrs,
-            save: function save(_ref3) {
-                var attributes = _ref3.attributes;
-                var id = attributes.id,
-                    align = attributes.align,
-                    url = attributes.url,
-                    urlOpenNewTab = attributes.urlOpenNewTab,
-                    title = attributes.title,
-                    text = attributes.text,
-                    bgColor = attributes.bgColor,
-                    textColor = attributes.textColor,
-                    textSize = attributes.textSize,
-                    paddingTop = attributes.paddingTop,
-                    paddingRight = attributes.paddingRight,
-                    paddingBottom = attributes.paddingBottom,
-                    paddingLeft = attributes.paddingLeft,
-                    borderWidth = attributes.borderWidth,
-                    borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius,
-                    borderStyle = attributes.borderStyle,
-                    hoverTextColor = attributes.hoverTextColor,
-                    hoverBgColor = attributes.hoverBgColor,
-                    hoverShadowColor = attributes.hoverShadowColor,
-                    hoverShadowH = attributes.hoverShadowH,
-                    hoverShadowV = attributes.hoverShadowV,
-                    hoverShadowBlur = attributes.hoverShadowBlur,
-                    hoverShadowSpread = attributes.hoverShadowSpread,
-                    transitionSpeed = attributes.transitionSpeed;
-
-
-                return React.createElement(
-                    'div',
-                    { className: 'align' + align },
-                    React.createElement(RichText.Content, {
-                        tagName: 'a',
-                        className: 'wp-block-advgb-button_link ' + id,
-                        href: url || '#',
-                        title: title,
-                        target: !urlOpenNewTab ? '_self' : '_blank',
-                        value: text
-                    }),
-                    React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
-                    )
-                );
-            }
-        }]
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -1684,7 +1583,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 'div',
                 { className: blockClassName,
                     style: {
-                        backgroundImage: 'url( ' + imageUrl + ')',
+                        backgroundImage: 'url(' + imageUrl + ')',
                         height: height,
                         width: width,
                         justifyContent: vAlign,
@@ -1698,12 +1597,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     rel: 'noopener noreferrer',
                     href: linkURL
                 }),
-                React.createElement(
+                title && React.createElement(
                     'h4',
                     { className: 'advgb-image-title', style: { color: titleColor } },
                     title
                 ),
-                React.createElement(
+                subtitle && React.createElement(
                     'p',
                     { className: 'advgb-image-subtitle', style: { color: subtitleColor } },
                     subtitle
@@ -1747,6 +1646,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement('a', { className: 'advgb-image-overlay',
                         style: { backgroundColor: overlayColor },
                         target: linkInNewTab ? '_blank' : '_self',
+                        rel: 'noopener noreferrer',
                         href: linkURL
                     }),
                     React.createElement(
@@ -2181,84 +2081,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     values
                 )
             );
-        },
-        deprecated: [{
-            attributes: listBlockAttrs,
-            save: function save(_ref4) {
-                var attributes = _ref4.attributes;
-                var id = attributes.id,
-                    values = attributes.values,
-                    icon = attributes.icon,
-                    iconSize = attributes.iconSize,
-                    iconColor = attributes.iconColor,
-                    margin = attributes.margin,
-                    padding = attributes.padding,
-                    lineHeight = attributes.lineHeight,
-                    fontSize = attributes.fontSize;
-
-                var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
-
-                var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
-                var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
-                var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
-
-                return React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                        'ul',
-                        { className: listClassName },
-                        values
-                    ),
-                    React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
-                    ),
-                    icon && React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                            margin-left: -' + (size + padd + marg) + 'px;\n                        }'
-                    )
-                );
-            }
-        }, {
-            attributes: listBlockAttrs,
-            save: function save(_ref5) {
-                var attributes = _ref5.attributes;
-                var id = attributes.id,
-                    values = attributes.values,
-                    icon = attributes.icon,
-                    iconSize = attributes.iconSize,
-                    iconColor = attributes.iconColor,
-                    margin = attributes.margin,
-                    padding = attributes.padding,
-                    lineHeight = attributes.lineHeight,
-                    fontSize = attributes.fontSize;
-
-                var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
-
-                return React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                        'ul',
-                        { className: listClassName },
-                        values
-                    ),
-                    React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' li { font-size: ' + fontSize + 'px }'
-                    ),
-                    icon && React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
-                    )
-                );
-            }
-        }]
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -4727,76 +4550,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 )
             );
-        },
-        deprecated: [{
-            attributes: blockAttrs,
-            save: function save(_ref5) {
-                var attributes = _ref5.attributes;
-                var videoURL = attributes.videoURL,
-                    videoSourceType = attributes.videoSourceType,
-                    videoTitle = attributes.videoTitle,
-                    videoFullWidth = attributes.videoFullWidth,
-                    videoWidth = attributes.videoWidth,
-                    videoHeight = attributes.videoHeight,
-                    playButtonIcon = attributes.playButtonIcon,
-                    playButtonSize = attributes.playButtonSize,
-                    playButtonColor = attributes.playButtonColor,
-                    overlayColor = attributes.overlayColor,
-                    poster = attributes.poster,
-                    openInLightbox = attributes.openInLightbox;
-
-
-                var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
-
-                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
-
-                return React.createElement(
-                    "div",
-                    { className: blockClassName,
-                        "data-video": videoURL,
-                        "data-source": videoSourceType
-                    },
-                    !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
-                        width: videoWidth,
-                        height: videoHeight,
-                        frameBorder: "0",
-                        allowFullScreen: true
-                    }) || videoSourceType === 'local' && React.createElement(
-                        "video",
-                        { className: videoFullWidth && 'full-width',
-                            width: videoWidth,
-                            height: videoHeight,
-                            poster: poster,
-                            controls: true
-                        },
-                        React.createElement("source", { src: videoURL }),
-                        __('Your browser does not support HTML5 video.')
-                    ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
-                    !!openInLightbox && React.createElement(
-                        "div",
-                        { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
-                        React.createElement("div", { className: "advgb-video-poster", style: { backgroundImage: "url(" + poster + ")" } }),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-button-wrapper", style: { height: videoHeight } },
-                            React.createElement(
-                                "div",
-                                { className: "advgb-play-button", style: { color: playButtonColor } },
-                                React.createElement(
-                                    "svg",
-                                    { xmlns: "http://www.w3.org/2000/svg",
-                                        width: playButtonSize,
-                                        height: playButtonSize,
-                                        viewBox: "0 0 24 24"
-                                    },
-                                    PLAY_BUTTON_STYLE[playButtonIcon]
-                                )
-                            )
-                        )
-                    )
-                );
-            }
-        }]
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -6855,201 +6609,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 )
             );
-        },
-        deprecated: [{
-            attributes: contactBlockAttrs,
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
-                var nameLabel = attributes.nameLabel,
-                    emailLabel = attributes.emailLabel,
-                    msgLabel = attributes.msgLabel,
-                    submitLabel = attributes.submitLabel,
-                    successLabel = attributes.successLabel,
-                    bgColor = attributes.bgColor,
-                    textColor = attributes.textColor,
-                    borderColor = attributes.borderColor,
-                    borderStyle = attributes.borderStyle,
-                    borderRadius = attributes.borderRadius,
-                    submitColor = attributes.submitColor,
-                    submitBgColor = attributes.submitBgColor,
-                    submitRadius = attributes.submitRadius,
-                    submitPosition = attributes.submitPosition;
-
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-contact-form" },
-                    React.createElement(
-                        "form",
-                        { method: "POST" },
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-half" },
-                            React.createElement("input", { type: "text",
-                                className: "advgb-form-input advgb-form-input-name",
-                                placeholder: nameLabel ? nameLabel : __('Name'),
-                                name: "contact_name",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-half" },
-                            React.createElement("input", { type: "email",
-                                className: "advgb-form-input advgb-form-input-email",
-                                placeholder: emailLabel ? emailLabel : __('Email address'),
-                                name: "contact_email",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-full" },
-                            React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                                placeholder: msgLabel ? msgLabel : __('Message'),
-                                name: "contact_message",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-submit-wrapper",
-                                style: { textAlign: submitPosition }
-                            },
-                            React.createElement(
-                                "button",
-                                { className: "advgb-form-submit",
-                                    type: "submit",
-                                    "data-success": successLabel ? successLabel : undefined,
-                                    style: {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius
-                                    }
-                                },
-                                submitLabel ? submitLabel : __('Submit')
-                            )
-                        )
-                    )
-                );
-            }
-        }, {
-            attributes: contactBlockAttrs,
-            save: function save(_ref3) {
-                var attributes = _ref3.attributes;
-                var nameLabel = attributes.nameLabel,
-                    emailLabel = attributes.emailLabel,
-                    msgLabel = attributes.msgLabel,
-                    submitLabel = attributes.submitLabel,
-                    successLabel = attributes.successLabel,
-                    bgColor = attributes.bgColor,
-                    textColor = attributes.textColor,
-                    borderColor = attributes.borderColor,
-                    borderStyle = attributes.borderStyle,
-                    borderRadius = attributes.borderRadius,
-                    submitColor = attributes.submitColor,
-                    submitBgColor = attributes.submitBgColor,
-                    submitRadius = attributes.submitRadius,
-                    submitPosition = attributes.submitPosition;
-
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-contact-form" },
-                    React.createElement(
-                        "form",
-                        { method: "POST" },
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-half" },
-                            React.createElement("input", { type: "text",
-                                className: "advgb-form-input advgb-form-input-name",
-                                placeholder: nameLabel ? nameLabel : __('Name'),
-                                name: "contact_name",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-half" },
-                            React.createElement("input", { type: "email",
-                                className: "advgb-form-input advgb-form-input-email",
-                                placeholder: emailLabel ? emailLabel : __('Email address'),
-                                name: "contact_email",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-full" },
-                            React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                                placeholder: msgLabel ? msgLabel : __('Message'),
-                                name: "contact_message",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-submit-wrapper",
-                                style: { textAlign: submitPosition }
-                            },
-                            React.createElement(
-                                "button",
-                                { className: "advgb-form-submit",
-                                    type: "submit",
-                                    "data-success": successLabel ? successLabel : undefined,
-                                    style: {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius
-                                    }
-                                },
-                                submitLabel ? submitLabel : __('Submit')
-                            )
-                        ),
-                        React.createElement("div", { className: "advgb-grecaptcha clearfix" })
-                    )
-                );
-            }
-        }]
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -7694,255 +7254,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
-/***/ "./assets/blocks/custom-columns/columns.jsx":
-/*!**************************************************!*\
-  !*** ./assets/blocks/custom-columns/columns.jsx ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-(function (wpI18n, wpHooks, wpElement, wpEditor, wpComponents) {
-    var addFilter = wpHooks.addFilter;
-    var __ = wpI18n.__;
-    var Fragment = wpElement.Fragment;
-    var InspectorControls = wpEditor.InspectorControls;
-    var PanelBody = wpComponents.PanelBody,
-        Button = wpComponents.Button;
-
-    // Register extra attributes
-
-    addFilter('blocks.registerBlockType', 'advgb/registerExtraColumnsAttrs', function (settings) {
-        if (settings.name === 'core/text-columns' || settings.name === 'core/columns') {
-            settings.attributes = _extends(settings.attributes, {
-                colMargin: {
-                    type: 'number'
-                },
-                colPadding: {
-                    type: 'number'
-                },
-                blockID: {
-                    type: 'string'
-                }
-            });
-        }
-
-        return settings;
-    });
-
-    // Add options to edit in backend
-    addFilter('editor.BlockEdit', 'advgb/editColumnsAttrs', function (BlockEdit) {
-        return function (props) {
-            if (props.name === "core/text-columns" || props.name === "core/columns") {
-                var attributes = props.attributes,
-                    clientId = props.clientId;
-                var colMargin = attributes.colMargin,
-                    colPadding = attributes.colPadding;
-
-
-                return React.createElement(
-                    Fragment,
-                    null,
-                    React.createElement(BlockEdit, props),
-                    React.createElement(
-                        InspectorControls,
-                        null,
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Custom styles') },
-                            React.createElement(
-                                Button,
-                                { isPrimary: true,
-                                    onClick: function onClick() {
-                                        return props.setAttributes({
-                                            colMargin: undefined,
-                                            colPadding: undefined,
-                                            blockID: undefined
-                                        });
-                                    } },
-                                __('Clear custom styles')
-                            ),
-                            React.createElement(
-                                'p',
-                                { style: { fontStyle: 'italic', marginTop: 10 } },
-                                __('We recommend to clear all custom styles as soon as possible to avoid block error validation,' + ' because we will remove this feature in very next version.')
-                            )
-                        )
-                    ),
-                    props.name === 'core/columns' && (!!colMargin || !!colPadding) && React.createElement(
-                        'style',
-                        { key: 'custom-columns-styles' },
-                        '#block-' + clientId + ' .wp-block-columns .editor-block-list__block:not(:first-child) {margin-left: ' + colMargin + 'px;}',
-                        '#block-' + clientId + ' .wp-block-columns .editor-block-list__block-edit {padding: ' + colPadding + 'px;}'
-                    )
-                );
-            }
-
-            return React.createElement(BlockEdit, props);
-        };
-    });
-
-    // Save options to show in frontend
-    addFilter('blocks.getSaveContent.extraProps', 'advgb/saveColumnsAttrs', function (extraProps, blockType, attributes) {
-        var colMargin = attributes.colMargin,
-            colPadding = attributes.colPadding,
-            blockID = attributes.blockID;
-
-
-        if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
-            extraProps = _extends(extraProps, {
-                id: colMargin || colPadding || blockID ? blockID : extraProps.id
-            });
-        }
-
-        return extraProps;
-    });
-
-    // Save option to show in frontend
-    addFilter('blocks.getSaveElement', 'advgb/saveTextColumnsElm', function (SaveElm, blockType, attributes) {
-        if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
-            var colMargin = attributes.colMargin,
-                colPadding = attributes.colPadding,
-                blockID = attributes.blockID;
-
-
-            return React.createElement(
-                Fragment,
-                null,
-                SaveElm,
-                blockID && (!!colMargin || !!colPadding) && React.createElement(
-                    'style',
-                    null,
-                    '#' + blockID + ' .wp-block-column:not(:first-child) {\n                        margin-left: ' + colMargin + 'px;\n                    }\n                    #' + blockID + ' .wp-block-column {\n                        padding: ' + colPadding + 'px;\n                    }'
-                )
-            );
-        }
-
-        return SaveElm;
-    });
-})(wp.i18n, wp.hooks, wp.element, wp.editor, wp.components);
-
-/***/ }),
-
-/***/ "./assets/blocks/custom-separator/separator.jsx":
-/*!******************************************************!*\
-  !*** ./assets/blocks/custom-separator/separator.jsx ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-(function (wpI18n, wpHooks, wpEditor, wpComponents) {
-    var addFilter = wpHooks.addFilter;
-    var __ = wpI18n.__;
-    var InspectorControls = wpEditor.InspectorControls;
-    var PanelBody = wpComponents.PanelBody,
-        Button = wpComponents.Button;
-
-    // Register extra attributes to separator blocks
-
-    addFilter('blocks.registerBlockType', 'advgb/registerExtraSeparatorAttrs', function (settings) {
-        if (settings.name === 'core/separator') {
-            settings.attributes = _extends(settings.attributes, {
-                borderColor: {
-                    type: 'string'
-                },
-                borderSize: {
-                    type: 'number'
-                },
-                borderStyle: {
-                    type: 'string'
-                },
-                borderWidth: {
-                    type: 'number'
-                }
-            });
-        }
-
-        return settings;
-    });
-
-    // Add option to select styles for separator
-    addFilter('editor.BlockEdit', 'advgb/customSeparatorStyles', function (BlockEdit) {
-        return function (props) {
-            if (props.name === "core/separator") {
-                var attributes = props.attributes,
-                    clientId = props.clientId;
-                var borderColor = attributes.borderColor,
-                    borderSize = attributes.borderSize,
-                    borderStyle = attributes.borderStyle,
-                    borderWidth = attributes.borderWidth;
-
-
-                return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-separator' }, props)), React.createElement(
-                    InspectorControls,
-                    { key: 'inspector-custom' },
-                    React.createElement(
-                        PanelBody,
-                        { title: __('Custom styles') },
-                        React.createElement(
-                            Button,
-                            { isPrimary: true,
-                                onClick: function onClick() {
-                                    return props.setAttributes({
-                                        borderColor: undefined,
-                                        borderSize: undefined,
-                                        borderStyle: undefined,
-                                        borderWidth: undefined
-                                    });
-                                } },
-                            __('Clear custom styles')
-                        ),
-                        React.createElement(
-                            'p',
-                            { style: { fontStyle: 'italic', marginTop: 10 } },
-                            __('We recommend to clear all custom styles as soon as possible to avoid block error validation,' + ' because we will remove this feature in very next version.')
-                        )
-                    )
-                ), React.createElement(
-                    'style',
-                    { key: 'custom-separator-styles' },
-                    '#block-' + clientId + ' hr {\n                        border-bottom-color: ' + borderColor + ';\n                        border-bottom-style: ' + borderStyle + ';\n                        border-bottom-width: ' + borderWidth + 'px;\n                        max-width: ' + borderSize + 'px;\n                    }'
-                )];
-            }
-
-            return React.createElement(BlockEdit, props);
-        };
-    });
-
-    // Apply custom styles on front-end
-    addFilter('blocks.getSaveContent.extraProps', 'advgb/saveSeparatorStyles', function (extraProps, blockType, attributes) {
-        if (blockType.name === 'core/separator') {
-            var borderColor = attributes.borderColor,
-                borderSize = attributes.borderSize,
-                borderStyle = attributes.borderStyle,
-                borderWidth = attributes.borderWidth;
-
-
-            extraProps = _extends(extraProps, {
-                style: {
-                    borderBottomColor: borderColor,
-                    borderBottomWidth: borderWidth ? borderWidth + 'px' : undefined,
-                    borderBottomStyle: borderStyle,
-                    maxWidth: borderSize ? borderSize + 'px' : undefined
-                }
-            });
-        }
-
-        return extraProps;
-    });
-})(wp.i18n, wp.hooks, wp.editor, wp.components);
-
-/***/ }),
-
 /***/ "./assets/blocks/customstyles/custom-styles.jsx":
 /*!******************************************************!*\
   !*** ./assets/blocks/customstyles/custom-styles.jsx ***!
@@ -8444,14 +7755,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 opacity: alwaysShowOverlay ? 0.5 : undefined
                                             }
                                         }),
-                                        React.createElement(
+                                        image.title && React.createElement(
                                             "h4",
                                             { className: "advgb-image-slider-title",
                                                 style: { color: titleColor }
                                             },
                                             image.title
                                         ),
-                                        React.createElement(
+                                        image.text && React.createElement(
                                             "p",
                                             { className: "advgb-image-slider-text",
                                                 style: { color: textColor }
@@ -8713,14 +8024,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         opacity: alwaysShowOverlay ? 0.5 : undefined
                                     }
                                 }),
-                                React.createElement(
+                                image.title && React.createElement(
                                     "h4",
                                     { className: "advgb-image-slider-title",
                                         style: { color: titleColor }
                                     },
                                     image.title
                                 ),
-                                React.createElement(
+                                image.text && React.createElement(
                                     "p",
                                     { className: "advgb-image-slider-text",
                                         style: { color: textColor }
@@ -8780,6 +8091,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement("a", { className: "advgb-image-slider-overlay",
                                         target: "_blank",
+                                        rel: "noopener noreferrer",
                                         href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
                                         style: {
                                             backgroundColor: hoverColor,
@@ -11285,7 +10597,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment,
         null,
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
+        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11 C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81 C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65 c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1 s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
     );
 
     var socialBlockIcon = React.createElement(
@@ -12021,98 +11333,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     })
                 )
             );
-        },
-        deprecated: [{
-            attributes: socialBlockAttrs,
-            save: function save(_ref3) {
-                var attributes = _ref3.attributes;
-                var items = attributes.items,
-                    align = attributes.align,
-                    iconSize = attributes.iconSize,
-                    iconSpace = attributes.iconSpace;
-
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-social-links-block", style: { textAlign: align } },
-                    React.createElement(
-                        "div",
-                        { className: "advgb-social-icons" },
-                        items.map(function (item, index) {
-                            return React.createElement(
-                                "a",
-                                { key: index,
-                                    className: "advgb-social-icon",
-                                    href: item.link || '#',
-                                    target: "_blank",
-                                    style: {
-                                        width: iconSize + 'px',
-                                        height: iconSize + 'px',
-                                        marginLeft: iconSpace + 'px',
-                                        marginRight: iconSpace + 'px',
-                                        color: item.iconColor
-                                    }
-                                },
-                                !!item.icon ? item.icon in ICONS_SET ? React.createElement(
-                                    "svg",
-                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
-                                    ICONS_SET_NEW[item.icon]
-                                ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
-                                    "svg",
-                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
-                                    socialBlockIconContent
-                                )
-                            );
-                        })
-                    )
-                );
-            }
-        }, {
-            attributes: socialBlockAttrs,
-            save: function save(_ref4) {
-                var attributes = _ref4.attributes;
-                var items = attributes.items,
-                    align = attributes.align,
-                    iconSize = attributes.iconSize,
-                    iconSpace = attributes.iconSpace;
-
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-social-links-block", style: { textAlign: align } },
-                    React.createElement(
-                        "div",
-                        { className: "advgb-social-icons" },
-                        items.map(function (item, index) {
-                            return React.createElement(
-                                "a",
-                                { key: index,
-                                    className: "advgb-social-icon",
-                                    href: item.link || '#',
-                                    target: "_blank",
-                                    style: {
-                                        width: iconSize + 'px',
-                                        height: iconSize + 'px',
-                                        marginLeft: iconSpace + 'px',
-                                        marginRight: iconSpace + 'px',
-                                        color: item.iconColor
-                                    }
-                                },
-                                !!item.icon ? item.icon in ICONS_SET ? React.createElement(
-                                    "svg",
-                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
-                                    ICONS_SET[item.icon]
-                                ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
-                                    "svg",
-                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
-                                    socialBlockIconContent
-                                )
-                            );
-                        })
-                    )
-                );
-            }
-        }]
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -13102,81 +12323,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
                 )
             );
-        },
-        deprecated: [{
-            attributes: tabBlockAttrs,
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
-                var tabItems = attributes.tabItems,
-                    headerBgColor = attributes.headerBgColor,
-                    headerTextColor = attributes.headerTextColor,
-                    bodyBgColor = attributes.bodyBgColor,
-                    bodyTextColor = attributes.bodyTextColor,
-                    borderStyle = attributes.borderStyle,
-                    borderWidth = attributes.borderWidth,
-                    borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius,
-                    blockID = attributes.blockID,
-                    activeTabBgColor = attributes.activeTabBgColor,
-                    activeTabTextColor = attributes.activeTabTextColor;
-
-
-                return React.createElement(
-                    'div',
-                    { id: 'advgb-tabs-' + blockID, className: 'advgb-tabs-block', style: { border: 'none' } },
-                    React.createElement(
-                        'ul',
-                        { className: 'advgb-tabs-panel' },
-                        tabItems.map(function (item, index) {
-                            return React.createElement(
-                                'li',
-                                { key: index, className: 'advgb-tab',
-                                    style: {
-                                        backgroundColor: headerBgColor,
-                                        borderStyle: borderStyle,
-                                        borderWidth: borderWidth + 'px',
-                                        borderColor: borderColor,
-                                        borderRadius: borderRadius + 'px',
-                                        margin: '-' + borderWidth + 'px 0 -' + borderWidth + 'px -' + borderWidth + 'px'
-                                    }
-                                },
-                                React.createElement(
-                                    'a',
-                                    { href: '#' + item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
-                                        style: { color: headerTextColor }
-                                    },
-                                    React.createElement(RichText.Content, { tagName: 'span', value: item.header })
-                                )
-                            );
-                        })
-                    ),
-                    tabItems.map(function (item, index) {
-                        return React.createElement(
-                            'div',
-                            { key: index,
-                                id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
-                                className: 'advgb-tab-body',
-                                style: {
-                                    backgroundColor: bodyBgColor,
-                                    color: bodyTextColor,
-                                    borderStyle: borderStyle,
-                                    borderWidth: borderWidth + 'px',
-                                    borderColor: borderColor,
-                                    borderRadius: borderRadius + 'px'
-                                }
-                            },
-                            React.createElement(RichText.Content, { tagName: 'p', value: item.body })
-                        );
-                    }),
-                    !!blockID && React.createElement(
-                        'style',
-                        null,
-                        activeTabBgColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }\n                            ',
-                        activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
-                    )
-                );
-            }
-        }]
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -13197,8 +12344,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -13586,157 +12731,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvTestimonial;
     }(Component);
 
-    function AdvTestimonialSave(_ref2) {
-        var attributes = _ref2.attributes;
-        var avatarUrl = attributes.avatarUrl,
-            avatarUrl2 = attributes.avatarUrl2,
-            avatarUrl3 = attributes.avatarUrl3,
-            avatarColor = attributes.avatarColor,
-            avatarBorderRadius = attributes.avatarBorderRadius,
-            avatarBorderWidth = attributes.avatarBorderWidth,
-            avatarBorderColor = attributes.avatarBorderColor,
-            avatarSize = attributes.avatarSize,
-            name = attributes.name,
-            name2 = attributes.name2,
-            name3 = attributes.name3,
-            nameColor = attributes.nameColor,
-            position = attributes.position,
-            position2 = attributes.position2,
-            position3 = attributes.position3,
-            positionColor = attributes.positionColor,
-            desc = attributes.desc,
-            desc2 = attributes.desc2,
-            desc3 = attributes.desc3,
-            descColor = attributes.descColor,
-            columns = attributes.columns;
-
-
-        return React.createElement(
-            'div',
-            { className: 'advgb-testimonial' },
-            React.createElement(
-                'div',
-                { className: 'advgb-testimonial-columns-one' },
-                React.createElement(
-                    'div',
-                    { className: 'advgb-testimonial-avatar-group' },
-                    React.createElement('div', { className: 'advgb-testimonial-avatar',
-                        style: {
-                            backgroundImage: 'url(' + (avatarUrl ? avatarUrl : advgbBlocks.avatarHolder) + ')',
-                            backgroundColor: avatarColor,
-                            borderRadius: avatarBorderRadius + '%',
-                            borderWidth: avatarBorderWidth + 'px',
-                            borderColor: avatarBorderColor,
-                            width: avatarSize + 'px',
-                            height: avatarSize + 'px'
-                        }
-                    })
-                ),
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-testimonial-name',
-                        style: { color: nameColor }
-                    },
-                    name
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-position',
-                        style: { color: positionColor }
-                    },
-                    position
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-desc',
-                        style: { color: descColor }
-                    },
-                    desc
-                )
-            ),
-            parseInt(columns) > 1 && React.createElement(
-                'div',
-                { className: 'advgb-testimonial-columns-two' },
-                React.createElement(
-                    'div',
-                    { className: 'advgb-testimonial-avatar-group' },
-                    React.createElement('div', { className: 'advgb-testimonial-avatar',
-                        style: {
-                            backgroundImage: 'url(' + (avatarUrl2 ? avatarUrl2 : advgbBlocks.avatarHolder) + ')',
-                            backgroundColor: avatarColor,
-                            borderRadius: avatarBorderRadius + '%',
-                            borderWidth: avatarBorderWidth + 'px',
-                            borderColor: avatarBorderColor,
-                            width: avatarSize + 'px',
-                            height: avatarSize + 'px'
-                        }
-                    })
-                ),
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-testimonial-name',
-                        style: { color: nameColor }
-                    },
-                    name2
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-position',
-                        style: { color: positionColor }
-                    },
-                    position2
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-desc',
-                        style: { color: descColor }
-                    },
-                    desc2
-                )
-            ),
-            parseInt(columns) > 2 && React.createElement(
-                'div',
-                { className: 'advgb-testimonial-columns-two' },
-                React.createElement(
-                    'div',
-                    { className: 'advgb-testimonial-avatar-group' },
-                    React.createElement('div', { className: 'advgb-testimonial-avatar',
-                        style: {
-                            backgroundImage: 'url(' + (avatarUrl3 ? avatarUrl3 : advgbBlocks.avatarHolder) + ')',
-                            backgroundColor: avatarColor,
-                            borderRadius: avatarBorderRadius + '%',
-                            borderWidth: avatarBorderWidth + 'px',
-                            borderColor: avatarBorderColor,
-                            width: avatarSize + 'px',
-                            height: avatarSize + 'px'
-                        }
-                    })
-                ),
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-testimonial-name',
-                        style: { color: nameColor }
-                    },
-                    name3
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-position',
-                        style: { color: positionColor }
-                    },
-                    position3
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-desc',
-                        style: { color: descColor }
-                    },
-                    desc3
-                )
-            )
-        );
-    }
-
     var testimonialBlockIcon = React.createElement(
         'svg',
         { height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
@@ -13885,8 +12879,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }),
         edit: AdvTestimonial,
-        save: function save(_ref3) {
-            var attributes = _ref3.attributes;
+        save: function save(_ref2) {
+            var attributes = _ref2.attributes;
             var items = attributes.items,
                 sliderView = attributes.sliderView,
                 avatarColor = attributes.avatarColor,
@@ -13962,49 +12956,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     );
                 })
             );
-        },
-        deprecated: [{
-            attributes: blockAttrsOld,
-            migrate: function migrate(attributes) {
-                var convertItems = [];
-                convertItems[0] = {
-                    avatarUrl: attributes.avatarUrl,
-                    avatarID: attributes.avatarID,
-                    name: attributes.name,
-                    position: attributes.position,
-                    desc: attributes.desc
-                };
-
-                convertItems[1] = {
-                    avatarUrl: attributes.avatarUrl2,
-                    avatarID: attributes.avatarID2,
-                    name: attributes.name2,
-                    position: attributes.position2,
-                    desc: attributes.desc2
-                };
-
-                convertItems[2] = {
-                    avatarUrl: attributes.avatarUrl3,
-                    avatarID: attributes.avatarID3,
-                    name: attributes.name3,
-                    position: attributes.position3,
-                    desc: attributes.desc3
-                };
-
-                return _extends({}, attributes, {
-                    items: [].concat(convertItems, _toConsumableArray(times(7, function () {
-                        return {
-                            avatarUrl: advgbBlocks.avatarHolder,
-                            avatarID: undefined,
-                            name: __('Person Name'),
-                            position: __('Job Position'),
-                            desc: __('A little description about this person will show up here.')
-                        };
-                    })))
-                });
-            },
-            save: AdvTestimonialSave
-        }]
+        }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
@@ -14637,9 +13589,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14654,8 +13606,6 @@ __webpack_require__(/*! ./assets/blocks/columns/column.jsx */"./assets/blocks/co
 __webpack_require__(/*! ./assets/blocks/contact-form/block.jsx */"./assets/blocks/contact-form/block.jsx");
 __webpack_require__(/*! ./assets/blocks/container/block.jsx */"./assets/blocks/container/block.jsx");
 __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/count-up/block.jsx");
-__webpack_require__(/*! ./assets/blocks/custom-columns/columns.jsx */"./assets/blocks/custom-columns/columns.jsx");
-__webpack_require__(/*! ./assets/blocks/custom-separator/separator.jsx */"./assets/blocks/custom-separator/separator.jsx");
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
 __webpack_require__(/*! ./assets/blocks/images-slider/block.jsx */"./assets/blocks/images-slider/block.jsx");
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
