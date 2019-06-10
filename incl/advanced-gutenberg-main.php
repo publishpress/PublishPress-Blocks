@@ -383,7 +383,8 @@ float: left;'
             'avatarHolder' => $avatarHolder,
             'config_url' => admin_url('admin.php?page=advgb_main'),
             'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
-            'captchaEnabled' => $recaptcha_config['recaptcha_enable']
+            'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
+            'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN)
         ));
 
         // Setup default config data for blocks
@@ -406,6 +407,10 @@ float: left;'
             $custom_styles_url . 'custom_styles.css'
         );
         wp_enqueue_style('dashicons');
+        wp_enqueue_style(
+            'advgb-bulma-styles',
+            plugins_url('assets/css/bulma.min.css', dirname(__FILE__))
+        );
 
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
             wp_enqueue_style(
@@ -3111,7 +3116,7 @@ float: left;'
     {
         // Search for Button and List blocks then add styles to it
         preg_match_all(
-            '/(<!-- wp:advgb\/(list|button)).*?(\/wp:advgb\/(list|button) -->)/mis',
+            '/(<!-- wp:advgb\/(list|button|column)).*?(\/wp:advgb\/(list|button|column) -->)/mis',
             $content,
             $matches
         );
@@ -3360,7 +3365,6 @@ float: left;'
             foreach ($matches[0] as $key => $match) {
                 preg_match('/{.*?}/', $match, $style_data);
                 if ($style_data && count($style_data)) {
-                    $style_html .= '<style>';
                     try {
                         $style_data_array = json_decode($style_data[0], true);
 
@@ -3424,8 +3428,51 @@ float: left;'
                             $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.';';
                             $style_html .= 'transition:all '.$transition_spd.'s ease;';
                             $style_html .= '}';
+                        } elseif ($matches[2][$key] === 'columns' || $matches[2][$key] === 'column') {
+                            $colID      = $style_data_array['colId'];
+                            if ($matches[2][$key] === 'column') {
+                                $colID = $colID . '>.advgb-column-inner';
+                            }
+
+                            $style_html .= '#'. $colID . '{';
+                            $style_html .= isset($style_data_array['marginTop']) ? 'margin-top:'.$style_data_array['marginTop'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginRight']) ? 'margin-right:'.$style_data_array['marginRight'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginBottom']) ? 'margin-bottom:'.$style_data_array['marginBottom'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginLeft']) ? 'margin-left:'.$style_data_array['marginLeft'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingTop']) ? 'padding-top:'.$style_data_array['paddingTop'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingRight']) ? 'padding-right:'.$style_data_array['paddingRight'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingBottom']) ? 'padding-bottom:'.$style_data_array['paddingBottom'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingLeft']) ? 'padding-left:'.$style_data_array['paddingLeft'].'px;' : '';
+                            $style_html .= '}';
+
+                            // Styles for tablet
+                            $style_html .= '@media screen and (max-width: 1023px) {';
+                            $style_html .=  '#'. $colID . '{';
+                            $style_html .= isset($style_data_array['marginTopT']) ? 'margin-top:'.$style_data_array['marginTopT'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginRightT']) ? 'margin-right:'.$style_data_array['marginRightT'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginBottomT']) ? 'margin-bottom:'.$style_data_array['marginBottomT'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginLeftT']) ? 'margin-left:'.$style_data_array['marginLeftT'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingTopT']) ? 'padding-top:'.$style_data_array['paddingTopT'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingRightT']) ? 'padding-right:'.$style_data_array['paddingRightT'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingBottomT']) ? 'padding-bottom:'.$style_data_array['paddingBottomT'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingLeftT']) ? 'padding-left:'.$style_data_array['paddingLeftT'].'px;' : '';
+                            $style_html .=  '}';
+                            $style_html .= '}';
+
+                            // Styles for mobile
+                            $style_html .= '@media screen and (max-width: 767px) {';
+                            $style_html .=  '#'. $colID . '{';
+                            $style_html .= isset($style_data_array['marginTopM']) ? 'margin-top:'.$style_data_array['marginTopM'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginRightM']) ? 'margin-right:'.$style_data_array['marginRightM'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginBottomM']) ? 'margin-bottom:'.$style_data_array['marginBottomM'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginLeftM']) ? 'margin-left:'.$style_data_array['marginLeftM'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingTopM']) ? 'padding-top:'.$style_data_array['paddingTopM'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingRightM']) ? 'padding-right:'.$style_data_array['paddingRightM'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingBottomM']) ? 'padding-bottom:'.$style_data_array['paddingBottomM'].'px;' : '';
+                            $style_html .= isset($style_data_array['paddingLeftM']) ? 'padding-left:'.$style_data_array['paddingLeftM'].'px;' : '';
+                            $style_html .=  '}';
+                            $style_html .= '}';
                         }
-                        $style_html .= '</style>';
                     } catch (Exception $e) {
                         $style_html = '';
                     }
@@ -3434,6 +3481,8 @@ float: left;'
                 }
             }
         }
+
+        $style_html = '<style type="text/css" class="advgb-blocks-styles-renderer">' . $style_html . '</style>';
 
         return preg_replace('/\s\s+/', '', $style_html);
     }
@@ -3502,7 +3551,7 @@ float: left;'
                     continue;
                 }
 
-                $html .= '<li class="ju-settings-option full-width block-config-option">';
+                $html .= '<li class="ju-settings-option full-width block-config-option clearfix">';
                 $html .= '<label for="setting-'. $setting['name'] .'" class="ju-setting-label">' . $setting['title'] . '</label>';
                 $html .= '<div class="block-config-input-wrapper">';
 

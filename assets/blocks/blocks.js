@@ -4802,6 +4802,1553 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/blocks/columns/block.jsx":
+/*!*****************************************!*\
+  !*** ./assets/blocks/columns/block.jsx ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpEditor.InspectorControls,
+        BlockControls = wpEditor.BlockControls,
+        PanelColorSettings = wpEditor.PanelColorSettings,
+        InnerBlocks = wpEditor.InnerBlocks;
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        SelectControl = wpComponents.SelectControl,
+        ToggleControl = wpComponents.ToggleControl,
+        Tooltip = wpComponents.Tooltip,
+        Toolbar = wpComponents.Toolbar;
+    var _lodash = lodash,
+        times = _lodash.times;
+    var _wp$data = wp.data,
+        dispatch = _wp$data.dispatch,
+        select = _wp$data.select;
+
+
+    var columnsBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+        React.createElement("path", { d: "M10 18h5V5h-5v13zm-6 0h5V5H4v13zM16 5v13h5V5h-5z" }),
+        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+    );
+
+    var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '12-12', icon: '12-12', title: __('Two: 1/2 - 1/2') }, { columns: 2, layout: '23-13', icon: '23-13', title: __('Two: 2/3 - 1/3') }, { columns: 2, layout: '13-23', icon: '13-23', title: __('Two: 1/3 - 2/3') }, { columns: 2, layout: '14-34', icon: '14-34', title: __('Two: 1/4 - 3/4') }, { columns: 2, layout: '34-14', icon: '34-14', title: __('Two: 3/4 - 1/4') }, { columns: 2, layout: '15-45', icon: '15-45', title: __('Two: 1/5 - 4/5') }, { columns: 2, layout: '45-15', icon: '45-15', title: __('Two: 4/5 - 1/5') }, { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __('Three: 1/3 - 1/3 - 1/3') }, { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __('Three: 1/2 - 1/4 - 1/4') }, { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __('Three: 1/4 - 1/4 - 1/2') }, { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __('Three: 1/4 - 1/2 - 1/4') }, { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __('Three: 1/5 - 3/5 - 1/5') }, { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __('Three: 3/5 - 1/5 - 1/5') }, { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __('Three: 1/5 - 1/5 - 3/5') }, { columns: 3, layout: '16-46-16', icon: '16-46-16', title: __('Three: 1/6 - 4/6 - 1/6') }, { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __('Four: 1/4 - 1/4 - 1/4 - 1/4') }, { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __('Four: 3/6 - 1/6 - 1/6 - 1/6') }, { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __('Four: 1/6 - 1/6 - 1/6 - 3/6') }, { columns: 4, layout: '15-15-15-25', icon: '15-15-15-25', title: __('Four: 1/5 - 1/5 - 1/5 - 2/5') }, { columns: 4, layout: '25-15-15-15', icon: '25-15-15-15', title: __('Four: 2/5 - 1/5 - 1/5 - 1/5') }, { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __('Five') }, { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __('Six') }];
+    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '100-12-12', title: __('Three: 100 - 1/2 - 1/2') }, { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __('Three: 1/2 - 1/2 - 100') }, { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __('Four: Two Columns') }, { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __('Six: Two Columns') }, { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __('Six: Three Columns') }];
+    var COLUMNS_LAYOUTS_STACKED = {
+        columns: 1, layout: 'stacked', icon: 'stacked', title: __('Stacked')
+    };
+    var GUTTER_OPTIONS = [{ label: __('No Gutter'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }, { label: '70px', value: 70 }, { label: '90px', value: 90 }];
+
+    var AdvColumnsEdit = function (_Component) {
+        _inherits(AdvColumnsEdit, _Component);
+
+        function AdvColumnsEdit() {
+            _classCallCheck(this, AdvColumnsEdit);
+
+            var _this = _possibleConstructorReturn(this, (AdvColumnsEdit.__proto__ || Object.getPrototypeOf(AdvColumnsEdit)).apply(this, arguments));
+
+            _this.state = {
+                tabSelected: 'desktop'
+            };
+            return _this;
+        }
+
+        _createClass(AdvColumnsEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-columns'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+
+
+                if (!attributes.id) {
+                    setAttributes({ colId: 'advgb-cols-' + clientId });
+                }
+            }
+        }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate(prevProps) {
+                var _prevProps$attributes = prevProps.attributes,
+                    prevLayout = _prevProps$attributes.columnsLayout,
+                    prevLayoutT = _prevProps$attributes.columnsLayoutT,
+                    prevLayoutM = _prevProps$attributes.columnsLayoutM;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
+                var columns = attributes.columns,
+                    columnsLayout = attributes.columnsLayout,
+                    columnsLayoutT = attributes.columnsLayoutT,
+                    columnsLayoutM = attributes.columnsLayoutM;
+
+                var _select = select('core/block-editor'),
+                    getBlockOrder = _select.getBlockOrder;
+
+                var _dispatch = dispatch('core/block-editor'),
+                    updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+                var childBlocks = getBlockOrder(clientId);
+                var shouldUpdate = false;
+                var classes = times(6, function () {
+                    return [];
+                });
+
+                var extraClassD = !!columnsLayoutT ? '-desktop' : '-tablet';
+                var extraClassT = '-tablet';
+                var extraClassM = '-mobile';
+
+                if (prevLayout !== columnsLayout || prevLayoutT !== columnsLayoutT || prevLayoutM !== columnsLayoutM) {
+                    shouldUpdate = true;
+                    switch (columnsLayout) {
+                        case '12-12':
+                        case '13-13-13':
+                        case '14-14-14-14':
+                        case 'five':
+                        case 'six':
+                            for (var i = 0; i < columns; i++) {
+                                classes[i].push('is-default-desktop');
+                            }
+                            break;
+                        case '23-13':
+                            classes[0].push('is-two-thirds' + extraClassD);
+                            classes[1].push('is-default-desktop');
+                            break;
+                        case '13-23':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-two-thirds' + extraClassD);
+                            break;
+                        case '34-14':
+                            classes[0].push('is-three-quarters' + extraClassD);
+                            classes[1].push('is-default-desktop');
+                            break;
+                        case '14-34':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-three-quarters' + extraClassD);
+                            break;
+                        case '45-15':
+                            classes[0].push('is-four-fifths' + extraClassD);
+                            classes[1].push('is-default-desktop');
+                            break;
+                        case '15-45':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-four-fifths' + extraClassD);
+                            break;
+                        case '12-14-14':
+                            classes[0].push('is-half' + extraClassD);
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '14-14-12':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-half' + extraClassD);
+                            break;
+                        case '14-12-14':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-half' + extraClassD);
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '15-35-15':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-three-fifths' + extraClassD);
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '35-15-15':
+                            classes[0].push('is-three-fifths' + extraClassD);
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '15-15-35':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-three-fifths' + extraClassD);
+                            break;
+                        case '16-46-16':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-8' + extraClassD);
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '36-16-16-16':
+                            classes[0].push('is-half' + extraClassD);
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-default-desktop');
+                            classes[3].push('is-default-desktop');
+                            break;
+                        case '16-16-16-36':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-default-desktop');
+                            classes[3].push('is-half' + extraClassD);
+                            break;
+                        case '25-15-15-15':
+                            classes[0].push('is-two-fifths' + extraClassD);
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-default-desktop');
+                            classes[3].push('is-default-desktop');
+                            break;
+                        case '15-15-15-25':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-default-desktop');
+                            classes[2].push('is-default-desktop');
+                            classes[3].push('is-two-fifths' + extraClassD);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    switch (columnsLayoutT) {
+                        case '12-12':
+                        case '13-13-13':
+                        case '14-14-14-14':
+                        case 'five':
+                        case 'six':
+                            for (var _i = 0; _i < columns; _i++) {
+                                classes[_i].push('is-default-tablet');
+                            }
+                            break;
+                        case '23-13':
+                            classes[0].push('is-two-thirds' + extraClassT);
+                            classes[1].push('is-default-tablet');
+                            break;
+                        case '13-23':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-two-thirds' + extraClassT);
+                            break;
+                        case '34-14':
+                            classes[0].push('is-three-quarters' + extraClassT);
+                            classes[1].push('is-default-tablet');
+                            break;
+                        case '14-34':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-three-quarters' + extraClassT);
+                            break;
+                        case '45-15':
+                            classes[0].push('is-four-fifths' + extraClassT);
+                            classes[1].push('is-default-tablet');
+                            break;
+                        case '15-45':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-four-fifths' + extraClassT);
+                            break;
+                        case '12-14-14':
+                            classes[0].push('is-half' + extraClassT);
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-default-tablet');
+                            break;
+                        case '14-14-12':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-half' + extraClassT);
+                            break;
+                        case '14-12-14':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-half' + extraClassT);
+                            classes[2].push('is-default-tablet');
+                            break;
+                        case '15-35-15':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-three-fifths' + extraClassT);
+                            classes[2].push('is-default-tablet');
+                            break;
+                        case '35-15-15':
+                            classes[0].push('is-three-fifths' + extraClassT);
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-default-tablet');
+                            break;
+                        case '15-15-35':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-three-fifths' + extraClassT);
+                            break;
+                        case '16-46-16':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-8' + extraClassT);
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '1-12-12':
+                            classes[0].push('is-full' + extraClassT);
+                            classes[1].push('is-half' + extraClassT);
+                            classes[2].push('is-half' + extraClassT);
+                            break;
+                        case '12-12-1':
+                            classes[0].push('is-half' + extraClassT);
+                            classes[1].push('is-half' + extraClassT);
+                            classes[2].push('is-full' + extraClassT);
+                            break;
+                        case '36-16-16-16':
+                            classes[0].push('is-half' + extraClassT);
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-default-tablet');
+                            classes[3].push('is-default-tablet');
+                            break;
+                        case '16-16-16-36':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-default-tablet');
+                            classes[3].push('is-half' + extraClassT);
+                            break;
+                        case '25-15-15-15':
+                            classes[0].push('is-two-fifths' + extraClassT);
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-default-tablet');
+                            classes[3].push('is-default-tablet');
+                            break;
+                        case '15-15-15-25':
+                            classes[0].push('is-default-tablet');
+                            classes[1].push('is-default-tablet');
+                            classes[2].push('is-default-tablet');
+                            classes[3].push('is-two-fifths' + extraClassT);
+                            break;
+                        case '12x4':
+                            for (var _i2 = 0; _i2 < columns; _i2++) {
+                                classes[_i2].push('is-half' + extraClassT);
+                            }
+                            break;
+                        case '12x6':
+                            for (var _i3 = 0; _i3 < columns; _i3++) {
+                                classes[_i3].push('is-half' + extraClassT);
+                            }
+                            break;
+                        case '13x6':
+                            for (var _i4 = 0; _i4 < columns; _i4++) {
+                                classes[_i4].push('is-one-third' + extraClassT);
+                            }
+                            break;
+                        case 'stacked':
+                            for (var _i5 = 0; _i5 < columns; _i5++) {
+                                classes[_i5].push('is-full' + extraClassT);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    switch (columnsLayoutM) {
+                        case '12-12':
+                        case '13-13-13':
+                        case '14-14-14-14':
+                        case 'five':
+                        case 'six':
+                            for (var _i6 = 0; _i6 < columns; _i6++) {
+                                classes[_i6].push('is-default-mobile');
+                            }
+                            break;
+                        case '23-13':
+                            classes[0].push('is-two-thirds' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            break;
+                        case '13-23':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-two-thirds' + extraClassM);
+                            break;
+                        case '34-14':
+                            classes[0].push('is-three-quarters' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            break;
+                        case '14-34':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-three-quarters' + extraClassM);
+                            break;
+                        case '45-15':
+                            classes[0].push('is-four-fifths' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            break;
+                        case '15-45':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-four-fifths' + extraClassM);
+                            break;
+                        case '12-14-14':
+                            classes[0].push('is-half' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            break;
+                        case '14-14-12':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-half' + extraClassM);
+                            break;
+                        case '14-12-14':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-half' + extraClassM);
+                            classes[2].push('is-default-mobile');
+                            break;
+                        case '15-35-15':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-three-fifths' + extraClassM);
+                            classes[2].push('is-default-mobile');
+                            break;
+                        case '35-15-15':
+                            classes[0].push('is-three-fifths' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            break;
+                        case '15-15-35':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-three-fifths' + extraClassM);
+                            break;
+                        case '16-46-16':
+                            classes[0].push('is-default-desktop');
+                            classes[1].push('is-8' + extraClassM);
+                            classes[2].push('is-default-desktop');
+                            break;
+                        case '1-12-12':
+                            classes[0].push('is-full' + extraClassM);
+                            classes[1].push('is-half' + extraClassM);
+                            classes[2].push('is-half' + extraClassM);
+                            break;
+                        case '12-12-1':
+                            classes[0].push('is-half' + extraClassM);
+                            classes[1].push('is-half' + extraClassM);
+                            classes[2].push('is-full' + extraClassM);
+                            break;
+                        case '36-16-16-16':
+                            classes[0].push('is-half' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            classes[3].push('is-default-mobile');
+                            break;
+                        case '16-16-16-36':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            classes[3].push('is-half' + extraClassM);
+                            break;
+                        case '25-15-15-15':
+                            classes[0].push('is-two-fifths' + extraClassM);
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            classes[3].push('is-default-mobile');
+                            break;
+                        case '15-15-15-25':
+                            classes[0].push('is-default-mobile');
+                            classes[1].push('is-default-mobile');
+                            classes[2].push('is-default-mobile');
+                            classes[3].push('is-two-fifths' + extraClassM);
+                            break;
+                        case '12x4':
+                            for (var _i7 = 0; _i7 < columns; _i7++) {
+                                classes[_i7].push('is-half' + extraClassM);
+                            }
+                            break;
+                        case '12x6':
+                            for (var _i8 = 0; _i8 < columns; _i8++) {
+                                classes[_i8].push('is-half' + extraClassM);
+                            }
+                            break;
+                        case '13x6':
+                            for (var _i9 = 0; _i9 < columns; _i9++) {
+                                classes[_i9].push('is-one-third' + extraClassM);
+                            }
+                            break;
+                        case 'stacked':
+                            for (var _i10 = 0; _i10 < columns; _i10++) {
+                                classes[_i10].push('is-full' + extraClassM);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                if (shouldUpdate) {
+                    classes = classes.map(function (cls) {
+                        return cls.filter(Boolean).join(' ');
+                    });
+                    classes.map(function (cls, idx) {
+                        return !!childBlocks[idx] && updateBlockAttributes(childBlocks[idx], { columnClasses: cls });
+                    });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    clientId = _props4.clientId;
+                var tabSelected = this.state.tabSelected;
+                var columns = attributes.columns,
+                    columnsLayout = attributes.columnsLayout,
+                    columnsLayoutT = attributes.columnsLayoutT,
+                    columnsLayoutM = attributes.columnsLayoutM,
+                    marginUnit = attributes.marginUnit,
+                    marginTop = attributes.marginTop,
+                    marginRight = attributes.marginRight,
+                    marginBottom = attributes.marginBottom,
+                    marginLeft = attributes.marginLeft,
+                    marginTopM = attributes.marginTopM,
+                    marginRightM = attributes.marginRightM,
+                    marginBottomM = attributes.marginBottomM,
+                    marginLeftM = attributes.marginLeftM,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    paddingTopM = attributes.paddingTopM,
+                    paddingRightM = attributes.paddingRightM,
+                    paddingBottomM = attributes.paddingBottomM,
+                    paddingLeftM = attributes.paddingLeftM,
+                    vAlign = attributes.vAlign,
+                    gutter = attributes.gutter,
+                    collapsedGutter = attributes.collapsedGutter,
+                    collapsedRtl = attributes.collapsedRtl,
+                    columnsWrapped = attributes.columnsWrapped,
+                    contentMaxWidth = attributes.contentMaxWidth,
+                    contentMaxWidthUnit = attributes.contentMaxWidthUnit,
+                    contentMinHeight = attributes.contentMinHeight,
+                    contentMinHeightUnit = attributes.contentMinHeightUnit,
+                    wrapperTag = attributes.wrapperTag;
+
+
+                var blockClasses = ['advgb-columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+
+                if (!columns) {
+                    return React.createElement(
+                        "div",
+                        { className: "advgb-columns-select-wrapper" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-columns-select-title" },
+                            __('CHOOSE LAYOUT')
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-columns-select-layout" },
+                            COLUMNS_LAYOUTS.map(function (layout, index) {
+                                return React.createElement(
+                                    Tooltip,
+                                    { text: layout.title, key: index },
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-columns-layout",
+                                            onClick: function onClick() {
+                                                return setAttributes({
+                                                    columns: layout.columns,
+                                                    columnsLayout: layout.layout
+                                                });
+                                            }
+                                        },
+                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                            alt: layout.layout
+                                        })
+                                    )
+                                );
+                            })
+                        )
+                    );
+                }
+
+                var COLUMNS_LAYOUTS_FILTERED = COLUMNS_LAYOUTS.filter(function (item) {
+                    return item.columns === columns;
+                });
+                var COLUMNS_LAYOUTS_RESPONSIVE_FILTERED = COLUMNS_LAYOUTS_RESPONSIVE.filter(function (item) {
+                    return item.columns === columns;
+                });
+                COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.push(COLUMNS_LAYOUTS_STACKED);
+                var VERT_ALIGNMENT_CONTROLS = [{
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Vertical Align Top'),
+                    isActive: vAlign === 'top',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'top' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Vertical Align Middle'),
+                    isActive: vAlign === 'middle',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'middle' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+                        React.createElement("path", { d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" }),
+                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                    ),
+                    title: __('Vertical Align Bottom'),
+                    isActive: vAlign === 'bottom',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'bottom' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 12 32" },
+                        React.createElement("polygon", { points: "8,20 8,26 12,26 6,32 0,26 4,26 4,20" }),
+                        React.createElement("polygon", { points: "4,12 4,6 0,6 6,0 12,6 8,6 8,12" })
+                    ),
+                    title: __('Inner Columns Full Height'),
+                    isActive: vAlign === 'full',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'full' });
+                    }
+                }];
+                var MARGIN_PADDING_CONTROLS = [{ label: 'Top', icon: 'arrow-up-alt2' }, { label: 'Right', icon: 'arrow-right-alt2' }, { label: 'Bottom', icon: 'arrow-down-alt2' }, { label: 'Left', icon: 'arrow-left-alt2' }];
+
+                var deviceLetter = '';
+                if (tabSelected === 'tablet') deviceLetter = 'T';
+                if (tabSelected === 'mobile') deviceLetter = 'M';
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(Toolbar, { controls: VERT_ALIGNMENT_CONTROLS })
+                    ),
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Columns Settings') },
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Responsive Settings') },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-columns-responsive-items" },
+                                    ['desktop', 'tablet', 'mobile'].map(function (device, index) {
+                                        var itemClasses = ["advgb-columns-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
+
+                                        return React.createElement(
+                                            "div",
+                                            { className: itemClasses,
+                                                key: index,
+                                                onClick: function onClick() {
+                                                    return _this2.setState({ tabSelected: device });
+                                                }
+                                            },
+                                            device
+                                        );
+                                    })
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-columns-select-layout on-inspector" },
+                                    COLUMNS_LAYOUTS_FILTERED.map(function (layout, index) {
+                                        var layoutClasses = ['advgb-columns-layout', tabSelected === 'desktop' && layout.layout === columnsLayout && 'is-selected', tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected', tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected'].filter(Boolean).join(' ');
+
+                                        return React.createElement(
+                                            Tooltip,
+                                            { text: layout.title, key: index },
+                                            React.createElement(
+                                                "div",
+                                                { className: layoutClasses,
+                                                    onClick: function onClick() {
+                                                        setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                        _this2.setState({ random: Math.random() });
+                                                    }
+                                                },
+                                                React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                                    alt: layout.layout
+                                                })
+                                            )
+                                        );
+                                    }),
+                                    tabSelected !== 'desktop' && COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.map(function (layout, index) {
+                                        var layoutClasses = ['advgb-columns-layout', tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected', tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected'].filter(Boolean).join(' ');
+
+                                        return React.createElement(
+                                            Tooltip,
+                                            { text: layout.title, key: index },
+                                            React.createElement(
+                                                "div",
+                                                { className: layoutClasses,
+                                                    onClick: function onClick() {
+                                                        setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                        _this2.setState({ random: Math.random() });
+                                                    }
+                                                },
+                                                React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                                    alt: layout.layout
+                                                })
+                                            )
+                                        );
+                                    })
+                                ),
+                                tabSelected === 'desktop' && React.createElement(SelectControl, {
+                                    label: __('Columns Gutter'),
+                                    value: gutter,
+                                    options: GUTTER_OPTIONS,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ gutter: parseInt(value) });
+                                    }
+                                }),
+                                tabSelected === 'mobile' && columnsLayoutM === 'stacked' && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(SelectControl, {
+                                        label: __('Collapsed Vertical Gutter'),
+                                        value: collapsedGutter,
+                                        options: GUTTER_OPTIONS,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ collapsedGutter: parseInt(value) });
+                                        }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Collapsed Order RTL'),
+                                        checked: collapsedRtl,
+                                        onChange: function onChange() {
+                                            return setAttributes({ collapsedRtl: !collapsedRtl });
+                                        }
+                                    })
+                                ),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding'),
+                                        initialOpen: false
+                                    },
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-controls-title" },
+                                        __('Unit (px)')
+                                    ),
+                                    MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                        return React.createElement(RangeControl, {
+                                            key: idx,
+                                            beforeIcon: pos.icon,
+                                            value: attributes['padding' + pos.label + deviceLetter] || 0,
+                                            min: 0,
+                                            max: 50,
+                                            onChange: function onChange(value) {
+                                                return setAttributes(_defineProperty({}, 'padding' + pos.label + deviceLetter, value));
+                                            }
+                                        });
+                                    })
+                                ),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin'),
+                                        initialOpen: false
+                                    },
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-controls-title" },
+                                        React.createElement(
+                                            "span",
+                                            null,
+                                            __('Unit')
+                                        ),
+                                        React.createElement(
+                                            "div",
+                                            { className: "advgb-unit-wrapper", key: "unit" },
+                                            ['px', 'em', 'vh', '%'].map(function (unit, idx) {
+                                                return React.createElement(
+                                                    "span",
+                                                    { className: "advgb-unit " + (marginUnit === unit ? 'selected' : ''), key: idx,
+                                                        onClick: function onClick() {
+                                                            return setAttributes({ marginUnit: unit });
+                                                        }
+                                                    },
+                                                    unit
+                                                );
+                                            })
+                                        )
+                                    ),
+                                    MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                        return React.createElement(RangeControl, {
+                                            key: idx,
+                                            beforeIcon: pos.icon,
+                                            value: attributes['margin' + pos.label + deviceLetter] || 0,
+                                            min: 0,
+                                            max: 50,
+                                            onChange: function onChange(value) {
+                                                return setAttributes(_defineProperty({}, 'margin' + pos.label + deviceLetter, value));
+                                            }
+                                        });
+                                    })
+                                )
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Row Settings'), initialOpen: false },
+                                React.createElement(ToggleControl, {
+                                    label: __('Columns Wrapped'),
+                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Gutter).'),
+                                    checked: columnsWrapped,
+                                    onChange: function onChange() {
+                                        return setAttributes({ columnsWrapped: !columnsWrapped });
+                                    }
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Wrapper Tag'),
+                                    value: wrapperTag,
+                                    options: [{ label: 'Div', value: 'div' }, { label: 'Header', value: 'header' }, { label: 'Section', value: 'section' }, { label: 'Main', value: 'main' }, { label: 'Article', value: 'article' }, { label: 'Aside', value: 'aside' }, { label: 'Footer', value: 'footer' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ wrapperTag: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: [__('Content Max Width'), React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'vw', '%'].map(function (unit, idx) {
+                                            return React.createElement(
+                                                "span",
+                                                { className: "advgb-unit " + (contentMaxWidthUnit === unit ? 'selected' : ''), key: idx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ contentMaxWidthUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )],
+                                    value: contentMaxWidth,
+                                    min: 0,
+                                    max: contentMaxWidthUnit === 'px' ? 2000 : 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ contentMaxWidth: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: [__('Content Min Height'), React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'vw', 'vh'].map(function (unit, idx) {
+                                            return React.createElement(
+                                                "span",
+                                                { className: "advgb-unit " + (contentMinHeightUnit === unit ? 'selected' : ''), key: idx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ contentMinHeightUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )],
+                                    value: contentMinHeight,
+                                    min: 0,
+                                    max: contentMinHeightUnit === 'px' ? 2000 : 200,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ contentMinHeight: value });
+                                    }
+                                })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-columns-wrapper" },
+                        React.createElement(
+                            "div",
+                            { className: blockClasses,
+                                style: {
+                                    maxWidth: !!contentMaxWidth ? "" + contentMaxWidth + contentMaxWidthUnit : undefined,
+                                    minHeight: !!contentMinHeight ? "" + contentMinHeight + contentMinHeightUnit : undefined
+                                }
+                            },
+                            React.createElement(InnerBlocks, {
+                                template: times(parseInt(columns), function () {
+                                    return ['advgb/column'];
+                                }),
+                                templateLock: "all",
+                                allowdBlockType: ['advgb/column'],
+                                random: this.state.random
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "style",
+                        null,
+                        "#block-" + clientId + " .advgb-columns-wrapper .advgb-columns {\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-columns-wrapper .advgb-columns {\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }"
+                    )
+                );
+            }
+        }], [{
+            key: "jsUcfirst",
+            value: function jsUcfirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        }]);
+
+        return AdvColumnsEdit;
+    }(Component);
+
+    var blockAttrs = {
+        columns: {
+            type: 'number'
+        },
+        columnsLayout: {
+            type: 'string'
+        },
+        columnsLayoutT: {
+            type: 'string'
+        },
+        columnsLayoutM: {
+            type: 'string',
+            default: 'stacked'
+        },
+        marginTop: {
+            type: 'number'
+        },
+        marginTopT: {
+            type: 'number'
+        },
+        marginTopM: {
+            type: 'number'
+        },
+        marginRight: {
+            type: 'number'
+        },
+        marginRightT: {
+            type: 'number'
+        },
+        marginRightM: {
+            type: 'number'
+        },
+        marginBottom: {
+            type: 'number'
+        },
+        marginBottomT: {
+            type: 'number'
+        },
+        marginBottomM: {
+            type: 'number'
+        },
+        marginLeft: {
+            type: 'number'
+        },
+        marginLeftT: {
+            type: 'number'
+        },
+        marginLeftM: {
+            type: 'number'
+        },
+        marginUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        paddingTop: {
+            type: 'number'
+        },
+        paddingTopT: {
+            type: 'number'
+        },
+        paddingTopM: {
+            type: 'number'
+        },
+        paddingRight: {
+            type: 'number'
+        },
+        paddingRightT: {
+            type: 'number'
+        },
+        paddingRightM: {
+            type: 'number'
+        },
+        paddingBottom: {
+            type: 'number'
+        },
+        paddingBottomT: {
+            type: 'number'
+        },
+        paddingBottomM: {
+            type: 'number'
+        },
+        paddingLeft: {
+            type: 'number'
+        },
+        paddingLeftT: {
+            type: 'number'
+        },
+        paddingLeftM: {
+            type: 'number'
+        },
+        gutter: {
+            type: 'number',
+            default: 0
+        },
+        collapsedGutter: {
+            type: 'number',
+            default: 10
+        },
+        collapsedRtl: {
+            type: 'boolean',
+            default: false
+        },
+        vAlign: {
+            type: 'string'
+        },
+        columnsWrapped: {
+            type: 'boolean',
+            default: false
+        },
+        contentMaxWidth: {
+            type: 'number'
+        },
+        contentMaxWidthUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        contentMinHeight: {
+            type: 'number'
+        },
+        contentMinHeightUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        wrapperTag: {
+            type: 'string',
+            default: 'div'
+        },
+        colId: {
+            type: 'string'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/columns', {
+        title: __('Columns Manager'),
+        description: __('Row layout with columns you decided.'),
+        icon: {
+            src: columnsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('columns'), __('row'), __('layout')],
+        supports: {
+            align: ['wide', 'full'],
+            html: false
+        },
+        attributes: blockAttrs,
+        edit: AdvColumnsEdit,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var columns = attributes.columns,
+                columnsLayout = attributes.columnsLayout,
+                columnsLayoutT = attributes.columnsLayoutT,
+                columnsLayoutM = attributes.columnsLayoutM,
+                vAlign = attributes.vAlign,
+                gutter = attributes.gutter,
+                collapsedGutter = attributes.collapsedGutter,
+                collapsedRtl = attributes.collapsedRtl,
+                columnsWrapped = attributes.columnsWrapped,
+                contentMaxWidth = attributes.contentMaxWidth,
+                contentMaxWidthUnit = attributes.contentMaxWidthUnit,
+                contentMinHeight = attributes.contentMinHeight,
+                contentMinHeightUnit = attributes.contentMinHeightUnit,
+                wrapperTag = attributes.wrapperTag,
+                colId = attributes.colId;
+
+            var Tag = wrapperTag;
+
+            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+
+            return React.createElement(
+                Tag,
+                { className: "advgb-columns-wrapper" },
+                React.createElement(
+                    "div",
+                    { className: blockClasses, id: colId,
+                        style: {
+                            maxWidth: !!contentMaxWidth ? "" + contentMaxWidth + contentMaxWidthUnit : undefined,
+                            minHeight: !!contentMinHeight ? "" + contentMinHeight + contentMinHeightUnit : undefined
+                        }
+                    },
+                    React.createElement(InnerBlocks.Content, null)
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/columns/column.jsx":
+/*!******************************************!*\
+  !*** ./assets/blocks/columns/column.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpEditor.InspectorControls,
+        PanelColorSettings = wpEditor.PanelColorSettings,
+        InnerBlocks = wpEditor.InnerBlocks,
+        AlignmentToolbar = wpEditor.AlignmentToolbar;
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        BaseControl = wpComponents.BaseControl,
+        SelectControl = wpComponents.SelectControl;
+    var select = wp.data.select;
+
+
+    var columnsBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+        React.createElement("path", { d: "M10 18h5V5h-5v13zm-6 0h5V5H4v13zM16 5v13h5V5h-5z" }),
+        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+    );
+    var listBorderStyles = [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }];
+    var MARGIN_PADDING_CONTROLS = [{ label: 'Top', icon: 'arrow-up-alt2' }, { label: 'Right', icon: 'arrow-right-alt2' }, { label: 'Bottom', icon: 'arrow-down-alt2' }, { label: 'Left', icon: 'arrow-left-alt2' }];
+
+    var AdvColumnEdit = function (_Component) {
+        _inherits(AdvColumnEdit, _Component);
+
+        function AdvColumnEdit() {
+            _classCallCheck(this, AdvColumnEdit);
+
+            var _this = _possibleConstructorReturn(this, (AdvColumnEdit.__proto__ || Object.getPrototypeOf(AdvColumnEdit)).apply(this, arguments));
+
+            _this.state = {
+                tabSelected: 'desktop'
+            };
+            return _this;
+        }
+
+        _createClass(AdvColumnEdit, [{
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes,
+                    clientId = _props.clientId;
+
+
+                if (!attributes.id) {
+                    setAttributes({ colId: 'advgb-col-' + clientId });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var tabSelected = this.state.tabSelected;
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+                var width = attributes.width,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderRadius = attributes.borderRadius,
+                    textAlign = attributes.textAlign,
+                    textAlignM = attributes.textAlignM,
+                    marginTop = attributes.marginTop,
+                    marginRight = attributes.marginRight,
+                    marginBottom = attributes.marginBottom,
+                    marginLeft = attributes.marginLeft,
+                    marginTopM = attributes.marginTopM,
+                    marginRightM = attributes.marginRightM,
+                    marginBottomM = attributes.marginBottomM,
+                    marginLeftM = attributes.marginLeftM,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    paddingTopM = attributes.paddingTopM,
+                    paddingRightM = attributes.paddingRightM,
+                    paddingBottomM = attributes.paddingBottomM,
+                    paddingLeftM = attributes.paddingLeftM;
+
+                var _select = select('core/block-editor'),
+                    getBlockOrder = _select.getBlockOrder,
+                    getBlockRootClientId = _select.getBlockRootClientId;
+
+                var hasChildBlocks = getBlockOrder(clientId).length > 0;
+                var rootBlockId = getBlockRootClientId(clientId);
+
+                var blockClasses = ['advgb-column', 'column'].filter(Boolean).join(' ');
+
+                var deviceLetter = '';
+                if (tabSelected === 'mobile') deviceLetter = 'M';
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Column Settings') },
+                            React.createElement(RangeControl, {
+                                label: __('Width (%)'),
+                                help: __('Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!'),
+                                value: width,
+                                min: 0,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ width: value });
+                                }
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Border Settings') },
+                                React.createElement(SelectControl, {
+                                    label: __('Border style'),
+                                    value: borderStyle,
+                                    options: listBorderStyles,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderStyle: value });
+                                    }
+                                }),
+                                borderStyle !== 'none' && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(PanelColorSettings, {
+                                        title: __('Border Color'),
+                                        initialOpen: false,
+                                        colorSettings: [{
+                                            label: __('Border Color'),
+                                            value: borderColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ borderColor: value });
+                                            }
+                                        }]
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border width'),
+                                        value: borderWidth || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderWidth: value });
+                                        },
+                                        min: 0,
+                                        max: 20
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border radius (px)'),
+                                        value: borderRadius || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderRadius: value });
+                                        },
+                                        min: 0,
+                                        max: 100
+                                    })
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-columns-responsive-items",
+                                    style: { borderTop: '2px solid #aaa', paddingTop: 10 }
+                                },
+                                ['desktop', 'mobile'].map(function (device, index) {
+                                    var itemClasses = ["advgb-columns-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
+
+                                    return React.createElement(
+                                        "div",
+                                        { className: itemClasses,
+                                            key: index,
+                                            onClick: function onClick() {
+                                                return _this2.setState({ tabSelected: device });
+                                            }
+                                        },
+                                        device
+                                    );
+                                })
+                            ),
+                            React.createElement(
+                                BaseControl,
+                                {
+                                    label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' Text Alignment')
+                                },
+                                React.createElement(AlignmentToolbar, {
+                                    value: attributes['textAlign' + deviceLetter],
+                                    onChange: function onChange(align) {
+                                        return setAttributes(_defineProperty({}, 'textAlign' + deviceLetter, align));
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    __('Unit (px)')
+                                ),
+                                MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                    return React.createElement(RangeControl, {
+                                        key: idx,
+                                        beforeIcon: pos.icon,
+                                        value: attributes['padding' + pos.label + deviceLetter] || '',
+                                        min: 0,
+                                        max: 50,
+                                        onChange: function onChange(value) {
+                                            return setAttributes(_defineProperty({}, 'padding' + pos.label + deviceLetter, value));
+                                        }
+                                    });
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    __('Unit (px)')
+                                ),
+                                MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                    return React.createElement(RangeControl, {
+                                        key: idx,
+                                        beforeIcon: pos.icon,
+                                        value: attributes['margin' + pos.label + deviceLetter] || '',
+                                        min: 0,
+                                        max: 50,
+                                        onChange: function onChange(value) {
+                                            return setAttributes(_defineProperty({}, 'margin' + pos.label + deviceLetter, value));
+                                        }
+                                    });
+                                })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: blockClasses },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-column-inner",
+                                style: {
+                                    borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius
+                                }
+                            },
+                            React.createElement(InnerBlocks, {
+                                templateLock: false,
+                                renderAppender: hasChildBlocks ? undefined : function () {
+                                    return React.createElement(InnerBlocks.ButtonBlockAppender, null);
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "style",
+                        null,
+                        "#block-" + clientId + " .advgb-column.column > .advgb-column-inner {\n                            text-align: " + textAlign + ";\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-column.column > .advgb-column-inner {\n                                text-align: " + textAlignM + ";\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}\n                            #block-" + clientId + " {flex-basis: " + width + "%;}" : '')
+                    )
+                );
+            }
+        }], [{
+            key: "jsUcfirst",
+            value: function jsUcfirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        }]);
+
+        return AdvColumnEdit;
+    }(Component);
+
+    var blockAttrs = {
+        width: {
+            type: 'number'
+        },
+        columnClasses: {
+            type: 'string'
+        },
+        colId: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'none'
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderWidth: {
+            type: 'number'
+        },
+        borderRadius: {
+            type: 'number'
+        },
+        textAlign: {
+            type: 'string'
+        },
+        textAlignM: {
+            type: 'string'
+        },
+        marginTop: {
+            type: 'number'
+        },
+        marginTopM: {
+            type: 'number'
+        },
+        marginRight: {
+            type: 'number'
+        },
+        marginRightM: {
+            type: 'number'
+        },
+        marginBottom: {
+            type: 'number'
+        },
+        marginBottomM: {
+            type: 'number'
+        },
+        marginLeft: {
+            type: 'number'
+        },
+        marginLeftM: {
+            type: 'number'
+        },
+        paddingTop: {
+            type: 'number'
+        },
+        paddingTopM: {
+            type: 'number'
+        },
+        paddingRight: {
+            type: 'number'
+        },
+        paddingRightM: {
+            type: 'number'
+        },
+        paddingBottom: {
+            type: 'number'
+        },
+        paddingBottomM: {
+            type: 'number'
+        },
+        paddingLeft: {
+            type: 'number'
+        },
+        paddingLeftM: {
+            type: 'number'
+        }
+    };
+
+    registerBlockType('advgb/column', {
+        title: __('Adv. Column'),
+        parent: ['advgb/columns'],
+        description: __('Column in row.'),
+        icon: {
+            src: columnsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('columns'), __('row'), __('layout')],
+        supports: {
+            inserter: false,
+            reusable: false,
+            html: false
+        },
+        attributes: blockAttrs,
+        edit: AdvColumnEdit,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var width = attributes.width,
+                columnClasses = attributes.columnClasses,
+                colId = attributes.colId,
+                borderColor = attributes.borderColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                borderRadius = attributes.borderRadius;
+
+
+            var blockClasses = ['advgb-column', 'column', columnClasses].filter(Boolean).join(' ');
+
+            return React.createElement(
+                "div",
+                { className: blockClasses,
+                    id: colId,
+                    style: {
+                        width: width ? width + '%' : undefined,
+                        flex: width ? 'none' : undefined
+                    }
+                },
+                React.createElement(
+                    "div",
+                    { className: "advgb-column-inner",
+                        style: { borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius }
+                    },
+                    React.createElement(InnerBlocks.Content, null)
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/blocks/contact-form/block.jsx":
 /*!**********************************************!*\
   !*** ./assets/blocks/contact-form/block.jsx ***!
@@ -13090,9 +14637,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13102,6 +14649,8 @@ __webpack_require__(/*! ./assets/blocks/advimage/block.jsx */"./assets/blocks/ad
 __webpack_require__(/*! ./assets/blocks/advlist/block.jsx */"./assets/blocks/advlist/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advtable/block.jsx */"./assets/blocks/advtable/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advvideo/block.jsx */"./assets/blocks/advvideo/block.jsx");
+__webpack_require__(/*! ./assets/blocks/columns/block.jsx */"./assets/blocks/columns/block.jsx");
+__webpack_require__(/*! ./assets/blocks/columns/column.jsx */"./assets/blocks/columns/column.jsx");
 __webpack_require__(/*! ./assets/blocks/contact-form/block.jsx */"./assets/blocks/contact-form/block.jsx");
 __webpack_require__(/*! ./assets/blocks/container/block.jsx */"./assets/blocks/container/block.jsx");
 __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/count-up/block.jsx");
