@@ -1445,6 +1445,25 @@ form .advgb-grecaptcha > div {
 
 .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.advgb-columns.columns-valign-full > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__block-edit > div[data-block] {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.advgb-columns.columns-valign-full > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__block-edit {
+    height: 100%;
+}
+
+.advgb-columns.columns-valign-full .advgb-column-inner {
+    height: 100%;
 }
 
 .advgb-columns.columns-valign-middle > .editor-inner-blocks > .editor-block-list__layout {
