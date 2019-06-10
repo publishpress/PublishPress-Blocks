@@ -4,7 +4,8 @@ window.addEventListener('load', function () {
     }
 
     var mapElm = document.querySelectorAll('.advgb-map-block .advgb-map-content');
-    mapElm.forEach(function (elm) {
+    for (var i = 0; i < mapElm.length; i++) {
+        elm = mapElm[i];
         var lat = parseFloat(elm.dataset.lat),
             lng = parseFloat(elm.dataset.lng),
             zoom = parseFloat(elm.dataset.zoom),
@@ -41,5 +42,5 @@ window.addEventListener('load', function () {
         marker.addListener('click', function () {
             infoWindow.open(map, marker);
         })
-    });
+    }
 });
