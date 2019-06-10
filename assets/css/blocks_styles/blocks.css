@@ -1485,8 +1485,8 @@ form .advgb-grecaptcha > div {
     flex-direction: column;
     height: 100%;
     margin: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .advgb-columns.columns-valign-full > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__block-edit {
