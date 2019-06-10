@@ -506,7 +506,6 @@
                 contentMinHeight,
                 contentMinHeightUnit,
                 wrapperTag,
-                innerColFullH,
             } = attributes;
 
             const blockClasses = [
@@ -520,7 +519,6 @@
                 !!collapsedGutter && `vgutter-${collapsedGutter}`,
                 collapsedRtl && 'order-rtl',
                 columnsWrapped && 'columns-wrapped',
-                innerColFullH && 'inner-col-full-height'
             ].filter( Boolean ).join( ' ' );
 
             if (!columns) {
@@ -587,6 +585,17 @@
                     title: __( 'Vertical Align Bottom' ),
                     isActive: vAlign === 'bottom',
                     onClick: () => setAttributes( { vAlign: 'bottom' } )
+                },
+                {
+                    icon: (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 12 32">
+                            <polygon points="8,20 8,26 12,26 6,32 0,26 4,26 4,20"/>
+                            <polygon points="4,12 4,6 0,6 6,0 12,6 8,6 8,12"/>
+                        </svg>
+                    ),
+                    title: __( 'Inner Columns Full Height' ),
+                    isActive: vAlign === 'full',
+                    onClick: () => setAttributes( { vAlign: 'full' } )
                 },
             ];
             const MARGIN_PADDING_CONTROLS = [
@@ -798,11 +807,6 @@
                                     max={ contentMinHeightUnit === 'px' ? 2000 : 200 }
                                     onChange={ (value) => setAttributes( { contentMinHeight: value } ) }
                                 />
-                                <ToggleControl
-                                    label={ __( 'Inner Column Full Height' ) }
-                                    checked={ innerColFullH }
-                                    onChange={ () => setAttributes( { innerColFullH: !innerColFullH } ) }
-                                />
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
@@ -977,10 +981,6 @@
             type: 'string',
             default: 'div',
         },
-        innerColFullH: {
-            type: 'boolean',
-            default: false,
-        },
         colId: {
             type: 'string',
         },
@@ -1019,7 +1019,6 @@
                 contentMinHeight,
                 contentMinHeightUnit,
                 wrapperTag,
-                innerColFullH,
                 colId,
             } = attributes;
             const Tag = wrapperTag;
@@ -1036,7 +1035,6 @@
                 !!collapsedGutter && `vgutter-${collapsedGutter}`,
                 collapsedRtl && 'order-rtl',
                 columnsWrapped && 'columns-wrapped',
-                innerColFullH && 'inner-col-full-height'
             ].filter( Boolean ).join( ' ' );
 
             return (

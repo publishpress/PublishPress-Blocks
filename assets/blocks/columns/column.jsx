@@ -183,19 +183,21 @@
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
-                    <div className={ blockClasses }
-                         style={ {
-                             borderStyle, borderColor, borderWidth, borderRadius,
-                         } }
-                    >
-                        <InnerBlocks
-                            templateLock={ false }
-                            renderAppender={ (
-                                hasChildBlocks ?
-                                    undefined :
-                                    () => <InnerBlocks.ButtonBlockAppender />
-                            ) }
-                        />
+                    <div className={ blockClasses }>
+                        <div className="advgb-column-inner"
+                             style={ {
+                                 borderStyle, borderColor, borderWidth, borderRadius,
+                             } }
+                        >
+                            <InnerBlocks
+                                templateLock={ false }
+                                renderAppender={ (
+                                    hasChildBlocks ?
+                                        undefined :
+                                        () => <InnerBlocks.ButtonBlockAppender />
+                                ) }
+                            />
+                        </div>
                     </div>
                     <style>
                         {`#block-${clientId} .advgb-column.column {
@@ -347,10 +349,11 @@
                      style={ {
                          width: width ? width + '%' : undefined,
                          flex: width ? 'none' : undefined,
-                         borderStyle, borderColor, borderWidth, borderRadius,
                      } }
                 >
-                    <div className="advgb-column-inner">
+                    <div className="advgb-column-inner"
+                         style={ { borderStyle, borderColor, borderWidth, borderRadius, } }
+                    >
                         <InnerBlocks.Content />
                     </div>
                 </div>

@@ -5346,11 +5346,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     contentMaxWidthUnit = attributes.contentMaxWidthUnit,
                     contentMinHeight = attributes.contentMinHeight,
                     contentMinHeightUnit = attributes.contentMinHeightUnit,
-                    wrapperTag = attributes.wrapperTag,
-                    innerColFullH = attributes.innerColFullH;
+                    wrapperTag = attributes.wrapperTag;
 
 
-                var blockClasses = ['advgb-columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped', innerColFullH && 'inner-col-full-height'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
@@ -5430,6 +5429,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     isActive: vAlign === 'bottom',
                     onClick: function onClick() {
                         return setAttributes({ vAlign: 'bottom' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        "svg",
+                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 12 32" },
+                        React.createElement("polygon", { points: "8,20 8,26 12,26 6,32 0,26 4,26 4,20" }),
+                        React.createElement("polygon", { points: "4,12 4,6 0,6 6,0 12,6 8,6 8,12" })
+                    ),
+                    title: __('Inner Columns Full Height'),
+                    isActive: vAlign === 'full',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'full' });
                     }
                 }];
                 var MARGIN_PADDING_CONTROLS = [{ label: 'Top', icon: 'arrow-up-alt2' }, { label: 'Right', icon: 'arrow-right-alt2' }, { label: 'Bottom', icon: 'arrow-down-alt2' }, { label: 'Left', icon: 'arrow-left-alt2' }];
@@ -5674,13 +5685,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return setAttributes({ contentMinHeight: value });
                                     }
-                                }),
-                                React.createElement(ToggleControl, {
-                                    label: __('Inner Column Full Height'),
-                                    checked: innerColFullH,
-                                    onChange: function onChange() {
-                                        return setAttributes({ innerColFullH: !innerColFullH });
-                                    }
                                 })
                             )
                         )
@@ -5850,10 +5854,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'div'
         },
-        innerColFullH: {
-            type: 'boolean',
-            default: false
-        },
         colId: {
             type: 'string'
         },
@@ -5894,12 +5894,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 contentMinHeight = attributes.contentMinHeight,
                 contentMinHeightUnit = attributes.contentMinHeightUnit,
                 wrapperTag = attributes.wrapperTag,
-                innerColFullH = attributes.innerColFullH,
                 colId = attributes.colId;
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped', innerColFullH && 'inner-col-full-height'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,
@@ -6185,17 +6184,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: blockClasses,
-                            style: {
-                                borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius
-                            }
-                        },
-                        React.createElement(InnerBlocks, {
-                            templateLock: false,
-                            renderAppender: hasChildBlocks ? undefined : function () {
-                                return React.createElement(InnerBlocks.ButtonBlockAppender, null);
-                            }
-                        })
+                        { className: blockClasses },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-column-inner",
+                                style: {
+                                    borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius
+                                }
+                            },
+                            React.createElement(InnerBlocks, {
+                                templateLock: false,
+                                renderAppender: hasChildBlocks ? undefined : function () {
+                                    return React.createElement(InnerBlocks.ButtonBlockAppender, null);
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         "style",
@@ -6329,13 +6332,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     id: colId,
                     style: {
                         width: width ? width + '%' : undefined,
-                        flex: width ? 'none' : undefined,
-                        borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius
+                        flex: width ? 'none' : undefined
                     }
                 },
                 React.createElement(
                     "div",
-                    { className: "advgb-column-inner" },
+                    { className: "advgb-column-inner",
+                        style: { borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius }
+                    },
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
