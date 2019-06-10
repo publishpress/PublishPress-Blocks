@@ -8080,13 +8080,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 if (!infoWindow) {
                     infoWindow = new google.maps.InfoWindow({
-                        content: "<div class=\"advgbmap-wrapper\">\n                    <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                    <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n                </div>",
+                        content: "<div class=\"advgbmap-wrapper\">\n                    <h3 class=\"advgbmap-title\">" + markerTitle + "</h3>\n                    <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n                </div>",
                         maxWidth: 500
                     });
                     this.setState({ currentInfo: infoWindow });
                 }
 
-                infoWindow.setContent("<div class=\"advgbmap-wrapper\">\n                <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n            </div>");
+                infoWindow.setContent("<div class=\"advgbmap-wrapper\">\n                <h3 class=\"advgbmap-title\">" + markerTitle + "</h3>\n                <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n            </div>");
 
                 if (!marker) {
                     marker = new google.maps.Marker({
@@ -8499,7 +8499,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
             var formattedTitle = markerTitle.replace(/'/, '\\\'');
             var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-            var infoWindowHtml = '' + '<div class="advgbmap-wrapper">' + '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' + '<p class="advgbmap-desc">' + formattedDesc + '</p>' + '</div>';
             var mapStyleApply = MAP_STYLES[mapStyle];
             if (mapStyle === 'custom') {
                 try {
@@ -8525,8 +8524,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     "data-lng": lng,
                     "data-zoom": zoom,
                     "data-title": formattedTitle,
+                    "data-desc": formattedDesc,
                     "data-icon": markerIcon,
-                    "data-info": encodeURIComponent(infoWindowHtml),
                     "data-style": encodeURIComponent(mapStyleApply)
                 })
             );
@@ -8575,42 +8574,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return React.createElement(
                     "div",
                     { className: "advgb-map-block", style: { margin: '10px auto' } },
-                    React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
-                    React.createElement(
-                        "script",
-                        { type: "text/javascript" },
-                        "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var contentHtml = '" + infoWindowHtml + "';\n                        var mapStyle = '" + mapStyleApply + "';\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: contentHtml\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
-                    )
-                );
-            }
-        }, {
-            attributes: mapBlockAttrs,
-            save: function save(_ref4) {
-                var attributes = _ref4.attributes;
-                var mapID = attributes.mapID,
-                    lat = attributes.lat,
-                    lng = attributes.lng,
-                    zoom = attributes.zoom,
-                    height = attributes.height,
-                    markerIcon = attributes.markerIcon,
-                    markerTitle = attributes.markerTitle,
-                    markerDesc = attributes.markerDesc;
-
-
-                var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
-                var formattedTitle = markerTitle.replace(/'/, '\\\'');
-                var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-                var infoWindowHtml = "<div class=\"advgbmap-wrapper\"><h2 class=\"advgbmap-title\">" + formattedTitle + "</h2><p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p></div>";
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-map-block", style: { margin: '10px auto' } },
-                    React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
-                    React.createElement(
-                        "script",
-                        { type: "text/javascript" },
-                        "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: '" + infoWindowHtml + "'\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
-                    )
+                    React.createElement("div", { className: "advgb-map-content",
+                        id: mapID,
+                        style: { height: height },
+                        "data-default": DEFAULT_MARKER,
+                        "data-lat": lat,
+                        "data-lng": lng,
+                        "data-zoom": zoom,
+                        "data-title": formattedTitle,
+                        "data-icon": markerIcon,
+                        "data-info": encodeURIComponent(infoWindowHtml),
+                        "data-style": encodeURIComponent(mapStyleApply)
+                    })
                 );
             }
         }]
