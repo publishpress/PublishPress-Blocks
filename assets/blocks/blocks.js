@@ -6207,14 +6207,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 opacity: alwaysShowOverlay ? 0.5 : undefined
                                             }
                                         }),
-                                        React.createElement(
+                                        image.title && React.createElement(
                                             "h4",
                                             { className: "advgb-image-slider-title",
                                                 style: { color: titleColor }
                                             },
                                             image.title
                                         ),
-                                        React.createElement(
+                                        image.text && React.createElement(
                                             "p",
                                             { className: "advgb-image-slider-text",
                                                 style: { color: textColor }
@@ -6476,14 +6476,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         opacity: alwaysShowOverlay ? 0.5 : undefined
                                     }
                                 }),
-                                React.createElement(
+                                image.title && React.createElement(
                                     "h4",
                                     { className: "advgb-image-slider-title",
                                         style: { color: titleColor }
                                     },
                                     image.title
                                 ),
-                                React.createElement(
+                                image.text && React.createElement(
                                     "p",
                                     { className: "advgb-image-slider-text",
                                         style: { color: textColor }
@@ -6543,6 +6543,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement("a", { className: "advgb-image-slider-overlay",
                                         target: "_blank",
+                                        rel: "noopener noreferrer",
                                         href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
                                         style: {
                                             backgroundColor: hoverColor,
