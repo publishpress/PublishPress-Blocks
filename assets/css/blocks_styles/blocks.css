@@ -1650,6 +1650,10 @@ form .advgb-grecaptcha > div {
     .advgb-columns.tbl-layout-stacked {
         flex-wrap: wrap;
     }
+
+    .advgb-columns.tbl-layout-stacked .advgb-column.column {
+        width: 100% !important;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -1665,6 +1669,10 @@ form .advgb-grecaptcha > div {
     .advgb-columns.mbl-layout-13x6,
     .advgb-columns.mbl-layout-stacked {
         flex-wrap: wrap;
+    }
+
+    .advgb-columns.mbl-layout-stacked .advgb-column.column {
+        width: 100% !important;
     }
 }
 
