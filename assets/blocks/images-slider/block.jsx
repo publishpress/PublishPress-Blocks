@@ -296,16 +296,20 @@
                                                   opacity: alwaysShowOverlay ? 0.5 : undefined,
                                               } }
                                         />
-                                        <h4 className="advgb-image-slider-title"
-                                            style={ { color: titleColor } }
-                                        >
-                                            { image.title }
-                                        </h4>
-                                        <p className="advgb-image-slider-text"
-                                           style={ { color: textColor } }
-                                        >
-                                            { image.text }
-                                        </p>
+                                        {image.title && (
+                                            <h4 className="advgb-image-slider-title"
+                                                style={ { color: titleColor } }
+                                            >
+                                                { image.title }
+                                            </h4>
+                                        ) }
+                                        {image.text && (
+                                            <p className="advgb-image-slider-text"
+                                               style={ { color: textColor } }
+                                            >
+                                                { image.text }
+                                            </p>
+                                        ) }
                                     </div>
                                 </div>
                             ) ) }
@@ -518,16 +522,20 @@
                                            opacity: alwaysShowOverlay ? 0.5 : undefined,
                                        } }
                                     />
-                                    <h4 className="advgb-image-slider-title"
-                                        style={ { color: titleColor } }
-                                    >
-                                        { image.title }
-                                    </h4>
-                                    <p className="advgb-image-slider-text"
-                                       style={ { color: textColor } }
-                                    >
-                                        { image.text }
-                                    </p>
+                                    {image.title && (
+                                        <h4 className="advgb-image-slider-title"
+                                            style={ { color: titleColor } }
+                                        >
+                                            { image.title }
+                                        </h4>
+                                    ) }
+                                    {image.text && (
+                                        <p className="advgb-image-slider-text"
+                                           style={ { color: textColor } }
+                                        >
+                                            { image.text }
+                                        </p>
+                                    ) }
                                 </div>
                             </div>
                         ) ) }
@@ -579,6 +587,7 @@
                                         >
                                             <a className="advgb-image-slider-overlay"
                                                target="_blank"
+                                               rel="noopener noreferrer"
                                                href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : undefined }
                                                style={ {
                                                    backgroundColor: hoverColor,

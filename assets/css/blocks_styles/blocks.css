@@ -21,6 +21,10 @@
     background: transparent;
 }
 
+.components-range-control .components-range-control__slider {
+    margin-left: 8px;
+}
+
 /*Accordion block styles*/
 #editor .advgb-accordion-block .advgb-accordion-header p.mce-content-body,
 #editor .advgb-accordion-block .advgb-accordion-body p.mce-content-body {
