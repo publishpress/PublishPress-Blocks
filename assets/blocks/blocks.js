@@ -5346,10 +5346,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     contentMaxWidthUnit = attributes.contentMaxWidthUnit,
                     contentMinHeight = attributes.contentMinHeight,
                     contentMinHeightUnit = attributes.contentMinHeightUnit,
-                    wrapperTag = attributes.wrapperTag;
+                    wrapperTag = attributes.wrapperTag,
+                    innerColFullH = attributes.innerColFullH;
 
 
-                var blockClasses = ['advgb-columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped', innerColFullH && 'inner-col-full-height'].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
@@ -5673,6 +5674,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return setAttributes({ contentMinHeight: value });
                                     }
+                                }),
+                                React.createElement(ToggleControl, {
+                                    label: __('Inner Column Full Height'),
+                                    checked: innerColFullH,
+                                    onChange: function onChange() {
+                                        return setAttributes({ innerColFullH: !innerColFullH });
+                                    }
                                 })
                             )
                         )
@@ -5842,6 +5850,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'div'
         },
+        innerColFullH: {
+            type: 'boolean',
+            default: false
+        },
         colId: {
             type: 'string'
         },
@@ -5882,11 +5894,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 contentMinHeight = attributes.contentMinHeight,
                 contentMinHeightUnit = attributes.contentMinHeightUnit,
                 wrapperTag = attributes.wrapperTag,
+                innerColFullH = attributes.innerColFullH,
                 colId = attributes.colId;
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped', innerColFullH && 'inner-col-full-height'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,

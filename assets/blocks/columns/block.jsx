@@ -506,6 +506,7 @@
                 contentMinHeight,
                 contentMinHeightUnit,
                 wrapperTag,
+                innerColFullH,
             } = attributes;
 
             const blockClasses = [
@@ -519,6 +520,7 @@
                 !!collapsedGutter && `vgutter-${collapsedGutter}`,
                 collapsedRtl && 'order-rtl',
                 columnsWrapped && 'columns-wrapped',
+                innerColFullH && 'inner-col-full-height'
             ].filter( Boolean ).join( ' ' );
 
             if (!columns) {
@@ -796,6 +798,11 @@
                                     max={ contentMinHeightUnit === 'px' ? 2000 : 200 }
                                     onChange={ (value) => setAttributes( { contentMinHeight: value } ) }
                                 />
+                                <ToggleControl
+                                    label={ __( 'Inner Column Full Height' ) }
+                                    checked={ innerColFullH }
+                                    onChange={ () => setAttributes( { innerColFullH: !innerColFullH } ) }
+                                />
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
@@ -970,6 +977,10 @@
             type: 'string',
             default: 'div',
         },
+        innerColFullH: {
+            type: 'boolean',
+            default: false,
+        },
         colId: {
             type: 'string',
         },
@@ -1008,6 +1019,7 @@
                 contentMinHeight,
                 contentMinHeightUnit,
                 wrapperTag,
+                innerColFullH,
                 colId,
             } = attributes;
             const Tag = wrapperTag;
@@ -1024,6 +1036,7 @@
                 !!collapsedGutter && `vgutter-${collapsedGutter}`,
                 collapsedRtl && 'order-rtl',
                 columnsWrapped && 'columns-wrapped',
+                innerColFullH && 'inner-col-full-height'
             ].filter( Boolean ).join( ' ' );
 
             return (
