@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @group php5.2
+ * @group php5.5
  */
-class installWP_php52Cest
+class installWP_php55Cest
 {
     public function _before(FunctionalTester $I)
     {
@@ -16,7 +16,7 @@ class installWP_php52Cest
     // tests
     public function InstallPlugin(FunctionalTester $I)
     {
-      $I->wantTo('Plugin should not install under php 5.2 and fails with graceful error');
+      $I->wantTo('Plugin should not install under php 5.5 and fails with graceful error');
       $I->loginAsAdmin('admin', 'password');
       $I->amOnPage('/wp-admin/plugins.php');
       $I->see('Plugins');
