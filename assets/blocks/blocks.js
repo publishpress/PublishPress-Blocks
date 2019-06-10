@@ -1583,7 +1583,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 'div',
                 { className: blockClassName,
                     style: {
-                        backgroundImage: 'url( ' + imageUrl + ')',
+                        backgroundImage: 'url(' + imageUrl + ')',
                         height: height,
                         width: width,
                         justifyContent: vAlign,
@@ -1597,12 +1597,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     rel: 'noopener noreferrer',
                     href: linkURL
                 }),
-                React.createElement(
+                title && React.createElement(
                     'h4',
                     { className: 'advgb-image-title', style: { color: titleColor } },
                     title
                 ),
-                React.createElement(
+                subtitle && React.createElement(
                     'p',
                     { className: 'advgb-image-subtitle', style: { color: subtitleColor } },
                     subtitle
@@ -1646,6 +1646,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement('a', { className: 'advgb-image-overlay',
                         style: { backgroundColor: overlayColor },
                         target: linkInNewTab ? '_blank' : '_self',
+                        rel: 'noopener noreferrer',
                         href: linkURL
                     }),
                     React.createElement(
