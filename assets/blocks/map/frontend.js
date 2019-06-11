@@ -16,12 +16,12 @@ window.addEventListener('load', function () {
             info = '',
             mapStyle = decodeURIComponent(elm.dataset.style);
 
-        if (!elm.dataset.info) {
-            info = '<div class="advgbmap-wrapper">' +
-                '<h3 class="advgbmap-title">' + title + '</h3>' +
-                '<p class="advgbmap-desc">'+ desc +'</p>' +
-            '</div>';
-        } else {
+        if (!elm.dataset.info && (desc || title) ) {
+            info = '<div class="advgbmap-wrapper">';
+            if (title) info += '<h3 class="advgbmap-title">' + title + '</h3>';
+            if (desc) info += '<p class="advgbmap-desc">'+ desc +'</p>';
+            info += '</div>';
+        } else if (elm.dataset.info) {
             info = decodeURIComponent(elm.dataset.info);
         }
 
@@ -36,9 +36,6 @@ window.addEventListener('load', function () {
             styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},
             gestureHandling: 'cooperative'
         });
-        var infoWindow = new google.maps.InfoWindow({
-            content: info
-        });
         var marker = new google.maps.Marker({
             position: location,
             map: map,
@@ -49,8 +46,14 @@ window.addEventListener('load', function () {
                 scaledSize: new google.maps.Size(27, 43)
             }
         });
-        marker.addListener('click', function () {
-            infoWindow.open(map, marker);
-        })
+
+        if (info) {
+            var infoWindow = new google.maps.InfoWindow({
+                content: info
+            });
+            marker.addListener('click', function () {
+                infoWindow.open(map, marker);
+            });
+        }
     }
 });
