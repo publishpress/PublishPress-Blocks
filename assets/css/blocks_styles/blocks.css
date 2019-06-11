@@ -1450,6 +1450,11 @@ form .advgb-grecaptcha > div {
     text-decoration: underline;
 }
 
+.wp-block-advgb-columns.advgb-columns-wrapper {
+    max-width: unset;
+    width: 100%;
+}
+
 .advgb-columns-wrapper .advgb-columns {
     margin: 0 auto;
 }
