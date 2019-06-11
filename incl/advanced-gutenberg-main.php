@@ -1444,7 +1444,7 @@ float: left;'
             'manage_options',
             'advgb_main',
             array($this, 'advgbMainView'),
-            'dashicons-edit'
+            'dashicons-layout'
         );
     }
 
