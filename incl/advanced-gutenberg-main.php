@@ -3114,14 +3114,22 @@ float: left;'
      */
     public function contentPreRender($content)
     {
-        // Search for Button and List blocks then add styles to it
+        // Search for needed blocks then add styles to it
         preg_match_all(
-            '/(<!-- wp:advgb\/(list|button|column)).*?(\/wp:advgb\/(list|button|column) -->)/mis',
+            '/(<!-- wp:advgb\/(list|button|columns)).*?(\/wp:advgb\/(list|button|columns) -->)/mis',
             $content,
             $matches
         );
 
+        // Style for column
+        preg_match_all(
+            '/(<!-- wp:advgb\/(column\b)).*?(\/wp:advgb\/column\b -->)/mis',
+            $content,
+            $column_data
+        );
+
         $content .= $this->addBlocksStyles($matches);
+        $content .= $this->addBlocksStyles($column_data);
 
         return $content;
     }
@@ -3435,6 +3443,7 @@ float: left;'
                             }
 
                             $style_html .= '#'. $colID . '{';
+                            $style_html .= isset($style_data_array['textAlign']) ? 'text-align:'.$style_data_array['textAlign'].';' : '';
                             $style_html .= isset($style_data_array['marginTop']) ? 'margin-top:'.$style_data_array['marginTop'].'px;' : '';
                             $style_html .= isset($style_data_array['marginRight']) ? 'margin-right:'.$style_data_array['marginRight'].'px;' : '';
                             $style_html .= isset($style_data_array['marginBottom']) ? 'margin-bottom:'.$style_data_array['marginBottom'].'px;' : '';
@@ -3462,6 +3471,7 @@ float: left;'
                             // Styles for mobile
                             $style_html .= '@media screen and (max-width: 767px) {';
                             $style_html .=  '#'. $colID . '{';
+                            $style_html .= isset($style_data_array['textAlignM']) ? 'text-align:'.$style_data_array['textAlignM'].';' : '';
                             $style_html .= isset($style_data_array['marginTopM']) ? 'margin-top:'.$style_data_array['marginTopM'].'px;' : '';
                             $style_html .= isset($style_data_array['marginRightM']) ? 'margin-right:'.$style_data_array['marginRightM'].'px;' : '';
                             $style_html .= isset($style_data_array['marginBottomM']) ? 'margin-bottom:'.$style_data_array['marginBottomM'].'px;' : '';
