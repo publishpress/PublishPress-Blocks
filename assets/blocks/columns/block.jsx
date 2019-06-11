@@ -476,7 +476,7 @@
                 classes = classes.map((cls) => cls.filter( Boolean ).join( ' ' ));
                 classes.map(
                     ( cls, idx ) =>
-                        (!!childBlocks[idx]) && updateBlockAttributes( childBlocks[idx], { columnClasses: cls } )
+                        (!!childBlocks[idx]) && updateBlockAttributes( childBlocks[idx], { columnClasses: cls, width: 0 } )
                 );
             }
         }

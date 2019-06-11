@@ -5056,7 +5056,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return cls.filter(Boolean).join(' ');
                     });
                     classes.map(function (cls, idx) {
-                        return !!childBlocks[idx] && updateBlockAttributes(childBlocks[idx], { columnClasses: cls });
+                        return !!childBlocks[idx] && updateBlockAttributes(childBlocks[idx], { columnClasses: cls, width: 0 });
                     });
                 }
             }
