@@ -5621,7 +5621,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         title: __('Columns Manager'),
         description: __('Row layout with columns you decided.'),
         icon: {
-            src: columnsBlockIcon,
+            src: 'layout',
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
