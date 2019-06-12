@@ -62,9 +62,15 @@
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
             } = attributes;
-            const { getBlockOrder, getBlockRootClientId  } = select( 'core/block-editor' );
+            const { getBlockOrder, getBlockRootClientId, getBlockAttributes  } = select( 'core/block-editor' );
             const hasChildBlocks = getBlockOrder( clientId ).length > 0;
             const rootBlockId = getBlockRootClientId( clientId );
+            const rootChildBlocks = getBlockOrder(rootBlockId).filter( blockId => blockId !== clientId );
+            let avaiWidth = 100;
+            rootChildBlocks.map( ( blockId ) => {
+                const width = getBlockAttributes(blockId).width || 0;
+                avaiWidth -= parseInt(width);
+            } );
 
             const blockClasses = [
                 'advgb-column',
@@ -79,11 +85,14 @@
                     <InspectorControls>
                         <PanelBody title={ __( 'Column Settings' ) }>
                             <RangeControl
-                                label={ __( 'Width (%)' ) }
+                                label={ [
+                                    __( 'Width (%)' ),
+                                    <span key="width" style={ { color: 'red', marginLeft: 10 } }>{ __( 'Available: ' ) + avaiWidth + '%' }</span>
+                                ] }
                                 help={ __( 'Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!' ) }
                                 value={ width }
                                 min={ 0 }
-                                max={ 100 }
+                                max={ avaiWidth }
                                 onChange={ (value) => setAttributes( { width: value } ) }
                             />
                             <PanelBody title={ __( 'Border Settings' ) }>

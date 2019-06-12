@@ -5782,10 +5782,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var _select = select('core/block-editor'),
                     getBlockOrder = _select.getBlockOrder,
-                    getBlockRootClientId = _select.getBlockRootClientId;
+                    getBlockRootClientId = _select.getBlockRootClientId,
+                    getBlockAttributes = _select.getBlockAttributes;
 
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
                 var rootBlockId = getBlockRootClientId(clientId);
+                var rootChildBlocks = getBlockOrder(rootBlockId).filter(function (blockId) {
+                    return blockId !== clientId;
+                });
+                var avaiWidth = 100;
+                rootChildBlocks.map(function (blockId) {
+                    var width = getBlockAttributes(blockId).width || 0;
+                    avaiWidth -= parseInt(width);
+                });
 
                 var blockClasses = ['advgb-column', 'column'].filter(Boolean).join(' ');
 
@@ -5802,11 +5811,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             PanelBody,
                             { title: __('Column Settings') },
                             React.createElement(RangeControl, {
-                                label: __('Width (%)'),
+                                label: [__('Width (%)'), React.createElement(
+                                    "span",
+                                    { key: "width", style: { color: 'red', marginLeft: 10 } },
+                                    __('Available: ') + avaiWidth + '%'
+                                )],
                                 help: __('Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!'),
                                 value: width,
                                 min: 0,
-                                max: 100,
+                                max: avaiWidth,
                                 onChange: function onChange(value) {
                                     return setAttributes({ width: value });
                                 }
