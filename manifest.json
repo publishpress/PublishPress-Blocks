@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "1.10.12",
+  "version": "2.0.0",
   "platform": "wordpress",
   "wp_version": "5.2.1",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,28 @@
     ]
   },
   "changelog": {
+    "2.0.0": [
+      {
+        "type": "feature",
+        "title": "New block: Columns Manager"
+      },
+      {
+        "type": "feature",
+        "title": "Drop support for PHP version < 5.6.20"
+      },
+      {
+        "type": "feature",
+        "title": "Completely remove custom columns and custom separator block"
+      },
+      {
+        "type": "fix",
+        "title": "Map block not showing on IE"
+      },
+      {
+        "type": "fix",
+        "title": "Remove empty html element on Map block, Image Slider block, Adv Image block"
+      }
+    ],
     "1.10.12": [
       {
         "type": "feature",
