@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, PanelColorSettings, AlignmentToolbar } = wpEditor;
+    const { InspectorControls, PanelColorSettings, AlignmentToolbar } = wpBlockEditor;
     const { PanelBody, RangeControl, BaseControl, SelectControl } = wpComponents;
     const { select } = wp.data;
     const { InnerBlocks } = wp.blockEditor;
@@ -370,4 +370,4 @@
             );
         },
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

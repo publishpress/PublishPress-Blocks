@@ -4578,15 +4578,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls,
-        PanelColorSettings = wpEditor.PanelColorSettings,
-        InnerBlocks = wpEditor.InnerBlocks;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        InnerBlocks = wpBlockEditor.InnerBlocks;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
@@ -5670,7 +5670,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -5694,14 +5694,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        PanelColorSettings = wpEditor.PanelColorSettings,
-        AlignmentToolbar = wpEditor.AlignmentToolbar;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        AlignmentToolbar = wpBlockEditor.AlignmentToolbar;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         BaseControl = wpComponents.BaseControl,
@@ -6112,7 +6112,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -10610,7 +10610,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Fragment,
         null,
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
+        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11 C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81 C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65 c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1 s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
     );
 
     var socialBlockIcon = React.createElement(
