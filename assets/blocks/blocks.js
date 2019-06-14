@@ -5701,13 +5701,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var InspectorControls = wpEditor.InspectorControls,
         PanelColorSettings = wpEditor.PanelColorSettings,
-        InnerBlocks = wpEditor.InnerBlocks,
         AlignmentToolbar = wpEditor.AlignmentToolbar;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl;
     var select = wp.data.select;
+    var InnerBlocks = wp.blockEditor.InnerBlocks;
 
 
     var columnsBlockIcon = React.createElement(

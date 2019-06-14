@@ -2,9 +2,10 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, PanelColorSettings, InnerBlocks, AlignmentToolbar } = wpEditor;
+    const { InspectorControls, PanelColorSettings, AlignmentToolbar } = wpEditor;
     const { PanelBody, RangeControl, BaseControl, SelectControl } = wpComponents;
     const { select } = wp.data;
+    const { InnerBlocks } = wp.blockEditor;
 
     const columnsBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
