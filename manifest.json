@@ -45,6 +45,10 @@
       },
       {
         "type": "feature",
+        "title": "Compatible with Gutenberg v5.9"
+      },
+      {
+        "type": "feature",
         "title": "Drop support for PHP version < 5.6.20"
       },
       {
