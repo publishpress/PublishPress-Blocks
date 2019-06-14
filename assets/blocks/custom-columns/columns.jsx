@@ -1,8 +1,8 @@
-(function ( wpI18n, wpHooks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpHooks, wpElement, wpBlockEditor, wpComponents ) {
     const { addFilter } = wpHooks;
     const { __ } = wpI18n;
     const { Fragment } = wpElement;
-    const { InspectorControls } = wpEditor;
+    const { InspectorControls } = wpBlockEditor;
     const { PanelBody, Button } = wpComponents;
 
     // Register extra attributes
@@ -99,4 +99,4 @@
 
         return SaveElm;
     } );
-})( wp.i18n, wp.hooks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.hooks, wp.element, wp.blockEditor, wp.components );

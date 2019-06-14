@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents, wpData, wpHooks ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, wpHooks ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, getBlockContent, createBlock } = wpBlocks;
-    const { BlockControls, InspectorControls, InspectorAdvancedControls, PanelColorSettings, BlockAlignmentToolbar } = wpEditor;
+    const { BlockControls, InspectorControls, InspectorAdvancedControls, PanelColorSettings, BlockAlignmentToolbar } = wpBlockEditor;
     const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody } = wpComponents;
     const { select, dispatch } = wpData;
     const { addFilter } = wpHooks;
@@ -358,4 +358,4 @@
             return props;
         },
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components, wp.data, wp.hooks );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, wp.hooks );

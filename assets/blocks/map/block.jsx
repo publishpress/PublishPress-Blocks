@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, MediaUpload } = wpEditor;
+    const { InspectorControls, MediaUpload } = wpBlockEditor;
     const { PanelBody, TextControl, TextareaControl, RangeControl, SelectControl, BaseControl, Button, Placeholder, Spinner } = wpComponents;
 
     let mapWillUpdate = null;
@@ -1632,4 +1632,4 @@
             }
         ]
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

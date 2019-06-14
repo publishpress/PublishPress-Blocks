@@ -1,7 +1,7 @@
-(function ( wpI18n, wpHooks, wpEditor, wpComponents ) {
+(function ( wpI18n, wpHooks, wpBlockEditor, wpComponents ) {
     const { addFilter } = wpHooks;
     const { __ } = wpI18n;
-    const { InspectorControls } = wpEditor;
+    const { InspectorControls } = wpBlockEditor;
     const { PanelBody, Button } = wpComponents;
 
     // Register extra attributes to separator blocks
@@ -84,4 +84,4 @@
 
         return extraProps;
     } );
-})( wp.i18n, wp.hooks, wp.editor, wp.components );
+})( wp.i18n, wp.hooks, wp.blockEditor, wp.components );
