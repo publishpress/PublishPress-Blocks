@@ -4552,7 +4552,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -6112,7 +6112,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
 
 /***/ }),
 
