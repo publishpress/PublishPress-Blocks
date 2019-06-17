@@ -69,6 +69,7 @@ function advgbRenderBlockRecentPosts($attributes)
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
             'category' => empty($attributes['category'])?0:$attributes['category'],
+            'suppress_filters' => false,
         ),
         OBJECT
     );
