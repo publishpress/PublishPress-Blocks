@@ -61,6 +61,10 @@
       },
       {
         "type": "fix",
+        "title": "Recent Posts block: Compatible with WPML"
+      },
+      {
+        "type": "fix",
         "title": "Remove empty html element on Map block, Image Slider block, Adv Image block"
       }
     ],
