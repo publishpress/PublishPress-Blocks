@@ -255,8 +255,9 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 }
 
 .advgb-icon-item > span.remove-icon {
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
+    border: 1px dashed #333;
 }
 
 /*Advanced Table block styles*/
