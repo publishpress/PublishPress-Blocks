@@ -99,16 +99,17 @@
     min-width: 25%;
     text-align: center;
     margin: 5px 0;
-    cursor: pointer;
 }
 
 .advgb-icon-item > span {
     display: inline-block;
-    height: 24px;
+    line-height: 0.9;
+    border-radius: 4px;
+    padding: 3px;
+    cursor: pointer;
 }
 
 .advgb-icon-item .active {
-    outline: 1px solid #ccc;
     background-color: #ddd;
 }
 
@@ -250,7 +251,7 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 }
 
 .advgb-icon-item.h20 > span {
-    height: 20px;
+    /*height: 20px;*/
 }
 
 .advgb-icon-item > span.remove-icon {
