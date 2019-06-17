@@ -228,35 +228,35 @@
                                         </Tooltip>
                                     </div>
                                 ) ) }
-                                <BaseControl label={ __( 'Custom icon' ) }>
-                                    <MediaUpload
-                                        allowedTypes={ ["image"] }
-                                        value={ items[currentSelected].iconID }
-                                        onSelect={ (media) => {
-                                            let newItems = items.map( (item, index) => {
-                                                if (index === currentSelected) {
-                                                    item = {
-                                                        ...item,
-                                                        icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                                        iconID: media.id,
-                                                    };
-                                                }
-                                                return item;
-                                            } );
-
-                                            setAttributes( { items: newItems } )
-                                        } }
-                                        render={ ( { open } ) => (
-                                            <Button
-                                                className="button button-large"
-                                                onClick={ open }
-                                            >
-                                                { __( 'Upload/Choose' ) }
-                                            </Button>
-                                        ) }
-                                    />
-                                </BaseControl>
                             </div>
+                            <BaseControl label={ __( 'Custom icon' ) }>
+                                <MediaUpload
+                                    allowedTypes={ ["image"] }
+                                    value={ items[currentSelected].iconID }
+                                    onSelect={ (media) => {
+                                        let newItems = items.map( (item, index) => {
+                                            if (index === currentSelected) {
+                                                item = {
+                                                    ...item,
+                                                    icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                                    iconID: media.id,
+                                                };
+                                            }
+                                            return item;
+                                        } );
+
+                                        setAttributes( { items: newItems } )
+                                    } }
+                                    render={ ( { open } ) => (
+                                        <Button
+                                            className="button button-large"
+                                            onClick={ open }
+                                        >
+                                            { __( 'Upload/Choose' ) }
+                                        </Button>
+                                    ) }
+                                />
+                            </BaseControl>
                             <PanelColorSettings
                                 title={ __( 'Preset Icon Color' ) }
                                 initialOpen={ false }

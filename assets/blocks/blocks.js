@@ -10915,39 +10915,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             )
                                         )
                                     );
-                                }),
-                                React.createElement(
-                                    BaseControl,
-                                    { label: __('Custom icon') },
-                                    React.createElement(MediaUpload, {
-                                        allowedTypes: ["image"],
-                                        value: items[currentSelected].iconID,
-                                        onSelect: function onSelect(media) {
-                                            var newItems = items.map(function (item, index) {
-                                                if (index === currentSelected) {
-                                                    item = _extends({}, item, {
-                                                        icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                                        iconID: media.id
-                                                    });
-                                                }
-                                                return item;
-                                            });
+                                })
+                            ),
+                            React.createElement(
+                                BaseControl,
+                                { label: __('Custom icon') },
+                                React.createElement(MediaUpload, {
+                                    allowedTypes: ["image"],
+                                    value: items[currentSelected].iconID,
+                                    onSelect: function onSelect(media) {
+                                        var newItems = items.map(function (item, index) {
+                                            if (index === currentSelected) {
+                                                item = _extends({}, item, {
+                                                    icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                                    iconID: media.id
+                                                });
+                                            }
+                                            return item;
+                                        });
 
-                                            setAttributes({ items: newItems });
-                                        },
-                                        render: function render(_ref) {
-                                            var open = _ref.open;
-                                            return React.createElement(
-                                                Button,
-                                                {
-                                                    className: "button button-large",
-                                                    onClick: open
-                                                },
-                                                __('Upload/Choose')
-                                            );
-                                        }
-                                    })
-                                )
+                                        setAttributes({ items: newItems });
+                                    },
+                                    render: function render(_ref) {
+                                        var open = _ref.open;
+                                        return React.createElement(
+                                            Button,
+                                            {
+                                                className: "button button-large",
+                                                onClick: open
+                                            },
+                                            __('Upload/Choose')
+                                        );
+                                    }
+                                })
                             ),
                             React.createElement(PanelColorSettings, {
                                 title: __('Preset Icon Color'),
