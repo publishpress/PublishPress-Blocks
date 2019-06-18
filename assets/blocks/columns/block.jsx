@@ -525,7 +525,7 @@
                 return (
                     <div className="advgb-columns-select-wrapper">
                         <div className="advgb-columns-select-title">
-                            { __( 'CHOOSE LAYOUT' ) }
+                            { __( 'Pick up a columns layout' ) }
                         </div>
                         <div className="advgb-columns-select-layout">
                             {COLUMNS_LAYOUTS.map( (layout, index) => {
