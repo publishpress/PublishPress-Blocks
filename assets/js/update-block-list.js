@@ -16,7 +16,8 @@ window.onload = function () {
                 name: block.name,
                 icon: block.icon.src,
                 title: block.title,
-                category: block.category
+                category: block.category,
+                parent: block.parent
             };
 
             var savedIcon = !!block.icon.src ? block.icon.src : block.icon;

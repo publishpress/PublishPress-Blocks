@@ -13359,7 +13359,8 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                         name: blocks[block].name,
                         icon: blocks[block].icon.src,
                         title: blocks[block].title,
-                        category: blocks[block].category
+                        category: blocks[block].category,
+                        parent: blocks[block].parent
                     };
 
                     var savedIcon = !!blocks[block].icon.src ? blocks[block].icon.src : blocks[block].icon;
