@@ -6002,7 +6002,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string'
         },
         borderWidth: {
-            type: 'number'
+            type: 'number',
+            default: 1
         },
         borderRadius: {
             type: 'number'
