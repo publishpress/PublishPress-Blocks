@@ -3071,13 +3071,142 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-contact-form' => array(
+                array(
+                    'label'    => __('Text Label', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Name placeholder', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'nameLabel',
+                        ),
+                        array(
+                            'title' => __('Email placeholder', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'emailLabel',
+                        ),
+                        array(
+                            'title' => __('Message placeholder', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'msgLabel',
+                        ),
+                        array(
+                            'title' => __('Submit label', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'submitLabel',
+                        ),
+                        array(
+                            'title' => __('Success text', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'successLabel',
+                        ),
+                        array(
+                            'title' => __('Error text', 'advanced-gutenberg'),
+                            'type'  => 'text',
+                            'name'  => 'alertLabel',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Input Color', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'bgColor',
+                        ),
+                        array(
+                            'title' => __('Text Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'textColor',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Border Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Border Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'borderColor',
+                        ),
+                        array(
+                            'title'   => __('Border Style', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'borderStyle',
+                            'options' => array(
+                                array(
+                                    'label' => __('Solid', 'advanced-gutenberg'),
+                                    'value' => 'solid',
+                                ),
+                                array(
+                                    'label' => __('Dashed', 'advanced-gutenberg'),
+                                    'value' => 'dashed',
+                                ),
+                                array(
+                                    'label' => __('Dotted', 'advanced-gutenberg'),
+                                    'value' => 'dotted',
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title' => __('Border Radius', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'borderRadius',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Submit Button Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Border and Text Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'submitColor',
+                        ),
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'submitBgColor',
+                        ),
+                        array(
+                            'title' => __('Border Radius', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'submitRadius',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title'   => __('Button Position', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'submitPosition',
+                            'options' => array(
+                                array(
+                                    'label' => __('Center', 'advanced-gutenberg'),
+                                    'value' => 'center',
+                                ),
+                                array(
+                                    'label' => __('Left', 'advanced-gutenberg'),
+                                    'value' => 'left',
+                                ),
+                                array(
+                                    'label' => __('Right', 'advanced-gutenberg'),
+                                    'value' => 'right',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
         $current_block = $block;
 
         if (!isset($blocks_settings_list[$current_block])) {
-            wp_die(esc_html(__('Config for this block is currently unsupported.', 'advanced-gutenberg')));
+            wp_die(esc_html(__('Config for this block is currently unsupported. It will coming in the future release.', 'advanced-gutenberg')));
             return;
         }
 
