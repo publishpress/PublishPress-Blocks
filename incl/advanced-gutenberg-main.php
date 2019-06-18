@@ -1961,7 +1961,7 @@ float: left;'
             'table', 'video', 'contact-form', 'container',
             'count-up','images-slider', 'map', 'newsletter',
             'recent-posts', 'social-links', 'summary', 'tabs',
-            'testimonial', 'woo-products',
+            'testimonial', 'woo-products', 'columns', 'column',
         );
 
         foreach ($advgb_block as $block) {
