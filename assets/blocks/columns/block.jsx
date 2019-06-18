@@ -687,7 +687,7 @@
                                 </div>
                                 {tabSelected === 'desktop' && (
                                     <SelectControl
-                                        label={ __( 'Columns Gutter' ) }
+                                        label={ __( 'Space between columns' ) }
                                         value={ gutter }
                                         options={ GUTTER_OPTIONS }
                                         onChange={ (value) => setAttributes( { gutter: parseInt(value) } ) }
@@ -696,7 +696,7 @@
                                 {tabSelected === 'mobile' && columnsLayoutM === 'stacked' && (
                                     <Fragment>
                                         <SelectControl
-                                            label={ __( 'Collapsed Vertical Gutter' ) }
+                                            label={ __( 'Vertical space when collapsed' ) }
                                             value={ collapsedGutter }
                                             options={ GUTTER_OPTIONS }
                                             onChange={ (value) => setAttributes( { collapsedGutter: parseInt(value) } ) }
@@ -753,7 +753,7 @@
                             <PanelBody title={ __( 'Row Settings' ) } initialOpen={ false }>
                                 <ToggleControl
                                     label={ __( 'Columns Wrapped' ) }
-                                    help={ __( 'If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Gutter).' ) }
+                                    help={ __( 'If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Spacing).' ) }
                                     checked={ columnsWrapped }
                                     onChange={ () => setAttributes( { columnsWrapped: !columnsWrapped } ) }
                                 />

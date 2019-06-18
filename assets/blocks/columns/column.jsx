@@ -88,7 +88,7 @@
                             <RangeControl
                                 label={ [
                                     __( 'Width (%)' ),
-                                    <span key="width" style={ { color: 'red', marginLeft: 10 } }>{ __( 'Available: ' ) + avaiWidth + '%' }</span>
+                                    <span key="width" style={ { color: 'green', marginLeft: 10 } }>{ __( 'Available: ' ) + avaiWidth + '%' }</span>
                                 ] }
                                 help={ __( 'Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!' ) }
                                 value={ width }
@@ -154,7 +154,7 @@
                                 } ) }
                             </div>
                             <BaseControl
-                                label={ AdvColumnEdit.jsUcfirst(tabSelected) + __( ' Text Alignment' ) }
+                                label={ AdvColumnEdit.jsUcfirst(tabSelected) + __( ' text alignment' ) }
                             >
                                 <AlignmentToolbar
                                     value={ attributes[ 'textAlign' + deviceLetter ] }

@@ -5283,7 +5283,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     })
                                 ),
                                 tabSelected === 'desktop' && React.createElement(SelectControl, {
-                                    label: __('Columns Gutter'),
+                                    label: __('Space between columns'),
                                     value: gutter,
                                     options: GUTTER_OPTIONS,
                                     onChange: function onChange(value) {
@@ -5294,7 +5294,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Fragment,
                                     null,
                                     React.createElement(SelectControl, {
-                                        label: __('Collapsed Vertical Gutter'),
+                                        label: __('Vertical space when collapsed'),
                                         value: collapsedGutter,
                                         options: GUTTER_OPTIONS,
                                         onChange: function onChange(value) {
@@ -5380,7 +5380,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { title: __('Row Settings'), initialOpen: false },
                                 React.createElement(ToggleControl, {
                                     label: __('Columns Wrapped'),
-                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Gutter).'),
+                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Spacing).'),
                                     checked: columnsWrapped,
                                     onChange: function onChange() {
                                         return setAttributes({ columnsWrapped: !columnsWrapped });
@@ -5813,7 +5813,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(RangeControl, {
                                 label: [__('Width (%)'), React.createElement(
                                     "span",
-                                    { key: "width", style: { color: 'red', marginLeft: 10 } },
+                                    { key: "width", style: { color: 'green', marginLeft: 10 } },
                                     __('Available: ') + avaiWidth + '%'
                                 )],
                                 help: __('Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!'),
@@ -5892,7 +5892,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 BaseControl,
                                 {
-                                    label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' Text Alignment')
+                                    label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' text alignment')
                                 },
                                 React.createElement(AlignmentToolbar, {
                                     value: attributes['textAlign' + deviceLetter],
