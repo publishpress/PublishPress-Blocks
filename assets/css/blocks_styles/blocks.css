@@ -1462,6 +1462,10 @@ form .advgb-grecaptcha > div {
     margin: 0 auto;
 }
 
+.advgb-columns-wrapper .advgb-columns .wp-block {
+    max-width: 100%;
+}
+
 .advgb-columns-wrapper .advgb-columns.columns-valign-middle {
     align-items: center;
 }
