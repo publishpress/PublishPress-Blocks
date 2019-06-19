@@ -18,16 +18,16 @@
     // Add button to insert summary inside table of contents component
     ( function () {
         jQuery( window ).on( 'load', function () {
-            if (typeof dispatch( 'core/block-editor' ) === 'undefined') {
+            if (typeof dispatch( 'core/editor' ) === 'undefined') {
                 return false;
             }
 
             const $ = jQuery;
-            const { insertBlock } = dispatch( 'core/block-editor' );
+            const { insertBlock } = dispatch( 'core/editor' );
             const summaryBlock = createBlock( 'advgb/summary' );
 
             $( '#editor' ).find( '.table-of-contents' ).click( function () {
-                const allBlocks = select( 'core/block-editor' ).getBlocks();
+                const allBlocks = select( 'core/editor' ).getBlocks();
                 const summaryBlockExist = !!allBlocks.filter( ( block ) => ( block.name === 'advgb/summary' ) ).length;
                 setTimeout( function () {
                     const summaryButton = $(
@@ -125,7 +125,7 @@
         updateSummary() {
             let headingDatas = [];
             let headingBlocks = [];
-            const allBlocks = select( 'core/block-editor' ).getBlocks();
+            const allBlocks = select( 'core/editor' ).getBlocks();
             const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'core/columns' ) );
             filteredBlocks.map(function ( block ) {
                 if (block.name === 'core/columns') {
@@ -188,7 +188,7 @@
 
             // Having heading blocks
             if (headings.length > 0) {
-                const { selectBlock } = dispatch( 'core/block-editor' );
+                const { selectBlock } = dispatch( 'core/editor' );
                 summaryContent = (
                     <ul className={'advgb-toc'}>
                         {headings.map( ( heading ) => {
@@ -228,7 +228,7 @@
                             <ToggleControl
                                 label={ __( 'Load minimized' ) }
                                 checked={ !!loadMinimized }
-                                onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/block-editor').getEditedPostAttribute('title') } ) }
+                                onChange={ () => setAttributes( { loadMinimized: !loadMinimized, postTitle: select('core/editor').getEditedPostAttribute('title') } ) }
                             />
                             {loadMinimized &&
                             <TextControl

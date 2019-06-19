@@ -11270,19 +11270,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     // Add button to insert summary inside table of contents component
     (function () {
         jQuery(window).on('load', function () {
-            if (typeof dispatch('core/block-editor') === 'undefined') {
+            if (typeof dispatch('core/editor') === 'undefined') {
                 return false;
             }
 
             var $ = jQuery;
 
-            var _dispatch = dispatch('core/block-editor'),
+            var _dispatch = dispatch('core/editor'),
                 insertBlock = _dispatch.insertBlock;
 
             var summaryBlock = createBlock('advgb/summary');
 
             $('#editor').find('.table-of-contents').click(function () {
-                var allBlocks = select('core/block-editor').getBlocks();
+                var allBlocks = select('core/editor').getBlocks();
                 var summaryBlockExist = !!allBlocks.filter(function (block) {
                     return block.name === 'advgb/summary';
                 }).length;
@@ -11370,7 +11370,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function updateSummary() {
                 var headingDatas = [];
                 var headingBlocks = [];
-                var allBlocks = select('core/block-editor').getBlocks();
+                var allBlocks = select('core/editor').getBlocks();
                 var filteredBlocks = allBlocks.filter(function (block) {
                     return block.name === 'core/heading' || block.name === 'core/columns';
                 });
@@ -11444,7 +11444,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // Having heading blocks
                 if (headings.length > 0) {
-                    var _dispatch2 = dispatch('core/block-editor'),
+                    var _dispatch2 = dispatch('core/editor'),
                         selectBlock = _dispatch2.selectBlock;
 
                     summaryContent = React.createElement(
@@ -11500,7 +11500,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Load minimized'),
                                 checked: !!loadMinimized,
                                 onChange: function onChange() {
-                                    return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/block-editor').getEditedPostAttribute('title') });
+                                    return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getEditedPostAttribute('title') });
                                 }
                             }),
                             loadMinimized && React.createElement(TextControl, {
