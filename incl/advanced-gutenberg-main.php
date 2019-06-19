@@ -3071,6 +3071,27 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-woo-products' => array(
+                array(
+                    'label'    => __('Layout Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Columns', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'columns',
+                            'min'   => 1,
+                            'max'   => 4,
+                        ),
+                        array(
+                            'title' => __('Number of Products', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'numberOfProducts',
+                            'min'   => 1,
+                            'max'   => 48,
+                        ),
+                    ),
+                ),
+            ),
             'advgb-contact-form' => array(
                 array(
                     'label'    => __('Text Label', 'advanced-gutenberg'),
