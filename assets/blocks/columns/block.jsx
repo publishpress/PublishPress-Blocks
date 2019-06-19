@@ -7,13 +7,6 @@
     const { times } = lodash;
     const { dispatch, select } = wp.data;
 
-    const columnsBlockIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-            <path d="M10 18h5V5h-5v13zm-6 0h5V5H4v13zM16 5v13h5V5h-5z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-        </svg>
-    );
-
     const COLUMNS_LAYOUTS = [
         { columns: 1, layout: '100', icon: '100', title: __( 'One' ) },
         { columns: 2, layout: '12-12', icon: '12-12', title: __( 'Two: 1/2 - 1/2' ) },

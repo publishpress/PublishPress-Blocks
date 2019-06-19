@@ -4600,13 +4600,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         select = _wp$data.select;
 
 
-    var columnsBlockIcon = React.createElement(
-        "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
-        React.createElement("path", { d: "M10 18h5V5h-5v13zm-6 0h5V5H4v13zM16 5v13h5V5h-5z" }),
-        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
-    );
-
     var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '12-12', icon: '12-12', title: __('Two: 1/2 - 1/2') }, { columns: 2, layout: '23-13', icon: '23-13', title: __('Two: 2/3 - 1/3') }, { columns: 2, layout: '13-23', icon: '13-23', title: __('Two: 1/3 - 2/3') }, { columns: 2, layout: '14-34', icon: '14-34', title: __('Two: 1/4 - 3/4') }, { columns: 2, layout: '34-14', icon: '34-14', title: __('Two: 3/4 - 1/4') }, { columns: 2, layout: '15-45', icon: '15-45', title: __('Two: 1/5 - 4/5') }, { columns: 2, layout: '45-15', icon: '45-15', title: __('Two: 4/5 - 1/5') }, { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __('Three: 1/3 - 1/3 - 1/3') }, { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __('Three: 1/2 - 1/4 - 1/4') }, { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __('Three: 1/4 - 1/4 - 1/2') }, { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __('Three: 1/4 - 1/2 - 1/4') }, { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __('Three: 1/5 - 3/5 - 1/5') }, { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __('Three: 3/5 - 1/5 - 1/5') }, { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __('Three: 1/5 - 1/5 - 3/5') }, { columns: 3, layout: '16-46-16', icon: '16-46-16', title: __('Three: 1/6 - 4/6 - 1/6') }, { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __('Four: 1/4 - 1/4 - 1/4 - 1/4') }, { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __('Four: 3/6 - 1/6 - 1/6 - 1/6') }, { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __('Four: 1/6 - 1/6 - 1/6 - 3/6') }, { columns: 4, layout: '15-15-15-25', icon: '15-15-15-25', title: __('Four: 1/5 - 1/5 - 1/5 - 2/5') }, { columns: 4, layout: '25-15-15-15', icon: '25-15-15-15', title: __('Four: 2/5 - 1/5 - 1/5 - 1/5') }, { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __('Five') }, { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __('Six') }];
     var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '100-12-12', title: __('Three: 100 - 1/2 - 1/2') }, { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __('Three: 1/2 - 1/2 - 100') }, { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __('Four: Two Columns') }, { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __('Six: Two Columns') }, { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __('Six: Three Columns') }];
     var COLUMNS_LAYOUTS_STACKED = {
@@ -4629,7 +4622,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvColumnsEdit, [{
-            key: "componentWillMount",
+            key: 'componentWillMount',
             value: function componentWillMount() {
                 var _props = this.props,
                     attributes = _props.attributes,
@@ -4639,7 +4632,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
-                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
                         Object.keys(currentBlockConfig).map(function (attribute) {
                             if (typeof attributes[attribute] === 'boolean') {
                                 attributes[attribute] = !!currentBlockConfig[attribute];
@@ -4654,7 +4647,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "componentDidMount",
+            key: 'componentDidMount',
             value: function componentDidMount() {
                 var _props2 = this.props,
                     attributes = _props2.attributes,
@@ -4667,7 +4660,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "componentDidUpdate",
+            key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
                 var _prevProps$attributes = prevProps.attributes,
                     prevLayout = _prevProps$attributes.columnsLayout,
@@ -5061,7 +5054,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "render",
+            key: 'render',
             value: function render() {
                 var _this2 = this;
 
@@ -5103,27 +5096,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     wrapperTag = attributes.wrapperTag;
 
 
-                var blockClasses = ['advgb-columns', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
-                        "div",
-                        { className: "advgb-columns-select-wrapper" },
+                        'div',
+                        { className: 'advgb-columns-select-wrapper' },
                         React.createElement(
-                            "div",
-                            { className: "advgb-columns-select-title" },
+                            'div',
+                            { className: 'advgb-columns-select-title' },
                             __('Pick up a columns layout')
                         ),
                         React.createElement(
-                            "div",
-                            { className: "advgb-columns-select-layout" },
+                            'div',
+                            { className: 'advgb-columns-select-layout' },
                             COLUMNS_LAYOUTS.map(function (layout, index) {
                                 return React.createElement(
                                     Tooltip,
                                     { text: layout.title, key: index },
                                     React.createElement(
-                                        "div",
-                                        { className: "advgb-columns-layout",
+                                        'div',
+                                        { className: 'advgb-columns-layout',
                                             onClick: function onClick() {
                                                 return setAttributes({
                                                     columns: layout.columns,
@@ -5131,7 +5124,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 });
                                             }
                                         },
-                                        React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                        React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
                                             alt: layout.layout
                                         })
                                     )
@@ -5150,10 +5143,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.push(COLUMNS_LAYOUTS_STACKED);
                 var VERT_ALIGNMENT_CONTROLS = [{
                     icon: React.createElement(
-                        "svg",
-                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" }),
-                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                        'svg',
+                        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '0 0 24 24' },
+                        React.createElement('path', { d: 'M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z' }),
+                        React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
                     ),
                     title: __('Vertical Align Top'),
                     isActive: vAlign === 'top',
@@ -5162,10 +5155,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     }
                 }, {
                     icon: React.createElement(
-                        "svg",
-                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z" }),
-                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                        'svg',
+                        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '0 0 24 24' },
+                        React.createElement('path', { d: 'M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z' }),
+                        React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
                     ),
                     title: __('Vertical Align Middle'),
                     isActive: vAlign === 'middle',
@@ -5174,10 +5167,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     }
                 }, {
                     icon: React.createElement(
-                        "svg",
-                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" }),
-                        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+                        'svg',
+                        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '0 0 24 24' },
+                        React.createElement('path', { d: 'M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z' }),
+                        React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
                     ),
                     title: __('Vertical Align Bottom'),
                     isActive: vAlign === 'bottom',
@@ -5186,10 +5179,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     }
                 }, {
                     icon: React.createElement(
-                        "svg",
-                        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 12 32" },
-                        React.createElement("polygon", { points: "8,20 8,26 12,26 6,32 0,26 4,26 4,20" }),
-                        React.createElement("polygon", { points: "4,12 4,6 0,6 6,0 12,6 8,6 8,12" })
+                        'svg',
+                        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '0 0 12 32' },
+                        React.createElement('polygon', { points: '8,20 8,26 12,26 6,32 0,26 4,26 4,20' }),
+                        React.createElement('polygon', { points: '4,12 4,6 0,6 6,0 12,6 8,6 8,12' })
                     ),
                     title: __('Inner Columns Full Height'),
                     isActive: vAlign === 'full',
@@ -5221,13 +5214,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 PanelBody,
                                 { title: __('Responsive Settings') },
                                 React.createElement(
-                                    "div",
-                                    { className: "advgb-columns-responsive-items" },
+                                    'div',
+                                    { className: 'advgb-columns-responsive-items' },
                                     ['desktop', 'tablet', 'mobile'].map(function (device, index) {
                                         var itemClasses = ["advgb-columns-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
 
                                         return React.createElement(
-                                            "div",
+                                            'div',
                                             { className: itemClasses,
                                                 key: index,
                                                 onClick: function onClick() {
@@ -5239,8 +5232,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     })
                                 ),
                                 React.createElement(
-                                    "div",
-                                    { className: "advgb-columns-select-layout on-inspector" },
+                                    'div',
+                                    { className: 'advgb-columns-select-layout on-inspector' },
                                     COLUMNS_LAYOUTS_FILTERED.map(function (layout, index) {
                                         var layoutClasses = ['advgb-columns-layout', tabSelected === 'desktop' && layout.layout === columnsLayout && 'is-selected', tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected', tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected'].filter(Boolean).join(' ');
 
@@ -5248,14 +5241,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             Tooltip,
                                             { text: layout.title, key: index },
                                             React.createElement(
-                                                "div",
+                                                'div',
                                                 { className: layoutClasses,
                                                     onClick: function onClick() {
                                                         setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
                                                         _this2.setState({ random: Math.random() });
                                                     }
                                                 },
-                                                React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                                React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
                                                     alt: layout.layout
                                                 })
                                             )
@@ -5268,14 +5261,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             Tooltip,
                                             { text: layout.title, key: index },
                                             React.createElement(
-                                                "div",
+                                                'div',
                                                 { className: layoutClasses,
                                                     onClick: function onClick() {
                                                         setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
                                                         _this2.setState({ random: Math.random() });
                                                     }
                                                 },
-                                                React.createElement("img", { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                                React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
                                                     alt: layout.layout
                                                 })
                                             )
@@ -5315,8 +5308,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         initialOpen: false
                                     },
                                     React.createElement(
-                                        "div",
-                                        { className: "advgb-controls-title" },
+                                        'div',
+                                        { className: 'advgb-controls-title' },
                                         __('Unit (px)')
                                     ),
                                     MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
@@ -5338,20 +5331,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         initialOpen: false
                                     },
                                     React.createElement(
-                                        "div",
-                                        { className: "advgb-controls-title" },
+                                        'div',
+                                        { className: 'advgb-controls-title' },
                                         React.createElement(
-                                            "span",
+                                            'span',
                                             null,
                                             __('Unit')
                                         ),
                                         React.createElement(
-                                            "div",
-                                            { className: "advgb-unit-wrapper", key: "unit" },
+                                            'div',
+                                            { className: 'advgb-unit-wrapper', key: 'unit' },
                                             ['px', 'em', 'vh', '%'].map(function (unit, idx) {
                                                 return React.createElement(
-                                                    "span",
-                                                    { className: "advgb-unit " + (marginUnit === unit ? 'selected' : ''), key: idx,
+                                                    'span',
+                                                    { className: 'advgb-unit ' + (marginUnit === unit ? 'selected' : ''), key: idx,
                                                         onClick: function onClick() {
                                                             return setAttributes({ marginUnit: unit });
                                                         }
@@ -5396,12 +5389,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(RangeControl, {
                                     label: [__('Content Max Width'), React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        'div',
+                                        { className: 'advgb-unit-wrapper', key: 'unit' },
                                         ['px', 'vw', '%'].map(function (unit, idx) {
                                             return React.createElement(
-                                                "span",
-                                                { className: "advgb-unit " + (contentMaxWidthUnit === unit ? 'selected' : ''), key: idx,
+                                                'span',
+                                                { className: 'advgb-unit ' + (contentMaxWidthUnit === unit ? 'selected' : ''), key: idx,
                                                     onClick: function onClick() {
                                                         return setAttributes({ contentMaxWidthUnit: unit });
                                                     }
@@ -5419,12 +5412,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(RangeControl, {
                                     label: [__('Content Min Height'), React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        'div',
+                                        { className: 'advgb-unit-wrapper', key: 'unit' },
                                         ['px', 'vw', 'vh'].map(function (unit, idx) {
                                             return React.createElement(
-                                                "span",
-                                                { className: "advgb-unit " + (contentMinHeightUnit === unit ? 'selected' : ''), key: idx,
+                                                'span',
+                                                { className: 'advgb-unit ' + (contentMinHeightUnit === unit ? 'selected' : ''), key: idx,
                                                     onClick: function onClick() {
                                                         return setAttributes({ contentMinHeightUnit: unit });
                                                     }
@@ -5444,35 +5437,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         )
                     ),
                     React.createElement(
-                        "div",
-                        { className: "advgb-columns-wrapper" },
+                        'div',
+                        { className: 'advgb-columns-wrapper' },
                         React.createElement(
-                            "div",
+                            'div',
                             { className: blockClasses,
                                 style: {
-                                    maxWidth: !!contentMaxWidth ? "" + contentMaxWidth + contentMaxWidthUnit : undefined,
-                                    minHeight: !!contentMinHeight ? "" + contentMinHeight + contentMinHeightUnit : undefined
+                                    maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
+                                    minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined
                                 }
                             },
                             React.createElement(InnerBlocks, {
                                 template: times(parseInt(columns), function () {
                                     return ['advgb/column'];
                                 }),
-                                templateLock: "all",
+                                templateLock: 'all',
                                 allowdBlockType: ['advgb/column'],
                                 random: this.state.random
                             })
                         )
                     ),
                     React.createElement(
-                        "style",
+                        'style',
                         null,
-                        "#block-" + clientId + " .advgb-columns-wrapper .advgb-columns {\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-columns-wrapper .advgb-columns {\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }"
+                        '#block-' + clientId + ' .advgb-columns-wrapper .advgb-columns {\n                            margin-top: ' + marginTop + 'px;\n                            margin-right: ' + marginRight + 'px;\n                            margin-bottom: ' + marginBottom + 'px;\n                            margin-left: ' + marginLeft + 'px;\n                            padding-top: ' + paddingTop + 'px;\n                            padding-right: ' + paddingRight + 'px;\n                            padding-bottom: ' + paddingBottom + 'px;\n                            padding-left: ' + paddingLeft + 'px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-' + clientId + ' .advgb-columns-wrapper .advgb-columns {\n                                margin-top: ' + marginTopM + 'px;\n                                margin-right: ' + marginRightM + 'px;\n                                margin-bottom: ' + marginBottomM + 'px;\n                                margin-left: ' + marginLeftM + 'px;\n                                padding-top: ' + paddingTopM + 'px;\n                                padding-right: ' + paddingRightM + 'px;\n                                padding-bottom: ' + paddingBottomM + 'px;\n                                padding-left: ' + paddingLeftM + 'px;\n                            }\n                        }'
                     )
                 );
             }
         }], [{
-            key: "jsUcfirst",
+            key: 'jsUcfirst',
             value: function jsUcfirst(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
@@ -5652,17 +5645,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && "columns-valign-" + vAlign, columns && "advgb-columns-" + columns, columnsLayout && "layout-" + columnsLayout, columnsLayoutT && "tbl-layout-" + columnsLayoutT, columnsLayoutM && "mbl-layout-" + columnsLayoutM, !!gutter && "gutter-" + gutter, !!collapsedGutter && "vgutter-" + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,
-                { className: "advgb-columns-wrapper" },
+                { className: 'advgb-columns-wrapper' },
                 React.createElement(
-                    "div",
+                    'div',
                     { className: blockClasses, id: colId,
                         style: {
-                            maxWidth: !!contentMaxWidth ? "" + contentMaxWidth + contentMaxWidthUnit : undefined,
-                            minHeight: !!contentMinHeight ? "" + contentMinHeight + contentMinHeightUnit : undefined
+                            maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
+                            minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined
                         }
                     },
                     React.createElement(InnerBlocks.Content, null)
