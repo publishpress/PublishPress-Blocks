@@ -3337,6 +3337,120 @@ float: left;'
                     ),
                 ),
             ),
+            'advgb-images-slider' => array(
+                array(
+                    'label'    => __('Images Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title'   => __('Action on click', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'actionOnClick',
+                            'options' => array(
+                                array(
+                                    'label' => __('Open image in lightbox', 'advanced-gutenberg'),
+                                    'value' => 'lightbox',
+                                ),
+                                array(
+                                    'label' => __('Open custom link', 'advanced-gutenberg'),
+                                    'value' => 'link',
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title' => __('Full width', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'fullWidth',
+                        ),
+                        array(
+                            'title' => __('Auto Height', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'autoHeight',
+                        ),
+                        array(
+                            'title' => __('Width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'width',
+                            'min'   => 200,
+                            'max'   => 1300,
+                        ),
+                        array(
+                            'title' => __('Height', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'height',
+                            'min'   => 100,
+                            'max'   => 1000,
+                        ),
+                        array(
+                            'title' => __('Always show overlay', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'alwaysShowOverlay',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Color Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Hover Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'hoverColor',
+                        ),
+                        array(
+                            'title' => __('Title Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'titleColor',
+                        ),
+                        array(
+                            'title' => __('Text Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'textColor',
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Text Alignment', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title'   => __('Vertical Alignment', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'vAlign',
+                            'options' => array(
+                                array(
+                                    'label' => __('Top', 'advanced-gutenberg'),
+                                    'value' => 'flex-start',
+                                ),
+                                array(
+                                    'label' => __('Center', 'advanced-gutenberg'),
+                                    'value' => 'center',
+                                ),
+                                array(
+                                    'label' => __('Bottom', 'advanced-gutenberg'),
+                                    'value' => 'flex-end',
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title'   => __('Horizontal Alignment', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'hAlign',
+                            'options' => array(
+                                array(
+                                    'label' => __('Left', 'advanced-gutenberg'),
+                                    'value' => 'flex-start',
+                                ),
+                                array(
+                                    'label' => __('Center', 'advanced-gutenberg'),
+                                    'value' => 'center',
+                                ),
+                                array(
+                                    'label' => __('Right', 'advanced-gutenberg'),
+                                    'value' => 'flex-end',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
