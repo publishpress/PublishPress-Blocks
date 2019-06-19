@@ -261,6 +261,10 @@ function advgbRegisterBlockRecentPosts()
             ),
             'readMoreLbl' => array(
                 'type' => 'string',
+            ),
+            'changed' => array(
+                'type' => 'boolean',
+                'default' => false,
             )
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',
