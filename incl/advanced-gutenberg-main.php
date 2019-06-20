@@ -1384,6 +1384,13 @@ float: left;'
                     '#editor .editor-writing-flow {max-width: ' . $saved_settings['editor_width'] . '%}'
                 );
             }
+
+            if (isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide']) {
+                wp_add_inline_style(
+                    'dashicons',
+                    '.advgb-columns>.editor-inner-blocks>.editor-block-list__layout>.wp-block:hover>.editor-block-list__block-edit:before{border:1px dashed #ddd;}'
+                );
+            }
         }
     }
 
@@ -1604,6 +1611,12 @@ float: left;'
                 $save_config['disable_wpautop'] = 1;
             } else {
                 $save_config['disable_wpautop'] = 0;
+            }
+
+            if (isset($_POST['enable_columns_visual_guide'])) {
+                $save_config['enable_columns_visual_guide'] = 1;
+            } else {
+                $save_config['enable_columns_visual_guide'] = 0;
             }
 
             $save_config['google_api_key'] = $_POST['google_api_key'];
