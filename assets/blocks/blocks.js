@@ -7400,6 +7400,196 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
+/***/ "./assets/blocks/editor-sidebar/sidebar.jsx":
+/*!**************************************************!*\
+  !*** ./assets/blocks/editor-sidebar/sidebar.jsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpPlugins, wpElement, wpData, wpComponents, wpEditPost) {
+    var __ = wpI18n.__;
+    var registerPlugin = wpPlugins.registerPlugin;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var withSelect = wpData.withSelect,
+        withDispatch = wpData.withDispatch;
+    var PanelBody = wpComponents.PanelBody,
+        SelectControl = wpComponents.SelectControl,
+        ButtonGroup = wpComponents.ButtonGroup,
+        Button = wpComponents.Button;
+    var PluginSidebar = wpEditPost.PluginSidebar,
+        PluginSidebarMoreMenuItem = wpEditPost.PluginSidebarMoreMenuItem;
+    var compose = wp.compose.compose;
+
+
+    var sidebarName = "advgb-editor-sidebar";
+    var sidebarTitle = __('Adv. Gutenberg Settings');
+    var sidebarIcon = "layout";
+    var VISUAL_GUIDE_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Enable'), value: 'enable' }, { label: __('Disable'), value: 'disable' }];
+    var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Default'), value: 'default' }, { label: __('Large'), value: 'large' }, { label: __('Full width'), value: 'full' }];
+
+    var AdvSidebar = function (_Component) {
+        _inherits(AdvSidebar, _Component);
+
+        function AdvSidebar() {
+            _classCallCheck(this, AdvSidebar);
+
+            return _possibleConstructorReturn(this, (AdvSidebar.__proto__ || Object.getPrototypeOf(AdvSidebar)).apply(this, arguments));
+        }
+
+        _createClass(AdvSidebar, [{
+            key: "onUpdateMeta",
+            value: function onUpdateMeta(metaData) {
+                var _props = this.props,
+                    metaValues = _props.metaValues,
+                    updateMetaField = _props.updateMetaField;
+
+                var meta = _extends({}, metaValues, metaData);
+
+                return updateMetaField(meta);
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var _props2 = this.props,
+                    columnsVisualGuide = _props2.columnsVisualGuide,
+                    editorWidth = _props2.editorWidth;
+
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: "advgb-editor-sidebar-note" },
+                        __('These settings will override the Adv. Gutenberg global settings.')
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Editor width') },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-editor-sidebar-note" },
+                            __('Change your editor width')
+                        ),
+                        React.createElement(
+                            ButtonGroup,
+                            { className: "advgb-button-group" },
+                            EDITOR_WIDTH_SETTINGS.map(function (setting, index) {
+                                return React.createElement(
+                                    Button,
+                                    { className: "advgb-button",
+                                        key: index,
+                                        isDefault: true,
+                                        isPrimary: setting.value === editorWidth,
+                                        onClick: function onClick() {
+                                            return _this2.onUpdateMeta({ advgb_blocks_editor_width: setting.value });
+                                        }
+                                    },
+                                    setting.label
+                                );
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Columns Visual Guide'), initialOpen: false },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-editor-sidebar-note" },
+                            __('Border to materialize Adv. Gutenberg Column block')
+                        ),
+                        React.createElement(
+                            ButtonGroup,
+                            { className: "advgb-button-group" },
+                            VISUAL_GUIDE_SETTINGS.map(function (setting, index) {
+                                return React.createElement(
+                                    Button,
+                                    { className: "advgb-button",
+                                        key: index,
+                                        isDefault: true,
+                                        isPrimary: setting.value === columnsVisualGuide,
+                                        onClick: function onClick() {
+                                            return _this2.onUpdateMeta({ advgb_blocks_columns_visual_guide: setting.value });
+                                        }
+                                    },
+                                    setting.label
+                                );
+                            })
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return AdvSidebar;
+    }(Component);
+
+    var AdvSidebarRender = compose(withDispatch(function (dispatch) {
+        return {
+            updateMetaField: function updateMetaField(data) {
+                dispatch('core/editor').editPost({ meta: data });
+            }
+        };
+    }), withSelect(function (select) {
+        var metaValues = select('core/editor').getEditedPostAttribute('meta');
+
+        return {
+            metaValues: metaValues,
+            columnsVisualGuide: metaValues.advgb_blocks_columns_visual_guide,
+            editorWidth: metaValues.advgb_blocks_editor_width
+        };
+    }))(AdvSidebar);
+
+    registerPlugin('advgb-editor-sidebar', {
+        render: function render() {
+            return React.createElement(
+                Fragment,
+                null,
+                React.createElement(
+                    PluginSidebarMoreMenuItem,
+                    {
+                        target: sidebarName,
+                        icon: sidebarIcon
+                    },
+                    sidebarTitle
+                ),
+                React.createElement(
+                    PluginSidebar,
+                    {
+                        name: sidebarName,
+                        title: sidebarTitle,
+                        icon: sidebarIcon
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-editor-sidebar-content" },
+                        React.createElement(AdvSidebarRender, null)
+                    )
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.plugins, wp.element, wp.data, wp.components, wp.editPost);
+
+/***/ }),
+
 /***/ "./assets/blocks/images-slider/block.jsx":
 /*!***********************************************!*\
   !*** ./assets/blocks/images-slider/block.jsx ***!
@@ -13464,9 +13654,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13482,6 +13672,7 @@ __webpack_require__(/*! ./assets/blocks/contact-form/block.jsx */"./assets/block
 __webpack_require__(/*! ./assets/blocks/container/block.jsx */"./assets/blocks/container/block.jsx");
 __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/count-up/block.jsx");
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
+__webpack_require__(/*! ./assets/blocks/editor-sidebar/sidebar.jsx */"./assets/blocks/editor-sidebar/sidebar.jsx");
 __webpack_require__(/*! ./assets/blocks/images-slider/block.jsx */"./assets/blocks/images-slider/block.jsx");
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
 __webpack_require__(/*! ./assets/blocks/newsletter/block.jsx */"./assets/blocks/newsletter/block.jsx");
