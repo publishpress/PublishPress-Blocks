@@ -2,8 +2,8 @@
     const { __ } = wpI18n;
     const { registerPlugin } = wpPlugins;
     const { Component, Fragment } = wpElement;
-    const { withSelect, withDispatch } = wpData;
-    const { PanelBody, SelectControl, ButtonGroup, Button } = wpComponents;
+    const { select, withSelect, withDispatch } = wpData;
+    const { PanelBody, ButtonGroup, Button } = wpComponents;
     const { PluginSidebar, PluginSidebarMoreMenuItem } = wpEditPost;
     const { compose } = wp.compose;
 
@@ -22,6 +22,24 @@
         { label: __( 'Full width' ), value: 'full' },
     ];
 
+    const updateBodyClass = function () {
+        const postMetaData = select( 'core/editor' ).getEditedPostAttribute( 'meta' );
+        const { advgb_blocks_editor_width, advgb_blocks_columns_visual_guide } = postMetaData;
+        const bodyClass = window.document.body.classList;
+
+        bodyClass.remove(
+            'advgb-editor-width-default',
+            'advgb-editor-width-large',
+            'advgb-editor-width-full',
+        );
+
+        if (!!advgb_blocks_editor_width) {
+            bodyClass.add( 'advgb-editor-width-' + advgb_blocks_editor_width );
+        }
+    };
+
+    window.onload = updateBodyClass;
+
     class AdvSidebar extends Component {
         constructor() {
             super( ...arguments );
@@ -31,7 +49,8 @@
             const { metaValues, updateMetaField } = this.props;
             const meta = { ...metaValues, ...metaData };
 
-            return updateMetaField( meta );
+            updateMetaField( meta );
+            updateBodyClass();
         }
 
         render() {

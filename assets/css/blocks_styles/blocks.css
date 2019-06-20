@@ -26,7 +26,19 @@
 }
 
 /*Editor sidebar controls*/
-.advgb-editor-sidebar-note {
+.advgb-editor-width-default #editor .editor-writing-flow {
+    max-width: 750px;
+}
+
+.advgb-editor-width-large #editor .editor-writing-flow {
+    max-width: 75%;
+}
+
+.advgb-editor-width-full #editor .editor-writing-flow {
+    max-width: 95%;
+}
+
+.advgb-editor-sidebar-content .advgb-editor-sidebar-note {
     font-size: 13px;
     font-style: italic;
     margin: 10px;

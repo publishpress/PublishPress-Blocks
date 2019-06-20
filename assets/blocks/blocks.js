@@ -7425,10 +7425,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerPlugin = wpPlugins.registerPlugin;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
-    var withSelect = wpData.withSelect,
+    var select = wpData.select,
+        withSelect = wpData.withSelect,
         withDispatch = wpData.withDispatch;
     var PanelBody = wpComponents.PanelBody,
-        SelectControl = wpComponents.SelectControl,
         ButtonGroup = wpComponents.ButtonGroup,
         Button = wpComponents.Button;
     var PluginSidebar = wpEditPost.PluginSidebar,
@@ -7441,6 +7441,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var sidebarIcon = "layout";
     var VISUAL_GUIDE_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Enable'), value: 'enable' }, { label: __('Disable'), value: 'disable' }];
     var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Default'), value: 'default' }, { label: __('Large'), value: 'large' }, { label: __('Full width'), value: 'full' }];
+
+    var updateBodyClass = function updateBodyClass() {
+        var postMetaData = select('core/editor').getEditedPostAttribute('meta');
+        var advgb_blocks_editor_width = postMetaData.advgb_blocks_editor_width,
+            advgb_blocks_columns_visual_guide = postMetaData.advgb_blocks_columns_visual_guide;
+
+        var bodyClass = window.document.body.classList;
+
+        bodyClass.remove('advgb-editor-width-default', 'advgb-editor-width-large', 'advgb-editor-width-full');
+
+        if (!!advgb_blocks_editor_width) {
+            bodyClass.add('advgb-editor-width-' + advgb_blocks_editor_width);
+        }
+    };
+
+    window.onload = updateBodyClass;
 
     var AdvSidebar = function (_Component) {
         _inherits(AdvSidebar, _Component);
@@ -7460,7 +7476,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var meta = _extends({}, metaValues, metaData);
 
-                return updateMetaField(meta);
+                updateMetaField(meta);
+                updateBodyClass();
             }
         }, {
             key: "render",
