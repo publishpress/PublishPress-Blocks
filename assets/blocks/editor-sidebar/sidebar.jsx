@@ -31,15 +31,16 @@
             'advgb-editor-width-default',
             'advgb-editor-width-large',
             'advgb-editor-width-full',
-            'advgb-editor-has-col-guide',
+            'advgb-editor-col-guide-enable',
+            'advgb-editor-col-guide-disable',
         );
 
         if (!!advgb_blocks_editor_width) {
             bodyClass.add( 'advgb-editor-width-' + advgb_blocks_editor_width );
         }
 
-        if (advgb_blocks_columns_visual_guide === 'enable') {
-            bodyClass.add( 'advgb-editor-has-col-guide' );
+        if (!!advgb_blocks_columns_visual_guide) {
+            bodyClass.add( 'advgb-editor-col-guide-' + advgb_blocks_columns_visual_guide );
         }
     };
 

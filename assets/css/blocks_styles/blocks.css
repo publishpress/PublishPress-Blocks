@@ -38,8 +38,14 @@
     max-width: 95%;
 }
 
-.advgb-editor-has-col-guide .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block:hover > .editor-block-list__block-edit:before{
+.advgb-editor-col-guide-enable .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block:hover > .editor-block-list__block-edit:before{
     border: 1px dashed #ddd;
+}
+
+.advgb-editor-col-guide-disable .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block:hover > .editor-block-list__block-edit:before{
+    border-style: none;
+    border-color: transparent;
+    border-width: 0;
 }
 
 .advgb-editor-sidebar-content .advgb-editor-sidebar-note {
