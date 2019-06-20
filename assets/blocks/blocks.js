@@ -7460,7 +7460,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
     };
 
-    window.onload = updateBodyClass;
+    window.document.addEventListener("DOMContentLoaded", updateBodyClass);
 
     var AdvSidebar = function (_Component) {
         _inherits(AdvSidebar, _Component);

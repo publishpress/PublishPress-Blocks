@@ -43,7 +43,7 @@
         }
     };
 
-    window.onload = updateBodyClass;
+    window.document.addEventListener("DOMContentLoaded", updateBodyClass);
 
     class AdvSidebar extends Component {
         constructor() {
