@@ -145,6 +145,7 @@ float: left;'
      */
     public function __construct()
     {
+        add_action('init', array($this, 'registerPostMeta'));
         add_action('admin_init', array($this, 'registerStylesScripts'));
         add_action('wp_enqueue_scripts', array($this, 'registerStylesScriptsFrontend'));
         add_action('enqueue_block_assets', array($this, 'addEditorAndFrontendStyles'), 9999);
@@ -1472,6 +1473,34 @@ float: left;'
         wp_enqueue_script('advgb_main_js');
 
         $this->loadView('main-view');
+    }
+
+    /**
+     * Register meta data to use on editor sidebar
+     *
+     * @return void
+     */
+    public function registerPostMeta()
+    {
+        register_post_meta(
+            '',
+            'advgb_blocks_editor_width',
+            array(
+                'show_in_rest'  => true,
+                'single'        => true,
+                'type'          => 'string',
+            )
+        );
+
+        register_post_meta(
+            '',
+            'advgb_blocks_columns_visual_guide',
+            array(
+                'show_in_rest'  => true,
+                'single'        => true,
+                'type'          => 'string',
+            )
+        );
     }
 
     /**
