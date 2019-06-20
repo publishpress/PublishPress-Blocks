@@ -38,6 +38,10 @@
     max-width: 95%;
 }
 
+.advgb-editor-has-col-guide .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block:hover > .editor-block-list__block-edit:before{
+    border: 1px dashed #ddd;
+}
+
 .advgb-editor-sidebar-content .advgb-editor-sidebar-note {
     font-size: 13px;
     font-style: italic;

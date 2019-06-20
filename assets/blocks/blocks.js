@@ -7449,10 +7449,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var bodyClass = window.document.body.classList;
 
-        bodyClass.remove('advgb-editor-width-default', 'advgb-editor-width-large', 'advgb-editor-width-full');
+        bodyClass.remove('advgb-editor-width-default', 'advgb-editor-width-large', 'advgb-editor-width-full', 'advgb-editor-has-col-guide');
 
         if (!!advgb_blocks_editor_width) {
             bodyClass.add('advgb-editor-width-' + advgb_blocks_editor_width);
+        }
+
+        if (advgb_blocks_columns_visual_guide === 'enable') {
+            bodyClass.add('advgb-editor-has-col-guide');
         }
     };
 
