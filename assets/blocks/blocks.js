@@ -4605,7 +4605,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var COLUMNS_LAYOUTS_STACKED = {
         columns: 1, layout: 'stacked', icon: 'stacked', title: __('Stacked')
     };
-    var GUTTER_OPTIONS = [{ label: __('No Gutter'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }, { label: '70px', value: 70 }, { label: '90px', value: 90 }];
+    var GUTTER_OPTIONS = [{ label: __('None'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }, { label: '70px', value: 70 }, { label: '90px', value: 90 }];
 
     var AdvColumnsEdit = function (_Component) {
         _inherits(AdvColumnsEdit, _Component);

@@ -43,7 +43,7 @@
         columns: 1, layout: 'stacked', icon: 'stacked', title: __( 'Stacked' )
     };
     const GUTTER_OPTIONS = [
-        {label: __( 'No Gutter' ), value: 0},
+        {label: __( 'None' ), value: 0},
         {label: '10px', value: 10},
         {label: '20px', value: 20},
         {label: '30px', value: 30},
