@@ -24,6 +24,7 @@
 
     const updateBodyClass = function () {
         const postMetaData = select( 'core/editor' ).getEditedPostAttribute( 'meta' );
+        if (!postMetaData) return null;
         const { advgb_blocks_editor_width, advgb_blocks_columns_visual_guide } = postMetaData;
         const bodyClass = window.document.body.classList;
 

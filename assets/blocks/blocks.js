@@ -7444,6 +7444,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var updateBodyClass = function updateBodyClass() {
         var postMetaData = select('core/editor').getEditedPostAttribute('meta');
+        if (!postMetaData) return null;
         var advgb_blocks_editor_width = postMetaData.advgb_blocks_editor_width,
             advgb_blocks_columns_visual_guide = postMetaData.advgb_blocks_columns_visual_guide;
 
