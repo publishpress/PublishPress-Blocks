@@ -7440,7 +7440,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var sidebarTitle = __('Adv. Gutenberg Settings');
     var sidebarIcon = "layout";
     var VISUAL_GUIDE_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Enable'), value: 'enable' }, { label: __('Disable'), value: 'disable' }];
-    var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Default'), value: 'default' }, { label: __('Large'), value: 'large' }, { label: __('Full width'), value: 'full' }];
+    var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Original'), value: 'default' }, { label: __('Large'), value: 'large' }, { label: __('Full width'), value: 'full' }];
 
     var updateBodyClass = function updateBodyClass() {
         var postMetaData = select('core/editor').getEditedPostAttribute('meta');

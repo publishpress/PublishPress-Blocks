@@ -17,7 +17,7 @@
     ];
     const EDITOR_WIDTH_SETTINGS = [
         { label: __( 'Inherit from global settings' ), value: '' },
-        { label: __( 'Default' ), value: 'default' },
+        { label: __( 'Original' ), value: 'default' },
         { label: __( 'Large' ), value: 'large' },
         { label: __( 'Full width' ), value: 'full' },
     ];
