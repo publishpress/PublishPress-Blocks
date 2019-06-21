@@ -5105,7 +5105,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'div',
                             { className: 'advgb-columns-select-title' },
-                            __('Pick up a columns layout')
+                            __('Pickup a columns layout')
                         ),
                         React.createElement(
                             'div',
