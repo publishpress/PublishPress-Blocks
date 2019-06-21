@@ -1618,6 +1618,14 @@ form .advgb-grecaptcha > div {
     margin-right: 90px;
 }
 
+.advgb-columns.advgb-columns-1 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 0;
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
     /*2 Columns*/
 .advgb-columns.layout-23-13 > .editor-inner-blocks > .editor-block-list__layout > .wp-block:first-child,
 .advgb-columns.layout-13-23 > .editor-inner-blocks > .editor-block-list__layout > .wp-block:last-child {
