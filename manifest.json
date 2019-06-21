@@ -49,6 +49,10 @@
       },
       {
         "type": "feature",
+        "title": "New editor sidebar settings"
+      },
+      {
+        "type": "feature",
         "title": "Drop support for PHP version < 5.6.20"
       },
       {
