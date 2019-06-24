@@ -109,7 +109,7 @@
                             <RangeControl
                                 label={ [
                                     __( 'Width (%)' ),
-                                    <span key="width" style={ { color: 'green', marginLeft: 10 } }>{ __( 'Available: ' ) + avaiWidth + '%' }</span>
+                                    <span key="width" style={ { color: '#555d66', marginLeft: 10 } }>{ __( 'Available: ' ) + avaiWidth + '%' }</span>
                                 ] }
                                 help={ __( 'Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!' ) }
                                 value={ width }

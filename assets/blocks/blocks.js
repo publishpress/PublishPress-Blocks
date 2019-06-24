@@ -5833,7 +5833,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(RangeControl, {
                                 label: [__('Width (%)'), React.createElement(
                                     "span",
-                                    { key: "width", style: { color: 'green', marginLeft: 10 } },
+                                    { key: "width", style: { color: '#555d66', marginLeft: 10 } },
                                     __('Available: ') + avaiWidth + '%'
                                 )],
                                 help: __('Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!'),
