@@ -76,6 +76,10 @@ ul.block-config-settings {
     float: right;
 }
 
+.block-config-settings .ju-settings-option {
+    font-size: 14px;
+}
+
 input.block-config-input[type="number"] {
     width: 130px;
 }
