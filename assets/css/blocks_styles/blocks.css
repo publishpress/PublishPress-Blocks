@@ -956,7 +956,8 @@ hr.wp-block-separator {
     margin: 0 5px;
 }
 
-.advgb-recent-posts-loading {
+.advgb-recent-posts-loading,
+.advgb-ajax-loading:before {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -967,6 +968,12 @@ hr.wp-block-separator {
     background-image: url("../../images/loading.gif");
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.advgb-ajax-loading:before {
+    content: '';
+    display: block;
+    background-color: rgba(0,0,0,0.7);
 }
 
 .advgb-recent-posts-block.slider-view.loading .advgb-recent-posts {
@@ -1067,6 +1074,7 @@ hr.wp-block-separator {
 /*Image slider block*/
 .advgb-images-slider-block {
     padding-bottom: 1px;
+    position: relative;
 }
 
 .advgb-images-slider-block .advgb-slider-image-dragholder{
@@ -1532,6 +1540,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 
 .advgb-columns-wrapper .advgb-columns.columns-valign-bottom {
     align-items: flex-end;
+}
+
+.advgb-column.column {
+    z-index: unset;
 }
 
     /*Backend columns*/
