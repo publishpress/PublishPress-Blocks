@@ -74,7 +74,7 @@
 
         render() {
             const { tabSelected } = this.state;
-            const { attributes, setAttributes, clientId } = this.props;
+            const { attributes, setAttributes, clientId, className } = this.props;
             const {
                 width,
                 borderColor, borderStyle, borderWidth, borderRadius,
@@ -97,6 +97,7 @@
             const blockClasses = [
                 'advgb-column',
                 'column',
+                className,
             ].filter( Boolean ).join( ' ' );
 
             let deviceLetter = '';

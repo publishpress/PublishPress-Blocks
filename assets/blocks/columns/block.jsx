@@ -479,7 +479,7 @@
         }
 
         render() {
-            const { attributes, setAttributes, clientId } = this.props;
+            const { attributes, setAttributes, clientId, className } = this.props;
             const { tabSelected } = this.state;
             const {
                 columns,
@@ -503,6 +503,7 @@
 
             const blockClasses = [
                 'advgb-columns',
+                className,
                 vAlign && `columns-valign-${vAlign}`,
                 columns && `advgb-columns-${columns}`,
                 columnsLayout && `layout-${columnsLayout}`,

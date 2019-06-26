@@ -5061,7 +5061,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     setAttributes = _props4.setAttributes,
-                    clientId = _props4.clientId;
+                    clientId = _props4.clientId,
+                    className = _props4.className;
                 var tabSelected = this.state.tabSelected;
                 var columns = attributes.columns,
                     columnsLayout = attributes.columnsLayout,
@@ -5096,7 +5097,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     wrapperTag = attributes.wrapperTag;
 
 
-                var blockClasses = ['advgb-columns', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-columns', className, vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
                 if (!columns) {
                     return React.createElement(
@@ -5775,7 +5776,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     setAttributes = _props3.setAttributes,
-                    clientId = _props3.clientId;
+                    clientId = _props3.clientId,
+                    className = _props3.className;
                 var width = attributes.width,
                     borderColor = attributes.borderColor,
                     borderStyle = attributes.borderStyle,
@@ -5816,7 +5818,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     avaiWidth -= parseInt(width);
                 });
 
-                var blockClasses = ['advgb-column', 'column'].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-column', 'column', className].filter(Boolean).join(' ');
 
                 var deviceLetter = '';
                 if (tabSelected === 'mobile') deviceLetter = 'M';
