@@ -7951,6 +7951,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     _this3.setState({ imageLoaded: true });
                                                 }
                                             }
+                                        },
+                                        onError: function onError() {
+                                            if (index === 0) {
+                                                if (_this3.state.imageLoaded === false) {
+                                                    _this3.setState({ imageLoaded: true });
+                                                }
+                                            }
                                         }
                                     }),
                                     React.createElement(

@@ -303,7 +303,14 @@
                                                      this.setState( { imageLoaded: true } )
                                                  }
                                              }
-                                         }}
+                                         } }
+                                         onError={ () => {
+                                             if (index === 0) {
+                                                 if (this.state.imageLoaded === false) {
+                                                     this.setState( { imageLoaded: true } )
+                                                 }
+                                             }
+                                         } }
                                     />
                                     <div className="advgb-image-slider-item-info"
                                          style={ {
