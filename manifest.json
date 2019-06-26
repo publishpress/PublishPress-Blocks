@@ -57,7 +57,11 @@
       },
       {
         "type": "feature",
-        "title": "Completely remove custom columns and custom separator block"
+        "title": "Remove Container block"
+      },
+      {
+        "type": "feature",
+        "title": "Completely remove custom columns and custom separator block settings"
       },
       {
         "type": "fix",
