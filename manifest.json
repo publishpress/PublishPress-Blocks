@@ -4,7 +4,7 @@
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
   "version": "2.0.0",
   "platform": "wordpress",
-  "wp_version": "5.2.1",
+  "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
