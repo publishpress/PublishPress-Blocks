@@ -408,10 +408,6 @@ float: left;'
             $custom_styles_url . 'custom_styles.css'
         );
         wp_enqueue_style('dashicons');
-        wp_enqueue_style(
-            'advgb-bulma-styles',
-            plugins_url('assets/css/bulma.min.css', dirname(__FILE__))
-        );
 
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
             wp_enqueue_style(
@@ -1414,6 +1410,10 @@ float: left;'
         wp_register_style(
             'slick_theme_style',
             plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'advgb_bulma_styles',
+            plugins_url('assets/css/bulma.min.css', dirname(__FILE__))
         );
 
         wp_register_script(
@@ -4042,6 +4042,10 @@ float: left;'
                 array($this, 'decodeHtmlEntity'),
                 $content
             );
+        }
+
+        if (strpos($content, 'advgb-columns') !== false) {
+            wp_enqueue_style('advgb_bulma_styles');
         }
 
         return $content;
