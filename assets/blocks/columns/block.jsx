@@ -113,356 +113,9 @@
                 || prevLayoutM !== columnsLayoutM
             ) {
                 shouldUpdate = true;
-                switch (columnsLayout) {
-                    case '12-12':
-                    case '13-13-13':
-                    case '14-14-14-14':
-                    case 'five':
-                    case 'six':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-default-desktop');
-                        }
-                        break;
-                    case '23-13':
-                        classes[0].push('is-two-thirds' + extraClassD);
-                        classes[1].push('is-default-desktop');
-                        break;
-                    case '13-23':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-two-thirds' + extraClassD);
-                        break;
-                    case '34-14':
-                        classes[0].push('is-three-quarters' + extraClassD);
-                        classes[1].push('is-default-desktop');
-                        break;
-                    case '14-34':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-three-quarters' + extraClassD);
-                        break;
-                    case '45-15':
-                        classes[0].push('is-four-fifths' + extraClassD);
-                        classes[1].push('is-default-desktop');
-                        break;
-                    case '15-45':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-four-fifths' + extraClassD);
-                        break;
-                    case '12-14-14':
-                        classes[0].push('is-half' + extraClassD);
-                        classes[1].push('is-default-desktop');
-                        classes[2].push('is-default-desktop');
-                        break;
-                    case '14-14-12':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-default-desktop');
-                        classes[2].push('is-half' + extraClassD);
-                        break;
-                    case '14-12-14':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-half' + extraClassD);
-                        classes[2].push('is-default-desktop');
-                        break;
-                    case '15-35-15':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-three-fifths' + extraClassD);
-                        classes[2].push('is-default-desktop');
-                        break;
-                    case '35-15-15':
-                        classes[0].push('is-three-fifths' + extraClassD);
-                        classes[1].push('is-default-desktop');
-                        classes[2].push('is-default-desktop');
-                        break;
-                    case '15-15-35':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-default-desktop');
-                        classes[2].push('is-three-fifths' + extraClassD);
-                        break;
-                    case '16-46-16':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-8' + extraClassD);
-                        classes[2].push('is-default-desktop');
-                        break;
-                    case '36-16-16-16':
-                        classes[0].push('is-half' + extraClassD);
-                        classes[1].push('is-default-desktop');
-                        classes[2].push('is-default-desktop');
-                        classes[3].push('is-default-desktop');
-                        break;
-                    case '16-16-16-36':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-default-desktop');
-                        classes[2].push('is-default-desktop');
-                        classes[3].push('is-half' + extraClassD);
-                        break;
-                    case '25-15-15-15':
-                        classes[0].push('is-two-fifths' + extraClassD);
-                        classes[1].push('is-default-desktop');
-                        classes[2].push('is-default-desktop');
-                        classes[3].push('is-default-desktop');
-                        break;
-                    case '15-15-15-25':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-default-desktop');
-                        classes[2].push('is-default-desktop');
-                        classes[3].push('is-two-fifths' + extraClassD);
-                        break;
-                    default:
-                        break;
-                }
-
-                switch (columnsLayoutT) {
-                    case '12-12':
-                    case '13-13-13':
-                    case '14-14-14-14':
-                    case 'five':
-                    case 'six':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-default-tablet');
-                        }
-                        break;
-                    case '23-13':
-                        classes[0].push('is-two-thirds' + extraClassT);
-                        classes[1].push('is-default-tablet');
-                        break;
-                    case '13-23':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-two-thirds' + extraClassT);
-                        break;
-                    case '34-14':
-                        classes[0].push('is-three-quarters' + extraClassT);
-                        classes[1].push('is-default-tablet');
-                        break;
-                    case '14-34':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-three-quarters' + extraClassT);
-                        break;
-                    case '45-15':
-                        classes[0].push('is-four-fifths' + extraClassT);
-                        classes[1].push('is-default-tablet');
-                        break;
-                    case '15-45':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-four-fifths' + extraClassT);
-                        break;
-                    case '12-14-14':
-                        classes[0].push('is-half' + extraClassT);
-                        classes[1].push('is-default-tablet');
-                        classes[2].push('is-default-tablet');
-                        break;
-                    case '14-14-12':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-default-tablet');
-                        classes[2].push('is-half' + extraClassT);
-                        break;
-                    case '14-12-14':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-half' + extraClassT);
-                        classes[2].push('is-default-tablet');
-                        break;
-                    case '15-35-15':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-three-fifths' + extraClassT);
-                        classes[2].push('is-default-tablet');
-                        break;
-                    case '35-15-15':
-                        classes[0].push('is-three-fifths' + extraClassT);
-                        classes[1].push('is-default-tablet');
-                        classes[2].push('is-default-tablet');
-                        break;
-                    case '15-15-35':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-default-tablet');
-                        classes[2].push('is-three-fifths' + extraClassT);
-                        break;
-                    case '16-46-16':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-8' + extraClassT);
-                        classes[2].push('is-default-desktop');
-                        break;
-                    case '1-12-12':
-                        classes[0].push('is-full' + extraClassT);
-                        classes[1].push('is-half' + extraClassT);
-                        classes[2].push('is-half' + extraClassT);
-                        break;
-                    case '12-12-1':
-                        classes[0].push('is-half' + extraClassT);
-                        classes[1].push('is-half' + extraClassT);
-                        classes[2].push('is-full' + extraClassT);
-                        break;
-                    case '36-16-16-16':
-                        classes[0].push('is-half' + extraClassT);
-                        classes[1].push('is-default-tablet');
-                        classes[2].push('is-default-tablet');
-                        classes[3].push('is-default-tablet');
-                        break;
-                    case '16-16-16-36':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-default-tablet');
-                        classes[2].push('is-default-tablet');
-                        classes[3].push('is-half' + extraClassT);
-                        break;
-                    case '25-15-15-15':
-                        classes[0].push('is-two-fifths' + extraClassT);
-                        classes[1].push('is-default-tablet');
-                        classes[2].push('is-default-tablet');
-                        classes[3].push('is-default-tablet');
-                        break;
-                    case '15-15-15-25':
-                        classes[0].push('is-default-tablet');
-                        classes[1].push('is-default-tablet');
-                        classes[2].push('is-default-tablet');
-                        classes[3].push('is-two-fifths' + extraClassT);
-                        break;
-                    case '12x4':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-half' + extraClassT);
-                        }
-                        break;
-                    case '12x6':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-half' + extraClassT);
-                        }
-                        break;
-                    case '13x6':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-one-third' + extraClassT);
-                        }
-                        break;
-                    case 'stacked':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-full' + extraClassT);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-                switch (columnsLayoutM) {
-                    case '12-12':
-                    case '13-13-13':
-                    case '14-14-14-14':
-                    case 'five':
-                    case 'six':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-default-mobile');
-                        }
-                        break;
-                    case '23-13':
-                        classes[0].push('is-two-thirds' + extraClassM);
-                        classes[1].push('is-default-mobile');
-                        break;
-                    case '13-23':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-two-thirds' + extraClassM);
-                        break;
-                    case '34-14':
-                        classes[0].push('is-three-quarters' + extraClassM);
-                        classes[1].push('is-default-mobile');
-                        break;
-                    case '14-34':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-three-quarters' + extraClassM);
-                        break;
-                    case '45-15':
-                        classes[0].push('is-four-fifths' + extraClassM);
-                        classes[1].push('is-default-mobile');
-                        break;
-                    case '15-45':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-four-fifths' + extraClassM);
-                        break;
-                    case '12-14-14':
-                        classes[0].push('is-half' + extraClassM);
-                        classes[1].push('is-default-mobile');
-                        classes[2].push('is-default-mobile');
-                        break;
-                    case '14-14-12':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-default-mobile');
-                        classes[2].push('is-half' + extraClassM);
-                        break;
-                    case '14-12-14':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-half' + extraClassM);
-                        classes[2].push('is-default-mobile');
-                        break;
-                    case '15-35-15':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-three-fifths' + extraClassM);
-                        classes[2].push('is-default-mobile');
-                        break;
-                    case '35-15-15':
-                        classes[0].push('is-three-fifths' + extraClassM);
-                        classes[1].push('is-default-mobile');
-                        classes[2].push('is-default-mobile');
-                        break;
-                    case '15-15-35':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-default-mobile');
-                        classes[2].push('is-three-fifths' + extraClassM);
-                        break;
-                    case '16-46-16':
-                        classes[0].push('is-default-desktop');
-                        classes[1].push('is-8' + extraClassM);
-                        classes[2].push('is-default-desktop');
-                        break;
-                    case '1-12-12':
-                        classes[0].push('is-full' + extraClassM);
-                        classes[1].push('is-half' + extraClassM);
-                        classes[2].push('is-half' + extraClassM);
-                        break;
-                    case '12-12-1':
-                        classes[0].push('is-half' + extraClassM);
-                        classes[1].push('is-half' + extraClassM);
-                        classes[2].push('is-full' + extraClassM);
-                        break;
-                    case '36-16-16-16':
-                        classes[0].push('is-half' + extraClassM);
-                        classes[1].push('is-default-mobile');
-                        classes[2].push('is-default-mobile');
-                        classes[3].push('is-default-mobile');
-                        break;
-                    case '16-16-16-36':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-default-mobile');
-                        classes[2].push('is-default-mobile');
-                        classes[3].push('is-half' + extraClassM);
-                        break;
-                    case '25-15-15-15':
-                        classes[0].push('is-two-fifths' + extraClassM);
-                        classes[1].push('is-default-mobile');
-                        classes[2].push('is-default-mobile');
-                        classes[3].push('is-default-mobile');
-                        break;
-                    case '15-15-15-25':
-                        classes[0].push('is-default-mobile');
-                        classes[1].push('is-default-mobile');
-                        classes[2].push('is-default-mobile');
-                        classes[3].push('is-two-fifths' + extraClassM);
-                        break;
-                    case '12x4':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-half' + extraClassM);
-                        }
-                        break;
-                    case '12x6':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-half' + extraClassM);
-                        }
-                        break;
-                    case '13x6':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-one-third' + extraClassM);
-                        }
-                        break;
-                    case 'stacked':
-                        for ( let i = 0; i < columns; i++) {
-                            classes[i].push('is-full' + extraClassM);
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                classes = AdvColumnsEdit.prepareColumnClass(columnsLayout, extraClassD, classes);
+                classes = AdvColumnsEdit.prepareColumnClass(columnsLayoutT, extraClassT, classes);
+                classes = AdvColumnsEdit.prepareColumnClass(columnsLayoutM, extraClassM, classes);
             }
 
             if (shouldUpdate) {
@@ -472,6 +125,153 @@
                         (!!childBlocks[idx]) && updateBlockAttributes( childBlocks[idx], { columnClasses: cls, width: 0 } )
                 );
             }
+        }
+
+        static prepareColumnClass(layout, extraClass, classObj) {
+            switch (layout) {
+                case '12-12':
+                    for ( let i = 0; i < 2; i++) {
+                        classObj[i].push('is-half' + extraClass);
+                    }
+                    break;
+                case '13-13-13':
+                    for ( let i = 0; i < 3; i++) {
+                        classObj[i].push('is-one-third' + extraClass);
+                    }
+                    break;
+                case '14-14-14-14':
+                    for ( let i = 0; i < 4; i++) {
+                        classObj[i].push('is-one-quarter' + extraClass);
+                    }
+                    break;
+                case 'five':
+                    for ( let i = 0; i < 5; i++) {
+                        classObj[i].push('is-one-fifth' + extraClass);
+                    }
+                    break;
+                case 'six':
+                    for ( let i = 0; i < 6; i++) {
+                        classObj[i].push('is-2' + extraClass);
+                    }
+                    break;
+                case '23-13':
+                    classObj[0].push('is-two-thirds' + extraClass);
+                    classObj[1].push('is-one-third' + extraClass);
+                    break;
+                case '13-23':
+                    classObj[0].push('is-one-third' + extraClass);
+                    classObj[1].push('is-two-thirds' + extraClass);
+                    break;
+                case '34-14':
+                    classObj[0].push('is-three-quarters' + extraClass);
+                    classObj[1].push('is-one-quarter' + extraClass);
+                    break;
+                case '14-34':
+                    classObj[0].push('is-one-quarter' + extraClass);
+                    classObj[1].push('is-three-quarters' + extraClass);
+                    break;
+                case '45-15':
+                    classObj[0].push('is-four-fifths' + extraClass);
+                    classObj[1].push('is-one-fifth' + extraClass);
+                    break;
+                case '15-45':
+                    classObj[0].push('is-one-fifth' + extraClass);
+                    classObj[1].push('is-four-fifths' + extraClass);
+                    break;
+                case '12-14-14':
+                    classObj[0].push('is-half' + extraClass);
+                    classObj[1].push('is-one-quarter' + extraClass);
+                    classObj[2].push('is-one-quarter' + extraClass);
+                    break;
+                case '14-14-12':
+                    classObj[0].push('is-one-quarter' + extraClass);
+                    classObj[1].push('is-one-quarter' + extraClass);
+                    classObj[2].push('is-half' + extraClass);
+                    break;
+                case '14-12-14':
+                    classObj[0].push('is-one-quarter' + extraClass);
+                    classObj[1].push('is-half' + extraClass);
+                    classObj[2].push('is-one-quarter' + extraClass);
+                    break;
+                case '15-35-15':
+                    classObj[0].push('is-one-fifth' + extraClass);
+                    classObj[1].push('is-three-fifths' + extraClass);
+                    classObj[2].push('is-one-fifth' + extraClass);
+                    break;
+                case '35-15-15':
+                    classObj[0].push('is-three-fifths' + extraClass);
+                    classObj[1].push('is-one-fifth' + extraClass);
+                    classObj[2].push('is-one-fifth' + extraClass);
+                    break;
+                case '15-15-35':
+                    classObj[0].push('is-one-fifth' + extraClass);
+                    classObj[1].push('is-one-fifth' + extraClass);
+                    classObj[2].push('is-three-fifths' + extraClass);
+                    break;
+                case '16-46-16':
+                    classObj[0].push('is-2' + extraClass);
+                    classObj[1].push('is-8' + extraClass);
+                    classObj[2].push('is-2' + extraClass);
+                    break;
+                case '1-12-12':
+                    classObj[0].push('is-full' + extraClass);
+                    classObj[1].push('is-half' + extraClass);
+                    classObj[2].push('is-half' + extraClass);
+                    break;
+                case '12-12-1':
+                    classObj[0].push('is-half' + extraClass);
+                    classObj[1].push('is-half' + extraClass);
+                    classObj[2].push('is-full' + extraClass);
+                    break;
+                case '36-16-16-16':
+                    classObj[0].push('is-half' + extraClass);
+                    classObj[1].push('is-2' + extraClass);
+                    classObj[2].push('is-2' + extraClass);
+                    classObj[3].push('is-2' + extraClass);
+                    break;
+                case '16-16-16-36':
+                    classObj[0].push('is-2' + extraClass);
+                    classObj[1].push('is-2' + extraClass);
+                    classObj[2].push('is-2' + extraClass);
+                    classObj[3].push('is-half' + extraClass);
+                    break;
+                case '25-15-15-15':
+                    classObj[0].push('is-two-fifths' + extraClass);
+                    classObj[1].push('is-one-fifth' + extraClass);
+                    classObj[2].push('is-one-fifth' + extraClass);
+                    classObj[3].push('is-one-fifth' + extraClass);
+                    break;
+                case '15-15-15-25':
+                    classObj[0].push('is-one-fifth' + extraClass);
+                    classObj[1].push('is-one-fifth' + extraClass);
+                    classObj[2].push('is-one-fifth' + extraClass);
+                    classObj[3].push('is-two-fifths' + extraClass);
+                    break;
+                case '12x4':
+                    for ( let i = 0; i < 4; i++) {
+                        classObj[i].push('is-half' + extraClass);
+                    }
+                    break;
+                case '12x6':
+                    for ( let i = 0; i < 6; i++) {
+                        classObj[i].push('is-half' + extraClass);
+                    }
+                    break;
+                case '13x6':
+                    for ( let i = 0; i < 6; i++) {
+                        classObj[i].push('is-one-third' + extraClass);
+                    }
+                    break;
+                case 'stacked':
+                    for ( let i = 0; i < 6; i++) {
+                        classObj[i].push('is-full' + extraClass);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return classObj;
         }
 
         static jsUcfirst(string) {
