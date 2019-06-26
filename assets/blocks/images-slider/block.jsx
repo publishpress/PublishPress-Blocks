@@ -377,7 +377,7 @@
                                         ) }
                                         <img src={ image.url }
                                              className="advgb-image-slider-image-list-img"
-                                             alt={ __( 'Remove' ) }
+                                             alt={ __( 'Image' ) }
                                              onClick={ () => {
                                                  $(`#block-${clientId} .advgb-images-slider`).slick('slickGoTo', index, false);
                                                  this.setState( { currentSelected: index } )
