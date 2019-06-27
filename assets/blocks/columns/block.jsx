@@ -622,9 +622,9 @@
                     <style>
                         {`#block-${clientId} .advgb-columns-wrapper .advgb-columns {
                             margin-top: ${marginTop + marginUnit};
-                            margin-right: ${marginRight + marginUnit}px;
-                            margin-bottom: ${marginBottom + marginUnit}px;
-                            margin-left: ${marginLeft + marginUnit}px;
+                            margin-right: ${marginRight + marginUnit};
+                            margin-bottom: ${marginBottom + marginUnit};
+                            margin-left: ${marginLeft + marginUnit};
                             padding-top: ${paddingTop}px;
                             padding-right: ${paddingRight}px;
                             padding-bottom: ${paddingBottom}px;
@@ -632,10 +632,10 @@
                         }
                         @media screen and (max-width: 767px) {
                             #block-${clientId} .advgb-columns-wrapper .advgb-columns {
-                                margin-top: ${marginTopM + marginUnit}px;
-                                margin-right: ${marginRightM + marginUnit}px;
-                                margin-bottom: ${marginBottomM + marginUnit}px;
-                                margin-left: ${marginLeftM + marginUnit}px;
+                                margin-top: ${marginTopM + marginUnit};
+                                margin-right: ${marginRightM + marginUnit};
+                                margin-bottom: ${marginBottomM + marginUnit};
+                                margin-left: ${marginLeftM + marginUnit};
                                 padding-top: ${paddingTopM}px;
                                 padding-right: ${paddingRightM}px;
                                 padding-bottom: ${paddingBottomM}px;
