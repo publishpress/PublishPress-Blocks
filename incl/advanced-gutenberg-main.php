@@ -4130,16 +4130,21 @@ float: left;'
                             $style_html .= '}';
                         } elseif ($matches[2][$key] === 'columns' || $matches[2][$key] === 'column') {
                             $colID      = $style_data_array['colId'];
+                            $marginUnit = 'px';
                             if ($matches[2][$key] === 'column') {
                                 $colID = $colID . '>.advgb-column-inner';
                             }
 
+                            if (isset($style_data_array['marginUnit'])) {
+                                $marginUnit = $style_data_array['marginUnit'];
+                            }
+
                             $style_html .= '#'. $colID . '{';
                             $style_html .= isset($style_data_array['textAlign']) ? 'text-align:'.$style_data_array['textAlign'].';' : '';
-                            $style_html .= isset($style_data_array['marginTop']) ? 'margin-top:'.$style_data_array['marginTop'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginRight']) ? 'margin-right:'.$style_data_array['marginRight'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginBottom']) ? 'margin-bottom:'.$style_data_array['marginBottom'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginLeft']) ? 'margin-left:'.$style_data_array['marginLeft'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginTop']) ? 'margin-top:'.$style_data_array['marginTop'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginRight']) ? 'margin-right:'.$style_data_array['marginRight'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginBottom']) ? 'margin-bottom:'.$style_data_array['marginBottom'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginLeft']) ? 'margin-left:'.$style_data_array['marginLeft'].$marginUnit.';' : '';
                             $style_html .= isset($style_data_array['paddingTop']) ? 'padding-top:'.$style_data_array['paddingTop'].'px;' : '';
                             $style_html .= isset($style_data_array['paddingRight']) ? 'padding-right:'.$style_data_array['paddingRight'].'px;' : '';
                             $style_html .= isset($style_data_array['paddingBottom']) ? 'padding-bottom:'.$style_data_array['paddingBottom'].'px;' : '';
@@ -4149,10 +4154,10 @@ float: left;'
                             // Styles for tablet
                             $style_html .= '@media screen and (max-width: 1023px) {';
                             $style_html .=  '#'. $colID . '{';
-                            $style_html .= isset($style_data_array['marginTopT']) ? 'margin-top:'.$style_data_array['marginTopT'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginRightT']) ? 'margin-right:'.$style_data_array['marginRightT'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginBottomT']) ? 'margin-bottom:'.$style_data_array['marginBottomT'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginLeftT']) ? 'margin-left:'.$style_data_array['marginLeftT'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginTopT']) ? 'margin-top:'.$style_data_array['marginTopT'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginRightT']) ? 'margin-right:'.$style_data_array['marginRightT'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginBottomT']) ? 'margin-bottom:'.$style_data_array['marginBottomT'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginLeftT']) ? 'margin-left:'.$style_data_array['marginLeftT'].$marginUnit.';' : '';
                             $style_html .= isset($style_data_array['paddingTopT']) ? 'padding-top:'.$style_data_array['paddingTopT'].'px;' : '';
                             $style_html .= isset($style_data_array['paddingRightT']) ? 'padding-right:'.$style_data_array['paddingRightT'].'px;' : '';
                             $style_html .= isset($style_data_array['paddingBottomT']) ? 'padding-bottom:'.$style_data_array['paddingBottomT'].'px;' : '';
@@ -4164,10 +4169,10 @@ float: left;'
                             $style_html .= '@media screen and (max-width: 767px) {';
                             $style_html .=  '#'. $colID . '{';
                             $style_html .= isset($style_data_array['textAlignM']) ? 'text-align:'.$style_data_array['textAlignM'].';' : '';
-                            $style_html .= isset($style_data_array['marginTopM']) ? 'margin-top:'.$style_data_array['marginTopM'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginRightM']) ? 'margin-right:'.$style_data_array['marginRightM'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginBottomM']) ? 'margin-bottom:'.$style_data_array['marginBottomM'].'px;' : '';
-                            $style_html .= isset($style_data_array['marginLeftM']) ? 'margin-left:'.$style_data_array['marginLeftM'].'px;' : '';
+                            $style_html .= isset($style_data_array['marginTopM']) ? 'margin-top:'.$style_data_array['marginTopM'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginRightM']) ? 'margin-right:'.$style_data_array['marginRightM'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginBottomM']) ? 'margin-bottom:'.$style_data_array['marginBottomM'].$marginUnit.';' : '';
+                            $style_html .= isset($style_data_array['marginLeftM']) ? 'margin-left:'.$style_data_array['marginLeftM'].$marginUnit.';' : '';
                             $style_html .= isset($style_data_array['paddingTopM']) ? 'padding-top:'.$style_data_array['paddingTopM'].'px;' : '';
                             $style_html .= isset($style_data_array['paddingRightM']) ? 'padding-right:'.$style_data_array['paddingRightM'].'px;' : '';
                             $style_html .= isset($style_data_array['paddingBottomM']) ? 'padding-bottom:'.$style_data_array['paddingBottomM'].'px;' : '';
