@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
-    const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, PanelColorSettings } = wpEditor;
+    const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, PanelColorSettings } = wpBlockEditor;
     const { RangeControl, PanelBody, TextControl, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
 
     class AdvButton extends Component {
@@ -490,4 +490,4 @@
             return props;
         },
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

@@ -1,10 +1,11 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, PanelColorSettings, InnerBlocks, AlignmentToolbar } = wpEditor;
+    const { InspectorControls, PanelColorSettings, AlignmentToolbar } = wpBlockEditor;
     const { PanelBody, RangeControl, BaseControl, SelectControl } = wpComponents;
     const { select } = wp.data;
+    const { InnerBlocks } = wp.blockEditor;
 
     const columnsBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -38,6 +39,27 @@
             };
         }
 
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-column'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
+                    });
+                }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
+            }
+        }
+
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
 
@@ -52,7 +74,7 @@
 
         render() {
             const { tabSelected } = this.state;
-            const { attributes, setAttributes, clientId } = this.props;
+            const { attributes, setAttributes, clientId, className } = this.props;
             const {
                 width,
                 borderColor, borderStyle, borderWidth, borderRadius,
@@ -62,13 +84,20 @@
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
             } = attributes;
-            const { getBlockOrder, getBlockRootClientId  } = select( 'core/block-editor' );
+            const { getBlockOrder, getBlockRootClientId, getBlockAttributes  } = select( 'core/block-editor' );
             const hasChildBlocks = getBlockOrder( clientId ).length > 0;
             const rootBlockId = getBlockRootClientId( clientId );
+            const rootChildBlocks = getBlockOrder(rootBlockId).filter( blockId => blockId !== clientId );
+            let avaiWidth = 100;
+            rootChildBlocks.map( ( blockId ) => {
+                const width = getBlockAttributes(blockId).width || 0;
+                avaiWidth -= parseInt(width);
+            } );
 
             const blockClasses = [
                 'advgb-column',
                 'column',
+                className,
             ].filter( Boolean ).join( ' ' );
 
             let deviceLetter = '';
@@ -79,11 +108,14 @@
                     <InspectorControls>
                         <PanelBody title={ __( 'Column Settings' ) }>
                             <RangeControl
-                                label={ __( 'Width (%)' ) }
+                                label={ [
+                                    __( 'Width (%)' ),
+                                    <span key="width" style={ { color: '#555d66', marginLeft: 10 } }>{ __( 'Available: ' ) + avaiWidth + '%' }</span>
+                                ] }
                                 help={ __( 'Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!' ) }
                                 value={ width }
                                 min={ 0 }
-                                max={ 100 }
+                                max={ avaiWidth }
                                 onChange={ (value) => setAttributes( { width: value } ) }
                             />
                             <PanelBody title={ __( 'Border Settings' ) }>
@@ -144,7 +176,7 @@
                                 } ) }
                             </div>
                             <BaseControl
-                                label={ AdvColumnEdit.jsUcfirst(tabSelected) + __( ' Text Alignment' ) }
+                                label={ AdvColumnEdit.jsUcfirst(tabSelected) + __( ' text alignment' ) }
                             >
                                 <AlignmentToolbar
                                     value={ attributes[ 'textAlign' + deviceLetter ] }
@@ -253,6 +285,7 @@
         },
         borderWidth: {
             type: 'number',
+            default: 1,
         },
         borderRadius: {
             type: 'number',
@@ -311,6 +344,10 @@
         paddingLeftM: {
             type: 'number',
         },
+        changed: {
+            type: 'boolean',
+            default: false,
+        }
     };
 
     registerBlockType( 'advgb/column', {
@@ -360,4 +397,4 @@
             );
         },
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, PanelColorSettings, MediaUpload } = wpEditor;
+    const { InspectorControls, PanelColorSettings, MediaUpload } = wpBlockEditor;
     const { PanelBody, RangeControl, ToggleControl , SelectControl, TextControl, TextareaControl, IconButton, Button, Placeholder, Tooltip } = wpComponents;
     const $ = jQuery;
 
@@ -19,7 +19,7 @@
             super( ...arguments );
             this.state = {
                 currentSelected: 0,
-                inited: false,
+                imageLoaded: false,
             };
 
             this.initSlider = this.initSlider.bind(this);
@@ -69,14 +69,23 @@
         }
 
         componentDidUpdate( prevProps ) {
-            const { attributes } = this.props;
+            const { attributes, clientId } = this.props;
             const { images } = attributes;
             const { images: prevImages } = prevProps.attributes;
 
             if (images.length !== prevImages.length) {
                 if (images.length) {
-                    setTimeout(() => this.initSlider(), 10);
+                    this.initSlider();
                 }
+            }
+
+            if (this.state.imageLoaded) {
+                $(`#block-${clientId} .advgb-image-slider-image-list `)
+                    .find('.advgb-image-slider-image-list-item:first-child')
+                    .find('.advgb-image-slider-image-list-img')
+                    .trigger('click');
+
+                this.setState( { imageLoaded: null } )
             }
         }
 
@@ -131,7 +140,7 @@
 
         render() {
             const { attributes, setAttributes, isSelected, clientId } = this.props;
-            const { currentSelected } = this.state;
+            const { currentSelected, imageLoaded } = this.state;
             const {
                 images,
                 actionOnClick,
@@ -180,6 +189,11 @@
                     </Placeholder>
                 )
             }
+
+            const blockClass = [
+                'advgb-images-slider-block',
+                imageLoaded === false && 'advgb-ajax-loading',
+            ].filter( Boolean ).join(' ');
 
             return (
                 <Fragment>
@@ -272,7 +286,7 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className="advgb-images-slider-block">
+                    <div className={blockClass}>
                         <div className="advgb-images-slider">
                             {images.map( (image, index) => (
                                 <div className="advgb-image-slider-item" key={index}>
@@ -282,6 +296,20 @@
                                          style={ {
                                              width: fullWidth ? '100%' : width,
                                              height: autoHeight ? 'auto' : height,
+                                         } }
+                                         onLoad={ () => {
+                                             if (index === 0) {
+                                                 if (this.state.imageLoaded === false) {
+                                                     this.setState( { imageLoaded: true } )
+                                                 }
+                                             }
+                                         } }
+                                         onError={ () => {
+                                             if (index === 0) {
+                                                 if (this.state.imageLoaded === false) {
+                                                     this.setState( { imageLoaded: true } )
+                                                 }
+                                             }
                                          } }
                                     />
                                     <div className="advgb-image-slider-item-info"
@@ -356,7 +384,7 @@
                                         ) }
                                         <img src={ image.url }
                                              className="advgb-image-slider-image-list-img"
-                                             alt={ __( 'Remove' ) }
+                                             alt={ __( 'Image' ) }
                                              onClick={ () => {
                                                  $(`#block-${clientId} .advgb-images-slider`).slick('slickGoTo', index, false);
                                                  this.setState( { currentSelected: index } )
@@ -614,4 +642,4 @@
             }
         ]
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

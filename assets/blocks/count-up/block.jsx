@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, PanelColorSettings } = wpEditor;
+    const { InspectorControls, RichText, PanelColorSettings } = wpBlockEditor;
     const { RangeControl, PanelBody, TextControl, FormToggle } = wpComponents;
 
     class AdvCountUp extends Component {
@@ -417,4 +417,4 @@
         edit: AdvCountUp,
         save: AdvCountUpSave,
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

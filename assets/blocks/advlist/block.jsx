@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
-    const { InspectorControls, RichText, ColorPalette, BlockControls } = wpEditor;
+    const { InspectorControls, RichText, ColorPalette, BlockControls } = wpBlockEditor;
     const { BaseControl, RangeControl, PanelBody, IconButton, Dashicon, Toolbar } = wpComponents;
 
     class AdvList extends Component {
@@ -358,4 +358,4 @@
             </div>
         },
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
