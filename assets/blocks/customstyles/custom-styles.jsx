@@ -1,8 +1,8 @@
-(function ( wpI18n, wpHooks, wpBlocks, wpEditor, wpComponents ) {
+(function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents ) {
     const { addFilter } = wpHooks;
     const { __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
-    const { InspectorControls } = wpEditor;
+    const { InspectorControls } = wpBlockEditor;
     const { SelectControl } = wpComponents;
 
     // Register custom styles to blocks attributes
@@ -91,4 +91,4 @@
 
         return extraProps;
     } );
-})( wp.i18n, wp.hooks, wp.blocks, wp.editor, wp.components );
+})( wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components );

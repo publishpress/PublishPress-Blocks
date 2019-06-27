@@ -59,6 +59,7 @@ $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) 
 $editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
 $default_thumb                    = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
 $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
+$enable_columns_visual_guide      = isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide'] ? 'checked' : '';
 ?>
 
 <div id="advgb-settings-container">
@@ -304,6 +305,29 @@ $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ?
                                 <i class="dashicons dashicons-edit ju-button" id="thumb_edit" title="<?php esc_html_e('Edit', 'advanced-gutenberg'); ?>"></i>
                                 <i class="dashicons dashicons-no ju-button orange-button" id="thumb_remove" title="<?php esc_html_e('Reset to default', 'advanced-gutenberg'); ?>"></i>
                             </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="ju-settings-option clearfix">
+                    <div class="settings-option-wrapper clearfix">
+                        <label for="enable_columns_visual_guide"
+                               class="advgb_qtip ju-setting-label"
+                               data-qtip="<?php esc_attr_e(
+                                   'Enable border to materialize Adv. Gutenberg Column block',
+                                   'advanced-gutenberg'
+                               ) ?>"
+                        >
+                            <?php esc_html_e('Enable columns visual guide', 'advanced-gutenberg') ?>
+                        </label>
+                        <div class="ju-switch-button">
+                            <label class="switch">
+                                <input type="checkbox" name="enable_columns_visual_guide"
+                                       id="enable_columns_visual_guide"
+                                       value="1"
+                                    <?php echo esc_attr($enable_columns_visual_guide) ?>
+                                />
+                                <span class="slider"></span>
+                            </label>
                         </div>
                     </div>
                 </li>

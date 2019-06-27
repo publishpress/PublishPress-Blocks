@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpEditor;
+    const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpBlockEditor;
     const { RangeControl, ToggleControl, PanelBody, Tooltip } = wpComponents;
     const { times } = lodash;
 
@@ -290,131 +290,6 @@
         }
     }
 
-    function AdvTestimonialSave( { attributes } ) {
-        const {
-            avatarUrl,
-            avatarUrl2,
-            avatarUrl3,
-            avatarColor,
-            avatarBorderRadius,
-            avatarBorderWidth,
-            avatarBorderColor,
-            avatarSize,
-            name,
-            name2,
-            name3,
-            nameColor,
-            position,
-            position2,
-            position3,
-            positionColor,
-            desc,
-            desc2,
-            desc3,
-            descColor,
-            columns
-        } = attributes;
-
-        return (
-            <div className="advgb-testimonial">
-                <div className="advgb-testimonial-columns-one">
-                    <div className="advgb-testimonial-avatar-group">
-                        <div className="advgb-testimonial-avatar"
-                             style={ {
-                                 backgroundImage: `url(${avatarUrl ? avatarUrl : advgbBlocks.avatarHolder})`,
-                                 backgroundColor: avatarColor,
-                                 borderRadius: avatarBorderRadius + '%',
-                                 borderWidth: avatarBorderWidth + 'px',
-                                 borderColor: avatarBorderColor,
-                                 width: avatarSize + 'px',
-                                 height: avatarSize + 'px',
-                             } }
-                        />
-                    </div>
-                    <h4 className="advgb-testimonial-name"
-                        style={ { color: nameColor } }
-                    >
-                        { name }
-                    </h4>
-                    <p className="advgb-testimonial-position"
-                       style={ { color: positionColor } }
-                    >
-                        { position }
-                    </p>
-                    <p className="advgb-testimonial-desc"
-                       style={ { color: descColor } }
-                    >
-                        { desc }
-                    </p>
-                </div>
-                {(parseInt(columns) > 1) && (
-                    <div className="advgb-testimonial-columns-two">
-                        <div className="advgb-testimonial-avatar-group">
-                            <div className="advgb-testimonial-avatar"
-                                 style={ {
-                                     backgroundImage: `url(${avatarUrl2 ? avatarUrl2 : advgbBlocks.avatarHolder})`,
-                                     backgroundColor: avatarColor,
-                                     borderRadius: avatarBorderRadius + '%',
-                                     borderWidth: avatarBorderWidth + 'px',
-                                     borderColor: avatarBorderColor,
-                                     width: avatarSize + 'px',
-                                     height: avatarSize + 'px',
-                                 } }
-                            />
-                        </div>
-                        <h4 className="advgb-testimonial-name"
-                            style={ { color: nameColor } }
-                        >
-                            { name2 }
-                        </h4>
-                        <p className="advgb-testimonial-position"
-                           style={ { color: positionColor } }
-                        >
-                            { position2 }
-                        </p>
-                        <p className="advgb-testimonial-desc"
-                           style={ { color: descColor } }
-                        >
-                            { desc2 }
-                        </p>
-                    </div>
-                ) }
-                {(parseInt(columns) > 2) && (
-                    <div className="advgb-testimonial-columns-two">
-                        <div className="advgb-testimonial-avatar-group">
-                            <div className="advgb-testimonial-avatar"
-                                 style={ {
-                                     backgroundImage: `url(${avatarUrl3 ? avatarUrl3 : advgbBlocks.avatarHolder})`,
-                                     backgroundColor: avatarColor,
-                                     borderRadius: avatarBorderRadius + '%',
-                                     borderWidth: avatarBorderWidth + 'px',
-                                     borderColor: avatarBorderColor,
-                                     width: avatarSize + 'px',
-                                     height: avatarSize + 'px',
-                                 } }
-                            />
-                        </div>
-                        <h4 className="advgb-testimonial-name"
-                            style={ { color: nameColor } }
-                        >
-                            { name3 }
-                        </h4>
-                        <p className="advgb-testimonial-position"
-                           style={ { color: positionColor } }
-                        >
-                            { position3 }
-                        </p>
-                        <p className="advgb-testimonial-desc"
-                           style={ { color: descColor } }
-                        >
-                            { desc3 }
-                        </p>
-                    </div>
-                ) }
-            </div>
-        );
-    }
-
     const testimonialBlockIcon = (
         <svg height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h4l3 3 3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 3.3c1.49 0 2.7 1.21 2.7 2.7 0 1.49-1.21 2.7-2.7 2.7-1.49 0-2.7-1.21-2.7-2.7 0-1.49 1.21-2.7 2.7-2.7zM18 16H6v-.9c0-2 4-3.1 6-3.1s6 1.1 6 3.1v.9z"/>
@@ -634,51 +509,5 @@
                 </div>
             );
         },
-        deprecated: [
-            {
-                attributes: blockAttrsOld,
-                migrate: function( attributes ) {
-                    let convertItems = [];
-                    convertItems[0] = {
-                        avatarUrl: attributes.avatarUrl,
-                        avatarID: attributes.avatarID,
-                        name: attributes.name,
-                        position: attributes.position,
-                        desc: attributes.desc,
-                    };
-
-                    convertItems[1] = {
-                        avatarUrl: attributes.avatarUrl2,
-                        avatarID: attributes.avatarID2,
-                        name: attributes.name2,
-                        position: attributes.position2,
-                        desc: attributes.desc2,
-                    };
-
-                    convertItems[2] = {
-                        avatarUrl: attributes.avatarUrl3,
-                        avatarID: attributes.avatarID3,
-                        name: attributes.name3,
-                        position: attributes.position3,
-                        desc: attributes.desc3,
-                    };
-
-                    return {
-                        ... attributes,
-                        items: [
-                            ...convertItems,
-                            ...times(7, () => ( {
-                                avatarUrl: advgbBlocks.avatarHolder,
-                                avatarID: undefined,
-                                name: __( 'Person Name' ),
-                                position: __( 'Job Position' ),
-                                desc: __( 'A little description about this person will show up here.' ),
-                            } ) ),
-                        ],
-                    };
-                },
-                save: AdvTestimonialSave,
-            }
-        ]
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

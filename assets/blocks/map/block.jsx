@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, MediaUpload } = wpEditor;
+    const { InspectorControls, MediaUpload } = wpBlockEditor;
     const { PanelBody, TextControl, TextareaControl, RangeControl, SelectControl, BaseControl, Button, Placeholder, Spinner } = wpComponents;
 
     let mapWillUpdate = null;
@@ -1070,7 +1070,7 @@
             if (!infoWindow) {
                 infoWindow = new google.maps.InfoWindow( {
                     content: `<div class="advgbmap-wrapper">
-                    <h2 class="advgbmap-title">${markerTitle}</h2>
+                    <h3 class="advgbmap-title">${markerTitle}</h3>
                     <p class="advgbmap-desc">${formattedDesc || ''}</p>
                 </div>`,
                     maxWidth: 500,
@@ -1080,7 +1080,7 @@
 
             infoWindow.setContent(
                 `<div class="advgbmap-wrapper">
-                <h2 class="advgbmap-title">${markerTitle}</h2>
+                <h3 class="advgbmap-title">${markerTitle}</h3>
                 <p class="advgbmap-desc">${formattedDesc || ''}</p>
             </div>`
             );
@@ -1449,11 +1449,6 @@
             const formattedDesc = markerDesc.replace( /\n/g, '<br/>' ).replace( /'/, '\\\'' );
             const formattedTitle = markerTitle.replace( /'/, '\\\'' );
             const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-            const infoWindowHtml = ''+
-                '<div class="advgbmap-wrapper">' +
-                    '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' +
-                    '<p class="advgbmap-desc">'+ formattedDesc +'</p>' +
-                '</div>';
             let mapStyleApply = MAP_STYLES[mapStyle];
             if (mapStyle === 'custom') {
                 try {
@@ -1478,8 +1473,8 @@
                          data-lng={ lng }
                          data-zoom={ zoom }
                          data-title={ formattedTitle }
+                         data-desc={ formattedDesc }
                          data-icon={ markerIcon }
-                         data-info={ encodeURIComponent(infoWindowHtml) }
                          data-style={ encodeURIComponent(mapStyleApply) }
                     />
                 </div>
@@ -1534,102 +1529,22 @@
 
                     return (
                         <div className="advgb-map-block" style={ { margin: '10px auto' } }>
-                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
-                            <script type="text/javascript">
-                                {`window.addEventListener('load', function() {
-                        if (typeof google === "undefined") return null;
-                        var location = {
-                            lat: parseFloat(${lat}),
-                            lng: parseFloat(${lng})
-                        };
-                        var contentHtml = '${infoWindowHtml}';
-                        var mapStyle = '${mapStyleApply}';
-                        var map = new google.maps.Map(document.getElementById('${mapID}'), {
-                            zoom: ${zoom},
-                            center: location,
-                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},
-                            gestureHandling: 'cooperative',
-                        });
-                        var infoWindow = new google.maps.InfoWindow({
-                            content: contentHtml
-                        });
-                        var marker = new google.maps.Marker({
-                            position: location,
-                            map: map,
-                            title: '${formattedTitle}',
-                            animation: google.maps.Animation.DROP,
-                            icon: {
-                                url: '${markerIcon || DEFAULT_MARKER}',
-                                scaledSize: new google.maps.Size(27, 43),
-                            },
-                        });
-                        ${markerTitle &&
-                                `marker.addListener('click', function() {
-                            infoWindow.open(map, marker);
-                        });`}
-                    })`}
-                            </script>
+                            <div className="advgb-map-content"
+                                 id={ mapID }
+                                 style={ { height: height } }
+                                 data-default={ DEFAULT_MARKER }
+                                 data-lat={ lat }
+                                 data-lng={ lng }
+                                 data-zoom={ zoom }
+                                 data-title={ formattedTitle }
+                                 data-icon={ markerIcon }
+                                 data-info={ encodeURIComponent(infoWindowHtml) }
+                                 data-style={ encodeURIComponent(mapStyleApply) }
+                            />
                         </div>
                     );
                 },
             },
-            {
-                attributes: mapBlockAttrs,
-                save: function ( { attributes } ) {
-                    const {
-                        mapID,
-                        lat,
-                        lng,
-                        zoom,
-                        height,
-                        markerIcon,
-                        markerTitle,
-                        markerDesc,
-                    } = attributes;
-
-                    const formattedDesc = markerDesc.replace( /\n/g, '<br/>' ).replace( /'/, '\\\'' );
-                    const formattedTitle = markerTitle.replace( /'/, '\\\'' );
-                    const DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-                    const infoWindowHtml = `<div class="advgbmap-wrapper"><h2 class="advgbmap-title">${formattedTitle}</h2><p class="advgbmap-desc">${formattedDesc || ''}</p></div>`;
-
-                    return (
-                        <div className="advgb-map-block" style={ { margin: '10px auto' } }>
-                            <div className="advgb-map-content" id={ mapID } style={ { height: height } }/>
-                            <script type="text/javascript">
-                                {`window.addEventListener('load', function() {
-                        if (typeof google === "undefined") return null;
-                        var location = {
-                            lat: parseFloat(${lat}),
-                            lng: parseFloat(${lng})
-                        };
-                        var map = new google.maps.Map(document.getElementById('${mapID}'), {
-                            zoom: ${zoom},
-                            center: location,
-                            gestureHandling: 'cooperative',
-                        });
-                        var infoWindow = new google.maps.InfoWindow({
-                            content: '${infoWindowHtml}'
-                        });
-                        var marker = new google.maps.Marker({
-                            position: location,
-                            map: map,
-                            title: '${formattedTitle}',
-                            animation: google.maps.Animation.DROP,
-                            icon: {
-                                url: '${markerIcon || DEFAULT_MARKER}',
-                                scaledSize: new google.maps.Size(27, 43),
-                            },
-                        });
-                        ${markerTitle &&
-                                `marker.addListener('click', function() {
-                            infoWindow.open(map, marker);
-                        });`}
-                    })`}
-                            </script>
-                        </div>
-                    );
-                },
-            }
         ]
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
