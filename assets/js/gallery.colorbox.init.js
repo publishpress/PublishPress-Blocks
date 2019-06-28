@@ -16,6 +16,7 @@ jQuery(document).ready(function ($) {
             fixed: true,
             className: 'advgb_lightbox',
             rel: 'gallery' + galGroup,
+            photo: true,
             href: function () {
                 return $(this).find('img').attr('src');
             },

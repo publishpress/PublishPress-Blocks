@@ -89,11 +89,11 @@ class createUpdateTestBlocksCest
         $I->fillField('.components-color-picker__inputs-wrapper input', '#ff006a');
 
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
-        // Change border color to blue
-        $I->click('//span[text()="Border Color"]/following-sibling::node()//div[3]');
         // Change border to 3px
         $I->click('//button[text()="Border"]');
         $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 3);
+        // Change border color to blue
+        $I->click('//span[text()="Border Color"]/following-sibling::node()//div[3]');
         // Set only right border
         $I->click('//div[@class="advgb-border-item-wrapper"]/div[last()]');
         $I->click('//div[@class="advgb-border-item-wrapper"]/div[2]');

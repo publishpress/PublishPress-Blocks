@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, PanelColorSettings } = wpEditor;
+    const { InspectorControls, RichText, PanelColorSettings } = wpBlockEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl } = wpComponents;
 
     class AdvTabsBlock extends Component {
@@ -428,78 +428,5 @@
                 </div>
             );
         },
-        deprecated: [
-            {
-                attributes: tabBlockAttrs,
-                save: function ( { attributes } ) {
-                    const {
-                        tabItems,
-                        headerBgColor,
-                        headerTextColor,
-                        bodyBgColor,
-                        bodyTextColor,
-                        borderStyle,
-                        borderWidth,
-                        borderColor,
-                        borderRadius,
-                        blockID,
-                        activeTabBgColor,
-                        activeTabTextColor,
-                    } = attributes;
-
-                    return (
-                        <div id={`advgb-tabs-${blockID}`} className="advgb-tabs-block" style={ { border: 'none' } }>
-                            <ul className="advgb-tabs-panel">
-                                {tabItems.map( ( item, index ) => (
-                                    <li key={ index } className="advgb-tab"
-                                        style={ {
-                                            backgroundColor: headerBgColor,
-                                            borderStyle: borderStyle,
-                                            borderWidth: borderWidth + 'px',
-                                            borderColor: borderColor,
-                                            borderRadius: borderRadius + 'px',
-                                            margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
-                                        } }
-                                    >
-                                        <a href={`#${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
-                                           style={ { color: headerTextColor } }
-                                        >
-                                            <RichText.Content tagName="span" value={ item.header }/>
-                                        </a>
-                                    </li>
-                                ) ) }
-                            </ul>
-                            {tabItems.map( ( item, index ) => (
-                                <div key={ index }
-                                     id={`${item.header.toLowerCase().replace(/\s/g, '')}-${index}`}
-                                     className="advgb-tab-body"
-                                     style={ {
-                                         backgroundColor: bodyBgColor,
-                                         color: bodyTextColor,
-                                         borderStyle: borderStyle,
-                                         borderWidth: borderWidth + 'px',
-                                         borderColor: borderColor,
-                                         borderRadius: borderRadius + 'px',
-                                     } }
-                                >
-                                    <RichText.Content tagName="p" value={ item.body }/>
-                                </div>
-                            ) ) }
-                            {!!blockID &&
-                            <style>
-                                {activeTabBgColor && `#advgb-tabs-${blockID} li.advgb-tab.ui-tabs-active {
-                                background-color: ${activeTabBgColor} !important;
-                            }
-                            `}
-                                {activeTabTextColor && `#advgb-tabs-${blockID} li.advgb-tab.ui-tabs-active a {
-                                color: ${activeTabTextColor} !important;
-                            }`}
-                            </style>
-                            }
-                        </div>
-                    );
-                }
-            }
-        ]
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

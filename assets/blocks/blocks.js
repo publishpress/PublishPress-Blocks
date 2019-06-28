@@ -106,15 +106,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings,
-        InnerBlocks = wpEditor.InnerBlocks;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        RichText = wpBlockEditor.RichText,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        InnerBlocks = wpBlockEditor.InnerBlocks;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
@@ -572,7 +572,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -598,17 +598,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType,
         createBlock = wpBlocks.createBlock;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls,
-        BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar,
-        RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls,
+        BlockAlignmentToolbar = wpBlockEditor.BlockAlignmentToolbar,
+        RichText = wpBlockEditor.RichText,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         TextControl = wpComponents.TextControl,
@@ -1145,110 +1145,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             return props;
-        },
-
-        deprecated: [{
-            attributes: blockAttrs,
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
-                var id = attributes.id,
-                    align = attributes.align,
-                    url = attributes.url,
-                    urlOpenNewTab = attributes.urlOpenNewTab,
-                    title = attributes.title,
-                    text = attributes.text,
-                    bgColor = attributes.bgColor,
-                    textColor = attributes.textColor,
-                    textSize = attributes.textSize,
-                    paddingTop = attributes.paddingTop,
-                    paddingRight = attributes.paddingRight,
-                    paddingBottom = attributes.paddingBottom,
-                    paddingLeft = attributes.paddingLeft,
-                    borderWidth = attributes.borderWidth,
-                    borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius,
-                    borderStyle = attributes.borderStyle,
-                    hoverTextColor = attributes.hoverTextColor,
-                    hoverBgColor = attributes.hoverBgColor,
-                    hoverShadowColor = attributes.hoverShadowColor,
-                    hoverShadowH = attributes.hoverShadowH,
-                    hoverShadowV = attributes.hoverShadowV,
-                    hoverShadowBlur = attributes.hoverShadowBlur,
-                    hoverShadowSpread = attributes.hoverShadowSpread,
-                    transitionSpeed = attributes.transitionSpeed;
-
-
-                return React.createElement(
-                    'div',
-                    { className: 'align' + align },
-                    React.createElement(RichText.Content, {
-                        tagName: 'a',
-                        className: 'wp-block-advgb-button_link ' + id,
-                        href: url || '#',
-                        title: title,
-                        target: !urlOpenNewTab ? '_self' : '_blank',
-                        value: text,
-                        rel: 'noopener noreferrer'
-                    }),
-                    React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
-                    )
-                );
-            }
-        }, {
-            attributes: blockAttrs,
-            save: function save(_ref3) {
-                var attributes = _ref3.attributes;
-                var id = attributes.id,
-                    align = attributes.align,
-                    url = attributes.url,
-                    urlOpenNewTab = attributes.urlOpenNewTab,
-                    title = attributes.title,
-                    text = attributes.text,
-                    bgColor = attributes.bgColor,
-                    textColor = attributes.textColor,
-                    textSize = attributes.textSize,
-                    paddingTop = attributes.paddingTop,
-                    paddingRight = attributes.paddingRight,
-                    paddingBottom = attributes.paddingBottom,
-                    paddingLeft = attributes.paddingLeft,
-                    borderWidth = attributes.borderWidth,
-                    borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius,
-                    borderStyle = attributes.borderStyle,
-                    hoverTextColor = attributes.hoverTextColor,
-                    hoverBgColor = attributes.hoverBgColor,
-                    hoverShadowColor = attributes.hoverShadowColor,
-                    hoverShadowH = attributes.hoverShadowH,
-                    hoverShadowV = attributes.hoverShadowV,
-                    hoverShadowBlur = attributes.hoverShadowBlur,
-                    hoverShadowSpread = attributes.hoverShadowSpread,
-                    transitionSpeed = attributes.transitionSpeed;
-
-
-                return React.createElement(
-                    'div',
-                    { className: 'align' + align },
-                    React.createElement(RichText.Content, {
-                        tagName: 'a',
-                        className: 'wp-block-advgb-button_link ' + id,
-                        href: url || '#',
-                        title: title,
-                        target: !urlOpenNewTab ? '_self' : '_blank',
-                        value: text
-                    }),
-                    React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
-                    )
-                );
-            }
-        }]
+        }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -1272,16 +1171,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls,
-        RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings,
-        MediaUpload = wpEditor.MediaUpload;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls,
+        RichText = wpBlockEditor.RichText,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        MediaUpload = wpBlockEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         ToggleControl = wpComponents.ToggleControl,
@@ -1684,7 +1583,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 'div',
                 { className: blockClassName,
                     style: {
-                        backgroundImage: 'url( ' + imageUrl + ')',
+                        backgroundImage: 'url(' + imageUrl + ')',
                         height: height,
                         width: width,
                         justifyContent: vAlign,
@@ -1698,12 +1597,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     rel: 'noopener noreferrer',
                     href: linkURL
                 }),
-                React.createElement(
+                title && React.createElement(
                     'h4',
                     { className: 'advgb-image-title', style: { color: titleColor } },
                     title
                 ),
-                React.createElement(
+                subtitle && React.createElement(
                     'p',
                     { className: 'advgb-image-subtitle', style: { color: subtitleColor } },
                     subtitle
@@ -1747,6 +1646,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement('a', { className: 'advgb-image-overlay',
                         style: { backgroundColor: overlayColor },
                         target: linkInNewTab ? '_blank' : '_self',
+                        rel: 'noopener noreferrer',
                         href: linkURL
                     }),
                     React.createElement(
@@ -1763,7 +1663,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -1791,16 +1691,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType,
         createBlock = wpBlocks.createBlock;
-    var InspectorControls = wpEditor.InspectorControls,
-        RichText = wpEditor.RichText,
-        ColorPalette = wpEditor.ColorPalette,
-        BlockControls = wpEditor.BlockControls;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        RichText = wpBlockEditor.RichText,
+        ColorPalette = wpBlockEditor.ColorPalette,
+        BlockControls = wpBlockEditor.BlockControls;
     var BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
@@ -2181,86 +2081,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     values
                 )
             );
-        },
-        deprecated: [{
-            attributes: listBlockAttrs,
-            save: function save(_ref4) {
-                var attributes = _ref4.attributes;
-                var id = attributes.id,
-                    values = attributes.values,
-                    icon = attributes.icon,
-                    iconSize = attributes.iconSize,
-                    iconColor = attributes.iconColor,
-                    margin = attributes.margin,
-                    padding = attributes.padding,
-                    lineHeight = attributes.lineHeight,
-                    fontSize = attributes.fontSize;
-
-                var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
-
-                var size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
-                var marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
-                var padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
-
-                return React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                        'ul',
-                        { className: listClassName },
-                        values
-                    ),
-                    React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' li { font-size: ' + fontSize + 'px; margin-left: ' + (size + padd) + 'px }'
-                    ),
-                    icon && React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                            margin-left: -' + (size + padd + marg) + 'px;\n                        }'
-                    )
-                );
-            }
-        }, {
-            attributes: listBlockAttrs,
-            save: function save(_ref5) {
-                var attributes = _ref5.attributes;
-                var id = attributes.id,
-                    values = attributes.values,
-                    icon = attributes.icon,
-                    iconSize = attributes.iconSize,
-                    iconColor = attributes.iconColor,
-                    margin = attributes.margin,
-                    padding = attributes.padding,
-                    lineHeight = attributes.lineHeight,
-                    fontSize = attributes.fontSize;
-
-                var listClassName = [id, icon && 'advgb-list', icon && 'advgb-list-' + icon].filter(Boolean).join(' ');
-
-                return React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                        'ul',
-                        { className: listClassName },
-                        values
-                    ),
-                    React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' li { font-size: ' + fontSize + 'px }'
-                    ),
-                    icon && React.createElement(
-                        'style',
-                        null,
-                        '.' + id + ' li:before {\n                            font-size: ' + iconSize + 'px;\n                            color: ' + iconColor + ';\n                            line-height: ' + lineHeight + 'px;\n                            margin: ' + margin + 'px;\n                            padding: ' + padding + 'px;\n                        }'
-                    )
-                );
-            }
-        }]
+        }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -2290,16 +2113,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType,
         createBlock = wpBlocks.createBlock;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls,
-        RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls,
+        RichText = wpBlockEditor.RichText,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
@@ -4065,7 +3888,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }]
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -4089,15 +3912,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls,
-        PanelColorSettings = wpEditor.PanelColorSettings,
-        MediaUpload = wpEditor.MediaUpload;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        MediaUpload = wpBlockEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         ToggleControl = wpComponents.ToggleControl,
@@ -4727,78 +4550,1397 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 )
             );
-        },
-        deprecated: [{
-            attributes: blockAttrs,
-            save: function save(_ref5) {
-                var attributes = _ref5.attributes;
-                var videoURL = attributes.videoURL,
-                    videoSourceType = attributes.videoSourceType,
-                    videoTitle = attributes.videoTitle,
-                    videoFullWidth = attributes.videoFullWidth,
-                    videoWidth = attributes.videoWidth,
-                    videoHeight = attributes.videoHeight,
-                    playButtonIcon = attributes.playButtonIcon,
-                    playButtonSize = attributes.playButtonSize,
-                    playButtonColor = attributes.playButtonColor,
-                    overlayColor = attributes.overlayColor,
-                    poster = attributes.poster,
-                    openInLightbox = attributes.openInLightbox;
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/columns/block.jsx":
+/*!*****************************************!*\
+  !*** ./assets/blocks/columns/block.jsx ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
-                var blockClassName = ['advgb-video-block', !!videoFullWidth && 'full-width', !!openInLightbox && !!videoURL && 'advgb-video-lightbox'].filter(Boolean).join(' ');
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-                var videoWrapperClass = ['advgb-video-wrapper', !!videoFullWidth && 'full-width'].filter(Boolean).join(' ');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        InnerBlocks = wpBlockEditor.InnerBlocks;
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        SelectControl = wpComponents.SelectControl,
+        ToggleControl = wpComponents.ToggleControl,
+        Tooltip = wpComponents.Tooltip,
+        Toolbar = wpComponents.Toolbar;
+    var _lodash = lodash,
+        times = _lodash.times;
+    var _wp$data = wp.data,
+        dispatch = _wp$data.dispatch,
+        select = _wp$data.select;
+
+
+    var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '12-12', icon: '12-12', title: __('Two: 1/2 - 1/2') }, { columns: 2, layout: '23-13', icon: '23-13', title: __('Two: 2/3 - 1/3') }, { columns: 2, layout: '13-23', icon: '13-23', title: __('Two: 1/3 - 2/3') }, { columns: 2, layout: '14-34', icon: '14-34', title: __('Two: 1/4 - 3/4') }, { columns: 2, layout: '34-14', icon: '34-14', title: __('Two: 3/4 - 1/4') }, { columns: 2, layout: '15-45', icon: '15-45', title: __('Two: 1/5 - 4/5') }, { columns: 2, layout: '45-15', icon: '45-15', title: __('Two: 4/5 - 1/5') }, { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __('Three: 1/3 - 1/3 - 1/3') }, { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __('Three: 1/2 - 1/4 - 1/4') }, { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __('Three: 1/4 - 1/4 - 1/2') }, { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __('Three: 1/4 - 1/2 - 1/4') }, { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __('Three: 1/5 - 3/5 - 1/5') }, { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __('Three: 3/5 - 1/5 - 1/5') }, { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __('Three: 1/5 - 1/5 - 3/5') }, { columns: 3, layout: '16-46-16', icon: '16-46-16', title: __('Three: 1/6 - 4/6 - 1/6') }, { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __('Four: 1/4 - 1/4 - 1/4 - 1/4') }, { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __('Four: 3/6 - 1/6 - 1/6 - 1/6') }, { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __('Four: 1/6 - 1/6 - 1/6 - 3/6') }, { columns: 4, layout: '15-15-15-25', icon: '15-15-15-25', title: __('Four: 1/5 - 1/5 - 1/5 - 2/5') }, { columns: 4, layout: '25-15-15-15', icon: '25-15-15-15', title: __('Four: 2/5 - 1/5 - 1/5 - 1/5') }, { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __('Five') }, { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __('Six') }];
+    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '100-12-12', title: __('Three: 100 - 1/2 - 1/2') }, { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __('Three: 1/2 - 1/2 - 100') }, { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __('Four: Two Columns') }, { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __('Six: Two Columns') }, { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __('Six: Three Columns') }];
+    var COLUMNS_LAYOUTS_STACKED = {
+        columns: 1, layout: 'stacked', icon: 'stacked', title: __('Stacked')
+    };
+    var GUTTER_OPTIONS = [{ label: __('None'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }, { label: '70px', value: 70 }, { label: '90px', value: 90 }];
+
+    var AdvColumnsEdit = function (_Component) {
+        _inherits(AdvColumnsEdit, _Component);
+
+        function AdvColumnsEdit() {
+            _classCallCheck(this, AdvColumnsEdit);
+
+            var _this = _possibleConstructorReturn(this, (AdvColumnsEdit.__proto__ || Object.getPrototypeOf(AdvColumnsEdit)).apply(this, arguments));
+
+            _this.state = {
+                tabSelected: 'desktop'
+            };
+            return _this;
+        }
+
+        _createClass(AdvColumnsEdit, [{
+            key: 'componentWillMount',
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-columns'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === 'undefined' ? 'undefined' : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+
+
+                if (!attributes.id) {
+                    setAttributes({ colId: 'advgb-cols-' + clientId });
+                }
+            }
+        }, {
+            key: 'componentDidUpdate',
+            value: function componentDidUpdate(prevProps) {
+                var _prevProps$attributes = prevProps.attributes,
+                    prevLayout = _prevProps$attributes.columnsLayout,
+                    prevLayoutT = _prevProps$attributes.columnsLayoutT,
+                    prevLayoutM = _prevProps$attributes.columnsLayoutM;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
+                var columns = attributes.columns,
+                    columnsLayout = attributes.columnsLayout,
+                    columnsLayoutT = attributes.columnsLayoutT,
+                    columnsLayoutM = attributes.columnsLayoutM;
+
+                var _select = select('core/block-editor'),
+                    getBlockOrder = _select.getBlockOrder;
+
+                var _dispatch = dispatch('core/block-editor'),
+                    updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+                var childBlocks = getBlockOrder(clientId);
+                var shouldUpdate = false;
+                var classes = times(6, function () {
+                    return [];
+                });
+
+                var extraClassD = !!columnsLayoutT ? '-desktop' : '-tablet';
+                var extraClassT = '-tablet';
+                var extraClassM = '-mobile';
+
+                if (prevLayout !== columnsLayout || prevLayoutT !== columnsLayoutT || prevLayoutM !== columnsLayoutM) {
+                    shouldUpdate = true;
+                    classes = AdvColumnsEdit.prepareColumnClass(columnsLayout, extraClassD, classes);
+                    classes = AdvColumnsEdit.prepareColumnClass(columnsLayoutT, extraClassT, classes);
+                    classes = AdvColumnsEdit.prepareColumnClass(columnsLayoutM, extraClassM, classes);
+                }
+
+                if (shouldUpdate) {
+                    classes = classes.map(function (cls) {
+                        return cls.filter(Boolean).join(' ');
+                    });
+                    classes.map(function (cls, idx) {
+                        return !!childBlocks[idx] && updateBlockAttributes(childBlocks[idx], { columnClasses: cls, width: 0 });
+                    });
+                }
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                var _this2 = this;
+
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    clientId = _props4.clientId,
+                    className = _props4.className;
+                var tabSelected = this.state.tabSelected;
+                var columns = attributes.columns,
+                    columnsLayout = attributes.columnsLayout,
+                    columnsLayoutT = attributes.columnsLayoutT,
+                    columnsLayoutM = attributes.columnsLayoutM,
+                    marginUnit = attributes.marginUnit,
+                    marginTop = attributes.marginTop,
+                    marginRight = attributes.marginRight,
+                    marginBottom = attributes.marginBottom,
+                    marginLeft = attributes.marginLeft,
+                    marginTopM = attributes.marginTopM,
+                    marginRightM = attributes.marginRightM,
+                    marginBottomM = attributes.marginBottomM,
+                    marginLeftM = attributes.marginLeftM,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    paddingTopM = attributes.paddingTopM,
+                    paddingRightM = attributes.paddingRightM,
+                    paddingBottomM = attributes.paddingBottomM,
+                    paddingLeftM = attributes.paddingLeftM,
+                    vAlign = attributes.vAlign,
+                    gutter = attributes.gutter,
+                    collapsedGutter = attributes.collapsedGutter,
+                    collapsedRtl = attributes.collapsedRtl,
+                    columnsWrapped = attributes.columnsWrapped,
+                    contentMaxWidth = attributes.contentMaxWidth,
+                    contentMaxWidthUnit = attributes.contentMaxWidthUnit,
+                    contentMinHeight = attributes.contentMinHeight,
+                    contentMinHeightUnit = attributes.contentMinHeightUnit,
+                    wrapperTag = attributes.wrapperTag;
+
+
+                var blockClasses = ['advgb-columns', className, vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+
+                if (!columns) {
+                    return React.createElement(
+                        'div',
+                        { className: 'advgb-columns-select-wrapper' },
+                        React.createElement(
+                            'div',
+                            { className: 'advgb-columns-select-title' },
+                            __('Pickup a columns layout')
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'advgb-columns-select-layout' },
+                            COLUMNS_LAYOUTS.map(function (layout, index) {
+                                return React.createElement(
+                                    Tooltip,
+                                    { text: layout.title, key: index },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-columns-layout',
+                                            onClick: function onClick() {
+                                                return setAttributes({
+                                                    columns: layout.columns,
+                                                    columnsLayout: layout.layout
+                                                });
+                                            }
+                                        },
+                                        React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                            alt: layout.layout
+                                        })
+                                    )
+                                );
+                            })
+                        )
+                    );
+                }
+
+                var COLUMNS_LAYOUTS_FILTERED = COLUMNS_LAYOUTS.filter(function (item) {
+                    return item.columns === columns;
+                });
+                var COLUMNS_LAYOUTS_RESPONSIVE_FILTERED = COLUMNS_LAYOUTS_RESPONSIVE.filter(function (item) {
+                    return item.columns === columns;
+                });
+                COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.push(COLUMNS_LAYOUTS_STACKED);
+                var VERT_ALIGNMENT_CONTROLS = [{
+                    icon: React.createElement(
+                        'svg',
+                        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '0 0 24 24' },
+                        React.createElement('path', { d: 'M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z' }),
+                        React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+                    ),
+                    title: __('Vertical Align Top'),
+                    isActive: vAlign === 'top',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'top' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        'svg',
+                        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '0 0 24 24' },
+                        React.createElement('path', { d: 'M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z' }),
+                        React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+                    ),
+                    title: __('Vertical Align Middle'),
+                    isActive: vAlign === 'middle',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'middle' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        'svg',
+                        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '0 0 24 24' },
+                        React.createElement('path', { d: 'M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z' }),
+                        React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+                    ),
+                    title: __('Vertical Align Bottom'),
+                    isActive: vAlign === 'bottom',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'bottom' });
+                    }
+                }, {
+                    icon: React.createElement(
+                        'svg',
+                        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '0 0 12 32' },
+                        React.createElement('polygon', { points: '8,20 8,26 12,26 6,32 0,26 4,26 4,20' }),
+                        React.createElement('polygon', { points: '4,12 4,6 0,6 6,0 12,6 8,6 8,12' })
+                    ),
+                    title: __('Inner Columns Full Height'),
+                    isActive: vAlign === 'full',
+                    onClick: function onClick() {
+                        return setAttributes({ vAlign: 'full' });
+                    }
+                }];
+                var MARGIN_PADDING_CONTROLS = [{ label: 'Top', icon: 'arrow-up-alt2' }, { label: 'Right', icon: 'arrow-right-alt2' }, { label: 'Bottom', icon: 'arrow-down-alt2' }, { label: 'Left', icon: 'arrow-left-alt2' }];
+
+                var deviceLetter = '';
+                if (tabSelected === 'tablet') deviceLetter = 'T';
+                if (tabSelected === 'mobile') deviceLetter = 'M';
 
                 return React.createElement(
-                    "div",
-                    { className: blockClassName,
-                        "data-video": videoURL,
-                        "data-source": videoSourceType
-                    },
-                    !openInLightbox && ((videoSourceType === 'youtube' || videoSourceType === 'vimeo') && React.createElement("iframe", { src: videoURL,
-                        width: videoWidth,
-                        height: videoHeight,
-                        frameBorder: "0",
-                        allowFullScreen: true
-                    }) || videoSourceType === 'local' && React.createElement(
-                        "video",
-                        { className: videoFullWidth && 'full-width',
-                            width: videoWidth,
-                            height: videoHeight,
-                            poster: poster,
-                            controls: true
-                        },
-                        React.createElement("source", { src: videoURL }),
-                        __('Your browser does not support HTML5 video.')
-                    ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })),
-                    !!openInLightbox && React.createElement(
-                        "div",
-                        { className: videoWrapperClass, style: { backgroundColor: overlayColor, width: videoWidth } },
-                        React.createElement("div", { className: "advgb-video-poster", style: { backgroundImage: "url(" + poster + ")" } }),
+                    Fragment,
+                    null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(Toolbar, { controls: VERT_ALIGNMENT_CONTROLS })
+                    ),
+                    React.createElement(
+                        InspectorControls,
+                        null,
                         React.createElement(
-                            "div",
-                            { className: "advgb-button-wrapper", style: { height: videoHeight } },
+                            PanelBody,
+                            { title: __('Columns Settings') },
                             React.createElement(
-                                "div",
-                                { className: "advgb-play-button", style: { color: playButtonColor } },
+                                PanelBody,
+                                { title: __('Responsive Settings') },
                                 React.createElement(
-                                    "svg",
-                                    { xmlns: "http://www.w3.org/2000/svg",
-                                        width: playButtonSize,
-                                        height: playButtonSize,
-                                        viewBox: "0 0 24 24"
+                                    'div',
+                                    { className: 'advgb-columns-responsive-items' },
+                                    ['desktop', 'tablet', 'mobile'].map(function (device, index) {
+                                        var itemClasses = ["advgb-columns-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
+
+                                        return React.createElement(
+                                            'div',
+                                            { className: itemClasses,
+                                                key: index,
+                                                onClick: function onClick() {
+                                                    return _this2.setState({ tabSelected: device });
+                                                }
+                                            },
+                                            device
+                                        );
+                                    })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'advgb-columns-select-layout on-inspector' },
+                                    COLUMNS_LAYOUTS_FILTERED.map(function (layout, index) {
+                                        var layoutClasses = ['advgb-columns-layout', tabSelected === 'desktop' && layout.layout === columnsLayout && 'is-selected', tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected', tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected'].filter(Boolean).join(' ');
+
+                                        return React.createElement(
+                                            Tooltip,
+                                            { text: layout.title, key: index },
+                                            React.createElement(
+                                                'div',
+                                                { className: layoutClasses,
+                                                    onClick: function onClick() {
+                                                        setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                        _this2.setState({ random: Math.random() });
+                                                    }
+                                                },
+                                                React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                                    alt: layout.layout
+                                                })
+                                            )
+                                        );
+                                    }),
+                                    tabSelected !== 'desktop' && COLUMNS_LAYOUTS_RESPONSIVE_FILTERED.map(function (layout, index) {
+                                        var layoutClasses = ['advgb-columns-layout', tabSelected === 'tablet' && layout.layout === columnsLayoutT && 'is-selected', tabSelected === 'mobile' && layout.layout === columnsLayoutM && 'is-selected'].filter(Boolean).join(' ');
+
+                                        return React.createElement(
+                                            Tooltip,
+                                            { text: layout.title, key: index },
+                                            React.createElement(
+                                                'div',
+                                                { className: layoutClasses,
+                                                    onClick: function onClick() {
+                                                        setAttributes(_defineProperty({}, 'columnsLayout' + deviceLetter, layout.layout));
+                                                        _this2.setState({ random: Math.random() });
+                                                    }
+                                                },
+                                                React.createElement('img', { src: advgbBlocks.pluginUrl + '/assets/blocks/columns/icons/' + layout.icon + '.png',
+                                                    alt: layout.layout
+                                                })
+                                            )
+                                        );
+                                    })
+                                ),
+                                tabSelected === 'desktop' && React.createElement(SelectControl, {
+                                    label: __('Space between columns'),
+                                    value: gutter,
+                                    options: GUTTER_OPTIONS,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ gutter: parseInt(value) });
+                                    }
+                                }),
+                                tabSelected === 'mobile' && columnsLayoutM === 'stacked' && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(SelectControl, {
+                                        label: __('Vertical space when collapsed'),
+                                        value: collapsedGutter,
+                                        options: GUTTER_OPTIONS,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ collapsedGutter: parseInt(value) });
+                                        }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Collapsed Order RTL'),
+                                        checked: collapsedRtl,
+                                        onChange: function onChange() {
+                                            return setAttributes({ collapsedRtl: !collapsedRtl });
+                                        }
+                                    })
+                                ),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding'),
+                                        initialOpen: false
                                     },
-                                    PLAY_BUTTON_STYLE[playButtonIcon]
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-controls-title' },
+                                        __('Unit (px)')
+                                    ),
+                                    MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                        return React.createElement(RangeControl, {
+                                            key: idx,
+                                            beforeIcon: pos.icon,
+                                            value: attributes['padding' + pos.label + deviceLetter] || 0,
+                                            min: 0,
+                                            max: 50,
+                                            onChange: function onChange(value) {
+                                                return setAttributes(_defineProperty({}, 'padding' + pos.label + deviceLetter, value));
+                                            }
+                                        });
+                                    })
+                                ),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin'),
+                                        initialOpen: false
+                                    },
+                                    React.createElement(
+                                        'div',
+                                        { className: 'advgb-controls-title' },
+                                        React.createElement(
+                                            'span',
+                                            null,
+                                            __('Unit')
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'advgb-unit-wrapper', key: 'unit' },
+                                            ['px', 'em', 'vh', '%'].map(function (unit, idx) {
+                                                return React.createElement(
+                                                    'span',
+                                                    { className: 'advgb-unit ' + (marginUnit === unit ? 'selected' : ''), key: idx,
+                                                        onClick: function onClick() {
+                                                            return setAttributes({ marginUnit: unit });
+                                                        }
+                                                    },
+                                                    unit
+                                                );
+                                            })
+                                        )
+                                    ),
+                                    MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                        return React.createElement(RangeControl, {
+                                            key: idx,
+                                            beforeIcon: pos.icon,
+                                            value: attributes['margin' + pos.label + deviceLetter] || 0,
+                                            min: 0,
+                                            max: 50,
+                                            onChange: function onChange(value) {
+                                                return setAttributes(_defineProperty({}, 'margin' + pos.label + deviceLetter, value));
+                                            }
+                                        });
+                                    })
                                 )
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Row Settings'), initialOpen: false },
+                                React.createElement(ToggleControl, {
+                                    label: __('Columns Wrapped'),
+                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Spacing).'),
+                                    checked: columnsWrapped,
+                                    onChange: function onChange() {
+                                        return setAttributes({ columnsWrapped: !columnsWrapped });
+                                    }
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Wrapper Tag'),
+                                    value: wrapperTag,
+                                    options: [{ label: 'Div', value: 'div' }, { label: 'Header', value: 'header' }, { label: 'Section', value: 'section' }, { label: 'Main', value: 'main' }, { label: 'Article', value: 'article' }, { label: 'Aside', value: 'aside' }, { label: 'Footer', value: 'footer' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ wrapperTag: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: [__('Content Max Width'), React.createElement(
+                                        'div',
+                                        { className: 'advgb-unit-wrapper', key: 'unit' },
+                                        ['px', 'vw', '%'].map(function (unit, idx) {
+                                            return React.createElement(
+                                                'span',
+                                                { className: 'advgb-unit ' + (contentMaxWidthUnit === unit ? 'selected' : ''), key: idx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ contentMaxWidthUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )],
+                                    value: contentMaxWidth,
+                                    min: 0,
+                                    max: contentMaxWidthUnit === 'px' ? 2000 : 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ contentMaxWidth: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: [__('Content Min Height'), React.createElement(
+                                        'div',
+                                        { className: 'advgb-unit-wrapper', key: 'unit' },
+                                        ['px', 'vw', 'vh'].map(function (unit, idx) {
+                                            return React.createElement(
+                                                'span',
+                                                { className: 'advgb-unit ' + (contentMinHeightUnit === unit ? 'selected' : ''), key: idx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ contentMinHeightUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )],
+                                    value: contentMinHeight,
+                                    min: 0,
+                                    max: contentMinHeightUnit === 'px' ? 2000 : 200,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ contentMinHeight: value });
+                                    }
+                                })
                             )
                         )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'advgb-columns-wrapper' },
+                        React.createElement(
+                            'div',
+                            { className: blockClasses,
+                                style: {
+                                    maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
+                                    minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined
+                                }
+                            },
+                            React.createElement(InnerBlocks, {
+                                template: times(parseInt(columns), function () {
+                                    return ['advgb/column'];
+                                }),
+                                templateLock: 'all',
+                                allowdBlockType: ['advgb/column'],
+                                random: this.state.random
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        'style',
+                        null,
+                        '#block-' + clientId + ' .advgb-columns-wrapper .advgb-columns {\n                            margin-top: ' + (marginTop + marginUnit) + ';\n                            margin-right: ' + (marginRight + marginUnit) + ';\n                            margin-bottom: ' + (marginBottom + marginUnit) + ';\n                            margin-left: ' + (marginLeft + marginUnit) + ';\n                            padding-top: ' + paddingTop + 'px;\n                            padding-right: ' + paddingRight + 'px;\n                            padding-bottom: ' + paddingBottom + 'px;\n                            padding-left: ' + paddingLeft + 'px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-' + clientId + ' .advgb-columns-wrapper .advgb-columns {\n                                margin-top: ' + (marginTopM + marginUnit) + ';\n                                margin-right: ' + (marginRightM + marginUnit) + ';\n                                margin-bottom: ' + (marginBottomM + marginUnit) + ';\n                                margin-left: ' + (marginLeftM + marginUnit) + ';\n                                padding-top: ' + paddingTopM + 'px;\n                                padding-right: ' + paddingRightM + 'px;\n                                padding-bottom: ' + paddingBottomM + 'px;\n                                padding-left: ' + paddingLeftM + 'px;\n                            }\n                        }'
                     )
                 );
             }
-        }]
+        }], [{
+            key: 'prepareColumnClass',
+            value: function prepareColumnClass(layout, extraClass, classObj) {
+                switch (layout) {
+                    case '12-12':
+                        for (var i = 0; i < 2; i++) {
+                            classObj[i].push('is-half' + extraClass);
+                        }
+                        break;
+                    case '13-13-13':
+                        for (var _i = 0; _i < 3; _i++) {
+                            classObj[_i].push('is-one-third' + extraClass);
+                        }
+                        break;
+                    case '14-14-14-14':
+                        for (var _i2 = 0; _i2 < 4; _i2++) {
+                            classObj[_i2].push('is-one-quarter' + extraClass);
+                        }
+                        break;
+                    case 'five':
+                        for (var _i3 = 0; _i3 < 5; _i3++) {
+                            classObj[_i3].push('is-one-fifth' + extraClass);
+                        }
+                        break;
+                    case 'six':
+                        for (var _i4 = 0; _i4 < 6; _i4++) {
+                            classObj[_i4].push('is-2' + extraClass);
+                        }
+                        break;
+                    case '23-13':
+                        classObj[0].push('is-two-thirds' + extraClass);
+                        classObj[1].push('is-one-third' + extraClass);
+                        break;
+                    case '13-23':
+                        classObj[0].push('is-one-third' + extraClass);
+                        classObj[1].push('is-two-thirds' + extraClass);
+                        break;
+                    case '34-14':
+                        classObj[0].push('is-three-quarters' + extraClass);
+                        classObj[1].push('is-one-quarter' + extraClass);
+                        break;
+                    case '14-34':
+                        classObj[0].push('is-one-quarter' + extraClass);
+                        classObj[1].push('is-three-quarters' + extraClass);
+                        break;
+                    case '45-15':
+                        classObj[0].push('is-four-fifths' + extraClass);
+                        classObj[1].push('is-one-fifth' + extraClass);
+                        break;
+                    case '15-45':
+                        classObj[0].push('is-one-fifth' + extraClass);
+                        classObj[1].push('is-four-fifths' + extraClass);
+                        break;
+                    case '12-14-14':
+                        classObj[0].push('is-half' + extraClass);
+                        classObj[1].push('is-one-quarter' + extraClass);
+                        classObj[2].push('is-one-quarter' + extraClass);
+                        break;
+                    case '14-14-12':
+                        classObj[0].push('is-one-quarter' + extraClass);
+                        classObj[1].push('is-one-quarter' + extraClass);
+                        classObj[2].push('is-half' + extraClass);
+                        break;
+                    case '14-12-14':
+                        classObj[0].push('is-one-quarter' + extraClass);
+                        classObj[1].push('is-half' + extraClass);
+                        classObj[2].push('is-one-quarter' + extraClass);
+                        break;
+                    case '15-35-15':
+                        classObj[0].push('is-one-fifth' + extraClass);
+                        classObj[1].push('is-three-fifths' + extraClass);
+                        classObj[2].push('is-one-fifth' + extraClass);
+                        break;
+                    case '35-15-15':
+                        classObj[0].push('is-three-fifths' + extraClass);
+                        classObj[1].push('is-one-fifth' + extraClass);
+                        classObj[2].push('is-one-fifth' + extraClass);
+                        break;
+                    case '15-15-35':
+                        classObj[0].push('is-one-fifth' + extraClass);
+                        classObj[1].push('is-one-fifth' + extraClass);
+                        classObj[2].push('is-three-fifths' + extraClass);
+                        break;
+                    case '16-46-16':
+                        classObj[0].push('is-2' + extraClass);
+                        classObj[1].push('is-8' + extraClass);
+                        classObj[2].push('is-2' + extraClass);
+                        break;
+                    case '1-12-12':
+                        classObj[0].push('is-full' + extraClass);
+                        classObj[1].push('is-half' + extraClass);
+                        classObj[2].push('is-half' + extraClass);
+                        break;
+                    case '12-12-1':
+                        classObj[0].push('is-half' + extraClass);
+                        classObj[1].push('is-half' + extraClass);
+                        classObj[2].push('is-full' + extraClass);
+                        break;
+                    case '36-16-16-16':
+                        classObj[0].push('is-half' + extraClass);
+                        classObj[1].push('is-2' + extraClass);
+                        classObj[2].push('is-2' + extraClass);
+                        classObj[3].push('is-2' + extraClass);
+                        break;
+                    case '16-16-16-36':
+                        classObj[0].push('is-2' + extraClass);
+                        classObj[1].push('is-2' + extraClass);
+                        classObj[2].push('is-2' + extraClass);
+                        classObj[3].push('is-half' + extraClass);
+                        break;
+                    case '25-15-15-15':
+                        classObj[0].push('is-two-fifths' + extraClass);
+                        classObj[1].push('is-one-fifth' + extraClass);
+                        classObj[2].push('is-one-fifth' + extraClass);
+                        classObj[3].push('is-one-fifth' + extraClass);
+                        break;
+                    case '15-15-15-25':
+                        classObj[0].push('is-one-fifth' + extraClass);
+                        classObj[1].push('is-one-fifth' + extraClass);
+                        classObj[2].push('is-one-fifth' + extraClass);
+                        classObj[3].push('is-two-fifths' + extraClass);
+                        break;
+                    case '12x4':
+                        for (var _i5 = 0; _i5 < 4; _i5++) {
+                            classObj[_i5].push('is-half' + extraClass);
+                        }
+                        break;
+                    case '12x6':
+                        for (var _i6 = 0; _i6 < 6; _i6++) {
+                            classObj[_i6].push('is-half' + extraClass);
+                        }
+                        break;
+                    case '13x6':
+                        for (var _i7 = 0; _i7 < 6; _i7++) {
+                            classObj[_i7].push('is-one-third' + extraClass);
+                        }
+                        break;
+                    case 'stacked':
+                        for (var _i8 = 0; _i8 < 6; _i8++) {
+                            classObj[_i8].push('is-full' + extraClass);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                return classObj;
+            }
+        }, {
+            key: 'jsUcfirst',
+            value: function jsUcfirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        }]);
+
+        return AdvColumnsEdit;
+    }(Component);
+
+    var blockAttrs = {
+        columns: {
+            type: 'number'
+        },
+        columnsLayout: {
+            type: 'string'
+        },
+        columnsLayoutT: {
+            type: 'string'
+        },
+        columnsLayoutM: {
+            type: 'string',
+            default: 'stacked'
+        },
+        marginTop: {
+            type: 'number'
+        },
+        marginTopT: {
+            type: 'number'
+        },
+        marginTopM: {
+            type: 'number'
+        },
+        marginRight: {
+            type: 'number'
+        },
+        marginRightT: {
+            type: 'number'
+        },
+        marginRightM: {
+            type: 'number'
+        },
+        marginBottom: {
+            type: 'number'
+        },
+        marginBottomT: {
+            type: 'number'
+        },
+        marginBottomM: {
+            type: 'number'
+        },
+        marginLeft: {
+            type: 'number'
+        },
+        marginLeftT: {
+            type: 'number'
+        },
+        marginLeftM: {
+            type: 'number'
+        },
+        marginUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        paddingTop: {
+            type: 'number'
+        },
+        paddingTopT: {
+            type: 'number'
+        },
+        paddingTopM: {
+            type: 'number'
+        },
+        paddingRight: {
+            type: 'number'
+        },
+        paddingRightT: {
+            type: 'number'
+        },
+        paddingRightM: {
+            type: 'number'
+        },
+        paddingBottom: {
+            type: 'number'
+        },
+        paddingBottomT: {
+            type: 'number'
+        },
+        paddingBottomM: {
+            type: 'number'
+        },
+        paddingLeft: {
+            type: 'number'
+        },
+        paddingLeftT: {
+            type: 'number'
+        },
+        paddingLeftM: {
+            type: 'number'
+        },
+        gutter: {
+            type: 'number',
+            default: 0
+        },
+        collapsedGutter: {
+            type: 'number',
+            default: 10
+        },
+        collapsedRtl: {
+            type: 'boolean',
+            default: false
+        },
+        vAlign: {
+            type: 'string'
+        },
+        columnsWrapped: {
+            type: 'boolean',
+            default: false
+        },
+        contentMaxWidth: {
+            type: 'number'
+        },
+        contentMaxWidthUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        contentMinHeight: {
+            type: 'number'
+        },
+        contentMinHeightUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        wrapperTag: {
+            type: 'string',
+            default: 'div'
+        },
+        colId: {
+            type: 'string'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/columns', {
+        title: __('Columns Manager'),
+        description: __('Row layout with columns you decided.'),
+        icon: {
+            src: 'layout',
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('columns'), __('row'), __('layout')],
+        supports: {
+            align: ['wide', 'full'],
+            html: false
+        },
+        attributes: blockAttrs,
+        edit: AdvColumnsEdit,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var columns = attributes.columns,
+                columnsLayout = attributes.columnsLayout,
+                columnsLayoutT = attributes.columnsLayoutT,
+                columnsLayoutM = attributes.columnsLayoutM,
+                vAlign = attributes.vAlign,
+                gutter = attributes.gutter,
+                collapsedGutter = attributes.collapsedGutter,
+                collapsedRtl = attributes.collapsedRtl,
+                columnsWrapped = attributes.columnsWrapped,
+                contentMaxWidth = attributes.contentMaxWidth,
+                contentMaxWidthUnit = attributes.contentMaxWidthUnit,
+                contentMinHeight = attributes.contentMinHeight,
+                contentMinHeightUnit = attributes.contentMinHeightUnit,
+                wrapperTag = attributes.wrapperTag,
+                colId = attributes.colId;
+
+            var Tag = wrapperTag;
+
+            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+
+            return React.createElement(
+                Tag,
+                { className: 'advgb-columns-wrapper' },
+                React.createElement(
+                    'div',
+                    { className: blockClasses, id: colId,
+                        style: {
+                            maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
+                            minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined
+                        }
+                    },
+                    React.createElement(InnerBlocks.Content, null)
+                )
+            );
+        }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/columns/column.jsx":
+/*!******************************************!*\
+  !*** ./assets/blocks/columns/column.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        AlignmentToolbar = wpBlockEditor.AlignmentToolbar;
+    var PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        BaseControl = wpComponents.BaseControl,
+        SelectControl = wpComponents.SelectControl;
+    var select = wp.data.select;
+    var InnerBlocks = wp.blockEditor.InnerBlocks;
+
+
+    var columnsBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+        React.createElement("path", { d: "M10 18h5V5h-5v13zm-6 0h5V5H4v13zM16 5v13h5V5h-5z" }),
+        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+    );
+    var listBorderStyles = [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }];
+    var MARGIN_PADDING_CONTROLS = [{ label: 'Top', icon: 'arrow-up-alt2' }, { label: 'Right', icon: 'arrow-right-alt2' }, { label: 'Bottom', icon: 'arrow-down-alt2' }, { label: 'Left', icon: 'arrow-left-alt2' }];
+
+    var AdvColumnEdit = function (_Component) {
+        _inherits(AdvColumnEdit, _Component);
+
+        function AdvColumnEdit() {
+            _classCallCheck(this, AdvColumnEdit);
+
+            var _this = _possibleConstructorReturn(this, (AdvColumnEdit.__proto__ || Object.getPrototypeOf(AdvColumnEdit)).apply(this, arguments));
+
+            _this.state = {
+                tabSelected: 'desktop'
+            };
+            return _this;
+        }
+
+        _createClass(AdvColumnEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-column'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+
+
+                if (!attributes.id) {
+                    setAttributes({ colId: 'advgb-col-' + clientId });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var tabSelected = this.state.tabSelected;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    clientId = _props3.clientId,
+                    className = _props3.className;
+                var width = attributes.width,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderRadius = attributes.borderRadius,
+                    textAlign = attributes.textAlign,
+                    textAlignM = attributes.textAlignM,
+                    marginTop = attributes.marginTop,
+                    marginRight = attributes.marginRight,
+                    marginBottom = attributes.marginBottom,
+                    marginLeft = attributes.marginLeft,
+                    marginTopM = attributes.marginTopM,
+                    marginRightM = attributes.marginRightM,
+                    marginBottomM = attributes.marginBottomM,
+                    marginLeftM = attributes.marginLeftM,
+                    paddingTop = attributes.paddingTop,
+                    paddingRight = attributes.paddingRight,
+                    paddingBottom = attributes.paddingBottom,
+                    paddingLeft = attributes.paddingLeft,
+                    paddingTopM = attributes.paddingTopM,
+                    paddingRightM = attributes.paddingRightM,
+                    paddingBottomM = attributes.paddingBottomM,
+                    paddingLeftM = attributes.paddingLeftM;
+
+                var _select = select('core/block-editor'),
+                    getBlockOrder = _select.getBlockOrder,
+                    getBlockRootClientId = _select.getBlockRootClientId,
+                    getBlockAttributes = _select.getBlockAttributes;
+
+                var hasChildBlocks = getBlockOrder(clientId).length > 0;
+                var rootBlockId = getBlockRootClientId(clientId);
+                var rootChildBlocks = getBlockOrder(rootBlockId).filter(function (blockId) {
+                    return blockId !== clientId;
+                });
+                var avaiWidth = 100;
+                rootChildBlocks.map(function (blockId) {
+                    var width = getBlockAttributes(blockId).width || 0;
+                    avaiWidth -= parseInt(width);
+                });
+
+                var blockClasses = ['advgb-column', 'column', className].filter(Boolean).join(' ');
+
+                var deviceLetter = '';
+                if (tabSelected === 'mobile') deviceLetter = 'M';
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Column Settings') },
+                            React.createElement(RangeControl, {
+                                label: [__('Width (%)'), React.createElement(
+                                    "span",
+                                    { key: "width", style: { color: '#555d66', marginLeft: 10 } },
+                                    __('Available: ') + avaiWidth + '%'
+                                )],
+                                help: __('Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!'),
+                                value: width,
+                                min: 0,
+                                max: avaiWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ width: value });
+                                }
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Border Settings') },
+                                React.createElement(SelectControl, {
+                                    label: __('Border style'),
+                                    value: borderStyle,
+                                    options: listBorderStyles,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderStyle: value });
+                                    }
+                                }),
+                                borderStyle !== 'none' && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(PanelColorSettings, {
+                                        title: __('Border Color'),
+                                        initialOpen: false,
+                                        colorSettings: [{
+                                            label: __('Border Color'),
+                                            value: borderColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ borderColor: value });
+                                            }
+                                        }]
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border width'),
+                                        value: borderWidth || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderWidth: value });
+                                        },
+                                        min: 0,
+                                        max: 20
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border radius (px)'),
+                                        value: borderRadius || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ borderRadius: value });
+                                        },
+                                        min: 0,
+                                        max: 100
+                                    })
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-columns-responsive-items",
+                                    style: { borderTop: '2px solid #aaa', paddingTop: 10 }
+                                },
+                                ['desktop', 'mobile'].map(function (device, index) {
+                                    var itemClasses = ["advgb-columns-responsive-item", tabSelected === device && 'is-selected'].filter(Boolean).join(' ');
+
+                                    return React.createElement(
+                                        "div",
+                                        { className: itemClasses,
+                                            key: index,
+                                            onClick: function onClick() {
+                                                return _this2.setState({ tabSelected: device });
+                                            }
+                                        },
+                                        device
+                                    );
+                                })
+                            ),
+                            React.createElement(
+                                BaseControl,
+                                {
+                                    label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' text alignment')
+                                },
+                                React.createElement(AlignmentToolbar, {
+                                    value: attributes['textAlign' + deviceLetter],
+                                    onChange: function onChange(align) {
+                                        return setAttributes(_defineProperty({}, 'textAlign' + deviceLetter, align));
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    __('Unit (px)')
+                                ),
+                                MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                    return React.createElement(RangeControl, {
+                                        key: idx,
+                                        beforeIcon: pos.icon,
+                                        value: attributes['padding' + pos.label + deviceLetter] || '',
+                                        min: 0,
+                                        max: 50,
+                                        onChange: function onChange(value) {
+                                            return setAttributes(_defineProperty({}, 'padding' + pos.label + deviceLetter, value));
+                                        }
+                                    });
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    __('Unit (px)')
+                                ),
+                                MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
+                                    return React.createElement(RangeControl, {
+                                        key: idx,
+                                        beforeIcon: pos.icon,
+                                        value: attributes['margin' + pos.label + deviceLetter] || '',
+                                        min: 0,
+                                        max: 50,
+                                        onChange: function onChange(value) {
+                                            return setAttributes(_defineProperty({}, 'margin' + pos.label + deviceLetter, value));
+                                        }
+                                    });
+                                })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: blockClasses },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-column-inner",
+                                style: {
+                                    borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius
+                                }
+                            },
+                            React.createElement(InnerBlocks, {
+                                templateLock: false,
+                                renderAppender: hasChildBlocks ? undefined : function () {
+                                    return React.createElement(InnerBlocks.ButtonBlockAppender, null);
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "style",
+                        null,
+                        "#block-" + clientId + " .advgb-column.column > .advgb-column-inner {\n                            text-align: " + textAlign + ";\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-column.column > .advgb-column-inner {\n                                text-align: " + textAlignM + ";\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}\n                            #block-" + clientId + " {flex-basis: " + width + "%;}" : '')
+                    )
+                );
+            }
+        }], [{
+            key: "jsUcfirst",
+            value: function jsUcfirst(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        }]);
+
+        return AdvColumnEdit;
+    }(Component);
+
+    var blockAttrs = {
+        width: {
+            type: 'number'
+        },
+        columnClasses: {
+            type: 'string'
+        },
+        colId: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'none'
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderWidth: {
+            type: 'number',
+            default: 1
+        },
+        borderRadius: {
+            type: 'number'
+        },
+        textAlign: {
+            type: 'string'
+        },
+        textAlignM: {
+            type: 'string'
+        },
+        marginTop: {
+            type: 'number'
+        },
+        marginTopM: {
+            type: 'number'
+        },
+        marginRight: {
+            type: 'number'
+        },
+        marginRightM: {
+            type: 'number'
+        },
+        marginBottom: {
+            type: 'number'
+        },
+        marginBottomM: {
+            type: 'number'
+        },
+        marginLeft: {
+            type: 'number'
+        },
+        marginLeftM: {
+            type: 'number'
+        },
+        paddingTop: {
+            type: 'number'
+        },
+        paddingTopM: {
+            type: 'number'
+        },
+        paddingRight: {
+            type: 'number'
+        },
+        paddingRightM: {
+            type: 'number'
+        },
+        paddingBottom: {
+            type: 'number'
+        },
+        paddingBottomM: {
+            type: 'number'
+        },
+        paddingLeft: {
+            type: 'number'
+        },
+        paddingLeftM: {
+            type: 'number'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/column', {
+        title: __('Adv. Column'),
+        parent: ['advgb/columns'],
+        description: __('Column in row.'),
+        icon: {
+            src: columnsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('columns'), __('row'), __('layout')],
+        supports: {
+            inserter: false,
+            reusable: false,
+            html: false
+        },
+        attributes: blockAttrs,
+        edit: AdvColumnEdit,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var width = attributes.width,
+                columnClasses = attributes.columnClasses,
+                colId = attributes.colId,
+                borderColor = attributes.borderColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                borderRadius = attributes.borderRadius;
+
+
+            var blockClasses = ['advgb-column', 'column', columnClasses].filter(Boolean).join(' ');
+
+            return React.createElement(
+                "div",
+                { className: blockClasses,
+                    id: colId,
+                    style: {
+                        width: width ? width + '%' : undefined,
+                        flex: width ? 'none' : undefined
+                    }
+                },
+                React.createElement(
+                    "div",
+                    { className: "advgb-column-inner",
+                        style: { borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius }
+                    },
+                    React.createElement(InnerBlocks.Content, null)
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -4822,13 +5964,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
@@ -5308,258 +6450,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 )
             );
-        },
-        deprecated: [{
-            attributes: contactBlockAttrs,
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
-                var nameLabel = attributes.nameLabel,
-                    emailLabel = attributes.emailLabel,
-                    msgLabel = attributes.msgLabel,
-                    submitLabel = attributes.submitLabel,
-                    successLabel = attributes.successLabel,
-                    bgColor = attributes.bgColor,
-                    textColor = attributes.textColor,
-                    borderColor = attributes.borderColor,
-                    borderStyle = attributes.borderStyle,
-                    borderRadius = attributes.borderRadius,
-                    submitColor = attributes.submitColor,
-                    submitBgColor = attributes.submitBgColor,
-                    submitRadius = attributes.submitRadius,
-                    submitPosition = attributes.submitPosition;
-
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-contact-form" },
-                    React.createElement(
-                        "form",
-                        { method: "POST" },
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-half" },
-                            React.createElement("input", { type: "text",
-                                className: "advgb-form-input advgb-form-input-name",
-                                placeholder: nameLabel ? nameLabel : __('Name'),
-                                name: "contact_name",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-half" },
-                            React.createElement("input", { type: "email",
-                                className: "advgb-form-input advgb-form-input-email",
-                                placeholder: emailLabel ? emailLabel : __('Email address'),
-                                name: "contact_email",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-full" },
-                            React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                                placeholder: msgLabel ? msgLabel : __('Message'),
-                                name: "contact_message",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-submit-wrapper",
-                                style: { textAlign: submitPosition }
-                            },
-                            React.createElement(
-                                "button",
-                                { className: "advgb-form-submit",
-                                    type: "submit",
-                                    "data-success": successLabel ? successLabel : undefined,
-                                    style: {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius
-                                    }
-                                },
-                                submitLabel ? submitLabel : __('Submit')
-                            )
-                        )
-                    )
-                );
-            }
-        }, {
-            attributes: contactBlockAttrs,
-            save: function save(_ref3) {
-                var attributes = _ref3.attributes;
-                var nameLabel = attributes.nameLabel,
-                    emailLabel = attributes.emailLabel,
-                    msgLabel = attributes.msgLabel,
-                    submitLabel = attributes.submitLabel,
-                    successLabel = attributes.successLabel,
-                    bgColor = attributes.bgColor,
-                    textColor = attributes.textColor,
-                    borderColor = attributes.borderColor,
-                    borderStyle = attributes.borderStyle,
-                    borderRadius = attributes.borderRadius,
-                    submitColor = attributes.submitColor,
-                    submitBgColor = attributes.submitBgColor,
-                    submitRadius = attributes.submitRadius,
-                    submitPosition = attributes.submitPosition;
-
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-contact-form" },
-                    React.createElement(
-                        "form",
-                        { method: "POST" },
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-half" },
-                            React.createElement("input", { type: "text",
-                                className: "advgb-form-input advgb-form-input-name",
-                                placeholder: nameLabel ? nameLabel : __('Name'),
-                                name: "contact_name",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-half" },
-                            React.createElement("input", { type: "email",
-                                className: "advgb-form-input advgb-form-input-email",
-                                placeholder: emailLabel ? emailLabel : __('Email address'),
-                                name: "contact_email",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-field advgb-form-field-full" },
-                            React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                                placeholder: msgLabel ? msgLabel : __('Message'),
-                                name: "contact_message",
-                                style: {
-                                    backgroundColor: bgColor,
-                                    color: textColor,
-                                    borderColor: borderColor,
-                                    borderStyle: borderStyle,
-                                    borderRadius: borderRadius
-                                }
-                            })
-                        ),
-                        React.createElement(
-                            "div",
-                            { className: "advgb-form-submit-wrapper",
-                                style: { textAlign: submitPosition }
-                            },
-                            React.createElement(
-                                "button",
-                                { className: "advgb-form-submit",
-                                    type: "submit",
-                                    "data-success": successLabel ? successLabel : undefined,
-                                    style: {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius
-                                    }
-                                },
-                                submitLabel ? submitLabel : __('Submit')
-                            )
-                        ),
-                        React.createElement("div", { className: "advgb-grecaptcha clearfix" })
-                    )
-                );
-            }
-        }]
-    });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
-
-/***/ }),
-
-/***/ "./assets/blocks/container/block.jsx":
-/*!*******************************************!*\
-  !*** ./assets/blocks/container/block.jsx ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-(function (wpI18n, wpBlocks, wpEditor) {
-    var __ = wpI18n.__;
-    var registerBlockType = wpBlocks.registerBlockType;
-    var InnerBlocks = wpEditor.InnerBlocks;
-
-
-    var containerBlockIcon = React.createElement(
-        "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
-        React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
-        React.createElement("path", { d: "M3 5v14h19V5H3zm2 2h15v4H5V7zm0 10v-4h4v4H5zm6 0v-4h9v4h-9z" })
-    );
-
-    registerBlockType('advgb/container', {
-        title: __('Container'),
-        description: __('Block for containing other blocks.'),
-        icon: {
-            src: containerBlockIcon,
-            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
-        },
-        category: 'advgb-category',
-        keywords: [__('container'), __('row'), __('box')],
-        attributes: {},
-        supports: {
-            align: true
-        },
-        edit: function edit() {
-            return React.createElement(
-                "div",
-                { className: "advgb-blocks-container" },
-                React.createElement(InnerBlocks, null)
-            );
-        },
-        save: function save() {
-            return React.createElement(
-                "div",
-                { className: "advgb-blocks-container" },
-                React.createElement(InnerBlocks.Content, null)
-            );
         }
     });
-})(wp.i18n, wp.blocks, wp.editor);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -5583,14 +6476,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        RichText = wpBlockEditor.RichText,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         TextControl = wpComponents.TextControl,
@@ -6143,256 +7036,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvCountUp,
         save: AdvCountUpSave
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
-
-/***/ }),
-
-/***/ "./assets/blocks/custom-columns/columns.jsx":
-/*!**************************************************!*\
-  !*** ./assets/blocks/custom-columns/columns.jsx ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-(function (wpI18n, wpHooks, wpElement, wpEditor, wpComponents) {
-    var addFilter = wpHooks.addFilter;
-    var __ = wpI18n.__;
-    var Fragment = wpElement.Fragment;
-    var InspectorControls = wpEditor.InspectorControls;
-    var PanelBody = wpComponents.PanelBody,
-        Button = wpComponents.Button;
-
-    // Register extra attributes
-
-    addFilter('blocks.registerBlockType', 'advgb/registerExtraColumnsAttrs', function (settings) {
-        if (settings.name === 'core/text-columns' || settings.name === 'core/columns') {
-            settings.attributes = _extends(settings.attributes, {
-                colMargin: {
-                    type: 'number'
-                },
-                colPadding: {
-                    type: 'number'
-                },
-                blockID: {
-                    type: 'string'
-                }
-            });
-        }
-
-        return settings;
-    });
-
-    // Add options to edit in backend
-    addFilter('editor.BlockEdit', 'advgb/editColumnsAttrs', function (BlockEdit) {
-        return function (props) {
-            if (props.name === "core/text-columns" || props.name === "core/columns") {
-                var attributes = props.attributes,
-                    clientId = props.clientId;
-                var colMargin = attributes.colMargin,
-                    colPadding = attributes.colPadding;
-
-
-                return React.createElement(
-                    Fragment,
-                    null,
-                    React.createElement(BlockEdit, props),
-                    React.createElement(
-                        InspectorControls,
-                        null,
-                        React.createElement(
-                            PanelBody,
-                            { title: __('Custom styles') },
-                            React.createElement(
-                                Button,
-                                { isPrimary: true,
-                                    onClick: function onClick() {
-                                        return props.setAttributes({
-                                            colMargin: undefined,
-                                            colPadding: undefined,
-                                            blockID: undefined
-                                        });
-                                    } },
-                                __('Clear custom styles')
-                            ),
-                            React.createElement(
-                                'p',
-                                { style: { fontStyle: 'italic', marginTop: 10 } },
-                                __('We recommend to clear all custom styles as soon as possible to avoid block error validation,' + ' because we will remove this feature in very next version.')
-                            )
-                        )
-                    ),
-                    props.name === 'core/columns' && (!!colMargin || !!colPadding) && React.createElement(
-                        'style',
-                        { key: 'custom-columns-styles' },
-                        '#block-' + clientId + ' .wp-block-columns .editor-block-list__block:not(:first-child) {margin-left: ' + colMargin + 'px;}',
-                        '#block-' + clientId + ' .wp-block-columns .editor-block-list__block-edit {padding: ' + colPadding + 'px;}'
-                    )
-                );
-            }
-
-            return React.createElement(BlockEdit, props);
-        };
-    });
-
-    // Save options to show in frontend
-    addFilter('blocks.getSaveContent.extraProps', 'advgb/saveColumnsAttrs', function (extraProps, blockType, attributes) {
-        var colMargin = attributes.colMargin,
-            colPadding = attributes.colPadding,
-            blockID = attributes.blockID;
-
-
-        if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
-            extraProps = _extends(extraProps, {
-                id: colMargin || colPadding || blockID ? blockID : extraProps.id
-            });
-        }
-
-        return extraProps;
-    });
-
-    // Save option to show in frontend
-    addFilter('blocks.getSaveElement', 'advgb/saveTextColumnsElm', function (SaveElm, blockType, attributes) {
-        if (blockType.name === 'core/text-columns' || blockType.name === 'core/columns') {
-            var colMargin = attributes.colMargin,
-                colPadding = attributes.colPadding,
-                blockID = attributes.blockID;
-
-
-            return React.createElement(
-                Fragment,
-                null,
-                SaveElm,
-                blockID && (!!colMargin || !!colPadding) && React.createElement(
-                    'style',
-                    null,
-                    '#' + blockID + ' .wp-block-column:not(:first-child) {\n                        margin-left: ' + colMargin + 'px;\n                    }\n                    #' + blockID + ' .wp-block-column {\n                        padding: ' + colPadding + 'px;\n                    }'
-                )
-            );
-        }
-
-        return SaveElm;
-    });
-})(wp.i18n, wp.hooks, wp.element, wp.editor, wp.components);
-
-/***/ }),
-
-/***/ "./assets/blocks/custom-separator/separator.jsx":
-/*!******************************************************!*\
-  !*** ./assets/blocks/custom-separator/separator.jsx ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-(function (wpI18n, wpHooks, wpEditor, wpComponents) {
-    var addFilter = wpHooks.addFilter;
-    var __ = wpI18n.__;
-    var InspectorControls = wpEditor.InspectorControls;
-    var PanelBody = wpComponents.PanelBody,
-        Button = wpComponents.Button;
-
-    // Register extra attributes to separator blocks
-
-    addFilter('blocks.registerBlockType', 'advgb/registerExtraSeparatorAttrs', function (settings) {
-        if (settings.name === 'core/separator') {
-            settings.attributes = _extends(settings.attributes, {
-                borderColor: {
-                    type: 'string'
-                },
-                borderSize: {
-                    type: 'number'
-                },
-                borderStyle: {
-                    type: 'string'
-                },
-                borderWidth: {
-                    type: 'number'
-                }
-            });
-        }
-
-        return settings;
-    });
-
-    // Add option to select styles for separator
-    addFilter('editor.BlockEdit', 'advgb/customSeparatorStyles', function (BlockEdit) {
-        return function (props) {
-            if (props.name === "core/separator") {
-                var attributes = props.attributes,
-                    clientId = props.clientId;
-                var borderColor = attributes.borderColor,
-                    borderSize = attributes.borderSize,
-                    borderStyle = attributes.borderStyle,
-                    borderWidth = attributes.borderWidth;
-
-
-                return [React.createElement(BlockEdit, _extends({ key: 'block-edit-custom-separator' }, props)), React.createElement(
-                    InspectorControls,
-                    { key: 'inspector-custom' },
-                    React.createElement(
-                        PanelBody,
-                        { title: __('Custom styles') },
-                        React.createElement(
-                            Button,
-                            { isPrimary: true,
-                                onClick: function onClick() {
-                                    return props.setAttributes({
-                                        borderColor: undefined,
-                                        borderSize: undefined,
-                                        borderStyle: undefined,
-                                        borderWidth: undefined
-                                    });
-                                } },
-                            __('Clear custom styles')
-                        ),
-                        React.createElement(
-                            'p',
-                            { style: { fontStyle: 'italic', marginTop: 10 } },
-                            __('We recommend to clear all custom styles as soon as possible to avoid block error validation,' + ' because we will remove this feature in very next version.')
-                        )
-                    )
-                ), React.createElement(
-                    'style',
-                    { key: 'custom-separator-styles' },
-                    '#block-' + clientId + ' hr {\n                        border-bottom-color: ' + borderColor + ';\n                        border-bottom-style: ' + borderStyle + ';\n                        border-bottom-width: ' + borderWidth + 'px;\n                        max-width: ' + borderSize + 'px;\n                    }'
-                )];
-            }
-
-            return React.createElement(BlockEdit, props);
-        };
-    });
-
-    // Apply custom styles on front-end
-    addFilter('blocks.getSaveContent.extraProps', 'advgb/saveSeparatorStyles', function (extraProps, blockType, attributes) {
-        if (blockType.name === 'core/separator') {
-            var borderColor = attributes.borderColor,
-                borderSize = attributes.borderSize,
-                borderStyle = attributes.borderStyle,
-                borderWidth = attributes.borderWidth;
-
-
-            extraProps = _extends(extraProps, {
-                style: {
-                    borderBottomColor: borderColor,
-                    borderBottomWidth: borderWidth ? borderWidth + 'px' : undefined,
-                    borderBottomStyle: borderStyle,
-                    maxWidth: borderSize ? borderSize + 'px' : undefined
-                }
-            });
-        }
-
-        return extraProps;
-    });
-})(wp.i18n, wp.hooks, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -6408,11 +7052,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-(function (wpI18n, wpHooks, wpBlocks, wpEditor, wpComponents) {
+(function (wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents) {
     var addFilter = wpHooks.addFilter;
     var __ = wpI18n.__;
     var hasBlockSupport = wpBlocks.hasBlockSupport;
-    var InspectorControls = wpEditor.InspectorControls;
+    var InspectorControls = wpBlockEditor.InspectorControls;
     var SelectControl = wpComponents.SelectControl;
 
     // Register custom styles to blocks attributes
@@ -6500,7 +7144,219 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         return extraProps;
     });
-})(wp.i18n, wp.hooks, wp.blocks, wp.editor, wp.components);
+})(wp.i18n, wp.hooks, wp.blocks, wp.blockEditor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/editor-sidebar/sidebar.jsx":
+/*!**************************************************!*\
+  !*** ./assets/blocks/editor-sidebar/sidebar.jsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpPlugins, wpElement, wpData, wpComponents, wpEditPost) {
+    var __ = wpI18n.__;
+    var registerPlugin = wpPlugins.registerPlugin;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var select = wpData.select,
+        withSelect = wpData.withSelect,
+        withDispatch = wpData.withDispatch;
+    var PanelBody = wpComponents.PanelBody,
+        ButtonGroup = wpComponents.ButtonGroup,
+        Button = wpComponents.Button;
+    var PluginSidebar = wpEditPost.PluginSidebar,
+        PluginSidebarMoreMenuItem = wpEditPost.PluginSidebarMoreMenuItem;
+    var compose = wp.compose.compose;
+
+
+    var sidebarName = "advgb-editor-sidebar";
+    var sidebarTitle = __('Adv. Gutenberg Settings');
+    var sidebarIcon = "layout";
+    var VISUAL_GUIDE_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Enable'), value: 'enable' }, { label: __('Disable'), value: 'disable' }];
+    var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Original'), value: 'default' }, { label: __('Large'), value: 'large' }, { label: __('Full width'), value: 'full' }];
+
+    var updateBodyClass = function updateBodyClass() {
+        var postMetaData = select('core/editor').getEditedPostAttribute('meta');
+        if (!postMetaData) return null;
+        var advgb_blocks_editor_width = postMetaData.advgb_blocks_editor_width,
+            advgb_blocks_columns_visual_guide = postMetaData.advgb_blocks_columns_visual_guide;
+
+        var bodyClass = window.document.body.classList;
+
+        bodyClass.remove('advgb-editor-width-default', 'advgb-editor-width-large', 'advgb-editor-width-full', 'advgb-editor-col-guide-enable', 'advgb-editor-col-guide-disable');
+
+        if (!!advgb_blocks_editor_width) {
+            bodyClass.add('advgb-editor-width-' + advgb_blocks_editor_width);
+        }
+
+        if (!!advgb_blocks_columns_visual_guide) {
+            bodyClass.add('advgb-editor-col-guide-' + advgb_blocks_columns_visual_guide);
+        }
+    };
+
+    window.document.addEventListener("DOMContentLoaded", updateBodyClass);
+
+    var AdvSidebar = function (_Component) {
+        _inherits(AdvSidebar, _Component);
+
+        function AdvSidebar() {
+            _classCallCheck(this, AdvSidebar);
+
+            return _possibleConstructorReturn(this, (AdvSidebar.__proto__ || Object.getPrototypeOf(AdvSidebar)).apply(this, arguments));
+        }
+
+        _createClass(AdvSidebar, [{
+            key: "onUpdateMeta",
+            value: function onUpdateMeta(metaData) {
+                var _props = this.props,
+                    metaValues = _props.metaValues,
+                    updateMetaField = _props.updateMetaField;
+
+                var meta = _extends({}, metaValues, metaData);
+
+                updateMetaField(meta);
+                updateBodyClass();
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var _props2 = this.props,
+                    columnsVisualGuide = _props2.columnsVisualGuide,
+                    editorWidth = _props2.editorWidth;
+
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: "advgb-editor-sidebar-note" },
+                        __('These settings will override the Adv. Gutenberg global settings.')
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Editor width') },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-editor-sidebar-note" },
+                            __('Change your editor width')
+                        ),
+                        React.createElement(
+                            ButtonGroup,
+                            { className: "advgb-button-group" },
+                            EDITOR_WIDTH_SETTINGS.map(function (setting, index) {
+                                return React.createElement(
+                                    Button,
+                                    { className: "advgb-button",
+                                        key: index,
+                                        isDefault: true,
+                                        isPrimary: setting.value === editorWidth,
+                                        onClick: function onClick() {
+                                            return _this2.onUpdateMeta({ advgb_blocks_editor_width: setting.value });
+                                        }
+                                    },
+                                    setting.label
+                                );
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Columns Visual Guide'), initialOpen: false },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-editor-sidebar-note" },
+                            __('Border to materialize Adv. Gutenberg Column block')
+                        ),
+                        React.createElement(
+                            ButtonGroup,
+                            { className: "advgb-button-group" },
+                            VISUAL_GUIDE_SETTINGS.map(function (setting, index) {
+                                return React.createElement(
+                                    Button,
+                                    { className: "advgb-button",
+                                        key: index,
+                                        isDefault: true,
+                                        isPrimary: setting.value === columnsVisualGuide,
+                                        onClick: function onClick() {
+                                            return _this2.onUpdateMeta({ advgb_blocks_columns_visual_guide: setting.value });
+                                        }
+                                    },
+                                    setting.label
+                                );
+                            })
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return AdvSidebar;
+    }(Component);
+
+    var AdvSidebarRender = compose(withDispatch(function (dispatch) {
+        return {
+            updateMetaField: function updateMetaField(data) {
+                dispatch('core/editor').editPost({ meta: data });
+            }
+        };
+    }), withSelect(function (select) {
+        var metaValues = select('core/editor').getEditedPostAttribute('meta');
+
+        return {
+            metaValues: metaValues,
+            columnsVisualGuide: metaValues.advgb_blocks_columns_visual_guide,
+            editorWidth: metaValues.advgb_blocks_editor_width
+        };
+    }))(AdvSidebar);
+
+    registerPlugin('advgb-editor-sidebar', {
+        render: function render() {
+            return React.createElement(
+                Fragment,
+                null,
+                React.createElement(
+                    PluginSidebarMoreMenuItem,
+                    {
+                        target: sidebarName,
+                        icon: sidebarIcon
+                    },
+                    sidebarTitle
+                ),
+                React.createElement(
+                    PluginSidebar,
+                    {
+                        name: sidebarName,
+                        title: sidebarTitle,
+                        icon: sidebarIcon
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-editor-sidebar-content" },
+                        React.createElement(AdvSidebarRender, null)
+                    )
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.plugins, wp.element, wp.data, wp.components, wp.editPost);
 
 /***/ }),
 
@@ -6528,14 +7384,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        PanelColorSettings = wpEditor.PanelColorSettings,
-        MediaUpload = wpEditor.MediaUpload;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        MediaUpload = wpBlockEditor.MediaUpload;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
@@ -6567,7 +7423,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             _this.state = {
                 currentSelected: 0,
-                inited: false
+                imageLoaded: false
             };
 
             _this.initSlider = _this.initSlider.bind(_this);
@@ -6627,25 +7483,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate(prevProps) {
-                var _this2 = this;
-
-                var attributes = this.props.attributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
                 var images = attributes.images;
                 var prevImages = prevProps.attributes.images;
 
 
                 if (images.length !== prevImages.length) {
                     if (images.length) {
-                        setTimeout(function () {
-                            return _this2.initSlider();
-                        }, 10);
+                        this.initSlider();
                     }
+                }
+
+                if (this.state.imageLoaded) {
+                    $("#block-" + clientId + " .advgb-image-slider-image-list ").find('.advgb-image-slider-image-list-item:first-child').find('.advgb-image-slider-image-list-img').trigger('click');
+
+                    this.setState({ imageLoaded: null });
                 }
             }
         }, {
             key: "initSlider",
             value: function initSlider() {
-                var _this3 = this;
+                var _this2 = this;
 
                 var clientId = this.props.clientId;
 
@@ -6656,17 +7516,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 $("#block-" + clientId + " .advgb-images-slider").on('afterChange', function (e, s, currentSlide) {
-                    if (_this3.state.currentSelected !== currentSlide) {
-                        _this3.setState({ currentSelected: currentSlide });
+                    if (_this2.state.currentSelected !== currentSlide) {
+                        _this2.setState({ currentSelected: currentSlide });
                     }
                 });
             }
         }, {
             key: "moveImage",
             value: function moveImage(currentIndex, newIndex) {
-                var _props3 = this.props,
-                    setAttributes = _props3.setAttributes,
-                    attributes = _props3.attributes;
+                var _props4 = this.props,
+                    setAttributes = _props4.setAttributes,
+                    attributes = _props4.attributes;
                 var images = attributes.images;
 
 
@@ -6688,9 +7548,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return null;
                 }
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var images = attributes.images;
 
 
@@ -6707,14 +7567,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _this4 = this;
+                var _this3 = this;
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes,
-                    isSelected = _props5.isSelected,
-                    clientId = _props5.clientId;
-                var currentSelected = this.state.currentSelected;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes,
+                    isSelected = _props6.isSelected,
+                    clientId = _props6.clientId;
+                var _state = this.state,
+                    currentSelected = _state.currentSelected,
+                    imageLoaded = _state.imageLoaded;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
@@ -6764,6 +7626,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         })
                     );
                 }
+
+                var blockClass = ['advgb-images-slider-block', imageLoaded === false && 'advgb-ajax-loading'].filter(Boolean).join(' ');
 
                 return React.createElement(
                     Fragment,
@@ -6867,7 +7731,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: "advgb-images-slider-block" },
+                        { className: blockClass },
                         React.createElement(
                             "div",
                             { className: "advgb-images-slider" },
@@ -6881,6 +7745,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         style: {
                                             width: fullWidth ? '100%' : width,
                                             height: autoHeight ? 'auto' : height
+                                        },
+                                        onLoad: function onLoad() {
+                                            if (index === 0) {
+                                                if (_this3.state.imageLoaded === false) {
+                                                    _this3.setState({ imageLoaded: true });
+                                                }
+                                            }
+                                        },
+                                        onError: function onError() {
+                                            if (index === 0) {
+                                                if (_this3.state.imageLoaded === false) {
+                                                    _this3.setState({ imageLoaded: true });
+                                                }
+                                            }
                                         }
                                     }),
                                     React.createElement(
@@ -6897,14 +7775,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 opacity: alwaysShowOverlay ? 0.5 : undefined
                                             }
                                         }),
-                                        React.createElement(
+                                        image.title && React.createElement(
                                             "h4",
                                             { className: "advgb-image-slider-title",
                                                 style: { color: titleColor }
                                             },
                                             image.title
                                         ),
-                                        React.createElement(
+                                        image.text && React.createElement(
                                             "p",
                                             { className: "advgb-image-slider-text",
                                                 style: { color: textColor }
@@ -6925,7 +7803,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Title'),
                                     value: images[currentSelected] ? images[currentSelected].title || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this4.updateImagesData({ title: value || '' });
+                                        return _this3.updateImagesData({ title: value || '' });
                                     }
                                 })
                             ),
@@ -6936,7 +7814,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Text'),
                                     value: images[currentSelected] ? images[currentSelected].text || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this4.updateImagesData({ text: value || '' });
+                                        return _this3.updateImagesData({ text: value || '' });
                                     }
                                 })
                             ),
@@ -6947,7 +7825,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Link'),
                                     value: images[currentSelected] ? images[currentSelected].link || '' : '',
                                     onChange: function onChange(value) {
-                                        return _this4.updateImagesData({ link: value || '' });
+                                        return _this3.updateImagesData({ link: value || '' });
                                     }
                                 })
                             ),
@@ -6965,7 +7843,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 { className: "advgb-move-arrow advgb-move-left",
                                                     onClick: function onClick() {
-                                                        return _this4.moveImage(index, index - 1);
+                                                        return _this3.moveImage(index, index - 1);
                                                     }
                                                 },
                                                 React.createElement(
@@ -6978,10 +7856,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         ),
                                         React.createElement("img", { src: image.url,
                                             className: "advgb-image-slider-image-list-img",
-                                            alt: __('Remove'),
+                                            alt: __('Image'),
                                             onClick: function onClick() {
                                                 $("#block-" + clientId + " .advgb-images-slider").slick('slickGoTo', index, false);
-                                                _this4.setState({ currentSelected: index });
+                                                _this3.setState({ currentSelected: index });
                                             }
                                         }),
                                         index + 1 < images.length && React.createElement(
@@ -6991,7 +7869,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 { className: "advgb-move-arrow advgb-move-right",
                                                     onClick: function onClick() {
-                                                        return _this4.moveImage(index, index + 1);
+                                                        return _this3.moveImage(index, index + 1);
                                                     }
                                                 },
                                                 React.createElement(
@@ -7009,7 +7887,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "advgb-image-slider-image-list-item-remove",
                                                 icon: "no",
                                                 onClick: function onClick() {
-                                                    if (index === currentSelected) _this4.setState({ currentSelected: null });
+                                                    if (index === currentSelected) _this3.setState({ currentSelected: null });
                                                     setAttributes({ images: images.filter(function (img, idx) {
                                                             return idx !== index;
                                                         }) });
@@ -7166,14 +8044,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         opacity: alwaysShowOverlay ? 0.5 : undefined
                                     }
                                 }),
-                                React.createElement(
+                                image.title && React.createElement(
                                     "h4",
                                     { className: "advgb-image-slider-title",
                                         style: { color: titleColor }
                                     },
                                     image.title
                                 ),
-                                React.createElement(
+                                image.text && React.createElement(
                                     "p",
                                     { className: "advgb-image-slider-text",
                                         style: { color: textColor }
@@ -7233,6 +8111,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement("a", { className: "advgb-image-slider-overlay",
                                         target: "_blank",
+                                        rel: "noopener noreferrer",
                                         href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
                                         style: {
                                             backgroundColor: hoverColor,
@@ -7261,7 +8140,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -7289,13 +8168,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        MediaUpload = wpEditor.MediaUpload;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        MediaUpload = wpBlockEditor.MediaUpload;
     var PanelBody = wpComponents.PanelBody,
         TextControl = wpComponents.TextControl,
         TextareaControl = wpComponents.TextareaControl,
@@ -8080,13 +8959,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 if (!infoWindow) {
                     infoWindow = new google.maps.InfoWindow({
-                        content: "<div class=\"advgbmap-wrapper\">\n                    <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                    <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n                </div>",
+                        content: "<div class=\"advgbmap-wrapper\">\n                    <h3 class=\"advgbmap-title\">" + markerTitle + "</h3>\n                    <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n                </div>",
                         maxWidth: 500
                     });
                     this.setState({ currentInfo: infoWindow });
                 }
 
-                infoWindow.setContent("<div class=\"advgbmap-wrapper\">\n                <h2 class=\"advgbmap-title\">" + markerTitle + "</h2>\n                <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n            </div>");
+                infoWindow.setContent("<div class=\"advgbmap-wrapper\">\n                <h3 class=\"advgbmap-title\">" + markerTitle + "</h3>\n                <p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p>\n            </div>");
 
                 if (!marker) {
                     marker = new google.maps.Marker({
@@ -8499,7 +9378,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
             var formattedTitle = markerTitle.replace(/'/, '\\\'');
             var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-            var infoWindowHtml = '' + '<div class="advgbmap-wrapper">' + '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' + '<p class="advgbmap-desc">' + formattedDesc + '</p>' + '</div>';
             var mapStyleApply = MAP_STYLES[mapStyle];
             if (mapStyle === 'custom') {
                 try {
@@ -8525,8 +9403,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     "data-lng": lng,
                     "data-zoom": zoom,
                     "data-title": formattedTitle,
+                    "data-desc": formattedDesc,
                     "data-icon": markerIcon,
-                    "data-info": encodeURIComponent(infoWindowHtml),
                     "data-style": encodeURIComponent(mapStyleApply)
                 })
             );
@@ -8575,47 +9453,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return React.createElement(
                     "div",
                     { className: "advgb-map-block", style: { margin: '10px auto' } },
-                    React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
-                    React.createElement(
-                        "script",
-                        { type: "text/javascript" },
-                        "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var contentHtml = '" + infoWindowHtml + "';\n                        var mapStyle = '" + mapStyleApply + "';\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            styles: mapStyle !== '' ? JSON.parse(mapStyle) : {},\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: contentHtml\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
-                    )
-                );
-            }
-        }, {
-            attributes: mapBlockAttrs,
-            save: function save(_ref4) {
-                var attributes = _ref4.attributes;
-                var mapID = attributes.mapID,
-                    lat = attributes.lat,
-                    lng = attributes.lng,
-                    zoom = attributes.zoom,
-                    height = attributes.height,
-                    markerIcon = attributes.markerIcon,
-                    markerTitle = attributes.markerTitle,
-                    markerDesc = attributes.markerDesc;
-
-
-                var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
-                var formattedTitle = markerTitle.replace(/'/, '\\\'');
-                var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-                var infoWindowHtml = "<div class=\"advgbmap-wrapper\"><h2 class=\"advgbmap-title\">" + formattedTitle + "</h2><p class=\"advgbmap-desc\">" + (formattedDesc || '') + "</p></div>";
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-map-block", style: { margin: '10px auto' } },
-                    React.createElement("div", { className: "advgb-map-content", id: mapID, style: { height: height } }),
-                    React.createElement(
-                        "script",
-                        { type: "text/javascript" },
-                        "window.addEventListener('load', function() {\n                        if (typeof google === \"undefined\") return null;\n                        var location = {\n                            lat: parseFloat(" + lat + "),\n                            lng: parseFloat(" + lng + ")\n                        };\n                        var map = new google.maps.Map(document.getElementById('" + mapID + "'), {\n                            zoom: " + zoom + ",\n                            center: location,\n                            gestureHandling: 'cooperative',\n                        });\n                        var infoWindow = new google.maps.InfoWindow({\n                            content: '" + infoWindowHtml + "'\n                        });\n                        var marker = new google.maps.Marker({\n                            position: location,\n                            map: map,\n                            title: '" + formattedTitle + "',\n                            animation: google.maps.Animation.DROP,\n                            icon: {\n                                url: '" + (markerIcon || DEFAULT_MARKER) + "',\n                                scaledSize: new google.maps.Size(27, 43),\n                            },\n                        });\n                        " + (markerTitle && "marker.addListener('click', function() {\n                            infoWindow.open(map, marker);\n                        });") + "\n                    })"
-                    )
+                    React.createElement("div", { className: "advgb-map-content",
+                        id: mapID,
+                        style: { height: height },
+                        "data-default": DEFAULT_MARKER,
+                        "data-lat": lat,
+                        "data-lng": lng,
+                        "data-zoom": zoom,
+                        "data-title": formattedTitle,
+                        "data-icon": markerIcon,
+                        "data-info": encodeURIComponent(infoWindowHtml),
+                        "data-style": encodeURIComponent(mapStyleApply)
+                    })
                 );
             }
         }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -8639,13 +9493,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
@@ -9205,7 +10059,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -9231,13 +10085,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls;
     var PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
@@ -9711,7 +10565,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return null;
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date);
 
 /***/ }),
 
@@ -9739,16 +10593,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls,
-        MediaUpload = wpEditor.MediaUpload,
-        AlignmentToolbar = wpEditor.AlignmentToolbar,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls,
+        MediaUpload = wpBlockEditor.MediaUpload,
+        AlignmentToolbar = wpBlockEditor.AlignmentToolbar,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
         BaseControl = wpComponents.BaseControl,
         PanelBody = wpComponents.PanelBody,
@@ -9760,10 +10614,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
     var socialBlockIconContent = React.createElement(
-        Fragment,
-        null,
+        "g",
+        { fill: "currentColor" },
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
-        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
+        React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11 C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81 C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65 c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1 s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1 s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" })
     );
 
     var socialBlockIcon = React.createElement(
@@ -9771,217 +10625,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         { width: "20", height: "20", viewBox: "0 0 24 24" },
         socialBlockIconContent
     );
-
-    var ICONS_SET = {
-        blogger: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 Z M47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 Z M14,28.8986406 C14,32.8228477 17.2049102,36 21.1539531,36 L28.8544258,36 C32.8063906,36 36,32.8228477 36,28.8986406 L36,23.8630898 C36,23.0788672 35.3675,22.4423281 34.5776484,22.4423281 L33.3700977,22.4423281 C32.5888398,22.4423281 31.9736563,21.8570938 31.9220508,21.121082 C31.9136289,17.1796445 28.7112969,14 24.7595898,14 L21.1539531,14 C17.2049102,14 14.002793,17.1796875 14,21.1041523 L14,28.8986406 Z M27,21.5001179 C27,22.3263074 26.3641346,23 25.5840879,23 L21.4159121,23 C20.6359096,23 20,22.3264017 20,21.5001179 C19.9999116,20.6705805 20.6358212,20 21.4159121,20 L25.5840879,20 C26.3641346,20 27,20.6705805 27,21.5001179 Z M31,28.4932201 C31,29.3206654 30.3988164,30 29.6624116,30 L21.3288673,30 C20.5925066,30 20,29.3206654 20,28.4932201 C20,27.6657749 20.5925947,27 21.3288673,27 L29.6624116,27 C30.3988164,27 31,27.665725 31,28.4932201 Z M31,28.4932201" })
-                )
-            )
-        ),
-        facebook: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 Z M25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 Z M26.8145197,36 L26.8145197,24.998712 L30.0687449,24.998712 L30.5,21.2076072 L26.8145197,21.2076072 L26.8200486,19.3101227 C26.8200486,18.3213442 26.9207209,17.7915341 28.4425538,17.7915341 L30.4769629,17.7915341 L30.4769629,14 L27.2222769,14 C23.3128757,14 21.9368678,15.8390937 21.9368678,18.9318709 L21.9368678,21.2080366 L19.5,21.2080366 L19.5,24.9991413 L21.9368678,24.9991413 L21.9368678,36 L26.8145197,36 Z M26.8145197,36" })
-                )
-            )
-        ),
-        flickr: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 Z M3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 Z M11,24.3933898 C11,27.9245881 13.8664452,30.7868324 17.4026552,30.7868852 C20.9389182,30.7868852 23.8053634,27.9245881 23.8053634,24.3933898 C23.8053634,20.8622443 20.9389711,17.9999472 17.4026552,18 C13.8664452,18 11,20.8622443 11,24.3933898 Z M33.4026552,30.7868852 C36.9389711,30.7868852 39.8053634,27.9245881 39.8053634,24.3933898 C39.8053634,20.8622971 36.9389182,18 33.4026552,18 C29.8663923,18 27,20.8622971 27,24.3933898 C27,27.9245881 29.8664452,30.7868852 33.4026552,30.7868852 Z M33.394864,19.9672131 C35.8394032,19.9672131 37.8210935,21.9489034 37.8210935,24.3934426 C37.8210935,26.8379818 35.8394032,28.8196721 33.394864,28.8196721 C30.9503248,28.8196721 28.9686345,26.8379818 28.9686345,24.3934426 C28.9686345,21.9489034 30.9503248,19.9672131 33.394864,19.9672131 Z M33.394864,19.9672131" })
-                )
-            )
-        ),
-        google: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 Z M25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 Z M38.2449877,22.1097512 L38.2449877,27.3881872 L36.0036768,27.3881872 L36.0036768,22.1097512 L30.7739796,22.1097512 L30.7739796,19.9128403 L36.0036768,19.9128403 L36.0036768,14.6807808 L38.2449877,14.6807808 L38.2449877,19.9128403 L42.2375586,19.9128403 C42.5324436,20.6254301 42.7875249,21.3586918 43,22.1097512 L38.2449877,22.1097512 Z M11.7255525,37.2757943 C14.6396541,35.4919506 18.5644269,35.2563486 20.6868362,35.1217189 C20.0299,34.2802832 19.2718967,33.3883614 19.2718967,31.9242632 C19.2718967,31.1333137 19.5077199,30.6621097 19.7435432,30.1067621 C19.2213631,30.1572483 18.7160276,30.2077344 18.2443811,30.2077344 C13.2752481,30.2077344 10.4622136,26.5054173 10.4622136,22.8535864 C10.4622136,20.699511 11.4560402,18.3064679 13.4605378,16.5747932 C16.1388163,14.3752803 19.3224302,14 21.849108,14 L31.501017,14 L28.5026927,15.6845543 L25.6054356,15.6845543 C26.6834848,16.5747932 28.9238057,18.4478291 28.9238057,22.0121507 C28.9238057,25.4788658 26.952997,27.1112511 24.9990329,28.6594927 C24.3757857,29.2653264 23.6851605,29.9216463 23.6851605,30.9481978 C23.6851605,31.9747494 24.3757857,32.5469257 24.8979658,32.9676435 L26.5824176,34.2802832 C28.6542934,35.996812 30.5240349,37.5955399 30.5240349,40.8266529 C30.5240349,42.9574523 29.5287217,45.0961123 27.5894278,46.7373863 C26.5459915,46.9073414 25.4755787,46.9970613 24.3847411,47 C26.3539444,46.1370063 27.37411,44.55802 27.37411,42.6609828 C27.37411,40.2713054 25.8412588,39.0091518 22.2702209,36.468016 C21.8996415,36.4343586 21.6638183,36.4343586 21.1921718,36.4343586 C20.7710588,36.4343586 18.2443811,36.5185022 16.2735724,37.174822 C15.2460568,37.5450537 12.2477325,38.6725775 12.2477325,42.0046629 C12.2477325,42.3667791 12.2863178,42.7178526 12.3616005,43.0559755 C7.42272978,39.3956824 9.56224074,39.9122538 9,39.9122529 C9.5622407,38.9676509 10.4340377,38.0389613 11.7255525,37.2757943 Z M18.9013173,15.5448759 C17.688512,15.5448759 16.3746395,16.1540754 15.6166362,17.0914348 C14.8249438,18.0742317 14.5891206,19.3363852 14.5891206,20.5480526 C14.5891206,23.6950221 16.4083286,28.8950947 20.451013,28.8950947 C21.6132847,28.8950947 22.8766236,28.3229185 23.6346269,27.582455 C24.7126761,26.5054173 24.7968987,25.0076618 24.7968987,24.1662261 C24.7968987,20.7836546 22.792401,15.5448759 18.9013173,15.5448759 Z M18.9013173,15.5448759" })
-                )
-            )
-        ),
-        instagram: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 Z M25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 Z M35.9513128,34.5096659 C35.9701595,34.4075385 35.9839804,34.3037693 36,34.2013135 L36,15.7986865 C35.9846086,15.6978726 35.9714159,15.5967304 35.9525693,15.496245 C35.7600194,14.4654483 34.9467868,13.6655054 33.9482288,13.5226585 C33.9067662,13.517076 33.8662459,13.5075528 33.8254116,13.5 L16.1745884,13.5 C16.0681049,13.5200314 15.9609932,13.5351371 15.8560802,13.5600942 C14.8813947,13.7922616 14.1601965,14.6128926 14.0213595,15.6453312 C14.0157055,15.6883495 14.0072245,15.7310394 14,15.7740577 L14,34.2269275 C14.0201031,34.3438321 14.0361227,34.4617219 14.0612516,34.5779697 C14.2767315,35.5742861 15.0902783,36.3466448 16.0580534,36.4766848 C16.1048559,36.4825957 16.1519725,36.4921188 16.198775,36.5 L33.801225,36.5 C33.9155613,36.4796402 34.0302117,36.4628926 34.1432916,36.4372787 C35.0416482,36.2379497 35.775725,35.454426 35.9513128,34.5096659 Z M16.380331,33.0989292 C16.380331,33.5885494 16.7858479,34.0095374 17.254187,34.0095374 C22.4169106,34.0098658 27.5793201,34.0098658 32.7420437,34.0095374 C33.2147803,34.0095374 33.6180985,33.5892062 33.6180985,33.0959737 C33.6184126,29.6962164 33.6180985,26.2967875 33.6180985,22.8973587 L33.6180985,22.8267561 L31.5179543,22.8267561 C31.8144748,23.81749 31.9055669,24.8252998 31.7893459,25.8524843 C31.6724968,26.8799971 31.3558732,27.8362507 30.8401034,28.7192747 C30.3240195,29.6032838 29.6549637,30.3355797 28.8357629,30.9184609 C26.7123745,32.4303398 23.9167892,32.5633352 21.6636731,31.2412621 C20.5247077,30.5736579 19.6304345,29.6426899 19.0069247,28.4431039 C18.0768429,26.653084 17.9282685,24.7744003 18.4738788,22.8251142 C17.7771813,22.825771 17.0833107,22.825771 16.3800168,22.825771 L16.3800168,22.8878355 C16.3800168,26.2915334 16.3797027,29.6952313 16.380331,33.0989292 Z M24.897757,29.6581239 C27.3886549,29.7139492 29.403361,27.6333095 29.4558175,25.1027841 C29.5095304,22.4931182 27.4960808,20.3376071 25.0001571,20.339249 C22.5601451,20.3376071 20.5765359,22.3900057 20.5422979,24.9293975 C20.5071175,27.5370931 22.5039192,29.604269 24.897757,29.6581239 Z M33.6177844,18.481582 C33.6180985,17.7555254 33.6180985,17.0291405 33.6177844,16.303084 C33.6177844,15.7822673 33.2235754,15.3678469 32.7260241,15.3675186 C32.03341,15.3671902 31.3407958,15.3668618 30.6478676,15.3675186 C30.1515727,15.3681753 29.7561073,15.7835808 29.7557932,16.3043975 C29.7554791,17.0242147 29.7535944,17.744032 29.7583061,18.4641776 C29.7589343,18.5715591 29.7784092,18.6832096 29.8110767,18.7850086 C29.9354645,19.1682324 30.2712489,19.4033552 30.6824198,19.4053255 C31.0166336,19.4059823 31.3508474,19.4049971 31.6853753,19.4049971 C32.0472308,19.4007282 32.4103428,19.4079526 32.7725125,19.3987579 C33.2383386,19.3866077 33.6177844,18.9692319 33.6177844,18.481582 Z M33.6177844,18.481582" })
-                )
-            )
-        ),
-        linkedin: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 Z M25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 Z M14,20.1180479 L14,34.6581834 L18.7100851,34.6581834 L18.7100851,20.1180479 L14,20.1180479 Z M16.6646962,13 C15.0534058,13 14,14.0858611 14,15.5115122 C14,16.9076331 15.0222711,18.0247614 16.6035556,18.0247614 L16.6336556,18.0247614 C18.2759867,18.0247614 19.2988222,16.9076331 19.2988222,15.5115122 C19.2682519,14.0858611 18.2759867,13 16.6646962,13 Z M30.5769213,20.1180479 C28.076176,20.1180479 26.9565501,21.5293199 26.3314108,22.5193527 L26.3314108,20.4598644 L21.6207614,20.4598644 C21.6828427,21.8242356 21.6207614,35 21.6207614,35 L26.3314108,35 L26.3314108,26.8795887 C26.3314108,26.445032 26.3619812,26.0115368 26.4865199,25.7004084 C26.826932,24.83226 27.6020069,23.9334233 28.9032674,23.9334233 C30.6083381,23.9334233 31.2899149,25.2667202 31.2899149,27.2206333 L31.2899149,34.999614 L35.9998119,34.999614 L36,26.6627446 C36,22.1966439 33.6763743,20.1180479 30.5769213,20.1180479 Z M30.5769213,20.1180479" })
-                )
-            )
-        ),
-        mail: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 Z M25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 Z M37,31.9646738 L37,17 L28.262875,25.4642914 L37,31.9646738 Z M13,31.9646738 L21.7369375,25.4633812 L13,17 L13,31.9646738 Z M22.9140156,26.604743 L13,33 L37,33 L27.08575,26.604743 L25,28.625083 L22.9140156,26.604743 Z M13.72,17 L25,26.0581312 L36.28,17 L13.72,17 Z M13.72,17" })
-                )
-            )
-        ),
-        picasa: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 Z M25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 Z M18.3081608,24.9268242 L18.3081608,36.1026094 C15.8801013,34.6339648 13.9785429,32.4174648 12.9377792,29.8090352 L18.3081608,24.9268242 Z M20.4591064,12.8520586 C21.9243514,12.297832 23.4480966,12 24.9979941,12 C26.8609587,12 28.6590247,12.3973125 30.3579148,13.1656836 L30.3579148,21.8322148 L20.4591064,12.8520586 Z M12.4719619,28.3769023 C12.1682386,27.2530625 12,26.1186602 12,25 C12,20.096918 14.7097944,15.6850937 19.0744513,13.4426953 L23.9947578,17.9067734 L12.4719619,28.3769023 Z M36.6723724,30.6506328 C34.5083252,35.1147617 29.9554726,38 24.9979941,38 C23.1521937,38 21.3633699,37.6133008 19.6735189,36.8500586 L19.6735189,30.6506328 L36.6723724,30.6506328 Z M37.257729,29.2811133 L31.727437,29.2811133 L31.727437,13.9131836 C35.5955539,16.2654219 38.0001016,20.483668 38,25.0000508 C38,26.4583867 37.7438081,27.8959531 37.257729,29.2811133 Z M37.257729,29.2811133" })
-                )
-            )
-        ),
-        pinterest: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 Z M25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 Z M15.5,21.3293651 C15.5,23.8979841 16.4179886,26.1831362 18.3868965,27.0346983 C18.7097504,27.1745243 18.9989411,27.0395084 19.0925718,26.6608336 C19.1577063,26.3987635 19.3117743,25.737617 19.3805099,25.4622774 C19.4749236,25.0877494 19.4382854,24.9563826 19.1777477,24.629956 C18.6100133,23.9205421 18.2472332,23.0021355 18.2472332,21.7012393 C18.2472332,17.9270976 20.9127352,14.5483833 25.1881227,14.5483833 C28.9739058,14.5483833 31.0538241,16.9989049 31.0538241,20.2716301 C31.0538241,24.5777078 29.2549547,28.2120235 26.5844424,28.2120235 C25.1096795,28.2120235 24.005682,26.9199182 24.3595374,25.3352232 C24.7832244,23.4433422 25.6039811,21.4015173 25.6039811,20.0359328 C25.6039811,18.8134918 24.9845775,17.7939063 23.7027128,17.7939063 C22.1950696,17.7939063 20.983976,19.4461092 20.983976,21.6594407 C20.983976,23.0691459 21.4336542,24.0225504 21.4336542,24.0225504 C21.4336542,24.0225504 19.890782,30.9476708 19.6203801,32.1604915 C19.0817683,34.5758493 19.5394317,37.5367443 19.5781053,37.8358028 C19.6008084,38.0129489 19.8157834,38.0550792 19.9131719,37.9212244 C20.0522089,37.7289843 21.8477903,35.3806369 22.4582691,33.0341139 C22.6309694,32.36965 23.4498471,28.9290673 23.4498471,28.9290673 C23.9396081,29.9187967 25.3711567,30.7905945 26.8935179,30.7905945 C31.4253723,30.7905945 34.5,26.4138574 34.5,20.5554288 C34.5,16.1256142 30.9581579,12 25.575015,12 C18.8771271,12 15.5,17.0871462 15.5,21.3293651 Z M15.5,21.3293651" })
-                )
-            )
-        ),
-        reddit: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 Z M47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 Z M29.285672,25.1142857 C28.1613122,25.1142857 27.25,26.0886553 27.25,27.2907328 C27.25,28.4931237 28.1613122,29.4676812 29.285672,29.4676812 C30.4097389,29.4676812 31.3211097,28.4931237 31.3211097,27.2907328 C31.3211097,26.0886553 30.4097389,25.1142857 29.285672,25.1142857 L29.285672,25.1142857 Z M40,25.1842541 C40,23.1661499 38.4647792,21.5245722 36.5778773,21.5245722 C35.7246903,21.5245722 34.9441013,21.8609333 34.344099,22.4154154 C32.0204962,20.8025988 29.01275,19.8611259 25.7938312,19.7275339 L27.4944043,13.7975395 L32.4418455,14.9819468 C32.4417283,14.9962334 32.4399119,15.0100187 32.4399119,15.0243053 C32.4399119,16.6918871 33.7087059,18.0486732 35.2680089,18.0486732 C36.8273118,18.0486732 38.0961058,16.6919498 38.0961058,15.0243053 C38.0961058,13.3566608 36.827429,12 35.2680089,12 C34.0961293,12 33.0888402,12.7662743 32.6602252,13.8548112 L27.2437392,12.5581164 C26.969285,12.4923856 26.6939519,12.6634486 26.6115688,12.9510599 L24.6717565,19.7148765 C21.2781691,19.773088 18.0911839,20.7250878 15.6557838,22.4155407 C15.0558987,21.8611213 14.2751339,21.5246975 13.4220056,21.5246975 C11.5351037,21.5246975 10,23.1663379 10,25.1843795 C10,26.5078929 10.6604127,27.6694291 11.6472525,28.3122624 C11.5968617,28.6558922 11.5703186,29.0034695 11.5703186,29.3544932 C11.5703186,31.9771452 12.997375,34.4258518 15.5885179,36.2485809 C18.110227,38.0226854 21.4524861,39 24.9999414,39 C28.5471037,39 31.8895972,38.0224974 34.4113063,36.2485809 C37.0025078,34.4256639 38.429447,31.9771452 38.429447,29.3544932 C38.429447,29.0034695 38.4030211,28.6560801 38.3525131,28.3122624 C39.3394701,27.6693665 40,26.5077049 40,25.1842541 L40,25.1842541 Z M35.2678917,13.1509466 C36.2337548,13.1509466 37.0196173,13.9912229 37.0196173,15.0242426 C37.0196173,16.0570117 36.2337548,16.8975386 35.2678917,16.8975386 C34.3021457,16.8975386 33.5161661,16.0570117 33.5161661,15.0242426 C33.5161075,13.9912856 34.3019699,13.1509466 35.2678917,13.1509466 L35.2678917,13.1509466 Z M11.076137,25.1842541 C11.076137,23.8009626 12.1284263,22.6755815 13.4218884,22.6755815 C13.9116754,22.6755815 14.3665405,22.8374333 14.7430654,23.1128259 C13.3654038,24.2769312 12.4090914,25.6430537 11.9283278,27.1170775 C11.4083063,26.6566487 11.076137,25.9612434 11.076137,25.1842541 L11.076137,25.1842541 Z M24.9999414,37.8488654 C18.1882742,37.8488654 12.6466314,34.0382971 12.6466314,29.3543679 C12.6466314,29.15304 12.6575885,28.9535918 12.6776862,28.7556476 C12.7167684,28.3727297 12.7922961,27.9965165 12.9030387,27.6288878 C13.3168294,26.2557474 14.2139618,25.0028522 15.4665839,23.9584283 C15.7443779,23.7265221 16.0403361,23.5054561 16.3517045,23.295293 C18.5818499,21.7901897 21.6355923,20.8602464 24.9999414,20.8602464 C28.3641147,20.8602464 31.4179743,21.790315 33.6479439,23.295293 C33.9593123,23.5054561 34.2553877,23.7265847 34.5331232,23.9584283 C35.7858039,25.0027895 36.6829949,26.2557474 37.0967269,27.6288878 C37.2075282,27.9965165 37.2830558,28.3727297 37.3220794,28.7556476 C37.3423529,28.9534039 37.3530756,29.15304 37.3530756,29.3543679 C37.3530756,34.0383598 31.8114915,37.8488654 24.9999414,37.8488654 L24.9999414,37.8488654 Z M38.071555,27.1172028 C37.5909086,25.6432417 36.6344204,24.2769312 35.2567588,23.1128886 C35.6332837,22.837496 36.0880902,22.6756441 36.5778773,22.6756441 C37.8713979,22.6756441 38.9236872,23.8009626 38.9236872,25.1843168 C38.9236872,25.9612434 38.5916937,26.6566487 38.071555,27.1172028 L38.071555,27.1172028 Z M29.1000551,33.0352917 C28.0801683,33.929456 26.815593,34.3281642 24.9999414,34.3281642 C23.1841726,34.3281642 21.9196559,33.929456 20.8995934,33.0352917 C20.6583619,32.8238128 20.3022277,32.8616597 20.1045317,33.1195073 C19.9066598,33.3776056 19.9419334,33.7583304 20.183282,33.9699346 C21.4026227,35.0389841 22.9330974,35.5366958 24.9999414,35.5366958 C27.0667854,35.5366958 28.5972016,35.0389841 29.8166008,33.9699346 C30.0578323,33.7583304 30.093223,33.3776056 29.8953512,33.1195073 C29.6971863,32.8611584 29.3412865,32.8238128 29.1000551,33.0352917 L29.1000551,33.0352917 Z M22.3208167,27.2907328 C22.3208167,26.0886553 21.4096217,25.1142857 20.2855548,25.1142857 C19.1613122,25.1142857 18.25,26.0886553 18.25,27.2907328 C18.25,28.4931237 19.1613707,29.4676812 20.2855548,29.4676812 C21.4096217,29.4675559 22.3208167,28.4931237 22.3208167,27.2907328 L22.3208167,27.2907328 Z M22.3208167,27.2907328" })
-                )
-            )
-        ),
-        skype: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 Z M47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 Z M25.4397706,13.975276 C24.8096937,13.975276 24.1919703,14.0277875 23.5908485,14.1278564 C22.5130674,13.4152862 21.2304038,13 19.8499866,13 C16.0647401,13 13,16.1114511 13,19.9506313 C13,21.3475345 13.4052238,22.6452605 14.1030252,23.7348727 C14.0090312,24.330184 13.9609845,24.939812 13.9609845,25.5608835 C13.9609845,31.9601448 19.0985232,37.1471351 25.4397218,37.1471351 C26.1553942,37.1471351 26.8521702,37.0764923 27.5293662,36.9523474 C28.5816102,37.6146354 29.8210609,38 31.1497692,38 C34.9340392,38 38,34.8877563 38,31.0489724 C37.9998535,29.5978238 37.5625009,28.2486268 36.8112328,27.1332542 C36.879885,26.6180477 36.9193869,26.0942709 36.9193869,25.5610817 C36.9193869,19.1628112 31.7792114,13.975276 25.4397706,13.975276 Z M19.9677886,28.6935701 C21.3911596,28.5966276 22.2458078,30.338952 23.0054897,30.8236149 C23.7642429,31.3064835 26.6513076,32.4065946 28.1762921,30.6288326 C29.836859,28.6935701 27.0719846,27.6921461 25.0453354,27.3890074 C22.1517212,26.9520931 18.4983763,25.3558056 18.7825911,22.210082 C19.0669036,19.066352 21.4014725,17.454464 23.8583783,17.2270851 C26.9902148,16.9371546 29.0290341,17.7109007 30.6416535,19.1141006 C32.5063271,20.7354087 31.497377,22.5479106 30.3093446,22.693748 C29.1260044,22.8387382 27.7969155,20.0270054 25.187565,19.9847394 C22.4980576,19.941676 20.6803539,22.8387382 24.000559,23.6622764 C27.3224748,24.4849175 30.8798758,24.8228956 32.1609683,27.9196246 C33.4429406,31.0166527 30.1690701,34.305622 26.5147477,34.4997563 C22.8634067,34.6936913 21.1547457,33.8699039 19.5894873,32.3719545 C17.8414321,30.6988605 18.5436356,28.7905625 19.9677886,28.6935701 Z M19.9677886,28.6935701" })
-                )
-            )
-        ),
-        soundcloud: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 Z M25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 Z M11.2046957,26.4994198 L11,28.2899843 L11.2046957,30.0498224 C11.2122973,30.1238678 11.258563,30.1755611 11.3170241,30.1755611 C11.3736257,30.1755611 11.4197274,30.1243715 11.4286961,30.0505779 L11.6713997,28.2899843 L11.4286961,26.4989161 C11.4200555,26.4251226 11.3733523,26.3731145 11.3170241,26.3731145 C11.2586177,26.3731145 11.2122426,26.4251226 11.2046957,26.4994198 Z M12.8503005,25.3946571 C12.8503005,25.3952867 12.5750031,28.2897324 12.5750031,28.2897324 L12.8503005,31.1207736 C12.8580661,31.1967079 12.9071756,31.2514864 12.9668398,31.2514864 C13.0253555,31.2514864 13.0733712,31.1979672 13.0829963,31.1215921 L13.3961375,28.2897324 L13.0833791,25.3946571 C13.0737541,25.3177153 13.0258477,25.2645739 12.9668398,25.2645739 C12.9075037,25.2645739 12.8583943,25.3194783 12.8503005,25.3946571 Z M14.396866,24.761745 L14.1500608,28.2908658 L14.396866,31.7053294 C14.4034832,31.8110456 14.4745771,31.8908837 14.5613116,31.8908837 C14.6470618,31.8908837 14.7178823,31.8109197 14.7254838,31.7053294 L15.0061953,28.2908658 L14.7254838,24.7609894 C14.7179369,24.6552103 14.6471712,24.5753722 14.5613116,24.5753722 C14.4745771,24.5753722 14.403866,24.6552732 14.396866,24.761745 Z M15.9578691,25.0172521 L15.7251733,28.2909287 L15.9578691,31.7335372 C15.9645956,31.8549944 16.0449317,31.9468586 16.1461038,31.9468586 C16.2457993,31.9468586 16.3264635,31.8549314 16.3339557,31.733852 L16.5983703,28.2909287 L16.3339557,25.0157409 C16.3268463,24.8947875 16.2460727,24.8036159 16.1461038,24.8036159 C16.044877,24.8036159 15.9642128,24.8955431 15.9578691,25.0172521 Z M17.5195284,22.9658916 L17.3001764,28.292251 L17.5195284,31.7345446 C17.5252159,31.8690983 17.6326223,31.9751293 17.7456069,31.9751293 C17.85799,31.9751293 17.972123,31.8685946 17.972123,31.7337261 L18.205475,28.292251 L17.950412,22.9658916 C17.9436307,22.8306454 17.8434977,22.7241106 17.7311147,22.7241106 C17.6182395,22.7241106 17.5248877,22.8305824 17.5195284,22.9658916 Z M19.0799298,21.7485496 C19.0799298,21.7489903 18.8752888,28.2933213 18.8752888,28.2933213 L19.0803673,31.7138925 C19.085508,31.8633686 19.1890863,31.9816775 19.3161256,31.9816775 C19.4420165,31.9816775 19.5458683,31.8633686 19.5518839,31.7126332 L19.7832125,28.2933213 L19.5518839,21.7485496 C19.5455948,21.5974994 19.4419618,21.4795682 19.3160709,21.4795682 C19.1890863,21.4795682 19.085508,21.5977513 19.0799298,21.7485496 Z M20.6267141,20.9640207 L20.4502919,28.2940139 L20.6269329,31.6585473 C20.6312532,31.8388756 20.7830113,31.9814257 20.9374491,31.9814257 C21.0916135,31.9814257 21.2481294,31.8388756 21.2481294,31.657477 L21.4195204,28.2942028 L21.2073871,20.9639577 C21.2024652,20.7820553 21.064215,20.6391905 20.9103787,20.6391905 C20.7556128,20.6391905 20.6309251,20.7816146 20.6267141,20.9640207 Z M22.1736078,21.4133933 L22.025459,28.2954621 L22.1736078,31.6071059 C22.1771625,31.8179717 22.3266784,31.9846998 22.5091162,31.9846998 C22.6910072,31.9846998 22.8440778,31.8182235 22.8440778,31.6048392 L23.0066094,28.2958399 L22.8385544,21.4128896 C22.8341794,21.1998201 22.6872885,21.032966 22.5053975,21.032966 C22.3232331,21.032966 22.1771625,21.1997571 22.1736078,21.4133933 Z M23.7558296,19.3647403 L23.6005168,28.2972251 L23.7562671,31.5388532 C23.7590015,31.7759119 23.947455,31.9709107 24.1542288,31.9709107 C24.3605652,31.9709107 24.5521358,31.7757859 24.5521358,31.5353272 L24.7023627,28.2972251 L24.5239717,19.3640477 C24.5209639,19.1245334 24.341862,18.9290938 24.1355257,18.9290938 C23.9286971,18.9290938 23.7589468,19.1245334 23.7558296,19.3647403 Z M34.2236391,24.3767843 C33.9495448,20.8031482 31.3466882,18 28.1717992,18 C27.3948523,18 26.641093,18.1759838 25.9723183,18.4738655 C25.7124428,18.589593 25.6441927,18.7089094 25.6441927,18.9399865 L25.6441927,31.5248122 C25.6441927,31.7674747 25.8069977,31.9696515 26.0125684,31.9933888 C26.0213184,31.9945221 35.4956182,32 35.5570323,32 C37.4589032,32 39,30.2245469 39,28.0346031 C39,25.8446593 37.4574267,24.0688914 35.5556651,24.0688914 C35.0838752,24.0688914 34.6335774,24.1788262 34.2236391,24.3767843 Z M34.2236391,24.3767843" })
-                )
-            )
-        ),
-        tumblr: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 Z M25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 Z M20.1212122,23.428572 L20.1212122,29.5776397 C20.2888032,34.6055735 23.1493975,35.6536697 26.4848488,36 C28.4239345,35.9068215 30.7994507,35.2128501 32,34.291925 L32,30.807453 C30.4550907,32.2576564 26.3092334,33.6801939 25.5656572,29.5776397 L25.4949496,23.3602485 L32,23.428572 L32,19.2608705 L25.4949496,19.2608705 L25.6363634,14 L23.0202023,14.0683235 C23.2002807,18.5559785 20.7320276,19.156712 18,19.3291926 L18,23.428572 L20.1212122,23.428572 Z M20.1212122,23.428572" })
-                )
-            )
-        ),
-        twitter: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M25,50 C38.8071194,50 50,38.8071194 50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 Z M25,47 C37.1502651,47 47,37.1502651 47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 Z M24.6822554,20.5542975 L24.729944,21.3761011 L23.9351333,21.2754721 C21.0420225,20.8897275 18.5145246,19.5815504 16.3685358,17.3844837 L15.3193857,16.2943361 L15.0491501,17.0993681 C14.4768864,18.8939188 14.8424993,20.7890985 16.0347153,22.0637326 C16.6705638,22.7681357 16.5274979,22.8687647 15.4306592,22.4494772 C15.0491501,22.3153051 14.7153296,22.2146761 14.6835371,22.2649907 C14.5722637,22.3823912 14.9537728,23.9085978 15.2558008,24.5123719 C15.6691024,25.350947 16.5116017,26.1727505 17.433582,26.6591241 L18.2124965,27.0448686 L17.2905161,27.0616401 C16.4003282,27.0616401 16.3685358,27.0784116 16.4639131,27.4306131 C16.7818374,28.5207608 18.0376382,29.6779944 19.436505,30.1811394 L20.4220701,30.533341 L19.5636746,31.070029 C18.2919776,31.8415181 16.7977335,32.2775772 15.3034895,32.3111202 C14.5881599,32.3278916 14,32.3949776 14,32.4452922 C14,32.6130071 15.939338,33.5522113 17.0679692,33.9211843 C20.4538626,35.0113319 24.4756046,34.5417298 27.4958851,32.6800932 C29.6418739,31.3551445 31.7878628,28.7220188 32.7893242,26.1727505 C33.3297954,24.8142589 33.8702667,22.3320767 33.8702667,21.1413 C33.8702667,20.369811 33.9179553,20.269182 34.8081432,19.3467494 C35.3327183,18.8100613 35.8255009,18.2230588 35.9208782,18.0553437 C36.0798403,17.7366852 36.0639442,17.7366852 35.2532373,18.0218007 C33.9020591,18.5249458 33.7113045,18.4578598 34.3789455,17.7031422 C34.8717281,17.1664541 35.459888,16.1937071 35.459888,15.9085915 C35.459888,15.858277 35.2214448,15.9421346 34.9512092,16.093078 C34.6650773,16.2607931 34.0292288,16.5123656 33.5523424,16.6633091 L32.6939469,16.9484246 L31.9150324,16.394965 C31.4858346,16.093078 30.8817786,15.757648 30.5638543,15.657019 C29.7531474,15.422218 28.5132428,15.455761 27.7820169,15.724105 C25.7949903,16.4788226 24.5391894,18.4243168 24.6822554,20.5542975 C24.6822554,20.5542975 24.5391894,18.4243168 24.6822554,20.5542975 Z M24.6822554,20.5542975" })
-                )
-            )
-        ),
-        vimeo: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 Z M47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 Z M17.315812,20.9060694 C17.9328006,21.6627251 20.2884417,30.7991385 21.0747632,32.4845455 C21.7610734,33.9625783 23.6542105,35.9166045 25.7302773,34.5211721 C27.8051355,33.1256949 34.7049271,27.0158598 35.9400265,19.8005667 C37.1740468,12.5875569 27.6369679,14.0985404 26.6267538,20.382799 C29.1516416,18.8105703 30.4993563,21.0216204 29.2073234,23.5249731 C27.9176213,26.0259082 26.7391965,27.657054 26.1221216,27.657054 C25.5062553,27.657054 25.0324423,25.9834215 24.3267945,23.0582023 C23.5973201,20.0339521 23.6018092,14.5864425 20.5690087,15.204043 C17.7089081,15.7862753 13.95,20.4417609 13.95,20.4417609 L14.8476851,21.6627251 C14.8476851,21.6627251 16.6987803,20.1493241 17.315812,20.9060694 Z M17.315812,20.9060694" })
-                )
-            )
-        ),
-        youtube: React.createElement(
-            Fragment,
-            null,
-            React.createElement(
-                "g",
-                { fill: "none", "fill-rule": "evenodd", stroke: "none", "stroke-width": "1" },
-                React.createElement(
-                    "g",
-                    { fill: "currentColor" },
-                    React.createElement("path", { d: "M50,25 C50,11.1928806 38.8071194,0 25,0 C11.1928806,0 0,11.1928806 0,25 C0,38.8071194 11.1928806,50 25,50 C38.8071194,50 50,38.8071194 50,25 Z M47,25 C47,12.8497349 37.1502651,3 25,3 C12.8497349,3 3,12.8497349 3,25 C3,37.1502651 12.8497349,47 25,47 C37.1502651,47 47,37.1502651 47,25 Z M36.768327,30.7654774 C36.4698281,32.0627028 35.4087162,33.0191862 34.1319129,33.1618614 C31.1074781,33.4998058 28.0463955,33.5014844 24.9984613,33.4998058 C21.9508068,33.5014844 18.8894444,33.4998058 15.8652894,33.1618614 C14.5882064,33.0191862 13.5276539,32.0627028 13.2294348,30.7654774 C12.8047662,28.9179732 12.8047662,26.9020564 12.8047662,25.0002798 C12.8047662,23.0982233 12.8098018,21.0820268 13.2341906,19.2345226 C13.5326895,17.9372972 14.5932419,16.980534 15.8700452,16.8381386 C18.89448,16.5001942 21.9555627,16.4985156 25.0034969,16.5001942 C28.0511513,16.4985156 31.1125137,16.5001942 34.1366687,16.8381386 C35.4137518,16.980534 36.4748637,17.9372972 36.7730829,19.2345226 C37.1977514,21.0820268 37.1952336,23.0982233 37.1952336,25.0002798 C37.1952336,26.9020564 37.1927158,28.9179732 36.768327,30.7654774 Z M22.8047662,20.5 L29.5547662,24.3971143 L22.8047662,28.2942286 L22.8047662,20.5 Z M22.8047662,20.5" })
-                )
-            )
-        )
-    };
 
     var ICONS_SET_NEW = {
         blogger: React.createElement(
@@ -10187,7 +10830,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     currentSelected = _state.currentSelected,
                     searchedText = _state.searchedText;
 
-                var matchedIcons = Object.keys(ICONS_SET).filter(function (key) {
+                var matchedIcons = Object.keys(ICONS_SET_NEW).filter(function (key) {
                     return key.indexOf(searchedText.toLowerCase().trim()) > -1;
                 });
 
@@ -10274,44 +10917,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 React.createElement(
                                                     "svg",
                                                     { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 50 50" },
-                                                    ICONS_SET[key]
+                                                    ICONS_SET_NEW[key]
                                                 )
                                             )
                                         )
                                     );
-                                }),
-                                React.createElement(
-                                    BaseControl,
-                                    { label: __('Custom icon') },
-                                    React.createElement(MediaUpload, {
-                                        allowedTypes: ["image"],
-                                        value: items[currentSelected].iconID,
-                                        onSelect: function onSelect(media) {
-                                            var newItems = items.map(function (item, index) {
-                                                if (index === currentSelected) {
-                                                    item = _extends({}, item, {
-                                                        icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                                        iconID: media.id
-                                                    });
-                                                }
-                                                return item;
-                                            });
+                                })
+                            ),
+                            React.createElement(
+                                BaseControl,
+                                { label: __('Custom icon') },
+                                React.createElement(MediaUpload, {
+                                    allowedTypes: ["image"],
+                                    value: items[currentSelected].iconID,
+                                    onSelect: function onSelect(media) {
+                                        var newItems = items.map(function (item, index) {
+                                            if (index === currentSelected) {
+                                                item = _extends({}, item, {
+                                                    icon: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                                    iconID: media.id
+                                                });
+                                            }
+                                            return item;
+                                        });
 
-                                            setAttributes({ items: newItems });
-                                        },
-                                        render: function render(_ref) {
-                                            var open = _ref.open;
-                                            return React.createElement(
-                                                Button,
-                                                {
-                                                    className: "button button-large",
-                                                    onClick: open
-                                                },
-                                                __('Upload/Choose')
-                                            );
-                                        }
-                                    })
-                                )
+                                        setAttributes({ items: newItems });
+                                    },
+                                    render: function render(_ref) {
+                                        var open = _ref.open;
+                                        return React.createElement(
+                                            Button,
+                                            {
+                                                className: "button button-large",
+                                                onClick: open
+                                            },
+                                            __('Upload/Choose')
+                                        );
+                                    }
+                                })
                             ),
                             React.createElement(PanelColorSettings, {
                                 title: __('Preset Icon Color'),
@@ -10379,10 +11022,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             color: item.iconColor
                                         }
                                     },
-                                    !!item.icon ? item.icon in ICONS_SET ? React.createElement(
+                                    !!item.icon ? item.icon in ICONS_SET_NEW ? React.createElement(
                                         "svg",
                                         { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
-                                        ICONS_SET[item.icon]
+                                        ICONS_SET_NEW[item.icon]
                                     ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
                                         "svg",
                                         { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
@@ -10433,7 +11076,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         iconSize: {
             type: 'number',
-            default: 24
+            default: 48
         },
         iconSpace: {
             type: 'number',
@@ -10486,7 +11129,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     color: item.iconColor
                                 }
                             },
-                            !!item.icon ? item.icon in ICONS_SET ? React.createElement(
+                            !!item.icon ? item.icon in ICONS_SET_NEW ? React.createElement(
                                 "svg",
                                 { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
                                 ICONS_SET_NEW[item.icon]
@@ -10501,7 +11144,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         },
         deprecated: [{
-            attributes: socialBlockAttrs,
+            attributes: _extends({}, socialBlockAttrs, {
+                iconSize: {
+                    type: "number",
+                    default: 24
+                }
+            }),
             save: function save(_ref3) {
                 var attributes = _ref3.attributes;
                 var items = attributes.items,
@@ -10523,6 +11171,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     className: "advgb-social-icon",
                                     href: item.link || '#',
                                     target: "_blank",
+                                    rel: "noopener noreferrer",
                                     style: {
                                         width: iconSize + 'px',
                                         height: iconSize + 'px',
@@ -10531,59 +11180,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         color: item.iconColor
                                     }
                                 },
-                                !!item.icon ? item.icon in ICONS_SET ? React.createElement(
+                                !!item.icon ? item.icon in ICONS_SET_NEW ? React.createElement(
                                     "svg",
                                     { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
                                     ICONS_SET_NEW[item.icon]
                                 ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
                                     "svg",
                                     { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
-                                    socialBlockIconContent
-                                )
-                            );
-                        })
-                    )
-                );
-            }
-        }, {
-            attributes: socialBlockAttrs,
-            save: function save(_ref4) {
-                var attributes = _ref4.attributes;
-                var items = attributes.items,
-                    align = attributes.align,
-                    iconSize = attributes.iconSize,
-                    iconSpace = attributes.iconSpace;
-
-
-                return React.createElement(
-                    "div",
-                    { className: "advgb-social-links-block", style: { textAlign: align } },
-                    React.createElement(
-                        "div",
-                        { className: "advgb-social-icons" },
-                        items.map(function (item, index) {
-                            return React.createElement(
-                                "a",
-                                { key: index,
-                                    className: "advgb-social-icon",
-                                    href: item.link || '#',
-                                    target: "_blank",
-                                    style: {
-                                        width: iconSize + 'px',
-                                        height: iconSize + 'px',
-                                        marginLeft: iconSpace + 'px',
-                                        marginRight: iconSpace + 'px',
-                                        color: item.iconColor
-                                    }
-                                },
-                                !!item.icon ? item.icon in ICONS_SET ? React.createElement(
-                                    "svg",
-                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
-                                    ICONS_SET[item.icon]
-                                ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
-                                    "svg",
-                                    { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
-                                    socialBlockIconContent
+                                    React.createElement(Fragment, null, React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }), React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" }))
                                 )
                             );
                         })
@@ -10592,7 +11196,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -10618,18 +11222,18 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents, wpData, wpHooks) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, wpHooks) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType,
         getBlockContent = wpBlocks.getBlockContent,
         createBlock = wpBlocks.createBlock;
-    var BlockControls = wpEditor.BlockControls,
-        InspectorControls = wpEditor.InspectorControls,
-        InspectorAdvancedControls = wpEditor.InspectorAdvancedControls,
-        PanelColorSettings = wpEditor.PanelColorSettings,
-        BlockAlignmentToolbar = wpEditor.BlockAlignmentToolbar;
+    var BlockControls = wpBlockEditor.BlockControls,
+        InspectorControls = wpBlockEditor.InspectorControls,
+        InspectorAdvancedControls = wpBlockEditor.InspectorAdvancedControls,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        BlockAlignmentToolbar = wpBlockEditor.BlockAlignmentToolbar;
     var IconButton = wpComponents.IconButton,
         Placeholder = wpComponents.Placeholder,
         Button = wpComponents.Button,
@@ -11053,7 +11657,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             return props;
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components, wp.data, wp.hooks);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, wp.hooks);
 
 /***/ }),
 
@@ -11081,14 +11685,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        RichText = wpBlockEditor.RichText,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings;
     var Dashicon = wpComponents.Dashicon,
         Tooltip = wpComponents.Tooltip,
         PanelBody = wpComponents.PanelBody,
@@ -11580,83 +12184,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
                 )
             );
-        },
-        deprecated: [{
-            attributes: tabBlockAttrs,
-            save: function save(_ref2) {
-                var attributes = _ref2.attributes;
-                var tabItems = attributes.tabItems,
-                    headerBgColor = attributes.headerBgColor,
-                    headerTextColor = attributes.headerTextColor,
-                    bodyBgColor = attributes.bodyBgColor,
-                    bodyTextColor = attributes.bodyTextColor,
-                    borderStyle = attributes.borderStyle,
-                    borderWidth = attributes.borderWidth,
-                    borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius,
-                    blockID = attributes.blockID,
-                    activeTabBgColor = attributes.activeTabBgColor,
-                    activeTabTextColor = attributes.activeTabTextColor;
-
-
-                return React.createElement(
-                    'div',
-                    { id: 'advgb-tabs-' + blockID, className: 'advgb-tabs-block', style: { border: 'none' } },
-                    React.createElement(
-                        'ul',
-                        { className: 'advgb-tabs-panel' },
-                        tabItems.map(function (item, index) {
-                            return React.createElement(
-                                'li',
-                                { key: index, className: 'advgb-tab',
-                                    style: {
-                                        backgroundColor: headerBgColor,
-                                        borderStyle: borderStyle,
-                                        borderWidth: borderWidth + 'px',
-                                        borderColor: borderColor,
-                                        borderRadius: borderRadius + 'px',
-                                        margin: '-' + borderWidth + 'px 0 -' + borderWidth + 'px -' + borderWidth + 'px'
-                                    }
-                                },
-                                React.createElement(
-                                    'a',
-                                    { href: '#' + item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
-                                        style: { color: headerTextColor }
-                                    },
-                                    React.createElement(RichText.Content, { tagName: 'span', value: item.header })
-                                )
-                            );
-                        })
-                    ),
-                    tabItems.map(function (item, index) {
-                        return React.createElement(
-                            'div',
-                            { key: index,
-                                id: item.header.toLowerCase().replace(/\s/g, '') + '-' + index,
-                                className: 'advgb-tab-body',
-                                style: {
-                                    backgroundColor: bodyBgColor,
-                                    color: bodyTextColor,
-                                    borderStyle: borderStyle,
-                                    borderWidth: borderWidth + 'px',
-                                    borderColor: borderColor,
-                                    borderRadius: borderRadius + 'px'
-                                }
-                            },
-                            React.createElement(RichText.Content, { tagName: 'p', value: item.body })
-                        );
-                    }),
-                    !!blockID && React.createElement(
-                        'style',
-                        null,
-                        activeTabBgColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active {\n                                background-color: ' + activeTabBgColor + ' !important;\n                            }\n                            ',
-                        activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
-                    )
-                );
-            }
-        }]
+        }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -11676,23 +12206,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        RichText = wpEditor.RichText,
-        PanelColorSettings = wpEditor.PanelColorSettings,
-        MediaUpload = wpEditor.MediaUpload;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        RichText = wpBlockEditor.RichText,
+        PanelColorSettings = wpBlockEditor.PanelColorSettings,
+        MediaUpload = wpBlockEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
         PanelBody = wpComponents.PanelBody,
@@ -12064,157 +12592,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return AdvTestimonial;
     }(Component);
 
-    function AdvTestimonialSave(_ref2) {
-        var attributes = _ref2.attributes;
-        var avatarUrl = attributes.avatarUrl,
-            avatarUrl2 = attributes.avatarUrl2,
-            avatarUrl3 = attributes.avatarUrl3,
-            avatarColor = attributes.avatarColor,
-            avatarBorderRadius = attributes.avatarBorderRadius,
-            avatarBorderWidth = attributes.avatarBorderWidth,
-            avatarBorderColor = attributes.avatarBorderColor,
-            avatarSize = attributes.avatarSize,
-            name = attributes.name,
-            name2 = attributes.name2,
-            name3 = attributes.name3,
-            nameColor = attributes.nameColor,
-            position = attributes.position,
-            position2 = attributes.position2,
-            position3 = attributes.position3,
-            positionColor = attributes.positionColor,
-            desc = attributes.desc,
-            desc2 = attributes.desc2,
-            desc3 = attributes.desc3,
-            descColor = attributes.descColor,
-            columns = attributes.columns;
-
-
-        return React.createElement(
-            'div',
-            { className: 'advgb-testimonial' },
-            React.createElement(
-                'div',
-                { className: 'advgb-testimonial-columns-one' },
-                React.createElement(
-                    'div',
-                    { className: 'advgb-testimonial-avatar-group' },
-                    React.createElement('div', { className: 'advgb-testimonial-avatar',
-                        style: {
-                            backgroundImage: 'url(' + (avatarUrl ? avatarUrl : advgbBlocks.avatarHolder) + ')',
-                            backgroundColor: avatarColor,
-                            borderRadius: avatarBorderRadius + '%',
-                            borderWidth: avatarBorderWidth + 'px',
-                            borderColor: avatarBorderColor,
-                            width: avatarSize + 'px',
-                            height: avatarSize + 'px'
-                        }
-                    })
-                ),
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-testimonial-name',
-                        style: { color: nameColor }
-                    },
-                    name
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-position',
-                        style: { color: positionColor }
-                    },
-                    position
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-desc',
-                        style: { color: descColor }
-                    },
-                    desc
-                )
-            ),
-            parseInt(columns) > 1 && React.createElement(
-                'div',
-                { className: 'advgb-testimonial-columns-two' },
-                React.createElement(
-                    'div',
-                    { className: 'advgb-testimonial-avatar-group' },
-                    React.createElement('div', { className: 'advgb-testimonial-avatar',
-                        style: {
-                            backgroundImage: 'url(' + (avatarUrl2 ? avatarUrl2 : advgbBlocks.avatarHolder) + ')',
-                            backgroundColor: avatarColor,
-                            borderRadius: avatarBorderRadius + '%',
-                            borderWidth: avatarBorderWidth + 'px',
-                            borderColor: avatarBorderColor,
-                            width: avatarSize + 'px',
-                            height: avatarSize + 'px'
-                        }
-                    })
-                ),
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-testimonial-name',
-                        style: { color: nameColor }
-                    },
-                    name2
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-position',
-                        style: { color: positionColor }
-                    },
-                    position2
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-desc',
-                        style: { color: descColor }
-                    },
-                    desc2
-                )
-            ),
-            parseInt(columns) > 2 && React.createElement(
-                'div',
-                { className: 'advgb-testimonial-columns-two' },
-                React.createElement(
-                    'div',
-                    { className: 'advgb-testimonial-avatar-group' },
-                    React.createElement('div', { className: 'advgb-testimonial-avatar',
-                        style: {
-                            backgroundImage: 'url(' + (avatarUrl3 ? avatarUrl3 : advgbBlocks.avatarHolder) + ')',
-                            backgroundColor: avatarColor,
-                            borderRadius: avatarBorderRadius + '%',
-                            borderWidth: avatarBorderWidth + 'px',
-                            borderColor: avatarBorderColor,
-                            width: avatarSize + 'px',
-                            height: avatarSize + 'px'
-                        }
-                    })
-                ),
-                React.createElement(
-                    'h4',
-                    { className: 'advgb-testimonial-name',
-                        style: { color: nameColor }
-                    },
-                    name3
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-position',
-                        style: { color: positionColor }
-                    },
-                    position3
-                ),
-                React.createElement(
-                    'p',
-                    { className: 'advgb-testimonial-desc',
-                        style: { color: descColor }
-                    },
-                    desc3
-                )
-            )
-        );
-    }
-
     var testimonialBlockIcon = React.createElement(
         'svg',
         { height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
@@ -12363,8 +12740,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }),
         edit: AdvTestimonial,
-        save: function save(_ref3) {
-            var attributes = _ref3.attributes;
+        save: function save(_ref2) {
+            var attributes = _ref2.attributes;
             var items = attributes.items,
                 sliderView = attributes.sliderView,
                 avatarColor = attributes.avatarColor,
@@ -12440,51 +12817,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     );
                 })
             );
-        },
-        deprecated: [{
-            attributes: blockAttrsOld,
-            migrate: function migrate(attributes) {
-                var convertItems = [];
-                convertItems[0] = {
-                    avatarUrl: attributes.avatarUrl,
-                    avatarID: attributes.avatarID,
-                    name: attributes.name,
-                    position: attributes.position,
-                    desc: attributes.desc
-                };
-
-                convertItems[1] = {
-                    avatarUrl: attributes.avatarUrl2,
-                    avatarID: attributes.avatarID2,
-                    name: attributes.name2,
-                    position: attributes.position2,
-                    desc: attributes.desc2
-                };
-
-                convertItems[2] = {
-                    avatarUrl: attributes.avatarUrl3,
-                    avatarID: attributes.avatarID3,
-                    name: attributes.name3,
-                    position: attributes.position3,
-                    desc: attributes.desc3
-                };
-
-                return _extends({}, attributes, {
-                    items: [].concat(convertItems, _toConsumableArray(times(7, function () {
-                        return {
-                            avatarUrl: advgbBlocks.avatarHolder,
-                            avatarID: undefined,
-                            name: __('Person Name'),
-                            position: __('Job Position'),
-                            desc: __('A little description about this person will show up here.')
-                        };
-                    })))
-                });
-            },
-            save: AdvTestimonialSave
-        }]
+        }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -12510,13 +12845,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
-    var InspectorControls = wpEditor.InspectorControls,
-        BlockControls = wpEditor.BlockControls;
+    var InspectorControls = wpBlockEditor.InspectorControls,
+        BlockControls = wpBlockEditor.BlockControls;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         CheckboxControl = wpComponents.CheckboxControl,
@@ -12989,7 +13324,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.editor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -13035,7 +13370,8 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                         name: blocks[block].name,
                         icon: blocks[block].icon.src,
                         title: blocks[block].title,
-                        category: blocks[block].category
+                        category: blocks[block].category,
+                        parent: blocks[block].parent
                     };
 
                     var savedIcon = !!blocks[block].icon.src ? blocks[block].icon.src : blocks[block].icon;
@@ -13115,9 +13451,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/custom-columns/columns.jsx ./assets/blocks/custom-separator/separator.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13127,12 +13463,12 @@ __webpack_require__(/*! ./assets/blocks/advimage/block.jsx */"./assets/blocks/ad
 __webpack_require__(/*! ./assets/blocks/advlist/block.jsx */"./assets/blocks/advlist/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advtable/block.jsx */"./assets/blocks/advtable/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advvideo/block.jsx */"./assets/blocks/advvideo/block.jsx");
+__webpack_require__(/*! ./assets/blocks/columns/block.jsx */"./assets/blocks/columns/block.jsx");
+__webpack_require__(/*! ./assets/blocks/columns/column.jsx */"./assets/blocks/columns/column.jsx");
 __webpack_require__(/*! ./assets/blocks/contact-form/block.jsx */"./assets/blocks/contact-form/block.jsx");
-__webpack_require__(/*! ./assets/blocks/container/block.jsx */"./assets/blocks/container/block.jsx");
 __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/count-up/block.jsx");
-__webpack_require__(/*! ./assets/blocks/custom-columns/columns.jsx */"./assets/blocks/custom-columns/columns.jsx");
-__webpack_require__(/*! ./assets/blocks/custom-separator/separator.jsx */"./assets/blocks/custom-separator/separator.jsx");
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
+__webpack_require__(/*! ./assets/blocks/editor-sidebar/sidebar.jsx */"./assets/blocks/editor-sidebar/sidebar.jsx");
 __webpack_require__(/*! ./assets/blocks/images-slider/block.jsx */"./assets/blocks/images-slider/block.jsx");
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
 __webpack_require__(/*! ./assets/blocks/newsletter/block.jsx */"./assets/blocks/newsletter/block.jsx");

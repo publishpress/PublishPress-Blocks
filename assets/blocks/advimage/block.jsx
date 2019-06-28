@@ -1,8 +1,8 @@
-(function ( wpI18n, wpBlocks, wpElement, wpEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, RichText, PanelColorSettings, MediaUpload } = wpEditor;
+    const { InspectorControls, BlockControls, RichText, PanelColorSettings, MediaUpload } = wpBlockEditor;
     const { RangeControl, PanelBody, ToggleControl, SelectControl, TextControl, IconButton, Button, Toolbar } = wpComponents;
 
     class AdvImage extends Component {
@@ -350,7 +350,7 @@
             return (
                 <div className={ blockClassName }
                      style={ {
-                         backgroundImage: `url( ${imageUrl})`,
+                         backgroundImage: `url(${imageUrl})`,
                          height: height,
                          width: width,
                          justifyContent: vAlign,
@@ -364,12 +364,16 @@
                        rel="noopener noreferrer"
                        href={ linkURL }
                     />
-                    <h4 className="advgb-image-title" style={ { color: titleColor } }>
-                        {title}
-                    </h4>
-                    <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
-                        {subtitle}
-                    </p>
+                    {title && (
+                        <h4 className="advgb-image-title" style={ { color: titleColor } }>
+                            {title}
+                        </h4>
+                    ) }
+                    {subtitle && (
+                        <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
+                            {subtitle}
+                        </p>
+                    ) }
                 </div>
             );
         },
@@ -414,6 +418,7 @@
                             <a className="advgb-image-overlay"
                                style={ { backgroundColor: overlayColor } }
                                target={ linkInNewTab ? '_blank' : '_self' }
+                               rel="noopener noreferrer"
                                href={ linkURL }
                             />
                             <h4 className="advgb-image-title" style={ { color: titleColor } }>
@@ -428,4 +433,4 @@
             }
         ]
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.editor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

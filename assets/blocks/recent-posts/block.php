@@ -69,6 +69,7 @@ function advgbRenderBlockRecentPosts($attributes)
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
             'category' => empty($attributes['category'])?0:$attributes['category'],
+            'suppress_filters' => false,
         ),
         OBJECT
     );
@@ -260,6 +261,10 @@ function advgbRegisterBlockRecentPosts()
             ),
             'readMoreLbl' => array(
                 'type' => 'string',
+            ),
+            'changed' => array(
+                'type' => 'boolean',
+                'default' => false,
             )
         ),
         'render_callback' => 'advgbRenderBlockRecentPosts',

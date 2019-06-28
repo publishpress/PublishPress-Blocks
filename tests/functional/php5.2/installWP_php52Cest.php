@@ -22,6 +22,6 @@ class installWP_php52Cest
       $I->see('Plugins');
       $I->see('Advanced Gutenberg', 'tr[data-slug="advanced-gutenberg"].inactive td.plugin-title');
       $I->click('tr[data-slug="advanced-gutenberg"] a.edit');
-      $I->see('Advanced Gutenberg needs at least PHP 5.3 version, please update php before installing the plugin.');
+      $I->see('Advanced Gutenberg needs at least PHP 5.6.20 version, please update php before installing the plugin.');
     }
 }

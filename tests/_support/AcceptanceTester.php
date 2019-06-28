@@ -69,4 +69,15 @@ class AcceptanceTester extends \Codeception\Actor
         $I->click($selector);
         $I->wait($wait);
     }
+
+    public function clickViewPost()
+    {
+        $I = $this;
+        try {
+            $I->waitForElementClickable('.components-snackbar a.components-snackbar__action', 1);
+        } catch (Exception $e) {
+            // do stuff
+        }
+        $I->click('View Post');
+    }
 }
