@@ -41,27 +41,36 @@
     "2.0.0": [
       {
         "type": "feature",
-        "title": "New block: Columns Manager"
+        "title": "New block: Columns Manager with predifined sizes"
       },
       {
+        "type": "feature",
+        "title": "Multiple responsive options on the column manager"
+      },
+      {
+        "type": "feature",
+        "title": "New editor menu to choose editor width"
+       },
+       {
+        "type": "feature",
+        "title": "New editor menu to display/hide column visual guides"
+        },
+       {
         "type": "feature",
         "title": "Compatible with Gutenberg v5.9"
-      },
-      {
-        "type": "feature",
-        "title": "New editor sidebar settings"
-      },
-      {
+        },
+     
+        {
         "type": "feature",
         "title": "Drop support for PHP version < 5.6.20"
+        },
+        {
+        "type": "feature",
+        "title": "Remove Container block (replced by column manager)"
       },
       {
         "type": "feature",
-        "title": "Remove Container block"
-      },
-      {
-        "type": "feature",
-        "title": "Completely remove custom columns and custom separator block settings"
+        "title": "Remove custom columns and custom separator block settings"
       },
       {
         "type": "fix",
@@ -73,7 +82,7 @@
       },
       {
         "type": "fix",
-        "title": "Remove empty html element on Map block, Image Slider block, Adv Image block"
+        "title": "Remove empty HTML element on Map block, Image Slider block, Adv Image block"
       }
     ],
     "1.10.12": [
