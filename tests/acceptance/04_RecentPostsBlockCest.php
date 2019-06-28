@@ -19,6 +19,7 @@ class RecentPostsBlockCest
 
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
 
         // Search for Recent Posts block
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Recent Posts');
@@ -37,9 +38,9 @@ class RecentPostsBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
-        $I->seeNumberOfElements('.advgb-recent-post', 8);
+        $I->seeNumberOfElements('.single .advgb-recent-post', 8);
     }
 
     public function changeNumberOfItems(AcceptanceTester $I)
@@ -60,9 +61,9 @@ class RecentPostsBlockCest
         $I->click('Update');
         $I->waitForText('Post updated.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
-        $I->seeNumberOfElements('.advgb-recent-post', 5);
+        $I->seeNumberOfElements('.single .advgb-recent-post', 5);
 
     }
 }

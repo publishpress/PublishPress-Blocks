@@ -31,6 +31,7 @@ class AdvancedTableBlockCest
 
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
 
         // Search for Adv Table block
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Table');
@@ -62,7 +63,7 @@ class AdvancedTableBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
         $I->seeElement('.wp-block-advgb-table.advgb-table-frontend');
         $I->seeNumberOfElements('.advgb-table-frontend td', 16);
@@ -99,7 +100,7 @@ class AdvancedTableBlockCest
         $I->click('Update');
         $I->waitForText('Post updated.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
         $I->waitForElement('.advgb-table-frontend');
 
@@ -167,7 +168,7 @@ class AdvancedTableBlockCest
         $I->click('Update');
         $I->waitForText('Post updated.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
         $I->waitForElementVisible('.advgb-table-frontend', 5);
         $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[3 and contains(@style, "background-color:'.$colors[0].'")]');
@@ -205,7 +206,7 @@ class AdvancedTableBlockCest
         $I->click('Update');
         $I->waitForText('Post updated.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
         $I->seeNumberOfElements('.advgb-table-frontend td', 16);
 
@@ -229,7 +230,7 @@ class AdvancedTableBlockCest
         $I->click('Update');
         $I->waitForText('Post updated.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
         // Check the actual width
         $width = $I->getElementWidth('//*[contains(@class,"advgb-table-frontend")]');
