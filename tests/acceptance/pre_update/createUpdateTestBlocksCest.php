@@ -37,7 +37,7 @@ class createUpdateTestBlocksCest
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
         // Search for Recent Posts block
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Recent Posts');
 
         $I->waitForText('Recent Posts');
@@ -59,7 +59,7 @@ class createUpdateTestBlocksCest
         /***** Create Advanced table *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Table');
 
         $I->waitForText('Advanced Table');
@@ -101,7 +101,7 @@ class createUpdateTestBlocksCest
         /***** Add map *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Map');
 
         $I->waitForText('Map');
@@ -111,7 +111,7 @@ class createUpdateTestBlocksCest
         /***** Add Advanced Image *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Image');
 
         $I->waitForText('Advanced Image');
@@ -134,7 +134,7 @@ class createUpdateTestBlocksCest
         /***** Add advanced button *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Button');
 
         $I->waitForText('Advanced Button');
@@ -146,7 +146,7 @@ class createUpdateTestBlocksCest
         /***** Add Testimonial *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Testimonial');
 
         $I->waitForText('Testimonial');
@@ -197,7 +197,7 @@ class createUpdateTestBlocksCest
         /***** Add Social Links *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Social Links');
 
         $I->waitForText('Social Links');
@@ -217,7 +217,7 @@ class createUpdateTestBlocksCest
         /***** Add Count Up*****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Count Up');
 
         $I->waitForText('Count Up');
@@ -268,7 +268,7 @@ class createUpdateTestBlocksCest
         /***** Add Advanced List *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced List');
 
         $I->waitForText('Advanced List');
@@ -283,7 +283,7 @@ class createUpdateTestBlocksCest
         /***** Add Advanced Video *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Video');
 
         $I->waitForText('Advanced Video');
@@ -297,7 +297,7 @@ class createUpdateTestBlocksCest
         /***** Add Accordion *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Accordion');
 
         $I->waitForText('Accordion');
@@ -310,7 +310,7 @@ class createUpdateTestBlocksCest
         $I->pressKeys(\WebDriverKeys::DOWN);
 
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Accordion');
 
         $I->waitForText('Accordion');
@@ -325,7 +325,7 @@ class createUpdateTestBlocksCest
         /***** Add Tabs *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Tabs');
 
         $I->waitForText('Tabs');
@@ -334,7 +334,7 @@ class createUpdateTestBlocksCest
         /***** Add some heading *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Heading');
 
         $I->waitForText('Heading');
@@ -345,7 +345,7 @@ class createUpdateTestBlocksCest
         $I->wait(0.1);
 
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Heading');
 
         $I->waitForText('Heading');
@@ -358,7 +358,7 @@ class createUpdateTestBlocksCest
 
         /***** Add summary *****/
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Summary');
 
         $I->waitForText('Summary');
@@ -367,7 +367,7 @@ class createUpdateTestBlocksCest
         /***** Add Image slider *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__menu');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Images Slider');
 
         $I->waitForText('Images Slider');

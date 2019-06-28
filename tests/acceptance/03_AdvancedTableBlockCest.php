@@ -31,6 +31,7 @@ class AdvancedTableBlockCest
 
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
 
         // Search for Adv Table block
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Table');

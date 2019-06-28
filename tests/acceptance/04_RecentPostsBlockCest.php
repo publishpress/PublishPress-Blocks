@@ -19,6 +19,7 @@ class RecentPostsBlockCest
 
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
 
         // Search for Recent Posts block
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Recent Posts');

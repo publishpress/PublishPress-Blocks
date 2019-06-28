@@ -37,6 +37,7 @@ class DetectNewBlocksCest
         // Go to new post page
         $I->amOnPage('/wp-admin/post-new.php');
         $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Test');
 
         $I->see("Test block");
