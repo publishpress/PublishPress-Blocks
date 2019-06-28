@@ -82,7 +82,7 @@
       },
       {
         "type": "fix",
-        "title": "Remove empty HEML element on Map block, Image Slider block, Adv Image block"
+        "title": "Remove empty HTML element on Map block, Image Slider block, Adv Image block"
       }
     ],
     "1.10.12": [
