@@ -3804,9 +3804,21 @@ float: left;'
     {
         // Search for needed blocks then add styles to it
         preg_match_all(
-            '/(<!-- wp:advgb\/(list|button|columns)).*?(\/wp:advgb\/(list|button|columns) -->)/mis',
+            '/(<!-- wp:advgb\/(list)).*?(\/wp:advgb\/(list) -->)/mis',
             $content,
-            $matches
+            $lists_matches
+        );
+
+        preg_match_all(
+            '/(<!-- wp:advgb\/(button)).*?(\/wp:advgb\/(button) -->)/mis',
+            $content,
+            $buttons_matches
+        );
+
+        preg_match_all(
+            '/(<!-- wp:advgb\/(columns)).*?(\/wp:advgb\/(columns) -->)/mis',
+            $content,
+            $columns_match
         );
 
         // Style for column
@@ -3816,7 +3828,9 @@ float: left;'
             $column_data
         );
 
-        $content .= $this->addBlocksStyles($matches);
+        $content .= $this->addBlocksStyles($lists_matches);
+        $content .= $this->addBlocksStyles($buttons_matches);
+        $content .= $this->addBlocksStyles($columns_match);
         $content .= $this->addBlocksStyles($column_data);
 
         return $content;
