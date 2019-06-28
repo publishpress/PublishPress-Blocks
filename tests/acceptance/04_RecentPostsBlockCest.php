@@ -37,9 +37,9 @@ class RecentPostsBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
-        $I->seeNumberOfElements('.advgb-recent-post', 8);
+        $I->seeNumberOfElements('.single .advgb-recent-post', 8);
     }
 
     public function changeNumberOfItems(AcceptanceTester $I)
@@ -60,9 +60,9 @@ class RecentPostsBlockCest
         $I->click('Update');
         $I->waitForText('Post updated.');
 
-        $I->click('View Post');
+        $I->clickViewPost();
 
-        $I->seeNumberOfElements('.advgb-recent-post', 5);
+        $I->seeNumberOfElements('.single .advgb-recent-post', 5);
 
     }
 }
