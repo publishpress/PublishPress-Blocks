@@ -32,7 +32,7 @@ class createUpdateTestBlocksCest
         $I->waitForElement('.editor-post-title__input');
         $I->fillField('.editor-post-title__input', 'Update test');
 
-        /***** Create Recent Posts Block *****/
+        /***** Add Recent Posts Block *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 
@@ -56,7 +56,7 @@ class createUpdateTestBlocksCest
         $I->fillField('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()', 5);
 
 
-        /***** Create Advanced table *****/
+        /***** Add Advanced table *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
         $I->waitForElement('.editor-inserter__search');
@@ -398,6 +398,68 @@ class createUpdateTestBlocksCest
         $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Field');
         $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Pectent caecoque semine regio.');
         $I->wait(0.1);
+
+        /***** Add Newsletter *****/
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
+        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Newsletter');
+
+        $I->waitForText('Newsletter');
+        $I->click('Newsletter');
+
+        // Change color to blue
+        $I->click('//span[text()="Text color"]/following-sibling::node()//div[2]');
+
+        // Change background color to white
+        $I->click('//span[text()="Background color"]/following-sibling::node()//div[5]');
+
+        // Change border settings
+        $I->click('//button[text()="Border Settings"]');
+        // Change border color to blue
+        $I->click('//span[text()="Border Color"]');
+        $I->click('//span[text()="Border color"]/following-sibling::node()//div[1]');
+        // Change border radius to 4px
+        $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 4);
+
+        // Change submit button color to white
+        $I->click('//span[text()="Color Settings"]');
+        $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
+        // Change submit button background color to blue
+        $I->click('//span[text()="Background"]/following-sibling::node()//div[1]');
+        // Change submit button border radius to 4px
+        $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
+
+        /***** Add Contact Form *****/
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
+        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Contact Form');
+
+        $I->waitForText('Contact Form');
+        $I->click('Contact Form');
+
+        // Change color to blue
+        $I->click('//span[text()="Text color"]/following-sibling::node()//div[2]');
+
+        // Change background color to white
+        $I->click('//span[text()="Background color"]/following-sibling::node()//div[5]');
+
+        // Change border settings
+        $I->click('//button[text()="Border Settings"]');
+        // Change border color to blue
+        $I->click('//span[text()="Border Color"]');
+        $I->click('//span[text()="Border color"]/following-sibling::node()//div[1]');
+        // Change border radius to 4px
+        $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 4);
+
+        // Change submit button color to white
+        $I->click('//span[text()="Color Settings"]');
+        $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
+        // Change submit button background color to blue
+        $I->click('//span[text()="Background"]/following-sibling::node()//div[1]');
+        // Change submit button border radius to 4px
+        $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
+        // Change button position to center
+        $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
 
         /***** Publish Post *****/
         $I->click('Publish…');
