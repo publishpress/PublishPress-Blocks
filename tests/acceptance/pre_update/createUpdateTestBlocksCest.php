@@ -13,8 +13,9 @@ class createUpdateTestBlocksCest
     {
     }
 
-    public function createUpdateTestBlocks(AcceptanceTester $I)
+    public function prepareNewPost(AcceptanceTester $I)
     {
+        // Login
         $I->loginAsAdmin('admin', 'password');
 
         // Save Google map API Key
@@ -23,15 +24,18 @@ class createUpdateTestBlocksCest
         $I->fillField('//input[@id="google_api_key"]', $map_api_key);
         $I->click('Save');
 
+        // Create new post
         $I->amOnPage('/wp-admin/post-new.php');
-
         // Hide the Tips popup
         $I->executeJS('wp.data.dispatch( \'core/nux\' ).disableTips()');
 
         // Change post title
         $I->waitForElement('.editor-post-title__input');
         $I->fillField('.editor-post-title__input', 'Update test');
+    }
 
+    public function createRecentPostsBlock(AcceptanceTester $I)
+    {
         /***** Add Recent Posts Block *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -54,8 +58,10 @@ class createUpdateTestBlocksCest
 
         $I->waitForElement('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()', 5);
+    }
 
-
+    public function createTableBlock(AcceptanceTester $I)
+    {
         /***** Add Advanced table *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -97,17 +103,10 @@ class createUpdateTestBlocksCest
         // Set only right border
         $I->click('//div[@class="advgb-border-item-wrapper"]/div[last()]');
         $I->click('//div[@class="advgb-border-item-wrapper"]/div[2]');
+    }
 
-        /***** Add map *****/
-        // Click on + button
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__search');
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Map');
-
-        $I->waitForText('Map');
-        $I->click('Map');
-        // todo: modify some content here
-
+    public function createAdvImageBlock(AcceptanceTester $I)
+    {
         /***** Add Advanced Image *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -130,7 +129,23 @@ class createUpdateTestBlocksCest
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
         $I->click('Select');
+    }
 
+    public function createMapBlock(AcceptanceTester $I)
+    {
+        /***** Add map *****/
+        // Click on + button
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
+        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Map');
+
+        $I->waitForText('Map');
+        $I->click('Map');
+        // todo: modify some content here
+    }
+
+    public function createAdvButtonBlock(AcceptanceTester $I)
+    {
         /***** Add advanced button *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -142,7 +157,10 @@ class createUpdateTestBlocksCest
 
         $I->waitForElement('//div[contains(@class, "wp-block-advgb-button_link")]');
         $I->pressKeys('My button');
+    }
 
+    public function createTestimonialBlock(AcceptanceTester $I)
+    {
         /***** Add Testimonial *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -193,7 +211,48 @@ class createUpdateTestBlocksCest
         $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][2]//p[contains(@class, "advgb-testimonial-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Orbe lanient quoque evolvit manebat. Figuras possedit siccis. Ut animalibus ventos terris deorum eurus.');
+    }
 
+    public function createImagesSliderBlock(AcceptanceTester $I)
+    {
+        /***** Add Image slider *****/
+        // Click on + button
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->waitForElement('.editor-inserter__search');
+        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Images Slider');
+
+        $I->waitForText('Images Slider');
+        $I->click('Images Slider');
+
+        $I->waitForText('Add images');
+        $I->click('Add images');
+
+        $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');
+        $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');
+        $I->clickAndWait('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
+        $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Vineyard');
+        $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Effervescere proxima habitandae nullo titan.');
+
+        $I->click('//div[@class="advgb-image-slider-add-item"]//button');
+        $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="road"]');
+        $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="road"]');
+        $I->clickAndWait('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
+        $I->clickAndWait('//div[contains(@class, "advgb-image-slider-image-list-item")][2]');
+        $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Road');
+        $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Utramque locoque summaque congestaque.');
+
+        $I->click('//div[@class="advgb-image-slider-add-item"]//button');
+        $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="field"]');
+        $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="field"]');
+        $I->clickAndWait('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
+        $I->clickAndWait('//div[contains(@class, "advgb-image-slider-image-list-item")][3]');
+        $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Field');
+        $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Pectent caecoque semine regio.');
+        $I->wait(0.1);
+    }
+
+    public function createSocialLinksBlock(AcceptanceTester $I)
+    {
         /***** Add Social Links *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -213,7 +272,10 @@ class createUpdateTestBlocksCest
         $I->fillField('//button[text()="Preset Icons"]/ancestor::node()[1]/following-sibling::node()//input', 'Twitter');
         $I->waitForElement('//div[@class="advgb-icon-items-wrapper"]//div[@class="advgb-icon-item"]/span');
         $I->click('//div[@class="advgb-icon-items-wrapper"]//div[@class="advgb-icon-item"]/span');
+    }
 
+    public function createCountUpBlock(AcceptanceTester $I)
+    {
         /***** Add Count Up*****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -264,7 +326,10 @@ class createUpdateTestBlocksCest
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[3]//div');
         $I->selectCurrentElementText();
         $I->pressKeys(\WebDriverKeys::DELETE);
+    }
 
+    public function createAdvListBlock(AcceptanceTester $I)
+    {
         /***** Add Advanced List *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -278,8 +343,10 @@ class createUpdateTestBlocksCest
 
         $I->waitForElement('//div[@class="advgb-icon-items-wrapper"]//div[contains(@class, "advgb-icon-item")][4]/span');
         $I->click('//div[@class="advgb-icon-items-wrapper"]//div[contains(@class, "advgb-icon-item")][4]/span');
+    }
 
-
+    public function createAdvVideoBlock(AcceptanceTester $I)
+    {
         /***** Add Advanced Video *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -293,7 +360,10 @@ class createUpdateTestBlocksCest
         $I->click('Fetch');
 
         $I->waitForElement('//div[@class="advgb-current-video-desc"]//span[@title="vimeo"]');
+    }
 
+    public function createAccordionBlock(AcceptanceTester $I)
+    {
         /***** Add Accordion *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -321,7 +391,10 @@ class createUpdateTestBlocksCest
         $I->pressKeys('Dextra galeae moles. Erat: ponderibus valles circumdare tuti sic? Orbis limitibus recens titan inmensa extendi valles nisi aera.');
 
         $I->pressKeys(\WebDriverKeys::DOWN);
+    }
 
+    public function createTabsBlock(AcceptanceTester $I)
+    {
         /***** Add Tabs *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -330,7 +403,10 @@ class createUpdateTestBlocksCest
 
         $I->waitForText('Tabs');
         $I->click('Tabs');
+    }
 
+    public function createSummaryBlock(AcceptanceTester $I)
+    {
         /***** Add some heading *****/
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
@@ -355,7 +431,6 @@ class createUpdateTestBlocksCest
         $I->pressKeys('your father');
         $I->click('//p[text()="Level"]/following-sibling::node()//div[3]');
 
-
         /***** Add summary *****/
         $I->click('.edit-post-header-toolbar .editor-inserter button');
         $I->waitForElement('.editor-inserter__search');
@@ -363,42 +438,10 @@ class createUpdateTestBlocksCest
 
         $I->waitForText('Summary');
         $I->click('Summary');
+    }
 
-        /***** Add Image slider *****/
-        // Click on + button
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__search');
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Images Slider');
-
-        $I->waitForText('Images Slider');
-        $I->click('Images Slider');
-
-        $I->waitForText('Add images');
-        $I->click('Add images');
-
-        $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');
-        $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');
-        $I->clickAndWait('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
-        $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Vineyard');
-        $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Effervescere proxima habitandae nullo titan.');
-
-        $I->click('//div[@class="advgb-image-slider-add-item"]//button');
-        $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="road"]');
-        $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="road"]');
-        $I->clickAndWait('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
-        $I->clickAndWait('//div[contains(@class, "advgb-image-slider-image-list-item")][2]');
-        $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Road');
-        $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Utramque locoque summaque congestaque.');
-
-        $I->click('//div[@class="advgb-image-slider-add-item"]//button');
-        $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="field"]');
-        $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="field"]');
-        $I->clickAndWait('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
-        $I->clickAndWait('//div[contains(@class, "advgb-image-slider-image-list-item")][3]');
-        $I->fillField('//div[@class="advgb-image-slider-control"]//input', 'Field');
-        $I->fillField('//div[@class="advgb-image-slider-control"][2]//textarea', 'Pectent caecoque semine regio.');
-        $I->wait(0.1);
-
+    public function createNewsletterBlock(AcceptanceTester $I)
+    {
         /***** Add Newsletter *****/
         $I->click('.edit-post-header-toolbar .editor-inserter button');
         $I->waitForElement('.editor-inserter__search');
@@ -428,7 +471,10 @@ class createUpdateTestBlocksCest
         $I->click('//span[text()="Background"]/following-sibling::node()//div[1]');
         // Change submit button border radius to 4px
         $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
+    }
 
+    public function createContactFormBlock(AcceptanceTester $I)
+    {
         /***** Add Contact Form *****/
         $I->click('.edit-post-header-toolbar .editor-inserter button');
         $I->waitForElement('.editor-inserter__search');
@@ -460,7 +506,10 @@ class createUpdateTestBlocksCest
         $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
         // Change button position to center
         $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
+    }
 
+    public function publishPost(AcceptanceTester $I)
+    {
         /***** Publish Post *****/
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
