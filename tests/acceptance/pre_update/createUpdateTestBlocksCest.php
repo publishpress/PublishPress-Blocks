@@ -326,6 +326,13 @@ class createUpdateTestBlocksCest
         // todo: Modify some content here
     }
 
+    public function createProductsBlock(AcceptanceTester $I)
+    {
+        /***** Add Woo Products *****/
+        $I->insertBlock('Woo Products');
+        // todo: Modify some content here
+    }
+
     public function createSummaryBlock(AcceptanceTester $I)
     {
         /***** Add some heading *****/
