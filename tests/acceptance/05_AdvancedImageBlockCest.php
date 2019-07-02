@@ -51,4 +51,35 @@ class AdvancedImageBlockCest
 
         $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@data-image, "galaxy.jpg")]');
     }
+
+    public function changeWidthHeight(AcceptanceTester $I)
+    {
+        $I->wantTo('Change image width and height');
+
+        // Back to edit post
+        $I->click('Edit Post');
+        $I->waitForElement('#editor');
+        $I->waitForElement('.advgb-image-block');
+        $I->clickWithLeftButton('//*[@class="advgb-image-block"]');
+
+        // Change block width
+        $I->waitForElementVisible('//label[text()="Width"]/following-sibling::node()/following-sibling::node()');
+        $I->fillField('//label[text()="Width"]/following-sibling::node()/following-sibling::node()', 700);
+
+        // Change block height
+        $I->fillField('//label[text()="Height"]/following-sibling::node()/following-sibling::node()', 650);
+
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+
+        // Check the actual width
+        $width = $I->getElementWidth('//*[contains(@class,"wp-block-advgb-image")]');
+        $I->assertEquals(700, $width);
+
+        // Check the actual height
+        $height = $I->getElementHeight('//*[contains(@class,"wp-block-advgb-image")]');
+        $I->assertEquals(650, $height);
+    }
 }
