@@ -14,11 +14,14 @@ function prepare_tests () {
         cd /var/www/html/;
 
         #Create dummy posts and affect them the Recent post category
+        echo "Create dummy posts"
         wp term create category "Recent posts" --description="Test category for Recent Post blocks" --porcelain --slug="recent_posts" --allow-root  2>/dev/null;
         wp post generate --count=10 --format=ids --allow-root 2>/dev/null | xargs -d " " -I {} wp post term set {} category recent_posts --by=slug --allow-root 2>/dev/null;
 
         # Create woocommerce products
+        echo "Install WooCommerce plugin"
         wp plugin install --allow-root woocommerce --activate --force 2>/dev/null ;
+        echo "Create sample products"
         wp wc product create --name="Test Product 1" --type=simple --sku=WCCLITESTP1 --regular_price=20 --user=admin --allow-root
         wp wc product create --name="Test Product 2" --type=simple --sku=WCCLITESTP2 --regular_price=30 --user=admin --allow-root
 
