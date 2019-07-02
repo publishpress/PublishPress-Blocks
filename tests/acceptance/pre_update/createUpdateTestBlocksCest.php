@@ -403,6 +403,66 @@ class createUpdateTestBlocksCest
         $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
     }
 
+    public function createColumnsBlock(AcceptanceTester $I)
+    {
+        /***** Add Columns block *****/
+        $I->insertBlock('Columns Manager');
+
+        // Choose layout 3 columns
+        $I->waitForText('Pickup a columns layout');
+        $I->click('//div[contains(@class, "advgb-columns-select-layout")]/div[contains(@class, "advgb-columns-layout")][9]');
+
+        // Insert content to column 1
+        try {
+            $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:first-child .block-list-appender');
+            $I->waitForElement('.editor-inserter__search');
+            // Insert paragraph block
+            $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
+            $I->waitForText('Paragraph');
+            $I->click('Paragraph');
+        } catch (Exception $e) {
+            // not latest gutenberg
+        }
+
+        $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:first-child .advgb-column .wp-block-paragraph');
+        $I->selectCurrentElementText();
+        $I->pressKeys("First column text");
+
+        // Insert content to column 2
+        try {
+            $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:nth-child(2)');
+            $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:nth-child(2) .block-list-appender');
+            $I->waitForElement('.editor-inserter__search');
+            // Insert paragraph block
+            $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
+            $I->waitForText('Paragraph');
+            $I->click('Paragraph');
+        } catch (Exception $e) {
+            // not latest gutenberg
+        }
+
+        $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:nth-child(2) .advgb-column .wp-block-paragraph');
+        $I->selectCurrentElementText();
+        $I->pressKeys("Second column text");
+
+        // Insert content to column 3
+        try {
+            $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child');
+            $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child .block-list-appender');
+            $I->waitForElement('.editor-inserter__search');
+            // Insert paragraph block
+            $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
+            $I->waitForText('Paragraph');
+            $I->click('Paragraph');
+        } catch (Exception $e) {
+            // not latest gutenberg
+        }
+
+        $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child .advgb-column .wp-block-paragraph');
+        $I->selectCurrentElementText();
+        $I->pressKeys("Third column text");
+    }
+
     public function publishPost(AcceptanceTester $I)
     {
         /***** Publish Post *****/
