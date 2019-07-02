@@ -29,15 +29,8 @@ class AdvancedTableBlockCest
 
         $I->fillField('.editor-post-title__input', 'Advanced Table Block');
 
-        // Click on + button
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__search');
-
-        // Search for Adv Table block
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Advanced Table');
-
-        $I->waitForText('Advanced Table');
-        $I->click('Advanced Table');
+        // Insert block
+        $I->insertBlock('Advanced Table');
 
         $I->waitForElement('//*[@class="advgb-init-table"]//label[text()="Column Count"]/following-sibling::node()');
         $I->fillField('//*[@class="advgb-init-table"]//label[text()="Column Count"]/following-sibling::node()', 4);
