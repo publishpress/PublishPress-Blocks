@@ -92,4 +92,29 @@ class MapBlockCest
         // Check location
         $I->seeElement('//div[@class="advgb-map-content"][@data-lat="'.$lat.'"][@data-lng="'.$lng.'"]/div');
     }
+
+    public function changeMapHeightAndZoom(AcceptanceTester $I)
+    {
+        $I->wantTo('Change height and zoom level of the map');
+        $zoom = 12;
+        $height = 500;
+
+        // Change height
+        $I->fillField('//label[text()="Zoom level"]/following-sibling::node()/following-sibling::node()', $zoom);
+        $I->fillField('//label[text()="Height"]/following-sibling::node()/following-sibling::node()', $height);
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-map');
+
+        // Check zoom level
+        $I->seeElement('//div[@class="advgb-map-content"][@data-zoom="'.$zoom.'"]/div');
+
+        // Check height
+        $eHeight = $I->getElementHeight('//div[@class="advgb-map-content"]');
+        $I->assertEquals($eHeight, $height);
+    }
 }
