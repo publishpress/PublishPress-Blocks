@@ -4,6 +4,15 @@ class AdvancedImageBlockCest
 {
     public function _before(AcceptanceTester $I)
     {
+        try {
+            // Back to edit post
+            $I->click('Edit Post');
+            $I->waitForElement('#editor');
+            $I->waitForElement('.advgb-image-block');
+            $I->clickWithLeftButton('//*[@class="advgb-image-block"]');
+        } catch(Exception $e) {
+            // do stuff
+        }
     }
 
     public function _after(AcceptanceTester $I)
@@ -56,12 +65,6 @@ class AdvancedImageBlockCest
     {
         $I->wantTo('Change image width and height');
 
-        // Back to edit post
-        $I->click('Edit Post');
-        $I->waitForElement('#editor');
-        $I->waitForElement('.advgb-image-block');
-        $I->clickWithLeftButton('//*[@class="advgb-image-block"]');
-
         // Change block width
         $I->waitForElementVisible('//label[text()="Width"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Width"]/following-sibling::node()/following-sibling::node()', 700);
@@ -87,12 +90,6 @@ class AdvancedImageBlockCest
     {
         $I->wantTo('Change image block color');
         $colors = array('#2196f3', '#ff0000', '#ffff00');
-
-        // Back to edit post
-        $I->click('Edit Post');
-        $I->waitForElement('#editor');
-        $I->waitForElement('.advgb-image-block');
-        $I->clickWithLeftButton('//*[@class="advgb-image-block"]');
 
         // Change color
         $I->click('//button[contains(@class, "components-panel__body-toggle")]/span[text()="Color Settings"]');
@@ -137,12 +134,6 @@ class AdvancedImageBlockCest
     public function changeTextPosition(AcceptanceTester $I)
     {
         $I->wantTo('Change image text position');
-
-        // Back to edit post
-        $I->click('Edit Post');
-        $I->waitForElement('#editor');
-        $I->waitForElement('.advgb-image-block');
-        $I->clickWithLeftButton('//*[@class="advgb-image-block"]');
 
         // Change text position
         $I->click('//button[contains(@class, "components-panel__body-toggle")][text()="Text Alignment"]');
