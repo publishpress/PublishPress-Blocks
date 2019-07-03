@@ -48,4 +48,48 @@ class MapBlockCest
         // Check map block exist and loaded
         $I->seeElement('//div[contains(@class, "wp-block-advgb-map")]/div[@class="advgb-map-content"]/div');
     }
+
+    public function changeMapLocationUsingAddress(AcceptanceTester $I)
+    {
+        $I->wantTo('Change location of map marker using address');
+
+        // Change location using address input
+        $I->fillField('//label[text()="Address"]/following-sibling::node()', 'Hanoi');
+        $I->click('//button[text()="Fetch Location"]');
+        $I->waitForText('Hanoi, Vietnam');
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-map');
+
+        // Check location
+        $I->seeElement('//div[@class="advgb-map-content"][@data-lat="21.0277644"][@data-lng="105.83415979999995"]/div');
+    }
+
+    public function changeMapLocationUsingLatLng(AcceptanceTester $I)
+    {
+        $I->wantTo('Change location of map marker using lat/lng');
+        // Statue of Liberty address
+        $lat = '40.6892494';
+        $lng = '-74.0445004';
+
+        // Change location using address input
+        $I->click('Use Lat/Lng');
+        $I->waitForElement('//input[@title="Latitude"]');
+        $I->fillField('//input[@title="Latitude"]', $lat);
+        $I->fillField('//input[@title="Longitude"]', $lng);
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-map');
+
+        // Check location
+        $I->seeElement('//div[@class="advgb-map-content"][@data-lat="'.$lat.'"][@data-lng="'.$lng.'"]/div');
+    }
 }
