@@ -82,4 +82,55 @@ class AdvancedImageBlockCest
         $height = $I->getElementHeight('//*[contains(@class,"wp-block-advgb-image")]');
         $I->assertEquals(650, $height);
     }
+
+    public function changeColor(AcceptanceTester $I)
+    {
+        $I->wantTo('Change image block color');
+        $colors = array('#2196f3', '#ff0000', '#ffff00');
+
+        // Back to edit post
+        $I->click('Edit Post');
+        $I->waitForElement('#editor');
+        $I->waitForElement('.advgb-image-block');
+        $I->clickWithLeftButton('//*[@class="advgb-image-block"]');
+
+        // Change color
+        $I->click('//button[contains(@class, "components-panel__body-toggle")]/span[text()="Color Settings"]');
+
+        // Change title color
+        $I->clickAndWait('//span[text()="Title Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($colors[0]);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//*[@class="advgb-image-block"]'); // click block to hide picker
+
+        // Change subtitle color
+        $I->clickAndWait('//span[text()="Subtitle Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($colors[1]);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//*[@class="advgb-image-block"]'); // click block to hide picker
+
+        // Change overlay color
+        $I->clickAndWait('//span[text()="Overlay Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($colors[2]);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//*[@class="advgb-image-block"]'); // click block to hide picker
+
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+
+        $I->waitForElementVisible('.wp-block-advgb-image');
+
+        // Check for colors applied
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-image")]//h4[@class="advgb-image-title"][contains(@style, "color:'.$colors[0].'")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-image")]//p[@class="advgb-image-subtitle"][contains(@style, "color:'.$colors[1].'")]');
+        $I->seeElementInDOM('//div[contains(@class, "wp-block-advgb-image")]//a[@class="advgb-image-overlay"][contains(@style, "background-color:'.$colors[2].'")]');
+    }
 }
