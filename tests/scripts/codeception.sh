@@ -7,6 +7,9 @@
 
 # Prepare container for all the tests, this function will only be run once at first
 function prepare_tests () {
+    # Send images needed for tests
+    sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 tests/_data/wp_cli_images root@$WWW_IP:/tmp/
+
     sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP << EOF
         # Set php cli to 7.2 to prevent wp-cli errors
         update-alternatives --set php /usr/bin/php7.2
@@ -14,16 +17,21 @@ function prepare_tests () {
         cd /var/www/html/;
 
         #Create dummy posts and affect them the Recent post category
-        echo "Create dummy posts"
+        echo -e "\e[92mCreate dummy posts\e[0m"
         wp term create category "Recent posts" --description="Test category for Recent Post blocks" --porcelain --slug="recent_posts" --allow-root  2>/dev/null;
         wp post generate --count=10 --format=ids --allow-root 2>/dev/null | xargs -d " " -I {} wp post term set {} category recent_posts --by=slug --allow-root 2>/dev/null;
 
         # Create woocommerce products
-        echo "Install WooCommerce plugin"
+        echo -e "\e[92mInstall WooCommerce plugin\e[0m"
         wp plugin install --allow-root woocommerce --activate --force 2>/dev/null ;
-        echo "Create sample products"
+
+        echo -e "\e[92mCreate sample products\e[0m"
         wp wc product create --name="Test Product 1" --type=simple --sku=WCCLITESTP1 --regular_price=20 --user=admin --allow-root
         wp wc product create --name="Test Product 2" --type=simple --sku=WCCLITESTP2 --regular_price=30 --user=admin --allow-root
+
+        # Import medias
+        echo -e "\e[92mImport sample images\e[0m"
+        wp media import --allow-root /tmp/wp_cli_images/*
 
         # Remove woocommerce admin notices
         mysql --host ${MYSQL_IP} -e "UPDATE wp_options SET option_value=\"a:0:{}\" WHERE option_name=\"woocommerce_admin_notices\"" wordpress
@@ -75,23 +83,21 @@ function do_install_tests () {
     codecept run functional --skip-group php5.2 --skip-group php5.5 --env=$DOCKER_ENV --fail-fast
 }
 
-function prepare_update_tests() {
-    # Send images needed for tests
-    sshpass -p 'password' scp -q -r -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 2222 tests/_data/wp_cli_images root@$WWW_IP:/tmp/
-
+function init_settings_tests() {
     # Install Advanced Gutenberg plugin from WP Repository
     sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP << EOF
             cd /var/www/html/;
             wp plugin install --allow-root advanced-gutenberg --activate --force 2>/dev/null ;
-
-            # Import medias
-            wp media import --allow-root /tmp/wp_cli_images/*
 
             # Activate Woocomerce and remove notices
             wp plugin activate --allow-root woocommerce 2>/dev/null || true;
             mysql --host ${MYSQL_IP} -e "UPDATE wp_options SET option_value=\"a:0:{}\" WHERE option_name=\"woocommerce_admin_notices\"" wordpress
 EOF
 
+    codecept run acceptance -g init_settings --env=$DOCKER_ENV --fail-fast
+}
+
+function prepare_update_tests() {
     # It's not actual tests but preparation for upcoming tests
     codecept run acceptance -g pre_update --env=$DOCKER_ENV --fail-fast
 }
@@ -101,7 +107,7 @@ function do_update_tests () {
 }
 
 function do_general_tests () {
-    codecept run acceptance --skip-group php5.2 --skip-group php5.5 --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast
+    codecept run acceptance --skip-group php5.2 --skip-group php5.5 --skip-group init_settings --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast
 
     check_php_errors
 }
@@ -146,10 +152,11 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
         copy_plugin_to_www
         codecept run functional -g php5.5 --env=$DOCKER_ENV --fail-fast
     elif [[ "$INSTALL_TYPE" = "install" ]]; then
+        init_settings_tests
         copy_plugin_to_www
-        do_install_tests
         do_general_tests
     elif [[ "$INSTALL_TYPE" = "update" ]]; then
+        init_settings_tests
         prepare_update_tests
         copy_plugin_to_www
         do_update_tests
