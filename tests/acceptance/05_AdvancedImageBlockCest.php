@@ -133,4 +133,31 @@ class AdvancedImageBlockCest
         $I->seeElement('//div[contains(@class, "wp-block-advgb-image")]//p[@class="advgb-image-subtitle"][contains(@style, "color:'.$colors[1].'")]');
         $I->seeElementInDOM('//div[contains(@class, "wp-block-advgb-image")]//a[@class="advgb-image-overlay"][contains(@style, "background-color:'.$colors[2].'")]');
     }
+
+    public function changeTextPosition(AcceptanceTester $I)
+    {
+        $I->wantTo('Change image text position');
+
+        // Back to edit post
+        $I->click('Edit Post');
+        $I->waitForElement('#editor');
+        $I->waitForElement('.advgb-image-block');
+        $I->clickWithLeftButton('//*[@class="advgb-image-block"]');
+
+        // Change text position
+        $I->click('//button[contains(@class, "components-panel__body-toggle")][text()="Text Alignment"]');
+        $I->selectOption('//label[text()="Vertical Alignment"]/following-sibling::node()', array('text' => 'Bottom'));
+        $I->selectOption('//label[text()="Horizontal Alignment"]/following-sibling::node()', array('text' => 'Left'));
+
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+
+        $I->waitForElementVisible('.wp-block-advgb-image');
+
+        // Check text position
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@style, "justify-content:flex-end")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@style, "align-items:flex-start")]');
+    }
 }
