@@ -21,13 +21,13 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Create edition profiles and assign user or user group to the profile
 - Select each block activation per user profile
 - Default block configuration (Advanced Gutenberg blocks)
-- Define Advanced Gutenberg icons block color
-- Custom CSS styles: create and apply on paragraph blocks
-- Define Gutenberg editor size(admin edition)
+- Custom CSS styles: apply on Gutenbergparagraph blocks
+- Define Gutenberg editor size and column materialization
 
 
 ## ADVANCED GUTENBERG SPECIAL BLOCKS
 
+- Column manager with pre-defined layouts
 - Latest post slider and latest post slider
 - Latest WooCommerce product slider and latest product slider
 - Advanced Button block: create button with tons of styles
