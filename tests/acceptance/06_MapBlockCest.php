@@ -117,4 +117,28 @@ class MapBlockCest
         $eHeight = $I->getElementHeight('//div[@class="advgb-map-content"]');
         $I->assertEquals($eHeight, $height);
     }
+
+    public function changeMarkerIcon(AcceptanceTester $I)
+    {
+        $I->wantTo('Change map marker icon');
+
+        // Change map marker icon
+        $I->click('Choose icon');
+        $I->click('Media Library');
+        $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
+        $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
+        $I->click('Select');
+
+        $I->wait(0.5);
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-map');
+
+        // Check marker icon
+        $I->seeElement('//div[@class="advgb-map-content"][contains(@data-icon, "marker.png")]/div');
+    }
 }
