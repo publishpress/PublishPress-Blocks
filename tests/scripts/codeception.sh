@@ -158,8 +158,8 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
         codecept run functional -g php5.5 --env=$DOCKER_ENV --fail-fast
     elif [[ "$INSTALL_TYPE" = "install" ]]; then
         copy_plugin_to_www
-        init_settings_tests
         do_install_tests
+        init_settings_tests
         do_general_tests
     elif [[ "$INSTALL_TYPE" = "update" ]]; then
         prepare_update_tests
