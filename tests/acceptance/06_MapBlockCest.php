@@ -141,4 +141,26 @@ class MapBlockCest
         // Check marker icon
         $I->seeElement('//div[@class="advgb-map-content"][contains(@data-icon, "marker.png")]/div');
     }
+
+    public function changeMarkerText(AcceptanceTester $I) {
+        $I->wantTo('Change map marker title and description');
+
+        // Change title
+        $title = 'Statue of Liberty';
+        $I->fillField('//label[text()="Marker Title"]/following-sibling::node()', $title);
+
+        // Change description
+        $desc = 'The symbol of USA';
+        $I->fillField('//label[text()="Marker description"]/following-sibling::node()', $desc);
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-map');
+
+        // Check marker text
+        $I->seeElement('//div[@class="advgb-map-content"][@data-title="'.$title.'"][@data-desc="'.$desc.'"]/div');
+    }
 }
