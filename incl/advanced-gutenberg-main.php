@@ -3828,10 +3828,21 @@ float: left;'
             $column_data
         );
 
-        $content .= $this->addBlocksStyles($lists_matches);
-        $content .= $this->addBlocksStyles($buttons_matches);
-        $content .= $this->addBlocksStyles($columns_match);
-        $content .= $this->addBlocksStyles($column_data);
+        if (!empty($lists_matches[0])) {
+            $content .= $this->addBlocksStyles($lists_matches);
+        }
+
+        if (!empty($buttons_matches[0])) {
+            $content .= $this->addBlocksStyles($buttons_matches);
+        }
+
+        if (!empty($columns_match[0])) {
+            $content .= $this->addBlocksStyles($columns_match);
+        }
+
+        if (!empty($column_data[0])) {
+            $content .= $this->addBlocksStyles($column_data);
+        }
 
         return $content;
     }
