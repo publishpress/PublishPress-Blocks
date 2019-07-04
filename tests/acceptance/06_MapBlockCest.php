@@ -163,4 +163,21 @@ class MapBlockCest
         // Check marker text
         $I->seeElement('//div[@class="advgb-map-content"][@data-title="'.$title.'"][@data-desc="'.$desc.'"]/div');
     }
+
+    public function changeMapStyle(AcceptanceTester $I) {
+        $I->wantTo('Change map color style');
+
+        // Change color style
+        $I->selectOption('//label[text()="Map styles"]/following-sibling::node()', array('text' => 'Night'));
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-map');
+
+        // Check map color
+        $I->seeElement('//div[@class="advgb-map-content"][contains(@data-style, "242f3e")]/div');
+    }
 }
