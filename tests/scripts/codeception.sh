@@ -84,6 +84,10 @@ function do_install_tests () {
 }
 
 function init_settings_tests() {
+    codecept run acceptance -g init_settings --env=$DOCKER_ENV --fail-fast
+}
+
+function prepare_update_tests() {
     # Install Advanced Gutenberg plugin from WP Repository
     sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP << EOF
             cd /var/www/html/;
@@ -94,10 +98,6 @@ function init_settings_tests() {
             mysql --host ${MYSQL_IP} -e "UPDATE wp_options SET option_value=\"a:0:{}\" WHERE option_name=\"woocommerce_admin_notices\"" wordpress
 EOF
 
-    codecept run acceptance -g init_settings --env=$DOCKER_ENV --fail-fast
-}
-
-function prepare_update_tests() {
     # It's not actual tests but preparation for upcoming tests
     codecept run acceptance -g pre_update --env=$DOCKER_ENV --fail-fast
 }
@@ -119,7 +119,7 @@ function copy_plugin_to_www () {
     sshpass -p 'password' ssh -q -o PreferredAuthentications=password -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -a -p 2222 root@$WWW_IP "chown -Rh www-data:www-data /var/www/html/wp-content/plugins/advanced-gutenberg"
 }
 
-prepare_tests
+PREPARED=0
 
 for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
     # Export php version so codeception can get it through env variables
@@ -128,6 +128,11 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
     EXCLUDE_PHP=("5.2" "5.3" "5.4" "5.5")
     if [[ " ${EXCLUDE_PHP[*]} " == *"$PHP_VERSION"* && $WP_VERSION == "latest" ]]; then
         continue
+    fi
+
+    if [[ " ${EXCLUDE_PHP[*]} " != *"$PHP_VERSION"* && $PREPARED == 0 ]]; then
+        prepare_tests
+        PREPARED=1
     fi
 
     if [[ $GUTENBERG_TYPE = "plugin" ]]; then
@@ -152,11 +157,11 @@ for PHP_VERSION in "${PHP_VERSIONS[@]}"; do
         copy_plugin_to_www
         codecept run functional -g php5.5 --env=$DOCKER_ENV --fail-fast
     elif [[ "$INSTALL_TYPE" = "install" ]]; then
-        init_settings_tests
         copy_plugin_to_www
+        init_settings_tests
+        do_install_tests
         do_general_tests
     elif [[ "$INSTALL_TYPE" = "update" ]]; then
-        init_settings_tests
         prepare_update_tests
         copy_plugin_to_www
         do_update_tests
