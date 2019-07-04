@@ -51,7 +51,7 @@ class MapBlockCest
 
     public function changeMapLocationUsingAddress(AcceptanceTester $I)
     {
-        $I->wantTo('Change location of map marker using address');
+        $I->wantTo('Change location using address');
 
         // Change location using address input
         $I->fillField('//label[text()="Address"]/following-sibling::node()', 'Hanoi');
@@ -71,7 +71,7 @@ class MapBlockCest
 
     public function changeMapLocationUsingLatLng(AcceptanceTester $I)
     {
-        $I->wantTo('Change location of map marker using lat/lng');
+        $I->wantTo('Change location using lat/lng');
         // Statue of Liberty address
         $lat = '40.6892494';
         $lng = '-74.0445004';
