@@ -83,7 +83,7 @@ pipelines:
         services:
         - chromedriver
         - mysql
-        - wordpress50
+        - wordpress51
     codeception_51_update:
     - step: &shared_codeception_51_plugin_update
         name: CC WP 5.1 plugin update
@@ -97,7 +97,7 @@ pipelines:
         services:
         - chromedriver
         - mysql
-        - wordpress50
+        - wordpress51
     codeception_51_core_install:
       - step: &shared_codeception_51_core_install
           name: CC WP 5.1 core install
@@ -111,7 +111,7 @@ pipelines:
           services:
             - chromedriver
             - mysql
-            - wordpress50
+            - wordpress51
     codeception_51_core_update:
       - step: &shared_codeception_51_core_update
           name: CC WP 5.1 core update
@@ -125,7 +125,7 @@ pipelines:
           services:
             - chromedriver
             - mysql
-            - wordpress50
+            - wordpress51
     generate_package:
     - step: &shared_generate_package
         name: Create package
@@ -197,5 +197,5 @@ definitions:
         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     wordpress:
       image: joomunited/wordpress_cgi:latest
-    wordpress50:
-      image: joomunited/wordpress_cgi:5.0
+    wordpress51:
+      image: joomunited/wordpress_cgi:5.1
