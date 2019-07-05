@@ -107,7 +107,7 @@ function do_update_tests () {
 }
 
 function do_general_tests () {
-    codecept run acceptance --skip-group php5.2 --skip-group php5.5 --skip-group init_settings --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast --steps
+    codecept run acceptance --skip-group php5.2 --skip-group php5.5 --skip-group init_settings --skip-group pre_update --skip-group update --env=$DOCKER_ENV --fail-fast
 
     check_php_errors
 }
