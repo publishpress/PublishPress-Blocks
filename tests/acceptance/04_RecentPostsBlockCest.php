@@ -40,6 +40,7 @@ class RecentPostsBlockCest
 
         $I->clickViewPost();
 
+        $I->waitForElement('body.single');
         $I->seeNumberOfElements('.single .advgb-recent-post', 8);
     }
 
@@ -63,7 +64,7 @@ class RecentPostsBlockCest
 
         $I->clickViewPost();
 
+        $I->waitForElement('body.single');
         $I->seeNumberOfElements('.single .advgb-recent-post', 5);
-
     }
 }
