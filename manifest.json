@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "platform": "wordpress",
   "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,22 @@
     ]
   },
   "changelog": {
+    "2.0.2": [
+      {
+        "type": "fix",
+        "title": "Blocks not loaded on WP version < 5.2 without Gutenberg plugin"
+      }
+    ],
+    "2.0.1": [
+      {
+        "type": "fix",
+        "title": "Remove empty inline style tags"
+      },
+      {
+        "type": "fix",
+        "title": "Remove unneeded styles to avoid conflict with theme styles"
+      }
+    ],
     "2.0.0": [
       {
         "type": "feature",
@@ -50,21 +66,20 @@
       {
         "type": "feature",
         "title": "New editor menu to choose editor width"
-       },
-       {
+      },
+      {
         "type": "feature",
         "title": "New editor menu to display/hide column visual guides"
-        },
-       {
+      },
+      {
         "type": "feature",
         "title": "Compatible with Gutenberg v5.9"
-        },
-     
-        {
+      },
+      {
         "type": "feature",
         "title": "Drop support for PHP version < 5.6.20"
-        },
-        {
+      },
+      {
         "type": "feature",
         "title": "Remove Container block (replced by column manager)"
       },
