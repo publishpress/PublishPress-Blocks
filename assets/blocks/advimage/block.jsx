@@ -1,4 +1,5 @@
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;

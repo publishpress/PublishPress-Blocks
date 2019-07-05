@@ -70,14 +70,35 @@ class AcceptanceTester extends \Codeception\Actor
         $I->wait($wait);
     }
 
+    /**
+     * Click to view post on frontend
+     */
     public function clickViewPost()
     {
         $I = $this;
-        try {
+        try { // latest gutenberg plugin
             $I->waitForElementClickable('.components-snackbar a.components-snackbar__action', 1);
         } catch (Exception $e) {
-            // do stuff
+            // not latest, do stuff
         }
         $I->click('View Post');
+    }
+
+    /**
+     * Insert new block to editor
+     */
+    public function insertBlock($blockName) {
+        $I = $this;
+        // Click on + button
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
+
+        // Search for block
+        $I->waitForElement('.editor-inserter__search');
+        $I->wait(0.2); // wait the animation done
+        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], $blockName);
+
+        // Insert block
+        $I->waitForText($blockName);
+        $I->click($blockName);
     }
 }

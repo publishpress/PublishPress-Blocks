@@ -1,11 +1,11 @@
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, PanelColorSettings, AlignmentToolbar } = wpBlockEditor;
+    const { InspectorControls, PanelColorSettings, AlignmentToolbar, InnerBlocks } = wpBlockEditor;
     const { PanelBody, RangeControl, BaseControl, SelectControl } = wpComponents;
     const { select } = wp.data;
-    const { InnerBlocks } = wp.blockEditor;
 
     const columnsBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">

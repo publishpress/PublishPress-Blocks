@@ -54,6 +54,16 @@ class Acceptance extends \Codeception\Module
         return $webDriver->findElement(\WebDriverBy::xpath($xpath))->getSize()->getWidth();
     }
 
+    /**
+     * Get an element height
+     *
+     * @param $xpath
+     */
+    public function getElementHeight($xpath)
+    {
+        $webDriver = $this->getModule('WebDriver')->webDriver;
+        return $webDriver->findElement(\WebDriverBy::xpath($xpath))->getSize()->getHeight();
+    }
 
     /**
      * Get param from commandline
