@@ -43,7 +43,7 @@ class MapBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->clickViewPost();
+        $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
 
         // Check map block exist and loaded
         $I->seeElement('//div[contains(@class, "wp-block-advgb-map")]/div[@class="advgb-map-content"]/div');
