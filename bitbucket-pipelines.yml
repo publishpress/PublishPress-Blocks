@@ -5,6 +5,9 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: php:7.1.1
 
+options:
+  size: 2x
+
 pipelines:
   custom:
     phpcs: 
