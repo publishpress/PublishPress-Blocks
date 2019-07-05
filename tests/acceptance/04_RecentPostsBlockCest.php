@@ -17,15 +17,8 @@ class RecentPostsBlockCest
 
         $I->amOnPage('/wp-admin/post-new.php');
 
-        // Click on + button
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__search');
-
-        // Search for Recent Posts block
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Recent Posts');
-
-        $I->waitForText('Recent Posts');
-        $I->click('Recent Posts');
+        // Insert block
+        $I->insertBlock('Recent Posts');
 
         $I->waitForElement('//label[text()="Category"]/following-sibling::node()/option[text()="Recent posts"]');
         $I->selectOption('//label[text()="Category"]/following-sibling::node()', array('text' => 'Recent posts'));
@@ -38,8 +31,9 @@ class RecentPostsBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->clickViewPost();
+        $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
 
+        $I->waitForElement('body.single');
         $I->seeNumberOfElements('.single .advgb-recent-post', 8);
     }
 
@@ -63,7 +57,7 @@ class RecentPostsBlockCest
 
         $I->clickViewPost();
 
+        $I->waitForElement('body.single');
         $I->seeNumberOfElements('.single .advgb-recent-post', 5);
-
     }
 }

@@ -5,6 +5,9 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: php:7.1.1
 
+options:
+  size: 2x
+
 pipelines:
   custom:
     phpcs: 
@@ -16,7 +19,7 @@ pipelines:
         - phpcs -s .
     codeception_core_install:
     - step: &shared_codeception_core_install
-        name: Codeception WP latest core install
+        name: CC WP latest core install
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -30,7 +33,7 @@ pipelines:
         - wordpress
     codeception_core_update:
     - step: &shared_codeception_core_update
-        name: Codeception WP latest core update
+        name: CC WP latest core update
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -44,7 +47,7 @@ pipelines:
         - wordpress
     codeception_plugin_install:
     - step: &shared_codeception_plugin_install
-        name: Codeception WP latest plugin install
+        name: CC WP latest plugin install
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -58,7 +61,7 @@ pipelines:
         - wordpress
     codeception_plugin_update:
     - step: &shared_codeception_plugin_update
-        name: Codeception WP latest plugin update
+        name: CC WP latest plugin update
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -71,8 +74,8 @@ pipelines:
         - mysql
         - wordpress
     codeception_51_install:
-    - step: &shared_codeception_51_install
-        name: Codeception WP 5.1 plugin install
+    - step: &shared_codeception_51_plugin_install
+        name: CC WP 5.1 plugin install
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -83,10 +86,10 @@ pipelines:
         services:
         - chromedriver
         - mysql
-        - wordpress50
+        - wordpress51
     codeception_51_update:
-    - step: &shared_codeception_51_update
-        name: Codeception WP 5.1 plugin update
+    - step: &shared_codeception_51_plugin_update
+        name: CC WP 5.1 plugin update
         image: joomunited/codeception
         script:
         - wait_services.sh
@@ -97,7 +100,35 @@ pipelines:
         services:
         - chromedriver
         - mysql
-        - wordpress50
+        - wordpress51
+    codeception_51_core_install:
+      - step: &shared_codeception_51_core_install
+          name: CC WP 5.1 core install
+          image: joomunited/codeception
+          script:
+            - wait_services.sh
+            - export WP_VERSION="5.1" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="install"
+            - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
+          artifacts:
+            - tests/_output/**
+          services:
+            - chromedriver
+            - mysql
+            - wordpress51
+    codeception_51_core_update:
+      - step: &shared_codeception_51_core_update
+          name: CC WP 5.1 core update
+          image: joomunited/codeception
+          script:
+            - wait_services.sh
+            - export WP_VERSION="5.1" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="update"
+            - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
+          artifacts:
+            - tests/_output/**
+          services:
+            - chromedriver
+            - mysql
+            - wordpress51
     generate_package:
     - step: &shared_generate_package
         name: Create package
@@ -147,12 +178,14 @@ pipelines:
     'release/*':
     - parallel:
       - step: *shared_phpcs
-      - step: *shared_codeception_core_update
+      - step: *shared_codeception_51_core_install
+      - step: *shared_codeception_51_core_update
+      - step: *shared_codeception_51_plugin_install
+      - step: *shared_codeception_51_plugin_update
       - step: *shared_codeception_core_install
-      - step: *shared_codeception_51_update
-      - step: *shared_codeception_51_install
-      - step: *shared_codeception_plugin_update
+      - step: *shared_codeception_core_update
       - step: *shared_codeception_plugin_install
+      - step: *shared_codeception_plugin_update
       - step: *shared_generate_package
     'master':
     - step: *shared_deployment_production
@@ -167,5 +200,5 @@ definitions:
         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     wordpress:
       image: joomunited/wordpress_cgi:latest
-    wordpress50:
-      image: joomunited/wordpress_cgi:5.0
+    wordpress51:
+      image: joomunited/wordpress_cgi:5.1
