@@ -20,6 +20,7 @@ class ProfilesCest
         // Click on + button
         $I->click('.editor-inserter button');
         $I->waitForElement('.editor-inserter__search');
+        $I->wait(0.2); // wait for animation done
 
         // Search for Count Up block
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Count');
@@ -57,6 +58,7 @@ class ProfilesCest
         // Click on + button
         $I->click('.editor-inserter button');
         $I->waitForElement('.editor-inserter__search');
+        $I->wait(0.2); // wait for animation done
 
         // Search for Count up block
         $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Count');

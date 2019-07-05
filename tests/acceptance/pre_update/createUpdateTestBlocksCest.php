@@ -305,12 +305,7 @@ class createUpdateTestBlocksCest
 
         $I->pressKeys(\WebDriverKeys::DOWN);
 
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__search');
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Accordion');
-
-        $I->waitForText('Accordion');
-        $I->click('Accordion');
+        $I->insertBlock('Accordion');
 
         $I->fillField('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 2');
         $I->click('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
@@ -423,6 +418,7 @@ class createUpdateTestBlocksCest
         try {
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:first-child .block-list-appender');
             $I->waitForElement('.editor-inserter__search');
+            $I->wait(0.2); // wait for animation done
             // Insert paragraph block
             $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
             $I->waitForText('Paragraph');
@@ -440,6 +436,7 @@ class createUpdateTestBlocksCest
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:nth-child(2)');
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:nth-child(2) .block-list-appender');
             $I->waitForElement('.editor-inserter__search');
+            $I->wait(0.2); // wait for animation done
             // Insert paragraph block
             $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
             $I->waitForText('Paragraph');
@@ -457,6 +454,7 @@ class createUpdateTestBlocksCest
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child');
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child .block-list-appender');
             $I->waitForElement('.editor-inserter__search');
+            $I->wait(0.2); // wait for animation done
             // Insert paragraph block
             $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
             $I->waitForText('Paragraph');
