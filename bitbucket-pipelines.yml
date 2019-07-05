@@ -71,7 +71,7 @@ pipelines:
         - mysql
         - wordpress
     codeception_51_install:
-    - step: &shared_codeception_51_install
+    - step: &shared_codeception_51_plugin_install
         name: Codeception WP 5.1 plugin install
         image: joomunited/codeception
         script:
@@ -85,7 +85,7 @@ pipelines:
         - mysql
         - wordpress50
     codeception_51_update:
-    - step: &shared_codeception_51_update
+    - step: &shared_codeception_51_plugin_update
         name: Codeception WP 5.1 plugin update
         image: joomunited/codeception
         script:
@@ -177,8 +177,8 @@ pipelines:
       - step: *shared_phpcs
       - step: *shared_codeception_51_core_install
       - step: *shared_codeception_51_core_update
-      - step: *shared_codeception_51_install
-      - step: *shared_codeception_51_update
+      - step: *shared_codeception_51_plugin_install
+      - step: *shared_codeception_51_plugin_update
       - step: *shared_codeception_core_install
       - step: *shared_codeception_core_update
       - step: *shared_codeception_plugin_install
