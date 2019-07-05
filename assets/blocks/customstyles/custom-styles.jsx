@@ -1,4 +1,5 @@
 (function ( wpI18n, wpHooks, wpBlocks, wpBlockEditor, wpComponents ) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
     const { addFilter } = wpHooks;
     const { __ } = wpI18n;
     const { hasBlockSupport } = wpBlocks;
