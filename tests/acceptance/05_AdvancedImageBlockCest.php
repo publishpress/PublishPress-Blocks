@@ -56,7 +56,7 @@ class AdvancedImageBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->clickViewPost();
+        $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
 
         $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@data-image, "galaxy.jpg")]');
     }

@@ -56,7 +56,7 @@ class AdvancedTableBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->clickViewPost();
+        $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
 
         $I->seeElement('.wp-block-advgb-table.advgb-table-frontend');
         $I->seeNumberOfElements('.advgb-table-frontend td', 16);

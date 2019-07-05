@@ -44,7 +44,7 @@ class AdvancedButtonBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->clickViewPost();
+        $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
 
         // Check button rendered
         $I->seeElement('//a[contains(@class, "wp-block-advgb-button_link")][text()="Button Text"]');

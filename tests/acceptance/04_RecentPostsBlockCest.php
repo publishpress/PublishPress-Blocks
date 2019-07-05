@@ -31,7 +31,7 @@ class RecentPostsBlockCest
         $I->click('Publish');
         $I->waitForText('Post published.');
 
-        $I->clickViewPost();
+        $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
 
         $I->waitForElement('body.single');
         $I->seeNumberOfElements('.single .advgb-recent-post', 8);
