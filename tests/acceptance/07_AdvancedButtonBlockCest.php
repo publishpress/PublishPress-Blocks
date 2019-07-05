@@ -63,7 +63,7 @@ class AdvancedButtonBlockCest
 
         // Change text color
         $I->click('//span[text()="Color Settings"]');
-        $I->clickAndWait('//span[text()="Text Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('//span[text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($textColor);
@@ -71,7 +71,7 @@ class AdvancedButtonBlockCest
         $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         // Change background color
-        $I->clickAndWait('//span[text()="Background Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('//span[text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($bgColor);

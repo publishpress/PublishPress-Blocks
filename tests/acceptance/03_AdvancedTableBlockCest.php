@@ -136,7 +136,7 @@ class AdvancedTableBlockCest
 
         // Change background color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[5]');
-        $I->clickAndWait('//span[text()="Background Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('//span[text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys('#ff006a');
@@ -148,7 +148,7 @@ class AdvancedTableBlockCest
 
         // Change text color to custom
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]');
-        $I->clickAndWait('//span[text()="Text Color"]/following-sibling::node()//div[last()]//*[1]');
+        $I->clickAndWait('//span[text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys('#335e77');
