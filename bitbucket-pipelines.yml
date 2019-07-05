@@ -98,6 +98,34 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress50
+    codeception_51_core_install:
+      - step: &shared_codeception_51_core_install
+          name: Codeception WP 5.1 core install
+          image: joomunited/codeception
+          script:
+            - wait_services.sh
+            - export WP_VERSION="5.1" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="install"
+            - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
+          artifacts:
+            - tests/_output/**
+          services:
+            - chromedriver
+            - mysql
+            - wordpress50
+    codeception_51_core_update:
+      - step: &shared_codeception_51_core_update
+          name: Codeception WP 5.1 plugin update
+          image: joomunited/codeception
+          script:
+            - wait_services.sh
+            - export WP_VERSION="5.1" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="update"
+            - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
+          artifacts:
+            - tests/_output/**
+          services:
+            - chromedriver
+            - mysql
+            - wordpress50
     generate_package:
     - step: &shared_generate_package
         name: Create package
@@ -147,12 +175,14 @@ pipelines:
     'release/*':
     - parallel:
       - step: *shared_phpcs
-      - step: *shared_codeception_core_update
-      - step: *shared_codeception_core_install
-      - step: *shared_codeception_51_update
+      - step: *shared_codeception_51_core_install
+      - step: *shared_codeception_51_core_update
       - step: *shared_codeception_51_install
-      - step: *shared_codeception_plugin_update
+      - step: *shared_codeception_51_update
+      - step: *shared_codeception_core_install
+      - step: *shared_codeception_core_update
       - step: *shared_codeception_plugin_install
+      - step: *shared_codeception_plugin_update
       - step: *shared_generate_package
     'master':
     - step: *shared_deployment_production
