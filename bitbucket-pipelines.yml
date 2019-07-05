@@ -114,7 +114,7 @@ pipelines:
             - wordpress50
     codeception_51_core_update:
       - step: &shared_codeception_51_core_update
-          name: Codeception WP 5.1 plugin update
+          name: Codeception WP 5.1 core update
           image: joomunited/codeception
           script:
             - wait_services.sh
