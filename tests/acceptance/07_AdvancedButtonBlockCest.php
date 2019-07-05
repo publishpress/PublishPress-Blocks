@@ -97,4 +97,51 @@ class AdvancedButtonBlockCest
         $cBgColor = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("backgroundColor")');
         $I->assertEquals($bgColorRgb, $cBgColor);
     }
+
+    public function changeButtonBorder(AcceptanceTester $I)
+    {
+        $I->wantTo('Change button border styles');
+
+        // Change border radius
+        $I->click('//button[text()="Border"]');
+        $I->fillField('//label[text()="Border radius"]/following-sibling::node()/following-sibling::node()', 10);
+
+        // Change border width
+        $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 2);
+
+        // Change border style
+        $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dashed'));
+
+        // Change border color
+        $I->click('//span[text()="Border Color"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-button');
+
+        // Check border radius applied
+        $borderRadius = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("borderRadius")');
+        $I->assertEquals('10px', $borderRadius);
+
+        // Check border width applied
+        $borderWidth = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("borderWidth")');
+        $I->assertEquals('2px', $borderWidth);
+
+        // Check border style applied
+        $borderStyle = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("borderStyle")');
+        $I->assertEquals('dashed', $borderStyle);
+
+        // Check border style applied
+        $borderColor = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("borderColor")');
+        $I->assertEquals('rgb(255, 0, 0)', $borderColor);
+    }
 }
