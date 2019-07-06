@@ -168,4 +168,71 @@ class AdvancedButtonBlockCest
         $padding = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("padding")');
         $I->assertEquals('3px 4px 5px 6px', $padding);
     }
+
+    public function changeHoverStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change button hover styles');
+        $hoverBgColor = '#ffff00';
+        $hoverBgColorRgb = 'rgb(255, 255, 0)';
+        $hoverTextColor = '#2196f3';
+        $hoverTextColorRgb = 'rgb(33, 150, 243)';
+        $hoverShadowColor = '#f9b300';
+        $hoverShadowColorRgb = 'rgb(249, 179, 0)';
+
+        // Change hover shadow
+        $I->click('//button[text()="Hover"]');
+        $I->click('//button[text()="Shadow"]');
+        $I->see('Shadow H offset');
+        $I->fillField('//label[text()="Shadow H offset"]/following-sibling::node()/following-sibling::node()', 5);
+        $I->fillField('//label[text()="Shadow V offset"]/following-sibling::node()/following-sibling::node()', 6);
+        $I->fillField('//label[text()="Shadow blur"]/following-sibling::node()/following-sibling::node()', 3);
+        $I->fillField('//label[text()="Shadow spread"]/following-sibling::node()/following-sibling::node()', 2);
+        $I->fillField('//label[text()="Transition speed"]/following-sibling::node()/following-sibling::node()', 0.5);
+
+        // Change hover color
+        $I->click('//h2/button[text()="Hover"]/parent::node()/following-sibling::node()//span[text()="Color Settings"]');
+        $I->clickAndWait('//span[text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($hoverBgColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+
+        $I->clickAndWait('//span[text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($hoverTextColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+
+        $I->clickAndWait('//span[text()="Shadow Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($hoverShadowColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-button');
+
+        // Check hover styles applied
+        $I->moveMouseOver('.wp-block-advgb-button .wp-block-advgb-button_link');
+        $I->wait(1);
+
+        $hBgColor = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("backgroundColor")');
+        $I->assertEquals($hoverBgColorRgb, $hBgColor);
+
+        $hTextColor = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("color")');
+        $I->assertEquals($hoverTextColorRgb, $hTextColor);
+
+        $boxShadow = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("boxShadow")');
+        $I->assertEquals($hoverShadowColorRgb.' 5px 6px 3px 2px', $boxShadow);
+
+        $transition = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("transition")');
+        $I->assertTrue(strpos($transition, '0.5') !== false);
+    }
 }
