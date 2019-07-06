@@ -144,4 +144,28 @@ class AdvancedButtonBlockCest
         $borderColor = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("borderColor")');
         $I->assertEquals('rgb(255, 0, 0)', $borderColor);
     }
+
+    public function changeButtonPadding(AcceptanceTester $I)
+    {
+        $I->wantTo('Change button padding');
+
+        // Change padding
+        $I->click('//button[text()="Padding"]');
+        $I->see('Padding top');
+        $I->fillField('//label[text()="Padding top"]/following-sibling::node()/following-sibling::node()', 3);
+        $I->fillField('//label[text()="Padding right"]/following-sibling::node()/following-sibling::node()', 4);
+        $I->fillField('//label[text()="Padding bottom"]/following-sibling::node()/following-sibling::node()', 5);
+        $I->fillField('//label[text()="Padding left"]/following-sibling::node()/following-sibling::node()', 6);
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-button');
+
+        // Check padding applied
+        $padding = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("padding")');
+        $I->assertEquals('3px 4px 5px 6px', $padding);
+    }
 }
