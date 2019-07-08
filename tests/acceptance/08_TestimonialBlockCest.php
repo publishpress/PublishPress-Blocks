@@ -67,4 +67,57 @@ class TestimonialBlockCest
         $I->seeElement('//div[@class="advgb-testimonial-item"]/p[@class="advgb-testimonial-position"][text()="Developer"]');
         $I->seeElement('//div[@class="advgb-testimonial-item"]/p[@class="advgb-testimonial-desc"][text()="Coding is the passion of his life."]');
     }
+
+    public function changeColumn(AcceptanceTester $I)
+    {
+        $I->wantTo('Change testimonial columns');
+
+        // Change columns
+        $I->fillField('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()', 3);
+
+        // Modify 2nd person
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) h4.advgb-testimonial-name');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Tony Stark');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) p.advgb-testimonial-position');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Iron Man');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) p.advgb-testimonial-desc');
+        $I->selectCurrentElementText();
+        $I->pressKeys('A super rich and clever person. Most adorable superhero. Respect!');
+
+        // Modify 3rd person
+        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child h4.advgb-testimonial-name');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Clark Kent');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child p.advgb-testimonial-position');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Superman');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child p.advgb-testimonial-desc');
+        $I->selectCurrentElementText();
+        $I->pressKeys('An alien person. Come to earth from a meteor. He has many super powers.');
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        // Check columns changed
+        $I->seeNumberOfElements('.advgb-testimonial .advgb-testimonial-item', 3);
+
+        // Check text
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/h4[@class="advgb-testimonial-name"][text()="Tony Stark"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/p[@class="advgb-testimonial-position"][text()="Iron Man"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/p[@class="advgb-testimonial-desc"][text()="A super rich and clever person. Most adorable superhero. Respect!"]');
+
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/h4[@class="advgb-testimonial-name"][text()="Clark Kent"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/p[@class="advgb-testimonial-position"][text()="Superman"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/p[@class="advgb-testimonial-desc"][text()="An alien person. Come to earth from a meteor. He has many super powers."]');
+    }
 }
