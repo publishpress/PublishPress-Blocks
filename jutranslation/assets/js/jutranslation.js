@@ -57,7 +57,7 @@ jQuery(document).ready(function($){
 
                                 //Get from Joomunited the translation
                                 $.ajax({
-                                    url : joomunited_url + "/index.php?option=com_jutranslation&task=translations.download",
+                                    url : joomunited_url + "index.php?option=com_jutranslation&task=translations.download",
                                     type : 'POST',
                                     data : {
                                         extension : $clicked_button.data("extension"),
