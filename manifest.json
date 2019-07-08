@@ -41,6 +41,10 @@
     "2.0.3": [
       {
         "type": "fix",
+        "title": "Add back Container block and allow to convert it to Columns Manager block"
+      },
+      {
+        "type": "fix",
         "title": "juTranslation duplicate slash in language url"
       }
     ],
