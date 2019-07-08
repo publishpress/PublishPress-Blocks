@@ -41,7 +41,7 @@
     "2.0.3": [
       {
         "type": "fix",
-        "title": "juTranslation duplicate slash in language url"
+        "title": "Fix Jutranslation url"
       }
     ],
     "2.0.2": [
