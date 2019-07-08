@@ -4688,11 +4688,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columnsLayoutT = attributes.columnsLayoutT,
                     columnsLayoutM = attributes.columnsLayoutM;
 
-                var _select = select('core/block-editor'),
-                    getBlockOrder = _select.getBlockOrder;
+                var _ref = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref.getBlockOrder;
 
-                var _dispatch = dispatch('core/block-editor'),
-                    updateBlockAttributes = _dispatch.updateBlockAttributes;
+                var _ref2 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref2.updateBlockAttributes;
 
                 var childBlocks = getBlockOrder(clientId);
                 var shouldUpdate = false;
@@ -5441,8 +5441,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         attributes: blockAttrs,
         edit: AdvColumnsEdit,
-        save: function save(_ref) {
-            var attributes = _ref.attributes;
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
             var columns = attributes.columns,
                 columnsLayout = attributes.columnsLayout,
                 columnsLayoutT = attributes.columnsLayoutT,
@@ -5619,11 +5619,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     paddingBottomM = attributes.paddingBottomM,
                     paddingLeftM = attributes.paddingLeftM;
 
-                var _select = select('core/block-editor'),
-                    getBlockOrder = _select.getBlockOrder,
-                    getBlockRootClientId = _select.getBlockRootClientId,
-                    getBlockAttributes = _select.getBlockAttributes;
+                var _ref = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref.getBlockOrder,
+                    getBlockRootClientId = _ref.getBlockRootClientId,
+                    getBlockAttributes = _ref.getBlockAttributes;
 
+                ;
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
                 var rootBlockId = getBlockRootClientId(clientId);
                 var rootChildBlocks = getBlockOrder(rootBlockId).filter(function (blockId) {
@@ -5924,8 +5925,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         attributes: blockAttrs,
         edit: AdvColumnEdit,
-        save: function save(_ref) {
-            var attributes = _ref.attributes;
+        save: function save(_ref2) {
+            var attributes = _ref2.attributes;
             var width = attributes.width,
                 columnClasses = attributes.columnClasses,
                 colId = attributes.colId,

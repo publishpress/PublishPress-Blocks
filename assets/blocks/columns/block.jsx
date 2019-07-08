@@ -99,8 +99,8 @@
             } = prevProps.attributes;
             const { attributes, clientId } = this.props;
             const { columns, columnsLayout, columnsLayoutT, columnsLayoutM } = attributes;
-            const { getBlockOrder } = select( 'core/block-editor' );
-            const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
             const childBlocks = getBlockOrder(clientId);
             let shouldUpdate = false;
             let classes = times( 6, () => [] );
