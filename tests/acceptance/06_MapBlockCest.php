@@ -59,10 +59,7 @@ class MapBlockCest
         $I->waitForText('Hanoi, Vietnam');
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check location
@@ -83,10 +80,7 @@ class MapBlockCest
         $I->fillField('//input[@title="Longitude"]', $lng);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check location
@@ -104,10 +98,7 @@ class MapBlockCest
         $I->fillField('//label[text()="Height"]/following-sibling::node()/following-sibling::node()', $height);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check zoom level
@@ -132,10 +123,7 @@ class MapBlockCest
         $I->wait(0.5);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check marker icon
@@ -154,10 +142,7 @@ class MapBlockCest
         $I->fillField('//label[text()="Marker description"]/following-sibling::node()', $desc);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check marker text
@@ -171,10 +156,7 @@ class MapBlockCest
         $I->selectOption('//label[text()="Map styles"]/following-sibling::node()', array('text' => 'Night'));
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check map color

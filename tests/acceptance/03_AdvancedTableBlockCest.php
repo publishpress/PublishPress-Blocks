@@ -90,11 +90,8 @@ class AdvancedTableBlockCest
         $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
         $I->clickAndWait('Add Column Before');
 
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
-
+        // Update post
+        $I->updatePost();
         $I->waitForElement('.advgb-table-frontend');
 
         $I->seeNumberOfElements('.advgb-table-frontend td', 36);
@@ -156,12 +153,7 @@ class AdvancedTableBlockCest
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[3]/td[5]'); // Click back on the cell to hide popup
         $colors[3] = '#335e77';
 
-        $I->wait(0.5);
-
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
 
         $I->waitForElementVisible('.advgb-table-frontend', 5);
         $I->seeElement('//table[contains(@class,"advgb-table-frontend")]//tr[1]//td[3 and contains(@style, "background-color:'.$colors[0].'")]');
@@ -196,10 +188,7 @@ class AdvancedTableBlockCest
         $I->clickAndWait('//div[contains(@class, "wp-block")][@data-type="advgb/table"]//button[@aria-label="Edit Table"]');
         $I->clickAndWait('Delete Column');
 
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
 
         $I->seeNumberOfElements('.advgb-table-frontend td', 16);
 
@@ -220,10 +209,7 @@ class AdvancedTableBlockCest
         $I->waitForElementVisible('//label[text()="Max width (px)"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Max width (px)"]/following-sibling::node()/following-sibling::node()', 200);
 
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
 
         // Check the actual width
         $width = $I->getElementWidth('//*[contains(@class,"advgb-table-frontend")]');

@@ -108,7 +108,7 @@ class AcceptanceTester extends \Codeception\Actor
     public function updatePost($wait = 0.5) {
         $I = $this;
 
-        // Wait a bit to make sure all change applied
+        // Wait a bit to make sure all changes applied
         $I->wait($wait);
 
         // Update post

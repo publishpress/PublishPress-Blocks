@@ -72,10 +72,7 @@ class AdvancedImageBlockCest
         // Change block height
         $I->fillField('//label[text()="Height"]/following-sibling::node()/following-sibling::node()', 650);
 
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
 
         // Check the actual width
         $width = $I->getElementWidth('//*[contains(@class,"wp-block-advgb-image")]');
@@ -118,11 +115,7 @@ class AdvancedImageBlockCest
         $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('//*[@class="advgb-image-block"]'); // click block to hide picker
 
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
-
+        $I->updatePost();
         $I->waitForElementVisible('.wp-block-advgb-image');
 
         // Check for colors applied
@@ -140,11 +133,7 @@ class AdvancedImageBlockCest
         $I->selectOption('//label[text()="Vertical Alignment"]/following-sibling::node()', array('text' => 'Bottom'));
         $I->selectOption('//label[text()="Horizontal Alignment"]/following-sibling::node()', array('text' => 'Left'));
 
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
-
+        $I->updatePost();
         $I->waitForElementVisible('.wp-block-advgb-image');
 
         // Check text position

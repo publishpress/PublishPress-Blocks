@@ -102,10 +102,7 @@ class TestimonialBlockCest
         $I->pressKeys('An alien person. Come to earth from a meteor. He has many super powers.');
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-testimonial');
 
         // Check columns changed

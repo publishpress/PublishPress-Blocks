@@ -79,10 +79,7 @@ class AdvancedButtonBlockCest
         $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-button');
 
         // Check size applied
@@ -122,10 +119,7 @@ class AdvancedButtonBlockCest
         $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-button');
 
         // Check border radius applied
@@ -158,10 +152,7 @@ class AdvancedButtonBlockCest
         $I->fillField('//label[text()="Padding left"]/following-sibling::node()/following-sibling::node()', 6);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-button');
 
         // Check padding applied
@@ -213,10 +204,7 @@ class AdvancedButtonBlockCest
         $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-button');
 
         // Check hover styles applied
