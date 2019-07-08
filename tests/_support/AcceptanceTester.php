@@ -30,7 +30,7 @@ class AcceptanceTester extends \Codeception\Actor
             return;
         }
         $I->amOnPage('/wp-admin/index.php');
-        $I->wait(1);
+        $I->waitForElement('#loginform');
         $I->submitForm('#loginform', [
             'log' => $username,
             'pwd' => $password
