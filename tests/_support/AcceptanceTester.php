@@ -101,4 +101,20 @@ class AcceptanceTester extends \Codeception\Actor
         $I->waitForText($blockName);
         $I->click($blockName);
     }
+
+    /**
+     * Insert new block to editor
+     */
+    public function updatePost($wait = 0.5) {
+        $I = $this;
+
+        // Wait a bit to make sure all change applied
+        $I->wait($wait);
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
+    }
 }
