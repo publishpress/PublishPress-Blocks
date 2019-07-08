@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "platform": "wordpress",
   "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,12 @@
     ]
   },
   "changelog": {
+    "2.0.3": [
+      {
+        "type": "fix",
+        "title": "juTranslation duplicate slash in language url"
+      }
+    ],
     "2.0.2": [
       {
         "type": "fix",
