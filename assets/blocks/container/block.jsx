@@ -1,7 +1,9 @@
-(function ( wpI18n, wpBlocks, wpEditor ) {
+(function ( wpI18n, wpBlocks, wpBlockEditor ) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
-    const { registerBlockType } = wpBlocks;
-    const { InnerBlocks } = wpEditor;
+    const { Fragment } = wp.element;
+    const { registerBlockType, createBlock } = wpBlocks;
+    const { InnerBlocks, InspectorControls } = wpBlockEditor;
 
     const containerBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
@@ -24,11 +26,50 @@
             align: true,
             inserter: false,
         },
+        transforms: {
+            to: [
+                {
+                    type: 'block',
+                    blocks: [ 'advgb/columns' ],
+                    transform: ( attributes, innerBlocks ) => {
+                        const columnBlock = createBlock(
+                            'advgb/column',
+                            {},
+                            innerBlocks,
+                        );
+
+                        return createBlock(
+                            'advgb/columns',
+                            { columns: 1 },
+                            [ columnBlock ],
+                        )
+                    }
+                }
+            ]
+        },
         edit: function () {
             return (
-                <div className="advgb-blocks-container">
-                    <InnerBlocks />
-                </div>
+                <Fragment>
+                    <InspectorControls>
+                        <div style={ {
+                            color: '#ff0000',
+                            fontStyle: 'italic',
+                            marginTop: 20,
+                            padding: 10,
+                            borderTop: '1px solid #ccc',
+                        } }
+                        >
+                            { __(
+                                'We will remove this block in the future release. ' +
+                                'Please convert it to Columns Manager block to avoid unwanted error. ' +
+                                'Columns Manager block has a lot of styles and improvements.'
+                            ) }
+                        </div>
+                    </InspectorControls>
+                    <div className="advgb-blocks-container">
+                        <InnerBlocks />
+                    </div>
+                </Fragment>
             )
         },
         save: function () {
@@ -39,4 +80,4 @@
             );
         },
     } );
-})( wp.i18n, wp.blocks, wp.editor );
+})( wp.i18n, wp.blocks, wp.blockEditor );

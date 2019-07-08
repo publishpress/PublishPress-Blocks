@@ -6484,10 +6484,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
-(function (wpI18n, wpBlocks, wpEditor) {
+(function (wpI18n, wpBlocks, wpBlockEditor) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
-    var registerBlockType = wpBlocks.registerBlockType;
-    var InnerBlocks = wpEditor.InnerBlocks;
+    var Fragment = wp.element.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType,
+        createBlock = wpBlocks.createBlock;
+    var _wpBlockEditor = wpBlockEditor,
+        InnerBlocks = _wpBlockEditor.InnerBlocks,
+        InspectorControls = _wpBlockEditor.InspectorControls;
 
 
     var containerBlockIcon = React.createElement(
@@ -6511,11 +6516,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             align: true,
             inserter: false
         },
+        transforms: {
+            to: [{
+                type: 'block',
+                blocks: ['advgb/columns'],
+                transform: function transform(attributes, innerBlocks) {
+                    var columnBlock = createBlock('advgb/column', {}, innerBlocks);
+
+                    return createBlock('advgb/columns', { columns: 1 }, [columnBlock]);
+                }
+            }]
+        },
         edit: function edit() {
             return React.createElement(
-                "div",
-                { className: "advgb-blocks-container" },
-                React.createElement(InnerBlocks, null)
+                Fragment,
+                null,
+                React.createElement(
+                    InspectorControls,
+                    null,
+                    React.createElement(
+                        "div",
+                        { style: {
+                                color: '#ff0000',
+                                fontStyle: 'italic',
+                                marginTop: 20,
+                                padding: 10,
+                                borderTop: '1px solid #ccc'
+                            }
+                        },
+                        __('We will remove this block in the future release. ' + 'Please convert it to Columns Manager block to avoid unwanted error. ' + 'Columns Manager block has a lot of styles and improvements.')
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "advgb-blocks-container" },
+                    React.createElement(InnerBlocks, null)
+                )
             );
         },
         save: function save() {
@@ -6526,7 +6562,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.editor);
+})(wp.i18n, wp.blocks, wp.blockEditor);
 
 /***/ }),
 
