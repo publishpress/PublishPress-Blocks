@@ -110,4 +110,22 @@ class SocialLinksBlockCest
         // Check icon loaded
         $I->seeElement('//div[@class="advgb-social-icons"]/a[@class="advgb-social-icon"][4]/img[contains(@src, "marker.png")]');
     }
+
+    public function changeIconStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change icon styles');
+
+        // Change styles
+        $I->fillField('//label[text()="Icon size"]/following-sibling::node()/following-sibling::node()', 55);
+        $I->fillField('//label[text()="Icon space"]/following-sibling::node()/following-sibling::node()', 10);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-social-links');
+
+        // Check styles applied
+        $I->seeElement('//div[@class="advgb-social-icons"]/a[@class="advgb-social-icon"][contains(@style, "width:55px")]');
+        $I->seeElement('//div[@class="advgb-social-icons"]/a[@class="advgb-social-icon"][contains(@style, "height:55px")]');
+        $I->seeElement('//div[@class="advgb-social-icons"]/a[@class="advgb-social-icon"][contains(@style, "margin-left:10px")]');
+        $I->seeElement('//div[@class="advgb-social-icons"]/a[@class="advgb-social-icon"][contains(@style, "margin-right:10px")]');
+    }
 }
