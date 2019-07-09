@@ -130,4 +130,24 @@ class ImagesSliderBlockCest
         $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"][contains(@style, "justify-content:flex-start")]');
         $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"][contains(@style, "align-items:flex-end")]');
     }
+
+    public function changeSliderSize(AcceptanceTester $I)
+    {
+        $I->wantTo('Change width and height of slider');
+
+        // Change size
+        $I->click('//label[text()="Full width"]/preceding-sibling::node()');
+        $I->click('//label[text()="Auto height"]/preceding-sibling::node()');
+
+        $I->fillField('//label[text()="Width"]/following-sibling::node()/following-sibling::node()', 500);
+        $I->fillField('//label[text()="Height"]/following-sibling::node()/following-sibling::node()', 350);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-images-slider');
+        $I->waitForElement('.slick-track');
+
+        // Check size change
+        $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/img[@class="advgb-image-slider-img"][contains(@style, "width:500px")]');
+        $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/img[@class="advgb-image-slider-img"][contains(@style, "height:350px")]');
+    }
 }
