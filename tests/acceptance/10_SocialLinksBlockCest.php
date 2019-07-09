@@ -87,4 +87,25 @@ class SocialLinksBlockCest
         $I->seeElement('//div[@class="advgb-social-icons"]/a[@class="advgb-social-icon"][2][contains(@style, "color:#ff0000")]');
         $I->seeElement('//div[@class="advgb-social-icons"]/a[@class="advgb-social-icon"][2][@href="https://youtube.com"]');
     }
+
+    public function addCustomIcon(AcceptanceTester $I)
+    {
+        $I->wantTo('Add custom icon');
+
+        // Add icon
+        $I->click('//button[@aria-label="Add item"]');
+        $I->seeNumberOfElements('.advgb-social-icons .advgb-social-icon', 4);
+        $I->click('//div[@class="advgb-social-icons"]/span[contains(@class, "advgb-social-icon")][4]');
+        $I->click('Upload/Choose');
+        $I->click('Media Library');
+        $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
+        $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
+        $I->click('Select');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-social-links');
+
+        // Check icon loaded
+        $I->seeElement('//div[@class="advgb-social-icons"]/a[@class="advgb-social-icon"][4]/img[contains(@src, "marker.png")]');
+    }
 }
