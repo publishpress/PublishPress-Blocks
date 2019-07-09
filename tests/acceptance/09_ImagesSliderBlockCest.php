@@ -112,4 +112,22 @@ class ImagesSliderBlockCest
         $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"]/h4[@class="advgb-image-slider-title"][contains(@style, "color:#ff0000")]');
         $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"]/p[@class="advgb-image-slider-text"][contains(@style, "color:#ffff00")]');
     }
+
+    public function changeTextPosition(AcceptanceTester $I)
+    {
+        $I->wantTo('Change position of images text');
+
+        // Change position
+        $I->click('//button[text()="Text Alignment"]');
+        $I->selectOption('//label[text()="Vertical Alignment"]/following-sibling::node()', array('text' => 'Top'));
+        $I->selectOption('//label[text()="Horizontal Alignment"]/following-sibling::node()', array('text' => 'Right'));
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-images-slider');
+        $I->waitForElement('.slick-track');
+
+        // Check position change
+        $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"][contains(@style, "justify-content:flex-start")]');
+        $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"][contains(@style, "align-items:flex-end")]');
+    }
 }
