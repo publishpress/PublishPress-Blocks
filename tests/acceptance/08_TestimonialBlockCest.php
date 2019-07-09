@@ -117,4 +117,49 @@ class TestimonialBlockCest
         $I->seeElement('//div[@class="advgb-testimonial-item"][3]/p[@class="advgb-testimonial-position"][text()="Superman"]');
         $I->seeElement('//div[@class="advgb-testimonial-item"][3]/p[@class="advgb-testimonial-desc"][text()="An alien person. Come to earth from a meteor. He has many super powers."]');
     }
+
+    public function changeAvatarStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change testimonial avatar styles');
+
+        // Change avatar styles
+        $I->click('//button[text()="Avatar"]');
+        // Change avatar color
+        $I->click('//button/span[text()="Avatar Colors"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#2196f3');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+
+        // Change border color
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+
+        // Change border radius
+        $I->fillField('//label[text()="Border Radius (%)"]/following-sibling::node()/following-sibling::node()', 10);
+
+        // Change border width
+        $I->fillField('//label[text()="Border Width"]/following-sibling::node()/following-sibling::node()', 2);
+
+        // Change avatar size
+        $I->fillField('//label[text()="Avatar Size"]/following-sibling::node()/following-sibling::node()', 80);
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        // Check styles applied
+        $I->seeElement('//div[@class="advgb-testimonial-avatar"][contains(@style, "background-color:#2196f3")]');
+        $I->seeElement('//div[@class="advgb-testimonial-avatar"][contains(@style, "border-color:#ff0000")]');
+        $I->seeElement('//div[@class="advgb-testimonial-avatar"][contains(@style, "border-radius:10%")]');
+        $I->seeElement('//div[@class="advgb-testimonial-avatar"][contains(@style, "border-width:2px")]');
+        $I->seeElement('//div[@class="advgb-testimonial-avatar"][contains(@style, "width:80px")]');
+        $I->seeElement('//div[@class="advgb-testimonial-avatar"][contains(@style, "height:80px")]');
+    }
 }
