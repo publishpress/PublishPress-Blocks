@@ -202,4 +202,19 @@ class TestimonialBlockCest
         $I->seeElement('//p[@class="advgb-testimonial-position"][contains(@style, "color:#999999")]');
         $I->seeElement('//p[@class="advgb-testimonial-desc"][contains(@style, "color:#00a32e")]');
     }
+
+    public function changeToSliderView(AcceptanceTester $I)
+    {
+        $I->wantTo('Change testimonial to slider view');
+
+        // Change to slider view
+        $I->click('//label[text()="Slider view"]/preceding-sibling::node()');
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        // Check view type
+        $I->seeElement('//div[contains(@class, "advgb-testimonial")]/div[contains(@class, "slick-list")]/div[contains(@class, "slick-track")]/*');
+    }
 }
