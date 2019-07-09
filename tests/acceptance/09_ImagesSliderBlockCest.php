@@ -75,4 +75,41 @@ class ImagesSliderBlockCest
         $I->waitForElement('.wp-block-advgb-images-slider');
         $I->seeElement('//div[contains(@class, "advgb-images-slider")]/div[contains(@class, "slick-list")]/div[contains(@class, "slick-track")]/*');
     }
+
+    public function changeSliderColors(AcceptanceTester $I)
+    {
+        $I->wantTo('Change image slider colors');
+
+        // Change colors
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Hover Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#044d88');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-images-slider-block"]'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Title Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-images-slider-block"]'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ffff00');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-images-slider-block"]'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-images-slider');
+
+        // Check color applied
+        $I->waitForElement('.slick-track');
+        $I->moveMouseOver('.advgb-images-slider');
+        $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"]/a[@class="advgb-image-slider-overlay"][contains(@style, "background-color:#044d88")]');
+        $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"]/h4[@class="advgb-image-slider-title"][contains(@style, "color:#ff0000")]');
+        $I->seeElement('//div[contains(@class, "advgb-image-slider-item")]/div[@class="advgb-image-slider-item-info"]/p[@class="advgb-image-slider-text"][contains(@style, "color:#ffff00")]');
+    }
 }
