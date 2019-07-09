@@ -49,6 +49,7 @@ class SocialLinksBlockCest
 
         $I->click('//div[@class="advgb-social-link"]//input');
         $I->selectCurrentElementText();
+        $I->wait(0.1);
         $I->pressKeys('https://facebook.com');
 
         $I->wait(0.1);
@@ -66,6 +67,7 @@ class SocialLinksBlockCest
 
         $I->click('//div[@class="advgb-social-link"]//input');
         $I->selectCurrentElementText();
+        $I->wait(0.1);
         $I->pressKeys('https://youtube.com');
 
         $I->wait(0.1);
