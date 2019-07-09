@@ -162,4 +162,44 @@ class TestimonialBlockCest
         $I->seeElement('//div[@class="advgb-testimonial-avatar"][contains(@style, "width:80px")]');
         $I->seeElement('//div[@class="advgb-testimonial-avatar"][contains(@style, "height:80px")]');
     }
+
+    public function changeTextColors(AcceptanceTester $I)
+    {
+        $I->wantTo('Change testimonial text colors');
+
+        // Change colors
+        $I->click('//button/span[text()="Text Colors"]');
+        // Change name color
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Name Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#7b17ff');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+
+        // Change position color
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Position Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#999999');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+
+        // Change name color
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Description Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#00a32e');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        // Check styles applied
+        $I->seeElement('//h4[@class="advgb-testimonial-name"][contains(@style, "color:#7b17ff")]');
+        $I->seeElement('//p[@class="advgb-testimonial-position"][contains(@style, "color:#999999")]');
+        $I->seeElement('//p[@class="advgb-testimonial-desc"][contains(@style, "color:#00a32e")]');
+    }
 }
