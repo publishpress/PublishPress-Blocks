@@ -42,6 +42,14 @@
       {
         "type": "fix",
         "title": "Prefix all column manager css class to avoid conflicts (Inserted blocks conversion is required)"
+      },
+      {
+        "type": "fix",
+        "title": "Columns Visual Guide not activate on fresh install"
+      },
+      {
+        "type": "fix",
+        "title": "Keep custom block class when transform Container block to Columns Manager block"
       }
     ],
     "2.0.3": [
