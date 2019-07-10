@@ -41,7 +41,7 @@
     "2.0.4": [
       {
         "type": "fix",
-        "title": "Prefix all column manager css class to avoid conflicts (Inserted blocks conversion is required)"
+        "title": "Prefix all Column Manager css class to avoid conflicts"
       },
       {
         "type": "fix",
