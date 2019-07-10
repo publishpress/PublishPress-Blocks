@@ -115,4 +115,47 @@ class CountUpBlockCest
         $I->seeElement('//div[@class="advgb-count-up-columns-three"]/div/span[@class="advgb-counter-number"][text()="50000"]');
         $I->seeElement('//div[@class="advgb-count-up-columns-three"]/p[@class="advgb-count-up-desc"][text()="per month"]');
     }
+
+    public function changeColors(AcceptanceTester $I)
+    {
+        $I->wantTo('Change colors of text and number size');
+        $headerColor = '#2196f3';
+        $numberColor = '#ff0000';
+        $descColor = '#06a132';
+
+        // Change colors
+        $I->click('//button/span[text()="Color Settings"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Header Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($headerColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "advgb-count-up")]'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Count Up Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($numberColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "advgb-count-up")]'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Description Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($descColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "advgb-count-up")]'); // click block to hide picker
+
+        // Change number size
+        $I->fillField('//label[text()="Counter Number Size"]/following-sibling::node()/following-sibling::node()', 70);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-count-up');
+
+        // Check changes applied
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/h4[@class="advgb-count-up-header"][contains(@style, "color:'.$headerColor.'")]');
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/p[@class="advgb-count-up-desc"][contains(@style, "color:'.$descColor.'")]');
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-counter"][contains(@style, "color:'.$numberColor.'")]');
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-counter"][contains(@style, "font-size:70px")]');
+    }
 }
