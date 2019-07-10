@@ -1381,7 +1381,9 @@ float: left;'
                 );
             }
 
-            if (isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide']) {
+            if (!isset($saved_settings['enable_columns_visual_guide'])
+                || (isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide'])
+            ) {
                 wp_add_inline_style(
                     'dashicons',
                     '.advgb-columns>.editor-inner-blocks>.editor-block-list__layout>.wp-block:not(.is-selected)>.editor-block-list__block-edit:before{border:1px dashed #ddd;}'
