@@ -153,9 +153,27 @@ class CountUpBlockCest
         $I->waitForElement('.wp-block-advgb-count-up');
 
         // Check changes applied
-        $I->seeElement('//div[contains(@class, "advgb-count-up")]/h4[@class="advgb-count-up-header"][contains(@style, "color:'.$headerColor.'")]');
-        $I->seeElement('//div[contains(@class, "advgb-count-up")]/p[@class="advgb-count-up-desc"][contains(@style, "color:'.$descColor.'")]');
-        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-counter"][contains(@style, "color:'.$numberColor.'")]');
-        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-counter"][contains(@style, "font-size:70px")]');
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div/h4[@class="advgb-count-up-header"][contains(@style, "color:'.$headerColor.'")]');
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div/p[@class="advgb-count-up-desc"][contains(@style, "color:'.$descColor.'")]');
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div/div[@class="advgb-counter"][contains(@style, "color:'.$numberColor.'")]');
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div/div[@class="advgb-counter"][contains(@style, "font-size:70px")]');
+    }
+
+    public function addCounterSymbol(AcceptanceTester $I)
+    {
+        $I->wantTo('Add symbol to counter number');
+
+        // Add symbol
+        $I->fillField('//div[text()="Counter Up Symbol"]/following-sibling::node()/following-sibling::node()//input[@class="components-text-control__input"]', 'K');
+        $I->click('//div[text()="Counter Up Symbol"]/following-sibling::node()/following-sibling::node()/span[@class="components-form-toggle"]');
+
+        $I->fillField('//div[text()="Counter Up Symbol"]/following-sibling::node()/following-sibling::node()/following-sibling::node()//input[@class="components-text-control__input"]', '$');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-count-up');
+
+        // Check changes
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div[2]/div[@class="advgb-counter"]/span[2][text()="K"]');
+        $I->seeElement('//div[contains(@class, "advgb-count-up")]/div[3]/div[@class="advgb-counter"]/span[1][text()="$"]');
     }
 }
