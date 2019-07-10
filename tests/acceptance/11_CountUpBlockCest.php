@@ -8,8 +8,8 @@ class CountUpBlockCest
             // Back to edit post
             $I->click('Edit Post');
             $I->waitForElement('#editor');
-            $I->waitForElement('.advgb-social-links-block');
-            $I->clickWithLeftButton('//div[@class="advgb-social-links-block"]');
+            $I->waitForElement('.advgb-count-up');
+            $I->clickWithLeftButton('//div[contains(@class, "advgb-count-up")]');
         } catch(Exception $e) {
             // do stuff
         }
@@ -64,5 +64,19 @@ class CountUpBlockCest
         $I->seeElement('//div[@class="advgb-count-up-columns-one"]/h4[@class="advgb-count-up-header"][text()="Visitors"]');
         $I->seeElement('//div[@class="advgb-count-up-columns-one"]/div/span[@class="advgb-counter-number"][text()="2345"]');
         $I->seeElement('//div[@class="advgb-count-up-columns-one"]/p[@class="advgb-count-up-desc"][text()="per day"]');
+    }
+
+    public function changeColumns(AcceptanceTester $I)
+    {
+        $I->wantTo('Change number of Count up columns');
+
+        // Change columns
+        $I->fillField('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()', 3);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-count-up');
+
+        // Check columns change
+        $I->seeNumberOfElements('.advgb-count-up > div', 3);
     }
 }
