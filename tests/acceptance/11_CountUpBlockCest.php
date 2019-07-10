@@ -80,7 +80,7 @@ class CountUpBlockCest
 
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]/div[2]//div');
         $I->selectCurrentElementText();
-        $I->pressKeys('199000');
+        $I->pressKeys('199');
 
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]/div[3]//div');
         $I->selectCurrentElementText();
@@ -89,15 +89,15 @@ class CountUpBlockCest
         // Change text
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]//h4');
         $I->selectCurrentElementText();
-        $I->pressKeys('Develop since');
+        $I->pressKeys('Profit');
 
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[2]//div');
         $I->selectCurrentElementText();
-        $I->pressKeys('2013');
+        $I->pressKeys('50000');
 
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[3]//div');
         $I->selectCurrentElementText();
-        $I->pressKeys('till now');
+        $I->pressKeys('per month');
 
         $I->updatePost();
         $I->waitForElement('.wp-block-advgb-count-up');
@@ -107,13 +107,12 @@ class CountUpBlockCest
 
         // Check text
         $I->seeElement('//div[@class="advgb-count-up-columns-two"]/h4[@class="advgb-count-up-header"][text()="Downloaded"]');
-        $I->seeElement('//div[@class="advgb-count-up-columns-two"]/div/span[@class="advgb-counter-number"][text()="199000"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-two"]/div/span[@class="advgb-counter-number"][text()="199"]');
         $I->seeElement('//div[@class="advgb-count-up-columns-two"]/p[@class="advgb-count-up-desc"][text()="times"]');
 
         // Check text
-        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/h4[@class="advgb-count-up-header"][text()="Develop since"]');
-        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/div/span[@class="advgb-counter-number"][text()="2013"]');
-        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/p[@class="advgb-count-up-desc"][text()="till now"]');
-
+        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/h4[@class="advgb-count-up-header"][text()="Profit"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/div/span[@class="advgb-counter-number"][text()="50000"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/p[@class="advgb-count-up-desc"][text()="per month"]');
     }
 }
