@@ -96,7 +96,6 @@
 
             const blockClasses = [
                 'advgb-column',
-                'column',
                 className,
             ].filter( Boolean ).join( ' ' );
 
@@ -232,7 +231,7 @@
                         </div>
                     </div>
                     <style>
-                        {`#block-${clientId} .advgb-column.column > .advgb-column-inner {
+                        {`#block-${clientId} .advgb-column > .advgb-column-inner {
                             text-align: ${textAlign};
                             margin-top: ${marginTop}px;
                             margin-right: ${marginRight}px;
@@ -244,7 +243,7 @@
                             padding-left: ${paddingLeft}px;
                         }
                         @media screen and (max-width: 767px) {
-                            #block-${clientId} .advgb-column.column > .advgb-column-inner {
+                            #block-${clientId} .advgb-column > .advgb-column-inner {
                                 text-align: ${textAlignM};
                                 margin-top: ${marginTopM}px;
                                 margin-right: ${marginRightM}px;
@@ -376,7 +375,6 @@
 
             const blockClasses = [
                 'advgb-column',
-                'column',
                 columnClasses,
             ].filter( Boolean ).join( ' ' );
 
@@ -396,5 +394,39 @@
                 </div>
             );
         },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        width,
+                        columnClasses, colId,
+                        borderColor, borderStyle, borderWidth, borderRadius,
+                    } = attributes;
+
+                    const blockClasses = [
+                        'advgb-column',
+                        'column',
+                        columnClasses,
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClasses }
+                             id={ colId }
+                             style={ {
+                                 width: width ? width + '%' : undefined,
+                                 flex: width ? 'none' : undefined,
+                             } }
+                        >
+                            <div className="advgb-column-inner"
+                                 style={ { borderStyle, borderColor, borderWidth, borderRadius, } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                },
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

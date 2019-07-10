@@ -5138,140 +5138,140 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 switch (layout) {
                     case '12-12':
                         for (var i = 0; i < 2; i++) {
-                            classObj[i].push('is-half' + extraClass);
+                            classObj[i].push('advgb-is-half' + extraClass);
                         }
                         break;
                     case '13-13-13':
                         for (var _i = 0; _i < 3; _i++) {
-                            classObj[_i].push('is-one-third' + extraClass);
+                            classObj[_i].push('advgb-is-one-third' + extraClass);
                         }
                         break;
                     case '14-14-14-14':
                         for (var _i2 = 0; _i2 < 4; _i2++) {
-                            classObj[_i2].push('is-one-quarter' + extraClass);
+                            classObj[_i2].push('advgb-is-one-quarter' + extraClass);
                         }
                         break;
                     case 'five':
                         for (var _i3 = 0; _i3 < 5; _i3++) {
-                            classObj[_i3].push('is-one-fifth' + extraClass);
+                            classObj[_i3].push('advgb-is-one-fifth' + extraClass);
                         }
                         break;
                     case 'six':
                         for (var _i4 = 0; _i4 < 6; _i4++) {
-                            classObj[_i4].push('is-2' + extraClass);
+                            classObj[_i4].push('advgb-is-2' + extraClass);
                         }
                         break;
                     case '23-13':
-                        classObj[0].push('is-two-thirds' + extraClass);
-                        classObj[1].push('is-one-third' + extraClass);
+                        classObj[0].push('advgb-is-two-thirds' + extraClass);
+                        classObj[1].push('advgb-is-one-third' + extraClass);
                         break;
                     case '13-23':
-                        classObj[0].push('is-one-third' + extraClass);
-                        classObj[1].push('is-two-thirds' + extraClass);
+                        classObj[0].push('advgb-is-one-third' + extraClass);
+                        classObj[1].push('advgb-is-two-thirds' + extraClass);
                         break;
                     case '34-14':
-                        classObj[0].push('is-three-quarters' + extraClass);
-                        classObj[1].push('is-one-quarter' + extraClass);
+                        classObj[0].push('advgb-is-three-quarters' + extraClass);
+                        classObj[1].push('advgb-is-one-quarter' + extraClass);
                         break;
                     case '14-34':
-                        classObj[0].push('is-one-quarter' + extraClass);
-                        classObj[1].push('is-three-quarters' + extraClass);
+                        classObj[0].push('advgb-is-one-quarter' + extraClass);
+                        classObj[1].push('advgb-is-three-quarters' + extraClass);
                         break;
                     case '45-15':
-                        classObj[0].push('is-four-fifths' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
+                        classObj[0].push('advgb-is-four-fifths' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
                         break;
                     case '15-45':
-                        classObj[0].push('is-one-fifth' + extraClass);
-                        classObj[1].push('is-four-fifths' + extraClass);
+                        classObj[0].push('advgb-is-one-fifth' + extraClass);
+                        classObj[1].push('advgb-is-four-fifths' + extraClass);
                         break;
                     case '12-14-14':
-                        classObj[0].push('is-half' + extraClass);
-                        classObj[1].push('is-one-quarter' + extraClass);
-                        classObj[2].push('is-one-quarter' + extraClass);
+                        classObj[0].push('advgb-is-half' + extraClass);
+                        classObj[1].push('advgb-is-one-quarter' + extraClass);
+                        classObj[2].push('advgb-is-one-quarter' + extraClass);
                         break;
                     case '14-14-12':
-                        classObj[0].push('is-one-quarter' + extraClass);
-                        classObj[1].push('is-one-quarter' + extraClass);
-                        classObj[2].push('is-half' + extraClass);
+                        classObj[0].push('advgb-is-one-quarter' + extraClass);
+                        classObj[1].push('advgb-is-one-quarter' + extraClass);
+                        classObj[2].push('advgb-is-half' + extraClass);
                         break;
                     case '14-12-14':
-                        classObj[0].push('is-one-quarter' + extraClass);
-                        classObj[1].push('is-half' + extraClass);
-                        classObj[2].push('is-one-quarter' + extraClass);
+                        classObj[0].push('advgb-is-one-quarter' + extraClass);
+                        classObj[1].push('advgb-is-half' + extraClass);
+                        classObj[2].push('advgb-is-one-quarter' + extraClass);
                         break;
                     case '15-35-15':
-                        classObj[0].push('is-one-fifth' + extraClass);
-                        classObj[1].push('is-three-fifths' + extraClass);
-                        classObj[2].push('is-one-fifth' + extraClass);
+                        classObj[0].push('advgb-is-one-fifth' + extraClass);
+                        classObj[1].push('advgb-is-three-fifths' + extraClass);
+                        classObj[2].push('advgb-is-one-fifth' + extraClass);
                         break;
                     case '35-15-15':
-                        classObj[0].push('is-three-fifths' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
-                        classObj[2].push('is-one-fifth' + extraClass);
+                        classObj[0].push('advgb-is-three-fifths' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
+                        classObj[2].push('advgb-is-one-fifth' + extraClass);
                         break;
                     case '15-15-35':
-                        classObj[0].push('is-one-fifth' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
-                        classObj[2].push('is-three-fifths' + extraClass);
+                        classObj[0].push('advgb-is-one-fifth' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
+                        classObj[2].push('advgb-is-three-fifths' + extraClass);
                         break;
                     case '16-46-16':
-                        classObj[0].push('is-2' + extraClass);
-                        classObj[1].push('is-8' + extraClass);
-                        classObj[2].push('is-2' + extraClass);
+                        classObj[0].push('advgb-is-2' + extraClass);
+                        classObj[1].push('advgb-is-8' + extraClass);
+                        classObj[2].push('advgb-is-2' + extraClass);
                         break;
                     case '1-12-12':
-                        classObj[0].push('is-full' + extraClass);
-                        classObj[1].push('is-half' + extraClass);
-                        classObj[2].push('is-half' + extraClass);
+                        classObj[0].push('advgb-is-full' + extraClass);
+                        classObj[1].push('advgb-is-half' + extraClass);
+                        classObj[2].push('advgb-is-half' + extraClass);
                         break;
                     case '12-12-1':
-                        classObj[0].push('is-half' + extraClass);
-                        classObj[1].push('is-half' + extraClass);
-                        classObj[2].push('is-full' + extraClass);
+                        classObj[0].push('advgb-is-half' + extraClass);
+                        classObj[1].push('advgb-is-half' + extraClass);
+                        classObj[2].push('advgb-is-full' + extraClass);
                         break;
                     case '36-16-16-16':
-                        classObj[0].push('is-half' + extraClass);
-                        classObj[1].push('is-2' + extraClass);
-                        classObj[2].push('is-2' + extraClass);
-                        classObj[3].push('is-2' + extraClass);
+                        classObj[0].push('advgb-is-half' + extraClass);
+                        classObj[1].push('advgb-is-2' + extraClass);
+                        classObj[2].push('advgb-is-2' + extraClass);
+                        classObj[3].push('advgb-is-2' + extraClass);
                         break;
                     case '16-16-16-36':
-                        classObj[0].push('is-2' + extraClass);
-                        classObj[1].push('is-2' + extraClass);
-                        classObj[2].push('is-2' + extraClass);
-                        classObj[3].push('is-half' + extraClass);
+                        classObj[0].push('advgb-is-2' + extraClass);
+                        classObj[1].push('advgb-is-2' + extraClass);
+                        classObj[2].push('advgb-is-2' + extraClass);
+                        classObj[3].push('advgb-is-half' + extraClass);
                         break;
                     case '25-15-15-15':
-                        classObj[0].push('is-two-fifths' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
-                        classObj[2].push('is-one-fifth' + extraClass);
-                        classObj[3].push('is-one-fifth' + extraClass);
+                        classObj[0].push('advgb-is-two-fifths' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
+                        classObj[2].push('advgb-is-one-fifth' + extraClass);
+                        classObj[3].push('advgb-is-one-fifth' + extraClass);
                         break;
                     case '15-15-15-25':
-                        classObj[0].push('is-one-fifth' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
-                        classObj[2].push('is-one-fifth' + extraClass);
-                        classObj[3].push('is-two-fifths' + extraClass);
+                        classObj[0].push('advgb-is-one-fifth' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
+                        classObj[2].push('advgb-is-one-fifth' + extraClass);
+                        classObj[3].push('advgb-is-two-fifths' + extraClass);
                         break;
                     case '12x4':
                         for (var _i5 = 0; _i5 < 4; _i5++) {
-                            classObj[_i5].push('is-half' + extraClass);
+                            classObj[_i5].push('advgb-is-half' + extraClass);
                         }
                         break;
                     case '12x6':
                         for (var _i6 = 0; _i6 < 6; _i6++) {
-                            classObj[_i6].push('is-half' + extraClass);
+                            classObj[_i6].push('advgb-is-half' + extraClass);
                         }
                         break;
                     case '13x6':
                         for (var _i7 = 0; _i7 < 6; _i7++) {
-                            classObj[_i7].push('is-one-third' + extraClass);
+                            classObj[_i7].push('advgb-is-one-third' + extraClass);
                         }
                         break;
                     case 'stacked':
                         for (var _i8 = 0; _i8 < 6; _i8++) {
-                            classObj[_i8].push('is-full' + extraClass);
+                            classObj[_i8].push('advgb-is-full' + extraClass);
                         }
                         break;
                     default:
@@ -5461,7 +5461,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'advgb-is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,
@@ -5477,7 +5477,47 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
+                var columns = attributes.columns,
+                    columnsLayout = attributes.columnsLayout,
+                    columnsLayoutT = attributes.columnsLayoutT,
+                    columnsLayoutM = attributes.columnsLayoutM,
+                    vAlign = attributes.vAlign,
+                    gutter = attributes.gutter,
+                    collapsedGutter = attributes.collapsedGutter,
+                    collapsedRtl = attributes.collapsedRtl,
+                    columnsWrapped = attributes.columnsWrapped,
+                    contentMaxWidth = attributes.contentMaxWidth,
+                    contentMaxWidthUnit = attributes.contentMaxWidthUnit,
+                    contentMinHeight = attributes.contentMinHeight,
+                    contentMinHeightUnit = attributes.contentMinHeightUnit,
+                    wrapperTag = attributes.wrapperTag,
+                    colId = attributes.colId;
+
+                var Tag = wrapperTag;
+
+                var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    Tag,
+                    { className: 'advgb-columns-wrapper' },
+                    React.createElement(
+                        'div',
+                        { className: blockClasses, id: colId,
+                            style: {
+                                maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
+                                minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
@@ -5636,7 +5676,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     avaiWidth -= parseInt(width);
                 });
 
-                var blockClasses = ['advgb-column', 'column', className].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-column', className].filter(Boolean).join(' ');
 
                 var deviceLetter = '';
                 if (tabSelected === 'mobile') deviceLetter = 'M';
@@ -5810,7 +5850,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "style",
                         null,
-                        "#block-" + clientId + " .advgb-column.column > .advgb-column-inner {\n                            text-align: " + textAlign + ";\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-column.column > .advgb-column-inner {\n                                text-align: " + textAlignM + ";\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}\n                            #block-" + clientId + " {flex-basis: " + width + "%;}" : '')
+                        "#block-" + clientId + " .advgb-column > .advgb-column-inner {\n                            text-align: " + textAlign + ";\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-column > .advgb-column-inner {\n                                text-align: " + textAlignM + ";\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}\n                            #block-" + clientId + " {flex-basis: " + width + "%;}" : '')
                     )
                 );
             }
@@ -5936,7 +5976,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderRadius = attributes.borderRadius;
 
 
-            var blockClasses = ['advgb-column', 'column', columnClasses].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-column', columnClasses].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
@@ -5955,7 +5995,41 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
+                var width = attributes.width,
+                    columnClasses = attributes.columnClasses,
+                    colId = attributes.colId,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderRadius = attributes.borderRadius;
+
+
+                var blockClasses = ['advgb-column', 'column', columnClasses].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClasses,
+                        id: colId,
+                        style: {
+                            width: width ? width + '%' : undefined,
+                            flex: width ? 'none' : undefined
+                        }
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-column-inner",
+                            style: { borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
@@ -6524,7 +6598,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 transform: function transform(attributes, innerBlocks) {
                     var columnBlock = createBlock('advgb/column', {}, innerBlocks);
 
-                    return createBlock('advgb/columns', { columns: 1 }, [columnBlock]);
+                    return createBlock('advgb/columns', { columns: 1, className: attributes.className }, [columnBlock]);
                 }
             }]
         },
