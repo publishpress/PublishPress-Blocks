@@ -40,7 +40,7 @@
 
                         return createBlock(
                             'advgb/columns',
-                            { columns: 1 },
+                            { columns: 1, className: attributes.className },
                             [ columnBlock ],
                         )
                     }

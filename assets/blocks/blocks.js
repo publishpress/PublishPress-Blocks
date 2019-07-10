@@ -6598,7 +6598,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 transform: function transform(attributes, innerBlocks) {
                     var columnBlock = createBlock('advgb/column', {}, innerBlocks);
 
-                    return createBlock('advgb/columns', { columns: 1 }, [columnBlock]);
+                    return createBlock('advgb/columns', { columns: 1, className: attributes.className }, [columnBlock]);
                 }
             }]
         },
