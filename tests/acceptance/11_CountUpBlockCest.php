@@ -73,10 +73,47 @@ class CountUpBlockCest
         // Change columns
         $I->fillField('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()', 3);
 
+        // Change text
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]//h4');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Downloaded');
+
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]/div[2]//div');
+        $I->selectCurrentElementText();
+        $I->pressKeys('199000');
+
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]/div[3]//div');
+        $I->selectCurrentElementText();
+        $I->pressKeys('times');
+
+        // Change text
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]//h4');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Develop since');
+
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[2]//div');
+        $I->selectCurrentElementText();
+        $I->pressKeys('2013');
+
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[3]//div');
+        $I->selectCurrentElementText();
+        $I->pressKeys('till now');
+
         $I->updatePost();
         $I->waitForElement('.wp-block-advgb-count-up');
 
         // Check columns change
         $I->seeNumberOfElements('.advgb-count-up > div', 3);
+
+        // Check text
+        $I->seeElement('//div[@class="advgb-count-up-columns-two"]/h4[@class="advgb-count-up-header"][text()="Downloaded"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-two"]/div/span[@class="advgb-counter-number"][text()="199000"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-two"]/p[@class="advgb-count-up-desc"][text()="times"]');
+
+        // Check text
+        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/h4[@class="advgb-count-up-header"][text()="Develop since"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/div/span[@class="advgb-counter-number"][text()="2013"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/p[@class="advgb-count-up-desc"][text()="till now"]');
+
     }
 }
