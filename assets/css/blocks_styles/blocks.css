@@ -214,7 +214,8 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     transition: all 0.4s ease-in-out !important;
 }
 
-.advgb-image-block .button {
+.advgb-image-block .button,
+#editor .advgb-image-block > div {
     z-index: 3;
 }
 

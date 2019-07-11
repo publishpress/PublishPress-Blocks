@@ -296,11 +296,11 @@
                                 />
                             </PanelBody>
                             <RangeControl
-                                label={ __('Transition speed') }
+                                label={ __('Transition speed (ms)') }
                                 value={ transitionSpeed || '' }
                                 onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) }
                                 min={ 0 }
-                                max={ 3 }
+                                max={ 3000 }
                             />
                         </PanelBody>
                     </InspectorControls>
@@ -407,7 +407,7 @@
         },
         transitionSpeed: {
             type: 'number',
-            default: 0.2,
+            default: 200,
         },
         align: {
             type: 'string',
@@ -490,5 +490,47 @@
 
             return props;
         },
+        deprecated: [
+            {
+                attributes: {
+                    ...blockAttrs,
+                    transitionSpeed: {
+                        type: 'number',
+                        default: 0.2,
+                    }
+                },
+                migrate: function( attributes ) {
+                    const transitionSpeed = attributes.transitionSpeed * 1000;
+                    return {
+                        ...attributes,
+                        transitionSpeed,
+                    }
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        id,
+                        align,
+                        url,
+                        urlOpenNewTab,
+                        title,
+                        text,
+                    } = attributes;
+
+                    return (
+                        <div className={ `align${align}` }>
+                            <RichText.Content
+                                tagName="a"
+                                className={ `wp-block-advgb-button_link ${id}` }
+                                href={ url || '#' }
+                                title={ title }
+                                target={ !urlOpenNewTab ? '_self' : '_blank' }
+                                value={ text }
+                                rel="noopener noreferrer"
+                            />
+                        </div>
+                    );
+                },
+            },
+        ],
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
