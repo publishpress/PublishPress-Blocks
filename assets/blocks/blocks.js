@@ -957,13 +957,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             ),
                             React.createElement(RangeControl, {
-                                label: __('Transition speed'),
+                                label: __('Transition speed (ms)'),
                                 value: transitionSpeed || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ transitionSpeed: value });
                                 },
                                 min: 0,
-                                max: 3
+                                max: 3000
                             })
                         )
                     )
@@ -1072,7 +1072,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         transitionSpeed: {
             type: 'number',
-            default: 0.2
+            default: 200
         },
         align: {
             type: 'string',
@@ -1149,7 +1149,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             return props;
-        }
+        },
+
+        deprecated: [{
+            attributes: _extends({}, blockAttrs, {
+                transitionSpeed: {
+                    type: 'number',
+                    default: 0.2
+                }
+            }),
+            migrate: function migrate(attributes) {
+                var transitionSpeed = attributes.transitionSpeed * 1000;
+                return _extends({}, attributes, {
+                    transitionSpeed: transitionSpeed
+                });
+            },
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var id = attributes.id,
+                    align = attributes.align,
+                    url = attributes.url,
+                    urlOpenNewTab = attributes.urlOpenNewTab,
+                    title = attributes.title,
+                    text = attributes.text;
+
+
+                return React.createElement(
+                    'div',
+                    { className: 'align' + align },
+                    React.createElement(RichText.Content, {
+                        tagName: 'a',
+                        className: 'wp-block-advgb-button_link ' + id,
+                        href: url || '#',
+                        title: title,
+                        target: !urlOpenNewTab ? '_self' : '_blank',
+                        value: text,
+                        rel: 'noopener noreferrer'
+                    })
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
