@@ -52,4 +52,50 @@ class AdvancedListBlockCest
         // Check block loaded
         $I->seeNumberOfElements('div.wp-block-advgb-list > ul > li', 5);
     }
+
+    public function changeIconStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change icon styles');
+
+        // Change styles
+        $I->click('//button[text()="Icon color"]');
+        $I->waitForElement('.components-color-palette');
+        $I->click('//button[text()="Icon color"]/parent::node()/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "advgb-list-item")]'); // click block to hide picker
+
+        $I->fillField('//label[text()="Icon size"]/following-sibling::node()/following-sibling::node()', 23);
+        $I->fillField('//label[text()="Line height"]/following-sibling::node()/following-sibling::node()', 21);
+        $I->fillField('//label[text()="Margin"]/following-sibling::node()/following-sibling::node()', 5);
+        $I->fillField('//label[text()="Padding"]/following-sibling::node()/following-sibling::node()', 5);
+
+        $I->click('//button[text()="Text Settings"]');
+        $I->waitForText('Text size');
+        $I->fillField('//label[text()="Text size"]/following-sibling::node()/following-sibling::node()/following-sibling::node()', 22);
+
+        $I->updatePost();
+        $I->waitForElement('div.wp-block-advgb-list');
+
+        // Check styles applied
+        $fontSize = $I->executeJS('return jQuery(".advgb-list li").css("font-size")');
+        $I->assertEquals('22px', $fontSize);
+
+        $iconSize = $I->executeJS('var elm = document.querySelector(".advgb-list li");var style = window.getComputedStyle(elm, "::before");return style.getPropertyValue("font-size");');
+        $I->assertEquals('23px', $iconSize);
+
+        $iconHeight = $I->executeJS('var elm = document.querySelector(".advgb-list li");var style = window.getComputedStyle(elm, "::before");return style.getPropertyValue("line-height");');
+        $I->assertEquals('21px', $iconHeight);
+
+        $iconColor = $I->executeJS('var elm = document.querySelector(".advgb-list li");var style = window.getComputedStyle(elm, "::before");return style.getPropertyValue("color");');
+        $I->assertEquals('rgb(255, 0, 0)', $iconColor);
+
+        $iconMargin = $I->executeJS('var elm = document.querySelector(".advgb-list li");var style = window.getComputedStyle(elm, "::before");return style.getPropertyValue("margin");');
+        $I->assertEquals('5px 5px 5px -33px', $iconMargin);
+
+        $iconPadding = $I->executeJS('var elm = document.querySelector(".advgb-list li");var style = window.getComputedStyle(elm, "::before");return style.getPropertyValue("padding");');
+        $I->assertEquals('5px', $iconPadding);
+    }
 }
