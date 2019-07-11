@@ -60,6 +60,9 @@ $editor_width                     = isset($saved_settings['editor_width']) ? $sa
 $default_thumb                    = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
 $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
 $enable_columns_visual_guide      = isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide'] ? 'checked' : '';
+if (!isset($saved_settings['enable_columns_visual_guide'])) {
+    $enable_columns_visual_guide = 'checked';
+}
 ?>
 
 <div id="advgb-settings-container">
@@ -356,6 +359,9 @@ $enable_columns_visual_guide      = isset($saved_settings['enable_columns_visual
         <ul class="blocks-config-list clearfix">
             <?php foreach ($advgb_blocks as $block) : ?>
                 <?php $iconColor = '';
+                if ($block['name'] === 'advgb/container') :
+                    continue;
+                endif;
                 if (isset($block['iconColor'])) :
                     $iconColor = 'style=color:' . $block['iconColor'];
                 endif; ?>

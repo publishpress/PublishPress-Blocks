@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "platform": "wordpress",
   "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,30 @@
     ]
   },
   "changelog": {
+    "2.0.4": [
+      {
+        "type": "fix",
+        "title": "Prefix all Column Manager css class to avoid conflicts"
+      },
+      {
+        "type": "fix",
+        "title": "Columns Visual Guide not activate on fresh install"
+      },
+      {
+        "type": "fix",
+        "title": "Keep custom block class when transform Container block to Columns Manager block"
+      }
+    ],
+    "2.0.3": [
+      {
+        "type": "fix",
+        "title": "Add back Container block and allow to convert it to Columns Manager block"
+      },
+      {
+        "type": "fix",
+        "title": "juTranslation duplicate slash in language url"
+      }
+    ],
     "2.0.2": [
       {
         "type": "fix",

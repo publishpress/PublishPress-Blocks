@@ -4688,11 +4688,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columnsLayoutT = attributes.columnsLayoutT,
                     columnsLayoutM = attributes.columnsLayoutM;
 
-                var _select = select('core/block-editor'),
-                    getBlockOrder = _select.getBlockOrder;
+                var _ref = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref.getBlockOrder;
 
-                var _dispatch = dispatch('core/block-editor'),
-                    updateBlockAttributes = _dispatch.updateBlockAttributes;
+                var _ref2 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref2.updateBlockAttributes;
 
                 var childBlocks = getBlockOrder(clientId);
                 var shouldUpdate = false;
@@ -5138,140 +5138,140 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 switch (layout) {
                     case '12-12':
                         for (var i = 0; i < 2; i++) {
-                            classObj[i].push('is-half' + extraClass);
+                            classObj[i].push('advgb-is-half' + extraClass);
                         }
                         break;
                     case '13-13-13':
                         for (var _i = 0; _i < 3; _i++) {
-                            classObj[_i].push('is-one-third' + extraClass);
+                            classObj[_i].push('advgb-is-one-third' + extraClass);
                         }
                         break;
                     case '14-14-14-14':
                         for (var _i2 = 0; _i2 < 4; _i2++) {
-                            classObj[_i2].push('is-one-quarter' + extraClass);
+                            classObj[_i2].push('advgb-is-one-quarter' + extraClass);
                         }
                         break;
                     case 'five':
                         for (var _i3 = 0; _i3 < 5; _i3++) {
-                            classObj[_i3].push('is-one-fifth' + extraClass);
+                            classObj[_i3].push('advgb-is-one-fifth' + extraClass);
                         }
                         break;
                     case 'six':
                         for (var _i4 = 0; _i4 < 6; _i4++) {
-                            classObj[_i4].push('is-2' + extraClass);
+                            classObj[_i4].push('advgb-is-2' + extraClass);
                         }
                         break;
                     case '23-13':
-                        classObj[0].push('is-two-thirds' + extraClass);
-                        classObj[1].push('is-one-third' + extraClass);
+                        classObj[0].push('advgb-is-two-thirds' + extraClass);
+                        classObj[1].push('advgb-is-one-third' + extraClass);
                         break;
                     case '13-23':
-                        classObj[0].push('is-one-third' + extraClass);
-                        classObj[1].push('is-two-thirds' + extraClass);
+                        classObj[0].push('advgb-is-one-third' + extraClass);
+                        classObj[1].push('advgb-is-two-thirds' + extraClass);
                         break;
                     case '34-14':
-                        classObj[0].push('is-three-quarters' + extraClass);
-                        classObj[1].push('is-one-quarter' + extraClass);
+                        classObj[0].push('advgb-is-three-quarters' + extraClass);
+                        classObj[1].push('advgb-is-one-quarter' + extraClass);
                         break;
                     case '14-34':
-                        classObj[0].push('is-one-quarter' + extraClass);
-                        classObj[1].push('is-three-quarters' + extraClass);
+                        classObj[0].push('advgb-is-one-quarter' + extraClass);
+                        classObj[1].push('advgb-is-three-quarters' + extraClass);
                         break;
                     case '45-15':
-                        classObj[0].push('is-four-fifths' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
+                        classObj[0].push('advgb-is-four-fifths' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
                         break;
                     case '15-45':
-                        classObj[0].push('is-one-fifth' + extraClass);
-                        classObj[1].push('is-four-fifths' + extraClass);
+                        classObj[0].push('advgb-is-one-fifth' + extraClass);
+                        classObj[1].push('advgb-is-four-fifths' + extraClass);
                         break;
                     case '12-14-14':
-                        classObj[0].push('is-half' + extraClass);
-                        classObj[1].push('is-one-quarter' + extraClass);
-                        classObj[2].push('is-one-quarter' + extraClass);
+                        classObj[0].push('advgb-is-half' + extraClass);
+                        classObj[1].push('advgb-is-one-quarter' + extraClass);
+                        classObj[2].push('advgb-is-one-quarter' + extraClass);
                         break;
                     case '14-14-12':
-                        classObj[0].push('is-one-quarter' + extraClass);
-                        classObj[1].push('is-one-quarter' + extraClass);
-                        classObj[2].push('is-half' + extraClass);
+                        classObj[0].push('advgb-is-one-quarter' + extraClass);
+                        classObj[1].push('advgb-is-one-quarter' + extraClass);
+                        classObj[2].push('advgb-is-half' + extraClass);
                         break;
                     case '14-12-14':
-                        classObj[0].push('is-one-quarter' + extraClass);
-                        classObj[1].push('is-half' + extraClass);
-                        classObj[2].push('is-one-quarter' + extraClass);
+                        classObj[0].push('advgb-is-one-quarter' + extraClass);
+                        classObj[1].push('advgb-is-half' + extraClass);
+                        classObj[2].push('advgb-is-one-quarter' + extraClass);
                         break;
                     case '15-35-15':
-                        classObj[0].push('is-one-fifth' + extraClass);
-                        classObj[1].push('is-three-fifths' + extraClass);
-                        classObj[2].push('is-one-fifth' + extraClass);
+                        classObj[0].push('advgb-is-one-fifth' + extraClass);
+                        classObj[1].push('advgb-is-three-fifths' + extraClass);
+                        classObj[2].push('advgb-is-one-fifth' + extraClass);
                         break;
                     case '35-15-15':
-                        classObj[0].push('is-three-fifths' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
-                        classObj[2].push('is-one-fifth' + extraClass);
+                        classObj[0].push('advgb-is-three-fifths' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
+                        classObj[2].push('advgb-is-one-fifth' + extraClass);
                         break;
                     case '15-15-35':
-                        classObj[0].push('is-one-fifth' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
-                        classObj[2].push('is-three-fifths' + extraClass);
+                        classObj[0].push('advgb-is-one-fifth' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
+                        classObj[2].push('advgb-is-three-fifths' + extraClass);
                         break;
                     case '16-46-16':
-                        classObj[0].push('is-2' + extraClass);
-                        classObj[1].push('is-8' + extraClass);
-                        classObj[2].push('is-2' + extraClass);
+                        classObj[0].push('advgb-is-2' + extraClass);
+                        classObj[1].push('advgb-is-8' + extraClass);
+                        classObj[2].push('advgb-is-2' + extraClass);
                         break;
                     case '1-12-12':
-                        classObj[0].push('is-full' + extraClass);
-                        classObj[1].push('is-half' + extraClass);
-                        classObj[2].push('is-half' + extraClass);
+                        classObj[0].push('advgb-is-full' + extraClass);
+                        classObj[1].push('advgb-is-half' + extraClass);
+                        classObj[2].push('advgb-is-half' + extraClass);
                         break;
                     case '12-12-1':
-                        classObj[0].push('is-half' + extraClass);
-                        classObj[1].push('is-half' + extraClass);
-                        classObj[2].push('is-full' + extraClass);
+                        classObj[0].push('advgb-is-half' + extraClass);
+                        classObj[1].push('advgb-is-half' + extraClass);
+                        classObj[2].push('advgb-is-full' + extraClass);
                         break;
                     case '36-16-16-16':
-                        classObj[0].push('is-half' + extraClass);
-                        classObj[1].push('is-2' + extraClass);
-                        classObj[2].push('is-2' + extraClass);
-                        classObj[3].push('is-2' + extraClass);
+                        classObj[0].push('advgb-is-half' + extraClass);
+                        classObj[1].push('advgb-is-2' + extraClass);
+                        classObj[2].push('advgb-is-2' + extraClass);
+                        classObj[3].push('advgb-is-2' + extraClass);
                         break;
                     case '16-16-16-36':
-                        classObj[0].push('is-2' + extraClass);
-                        classObj[1].push('is-2' + extraClass);
-                        classObj[2].push('is-2' + extraClass);
-                        classObj[3].push('is-half' + extraClass);
+                        classObj[0].push('advgb-is-2' + extraClass);
+                        classObj[1].push('advgb-is-2' + extraClass);
+                        classObj[2].push('advgb-is-2' + extraClass);
+                        classObj[3].push('advgb-is-half' + extraClass);
                         break;
                     case '25-15-15-15':
-                        classObj[0].push('is-two-fifths' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
-                        classObj[2].push('is-one-fifth' + extraClass);
-                        classObj[3].push('is-one-fifth' + extraClass);
+                        classObj[0].push('advgb-is-two-fifths' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
+                        classObj[2].push('advgb-is-one-fifth' + extraClass);
+                        classObj[3].push('advgb-is-one-fifth' + extraClass);
                         break;
                     case '15-15-15-25':
-                        classObj[0].push('is-one-fifth' + extraClass);
-                        classObj[1].push('is-one-fifth' + extraClass);
-                        classObj[2].push('is-one-fifth' + extraClass);
-                        classObj[3].push('is-two-fifths' + extraClass);
+                        classObj[0].push('advgb-is-one-fifth' + extraClass);
+                        classObj[1].push('advgb-is-one-fifth' + extraClass);
+                        classObj[2].push('advgb-is-one-fifth' + extraClass);
+                        classObj[3].push('advgb-is-two-fifths' + extraClass);
                         break;
                     case '12x4':
                         for (var _i5 = 0; _i5 < 4; _i5++) {
-                            classObj[_i5].push('is-half' + extraClass);
+                            classObj[_i5].push('advgb-is-half' + extraClass);
                         }
                         break;
                     case '12x6':
                         for (var _i6 = 0; _i6 < 6; _i6++) {
-                            classObj[_i6].push('is-half' + extraClass);
+                            classObj[_i6].push('advgb-is-half' + extraClass);
                         }
                         break;
                     case '13x6':
                         for (var _i7 = 0; _i7 < 6; _i7++) {
-                            classObj[_i7].push('is-one-third' + extraClass);
+                            classObj[_i7].push('advgb-is-one-third' + extraClass);
                         }
                         break;
                     case 'stacked':
                         for (var _i8 = 0; _i8 < 6; _i8++) {
-                            classObj[_i8].push('is-full' + extraClass);
+                            classObj[_i8].push('advgb-is-full' + extraClass);
                         }
                         break;
                     default:
@@ -5441,8 +5441,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         attributes: blockAttrs,
         edit: AdvColumnsEdit,
-        save: function save(_ref) {
-            var attributes = _ref.attributes;
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
             var columns = attributes.columns,
                 columnsLayout = attributes.columnsLayout,
                 columnsLayoutT = attributes.columnsLayoutT,
@@ -5461,7 +5461,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'advgb-is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,
@@ -5477,7 +5477,47 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
+                var columns = attributes.columns,
+                    columnsLayout = attributes.columnsLayout,
+                    columnsLayoutT = attributes.columnsLayoutT,
+                    columnsLayoutM = attributes.columnsLayoutM,
+                    vAlign = attributes.vAlign,
+                    gutter = attributes.gutter,
+                    collapsedGutter = attributes.collapsedGutter,
+                    collapsedRtl = attributes.collapsedRtl,
+                    columnsWrapped = attributes.columnsWrapped,
+                    contentMaxWidth = attributes.contentMaxWidth,
+                    contentMaxWidthUnit = attributes.contentMaxWidthUnit,
+                    contentMinHeight = attributes.contentMinHeight,
+                    contentMinHeightUnit = attributes.contentMinHeightUnit,
+                    wrapperTag = attributes.wrapperTag,
+                    colId = attributes.colId;
+
+                var Tag = wrapperTag;
+
+                var blockClasses = ['advgb-columns', 'columns is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    Tag,
+                    { className: 'advgb-columns-wrapper' },
+                    React.createElement(
+                        'div',
+                        { className: blockClasses, id: colId,
+                            style: {
+                                maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
+                                minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
@@ -5619,11 +5659,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     paddingBottomM = attributes.paddingBottomM,
                     paddingLeftM = attributes.paddingLeftM;
 
-                var _select = select('core/block-editor'),
-                    getBlockOrder = _select.getBlockOrder,
-                    getBlockRootClientId = _select.getBlockRootClientId,
-                    getBlockAttributes = _select.getBlockAttributes;
+                var _ref = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref.getBlockOrder,
+                    getBlockRootClientId = _ref.getBlockRootClientId,
+                    getBlockAttributes = _ref.getBlockAttributes;
 
+                ;
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
                 var rootBlockId = getBlockRootClientId(clientId);
                 var rootChildBlocks = getBlockOrder(rootBlockId).filter(function (blockId) {
@@ -5635,7 +5676,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     avaiWidth -= parseInt(width);
                 });
 
-                var blockClasses = ['advgb-column', 'column', className].filter(Boolean).join(' ');
+                var blockClasses = ['advgb-column', className].filter(Boolean).join(' ');
 
                 var deviceLetter = '';
                 if (tabSelected === 'mobile') deviceLetter = 'M';
@@ -5809,7 +5850,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "style",
                         null,
-                        "#block-" + clientId + " .advgb-column.column > .advgb-column-inner {\n                            text-align: " + textAlign + ";\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-column.column > .advgb-column-inner {\n                                text-align: " + textAlignM + ";\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}\n                            #block-" + clientId + " {flex-basis: " + width + "%;}" : '')
+                        "#block-" + clientId + " .advgb-column > .advgb-column-inner {\n                            text-align: " + textAlign + ";\n                            margin-top: " + marginTop + "px;\n                            margin-right: " + marginRight + "px;\n                            margin-bottom: " + marginBottom + "px;\n                            margin-left: " + marginLeft + "px;\n                            padding-top: " + paddingTop + "px;\n                            padding-right: " + paddingRight + "px;\n                            padding-bottom: " + paddingBottom + "px;\n                            padding-left: " + paddingLeft + "px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-" + clientId + " .advgb-column > .advgb-column-inner {\n                                text-align: " + textAlignM + ";\n                                margin-top: " + marginTopM + "px;\n                                margin-right: " + marginRightM + "px;\n                                margin-bottom: " + marginBottomM + "px;\n                                margin-left: " + marginLeftM + "px;\n                                padding-top: " + paddingTopM + "px;\n                                padding-right: " + paddingRightM + "px;\n                                padding-bottom: " + paddingBottomM + "px;\n                                padding-left: " + paddingLeftM + "px;\n                            }\n                        }\n                        " + (width ? "#block-" + rootBlockId + " .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}\n                            #block-" + clientId + " {flex-basis: " + width + "%;}" : '')
                     )
                 );
             }
@@ -5924,8 +5965,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         attributes: blockAttrs,
         edit: AdvColumnEdit,
-        save: function save(_ref) {
-            var attributes = _ref.attributes;
+        save: function save(_ref2) {
+            var attributes = _ref2.attributes;
             var width = attributes.width,
                 columnClasses = attributes.columnClasses,
                 colId = attributes.colId,
@@ -5935,7 +5976,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderRadius = attributes.borderRadius;
 
 
-            var blockClasses = ['advgb-column', 'column', columnClasses].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-column', columnClasses].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
@@ -5954,7 +5995,41 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
+                var width = attributes.width,
+                    columnClasses = attributes.columnClasses,
+                    colId = attributes.colId,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderRadius = attributes.borderRadius;
+
+
+                var blockClasses = ['advgb-column', 'column', columnClasses].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClasses,
+                        id: colId,
+                        style: {
+                            width: width ? width + '%' : undefined,
+                            flex: width ? 'none' : undefined
+                        }
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-column-inner",
+                            style: { borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
@@ -6471,6 +6546,98 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/container/block.jsx":
+/*!*******************************************!*\
+  !*** ./assets/blocks/container/block.jsx ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function (wpI18n, wpBlocks, wpBlockEditor) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Fragment = wp.element.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType,
+        createBlock = wpBlocks.createBlock;
+    var _wpBlockEditor = wpBlockEditor,
+        InnerBlocks = _wpBlockEditor.InnerBlocks,
+        InspectorControls = _wpBlockEditor.InspectorControls;
+
+
+    var containerBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+        React.createElement("path", { d: "M3 5v14h19V5H3zm2 2h15v4H5V7zm0 10v-4h4v4H5zm6 0v-4h9v4h-9z" })
+    );
+
+    registerBlockType('advgb/container', {
+        title: __('Container'),
+        description: __('Block for containing other blocks.'),
+        icon: {
+            src: containerBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('container'), __('row'), __('box')],
+        attributes: {},
+        supports: {
+            align: true,
+            inserter: false
+        },
+        transforms: {
+            to: [{
+                type: 'block',
+                blocks: ['advgb/columns'],
+                transform: function transform(attributes, innerBlocks) {
+                    var columnBlock = createBlock('advgb/column', {}, innerBlocks);
+
+                    return createBlock('advgb/columns', { columns: 1, className: attributes.className }, [columnBlock]);
+                }
+            }]
+        },
+        edit: function edit() {
+            return React.createElement(
+                Fragment,
+                null,
+                React.createElement(
+                    InspectorControls,
+                    null,
+                    React.createElement(
+                        "div",
+                        { style: {
+                                color: '#ff0000',
+                                fontStyle: 'italic',
+                                marginTop: 20,
+                                padding: 10,
+                                borderTop: '1px solid #ccc'
+                            }
+                        },
+                        __('We will remove this block in the future release. ' + 'Please convert it to Columns Manager block to avoid unwanted error. ' + 'Columns Manager block has a lot of styles and improvements.')
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "advgb-blocks-container" },
+                    React.createElement(InnerBlocks, null)
+                )
+            );
+        },
+        save: function save() {
+            return React.createElement(
+                "div",
+                { className: "advgb-blocks-container" },
+                React.createElement(InnerBlocks.Content, null)
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.blockEditor);
 
 /***/ }),
 
@@ -13491,9 +13658,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13506,6 +13673,7 @@ __webpack_require__(/*! ./assets/blocks/advvideo/block.jsx */"./assets/blocks/ad
 __webpack_require__(/*! ./assets/blocks/columns/block.jsx */"./assets/blocks/columns/block.jsx");
 __webpack_require__(/*! ./assets/blocks/columns/column.jsx */"./assets/blocks/columns/column.jsx");
 __webpack_require__(/*! ./assets/blocks/contact-form/block.jsx */"./assets/blocks/contact-form/block.jsx");
+__webpack_require__(/*! ./assets/blocks/container/block.jsx */"./assets/blocks/container/block.jsx");
 __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/count-up/block.jsx");
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
 __webpack_require__(/*! ./assets/blocks/editor-sidebar/sidebar.jsx */"./assets/blocks/editor-sidebar/sidebar.jsx");
