@@ -4137,7 +4137,7 @@ float: left;'
                             $hover_sh_v     = isset($style_data_array['hoverShadowV']) ? intval($style_data_array['hoverShadowV']) : 3;
                             $hover_sh_blur  = isset($style_data_array['hoverShadowBlur']) ? intval($style_data_array['hoverShadowBlur']) : 1;
                             $hover_sh_sprd  = isset($style_data_array['hoverShadowSpread']) ? intval($style_data_array['hoverShadowSpread']) : 1;
-                            $transition_spd = isset($style_data_array['transitionSpeed']) ? floatval($style_data_array['transitionSpeed']) : 0.2;
+                            $transition_spd = isset($style_data_array['transitionSpeed']) ? floatval($style_data_array['transitionSpeed'])/1000 : 0.2;
 
                             $style_html .= '.'. $block_class . '{';
                             $style_html .= 'font-size:'.$font_size.'px;';
