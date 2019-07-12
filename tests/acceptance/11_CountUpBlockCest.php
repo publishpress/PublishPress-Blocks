@@ -29,7 +29,7 @@ class CountUpBlockCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( \'core/nux\' ).disableTips()');
+        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
 
         $I->fillField('.editor-post-title__input', 'Count Up Block');
 

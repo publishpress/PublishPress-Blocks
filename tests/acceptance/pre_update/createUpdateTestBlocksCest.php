@@ -27,7 +27,7 @@ class createUpdateTestBlocksCest
         // Create new post
         $I->amOnPage('/wp-admin/post-new.php');
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( \'core/nux\' ).disableTips()');
+        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
 
         // Change post title
         $I->waitForElement('.editor-post-title__input');
