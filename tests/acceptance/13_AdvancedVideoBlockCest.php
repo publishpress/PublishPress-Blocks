@@ -57,6 +57,24 @@ class AdvancedVideoBlockCest
         $I->seeElement('//div[contains(@class, "advgb-video-block")][contains(@data-video, "264060718")][@data-source="vimeo"]');
     }
 
+    public function fetchYoutubeVideo(AcceptanceTester $I)
+    {
+        $I->wantTo('Fetch video from Youtube');
+
+        // Add youtube video
+        $I->waitForElementVisible('.advgb-video-input-block');
+        $I->fillField('//div[contains(@class, "advgb-video-block")]//div[@class="advgb-video-input-block"]//input', 'https://www.youtube.com/watch?v=kJQP7kiw5Fk');
+        $I->click('Fetch');
+
+        $I->waitForElement('//div[@class="advgb-current-video-desc"]//span[@title="youtube"]');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-video');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-video-block")][contains(@data-video, "kJQP7kiw5Fk")][@data-source="youtube"]');
+    }
+
     public function changeColors(AcceptanceTester $I)
     {
         $I->wantTo('Change video block colors');
