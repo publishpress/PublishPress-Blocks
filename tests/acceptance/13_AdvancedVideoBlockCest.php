@@ -55,4 +55,32 @@ class AdvancedVideoBlockCest
         // Check
         $I->seeElement('//div[contains(@class, "advgb-video-block")][contains(@data-video, "264060718")][@data-source="vimeo"]');
     }
+
+    public function changeColors(AcceptanceTester $I)
+    {
+        $I->wantTo('Change video block colors');
+
+        // Change colors
+        $I->click('//button/span[text()="Color Settings"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Overlay Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#2196f3');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "advgb-video-block")]'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Play Button Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[contains(@class, "advgb-video-block")]'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-video');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-video-block")]/div[contains(@class, "advgb-video-wrapper")][contains(@style, "background-color:#2196f3")]');
+        $I->seeElement('//div[contains(@class, "advgb-video-block")]//div[@class="advgb-play-button"][contains(@style, "color:#ff0000")]');
+    }
 }
