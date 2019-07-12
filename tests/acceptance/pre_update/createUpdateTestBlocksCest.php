@@ -298,6 +298,7 @@ class createUpdateTestBlocksCest
     {
         /***** Add Accordion *****/
         $I->insertBlock('Accordion');
+        $I->waitForElement('.advgb-accordion-block');
 
         $I->fillField('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 1');
         $I->click('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
@@ -306,6 +307,7 @@ class createUpdateTestBlocksCest
         $I->pressKeys(\WebDriverKeys::DOWN);
 
         $I->insertBlock('Accordion');
+        $I->waitForElement('.advgb-accordion-block');
 
         $I->fillField('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 2');
         $I->click('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
