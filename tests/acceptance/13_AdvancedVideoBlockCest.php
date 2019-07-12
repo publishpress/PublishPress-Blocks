@@ -23,7 +23,7 @@ class AdvancedVideoBlockCest
     {
         $I->loginAsAdmin('admin', 'password');
 
-        $I->wantTo('Create a Advanced Video block');
+        $I->wantTo('Create a Advanced Video block from Vimeo');
 
         $I->amOnPage('/wp-admin/post-new.php');
 
@@ -37,7 +37,8 @@ class AdvancedVideoBlockCest
         $I->waitForElement('.advgb-video-block');
 
         // Fetch video
-        $I->fillField('//div[@class="advgb-video-block"]//input', 'https://vimeo.com/264060718');
+        $I->waitForElementVisible('.advgb-video-input-block');
+        $I->fillField('//div[contains(@class, "advgb-video-block")]//div[@class="advgb-video-input-block"]//input', 'https://vimeo.com/264060718');
         $I->click('Fetch');
 
         $I->waitForElement('//div[@class="advgb-current-video-desc"]//span[@title="vimeo"]');
