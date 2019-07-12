@@ -178,7 +178,7 @@ class AdvancedButtonBlockCest
         $I->fillField('//label[text()="Shadow V offset"]/following-sibling::node()/following-sibling::node()', 6);
         $I->fillField('//label[text()="Shadow blur"]/following-sibling::node()/following-sibling::node()', 3);
         $I->fillField('//label[text()="Shadow spread"]/following-sibling::node()/following-sibling::node()', 2);
-        $I->fillField('//label[text()="Transition speed"]/following-sibling::node()/following-sibling::node()', 0.5);
+        $I->fillField('//label[text()="Transition speed (ms)"]/following-sibling::node()/following-sibling::node()', 500);
 
         // Change hover color
         $I->click('//h2/button[text()="Hover"]/parent::node()/following-sibling::node()//span[text()="Color Settings"]');
@@ -221,6 +221,6 @@ class AdvancedButtonBlockCest
         $I->assertEquals($hoverShadowColorRgb.' 5px 6px 3px 2px', $boxShadow);
 
         $transition = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("transition")');
-        $I->assertTrue(strpos($transition, '0.5') !== false);
+        $I->assertTrue(strpos($transition, '0.5s') !== false);
     }
 }
