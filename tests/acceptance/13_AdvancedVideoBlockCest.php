@@ -135,4 +135,22 @@ class AdvancedVideoBlockCest
         $I->seeElement('//div[contains(@class, "advgb-video-block")]/div[contains(@class, "advgb-video-wrapper")][contains(@style, "width:650px")]');
         $I->seeElement('//div[contains(@class, "advgb-video-block")]//div[@class="advgb-button-wrapper"][contains(@style, "height:500px")]');
     }
+
+    public function changeVideoPoster(AcceptanceTester $I)
+    {
+        $I->wantTo('Change video poster image');
+
+        // Change
+        $I->click('//button[@aria-label="Change image preview"]');
+        $I->click('Media Library');
+        $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
+        $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
+        $I->click('Select');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-video');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-video-block")]/div[contains(@class, "advgb-video-wrapper")]/div[contains(@class, "advgb-video-poster")][contains(@style, "galaxy.jpg")]');
+    }
 }
