@@ -99,4 +99,21 @@ class AdvancedVideoBlockCest
         $I->seeElement('.advgb-video-block .advgb-play-button svg[width="100"]');
         $I->seeElement('.advgb-video-block .advgb-play-button svg[height="100"]');
     }
+
+    public function changeVideoSize(AcceptanceTester $I)
+    {
+        $I->wantTo('Change video width and height');
+
+        // Change
+        $I->click('//label[text()="Full width"]/preceding-sibling::node()');
+        $I->fillField('//label[text()="Video height"]/following-sibling::node()/following-sibling::node()', 500);
+        $I->fillField('//label[text()="Video width"]/following-sibling::node()/following-sibling::node()', 650);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-video');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-video-block")]/div[contains(@class, "advgb-video-wrapper")][contains(@style, "width:650px")]');
+        $I->seeElement('//div[contains(@class, "advgb-video-block")]//div[@class="advgb-button-wrapper"][contains(@style, "height:500px")]');
+    }
 }
