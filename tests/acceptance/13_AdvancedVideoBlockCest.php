@@ -83,4 +83,20 @@ class AdvancedVideoBlockCest
         $I->seeElement('//div[contains(@class, "advgb-video-block")]/div[contains(@class, "advgb-video-wrapper")][contains(@style, "background-color:#2196f3")]');
         $I->seeElement('//div[contains(@class, "advgb-video-block")]//div[@class="advgb-play-button"][contains(@style, "color:#ff0000")]');
     }
+
+    public function changePlayButtonStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change play button styles');
+
+        // Change styles
+        $I->click('//span[text()="Icon Style"]/following-sibling::node()/div[@class="advgb-icon-item"][3]');
+        $I->fillField('//label[text()="Play Button Size"]/following-sibling::node()/following-sibling::node()', 100);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-video');
+
+        // Check
+        $I->seeElement('.advgb-video-block .advgb-play-button svg[width="100"]');
+        $I->seeElement('.advgb-video-block .advgb-play-button svg[height="100"]');
+    }
 }
