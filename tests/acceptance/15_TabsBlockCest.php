@@ -65,7 +65,7 @@ class TabsBlockCest
 
     public function changeHeaderStyles(AcceptanceTester $I)
     {
-        $I->wantTo('Change header styles');
+        $I->wantTo('Change tabs header styles');
         $tabBgColor = '#999999';
         $tabTextColor = '#ffff00';
         $activeBgColor = '#006da3';
@@ -119,7 +119,7 @@ class TabsBlockCest
 
     public function changeBodyStyles(AcceptanceTester $I)
     {
-        $I->wantTo('Change body styles');
+        $I->wantTo('Change tabs body styles');
         $bodyBgColor = '#2196f3';
         $bodyTextColor = '#ffffff';
 
@@ -149,7 +149,7 @@ class TabsBlockCest
 
     public function changeBorderStyles(AcceptanceTester $I)
     {
-        $I->wantTo('Change border styles');
+        $I->wantTo('Change tabs border styles');
 
         //Change
         $I->click('//button[text()="Border Settings"]');

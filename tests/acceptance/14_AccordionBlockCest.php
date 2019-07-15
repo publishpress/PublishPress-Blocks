@@ -23,7 +23,7 @@ class AccordionBlockCest
     {
         $I->loginAsAdmin('admin', 'password');
 
-        $I->wantTo('Create a Accordion block');
+        $I->wantTo('Create an Accordion block');
 
         $I->amOnPage('/wp-admin/post-new.php');
 
