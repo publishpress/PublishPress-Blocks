@@ -57,10 +57,63 @@ class TabsBlockCest
         $I->waitForElement('.wp-block-advgb-tabs');
 
         // Check
-        $I->wait(1);
         $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][1]/a/span[text()="First tab"]');
         $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/div[contains(@class, "advgb-tab-body")][1]/p[text()="Lorem ipsum dono sit amet."]');
         $I->seeNumberOfElements('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "ui-state-default")]', 3);
         $I->seeNumberOfElementsInDOM('//div[contains(@class, "advgb-tabs-block")]/div[contains(@class, "ui-tabs-panel")]', 3);
+    }
+
+    public function changeHeaderStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change header styles');
+        $tabBgColor = '#999999';
+        $tabTextColor = '#ffff00';
+        $activeBgColor = '#006da3';
+        $activeBgColorRgb = 'rgb(0, 109, 163)';
+        $activeTextColor = '#00ffff';
+        $activeTextColorRgb = 'rgb(0, 255, 255)';
+
+        // Change
+        $I->click('//button/span[text()="Tab Colors"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($tabBgColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-tabs-block'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($tabTextColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-tabs-block'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Active Tab Background Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($activeBgColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-tabs-block'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Active Tab Text Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($activeTextColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-tabs-block'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-tabs');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][2][contains(@style, "background-color:'.$tabBgColor.'")]');
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][2]/a[contains(@style, "color:'.$tabTextColor.'")]');
+
+        $tabActiveBgColor = $I->executeJS('return jQuery("li.advgb-tab.ui-tabs-active").css("background-color")');
+        $I->assertEquals($activeBgColorRgb, $tabActiveBgColor);
+
+        $tabActiveTextColor = $I->executeJS('return jQuery("li.advgb-tab.ui-tabs-active a").css("color")');
+        $I->assertEquals($activeTextColorRgb, $tabActiveTextColor);
     }
 }
