@@ -137,4 +137,39 @@ class AccordionBlockCest
         $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "background-color: '.$bodyBgColorRgb.'")]');
         $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "color: '.$bodyTextColorRgb.'")]');
     }
+
+    public function changeBorderStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change accordion border styles');
+
+        // Change
+        $I->click('//button[text()="Border Settings"]');
+        $I->selectOption('//label[text()="Border Style"]/following-sibling::node()', array('text' => 'Dashed'));
+        $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 2);
+        $I->fillField('//label[text()="Border radius"]/following-sibling::node()/following-sibling::node()', 10);
+
+        $I->click('//button[text()="Border Settings"]/parent::node()/parent::node()//span[text()="Color Settings"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-accordion');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-color:#ff0000")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-color: rgb(255, 0, 0)")]');
+
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-style:dashed")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-style: dashed")]');
+
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-width:2px")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-width: 2px")]');
+
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-radius:10px")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-radius: 10px")]');
+    }
 }
