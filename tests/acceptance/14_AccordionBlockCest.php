@@ -9,7 +9,7 @@ class AccordionBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-accordion-block');
-            $I->clickWithLeftButton('//div[contains(@class, "advgb-accordion-block")]');
+            $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4');
         } catch(Exception $e) {
             // do stuff
         }
@@ -62,5 +62,48 @@ class AccordionBlockCest
         // Check
         $I->seeNumberOfElements('.advgb-accordion-block', 2);
         $I->seeElement('.advgb-accordion-block .ui-accordion-header');
+    }
+
+    public function changeHeaderStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change accordion header styles');
+        $headerBgColor = '#2196f3';
+        $headerTextColor = '#000000';
+        $headerIconColor = '#ffff00';
+        $headerIconColorRgb = 'rgb(255, 255, 0)';
+
+        // Change styles
+        $I->click('//span[text()="Header Icon Style"]/following-sibling::node()/div[@class="advgb-icon-item"][2]');
+
+        // Change colors
+        $I->click('//button/span[text()="Color Settings"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($headerBgColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($headerTextColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Icon Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($headerIconColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-accordion');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "background-color:'.$headerBgColor.'")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "color:'.$headerTextColor.'")]');
+        //$I->seeElementInDOM('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")]/span/*[@fill="#ffff00"]');
     }
 }
