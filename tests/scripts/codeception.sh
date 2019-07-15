@@ -27,7 +27,11 @@ function prepare_tests () {
 
         echo -e "\e[92mCreate sample products\e[0m"
         wp wc product create --name="Test Product 1" --type=simple --sku=WCCLITESTP1 --regular_price=20 --user=admin --allow-root
-        wp wc product create --name="Test Product 2" --type=simple --sku=WCCLITESTP2 --regular_price=30 --user=admin --allow-root
+        wp wc product create --name="Hot Product 2" --type=simple --sku=WCCLITESTP2 --regular_price=30 --user=admin --allow-root
+        wp wc product create --name="Another Product 3" --type=simple --sku=WCCLITESTP2 --regular_price=28 --user=admin --allow-root
+        wp wc product create --name="Vip Product 4" --type=simple --sku=WCCLITESTP2 --regular_price=69 --user=admin --allow-root
+        wp wc product create --name="Digital Product 5" --type=simple --sku=WCCLITESTP2 --regular_price=99 --user=admin --allow-root
+        wp wc product create --name="Normal Product 6" --type=simple --sku=WCCLITESTP2 --regular_price=99 --user=admin --allow-root
 
         # Import medias
         echo -e "\e[92mImport sample images\e[0m"
