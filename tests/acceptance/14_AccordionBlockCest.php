@@ -70,7 +70,6 @@ class AccordionBlockCest
         $headerBgColor = '#2196f3';
         $headerTextColor = '#000000';
         $headerIconColor = '#ffff00';
-        $headerIconColorRgb = 'rgb(255, 255, 0)';
 
         // Change styles
         $I->click('//span[text()="Header Icon Style"]/following-sibling::node()/div[@class="advgb-icon-item"][2]');
@@ -105,5 +104,37 @@ class AccordionBlockCest
         $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "background-color:'.$headerBgColor.'")]');
         $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "color:'.$headerTextColor.'")]');
         //$I->seeElementInDOM('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")]/span/*[@fill="#ffff00"]');
+    }
+
+    public function changeBodyStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change accordion body styles');
+        $bodyBgColor = '#f2f3a4';
+        $bodyBgColorRgb = 'rgb(242, 243, 164)';
+        $bodyTextColor = '#333333';
+        $bodyTextColorRgb = 'rgb(51, 51, 51)';
+
+        // Change colors
+        $I->click('//button/span[text()="Body Color Settings"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($bodyBgColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys($bodyTextColor);
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-accordion');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "background-color: '.$bodyBgColorRgb.'")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "color: '.$bodyTextColorRgb.'")]');
     }
 }
