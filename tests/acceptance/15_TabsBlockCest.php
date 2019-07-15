@@ -146,4 +146,38 @@ class TabsBlockCest
         $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/div[contains(@class, "advgb-tab-body")][contains(@style, "background-color:'.$bodyBgColor.'")]');
         $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/div[contains(@class, "advgb-tab-body")][contains(@style, "color:'.$bodyTextColor.'")]');
     }
+
+    public function changeBorderStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change border styles');
+
+        //Change
+        $I->click('//button[text()="Border Settings"]');
+        $I->selectOption('//label[text()="Border Style"]/following-sibling::node()', array('text' => 'Dashed'));
+        $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 2);
+        $I->fillField('//label[text()="Border radius"]/following-sibling::node()/following-sibling::node()', 10);
+
+        $I->click('//button/span[text()="Border Color"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-tabs-block'); // click block to hide picker
+
+        $I->updatePost();
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][contains(@style, "border-color:#ff0000")]');
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/div[contains(@class, "advgb-tab-body")][contains(@style, "border-color:#ff0000")]');
+
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][contains(@style, "border-style:dashed")]');
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/div[contains(@class, "advgb-tab-body")][contains(@style, "border-style:dashed")]');
+
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][contains(@style, "border-width:2px")]');
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/div[contains(@class, "advgb-tab-body")][contains(@style, "border-width:2px")]');
+
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][contains(@style, "border-radius:10px")]');
+        $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/div[contains(@class, "advgb-tab-body")][contains(@style, "border-radius:10px")]');
+    }
 }
