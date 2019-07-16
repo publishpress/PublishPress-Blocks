@@ -117,4 +117,30 @@ class NewsletterBlockCest
         $I->seeElement('//div[contains(@class, "advgb-newsletter")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "background-color:#2196f3")]');
         $I->seeElement('//div[contains(@class, "advgb-newsletter")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "color:#ffffff")]');
     }
+
+    public function changeBorderStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change newsletter form border styles');
+
+        // Change
+        $I->click('//button[text()="Border Settings"]');
+        $I->click('//button/span[text()="Border Color"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-newsletter-wrapper'); // click block to hide picker
+
+        $I->selectOption('//label[text()="Border Style"]/following-sibling::node()', array('text' => 'Dashed'));
+        $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 5);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-newsletter');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "border-color:#ff0000")]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "border-style:dashed")]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "border-radius:5px")]');
+    }
 }
