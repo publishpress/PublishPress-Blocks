@@ -75,4 +75,34 @@ class SummaryBlockCest
         $I->seeNumberOfElements('//ul[contains(@class, "advgb-toc")]/li[@class="toc-level-2"]', 1);
         $I->seeNumberOfElements('//ul[contains(@class, "advgb-toc")]/li[@class="toc-level-3"]', 1);
     }
+
+    public function changeSummaryStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change summary link color and load minimized');
+
+        // Change
+        $I->click('//button/span[text()="Anchor Color"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Anchor Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff0000');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-toc'); // click block to hide picker
+
+        $I->click('//label[text()="Load minimized"]/preceding-sibling::node()');
+        $I->waitForText('Summary header title');
+        $I->fillField('//label[text()="Summary header title"]/following-sibling::node()', 'Summary Content');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-summary');
+
+        // Check
+        $I->seeElement('//div[@class="advgb-toc-header collapsed"]');
+        $I->dontSeeElement('//ul[contains(@class, "advgb-toc")]');
+        $I->click('//div[contains(@class, "advgb-toc-header")]');
+        $I->waitForElementVisible('//ul[contains(@class, "advgb-toc")]/li');
+
+        $color = $I->executeJS('return jQuery(".advgb-toc li a").css("color")');
+        $I->assertEquals('rgb(255, 0, 0)', $color);
+    }
 }
