@@ -67,4 +67,27 @@ class NewsletterBlockCest
         $I->seeElement('//div[contains(@class, "advgb-newsletter")]//input[contains(@class, "advgb-form-input-lname")]');
         $I->seeElement('//div[contains(@class, "advgb-newsletter")]//input[contains(@class, "advgb-form-input-email")]');
     }
+
+    public function changeTextHolder(AcceptanceTester $I)
+    {
+        $I->wantTo('Change newsletter form input placeholder');
+
+        // Change
+        $I->fillField('//label[text()="First Name input placeholder"]/following-sibling::node()', 'Your Name');
+        $I->fillField('//label[text()="Last Name input placeholder"]/following-sibling::node()', 'Your Nickname');
+        $I->fillField('//label[text()="Email input placeholder"]/following-sibling::node()', 'Your Email');
+        $I->fillField('//label[text()="Submit text"]/following-sibling::node()', 'Subscribe');
+        $I->fillField('//label[text()="Empty field warning text"]/following-sibling::node()', 'Not allow empty field!');
+        $I->fillField('//label[text()="Submit success text"]/following-sibling::node()', 'Thanks for subscribe!');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-newsletter');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//input[contains(@class, "advgb-form-input-fname")][@placeholder="Your Name"]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//input[contains(@class, "advgb-form-input-lname")][@placeholder="Your Nickname"]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//input[contains(@class, "advgb-form-input-email")][@placeholder="Your Email"]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//button[contains(@class, "advgb-form-submit")][@data-alert="Not allow empty field!"]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//button[contains(@class, "advgb-form-submit")][@data-success="Thanks for subscribe!"]');
+    }
 }
