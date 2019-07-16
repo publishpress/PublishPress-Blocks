@@ -47,6 +47,24 @@ class NewsletterBlockCest
         $I->waitForElement('.wp-block-advgb-newsletter');
 
         // Check
-        $I->seeElement('//div[contains(@class, "advgb-newsletter")]/form/div[@class="advgb-form-field"]/input[@type="email"]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]/form/div[@class="advgb-form-field"]/input[contains(@class, "advgb-form-input-email")]');
+    }
+
+    public function changeNewsletterStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change newsletter form styles');
+
+        // Change
+        $I->selectOption('//label[text()="Form style"]/following-sibling::node()', array('text' => 'Alternative'));
+        $I->fillField('//label[text()="Form width (px)"]/following-sibling::node()/following-sibling::node()', 500);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-newsletter');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")][contains(@class, "style-alt")][contains(@style, "max-width:500px")]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//input[contains(@class, "advgb-form-input-fname")]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//input[contains(@class, "advgb-form-input-lname")]');
+        $I->seeElement('//div[contains(@class, "advgb-newsletter")]//input[contains(@class, "advgb-form-input-email")]');
     }
 }
