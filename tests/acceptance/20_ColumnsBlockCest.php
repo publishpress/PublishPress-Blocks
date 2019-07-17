@@ -12,7 +12,7 @@ class ColumnsBlockCest
             $I->clickWithLeftButton('.advgb-columns-wrapper');
             $I->clickWithLeftButton('.editor-block-navigation');
             $I->waitForText('Block Navigation');
-            $I->clickWithLeftButton('//div[@class="editor-block-navigation__item"]/button[text()="Columns Manager"]');
+            $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]');
         } catch(Exception $e) {
             // do stuff
         }
@@ -155,5 +155,99 @@ class ColumnsBlockCest
         $I->seeElement('section.advgb-columns-wrapper');
         $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "max-width:90%")]');
         $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "min-height:20vh")]');
+    }
+
+    public function changeInnerColumnStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change inner columns styles');
+
+        // Change column 1
+        $I->clickWithLeftButton('.editor-block-navigation');
+        $I->waitForText('Block Navigation');
+        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[1]/div/button');
+
+        $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Solid'));
+        $I->waitForText('Border width');
+        $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 2);
+        $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 4);
+        $I->click('//span[text()="Desktop text alignment"]/following-sibling::node()/div[1]/button');
+
+        $I->click('//button/span[text()="Border Color"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ff6900');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-columns-wrapper'); // click block to hide picker
+
+        // Change column 2
+        $I->clickWithLeftButton('.editor-block-navigation');
+        $I->waitForText('Block Navigation');
+        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[2]/div/button');
+
+        $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dotted'));
+        $I->waitForText('Border width');
+        $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 3);
+        $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 8);
+        $I->click('//span[text()="Desktop text alignment"]/following-sibling::node()/div[2]/button');
+
+        $I->click('//button/span[text()="Border Color"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#00d084');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-columns-wrapper'); // click block to hide picker
+
+        // Change column 3
+        $I->clickWithLeftButton('.editor-block-navigation');
+        $I->waitForText('Block Navigation');
+        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[3]/div/button');
+
+        $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dashed'));
+        $I->waitForText('Border width');
+        $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 4);
+        $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 10);
+        $I->click('//span[text()="Desktop text alignment"]/following-sibling::node()/div[3]/button');
+
+        $I->click('//button/span[text()="Border Color"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#2196f3');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-columns-wrapper'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-columns');
+
+        // Check
+        $selectorCol1 = '//div[contains(@class, "advgb-columns")]/div[contains(@class, "advgb-column")][1]/div[@class="advgb-column-inner"]';
+        $selectorCol2 = '//div[contains(@class, "advgb-columns")]/div[contains(@class, "advgb-column")][2]/div[@class="advgb-column-inner"]';
+        $selectorCol3 = '//div[contains(@class, "advgb-columns")]/div[contains(@class, "advgb-column")][3]/div[@class="advgb-column-inner"]';
+
+        $I->seeElement($selectorCol1.'[contains(@style, "border-style:solid")]');
+        $I->seeElement($selectorCol1.'[contains(@style, "border-color:#ff6900")]');
+        $I->seeElement($selectorCol1.'[contains(@style, "border-width:2px")]');
+        $I->seeElement($selectorCol1.'[contains(@style, "border-radius:4px")]');
+
+        $I->seeElement($selectorCol2.'[contains(@style, "border-style:dotted")]');
+        $I->seeElement($selectorCol2.'[contains(@style, "border-color:#00d084")]');
+        $I->seeElement($selectorCol2.'[contains(@style, "border-width:3px")]');
+        $I->seeElement($selectorCol2.'[contains(@style, "border-radius:8px")]');
+
+        $I->seeElement($selectorCol3.'[contains(@style, "border-style:dashed")]');
+        $I->seeElement($selectorCol3.'[contains(@style, "border-color:#2196f3")]');
+        $I->seeElement($selectorCol3.'[contains(@style, "border-width:4px")]');
+        $I->seeElement($selectorCol3.'[contains(@style, "border-radius:10px")]');
+
+        $textAlign1 = $I->executeJS('return jQuery(".advgb-columns .advgb-column:nth-child(1) .advgb-column-inner").css("text-align")');
+        $I->assertEquals('left', $textAlign1);
+
+        $textAlign2 = $I->executeJS('return jQuery(".advgb-columns .advgb-column:nth-child(2) .advgb-column-inner").css("text-align")');
+        $I->assertEquals('center', $textAlign2);
+
+        $textAlign3 = $I->executeJS('return jQuery(".advgb-columns .advgb-column:nth-child(3) .advgb-column-inner").css("text-align")');
+        $I->assertEquals('right', $textAlign3);
     }
 }
