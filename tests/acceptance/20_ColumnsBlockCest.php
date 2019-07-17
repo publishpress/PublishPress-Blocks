@@ -134,4 +134,26 @@ class ColumnsBlockCest
         $I->seeElement('div.advgb-columns > div.advgb-column:nth-child(2).advgb-is-half-desktop.advgb-is-half-tablet.advgb-is-full-mobile');
         $I->seeElement('div.advgb-columns > div.advgb-column:nth-child(3).advgb-is-one-quarter-desktop.advgb-is-half-tablet.advgb-is-full-mobile');
     }
+
+    public function changeColumnsSettings(AcceptanceTester $I)
+    {
+        $I->wantTo('Change columns settings');
+
+        // Change
+        $I->click('//button[text()="Row Settings"]');
+        $I->click('//label[text()="Columns Wrapped"]/preceding-sibling::node()');
+        $I->selectOption('//label[text()="Wrapper Tag"]/following-sibling::node()', array('text' => 'Section'));
+        $I->fillField('//label[text()="Content Max Width"]/following-sibling::node()/following-sibling::node()', 90);
+        $I->click('//label[text()="Content Max Width"]/div[@class="advgb-unit-wrapper"]/span[text()="%"]');
+        $I->fillField('//label[text()="Content Min Height"]/following-sibling::node()/following-sibling::node()', 20);
+        $I->click('//label[text()="Content Min Height"]/div[@class="advgb-unit-wrapper"]/span[text()="vh"]');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-columns');
+
+        // Check
+        $I->seeElement('section.advgb-columns-wrapper');
+        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "max-width:90%")]');
+        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "min-height:20vh")]');
+    }
 }
