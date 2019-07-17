@@ -49,4 +49,27 @@ class ContactFormBlockCest
         // Check
         $I->seeElement('//div[contains(@class, "advgb-contact-form")]/form/div[contains(@class, "advgb-form-field")]/textarea[contains(@class, "advgb-form-input-msg")]');
     }
+
+    public function changeTextHolder(AcceptanceTester $I)
+    {
+        $I->wantTo('Change contact form input placeholder');
+
+        // Change
+        $I->fillField('//label[text()="Name input placeholder"]/following-sibling::node()', 'Your Name');
+        $I->fillField('//label[text()="Email input placeholder"]/following-sibling::node()', 'Your Email');
+        $I->fillField('//label[text()="Message input placeholder"]/following-sibling::node()', 'Your Message');
+        $I->fillField('//label[text()="Submit text"]/following-sibling::node()', 'Send');
+        $I->fillField('//label[text()="Empty field warning text"]/following-sibling::node()', 'Not allow empty field!');
+        $I->fillField('//label[text()="Submit success text"]/following-sibling::node()', 'Thanks for subscribe!');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-contact-form');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//input[contains(@class, "advgb-form-input-name")][@placeholder="Your Name"]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//input[contains(@class, "advgb-form-input-email")][@placeholder="Your Email"]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//textarea[contains(@class, "advgb-form-input-msg")][@placeholder="Your Message"]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//button[contains(@class, "advgb-form-submit")][@data-alert="Not allow empty field!"]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//button[contains(@class, "advgb-form-submit")][@data-success="Thanks for subscribe!"]');
+    }
 }
