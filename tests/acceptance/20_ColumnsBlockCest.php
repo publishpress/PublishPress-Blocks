@@ -10,6 +10,9 @@ class ColumnsBlockCest
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-columns-wrapper');
             $I->clickWithLeftButton('.advgb-columns-wrapper');
+            $I->clickWithLeftButton('.editor-block-navigation');
+            $I->waitForText('Block Navigation');
+            $I->clickWithLeftButton('//div[@class="editor-block-navigation__item"]/button[text()="Columns Manager"]');
         } catch(Exception $e) {
             // do stuff
         }
@@ -105,5 +108,30 @@ class ColumnsBlockCest
         // Check
         $I->seeElement('div.advgb-columns.layout-13-13-13.mbl-layout-stacked');
         $I->seeNumberOfElements('div.advgb-columns.layout-13-13-13.mbl-layout-stacked > div', 3);
+    }
+
+    public function changeColumnsLayout(AcceptanceTester $I)
+    {
+        $I->wantTo('Change columns layout styles');
+
+        // Change
+        $I->click('//div[@class="advgb-columns-select-layout on-inspector"]/div[contains(@class, "advgb-columns-layout")][4]');
+        $I->selectOption('//label[text()="Space between columns"]/following-sibling::node()', array('text' => '30px'));
+
+        $I->click('//div[contains(@class, "advgb-columns-responsive-item")][text()="tablet"]');
+        $I->click('//div[@class="advgb-columns-select-layout on-inspector"]/div[contains(@class, "advgb-columns-layout")][9]');
+
+        $I->click('//div[contains(@class, "advgb-columns-responsive-item")][text()="mobile"]');
+        $I->selectOption('//label[text()="Vertical space when collapsed"]/following-sibling::node()', array('text' => '20px'));
+        $I->click('//label[text()="Collapsed Order RTL"]/preceding-sibling::node()');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-columns');
+
+        // Check
+        $I->seeElement('div.advgb-columns.layout-14-12-14.tbl-layout-1-12-12.mbl-layout-stacked.gutter-30.vgutter-20.order-rtl');
+        $I->seeElement('div.advgb-columns > div.advgb-column:first-child.advgb-is-one-quarter-desktop.advgb-is-full-tablet.advgb-is-full-mobile');
+        $I->seeElement('div.advgb-columns > div.advgb-column:nth-child(2).advgb-is-half-desktop.advgb-is-half-tablet.advgb-is-full-mobile');
+        $I->seeElement('div.advgb-columns > div.advgb-column:nth-child(3).advgb-is-one-quarter-desktop.advgb-is-half-tablet.advgb-is-full-mobile');
     }
 }
