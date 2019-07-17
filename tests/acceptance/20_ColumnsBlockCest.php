@@ -250,4 +250,44 @@ class ColumnsBlockCest
         $textAlign3 = $I->executeJS('return jQuery(".advgb-columns .advgb-column:nth-child(3) .advgb-column-inner").css("text-align")');
         $I->assertEquals('right', $textAlign3);
     }
+
+    public function changeInnerColumnsWidth(AcceptanceTester $I)
+    {
+        $I->wantTo('Change inner columns width');
+
+        // Change column 1
+        $I->clickWithLeftButton('.editor-block-navigation');
+        $I->waitForText('Block Navigation');
+        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[1]/div/button');
+
+        $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 30);
+
+        // Change column 2
+        $I->clickWithLeftButton('.editor-block-navigation');
+        $I->waitForText('Block Navigation');
+        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[2]/div/button');
+
+        $I->see('Available: 70%');
+        $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 50);
+
+        // Change column 2
+        $I->clickWithLeftButton('.editor-block-navigation');
+        $I->waitForText('Block Navigation');
+        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[3]/div/button');
+
+        $I->see('Available: 20%');
+        $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 20);
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-columns');
+
+        // Check
+        $selectorCol1 = '//div[contains(@class, "advgb-columns")]/div[contains(@class, "advgb-column")][1]';
+        $selectorCol2 = '//div[contains(@class, "advgb-columns")]/div[contains(@class, "advgb-column")][2]';
+        $selectorCol3 = '//div[contains(@class, "advgb-columns")]/div[contains(@class, "advgb-column")][3]';
+
+        $I->seeElement($selectorCol1.'[contains(@style, "width:30%")]');
+        $I->seeElement($selectorCol2.'[contains(@style, "width:50%")]');
+        $I->seeElement($selectorCol3.'[contains(@style, "width:20%")]');
+    }
 }
