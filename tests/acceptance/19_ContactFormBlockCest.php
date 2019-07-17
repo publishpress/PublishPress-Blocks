@@ -125,4 +125,38 @@ class ContactFormBlockCest
         $I->seeElement('//div[contains(@class, "advgb-contact-form")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "border-style:dashed")]');
         $I->seeElement('//div[contains(@class, "advgb-contact-form")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "border-radius:5px")]');
     }
+
+    public function changeSubmitButtonStyles(AcceptanceTester $I)
+    {
+        $I->wantTo('Change contact form border styles');
+
+        // Change
+        $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 5);
+        $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
+
+        $I->click('//button/span[text()="Color Settings"]');
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border and Text"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#333333');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-contact-form'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Background"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#fcb900');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-contact-form'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-contact-form');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//button[contains(@class, "advgb-form-submit")][contains(@style, "border-color:#333333")]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//button[contains(@class, "advgb-form-submit")][contains(@style, "color:#333333")]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//button[contains(@class, "advgb-form-submit")][contains(@style, "background-color:#fcb900")]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//button[contains(@class, "advgb-form-submit")][contains(@style, "border-radius:5px")]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//div[contains(@class, "advgb-form-submit-wrapper")][contains(@style, "text-align:center")]');
+    }
 }
