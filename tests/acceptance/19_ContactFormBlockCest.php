@@ -72,4 +72,31 @@ class ContactFormBlockCest
         $I->seeElement('//div[contains(@class, "advgb-contact-form")]//button[contains(@class, "advgb-form-submit")][@data-alert="Not allow empty field!"]');
         $I->seeElement('//div[contains(@class, "advgb-contact-form")]//button[contains(@class, "advgb-form-submit")][@data-success="Thanks for subscribe!"]');
     }
+
+    public function changeInputColors(AcceptanceTester $I)
+    {
+        $I->wantTo('Change contact form input colors');
+
+        // Change
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Background color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#2196f3');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-contact-form'); // click block to hide picker
+
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#ffffff');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('.advgb-contact-form'); // click block to hide picker
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-contact-form');
+
+        // Check
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "background-color:#2196f3")]');
+        $I->seeElement('//div[contains(@class, "advgb-contact-form")]//div[contains(@class, "advgb-form-field")]//input[contains(@class, "advgb-form-input")][contains(@style, "color:#ffffff")]');
+    }
 }
