@@ -32,7 +32,7 @@ class ContactFormBlockCest
 
         $I->fillField('.editor-post-title__input', 'Contact Form Block');
 
-        // Insert some headings
+        // Insert block
         $I->insertBlock('Contact Form');
         $I->waitForElement('.advgb-contact-form');
 

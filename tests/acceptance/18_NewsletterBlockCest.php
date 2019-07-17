@@ -32,7 +32,7 @@ class NewsletterBlockCest
 
         $I->fillField('.editor-post-title__input', 'Newsletter Block');
 
-        // Insert some headings
+        // Insert block
         $I->insertBlock('Newsletter');
         $I->waitForElement('.advgb-newsletter-wrapper');
 
