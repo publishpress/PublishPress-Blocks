@@ -70,8 +70,8 @@ class TabsBlockCest
         $tabTextColor = '#ffff00';
         $activeBgColor = '#006da3';
         $activeBgColorRgb = 'rgb(0, 109, 163)';
-        $activeTextColor = '#00ffff';
-        $activeTextColorRgb = 'rgb(0, 255, 255)';
+        $activeTextColor = '#000000';
+        $activeTextColorRgb = 'rgb(0, 0, 0)';
 
         // Change
         $I->click('//button/span[text()="Tab Colors"]');
@@ -110,6 +110,7 @@ class TabsBlockCest
         $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][2][contains(@style, "background-color:'.$tabBgColor.'")]');
         $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][2]/a[contains(@style, "color:'.$tabTextColor.'")]');
         $I->waitForElement('li.advgb-tab.ui-tabs-active'); // wait for js loaded
+        $I->wait(0.5);
 
         $tabActiveBgColor = $I->executeJS('return jQuery("li.advgb-tab.ui-tabs-active").css("background-color")');
         $I->assertEquals($activeBgColorRgb, $tabActiveBgColor);
