@@ -27,7 +27,7 @@ class createUpdateTestBlocksCest
         // Create new post
         $I->amOnPage('/wp-admin/post-new.php');
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( \'core/nux\' ).disableTips()');
+        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
 
         // Change post title
         $I->waitForElement('.editor-post-title__input');
@@ -97,14 +97,15 @@ class createUpdateTestBlocksCest
         $I->insertBlock('Advanced Image');
 
         $I->waitForText('Choose image');
-//        $I->click('//div[@class="advgb-image-block"]//h4');
-//        $I->selectCurrentElementText();
-//        $I->pressKeys('Hello world');
-//        $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
-//        $I->selectCurrentElementText();
-//        $I->pressKeys('Lorem ipsum');
+        $I->click('//div[@class="advgb-image-block"]//h4');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Hello world');
+        $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Lorem ipsum');
 
         $I->click('Choose image');
+        $I->waitForText('Media Library');
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
@@ -298,6 +299,7 @@ class createUpdateTestBlocksCest
     {
         /***** Add Accordion *****/
         $I->insertBlock('Accordion');
+        $I->waitForElement('.advgb-accordion-block');
 
         $I->fillField('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 1');
         $I->click('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
@@ -306,6 +308,7 @@ class createUpdateTestBlocksCest
         $I->pressKeys(\WebDriverKeys::DOWN);
 
         $I->insertBlock('Accordion');
+        $I->waitForElement('.advgb-accordion-block');
 
         $I->fillField('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 2');
         $I->click('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
