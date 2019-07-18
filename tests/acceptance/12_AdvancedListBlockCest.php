@@ -60,6 +60,7 @@ class AdvancedListBlockCest
         // Change styles
         $I->click('//button[text()="Text Settings"]');
         $I->waitForText('Text size');
+        $I->clearField('//label[text()="Text size"]/following-sibling::node()/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Text size"]/following-sibling::node()/following-sibling::node()/following-sibling::node()', 22);
 
         $I->click('//button[text()="Icon color"]');
@@ -71,9 +72,13 @@ class AdvancedListBlockCest
         $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('//div[contains(@class, "advgb-list-item")]'); // click block to hide picker
 
+        $I->clearField('//label[text()="Icon size"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Icon size"]/following-sibling::node()/following-sibling::node()', 23);
+        $I->clearField('//label[text()="Line height"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Line height"]/following-sibling::node()/following-sibling::node()', 21);
+        $I->clearField('//label[text()="Margin"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Margin"]/following-sibling::node()/following-sibling::node()', 5);
+        $I->clearField('//label[text()="Padding"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Padding"]/following-sibling::node()/following-sibling::node()', 5);
 
         $I->updatePost();
