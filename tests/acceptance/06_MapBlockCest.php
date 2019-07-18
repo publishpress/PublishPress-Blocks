@@ -115,6 +115,7 @@ class MapBlockCest
 
         // Change map marker icon
         $I->click('Choose icon');
+        $I->waitForText('Media Library');
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');

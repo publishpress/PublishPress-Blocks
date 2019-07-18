@@ -142,6 +142,7 @@ class AdvancedVideoBlockCest
 
         // Change
         $I->click('//button[@aria-label="Change image preview"]');
+        $I->waitForText('Media Library');
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');

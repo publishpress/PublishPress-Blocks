@@ -105,6 +105,7 @@ class createUpdateTestBlocksCest
         $I->pressKeys('Lorem ipsum');
 
         $I->click('Choose image');
+        $I->waitForText('Media Library');
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');

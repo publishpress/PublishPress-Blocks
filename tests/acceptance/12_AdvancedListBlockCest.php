@@ -58,6 +58,10 @@ class AdvancedListBlockCest
         $I->wantTo('Change icon styles');
 
         // Change styles
+        $I->click('//button[text()="Text Settings"]');
+        $I->waitForText('Text size');
+        $I->fillField('//label[text()="Text size"]/following-sibling::node()/following-sibling::node()/following-sibling::node()', 22);
+
         $I->click('//button[text()="Icon color"]');
         $I->waitForElement('.components-color-palette');
         $I->click('//button[text()="Icon color"]/parent::node()/following-sibling::node()/div[last()]/*[1]');
@@ -71,10 +75,6 @@ class AdvancedListBlockCest
         $I->fillField('//label[text()="Line height"]/following-sibling::node()/following-sibling::node()', 21);
         $I->fillField('//label[text()="Margin"]/following-sibling::node()/following-sibling::node()', 5);
         $I->fillField('//label[text()="Padding"]/following-sibling::node()/following-sibling::node()', 5);
-
-        $I->click('//button[text()="Text Settings"]');
-        $I->waitForText('Text size');
-        $I->fillField('//label[text()="Text size"]/following-sibling::node()/following-sibling::node()/following-sibling::node()', 22);
 
         $I->updatePost();
         $I->waitForElement('div.wp-block-advgb-list');

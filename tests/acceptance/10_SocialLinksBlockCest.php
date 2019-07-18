@@ -99,6 +99,7 @@ class SocialLinksBlockCest
         $I->seeNumberOfElements('.advgb-social-icons .advgb-social-icon', 4);
         $I->click('//div[@class="advgb-social-icons"]/span[contains(@class, "advgb-social-icon")][4]');
         $I->click('Upload/Choose');
+        $I->waitForText('Media Library');
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
