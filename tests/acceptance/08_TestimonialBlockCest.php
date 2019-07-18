@@ -142,6 +142,9 @@ class TestimonialBlockCest
         $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
 
         // Change border radius
+        $I->click('//label[text()="Border Radius (%)"]/following-sibling::node()/following-sibling::node()');
+        $I->selectCurrentElementText();
+        $I->pressKeys(WebDriverKeys::DELETE);
         $I->fillField('//label[text()="Border Radius (%)"]/following-sibling::node()/following-sibling::node()', 10);
 
         // Change border width
