@@ -109,6 +109,7 @@ class TabsBlockCest
         // Check
         $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][2][contains(@style, "background-color:'.$tabBgColor.'")]');
         $I->seeElement('//div[contains(@class, "advgb-tabs-block")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][2]/a[contains(@style, "color:'.$tabTextColor.'")]');
+        $I->wait(1); // wait for js loaded
 
         $tabActiveBgColor = $I->executeJS('return jQuery("li.advgb-tab.ui-tabs-active").css("background-color")');
         $I->assertEquals($activeBgColorRgb, $tabActiveBgColor);
