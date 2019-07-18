@@ -6607,6 +6607,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var _wpBlockEditor = wpBlockEditor,
         InnerBlocks = _wpBlockEditor.InnerBlocks,
         InspectorControls = _wpBlockEditor.InspectorControls;
+    var _wp$components = wp.components,
+        PanelBody = _wp$components.PanelBody,
+        SelectControl = _wp$components.SelectControl;
 
 
     var containerBlockIcon = React.createElement(
@@ -6625,23 +6628,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('container'), __('row'), __('box')],
-        attributes: {},
+        attributes: {
+            wrapperTag: {
+                type: 'string',
+                default: 'div'
+            }
+        },
         supports: {
             align: true,
-            inserter: false
+            className: true
         },
         transforms: {
             to: [{
                 type: 'block',
                 blocks: ['advgb/columns'],
                 transform: function transform(attributes, innerBlocks) {
+                    var className = attributes.className,
+                        wrapperTag = attributes.wrapperTag;
+
                     var columnBlock = createBlock('advgb/column', {}, innerBlocks);
 
-                    return createBlock('advgb/columns', { columns: 1, className: attributes.className }, [columnBlock]);
+                    return createBlock('advgb/columns', { columns: 1, className: className, wrapperTag: wrapperTag }, [columnBlock]);
                 }
             }]
         },
-        edit: function edit() {
+        edit: function edit(props) {
+            var attributes = props.attributes,
+                setAttributes = props.setAttributes,
+                className = props.className;
+            var wrapperTag = attributes.wrapperTag;
+
+
             return React.createElement(
                 Fragment,
                 null,
@@ -6659,18 +6676,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }
                         },
                         __('We will remove this block in the future release. ' + 'Please convert it to Columns Manager block to avoid unwanted error. ' + 'Columns Manager block has a lot of styles and improvements.')
+                    ),
+                    React.createElement(
+                        PanelBody,
+                        { title: __('Container Settings') },
+                        React.createElement(SelectControl, {
+                            label: __('Wrapper Tag'),
+                            value: wrapperTag,
+                            options: [{ label: 'Div', value: 'div' }, { label: 'Header', value: 'header' }, { label: 'Section', value: 'section' }, { label: 'Main', value: 'main' }, { label: 'Article', value: 'article' }, { label: 'Aside', value: 'aside' }, { label: 'Footer', value: 'footer' }],
+                            onChange: function onChange(value) {
+                                return setAttributes({ wrapperTag: value });
+                            }
+                        })
                     )
                 ),
                 React.createElement(
                     "div",
-                    { className: "advgb-blocks-container" },
+                    { className: "advgb-blocks-container " + className },
                     React.createElement(InnerBlocks, null)
                 )
             );
         },
-        save: function save() {
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var Tag = attributes.wrapperTag;
+
+
             return React.createElement(
-                "div",
+                Tag,
                 { className: "advgb-blocks-container" },
                 React.createElement(InnerBlocks.Content, null)
             );
