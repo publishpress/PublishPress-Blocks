@@ -35,6 +35,7 @@ class AcceptanceTester extends \Codeception\Actor
             'log' => $username,
             'pwd' => $password
         ]);
+        $I->waitForText('Dashboard');
         $I->saveSessionSnapshot('adminLogin');
     }
 
