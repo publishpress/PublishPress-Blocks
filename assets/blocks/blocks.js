@@ -6919,19 +6919,43 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 placeholder: __('Enter text…'),
                                 className: 'advgb-count-up-header'
                             }),
-                            React.createElement(RichText, {
-                                tagName: 'div',
-                                value: countUpNumber,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ countUpNumber: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'countUp',
-                                unstableOnFocus: function unstableOnFocus() {
-                                    return _this2.setState({ currentEdit: 'countUp' });
-                                },
-                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
-                                className: 'advgb-counter-number'
-                            }),
+                            React.createElement(
+                                'div',
+                                { className: 'advgb-counter' },
+                                countUpSymbol && !countUpSymbolAfter && React.createElement(
+                                    'span',
+                                    { className: 'advgb-counter-symbol',
+                                        style: {
+                                            fontSize: countUpNumberSize,
+                                            color: countUpNumberColor
+                                        }
+                                    },
+                                    countUpSymbol
+                                ),
+                                React.createElement(RichText, {
+                                    tagName: 'div',
+                                    value: countUpNumber,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ countUpNumber: value });
+                                    },
+                                    isSelected: isSelected && currentEdit === 'countUp',
+                                    unstableOnFocus: function unstableOnFocus() {
+                                        return _this2.setState({ currentEdit: 'countUp' });
+                                    },
+                                    style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
+                                    className: 'advgb-counter-number'
+                                }),
+                                countUpSymbol && countUpSymbolAfter && React.createElement(
+                                    'span',
+                                    { className: 'advgb-counter-symbol',
+                                        style: {
+                                            fontSize: countUpNumberSize,
+                                            color: countUpNumberColor
+                                        }
+                                    },
+                                    countUpSymbol
+                                )
+                            ),
                             React.createElement(RichText, {
                                 tagName: 'p',
                                 value: descText,
@@ -6964,19 +6988,43 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 placeholder: __('Enter text…'),
                                 className: 'advgb-count-up-header'
                             }),
-                            React.createElement(RichText, {
-                                tagName: 'div',
-                                value: countUpNumber2,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ countUpNumber2: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'countUp2',
-                                unstableOnFocus: function unstableOnFocus() {
-                                    return _this2.setState({ currentEdit: 'countUp2' });
-                                },
-                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
-                                className: 'advgb-counter-number'
-                            }),
+                            React.createElement(
+                                'div',
+                                { className: 'advgb-counter' },
+                                countUpSymbol2 && !countUpSymbolAfter2 && React.createElement(
+                                    'span',
+                                    { className: 'advgb-counter-symbol',
+                                        style: {
+                                            fontSize: countUpNumberSize,
+                                            color: countUpNumberColor
+                                        }
+                                    },
+                                    countUpSymbol2
+                                ),
+                                React.createElement(RichText, {
+                                    tagName: 'div',
+                                    value: countUpNumber2,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ countUpNumber2: value });
+                                    },
+                                    isSelected: isSelected && currentEdit === 'countUp2',
+                                    unstableOnFocus: function unstableOnFocus() {
+                                        return _this2.setState({ currentEdit: 'countUp2' });
+                                    },
+                                    style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
+                                    className: 'advgb-counter-number'
+                                }),
+                                countUpSymbol2 && countUpSymbolAfter2 && React.createElement(
+                                    'span',
+                                    { className: 'advgb-counter-symbol',
+                                        style: {
+                                            fontSize: countUpNumberSize,
+                                            color: countUpNumberColor
+                                        }
+                                    },
+                                    countUpSymbol2
+                                )
+                            ),
                             React.createElement(RichText, {
                                 tagName: 'p',
                                 value: descText2,
@@ -7009,19 +7057,43 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 placeholder: __('Enter text…'),
                                 className: 'advgb-count-up-header'
                             }),
-                            React.createElement(RichText, {
-                                tagName: 'div',
-                                value: countUpNumber3,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ countUpNumber3: value });
-                                },
-                                isSelected: isSelected && currentEdit === 'countUp3',
-                                unstableOnFocus: function unstableOnFocus() {
-                                    return _this2.setState({ currentEdit: 'countUp3' });
-                                },
-                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
-                                className: 'advgb-counter-number'
-                            }),
+                            React.createElement(
+                                'div',
+                                { className: 'advgb-counter' },
+                                countUpSymbol3 && !countUpSymbolAfter3 && React.createElement(
+                                    'span',
+                                    { className: 'advgb-counter-symbol',
+                                        style: {
+                                            fontSize: countUpNumberSize,
+                                            color: countUpNumberColor
+                                        }
+                                    },
+                                    countUpSymbol3
+                                ),
+                                React.createElement(RichText, {
+                                    tagName: 'div',
+                                    value: countUpNumber3,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ countUpNumber3: value });
+                                    },
+                                    isSelected: isSelected && currentEdit === 'countUp3',
+                                    unstableOnFocus: function unstableOnFocus() {
+                                        return _this2.setState({ currentEdit: 'countUp3' });
+                                    },
+                                    style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
+                                    className: 'advgb-counter-number'
+                                }),
+                                countUpSymbol3 && countUpSymbolAfter3 && React.createElement(
+                                    'span',
+                                    { className: 'advgb-counter-symbol',
+                                        style: {
+                                            fontSize: countUpNumberSize,
+                                            color: countUpNumberColor
+                                        }
+                                    },
+                                    countUpSymbol3
+                                )
+                            ),
                             React.createElement(RichText, {
                                 tagName: 'p',
                                 value: descText3,
