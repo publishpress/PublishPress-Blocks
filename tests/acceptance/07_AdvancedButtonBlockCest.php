@@ -23,7 +23,7 @@ class AdvancedButtonBlockCest
     {
         $I->loginAsAdmin('admin', 'password');
 
-        $I->wantTo('Create a Adv Button block');
+        $I->wantTo('Create an Advanced Button block');
 
         $I->amOnPage('/wp-admin/post-new.php');
 

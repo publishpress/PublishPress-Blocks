@@ -23,7 +23,7 @@ class AdvancedListBlockCest
     {
         $I->loginAsAdmin('admin', 'password');
 
-        $I->wantTo('Create a Advanced List block');
+        $I->wantTo('Create an Advanced List block');
 
         $I->amOnPage('/wp-admin/post-new.php');
 

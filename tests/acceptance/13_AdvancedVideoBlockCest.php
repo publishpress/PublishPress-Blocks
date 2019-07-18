@@ -23,7 +23,7 @@ class AdvancedVideoBlockCest
     {
         $I->loginAsAdmin('admin', 'password');
 
-        $I->wantTo('Create a Advanced Video block from Vimeo');
+        $I->wantTo('Create an Advanced Video block from Vimeo');
 
         $I->amOnPage('/wp-admin/post-new.php');
 
