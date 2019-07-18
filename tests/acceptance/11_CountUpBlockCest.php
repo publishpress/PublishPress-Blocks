@@ -147,6 +147,9 @@ class CountUpBlockCest
         $I->clickWithLeftButton('//div[contains(@class, "advgb-count-up")]'); // click block to hide picker
 
         // Change number size
+        $I->click('//label[text()="Counter Number Size"]/following-sibling::node()/following-sibling::node()');
+        $I->selectCurrentElementText();
+        $I->pressKeys(WebDriverKeys::DELETE);
         $I->fillField('//label[text()="Counter Number Size"]/following-sibling::node()/following-sibling::node()', 70);
 
         $I->updatePost();
