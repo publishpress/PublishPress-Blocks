@@ -6916,7 +6916,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'header' });
                                 },
                                 style: { color: headerTextColor },
-                                placeholder: __('Enter text…')
+                                placeholder: __('Enter text…'),
+                                className: 'advgb-count-up-header'
                             }),
                             React.createElement(RichText, {
                                 tagName: 'div',
@@ -6928,7 +6929,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 unstableOnFocus: function unstableOnFocus() {
                                     return _this2.setState({ currentEdit: 'countUp' });
                                 },
-                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
+                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
+                                className: 'advgb-counter-number'
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -6941,7 +6943,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'desc' });
                                 },
                                 style: { color: descTextColor },
-                                placeholder: __('Enter text…')
+                                placeholder: __('Enter text…'),
+                                className: 'advgb-count-up-desc'
                             })
                         ),
                         React.createElement(
@@ -6958,7 +6961,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'header2' });
                                 },
                                 style: { color: headerTextColor },
-                                placeholder: __('Enter text…')
+                                placeholder: __('Enter text…'),
+                                className: 'advgb-count-up-header'
                             }),
                             React.createElement(RichText, {
                                 tagName: 'div',
@@ -6970,7 +6974,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 unstableOnFocus: function unstableOnFocus() {
                                     return _this2.setState({ currentEdit: 'countUp2' });
                                 },
-                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
+                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
+                                className: 'advgb-counter-number'
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -6983,7 +6988,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'desc2' });
                                 },
                                 style: { color: descTextColor },
-                                placeholder: __('Enter text…')
+                                placeholder: __('Enter text…'),
+                                className: 'advgb-count-up-desc'
                             })
                         ),
                         React.createElement(
@@ -7000,7 +7006,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'header3' });
                                 },
                                 style: { color: headerTextColor },
-                                placeholder: __('Enter text…')
+                                placeholder: __('Enter text…'),
+                                className: 'advgb-count-up-header'
                             }),
                             React.createElement(RichText, {
                                 tagName: 'div',
@@ -7012,7 +7019,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 unstableOnFocus: function unstableOnFocus() {
                                     return _this2.setState({ currentEdit: 'countUp3' });
                                 },
-                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor }
+                                style: { fontSize: countUpNumberSize + 'px', color: countUpNumberColor },
+                                className: 'advgb-counter-number'
                             }),
                             React.createElement(RichText, {
                                 tagName: 'p',
@@ -7025,7 +7033,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'desc3' });
                                 },
                                 style: { color: descTextColor },
-                                placeholder: __('Enter text…')
+                                placeholder: __('Enter text…'),
+                                className: 'advgb-count-up-desc'
                             })
                         )
                     )

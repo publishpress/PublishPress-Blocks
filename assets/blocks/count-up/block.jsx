@@ -155,6 +155,7 @@
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'header' } ) }
                                 style={ { color: headerTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
+                                className="advgb-count-up-header"
                             />
                             <RichText
                                 tagName="div"
@@ -163,6 +164,7 @@
                                 isSelected={ isSelected && currentEdit === 'countUp' }
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'countUp' } ) }
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
+                                className="advgb-counter-number"
                             />
                             <RichText
                                 tagName="p"
@@ -172,6 +174,7 @@
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'desc' } ) }
                                 style={ { color: descTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
+                                className="advgb-count-up-desc"
                             />
                         </div>
                         <div className="advgb-count-up-columns-two" style={ { textAlign: 'center' } }>
@@ -183,6 +186,7 @@
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'header2' } ) }
                                 style={ { color: headerTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
+                                className="advgb-count-up-header"
                             />
                             <RichText
                                 tagName="div"
@@ -191,6 +195,7 @@
                                 isSelected={ isSelected && currentEdit === 'countUp2' }
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'countUp2' } ) }
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
+                                className="advgb-counter-number"
                             />
                             <RichText
                                 tagName="p"
@@ -200,6 +205,7 @@
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'desc2' } ) }
                                 style={ { color: descTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
+                                className="advgb-count-up-desc"
                             />
                         </div>
                         <div className="advgb-count-up-columns-three" style={ { textAlign: 'center' } }>
@@ -211,6 +217,7 @@
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'header3' } ) }
                                 style={ { color: headerTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
+                                className="advgb-count-up-header"
                             />
                             <RichText
                                 tagName="div"
@@ -219,6 +226,7 @@
                                 isSelected={ isSelected && currentEdit === 'countUp3' }
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'countUp3' } ) }
                                 style={ { fontSize: countUpNumberSize + 'px', color: countUpNumberColor } }
+                                className="advgb-counter-number"
                             />
                             <RichText
                                 tagName="p"
@@ -228,6 +236,7 @@
                                 unstableOnFocus={ () => this.setState( { currentEdit: 'desc3' } ) }
                                 style={ { color: descTextColor } }
                                 placeholder={ __( 'Enter text…' ) }
+                                className="advgb-count-up-desc"
                             />
                         </div>
                     </div>
