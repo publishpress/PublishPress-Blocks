@@ -140,9 +140,6 @@ if (version_compare($advgb_current_version, '2.0.6', 'lt')) {
             update_post_meta($profile->ID, 'blocks', $blocks_saved);
         }
     }
-
-    // We don't use it anymore
-    delete_option('advgb_categories_list');
 }
 
 // Set version if needed
