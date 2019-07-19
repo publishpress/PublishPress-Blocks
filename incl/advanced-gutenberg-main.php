@@ -162,7 +162,7 @@ float: left;'
         add_action('wp_ajax_nopriv_advgb_newsletter_save', array($this, 'saveNewsletterData'));
 
         if (is_admin()) {
-            add_action('init', array($this, 'registerAdvgbProfile'));
+            add_action('admin_init', array($this, 'registerAdvgbProfile'));
             add_action('admin_footer', array($this, 'initBlocksList'));
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
