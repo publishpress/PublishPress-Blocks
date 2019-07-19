@@ -134,7 +134,11 @@ if (version_compare($advgb_current_version, '2.0.6', 'lt')) {
             // Remove Container block from profile
             $key = array_search('advgb/container', $blocks_saved['active_blocks']);
             unset($blocks_saved['active_blocks'][$key]);
-            array_push($blocks_saved['inactive_blocks'], 'advgb/container');
+
+            $keyIA = array_search('advgb/container', $blocks_saved['inactive_blocks']);
+            if ($keyIA === false) {
+                array_push($blocks_saved['inactive_blocks'], 'advgb/container');
+            }
 
             update_post_meta($profile->ID, 'blocks', $blocks_saved);
         }
