@@ -297,7 +297,7 @@ float: left;'
             // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
             foreach ($settings['allowedBlockTypes'] as $key => $type) {
                 if (in_array($type, $advgb_blocks_vars['blocks']['inactive_blocks'])) {
-                    unset($settings['allowedBlockTypes']);
+                    unset($settings['allowedBlockTypes'][$key]);
                 }
             }
         } elseif ($settings['allowedBlockTypes'] === true) {
