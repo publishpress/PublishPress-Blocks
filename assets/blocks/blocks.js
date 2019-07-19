@@ -11790,7 +11790,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     summaryContent = React.createElement(
                         "ul",
-                        { className: 'advgb-toc' },
+                        { className: "advgb-toc" },
                         headings.map(function (heading) {
                             return React.createElement(
                                 "li",
@@ -11803,7 +11803,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { href: '#' + heading.anchor,
                                         onClick: function onClick() {
                                             return selectBlock(heading.clientId);
-                                        }
+                                        },
+                                        style: { color: anchorColor }
                                     },
                                     heading.content
                                 )
@@ -11865,12 +11866,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         )
                     ),
-                    summaryContent,
-                    anchorColor && React.createElement(
-                        "style",
-                        null,
-                        ".advgb-toc li a {\n                        color: " + anchorColor + ";\n                    }"
-                    )
+                    summaryContent
                 );
             }
         }], [{
@@ -11902,6 +11898,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return SummaryBlock;
     }(Component);
 
+    var blockAttrs = {
+        headings: {
+            type: 'array',
+            default: []
+        },
+        loadMinimized: {
+            type: 'boolean',
+            default: false
+        },
+        anchorColor: {
+            type: 'string'
+        },
+        align: {
+            type: 'string',
+            default: 'none'
+        },
+        postTitle: {
+            type: 'string'
+        },
+        headerTitle: {
+            type: 'string'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
     registerBlockType('advgb/summary', {
         title: summaryBlockTitle,
         description: __('Show the table of content of current post/page.'),
@@ -11911,33 +11935,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('summary'), __('table of content'), __('list')],
-        attributes: {
-            headings: {
-                type: 'array',
-                default: []
-            },
-            loadMinimized: {
-                type: 'boolean',
-                default: false
-            },
-            anchorColor: {
-                type: 'string'
-            },
-            align: {
-                type: 'string',
-                default: 'none'
-            },
-            postTitle: {
-                type: 'string'
-            },
-            headerTitle: {
-                type: 'string'
-            },
-            changed: {
-                type: 'boolean',
-                default: false
-            }
-        },
+        attributes: blockAttrs,
         supports: {
             multiple: false
         },
@@ -11972,16 +11970,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         },
                         React.createElement(
                             "a",
-                            { href: '#' + heading.anchor },
+                            { href: '#' + heading.anchor,
+                                style: { color: anchorColor }
+                            },
                             heading.content
                         )
                     );
-                }),
-                anchorColor && React.createElement(
-                    "style",
-                    null,
-                    ".advgb-toc li a {\n                            color: " + anchorColor + ";\n                        }"
-                )
+                })
             );
 
             if (loadMinimized) {
@@ -12009,7 +12004,68 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
 
             return props;
-        }
+        },
+
+        deprecated: [{
+            attributes: blockAttrs,
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var headings = attributes.headings,
+                    loadMinimized = attributes.loadMinimized,
+                    anchorColor = attributes.anchorColor,
+                    _attributes$align2 = attributes.align,
+                    align = _attributes$align2 === undefined ? 'none' : _attributes$align2,
+                    postTitle = attributes.postTitle,
+                    headerTitle = attributes.headerTitle;
+                // No heading blocks
+
+                if (headings.length < 1) {
+                    return null;
+                }
+
+                var blockStyle = undefined;
+                if (loadMinimized) blockStyle = { display: 'none' };
+
+                var summary = React.createElement(
+                    "ul",
+                    { className: "advgb-toc align" + align, style: blockStyle },
+                    headings.map(function (heading, index) {
+                        return React.createElement(
+                            "li",
+                            { className: 'toc-level-' + heading.level,
+                                key: "summary-save-" + index,
+                                style: { marginLeft: heading.level * 20 }
+                            },
+                            React.createElement(
+                                "a",
+                                { href: '#' + heading.anchor },
+                                heading.content
+                            )
+                        );
+                    }),
+                    anchorColor && React.createElement(
+                        "style",
+                        null,
+                        ".advgb-toc li a {\n                                    color: " + anchorColor + ";\n                                }"
+                    )
+                );
+
+                if (loadMinimized) {
+                    return React.createElement(
+                        "div",
+                        { className: "align" + align },
+                        React.createElement(
+                            "div",
+                            { className: 'advgb-toc-header collapsed' },
+                            headerTitle || postTitle
+                        ),
+                        summary
+                    );
+                }
+
+                return summary;
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, wp.hooks);
 
