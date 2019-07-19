@@ -53,6 +53,10 @@
       },
       {
         "type": "fix",
+        "title": "Show Counter symbol on editor"
+      },
+      {
+        "type": "fix",
         "title": "Remove inline styles from Summary block"
       }
     ],
