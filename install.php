@@ -114,11 +114,6 @@ $advgb_current_version = get_option('advgb_version', '0.0.0');
 global $wpdb;
 
 if (version_compare($advgb_current_version, '2.0.6', 'lt')) {
-    $all_blocks_list = get_option('advgb_blocks_list');
-    if (!is_array($all_blocks_list)) {
-        $all_blocks_list     = array();
-    }
-
     // Get all GB-ADV active profiles
     $profiles = $wpdb->get_results('SELECT * FROM '. $wpdb->prefix. 'posts
          WHERE post_type="advgb_profiles"');
