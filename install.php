@@ -48,7 +48,7 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
             'post_type'   => 'advgb_profiles',
             'post_status' => 'publish',
             'meta_input'  => array(
-                'blocks' => array('active_blocks'=>array(), 'inactive_blocks'=>array()),
+                'blocks' => array('active_blocks'=>array(), 'inactive_blocks'=>array('advgb/container')),
                 'roles_access'  => AdvancedGutenbergMain::$default_roles_access,
                 'users_access'  => array(),
             )
