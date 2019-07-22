@@ -40,24 +40,24 @@
   "changelog": {
     "2.0.6": [
       {
-        "type": "fix",
-        "title": "Bring back the Container block (but you need to enable it from profile)"
+        "type": "feature",
+        "title": "Show Count Up symbol on editor"
       },
       {
-        "type": "fix",
+        "type": "feature",
+        "title": "Allow nested Accordion blocks"
+      },
+            {
+        "type": "feature",
         "title": "Allow to change the html tag of the Container block"
       },
       {
         "type": "fix",
+        "title": "Bring back the Container block (can be enabled in profile)"
+      },
+      {
+        "type": "fix",
         "title": "Add missing classname for Count Up block on editor"
-      },
-      {
-        "type": "fix",
-        "title": "Show Count Up symbol on editor"
-      },
-      {
-        "type": "fix",
-        "title": "Nested Accordion not work properly"
       },
       {
         "type": "fix",
