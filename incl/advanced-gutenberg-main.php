@@ -162,7 +162,7 @@ float: left;'
         add_action('wp_ajax_nopriv_advgb_newsletter_save', array($this, 'saveNewsletterData'));
 
         if (is_admin()) {
-            add_action('init', array($this, 'registerAdvgbProfile'));
+            add_action('admin_init', array($this, 'registerAdvgbProfile'));
             add_action('admin_footer', array($this, 'initBlocksList'));
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
@@ -297,7 +297,7 @@ float: left;'
             // Note that we do not add missing blocks, because another plugin may have used the hook to remove some of them
             foreach ($settings['allowedBlockTypes'] as $key => $type) {
                 if (in_array($type, $advgb_blocks_vars['blocks']['inactive_blocks'])) {
-                    unset($settings['allowedBlockTypes']);
+                    unset($settings['allowedBlockTypes'][$key]);
                 }
             }
         } elseif ($settings['allowedBlockTypes'] === true) {
@@ -3961,7 +3961,7 @@ float: left;'
             wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
                 $(".advgb-accordion-block").parent().each(function() {
                     $(this).accordion({
-                        header: ".advgb-accordion-header",
+                        header: "> div > .advgb-accordion-header",
                         heightStyle: "content",
                         collapsible: true,
                         active: $(this).find(".advgb-accordion-block:first").data("collapsed") ? false : 0,
