@@ -28,7 +28,7 @@ class MapBlockCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( \'core/nux\' ).disableTips()');
+        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
 
         $I->fillField('.editor-post-title__input', 'Advanced Map Block');
 
@@ -59,10 +59,7 @@ class MapBlockCest
         $I->waitForText('Hanoi, Vietnam');
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check location
@@ -83,10 +80,7 @@ class MapBlockCest
         $I->fillField('//input[@title="Longitude"]', $lng);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check location
@@ -104,10 +98,7 @@ class MapBlockCest
         $I->fillField('//label[text()="Height"]/following-sibling::node()/following-sibling::node()', $height);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check zoom level
@@ -124,6 +115,7 @@ class MapBlockCest
 
         // Change map marker icon
         $I->click('Choose icon');
+        $I->waitForText('Media Library');
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="marker"]');
@@ -132,10 +124,7 @@ class MapBlockCest
         $I->wait(0.5);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check marker icon
@@ -154,10 +143,7 @@ class MapBlockCest
         $I->fillField('//label[text()="Marker description"]/following-sibling::node()', $desc);
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check marker text
@@ -171,10 +157,7 @@ class MapBlockCest
         $I->selectOption('//label[text()="Map styles"]/following-sibling::node()', array('text' => 'Night'));
 
         // Update post
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check map color

@@ -22,7 +22,7 @@ class DetectNewBlocksCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( \'core/nux\' ).disableTips()');
+        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
 
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');

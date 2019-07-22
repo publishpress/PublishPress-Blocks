@@ -52,10 +52,7 @@ class RecentPostsBlockCest
 
         $I->waitForElementNotVisible('//article[@class="advgb-recent-post"][6]');
 
-        $I->click('Update');
-        $I->waitForText('Post updated.');
-
-        $I->clickViewPost();
+        $I->updatePost();
 
         $I->waitForElement('body.single');
         $I->seeNumberOfElements('.single .advgb-recent-post', 5);

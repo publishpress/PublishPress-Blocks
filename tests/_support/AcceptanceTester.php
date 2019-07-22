@@ -30,11 +30,13 @@ class AcceptanceTester extends \Codeception\Actor
             return;
         }
         $I->amOnPage('/wp-admin/index.php');
-        $I->wait(1);
+        $I->waitForElement('#loginform');
+        $this->wait(0.5);
         $I->submitForm('#loginform', [
             'log' => $username,
             'pwd' => $password
         ]);
+        $I->waitForText('Dashboard');
         $I->saveSessionSnapshot('adminLogin');
     }
 
@@ -100,5 +102,21 @@ class AcceptanceTester extends \Codeception\Actor
         // Insert block
         $I->waitForText($blockName);
         $I->click($blockName);
+    }
+
+    /**
+     * Insert new block to editor
+     */
+    public function updatePost($wait = 0.5) {
+        $I = $this;
+
+        // Wait a bit to make sure all changes applied
+        $I->wait($wait);
+
+        // Update post
+        $I->click('Update');
+        $I->waitForText('Post updated.');
+
+        $I->clickViewPost();
     }
 }

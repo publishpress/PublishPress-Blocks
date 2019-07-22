@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "platform": "wordpress",
   "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,32 @@
     ]
   },
   "changelog": {
+    "2.0.6": [
+      {
+        "type": "feature",
+        "title": "Show Count Up symbol on editor"
+      },
+      {
+        "type": "feature",
+        "title": "Allow nested Accordion blocks"
+      },
+            {
+        "type": "feature",
+        "title": "Allow to change the html tag of the Container block"
+      },
+      {
+        "type": "fix",
+        "title": "Bring back the Container block (can be enabled in profile)"
+      },
+      {
+        "type": "fix",
+        "title": "Add missing classname for Count Up block on editor"
+      },
+      {
+        "type": "fix",
+        "title": "Remove inline styles from Summary block"
+      }
+    ],
     "2.0.5": [
       {
         "type": "fix",
@@ -87,7 +113,7 @@
     "2.0.0": [
       {
         "type": "feature",
-        "title": "New block: Columns Manager with predifined sizes"
+        "title": "New block: Columns Manager with predefined sizes"
       },
       {
         "type": "feature",
@@ -111,7 +137,7 @@
       },
       {
         "type": "feature",
-        "title": "Remove Container block (replced by column manager)"
+        "title": "Remove Container block (replaced by column manager)"
       },
       {
         "type": "feature",
