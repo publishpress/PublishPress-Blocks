@@ -3961,7 +3961,7 @@ float: left;'
             wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
                 $(".advgb-accordion-block").parent().each(function() {
                     $(this).accordion({
-                        header: ".advgb-accordion-header",
+                        header: "> div > .advgb-accordion-header",
                         heightStyle: "content",
                         collapsible: true,
                         active: $(this).find(".advgb-accordion-block:first").data("collapsed") ? false : 0,
