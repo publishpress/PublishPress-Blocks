@@ -53,7 +53,11 @@
       },
       {
         "type": "fix",
-        "title": "Show Counter symbol on editor"
+        "title": "Show Count Up symbol on editor"
+      },
+      {
+        "type": "fix",
+        "title": "Nested Accordion not work properly"
       },
       {
         "type": "fix",
