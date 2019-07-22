@@ -5159,7 +5159,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return ['advgb/column'];
                                 }),
                                 templateLock: 'all',
-                                allowdBlockType: ['advgb/column'],
+                                allowedBlocks: ['advgb/column'],
                                 random: this.state.random
                             })
                         )
