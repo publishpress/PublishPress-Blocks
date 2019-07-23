@@ -654,6 +654,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
+        parent: ['advgb/accordions'],
         category: 'advgb-category',
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: accordionAttrs,
