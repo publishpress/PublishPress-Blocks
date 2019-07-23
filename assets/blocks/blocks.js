@@ -86,6 +86,154 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./assets/blocks/accordion/accordions.jsx":
+/*!************************************************!*\
+  !*** ./assets/blocks/accordion/accordions.jsx ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var _wpBlockEditor = wpBlockEditor,
+        InspectorControls = _wpBlockEditor.InspectorControls,
+        RichText = _wpBlockEditor.RichText,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings,
+        InnerBlocks = _wpBlockEditor.InnerBlocks;
+    var RangeControl = wpComponents.RangeControl,
+        PanelBody = wpComponents.PanelBody,
+        BaseControl = wpComponents.BaseControl,
+        SelectControl = wpComponents.SelectControl,
+        ToggleControl = wpComponents.ToggleControl;
+
+    var AccordionsEdit = function (_Component) {
+        _inherits(AccordionsEdit, _Component);
+
+        function AccordionsEdit() {
+            _classCallCheck(this, AccordionsEdit);
+
+            return _possibleConstructorReturn(this, (AccordionsEdit.__proto__ || Object.getPrototypeOf(AccordionsEdit)).apply(this, arguments));
+        }
+
+        _createClass(AccordionsEdit, [{
+            key: 'render',
+            value: function render() {
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        'div',
+                        { className: 'advgb-accordions-wrapper' },
+                        React.createElement(InnerBlocks, {
+                            template: [['advgb/accordion'], ['advgb/accordion']],
+                            templateLock: false,
+                            allowedBlocks: ['advgb/accordion']
+                        })
+                    )
+                );
+            }
+        }]);
+
+        return AccordionsEdit;
+    }(Component);
+
+    var accordionBlockIcon = React.createElement(
+        'svg',
+        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '2 2 22 22' },
+        React.createElement('path', { fill: 'none', d: 'M0,0h24v24H0V0z' }),
+        React.createElement('rect', { x: '3', y: '17', width: '18', height: '2' }),
+        React.createElement('path', { d: 'M19,12v1H5v-1H19 M21,10H3v5h18V10L21,10z' }),
+        React.createElement('rect', { x: '3', y: '6', width: '18', height: '2' })
+    );
+
+    var blockAttrs = {
+        headerBgColor: {
+            type: 'string',
+            default: '#000'
+        },
+        headerTextColor: {
+            type: 'string',
+            default: '#eee'
+        },
+        headerIcon: {
+            type: 'string',
+            default: 'unfold'
+        },
+        headerIconColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        bodyBgColor: {
+            type: 'string'
+        },
+        bodyTextColor: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid'
+        },
+        borderWidth: {
+            type: 'number',
+            default: 0
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderRadius: {
+            type: 'number',
+            default: 2
+        },
+        marginBottom: {
+            type: 'number',
+            default: 15
+        },
+        collapsedAll: {
+            type: 'boolean',
+            default: false
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/accordions', {
+        title: __('Accordions'),
+        description: __('Easy to create an accordion for your post/page.'),
+        icon: {
+            src: accordionBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('accordion'), __('list'), __('faq')],
+        attributes: blockAttrs,
+        edit: AccordionsEdit,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+
+            return null;
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/blocks/accordion/block.jsx":
 /*!*******************************************!*\
   !*** ./assets/blocks/accordion/block.jsx ***!
@@ -13867,12 +14015,13 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/accordions.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(/*! ./assets/blocks/accordion/accordions.jsx */"./assets/blocks/accordion/accordions.jsx");
 __webpack_require__(/*! ./assets/blocks/accordion/block.jsx */"./assets/blocks/accordion/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advbutton/block.jsx */"./assets/blocks/advbutton/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advimage/block.jsx */"./assets/blocks/advimage/block.jsx");
