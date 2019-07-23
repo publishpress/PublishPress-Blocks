@@ -1,10 +1,9 @@
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
-    const { Component, Fragment } = wpElement;
+    const { Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
-    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl } = wpComponents;
+    const { RichText, InnerBlocks } = wpBlockEditor;
 
     const accordionBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
@@ -30,6 +29,10 @@
                 type: 'string',
                 default: __( 'Header text' ),
             },
+            changed: {
+                type: 'boolean',
+                default: false,
+            }
         },
         edit: function ( { attributes, setAttributes } ) {
             const { header } = attributes;
@@ -63,7 +66,7 @@
             const { header } = attributes;
 
             return (
-                <div className="advgb-accordion-block">
+                <div className="advgb-accordion-item">
                     <div className="advgb-accordion-header">
                         <span className="advgb-accordion-header-icon">
                             <svg fill={ null } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -77,6 +80,6 @@
                     </div>
                 </div>
             );
-        }
+        },
     } )
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

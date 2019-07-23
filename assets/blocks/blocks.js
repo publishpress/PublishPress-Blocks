@@ -594,19 +594,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 (function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
-    var Component = wpElement.Component,
-        Fragment = wpElement.Fragment;
+    var Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
-        InspectorControls = _wpBlockEditor.InspectorControls,
         RichText = _wpBlockEditor.RichText,
-        PanelColorSettings = _wpBlockEditor.PanelColorSettings,
         InnerBlocks = _wpBlockEditor.InnerBlocks;
-    var RangeControl = wpComponents.RangeControl,
-        PanelBody = wpComponents.PanelBody,
-        BaseControl = wpComponents.BaseControl,
-        SelectControl = wpComponents.SelectControl,
-        ToggleControl = wpComponents.ToggleControl;
 
 
     var accordionBlockIcon = React.createElement(
@@ -632,6 +624,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             header: {
                 type: 'string',
                 default: __('Header text')
+            },
+            changed: {
+                type: 'boolean',
+                default: false
             }
         },
         edit: function edit(_ref) {
@@ -686,7 +682,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             return React.createElement(
                 "div",
-                { className: "advgb-accordion-block" },
+                { className: "advgb-accordion-item" },
                 React.createElement(
                     "div",
                     { className: "advgb-accordion-header" },
@@ -727,6 +723,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -752,6 +750,53 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         ToggleControl = wpComponents.ToggleControl;
 
+
+    var HEADER_ICONS = {
+        plus: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z" })
+        ),
+        plusCircle: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z" })
+        ),
+        plusCircleOutline: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M13,7h-2v4H7v2h4v4h2v-4h4v-2h-4V7z M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20 c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8S16.41,20,12,20z" })
+        ),
+        plusBox: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M19,3H5C3.89,3,3,3.9,3,5v14c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z" }),
+            React.createElement("polygon", { points: "11,17 13,17 13,13 17,13 17,11 13,11 13,7 11,7 11,11 7,11 7,13 11,13" })
+        ),
+        unfold: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M12,5.83L15.17,9l1.41-1.41L12,3L7.41,7.59L8.83,9L12,5.83z M12,18.17L8.83,15l-1.41,1.41L12,21l4.59-4.59L15.17,15 L12,18.17z" })
+        ),
+        threeDots: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M6,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S7.1,10,6,10z M18,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S19.1,10,18,10z M12,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S13.1,10,12,10z" })
+        ),
+        arrowDown: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { opacity: "0.87", fill: "none", d: "M24,24H0L0,0l24,0V24z" }),
+            React.createElement("path", { d: "M16.59,8.59L12,13.17L7.41,8.59L6,10l6,6l6-6L16.59,8.59z" })
+        )
+    };
+
     var AccordionsEdit = function (_Component) {
         _inherits(AccordionsEdit, _Component);
 
@@ -762,14 +807,193 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AccordionsEdit, [{
-            key: 'render',
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-accordions'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "render",
             value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    headerIcon = attributes.headerIcon,
+                    headerIconColor = attributes.headerIconColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    marginBottom = attributes.marginBottom,
+                    collapsedAll = attributes.collapsedAll;
+
+
                 return React.createElement(
                     Fragment,
                     null,
                     React.createElement(
-                        'div',
-                        { className: 'advgb-accordions-wrapper' },
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Accordion Settings') },
+                            React.createElement(RangeControl, {
+                                label: __('Bottom spacing'),
+                                value: marginBottom,
+                                help: __('Define space between each accordion (Frontend view only)'),
+                                min: 0,
+                                max: 50,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ marginBottom: value });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Initial Collapsed'),
+                                help: __('Make all accordions collapsed by default.'),
+                                checked: collapsedAll,
+                                onChange: function onChange() {
+                                    return setAttributes({ collapsedAll: !collapsedAll });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Header Settings') },
+                            React.createElement(
+                                BaseControl,
+                                { label: __('Header Icon Style') },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper" },
+                                    Object.keys(HEADER_ICONS).map(function (key, index) {
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: index },
+                                            React.createElement(
+                                                "span",
+                                                { className: key === headerIcon ? 'active' : '',
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ headerIcon: key });
+                                                    } },
+                                                React.createElement(
+                                                    "svg",
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    HEADER_ICONS[key]
+                                                )
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
+                                    value: headerBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ headerBgColor: value === undefined ? '#000' : value });
+                                    }
+                                }, {
+                                    label: __('Text Color'),
+                                    value: headerTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ headerTextColor: value === undefined ? '#eee' : value });
+                                    }
+                                }, {
+                                    label: __('Icon Color'),
+                                    value: headerIconColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ headerIconColor: value === undefined ? '#fff' : value });
+                                    }
+                                }]
+                            })
+                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Body Color Settings'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color'),
+                                value: bodyBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: bodyTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyTextColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Border Settings'), initialOpen: false },
+                            React.createElement(SelectControl, {
+                                label: __('Border Style'),
+                                value: borderStyle,
+                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderStyle: value });
+                                }
+                            }),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border Color'),
+                                    value: borderColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border width'),
+                                value: borderWidth,
+                                min: 0,
+                                max: 10,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderWidth: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border radius'),
+                                value: borderRadius,
+                                min: 0,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderRadius: value });
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordions-wrapper" },
                         React.createElement(InnerBlocks, {
                             template: [['advgb/accordion-item'], ['advgb/accordion-item']],
                             templateLock: false,
@@ -784,12 +1008,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     var accordionBlockIcon = React.createElement(
-        'svg',
-        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '2 2 22 22' },
-        React.createElement('path', { fill: 'none', d: 'M0,0h24v24H0V0z' }),
-        React.createElement('rect', { x: '3', y: '17', width: '18', height: '2' }),
-        React.createElement('path', { d: 'M19,12v1H5v-1H19 M21,10H3v5h18V10L21,10z' }),
-        React.createElement('rect', { x: '3', y: '6', width: '18', height: '2' })
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
+        React.createElement("path", { d: "M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z" })
     );
 
     var blockAttrs = {
@@ -857,8 +1079,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AccordionsEdit,
         save: function save(_ref) {
             var attributes = _ref.attributes;
+            var collapsedAll = attributes.collapsedAll;
 
-            return null;
+
+            return React.createElement(
+                "div",
+                { className: "advgb-accordion-wrapper", "data-collapsed": collapsedAll ? collapsedAll : undefined },
+                React.createElement(InnerBlocks.Content, null)
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
