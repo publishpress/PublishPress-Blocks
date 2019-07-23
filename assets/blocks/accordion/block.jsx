@@ -329,6 +329,9 @@
         category: 'advgb-category',
         keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
         attributes: accordionAttrs,
+        supports: {
+            inserter: false,
+        },
         edit: AdvAccordion,
         save: function ( { attributes } ) {
             const {

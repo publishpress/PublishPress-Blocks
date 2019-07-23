@@ -509,6 +509,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'advgb-category',
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: accordionAttrs,
+        supports: {
+            inserter: false
+        },
         edit: AdvAccordion,
         save: function save(_ref) {
             var attributes = _ref.attributes;
