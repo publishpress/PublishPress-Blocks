@@ -16,9 +16,9 @@
                 <Fragment>
                     <div className="advgb-accordions-wrapper">
                         <InnerBlocks
-                            template={ [ ['advgb/accordion'], ['advgb/accordion'] ] }
+                            template={ [ ['advgb/accordion-item'], ['advgb/accordion-item'] ] }
                             templateLock={ false }
-                            allowedBlocks={ [ 'advgb/accordion' ] }
+                            allowedBlocks={ [ 'advgb/accordion-item' ] }
                         />
                     </div>
                 </Fragment>
@@ -88,7 +88,7 @@
     };
 
     registerBlockType( 'advgb/accordions', {
-        title: __( 'Accordions' ),
+        title: __( 'Advanced Accordion' ),
         description: __( 'Easy to create an accordion for your post/page.' ),
         icon: {
             src: accordionBlockIcon,
