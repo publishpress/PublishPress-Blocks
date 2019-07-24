@@ -3,8 +3,9 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
+    const { InspectorControls, PanelColorSettings, InnerBlocks } = wpBlockEditor;
     const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl } = wpComponents;
+    const { select, dispatch } = wp.data;
 
     const HEADER_ICONS = {
         plus: (
@@ -55,6 +56,8 @@
     class AccordionsEdit extends Component {
         constructor() {
             super( ...arguments );
+
+            this.updateAccordionAttrs = this.updateAccordionAttrs.bind( this );
         }
 
         componentWillMount() {
@@ -76,6 +79,16 @@
                 // Finally set changed attribute to true, so we don't modify anything again
                 setAttributes( { changed: true } );
             }
+        }
+
+        updateAccordionAttrs( attrs ) {
+            const { setAttributes, clientId } = this.props;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            setAttributes( attrs );
+            childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attrs ) );
         }
 
         render() {
@@ -105,7 +118,7 @@
                                 help={ __( 'Define space between each accordion (Frontend view only)' ) }
                                 min={ 0 }
                                 max={ 50 }
-                                onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { marginBottom: value } ) }
                             />
                             <ToggleControl
                                 label={ __( 'Initial Collapsed' ) }
@@ -120,7 +133,7 @@
                                     {Object.keys( HEADER_ICONS ).map( ( key, index ) => (
                                         <div className="advgb-icon-item" key={ index }>
                                                 <span className={ key === headerIcon ? 'active' : '' }
-                                                      onClick={ () => setAttributes( { headerIcon: key } ) }>
+                                                      onClick={ () => this.updateAccordionAttrs( { headerIcon: key } ) }>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                                         { HEADER_ICONS[key] }
                                                     </svg>
@@ -136,17 +149,17 @@
                                     {
                                         label: __( 'Background Color' ),
                                         value: headerBgColor,
-                                        onChange: ( value ) => setAttributes( { headerBgColor: value === undefined ? '#000' : value } ),
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerBgColor: value === undefined ? '#000' : value } ),
                                     },
                                     {
                                         label: __( 'Text Color' ),
                                         value: headerTextColor,
-                                        onChange: ( value ) => setAttributes( { headerTextColor: value === undefined ? '#eee' : value } ),
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerTextColor: value === undefined ? '#eee' : value } ),
                                     },
                                     {
                                         label: __( 'Icon Color' ),
                                         value: headerIconColor,
-                                        onChange: ( value ) => setAttributes( { headerIconColor: value === undefined ? '#fff' : value } ),
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerIconColor: value === undefined ? '#fff' : value } ),
                                     },
                                 ] }
                             />
@@ -158,12 +171,12 @@
                                 {
                                     label: __( 'Background Color' ),
                                     value: bodyBgColor,
-                                    onChange: ( value ) => setAttributes( { bodyBgColor: value } ),
+                                    onChange: ( value ) => this.updateAccordionAttrs( { bodyBgColor: value } ),
                                 },
                                 {
                                     label: __( 'Text Color' ),
                                     value: bodyTextColor,
-                                    onChange: ( value ) => setAttributes( { bodyTextColor: value } ),
+                                    onChange: ( value ) => this.updateAccordionAttrs( { bodyTextColor: value } ),
                                 },
                             ] }
                         />
@@ -176,7 +189,7 @@
                                     { label: __( 'Dashed' ), value: 'dashed' },
                                     { label: __( 'Dotted' ), value: 'dotted' },
                                 ] }
-                                onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderStyle: value } ) }
                             />
                             <PanelColorSettings
                                 title={ __( 'Color Settings' ) }
@@ -185,7 +198,7 @@
                                     {
                                         label: __( 'Border Color' ),
                                         value: borderColor,
-                                        onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                        onChange: ( value ) => this.updateAccordionAttrs( { borderColor: value } ),
                                     },
                                 ] }
                             />
@@ -194,14 +207,14 @@
                                 value={ borderWidth }
                                 min={ 0 }
                                 max={ 10 }
-                                onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderWidth: value } ) }
                             />
                             <RangeControl
                                 label={ __( 'Border radius' ) }
                                 value={ borderRadius }
                                 min={ 0 }
                                 max={ 100 }
-                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderRadius: value } ) }
                             />
                         </PanelBody>
                     </InspectorControls>
