@@ -591,14 +591,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 (function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
-    var Fragment = wpElement.Fragment;
+    var Fragment = wpElement.Fragment,
+        Component = wpElement.Component;
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         RichText = _wpBlockEditor.RichText,
         InnerBlocks = _wpBlockEditor.InnerBlocks;
+    var select = wp.data.select;
 
 
     var HEADER_ICONS = {
@@ -646,6 +656,121 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             React.createElement("path", { d: "M16.59,8.59L12,13.17L7.41,8.59L6,10l6,6l6-6L16.59,8.59z" })
         )
     };
+
+    var AccordionItemEdit = function (_Component) {
+        _inherits(AccordionItemEdit, _Component);
+
+        function AccordionItemEdit() {
+            _classCallCheck(this, AccordionItemEdit);
+
+            return _possibleConstructorReturn(this, (AccordionItemEdit.__proto__ || Object.getPrototypeOf(AccordionItemEdit)).apply(this, arguments));
+        }
+
+        _createClass(AccordionItemEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes,
+                    clientId = _props.clientId;
+
+                // Apply parent style if newly inserted
+
+                if (attributes.changed !== true) {
+                    var _ref = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                        getBlockRootClientId = _ref.getBlockRootClientId,
+                        getBlockAttributes = _ref.getBlockAttributes;
+
+                    var rootBlockId = getBlockRootClientId(clientId);
+                    var rootBlockAttrs = getBlockAttributes(rootBlockId);
+
+                    if (rootBlockAttrs !== null) {
+                        Object.keys(rootBlockAttrs).map(function (attribute) {
+                            attributes[attribute] = rootBlockAttrs[attribute];
+                        });
+
+                        // Done applied, we will not do this again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var header = attributes.header,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    headerIcon = attributes.headerIcon,
+                    headerIconColor = attributes.headerIconColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-accordion-item" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-header",
+                            style: {
+                                backgroundColor: headerBgColor,
+                                color: headerTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        React.createElement(
+                            "span",
+                            { className: "advgb-accordion-header-icon" },
+                            React.createElement(
+                                "svg",
+                                { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                HEADER_ICONS[headerIcon]
+                            )
+                        ),
+                        React.createElement(RichText, {
+                            tagName: "h4",
+                            value: header,
+                            onChange: function onChange(value) {
+                                return setAttributes({ header: value });
+                            },
+                            unstableOnSplit: function unstableOnSplit() {
+                                return null;
+                            },
+                            className: "advgb-accordion-header-title",
+                            placeholder: __('Enter header…'),
+                            style: { color: 'inherit' }
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-body",
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        React.createElement(InnerBlocks, null)
+                    )
+                );
+            }
+        }]);
+
+        return AccordionItemEdit;
+    }(Component);
 
     var accordionBlockIcon = React.createElement(
         "svg",
@@ -717,76 +842,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: false
             }
         },
-        edit: function edit(_ref) {
-            var attributes = _ref.attributes,
-                setAttributes = _ref.setAttributes;
-            var header = attributes.header,
-                headerBgColor = attributes.headerBgColor,
-                headerTextColor = attributes.headerTextColor,
-                headerIcon = attributes.headerIcon,
-                headerIconColor = attributes.headerIconColor,
-                bodyBgColor = attributes.bodyBgColor,
-                bodyTextColor = attributes.bodyTextColor,
-                borderStyle = attributes.borderStyle,
-                borderWidth = attributes.borderWidth,
-                borderColor = attributes.borderColor,
-                borderRadius = attributes.borderRadius;
-
-
-            return React.createElement(
-                "div",
-                { className: "advgb-accordion-item" },
-                React.createElement(
-                    "div",
-                    { className: "advgb-accordion-header",
-                        style: {
-                            backgroundColor: headerBgColor,
-                            color: headerTextColor,
-                            borderStyle: borderStyle,
-                            borderWidth: borderWidth + 'px',
-                            borderColor: borderColor,
-                            borderRadius: borderRadius + 'px'
-                        }
-                    },
-                    React.createElement(
-                        "span",
-                        { className: "advgb-accordion-header-icon" },
-                        React.createElement(
-                            "svg",
-                            { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                            HEADER_ICONS[headerIcon]
-                        )
-                    ),
-                    React.createElement(RichText, {
-                        tagName: "h4",
-                        value: header,
-                        onChange: function onChange(value) {
-                            return setAttributes({ header: value });
-                        },
-                        unstableOnSplit: function unstableOnSplit() {
-                            return null;
-                        },
-                        className: "advgb-accordion-header-title",
-                        placeholder: __('Enter header…'),
-                        style: { color: 'inherit' }
-                    })
-                ),
-                React.createElement(
-                    "div",
-                    { className: "advgb-accordion-body",
-                        style: {
-                            backgroundColor: bodyBgColor,
-                            color: bodyTextColor,
-                            borderStyle: borderStyle,
-                            borderWidth: borderWidth + 'px',
-                            borderColor: borderColor,
-                            borderRadius: borderRadius + 'px'
-                        }
-                    },
-                    React.createElement(InnerBlocks, null)
-                )
-            );
-        },
+        edit: AccordionItemEdit,
         save: function save(_ref2) {
             var attributes = _ref2.attributes;
             var header = attributes.header,
@@ -813,9 +869,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             backgroundColor: headerBgColor,
                             color: headerTextColor,
                             borderStyle: borderStyle,
-                            borderWidth: borderWidth ? borderWidth + 'px' : undefined,
+                            borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
                             borderColor: borderColor,
-                            borderRadius: borderRadius ? borderRadius + 'px' : undefined
+                            borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
                         }
                     },
                     React.createElement(
@@ -840,9 +896,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             backgroundColor: bodyBgColor,
                             color: bodyTextColor,
                             borderStyle: borderStyle,
-                            borderWidth: borderWidth ? borderWidth + 'px' : undefined,
+                            borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
                             borderColor: borderColor,
-                            borderRadius: borderRadius ? borderRadius + 'px' : undefined
+                            borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
                         }
                     },
                     React.createElement(InnerBlocks.Content, null)

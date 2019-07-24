@@ -84,7 +84,7 @@
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
             } = attributes;
-            const { getBlockOrder, getBlockRootClientId, getBlockAttributes  } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const { getBlockOrder, getBlockRootClientId, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
             const hasChildBlocks = getBlockOrder( clientId ).length > 0;
             const rootBlockId = getBlockRootClientId( clientId );
             const rootChildBlocks = getBlockOrder(rootBlockId).filter( blockId => blockId !== clientId );

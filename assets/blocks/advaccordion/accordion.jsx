@@ -1,9 +1,10 @@
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
-    const { Fragment } = wpElement;
+    const { Fragment, Component } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { RichText, InnerBlocks } = wpBlockEditor;
+    const { select } = wp.data;
 
     const HEADER_ICONS = {
         plus: (
@@ -50,6 +51,91 @@
             </Fragment>
         )
     };
+
+    class AccordionItemEdit extends Component {
+        constructor() {
+            super( ...arguments );
+        }
+
+        componentWillMount() {
+            const { attributes, setAttributes, clientId } = this.props;
+
+            // Apply parent style if newly inserted
+            if (attributes.changed !== true) {
+                const { getBlockRootClientId, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+                const rootBlockId = getBlockRootClientId( clientId );
+                const rootBlockAttrs = getBlockAttributes( rootBlockId );
+
+                if (rootBlockAttrs !== null) {
+                    Object.keys(rootBlockAttrs).map((attribute) => {
+                        attributes[attribute] = rootBlockAttrs[attribute];
+                    });
+
+                    // Done applied, we will not do this again
+                    setAttributes( { changed: true } );
+                }
+            }
+        }
+
+        render() {
+            const { attributes, setAttributes } = this.props;
+            const {
+                header,
+                headerBgColor,
+                headerTextColor,
+                headerIcon,
+                headerIconColor,
+                bodyBgColor,
+                bodyTextColor,
+                borderStyle,
+                borderWidth,
+                borderColor,
+                borderRadius,
+            } = attributes;
+
+            return (
+                <div className="advgb-accordion-item">
+                    <div className="advgb-accordion-header"
+                         style={ {
+                             backgroundColor: headerBgColor,
+                             color: headerTextColor,
+                             borderStyle: borderStyle,
+                             borderWidth: borderWidth + 'px',
+                             borderColor: borderColor,
+                             borderRadius: borderRadius + 'px',
+                         } }
+                    >
+                        <span className="advgb-accordion-header-icon">
+                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                { HEADER_ICONS[headerIcon] }
+                            </svg>
+                        </span>
+                        <RichText
+                            tagName="h4"
+                            value={ header }
+                            onChange={ ( value ) => setAttributes( { header: value } ) }
+                            unstableOnSplit={ () => null }
+                            className="advgb-accordion-header-title"
+                            placeholder={ __( 'Enter header…' ) }
+                            style={ { color: 'inherit' } }
+                        />
+                    </div>
+                    <div className="advgb-accordion-body"
+                         style={ {
+                             backgroundColor: bodyBgColor,
+                             color: bodyTextColor,
+                             borderStyle: borderStyle,
+                             borderWidth: borderWidth + 'px',
+                             borderColor: borderColor,
+                             borderRadius: borderRadius + 'px',
+                         } }
+                    >
+                        <InnerBlocks />
+                    </div>
+                </div>
+            )
+        }
+    }
 
     const accordionBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
@@ -121,63 +207,7 @@
                 default: false,
             }
         },
-        edit: function ( { attributes, setAttributes } ) {
-            const {
-                header,
-                headerBgColor,
-                headerTextColor,
-                headerIcon,
-                headerIconColor,
-                bodyBgColor,
-                bodyTextColor,
-                borderStyle,
-                borderWidth,
-                borderColor,
-                borderRadius,
-            } = attributes;
-
-            return (
-                <div className="advgb-accordion-item">
-                    <div className="advgb-accordion-header"
-                         style={ {
-                             backgroundColor: headerBgColor,
-                             color: headerTextColor,
-                             borderStyle: borderStyle,
-                             borderWidth: borderWidth + 'px',
-                             borderColor: borderColor,
-                             borderRadius: borderRadius + 'px',
-                         } }
-                    >
-                        <span className="advgb-accordion-header-icon">
-                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                { HEADER_ICONS[headerIcon] }
-                            </svg>
-                        </span>
-                        <RichText
-                            tagName="h4"
-                            value={ header }
-                            onChange={ ( value ) => setAttributes( { header: value } ) }
-                            unstableOnSplit={ () => null }
-                            className="advgb-accordion-header-title"
-                            placeholder={ __( 'Enter header…' ) }
-                            style={ { color: 'inherit' } }
-                        />
-                    </div>
-                    <div className="advgb-accordion-body"
-                         style={ {
-                             backgroundColor: bodyBgColor,
-                             color: bodyTextColor,
-                             borderStyle: borderStyle,
-                             borderWidth: borderWidth + 'px',
-                             borderColor: borderColor,
-                             borderRadius: borderRadius + 'px',
-                         } }
-                    >
-                        <InnerBlocks />
-                    </div>
-                </div>
-            )
-        },
+        edit: AccordionItemEdit,
         save: function ( { attributes } ) {
             const {
                 header,
@@ -201,9 +231,9 @@
                              backgroundColor: headerBgColor,
                              color: headerTextColor,
                              borderStyle: borderStyle,
-                             borderWidth: borderWidth ? borderWidth + 'px' : undefined,
+                             borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
                              borderColor: borderColor,
-                             borderRadius: borderRadius ? borderRadius + 'px' : undefined,
+                             borderRadius: !!borderRadius ? borderRadius + 'px' : undefined,
                          } }
                     >
                         <span className="advgb-accordion-header-icon">
@@ -218,9 +248,9 @@
                              backgroundColor: bodyBgColor,
                              color: bodyTextColor,
                              borderStyle: borderStyle,
-                             borderWidth: borderWidth ? borderWidth + 'px' : undefined,
+                             borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
                              borderColor: borderColor,
-                             borderRadius: borderRadius ? borderRadius + 'px' : undefined,
+                             borderRadius: !!borderRadius ? borderRadius + 'px' : undefined,
                          } }
                     >
                         <InnerBlocks.Content />
