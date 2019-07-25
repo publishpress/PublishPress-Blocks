@@ -960,13 +960,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
+        BlockControls = _wpBlockEditor.BlockControls,
         PanelColorSettings = _wpBlockEditor.PanelColorSettings,
         InnerBlocks = _wpBlockEditor.InnerBlocks;
     var RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
-        ToggleControl = wpComponents.ToggleControl;
+        ToggleControl = wpComponents.ToggleControl,
+        Toolbar = wpComponents.Toolbar,
+        IconButton = wpComponents.IconButton;
     var _wp$data = wp.data,
         select = _wp$data.select,
         dispatch = _wp$data.dispatch;
@@ -1094,13 +1097,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
+            key: "resyncAccordions",
+            value: function resyncAccordions() {
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
+
+                var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref5.updateBlockAttributes;
+
+                var _ref6 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref6.getBlockOrder;
+
+                var childBlocks = getBlockOrder(clientId);
+
+                childBlocks.forEach(function (childBlockId) {
+                    return updateBlockAttributes(childBlockId, attributes);
+                });
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
                 var headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
                     headerIcon = attributes.headerIcon,
@@ -1118,6 +1140,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return React.createElement(
                     Fragment,
                     null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(
+                            Toolbar,
+                            null,
+                            React.createElement(IconButton, {
+                                icon: "update",
+                                onClick: function onClick() {
+                                    return _this2.resyncAccordions();
+                                }
+                            })
+                        )
+                    ),
                     React.createElement(
                         InspectorControls,
                         null,
@@ -1345,8 +1381,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: blockAttrs,
         edit: AccordionsEdit,
-        save: function save(_ref5) {
-            var attributes = _ref5.attributes;
+        save: function save(_ref7) {
+            var attributes = _ref7.attributes;
             var collapsedAll = attributes.collapsedAll;
 
 

@@ -3,8 +3,8 @@
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, PanelColorSettings, InnerBlocks } = wpBlockEditor;
-    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl } = wpComponents;
+    const { InspectorControls, BlockControls, PanelColorSettings, InnerBlocks } = wpBlockEditor;
+    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl, Toolbar, IconButton } = wpComponents;
     const { select, dispatch } = wp.data;
 
     const HEADER_ICONS = {
@@ -103,6 +103,15 @@
             childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attrs ) );
         }
 
+        resyncAccordions() {
+            const { attributes, clientId } = this.props;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attributes ) );
+        }
+
         render() {
             const { attributes, setAttributes } = this.props;
             const {
@@ -122,6 +131,14 @@
 
             return (
                 <Fragment>
+                    <BlockControls>
+                        <Toolbar>
+                            <IconButton
+                                icon="update"
+                                onClick={ () => this.resyncAccordions() }
+                            />
+                        </Toolbar>
+                    </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Accordion Settings' ) }>
                             <RangeControl
