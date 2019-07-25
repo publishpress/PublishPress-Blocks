@@ -3970,6 +3970,20 @@ float: left;'
             });');
         }
 
+        if (strpos($content, 'advgb-accordion-wrapper') !== false) {
+            wp_enqueue_script('jquery-ui-accordion');
+            wp_add_inline_script('jquery-ui-accordion', 'jQuery(document).ready(function($){
+                $(".advgb-accordion-wrapper").each(function() {
+                    $(this).accordion({
+                        header: "> div > .advgb-accordion-header",
+                        heightStyle: "content",
+                        collapsible: true,
+                        active: $(this).data("collapsed") ? false : 0,
+                    });
+                });
+            });');
+        }
+
         if (strpos($content, 'advgb-tabs-block') !== false) {
             wp_enqueue_script('jquery-ui-tabs');
             wp_add_inline_script('jquery-ui-tabs', 'jQuery(document).ready(function($){
