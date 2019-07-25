@@ -2001,7 +2001,7 @@ float: left;'
     public function registerBlockConfigPage()
     {
         $advgb_block = array(
-            'accordion', 'button', 'image', 'list',
+            'accordions', 'button', 'image', 'list',
             'table', 'video', 'contact-form', 'container',
             'count-up','images-slider', 'map', 'newsletter',
             'recent-posts', 'social-links', 'summary', 'tabs',
@@ -2063,7 +2063,24 @@ float: left;'
         );
 
         $blocks_settings_list = array(
-            'advgb-accordion' => array(
+            'advgb-accordions' => array(
+                array(
+                    'label'    => __('Accordion Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Bottom spacing', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginBottom',
+                            'min'   => 0,
+                            'max'   => 50,
+                        ),
+                        array(
+                            'title' => __('Initial Collapsed', 'advanced-gutenberg'),
+                            'type'  => 'checkbox',
+                            'name'  => 'collapsedAll',
+                        ),
+                    )
+                ),
                 array(
                     'label'    => __('Header Settings', 'advanced-gutenberg'),
                     'settings' => array(
