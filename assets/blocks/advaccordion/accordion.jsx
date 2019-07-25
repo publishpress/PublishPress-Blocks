@@ -66,7 +66,7 @@
                 const rootBlockId = getBlockRootClientId( clientId );
                 const rootBlockAttrs = getBlockAttributes( rootBlockId );
 
-                if (rootBlockAttrs !== null) {
+                if (rootBlockAttrs !== null && rootBlockAttrs.needUpdate !== false) {
                     Object.keys(rootBlockAttrs).map((attribute) => {
                         attributes[attribute] = rootBlockAttrs[attribute];
                     });

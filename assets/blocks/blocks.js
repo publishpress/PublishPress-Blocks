@@ -96,6 +96,8 @@
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -111,7 +113,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
-    var registerBlockType = wpBlocks.registerBlockType;
+    var registerBlockType = wpBlocks.registerBlockType,
+        createBlock = wpBlocks.createBlock;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
         RichText = _wpBlockEditor.RichText,
@@ -213,7 +216,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "render",
             value: function render() {
                 var _props2 = this.props,
-                    isSelected = _props2.isSelected,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
                 var header = attributes.header,
@@ -237,6 +239,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         InspectorControls,
                         null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Notice') },
+                            React.createElement(
+                                "p",
+                                { style: { color: '#ff0000', fontStyle: 'italic' } },
+                                __("We have Adv. Accordion block to replace for this block.\n                                This block will be removed in the some next version.\n                                Please transform this to an Accordion Item block and drag them into\n                                new Adv. Accordion block as soon as possible.")
+                            )
+                        ),
                         React.createElement(
                             PanelBody,
                             { title: __('Accordion Settings') },
@@ -575,6 +586,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
+        },
+        transforms: {
+            to: [{
+                type: 'block',
+                blocks: ['advgb/accordions'],
+                transform: function transform(attributes, innerBlocks) {
+                    var accordion = createBlock('advgb/accordion-item', _extends({}, attributes, { changed: false }), innerBlocks);
+
+                    return createBlock('advgb/accordions', _extends({}, attributes, { header: undefined, needUpdate: false }), [accordion]);
+                }
+            }]
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
@@ -684,7 +706,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     var rootBlockId = getBlockRootClientId(clientId);
                     var rootBlockAttrs = getBlockAttributes(rootBlockId);
 
-                    if (rootBlockAttrs !== null) {
+                    if (rootBlockAttrs !== null && rootBlockAttrs.needUpdate !== false) {
                         Object.keys(rootBlockAttrs).map(function (attribute) {
                             attributes[attribute] = rootBlockAttrs[attribute];
                         });
@@ -1034,17 +1056,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate() {
+                var clientId = this.props.clientId;
+
+                var _ref = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    removeBlock = _ref.removeBlock;
+
+                var _ref2 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref2.getBlockOrder;
+
+                var childBlocks = getBlockOrder(clientId);
+
+                if (childBlocks.length < 1) {
+                    // No accordion left, we will remove this block
+                    removeBlock(clientId);
+                }
+            }
+        }, {
             key: "updateAccordionAttrs",
             value: function updateAccordionAttrs(attrs) {
                 var _props2 = this.props,
                     setAttributes = _props2.setAttributes,
                     clientId = _props2.clientId;
 
-                var _ref = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    updateBlockAttributes = _ref.updateBlockAttributes;
+                var _ref3 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref3.updateBlockAttributes;
 
-                var _ref2 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref2.getBlockOrder;
+                var _ref4 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref4.getBlockOrder;
 
                 var childBlocks = getBlockOrder(clientId);
 
@@ -1287,6 +1327,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         changed: {
             type: 'boolean',
             default: false
+        },
+        needUpdate: {
+            type: 'boolean',
+            default: true
         }
     };
 
@@ -1301,8 +1345,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: blockAttrs,
         edit: AccordionsEdit,
-        save: function save(_ref3) {
-            var attributes = _ref3.attributes;
+        save: function save(_ref5) {
+            var attributes = _ref5.attributes;
             var collapsedAll = attributes.collapsedAll;
 
 

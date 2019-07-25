@@ -81,6 +81,18 @@
             }
         }
 
+        componentDidUpdate() {
+            const { clientId } = this.props;
+            const { removeBlock } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            if (childBlocks.length < 1) {
+                // No accordion left, we will remove this block
+                removeBlock(clientId);
+            }
+        }
+
         updateAccordionAttrs( attrs ) {
             const { setAttributes, clientId } = this.props;
             const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
@@ -287,6 +299,10 @@
             type: 'boolean',
             default: false,
         },
+        needUpdate: {
+            type: 'boolean',
+            default: true,
+        }
     };
 
     registerBlockType( 'advgb/accordions', {
