@@ -369,8 +369,9 @@ float: left;'
         wp_localize_script('advgb_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
 
         // Set variable needed by blocks editor
-        $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
+        $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
         $default_thumb      = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+        $home_logo          = plugins_url('assets/blocks/login-form/home.png', ADVANCED_GUTENBERG_PLUGIN);
         $saved_settings     = get_option('advgb_settings');
         $custom_styles_data = get_option('advgb_custom_styles');
         $recaptcha_config   = get_option('advgb_recaptcha_config');
@@ -382,6 +383,7 @@ float: left;'
             'color' => $blocks_icon_color,
             'post_thumb' => $rp_default_thumb['url'],
             'avatarHolder' => $avatarHolder,
+            'home_logo' => $home_logo,
             'config_url' => admin_url('admin.php?page=advgb_main'),
             'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
             'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
