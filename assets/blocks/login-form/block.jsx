@@ -81,16 +81,15 @@
                 <MediaUpload
                     allowedTypes={ ["image"] }
                     onSelect={ (media) => setAttributes( {
-                        logoImg: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                        logoImg: media.sizes.medium ? media.sizes.medium.url : media.sizes.full.url,
                         logoID: media.id
                     } ) }
                     value={ logoID }
                     render={ ( { open } ) => (
                         <div className="advgb-lores-form-logo-wrapper">
-                            <Tooltip text={ __( 'Click to change avatar' ) }>
+                            <Tooltip text={ __( 'Click to change logo' ) }>
                                 <span style={ {
-                                    display: 'inline-block',
-                                    cursor: 'pointer',
+                                    display: 'block',
                                 } }>
                                     <img className="advgb-lores-form-logo"
                                          onClick={ open }
@@ -98,7 +97,7 @@
                                          alt={ __( 'Site logo' ) }
                                          style={ {
                                              width: logoWidth ? logoWidth + 'px' : undefined,
-                                             height: logoWidth ? logoWidth + 'px' : undefined,
+                                             cursor: 'pointer',
                                          } }
                                     />
                                 </span>
@@ -450,6 +449,15 @@
                                     checked={ !!showLogo }
                                     onChange={ () => setAttributes( { showLogo: !showLogo } ) }
                                 />
+                                {!!showLogo && (
+                                    <RangeControl
+                                        label={ __( 'Logo Width (px)' ) }
+                                        value={ logoWidth }
+                                        onChange={ ( value ) => setAttributes( { logoWidth: value } ) }
+                                        min={ 100 }
+                                        max={ 1500 }
+                                    />
+                                ) }
                                 <ToggleControl
                                     label={ __( 'Show input field icon' ) }
                                     checked={ !!showInputFieldIcon }
@@ -620,6 +628,7 @@
         },
         logoWidth: {
             type: 'number',
+            default: 150,
         },
         welcomeText: {
             type: 'string',

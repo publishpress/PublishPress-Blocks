@@ -9434,7 +9434,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     allowedTypes: ["image"],
                     onSelect: function onSelect(media) {
                         return setAttributes({
-                            logoImg: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                            logoImg: media.sizes.medium ? media.sizes.medium.url : media.sizes.full.url,
                             logoID: media.id
                         });
                     },
@@ -9446,12 +9446,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-lores-form-logo-wrapper" },
                             React.createElement(
                                 Tooltip,
-                                { text: __('Click to change avatar') },
+                                { text: __('Click to change logo') },
                                 React.createElement(
                                     "span",
                                     { style: {
-                                            display: 'inline-block',
-                                            cursor: 'pointer'
+                                            display: 'block'
                                         } },
                                     React.createElement("img", { className: "advgb-lores-form-logo",
                                         onClick: open,
@@ -9459,7 +9458,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         alt: __('Site logo'),
                                         style: {
                                             width: logoWidth ? logoWidth + 'px' : undefined,
-                                            height: logoWidth ? logoWidth + 'px' : undefined
+                                            cursor: 'pointer'
                                         }
                                     })
                                 )
@@ -9942,6 +9941,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return setAttributes({ showLogo: !showLogo });
                                     }
                                 }),
+                                !!showLogo && React.createElement(RangeControl, {
+                                    label: __('Logo Width (px)'),
+                                    value: logoWidth,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ logoWidth: value });
+                                    },
+                                    min: 100,
+                                    max: 1500
+                                }),
                                 React.createElement(ToggleControl, {
                                     label: __('Show input field icon'),
                                     checked: !!showInputFieldIcon,
@@ -10136,7 +10144,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number'
         },
         logoWidth: {
-            type: 'number'
+            type: 'number',
+            default: 150
         },
         welcomeText: {
             type: 'string',
