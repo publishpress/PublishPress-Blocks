@@ -9412,7 +9412,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 // Change view to Register form regard to initial form option
-                this.setState({ registerView: attributes.formType === 'register' || currentBlockConfig.formType === 'register' });
+                this.setState({ registerView: attributes.formType === 'register' });
             }
         }, {
             key: "render",
