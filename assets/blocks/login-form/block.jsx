@@ -89,6 +89,7 @@
                 registerWelcome,
                 backToLoginText,
                 lostPasswordText,
+                headerBgColor,
                 bgColor,
                 textColor,
                 inputColor,
@@ -134,7 +135,9 @@
             const loginForm = (
                 <div className="advgb-login-form-wrapper advgb-lores-form">
                     {!!showRegisterLink && (
-                        <div className="advgb-register-link-wrapper advgb-header-navigation">
+                        <div className="advgb-register-link-wrapper advgb-header-navigation"
+                             style={ { backgroundColor: headerBgColor } }
+                        >
                             <RichText
                                 tagName="span"
                                 value={ registerText }
@@ -247,9 +250,9 @@
                         <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
                             <label htmlFor="rememberme">
                                 <input type="checkbox"
-                                       disabled={ true }
                                        checked={ true }
                                        className="advgb-lores-checkbox"
+                                       style={ { color: submitBgColor } }
                                 />
                                 <span>
                                     <RichText
@@ -307,7 +310,9 @@
             const registerForm = (
                 <div className="advgb-register-form-wrapper advgb-lores-form">
                     {!!showRegisterLink && (
-                        <div className="advgb-header-navigation advgb-back-to-login">
+                        <div className="advgb-header-navigation advgb-back-to-login"
+                             style={ { backgroundColor: headerBgColor } }
+                        >
                             <div className="advgb-back-to-login-link"
                                  style={ { color: submitBgColor } }
                             >
@@ -447,6 +452,14 @@
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Form Settings' ) }>
+                            {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled)) && (
+                                <PanelBody title={ __( 'Notice' ) }>
+                                    <p style={ { fontStyle: 'italic', color: '#ff0000' } }>
+                                        { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in' ) }
+                                        <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings' ) }.</a>
+                                    </p>
+                                </PanelBody>
+                            ) }
                             <PanelBody title={ __( 'Form State' ) }>
                                 <SelectControl
                                     label={ __( 'Initial Form' ) }
@@ -461,6 +474,11 @@
                                         this.setState( { registerView: value === 'register' } );
                                     } }
                                 />
+                                {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled)) && (
+                                    <p style={ { fontStyle: 'italic', color: '#ff0000' } }>
+                                        { __( 'Registration for your site is currently disabled, enable it to use registration form.' ) }
+                                    </p>
+                                ) }
                                 <RangeControl
                                     label={ __( 'Form Width (px)' ) }
                                     value={ formWidth }
@@ -492,6 +510,19 @@
                                     checked={ !!showRegisterLink }
                                     onChange={ () => setAttributes( { showRegisterLink: !showRegisterLink } ) }
                                 />
+                                {!!showRegisterLink && (
+                                    <PanelColorSettings
+                                        title={ __( 'Header Color' ) }
+                                        initialOpen={ false }
+                                        colorSettings={ [
+                                            {
+                                                label: __( 'Header color' ),
+                                                value: headerBgColor,
+                                                onChange: (value) => setAttributes( { headerBgColor: value } ),
+                                            },
+                                        ] }
+                                    />
+                                ) }
                                 <ToggleControl
                                     label={ __( 'Show lost password link' ) }
                                     checked={ !!showLostPasswordLink }
@@ -622,6 +653,7 @@
     const blockAttrs = {
         formType: {
             type: 'string',
+            default: 'login',
         },
         formWidth: {
             type: 'number',
@@ -715,6 +747,9 @@
             type: 'string',
             default: __( 'Lost your password?' ),
         },
+        headerBgColor: {
+            type: 'string',
+        },
         bgColor: {
             type: 'string',
         },
@@ -764,7 +799,330 @@
         attributes: blockAttrs,
         edit: LoginFormEdit,
         save: function ( { attributes } ) {
-            return null;
+            const {
+                formType,
+                formWidth,
+                showLogo,
+                showInputFieldIcon,
+                showRegisterLink,
+                showLostPasswordLink,
+                logoImg,
+                logoWidth,
+                welcomeText,
+                loginLabel,
+                loginText,
+                passwordText,
+                usernameLabel,
+                userText,
+                emailLabel,
+                emailText,
+                rememberMeText,
+                loginSubmitLabel,
+                registerSubmitLabel,
+                registerText,
+                registerLinkText,
+                registerWelcome,
+                backToLoginText,
+                lostPasswordText,
+                headerBgColor,
+                bgColor,
+                textColor,
+                inputColor,
+                borderColor,
+                borderStyle,
+                borderWidth,
+                submitColor,
+                submitBgColor,
+                submitRadius,
+                submitPosition,
+            } = attributes;
+
+            const logoElmSave = (
+                <div className="advgb-lores-form-logo-wrapper">
+                    <span style={ {display: 'block',} }>
+                        <img className="advgb-lores-form-logo"
+                             src={ logoImg }
+                             alt={ __( 'Site logo' ) }
+                             style={ {
+                                 width: logoWidth ? logoWidth + 'px' : undefined,
+                                 cursor: 'pointer',
+                             } }
+                        />
+                    </span>
+                </div>
+            );
+
+            const loginFormSave = (
+                <div className="advgb-login-form-wrapper advgb-lores-form"
+                     style={ {
+                         display: formType === 'login' ? 'block' : 'none',
+                     } }
+                >
+                    {!!showRegisterLink && (
+                        <div className="advgb-register-link-wrapper advgb-header-navigation"
+                             style={ { backgroundColor: headerBgColor } }
+                        >
+                            <span className="advgb-register-text"
+                                  style={ { color: textColor } }
+                            >
+                                { registerText }
+                            </span>
+                            <a href="#"
+                               className="advgb-register-link"
+                               style={ { color: submitBgColor } }
+                            >
+                                { registerLinkText }
+                            </a>
+                        </div>
+                    ) }
+                    <form action="" className="advgb-form-login" method="post">
+                        <div className="advgb-login-form advgb-form-inner">
+                            <div className="advgb-lores-form-header">
+                                {!!showLogo && logoElmSave}
+                                <h3 className="advgb-lores-form-welcome"
+                                    style={ { color: textColor } }
+                                >
+                                    { welcomeText }
+                                </h3>
+                            </div>
+                            <div className="advgb-lores-field advgb-login-user"
+                                 style={ { borderColor: textColor } }
+                            >
+                                <div className="advgb-lores-field-label">
+                                    <label htmlFor="advgb-login-user" style={ { color: textColor } }>
+                                        { loginText }
+                                    </label>
+                                </div>
+                                <div className="advgb-lores-field-input"
+                                     style={ {
+                                         backgroundColor: bgColor,
+                                         color: inputColor,
+                                         borderBottomColor: borderColor,
+                                         borderStyle: borderStyle,
+                                         borderWidth: borderWidth,
+                                     } }
+                                >
+                                    {!!showInputFieldIcon && (
+                                        <span className="advgb-lores-input-icon"
+                                              style={ { color: textColor } }
+                                        >
+                                            { emailIcon }
+                                        </span>
+                                    ) }
+                                    <input type="text"
+                                           id="advgb-login-user"
+                                           className="advgb-lores-input"
+                                           name="log"
+                                           style={ { color: inputColor } }
+                                           placeholder={ loginLabel ? loginLabel : __( 'user@email.com' ) }
+                                    />
+                                </div>
+                            </div>
+                            <div className="advgb-lores-field advgb-login-password"
+                                 style={ { borderColor: textColor } }
+                            >
+                                <div className="advgb-lores-field-label">
+                                    <label htmlFor="advgb-login-password" style={ { color: textColor } }>
+                                        { passwordText }
+                                    </label>
+                                </div>
+                                <div className="advgb-lores-field-input"
+                                     style={ {
+                                         backgroundColor: bgColor,
+                                         color: inputColor,
+                                         borderBottomColor: borderColor,
+                                         borderStyle: borderStyle,
+                                         borderWidth: borderWidth,
+                                     } }
+                                >
+                                    {!!showInputFieldIcon && (
+                                        <span className="advgb-lores-input-icon"
+                                              style={ { color: textColor } }
+                                        >
+                                            { passwordIcon }
+                                        </span>
+                                    ) }
+                                    <input type="password"
+                                           id="advgb-login-password"
+                                           className="advgb-lores-input"
+                                           name="pwd"
+                                           style={ { color: inputColor } }
+                                           placeholder="password"
+                                    />
+                                </div>
+                            </div>
+                            <div className={`advgb-grecaptcha clearfix position-${submitPosition}`}/>
+                            <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
+                                <label htmlFor="rememberme">
+                                    <input type="checkbox"
+                                           value="forever"
+                                           id="rememberme"
+                                           name="rememberme"
+                                           className="advgb-lores-checkbox"
+                                           style={ { color: submitBgColor } }
+                                    />
+                                    <span style={ { color: textColor } }>
+                                        { rememberMeText }
+                                    </span>
+                                </label>
+                                <div className="advgb-lores-submit advgb-login-submit">
+                                    <button className="advgb-lores-submit-button"
+                                            type="submit"
+                                            name="wp-submit"
+                                            style={ {
+                                                borderColor: submitColor,
+                                                color: submitColor,
+                                                backgroundColor: submitBgColor,
+                                                borderRadius: submitRadius,
+                                            } }
+                                    >
+                                        { loginSubmitLabel }
+                                    </button>
+                                    <input type="hidden" name="testcookie" value="1" />
+                                </div>
+                            </div>
+                            {!!showLostPasswordLink && (
+                                <div className="advgb-lores-field advgb-lost-password-field">
+                                    <div className="advgb-lost-password">
+                                        <a href="#"
+                                           className="advgb-lost-password-link"
+                                           style={ { color: submitBgColor } }
+                                        >
+                                            { lostPasswordText }
+                                        </a>
+                                    </div>
+                                </div>
+                            ) }
+                        </div>
+                    </form>
+                </div>
+            );
+
+            const registerFormSave = (
+                <div className="advgb-register-form-wrapper advgb-lores-form"
+                     style={ {
+                         display: formType === 'register' ? 'block' : 'none',
+                     } }
+                >
+                    {!!showRegisterLink && (
+                        <div className="advgb-header-navigation advgb-back-to-login"
+                             style={ { backgroundColor: headerBgColor } }
+                        >
+                            <div className="advgb-back-to-login-link"
+                                 style={ { color: submitBgColor } }
+                            >
+                                <span className="advgb-register-text"
+                                      style={ { color: submitBgColor } }
+                                >
+                                    { backToLoginText }
+                                </span>
+                            </div>
+                        </div>
+                    ) }
+                    <form action="" className="advgb-form-register" method="post">
+                        <div className="advgb-register-form advgb-form-inner">
+                            <div className="advgb-lores-form-header">
+                                {!!showLogo && logoElmSave}
+                                <h3 className="advgb-lores-form-welcome"
+                                    style={ { color: textColor } }
+                                >
+                                    { registerWelcome }
+                                </h3>
+                            </div>
+                            <div className="advgb-lores-field advgb-register-username"
+                                 style={ { borderColor: textColor } }
+                            >
+                                <div className="advgb-lores-field-label">
+                                    <label htmlFor="advgb-register-username" style={ { color: textColor } }>
+                                        { userText }
+                                    </label>
+                                </div>
+                                <div className="advgb-lores-field-input"
+                                     style={ {
+                                         backgroundColor: bgColor,
+                                         color: inputColor,
+                                         borderBottomColor: borderColor,
+                                         borderStyle: borderStyle,
+                                         borderWidth: borderWidth,
+                                     } }
+                                >
+                                    {!!showInputFieldIcon && (
+                                        <span className="advgb-lores-input-icon"
+                                              style={ { color: textColor } }
+                                        >
+                                            { userIcon }
+                                        </span>
+                                    ) }
+                                    <input type="text"
+                                           id="advgb-register-username"
+                                           className="advgb-lores-input"
+                                           name="user_login"
+                                           style={ { color: inputColor } }
+                                           placeholder={ usernameLabel ? usernameLabel : __( 'username' ) }
+                                    />
+                                </div>
+                            </div>
+                            <div className="advgb-lores-field advgb-register-email"
+                                 style={ { borderColor: textColor } }
+                            >
+                                <div className="advgb-lores-field-label">
+                                    <label htmlFor="advgb-register-email" style={ { color: textColor } }>
+                                        { emailText }
+                                    </label>
+                                </div>
+                                <div className="advgb-lores-field-input"
+                                     style={ {
+                                         backgroundColor: bgColor,
+                                         color: inputColor,
+                                         borderBottomColor: borderColor,
+                                         borderStyle: borderStyle,
+                                         borderWidth: borderWidth,
+                                     } }
+                                >
+                                    {!!showInputFieldIcon && (
+                                        <span className="advgb-lores-input-icon"
+                                              style={ { color: textColor } }
+                                        >
+                                            { emailIcon }
+                                        </span>
+                                    ) }
+                                    <input type="email"
+                                           id="advgb-register-email"
+                                           className="advgb-lores-input"
+                                           name="user_email"
+                                           style={ { color: inputColor } }
+                                           placeholder={ emailLabel ? emailLabel : __( 'user@email.com' ) }
+                                    />
+                                </div>
+                            </div>
+                            <div className={`advgb-grecaptcha clearfix position-${submitPosition}`}/>
+                            <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
+                                <div className="advgb-lores-submit advgb-register-submit">
+                                    <button className="advgb-lores-submit-button"
+                                            type="submit"
+                                            name="wp-submit"
+                                            style={ {
+                                                borderColor: submitColor,
+                                                color: submitColor,
+                                                backgroundColor: submitBgColor,
+                                                borderRadius: submitRadius,
+                                            } }
+                                    >
+                                        { registerSubmitLabel }
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            );
+
+            return (
+                <div className="advgb-lores-form-wrapper" style={ { width: formWidth } }>
+                    { loginFormSave }
+                    { registerFormSave }
+                </div>
+            );
         }
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

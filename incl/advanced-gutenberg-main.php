@@ -387,7 +387,8 @@ float: left;'
             'config_url' => admin_url('admin.php?page=advgb_main'),
             'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
             'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
-            'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN)
+            'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN),
+            'registerEnabled' => get_option('users_can_register'),
         ));
 
         // Setup default config data for blocks

@@ -9448,6 +9448,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     registerWelcome = attributes.registerWelcome,
                     backToLoginText = attributes.backToLoginText,
                     lostPasswordText = attributes.lostPasswordText,
+                    headerBgColor = attributes.headerBgColor,
                     bgColor = attributes.bgColor,
                     textColor = attributes.textColor,
                     inputColor = attributes.inputColor,
@@ -9502,7 +9503,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { className: "advgb-login-form-wrapper advgb-lores-form" },
                     !!showRegisterLink && React.createElement(
                         "div",
-                        { className: "advgb-register-link-wrapper advgb-header-navigation" },
+                        { className: "advgb-register-link-wrapper advgb-header-navigation",
+                            style: { backgroundColor: headerBgColor }
+                        },
                         React.createElement(RichText, {
                             tagName: "span",
                             value: registerText,
@@ -9660,9 +9663,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "label",
                                 { htmlFor: "rememberme" },
                                 React.createElement("input", { type: "checkbox",
-                                    disabled: true,
                                     checked: true,
-                                    className: "advgb-lores-checkbox"
+                                    className: "advgb-lores-checkbox",
+                                    style: { color: submitBgColor }
                                 }),
                                 React.createElement(
                                     "span",
@@ -9745,7 +9748,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { className: "advgb-register-form-wrapper advgb-lores-form" },
                     !!showRegisterLink && React.createElement(
                         "div",
-                        { className: "advgb-header-navigation advgb-back-to-login" },
+                        { className: "advgb-header-navigation advgb-back-to-login",
+                            style: { backgroundColor: headerBgColor }
+                        },
                         React.createElement(
                             "div",
                             { className: "advgb-back-to-login-link",
@@ -9942,6 +9947,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Form Settings') },
+                            typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
+                                PanelBody,
+                                { title: __('Notice') },
+                                React.createElement(
+                                    "p",
+                                    { style: { fontStyle: 'italic', color: '#ff0000' } },
+                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
+                                    React.createElement(
+                                        "a",
+                                        { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
+                                        " ",
+                                        __('settings'),
+                                        "."
+                                    )
+                                )
+                            ),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Form State') },
@@ -9955,6 +9976,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         _this2.setState({ registerView: value === 'register' });
                                     }
                                 }),
+                                typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled) && React.createElement(
+                                    "p",
+                                    { style: { fontStyle: 'italic', color: '#ff0000' } },
+                                    __('Registration for your site is currently disabled, enable it to use registration form.')
+                                ),
                                 React.createElement(RangeControl, {
                                     label: __('Form Width (px)'),
                                     value: formWidth,
@@ -9993,6 +10019,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange() {
                                         return setAttributes({ showRegisterLink: !showRegisterLink });
                                     }
+                                }),
+                                !!showRegisterLink && React.createElement(PanelColorSettings, {
+                                    title: __('Header Color'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Header color'),
+                                        value: headerBgColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ headerBgColor: value });
+                                        }
+                                    }]
                                 }),
                                 React.createElement(ToggleControl, {
                                     label: __('Show lost password link'),
@@ -10144,7 +10181,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var blockAttrs = {
         formType: {
-            type: 'string'
+            type: 'string',
+            default: 'login'
         },
         formWidth: {
             type: 'number',
@@ -10238,6 +10276,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: __('Lost your password?')
         },
+        headerBgColor: {
+            type: 'string'
+        },
         bgColor: {
             type: 'string'
         },
@@ -10288,8 +10329,407 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: LoginFormEdit,
         save: function save(_ref2) {
             var attributes = _ref2.attributes;
+            var formType = attributes.formType,
+                formWidth = attributes.formWidth,
+                showLogo = attributes.showLogo,
+                showInputFieldIcon = attributes.showInputFieldIcon,
+                showRegisterLink = attributes.showRegisterLink,
+                showLostPasswordLink = attributes.showLostPasswordLink,
+                logoImg = attributes.logoImg,
+                logoWidth = attributes.logoWidth,
+                welcomeText = attributes.welcomeText,
+                loginLabel = attributes.loginLabel,
+                loginText = attributes.loginText,
+                passwordText = attributes.passwordText,
+                usernameLabel = attributes.usernameLabel,
+                userText = attributes.userText,
+                emailLabel = attributes.emailLabel,
+                emailText = attributes.emailText,
+                rememberMeText = attributes.rememberMeText,
+                loginSubmitLabel = attributes.loginSubmitLabel,
+                registerSubmitLabel = attributes.registerSubmitLabel,
+                registerText = attributes.registerText,
+                registerLinkText = attributes.registerLinkText,
+                registerWelcome = attributes.registerWelcome,
+                backToLoginText = attributes.backToLoginText,
+                lostPasswordText = attributes.lostPasswordText,
+                headerBgColor = attributes.headerBgColor,
+                bgColor = attributes.bgColor,
+                textColor = attributes.textColor,
+                inputColor = attributes.inputColor,
+                borderColor = attributes.borderColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                submitColor = attributes.submitColor,
+                submitBgColor = attributes.submitBgColor,
+                submitRadius = attributes.submitRadius,
+                submitPosition = attributes.submitPosition;
 
-            return null;
+
+            var logoElmSave = React.createElement(
+                "div",
+                { className: "advgb-lores-form-logo-wrapper" },
+                React.createElement(
+                    "span",
+                    { style: { display: 'block' } },
+                    React.createElement("img", { className: "advgb-lores-form-logo",
+                        src: logoImg,
+                        alt: __('Site logo'),
+                        style: {
+                            width: logoWidth ? logoWidth + 'px' : undefined,
+                            cursor: 'pointer'
+                        }
+                    })
+                )
+            );
+
+            var loginFormSave = React.createElement(
+                "div",
+                { className: "advgb-login-form-wrapper advgb-lores-form",
+                    style: {
+                        display: formType === 'login' ? 'block' : 'none'
+                    }
+                },
+                !!showRegisterLink && React.createElement(
+                    "div",
+                    { className: "advgb-register-link-wrapper advgb-header-navigation",
+                        style: { backgroundColor: headerBgColor }
+                    },
+                    React.createElement(
+                        "span",
+                        { className: "advgb-register-text",
+                            style: { color: textColor }
+                        },
+                        registerText
+                    ),
+                    React.createElement(
+                        "a",
+                        { href: "#",
+                            className: "advgb-register-link",
+                            style: { color: submitBgColor }
+                        },
+                        registerLinkText
+                    )
+                ),
+                React.createElement(
+                    "form",
+                    { action: "", className: "advgb-form-login", method: "post" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-login-form advgb-form-inner" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-header" },
+                            !!showLogo && logoElmSave,
+                            React.createElement(
+                                "h3",
+                                { className: "advgb-lores-form-welcome",
+                                    style: { color: textColor }
+                                },
+                                welcomeText
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-login-user",
+                                style: { borderColor: textColor }
+                            },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "advgb-login-user", style: { color: textColor } },
+                                    loginText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    emailIcon
+                                ),
+                                React.createElement("input", { type: "text",
+                                    id: "advgb-login-user",
+                                    className: "advgb-lores-input",
+                                    name: "log",
+                                    style: { color: inputColor },
+                                    placeholder: loginLabel ? loginLabel : __('user@email.com')
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-login-password",
+                                style: { borderColor: textColor }
+                            },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "advgb-login-password", style: { color: textColor } },
+                                    passwordText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    passwordIcon
+                                ),
+                                React.createElement("input", { type: "password",
+                                    id: "advgb-login-password",
+                                    className: "advgb-lores-input",
+                                    name: "pwd",
+                                    style: { color: inputColor },
+                                    placeholder: "password"
+                                })
+                            )
+                        ),
+                        React.createElement("div", { className: "advgb-grecaptcha clearfix position-" + submitPosition }),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-" + submitPosition },
+                            React.createElement(
+                                "label",
+                                { htmlFor: "rememberme" },
+                                React.createElement("input", { type: "checkbox",
+                                    value: "forever",
+                                    id: "rememberme",
+                                    name: "rememberme",
+                                    className: "advgb-lores-checkbox",
+                                    style: { color: submitBgColor }
+                                }),
+                                React.createElement(
+                                    "span",
+                                    { style: { color: textColor } },
+                                    rememberMeText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-submit advgb-login-submit" },
+                                React.createElement(
+                                    "button",
+                                    { className: "advgb-lores-submit-button",
+                                        type: "submit",
+                                        name: "wp-submit",
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
+                                    },
+                                    loginSubmitLabel
+                                ),
+                                React.createElement("input", { type: "hidden", name: "testcookie", value: "1" })
+                            )
+                        ),
+                        !!showLostPasswordLink && React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lost-password-field" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lost-password" },
+                                React.createElement(
+                                    "a",
+                                    { href: "#",
+                                        className: "advgb-lost-password-link",
+                                        style: { color: submitBgColor }
+                                    },
+                                    lostPasswordText
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            var registerFormSave = React.createElement(
+                "div",
+                { className: "advgb-register-form-wrapper advgb-lores-form",
+                    style: {
+                        display: formType === 'register' ? 'block' : 'none'
+                    }
+                },
+                !!showRegisterLink && React.createElement(
+                    "div",
+                    { className: "advgb-header-navigation advgb-back-to-login",
+                        style: { backgroundColor: headerBgColor }
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-back-to-login-link",
+                            style: { color: submitBgColor }
+                        },
+                        React.createElement(
+                            "span",
+                            { className: "advgb-register-text",
+                                style: { color: submitBgColor }
+                            },
+                            backToLoginText
+                        )
+                    )
+                ),
+                React.createElement(
+                    "form",
+                    { action: "", className: "advgb-form-register", method: "post" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-register-form advgb-form-inner" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-header" },
+                            !!showLogo && logoElmSave,
+                            React.createElement(
+                                "h3",
+                                { className: "advgb-lores-form-welcome",
+                                    style: { color: textColor }
+                                },
+                                registerWelcome
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-register-username",
+                                style: { borderColor: textColor }
+                            },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "advgb-register-username", style: { color: textColor } },
+                                    userText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    userIcon
+                                ),
+                                React.createElement("input", { type: "text",
+                                    id: "advgb-register-username",
+                                    className: "advgb-lores-input",
+                                    name: "user_login",
+                                    style: { color: inputColor },
+                                    placeholder: usernameLabel ? usernameLabel : __('username')
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-register-email",
+                                style: { borderColor: textColor }
+                            },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "advgb-register-email", style: { color: textColor } },
+                                    emailText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    emailIcon
+                                ),
+                                React.createElement("input", { type: "email",
+                                    id: "advgb-register-email",
+                                    className: "advgb-lores-input",
+                                    name: "user_email",
+                                    style: { color: inputColor },
+                                    placeholder: emailLabel ? emailLabel : __('user@email.com')
+                                })
+                            )
+                        ),
+                        React.createElement("div", { className: "advgb-grecaptcha clearfix position-" + submitPosition }),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-" + submitPosition },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-submit advgb-register-submit" },
+                                React.createElement(
+                                    "button",
+                                    { className: "advgb-lores-submit-button",
+                                        type: "submit",
+                                        name: "wp-submit",
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
+                                    },
+                                    registerSubmitLabel
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            return React.createElement(
+                "div",
+                { className: "advgb-lores-form-wrapper", style: { width: formWidth } },
+                loginFormSave,
+                registerFormSave
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
