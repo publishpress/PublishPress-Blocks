@@ -9345,7 +9345,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToggleControl = wpComponents.ToggleControl,
         Tooltip = wpComponents.Tooltip,
         Toolbar = wpComponents.Toolbar,
-        IconButton = wpComponents.IconButton;
+        IconButton = wpComponents.IconButton,
+        Placeholder = wpComponents.Placeholder;
 
 
     var userIcon = React.createElement(
@@ -9976,11 +9977,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         _this2.setState({ registerView: value === 'register' });
                                     }
                                 }),
-                                typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled) && React.createElement(
-                                    "p",
-                                    { style: { fontStyle: 'italic', color: '#ff0000' } },
-                                    __('Registration for your site is currently disabled, enable it to use registration form.')
-                                ),
                                 React.createElement(RangeControl, {
                                     label: __('Form Width (px)'),
                                     value: formWidth,
@@ -10164,7 +10160,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "div",
                         { className: "advgb-lores-form-wrapper", style: { width: formWidth } },
-                        !registerView ? loginForm : registerForm
+                        !registerView ? loginForm : typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled) ? React.createElement(Placeholder, {
+                            icon: userIcon,
+                            label: __('Registration Form'),
+                            instructions: __('Registration for your site is currently disabled, enable it in Settings to use registration form.')
+                        }) : registerForm
                     )
                 );
             }

@@ -4,7 +4,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, PanelColorSettings, MediaUpload } = wpBlockEditor;
-    const { RangeControl, PanelBody, TextControl , SelectControl, ToggleControl, Tooltip, Toolbar, IconButton } = wpComponents;
+    const { RangeControl, PanelBody, TextControl , SelectControl, ToggleControl, Tooltip, Toolbar, IconButton, Placeholder } = wpComponents;
 
     const userIcon = (
         <svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -474,11 +474,6 @@
                                         this.setState( { registerView: value === 'register' } );
                                     } }
                                 />
-                                {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled)) && (
-                                    <p style={ { fontStyle: 'italic', color: '#ff0000' } }>
-                                        { __( 'Registration for your site is currently disabled, enable it to use registration form.' ) }
-                                    </p>
-                                ) }
                                 <RangeControl
                                     label={ __( 'Form Width (px)' ) }
                                     value={ formWidth }
@@ -637,7 +632,18 @@
                         </PanelBody>
                     </InspectorControls>
                     <div className="advgb-lores-form-wrapper" style={ { width: formWidth } }>
-                        {!registerView ? loginForm : registerForm }
+                        {!registerView
+                            ? loginForm
+                            : (typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled))
+                                ? (
+                                    <Placeholder
+                                        icon={userIcon}
+                                        label={ __( 'Registration Form' ) }
+                                        instructions={ __( 'Registration for your site is currently disabled, enable it in Settings to use registration form.' ) }
+                                    />
+                                )
+                                : registerForm
+                        }
                     </div>
                 </Fragment>
             )

@@ -1467,6 +1467,7 @@ form .advgb-grecaptcha > div {
 .advgb-lores-form-wrapper .advgb-lores-form {
     width: 100%;
     border: 1px solid #ccc;
+    position: relative;
 }
 
 .advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation {
@@ -1687,6 +1688,25 @@ form .advgb-grecaptcha > div {
     outline: none;
     background-color: #2196f3;
     color: #fff;
+    font-weight: normal;
+}
+
+.advgb-lores-form.sending:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-sending {
+    top: 49%;
+    left: 49%;
+    z-index: 9;
 }
 
 /*Columns Manager block*/
