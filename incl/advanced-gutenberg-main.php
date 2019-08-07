@@ -3798,9 +3798,9 @@ float: left;'
     /**
      * Function to load assets for post/page on front-end before gutenberg rendering
      *
-     * @param string $content Post content
+     * @param array $block Block data
      *
-     * @return string
+     * @return array       New block data
      */
     public function contentPreRender($block)
     {
@@ -4045,7 +4045,7 @@ float: left;'
     /**
      * Add styles for Adv Button and Adv List
      *
-     * @param array $matches Matched string
+     * @param array $block Block data
      *
      * @return string HTML style
      */
@@ -4167,7 +4167,6 @@ float: left;'
                 $style_html .=  '}';
                 $style_html .= '}';
             }
-
         }
 
         $style_html = $style_html ? '<style type="text/css" class="advgb-blocks-styles-renderer">' . $style_html . '</style>' : '';
@@ -4178,8 +4177,9 @@ float: left;'
     /**
      * Find all style tag and append them in the end of content
      *
-     * @param $content      string Content to be prettify
-     * @return mixed|string        New prettified string
+     * @param string $content Content to be prettify
+     *
+     * @return string          New prettified string
      */
     public function groupStylesTag($content)
     {
@@ -4193,7 +4193,9 @@ float: left;'
             }
         }
 
-        if ($styles_tag) $content .= '<style class="advgb-styles-renderer">'.$styles_tag.'</style>';
+        if ($styles_tag) {
+            $content .= '<style class="advgb-styles-renderer">'.$styles_tag.'</style>';
+        }
 
         return $content;
     }
