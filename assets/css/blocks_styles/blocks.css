@@ -13,9 +13,9 @@
     width: 100%;
 }
 
-#editor .slick-slide {
-    pointer-events: none;
-}
+/*#editor .slick-slide {*/
+    /*pointer-events: none;*/
+/*}*/
 
 .slick-arrow:focus {
     background: transparent;
@@ -768,6 +768,13 @@ div.advgb-tab-body {
     padding: 15px 0;
 }
 
+.advgb-testimonial .advgb-testimonial-item {
+    flex: auto;
+    margin: 0 10px;
+    text-align: center;
+    pointer-events: all;
+}
+
 .advgb-testimonial > div {
     flex: auto;
     margin: 0 10px;
@@ -1444,7 +1451,263 @@ form .advgb-grecaptcha > div {
     margin-left: 3%;
 }
 
-/*Container block*/
+/*Login-Register Form block*/
+.advgb-lores-form-wrapper {
+    width: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.advgb-lores-form-wrapper > * {
+    box-sizing: border-box;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form {
+    width: 100%;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation {
+    background-color: #eee;
+    padding: 5px;
+    text-align: center;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation > .editor-rich-text {
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-register-text {
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-register-link {
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner {
+    padding: 20px 50px;
+    width: 100%;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-form-logo-wrapper {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-form-logo-wrapper .advgb-lores-form-logo {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-form-welcome {
+    font-weight: normal;
+    font-size: 1.7em;
+    margin: 0 0 20px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field {
+    text-align: left;
+    margin-bottom: 20px;
+    border-width: 0;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input {
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    border-bottom-color: #ccc;
+    background-color: transparent;
+    padding: 5px;
+    outline: none;
+    transition: all 0.5s ease;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input.focused {
+    border-bottom-color: inherit !important;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input .advgb-lores-input-icon {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input .advgb-lores-input-icon svg {
+    vertical-align: middle;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input .advgb-lores-input {
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    width: calc(100% - 40px);
+    border: none;
+    background-color: transparent;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input .advgb-lores-input:focus {
+    outline: none;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-label > label {
+    display: block;
+    cursor: pointer;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper label {
+    cursor: pointer;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-right {
+    flex-direction: row;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-left  {
+    flex-direction: row-reverse;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form.advgb-register-form-wrapper .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-right {
+    justify-content: flex-end;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form.advgb-register-form-wrapper .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-left {
+    flex-direction: row;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-center {
+    flex-direction: column;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-center .advgb-lores-submit {
+    margin-top: 20px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper label > span {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper label > * {
+    vertical-align: middle;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox {
+    height: 0;
+    line-height: 0;
+    background-color: transparent;
+    border: none;
+    color: #2196f3;
+}
+
+#editor .advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox:before {
+    margin-top: -9px;
+    line-height: 0.9;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox:before {
+    content: "\f147";
+    font-family: dashicons;
+    background-color: #fff;
+    margin: 0;
+    color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox:checked:before {
+    color: inherit;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper .advgb-lores-submit .advgb-lores-submit-button {
+    padding: 10px 25px;
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lost-password-field {
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 30px;
+    text-align: center;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-back-to-login-link {
+    display: inline-block;
+    cursor: pointer;
+    color: #2196f3;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation.advgb-back-to-login {
+    text-align: left;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-back-to-login-link:before {
+    content: "\f341";
+    font-family: dashicons;
+    float: left;
+    margin-right: 5px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-back-to-login-link > * {
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper .advgb-lores-submit-button {
+    background: none;
+    border: 1px solid transparent;
+    box-shadow: none;
+    outline: none;
+    background-color: #2196f3;
+    color: #fff;
+    font-weight: normal;
+}
+
+.advgb-lores-form.sending:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-sending {
+    top: 49%;
+    left: 49%;
+    z-index: 9;
+}
 
 /*Columns Manager block*/
 .advgb-columns-select-wrapper {

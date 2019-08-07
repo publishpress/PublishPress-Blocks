@@ -160,6 +160,8 @@ float: left;'
         add_action('wp_ajax_nopriv_advgb_contact_form_save', array($this, 'saveContactFormData'));
         add_action('wp_ajax_advgb_newsletter_save', array($this, 'saveNewsletterData'));
         add_action('wp_ajax_nopriv_advgb_newsletter_save', array($this, 'saveNewsletterData'));
+        add_action('wp_ajax_advgb_lores_validate', array($this, 'validateLoresForm'));
+        add_action('wp_ajax_nopriv_advgb_lores_validate', array($this, 'validateLoresForm'));
 
         if (is_admin()) {
             add_action('admin_init', array($this, 'registerAdvgbProfile'));
@@ -369,8 +371,9 @@ float: left;'
         wp_localize_script('advgb_blocks', 'advgb_blocks_vars', $advgb_blocks_vars);
 
         // Set variable needed by blocks editor
-        $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', dirname(__FILE__));
+        $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
         $default_thumb      = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
+        $home_logo          = plugins_url('assets/blocks/login-form/home.png', ADVANCED_GUTENBERG_PLUGIN);
         $saved_settings     = get_option('advgb_settings');
         $custom_styles_data = get_option('advgb_custom_styles');
         $recaptcha_config   = get_option('advgb_recaptcha_config');
@@ -382,10 +385,12 @@ float: left;'
             'color' => $blocks_icon_color,
             'post_thumb' => $rp_default_thumb['url'],
             'avatarHolder' => $avatarHolder,
+            'home_logo' => $home_logo,
             'config_url' => admin_url('admin.php?page=advgb_main'),
             'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
             'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
-            'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN)
+            'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN),
+            'registerEnabled' => get_option('users_can_register'),
         ));
 
         // Setup default config data for blocks
@@ -1194,7 +1199,7 @@ float: left;'
                 wp_send_json(__('Cannot validate captcha', 'advanced-gutenberg'), 400);
             }
 
-            $verified = json_decode($verify);
+            $verified = json_decode($verify['body']);
             if (!$verified->success) {
                 wp_send_json(__('Captcha validation error', 'advanced-gutenberg'), 400);
             }
@@ -1214,6 +1219,45 @@ float: left;'
 
         update_option('advgb_newsletter_saved', $newsletter_saved);
         wp_send_json($newsletter_data, 200);
+        // phpcs:enable
+    }
+
+    /**
+     * Ajax for validating login/register form captcha
+     *
+     * @return boolean,void     Return false if failure, echo json on success
+     */
+    public function validateLoresForm()
+    {
+        // phpcs:disable -- WordPress.Security.NonceVerification.Recommended - frontend form, no nonce
+        if (!isset($_POST['action'])) {
+            wp_send_json(__('Bad Request!', 'advanced-gutenberg'), 400);
+            return false;
+        }
+
+        if (isset($_POST['captcha'])) {
+            $recaptcha_config  = get_option('advgb_recaptcha_config');
+            if (!isset($recaptcha_config['recaptcha_secret_key']) || !isset($recaptcha_config['recaptcha_site_key'])) {
+                wp_send_json(__('Server error. Try again later!', 'advanced-gutenberg'), 500);
+            }
+
+            $captcha = $_POST['captcha'];
+            $secret_key = $recaptcha_config['recaptcha_secret_key'];
+            $verify = wp_remote_get("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha}");
+
+            if (!is_array($verify) || !isset($verify['body'])) {
+                wp_send_json(__('Cannot validate captcha', 'advanced-gutenberg'), 400);
+            }
+
+            $verified = json_decode($verify['body']);
+            if (!$verified->success) {
+                wp_send_json(__('Captcha validation error', 'advanced-gutenberg'), 400);
+            }
+
+            wp_send_json(__('Captcha validated', 'advanced-gutenberg'), 200);
+        }
+
+        wp_send_json(__('Captcha is empty', 'advanced-gutenberg'), 400);
         // phpcs:enable
     }
 
@@ -4104,6 +4148,25 @@ float: left;'
 
         if (strpos($content, 'advgb-columns') !== false) {
             wp_enqueue_style('advgb_bulma_styles');
+        }
+
+        if (strpos($content, 'advgb-lores-form-wrapper') !== false) {
+            wp_enqueue_script('jquery-effects-slide');
+            wp_enqueue_script(
+                'advgb_lores_js',
+                plugins_url('assets/blocks/login-form/frontend.js', dirname(__FILE__)),
+                array('jquery'),
+                ADVANCED_GUTENBERG_VERSION
+            );
+            wp_localize_script('advgb_lores_js', 'advgbLoresForm', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'login_url' => wp_login_url(),
+                'register_url' => wp_registration_url(),
+                'lostpwd_url' => wp_lostpassword_url(),
+                'register_enabled' => get_option('users_can_register'),
+                'unregistrable_notice' => __('User registration is currently not allowed.', 'advanced-gutenberg'),
+                'captcha_empty_warning' => __('Captcha must be checked!', 'advanced-gutenberg'),
+            ));
         }
 
         return $content;
