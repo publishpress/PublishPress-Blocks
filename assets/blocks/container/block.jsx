@@ -61,20 +61,6 @@
             return (
                 <Fragment>
                     <InspectorControls>
-                        <div style={ {
-                            color: '#ff0000',
-                            fontStyle: 'italic',
-                            marginTop: 20,
-                            padding: 10,
-                            borderTop: '1px solid #ccc',
-                        } }
-                        >
-                            { __(
-                                'We will remove this block in the future release. ' +
-                                'Please convert it to Columns Manager block to avoid unwanted error. ' +
-                                'Columns Manager block has a lot of styles and improvements.'
-                            ) }
-                        </div>
                         <PanelBody title={ __( 'Container Settings' ) }>
                             <SelectControl
                                 label={ __( 'Wrapper Tag' ) }

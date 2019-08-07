@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "platform": "wordpress",
   "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
@@ -38,26 +38,36 @@
     ]
   },
   "changelog": {
-    "2.0.6": [
+    "2.0.7": [
       {
         "type": "fix",
-        "title": "Bring back the Container block (but you need to enable it from profile)"
+        "title": "Some blocks missing styles when using as Reusable blocks"
       },
       {
         "type": "fix",
+        "title": "Remove notice on Container block"
+      }
+    ],
+    "2.0.6": [
+      {
+        "type": "feature",
+        "title": "Show Count Up symbol on editor"
+      },
+      {
+        "type": "feature",
+        "title": "Allow nested Accordion blocks"
+      },
+            {
+        "type": "feature",
         "title": "Allow to change the html tag of the Container block"
       },
       {
         "type": "fix",
+        "title": "Bring back the Container block (can be enabled in profile)"
+      },
+      {
+        "type": "fix",
         "title": "Add missing classname for Count Up block on editor"
-      },
-      {
-        "type": "fix",
-        "title": "Show Count Up symbol on editor"
-      },
-      {
-        "type": "fix",
-        "title": "Nested Accordion not work properly"
       },
       {
         "type": "fix",
@@ -91,7 +101,7 @@
       },
       {
         "type": "fix",
-        "title": "juTranslation duplicate slash in language url"
+        "title": "Fix Jutranslation url"
       }
     ],
     "2.0.2": [

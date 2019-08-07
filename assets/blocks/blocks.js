@@ -6666,18 +6666,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     InspectorControls,
                     null,
                     React.createElement(
-                        "div",
-                        { style: {
-                                color: '#ff0000',
-                                fontStyle: 'italic',
-                                marginTop: 20,
-                                padding: 10,
-                                borderTop: '1px solid #ccc'
-                            }
-                        },
-                        __('We will remove this block in the future release. ' + 'Please convert it to Columns Manager block to avoid unwanted error. ' + 'Columns Manager block has a lot of styles and improvements.')
-                    ),
-                    React.createElement(
                         PanelBody,
                         { title: __('Container Settings') },
                         React.createElement(SelectControl, {
