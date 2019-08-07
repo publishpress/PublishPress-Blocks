@@ -48,7 +48,7 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
         {
             if (current_user_can('activate_plugins') && is_plugin_active(plugin_basename(__FILE__))) {
                 deactivate_plugins(__FILE__);
-                unset($_GET['activate']);
+                unset($_GET['activate']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No action, nonce is not required
             }
         }
     }
