@@ -4191,6 +4191,7 @@ float: left;'
                 $hover_sh_v     = isset($blockAttrs['hoverShadowV']) ? intval($blockAttrs['hoverShadowV']) : 3;
                 $hover_sh_blur  = isset($blockAttrs['hoverShadowBlur']) ? intval($blockAttrs['hoverShadowBlur']) : 1;
                 $hover_sh_sprd  = isset($blockAttrs['hoverShadowSpread']) ? intval($blockAttrs['hoverShadowSpread']) : 1;
+                $hover_opacity  = isset($blockAttrs['hoverOpacity']) ? intval($blockAttrs['hoverOpacity'])/100 : 1;
                 $transition_spd = isset($blockAttrs['transitionSpeed']) ? floatval($blockAttrs['transitionSpeed'])/1000 : 0.2;
 
                 $style_html .= '.'. $block_class . '{';
@@ -4203,10 +4204,12 @@ float: left;'
                 $style_html .= 'border-style:'.$border_style.';';
                 $style_html .= 'border-radius:'.$border_radius.'px;';
                 $style_html .= '}';
+
                 $style_html .= '.'. $block_class . ':hover{';
                 $style_html .= 'color:'.$hover_t_color.';';
                 $style_html .= 'background-color:'.$hover_bg_color.';';
                 $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.';';
+                $style_html .= 'opacity:'.$hover_opacity.';';
                 $style_html .= 'transition:all '.$transition_spd.'s ease;';
                 $style_html .= '}';
             } elseif ($blockName === 'advgb/columns' || $blockName === 'advgb/column') {
