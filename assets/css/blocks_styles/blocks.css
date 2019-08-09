@@ -1496,6 +1496,17 @@ form .advgb-grecaptcha > div {
     width: 100%;
 }
 
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-login-failed-notice {
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+    border-left: 5px solid #ff0000;
+    background-color: #fff;
+    color: #333;
+    font-size: 1em;
+    box-shadow: 0 0 5px #ccc;
+}
+
 .advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-form-logo-wrapper {
     text-align: center;
     margin: auto;
@@ -1608,33 +1619,26 @@ form .advgb-grecaptcha > div {
     margin-top: 20px;
 }
 
-.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper label > span {
-    display: inline-block;
-    margin-left: 15px;
-}
-
-.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper label > * {
-    vertical-align: middle;
-}
-
 .advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox {
-    height: 0;
-    line-height: 0;
-    background-color: transparent;
-    border: none;
+    display: none;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .remember-me-label .remember-me-switch {
     color: #2196f3;
 }
 
-#editor .advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox:before {
-    margin-top: -9px;
-    line-height: 0.9;
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .remember-me-label .remember-me-switch span {
+    vertical-align: middle;
+    color: initial;
+    display: inline-block;
 }
 
-.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox:before {
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .remember-me-label .remember-me-switch:before {
     content: "\f147";
     font-family: dashicons;
     background-color: #fff;
     margin: 0;
+    margin-right: 5px;
     color: transparent;
     border: 1px solid #ccc;
     border-radius: 50%;
@@ -1642,9 +1646,10 @@ form .advgb-grecaptcha > div {
     font-weight: bold;
     cursor: pointer;
     line-height: 0;
+    vertical-align: middle;
 }
 
-.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox:checked:before {
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .remember-me-label input.advgb-lores-checkbox:checked + .remember-me-switch:before {
     color: inherit;
 }
 
