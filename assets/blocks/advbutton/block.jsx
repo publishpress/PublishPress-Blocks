@@ -85,6 +85,7 @@
                 hoverShadowV,
                 hoverShadowBlur,
                 hoverShadowSpread,
+                hoverOpacity,
                 transitionSpeed,
             } = attributes;
 
@@ -103,6 +104,7 @@
                     </BlockControls>
                     <span style={ { display: 'inline-block' } } >
                         <RichText
+                            tagName="span"
                             placeholder={ __( 'Add text…' ) }
                             value={ text }
                             onChange={ ( value ) => setAttributes( { text: value } ) }
@@ -128,6 +130,7 @@
                         background-color: ${hoverBgColor};
                         box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
                         transition: all ${transitionSpeed}s ease;
+                        opacity: ${hoverOpacity/100}
                     }`}
                     </style>
                     <InspectorControls>
@@ -296,6 +299,13 @@
                                 />
                             </PanelBody>
                             <RangeControl
+                                label={ __('Opacity (%)') }
+                                value={ hoverOpacity }
+                                onChange={ ( value ) => setAttributes( { hoverOpacity: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                            <RangeControl
                                 label={ __('Transition speed (ms)') }
                                 value={ transitionSpeed || '' }
                                 onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) }
@@ -404,6 +414,10 @@
         hoverShadowSpread: {
             type: 'number',
             default: 0,
+        },
+        hoverOpacity: {
+            type: 'number',
+            default: 100,
         },
         transitionSpeed: {
             type: 'number',

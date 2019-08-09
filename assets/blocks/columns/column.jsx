@@ -178,6 +178,7 @@
                                 label={ AdvColumnEdit.jsUcfirst(tabSelected) + __( ' text alignment' ) }
                             >
                                 <AlignmentToolbar
+                                    isCollapsed={ false }
                                     value={ attributes[ 'textAlign' + deviceLetter ] }
                                     onChange={ (align) => setAttributes( { ['textAlign' + deviceLetter]: align } ) }
                                 />

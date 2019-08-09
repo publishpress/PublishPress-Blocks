@@ -1521,6 +1521,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hoverShadowV = attributes.hoverShadowV,
                     hoverShadowBlur = attributes.hoverShadowBlur,
                     hoverShadowSpread = attributes.hoverShadowSpread,
+                    hoverOpacity = attributes.hoverOpacity,
                     transitionSpeed = attributes.transitionSpeed;
 
 
@@ -1550,6 +1551,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         'span',
                         { style: { display: 'inline-block' } },
                         React.createElement(RichText, {
+                            tagName: 'span',
                             placeholder: __('Add text…'),
                             value: text,
                             onChange: function onChange(value) {
@@ -1564,7 +1566,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'style',
                         null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
                     ),
                     React.createElement(
                         InspectorControls,
@@ -1776,6 +1778,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             ),
                             React.createElement(RangeControl, {
+                                label: __('Opacity (%)'),
+                                value: hoverOpacity,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ hoverOpacity: value });
+                                },
+                                min: 0,
+                                max: 100
+                            }),
+                            React.createElement(RangeControl, {
                                 label: __('Transition speed (ms)'),
                                 value: transitionSpeed || '',
                                 onChange: function onChange(value) {
@@ -1888,6 +1899,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         hoverShadowSpread: {
             type: 'number',
             default: 0
+        },
+        hoverOpacity: {
+            type: 'number',
+            default: 100
         },
         transitionSpeed: {
             type: 'number',
@@ -6632,6 +6647,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' text alignment')
                                 },
                                 React.createElement(AlignmentToolbar, {
+                                    isCollapsed: false,
                                     value: attributes['textAlign' + deviceLetter],
                                     onChange: function onChange(align) {
                                         return setAttributes(_defineProperty({}, 'textAlign' + deviceLetter, align));
@@ -16016,6 +16032,11 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                 var missing_block = false;
                 // Retrieve all registered blocks
                 var blocks = wp.blocks.getBlockTypes();
+                var savedBlocks = {
+                    active_blocks: Object.values(advgb_blocks_vars.blocks.active_blocks),
+                    inactive_blocks: Object.values(advgb_blocks_vars.blocks.inactive_blocks)
+                };
+
                 for (var block in blocks) {
                     var blockItemIcon = '';
                     var blockItem = {
@@ -16050,10 +16071,10 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     list_blocks.push(blockItem);
 
                     // Compare current block with the list of blocks we have
-                    if (advgb_blocks_vars.blocks.active_blocks.indexOf(blocks[block].name) >= 0) {
+                    if (savedBlocks.active_blocks.indexOf(blocks[block].name) >= 0) {
                         // Block is active
                         granted_blocks.push(blocks[block].name);
-                    } else if (advgb_blocks_vars.blocks.inactive_blocks.indexOf(blocks[block].name) >= 0) {
+                    } else if (savedBlocks.inactive_blocks.indexOf(blocks[block].name) >= 0) {
                         // Block is inactive
                     } else {
                         // This block is not in our database yet, but by default we allow the usage
