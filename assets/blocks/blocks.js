@@ -9430,6 +9430,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes = _props2.setAttributes;
                 var formType = attributes.formType,
                     formWidth = attributes.formWidth,
+                    redirect = attributes.redirect,
+                    redirectLink = attributes.redirectLink,
                     showLogo = attributes.showLogo,
                     showInputFieldIcon = attributes.showInputFieldIcon,
                     showRegisterLink = attributes.showRegisterLink,
@@ -9666,31 +9668,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-" + submitPosition },
                             React.createElement(
                                 "label",
-                                { htmlFor: "rememberme" },
+                                { htmlFor: "rememberme", className: "remember-me-label" },
                                 React.createElement("input", { type: "checkbox",
                                     checked: true,
                                     className: "advgb-lores-checkbox",
                                     style: { color: submitBgColor }
                                 }),
                                 React.createElement(
-                                    "span",
-                                    null,
-                                    React.createElement(RichText, {
-                                        tagName: "span",
-                                        value: rememberMeText,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ passwordText: value.trim() });
-                                        },
-                                        style: { color: textColor },
-                                        onReplace: function onReplace() {
-                                            return null;
-                                        },
-                                        onSplit: function onSplit() {
-                                            return null;
-                                        },
-                                        placeholder: __('Remember me…'),
-                                        keepPlaceholderOnFocus: true
-                                    })
+                                    "div",
+                                    { className: "remember-me-switch", style: { color: submitBgColor } },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        React.createElement(RichText, {
+                                            tagName: "span",
+                                            value: rememberMeText,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ passwordText: value.trim() });
+                                            },
+                                            style: { color: textColor },
+                                            onReplace: function onReplace() {
+                                                return null;
+                                            },
+                                            onSplit: function onSplit() {
+                                                return null;
+                                            },
+                                            placeholder: __('Remember me…'),
+                                            keepPlaceholderOnFocus: true
+                                        })
+                                    )
                                 )
                             ),
                             React.createElement(
@@ -9981,6 +9987,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         _this2.setState({ registerView: value === 'register' });
                                     }
                                 }),
+                                React.createElement(SelectControl, {
+                                    label: __('Redirect After Login'),
+                                    value: redirect,
+                                    options: [{ label: __('Home'), value: 'home' }, { label: __('Dashboard'), value: 'dashboard' }, { label: __('Custom'), value: 'custom' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ redirect: value });
+                                    }
+                                }),
+                                redirect === 'custom' && React.createElement(TextControl, {
+                                    label: __('Custom redirect link'),
+                                    value: redirectLink,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ redirectLink: value });
+                                    }
+                                }),
                                 React.createElement(RangeControl, {
                                     label: __('Form Width (px)'),
                                     value: formWidth,
@@ -10192,6 +10213,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 500
         },
+        redirect: {
+            type: 'string',
+            default: 'home'
+        },
+        redirectLink: {
+            type: 'string'
+        },
         showLogo: {
             type: 'boolean',
             default: true
@@ -10335,6 +10363,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref2.attributes;
             var formType = attributes.formType,
                 formWidth = attributes.formWidth,
+                redirect = attributes.redirect,
+                redirectLink = attributes.redirectLink,
                 showLogo = attributes.showLogo,
                 showInputFieldIcon = attributes.showInputFieldIcon,
                 showRegisterLink = attributes.showRegisterLink,
@@ -10521,18 +10551,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-" + submitPosition },
                             React.createElement(
                                 "label",
-                                { htmlFor: "rememberme" },
+                                { htmlFor: "rememberme", className: "remember-me-label" },
                                 React.createElement("input", { type: "checkbox",
                                     value: "forever",
                                     id: "rememberme",
                                     name: "rememberme",
-                                    className: "advgb-lores-checkbox",
-                                    style: { color: submitBgColor }
+                                    className: "advgb-lores-checkbox"
                                 }),
                                 React.createElement(
-                                    "span",
-                                    { style: { color: textColor } },
-                                    rememberMeText
+                                    "div",
+                                    { style: { color: submitBgColor }, className: "remember-me-switch" },
+                                    React.createElement(
+                                        "span",
+                                        { style: { color: textColor } },
+                                        rememberMeText
+                                    )
                                 )
                             ),
                             React.createElement(
@@ -10552,7 +10585,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     loginSubmitLabel
                                 ),
-                                React.createElement("input", { type: "hidden", name: "testcookie", value: "1" })
+                                React.createElement("input", { type: "hidden", name: "redirect_to", "data-redirect": redirect, className: "redirect_to", value: redirectLink }),
+                                React.createElement("input", { type: "hidden", name: "testcookie", value: "1" }),
+                                React.createElement("input", { type: "hidden", name: "advgb_login_form", value: "1" })
                             )
                         ),
                         !!showLostPasswordLink && React.createElement(

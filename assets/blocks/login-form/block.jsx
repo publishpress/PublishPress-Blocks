@@ -66,6 +66,8 @@
             const {
                 formType,
                 formWidth,
+                redirect,
+                redirectLink,
                 showLogo,
                 showInputFieldIcon,
                 showRegisterLink,
@@ -248,24 +250,26 @@
                             </div>
                         </div>
                         <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
-                            <label htmlFor="rememberme">
+                            <label htmlFor="rememberme" className="remember-me-label">
                                 <input type="checkbox"
                                        checked={ true }
                                        className="advgb-lores-checkbox"
                                        style={ { color: submitBgColor } }
                                 />
-                                <span>
-                                    <RichText
-                                        tagName="span"
-                                        value={ rememberMeText }
-                                        onChange={ (value) => setAttributes( { passwordText: value.trim() } ) }
-                                        style={ { color: textColor } }
-                                        onReplace={ () => null }
-                                        onSplit={ () => null }
-                                        placeholder={ __( 'Remember me…' ) }
-                                        keepPlaceholderOnFocus
-                                    />
-                                </span>
+                                <div className="remember-me-switch" style={ { color: submitBgColor } }>
+                                    <span>
+                                        <RichText
+                                            tagName="span"
+                                            value={ rememberMeText }
+                                            onChange={ (value) => setAttributes( { passwordText: value.trim() } ) }
+                                            style={ { color: textColor } }
+                                            onReplace={ () => null }
+                                            onSplit={ () => null }
+                                            placeholder={ __( 'Remember me…' ) }
+                                            keepPlaceholderOnFocus
+                                        />
+                                    </span>
+                                </div>
                             </label>
                             <div className="advgb-lores-submit advgb-login-submit">
                                 <RichText
@@ -474,6 +478,23 @@
                                         this.setState( { registerView: value === 'register' } );
                                     } }
                                 />
+                                <SelectControl
+                                    label={ __( 'Redirect After Login' ) }
+                                    value={ redirect }
+                                    options={ [
+                                        { label: __( 'Home' ), value: 'home' },
+                                        { label: __( 'Dashboard' ), value: 'dashboard' },
+                                        { label: __( 'Custom' ), value: 'custom' },
+                                    ] }
+                                    onChange={ (value) => setAttributes( { redirect: value } ) }
+                                />
+                                {redirect === 'custom' && (
+                                    <TextControl
+                                        label={ __( 'Custom redirect link' ) }
+                                        value={ redirectLink }
+                                        onChange={ (value) => setAttributes( { redirectLink: value } ) }
+                                    />
+                                ) }
                                 <RangeControl
                                     label={ __( 'Form Width (px)' ) }
                                     value={ formWidth }
@@ -665,6 +686,13 @@
             type: 'number',
             default: 500,
         },
+        redirect: {
+            type: 'string',
+            default: 'home',
+        },
+        redirectLink: {
+            type: 'string',
+        },
         showLogo: {
             type: 'boolean',
             default: true,
@@ -808,6 +836,8 @@
             const {
                 formType,
                 formWidth,
+                redirect,
+                redirectLink,
                 showLogo,
                 showInputFieldIcon,
                 showRegisterLink,
@@ -959,17 +989,16 @@
                             </div>
                             <div className={`advgb-grecaptcha clearfix position-${submitPosition}`}/>
                             <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
-                                <label htmlFor="rememberme">
+                                <label htmlFor="rememberme" className="remember-me-label">
                                     <input type="checkbox"
                                            value="forever"
                                            id="rememberme"
                                            name="rememberme"
                                            className="advgb-lores-checkbox"
-                                           style={ { color: submitBgColor } }
                                     />
-                                    <span style={ { color: textColor } }>
-                                        { rememberMeText }
-                                    </span>
+                                    <div style={ { color: submitBgColor } } className="remember-me-switch">
+                                        <span style={ { color: textColor } }>{ rememberMeText }</span>
+                                    </div>
                                 </label>
                                 <div className="advgb-lores-submit advgb-login-submit">
                                     <button className="advgb-lores-submit-button"
@@ -984,7 +1013,9 @@
                                     >
                                         { loginSubmitLabel }
                                     </button>
+                                    <input type="hidden" name="redirect_to" data-redirect={redirect} className="redirect_to" value={redirectLink} />
                                     <input type="hidden" name="testcookie" value="1" />
+                                    <input type="hidden" name="advgb_login_form" value="1" />
                                 </div>
                             </div>
                             {!!showLostPasswordLink && (

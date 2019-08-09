@@ -1,14 +1,36 @@
 jQuery(document).ready(function ($) {
-    $('.advgb-form-login').attr('action', advgbLoresForm.login_url);
-    $('.advgb-form-register').attr('action', advgbLoresForm.register_url);
+    // Add link to form url
+    var loginForm = $('.advgb-form-login');
+    var registerForm = $('.advgb-form-register');
+    loginForm.attr('action', advgbLoresForm.login_url);
+    registerForm.attr('action', advgbLoresForm.register_url);
     $('.advgb-lost-password .advgb-lost-password-link').attr('href', advgbLoresForm.lostpwd_url);
 
+    // Add value to redirect input
+    var redirectInput = $('.advgb-lores-form .redirect_to');
+    var redirectType = redirectInput.data('redirect');
+    if (redirectType === 'home') {
+        redirectInput.val(advgbLoresForm.home_url);
+    } else if (redirectType === 'dashboard') {
+        redirectInput.val(advgbLoresForm.admin_url);
+    }
+
+    // Show notice on failed login
+    var url = new URL(window.location.href);
+    var isLoginFailed = url.searchParams.get("login") === 'failed';
+    if (isLoginFailed) {
+        var failedNotice = $('<div class="advgb-login-failed-notice">'+advgbLoresForm.login_failed_notice+'</div>');
+        loginForm.find('.advgb-login-form').prepend(failedNotice);
+    }
+
+    // Add class when focus to input
     $('.advgb-lores-field .advgb-lores-field-input .advgb-lores-input').focus(function () {
         $(this).closest('.advgb-lores-field-input').addClass('focused');
     }).blur(function () {
         $(this).closest('.advgb-lores-field-input').removeClass('focused');
     });
 
+    // Animate when switch between login and register form
     $('.advgb-lores-form .advgb-register-link').click(function (e) {
         e.preventDefault();
         var wrapperForm = $(this).closest('.advgb-lores-form-wrapper');
@@ -29,12 +51,12 @@ jQuery(document).ready(function ($) {
         loginForm.show("slide", { direction: "left" }, 300);
     });
 
+    // Hide register form if register is disabled
     var registerEnabled = parseInt(advgbLoresForm.register_enabled);
-
     if (!registerEnabled) {
         $('.advgb-header-navigation').remove();
-        $('.advgb-register-form').hide();
-        $('.advgb-form-register').prepend('<p style="color: red">'+advgbLoresForm.unregistrable_notice+'</p>')
+        registerForm.hide();
+        registerForm.prepend('<p style="color: red">'+advgbLoresForm.unregistrable_notice+'</p>')
     }
 
     // Check captcha is enable before submitting

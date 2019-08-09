@@ -152,6 +152,7 @@ float: left;'
         add_action('plugins_loaded', array($this, 'advgbBlockLoader'));
         add_action('rest_api_init', array($this, 'registerRestAPI'));
         add_action('admin_print_scripts', array($this, 'disableAllAdminNotices')); // Disable all admin notice for page belong to plugin
+        add_action('wp_login_failed', array($this, 'handleLoginFailed'));
         add_filter('safe_style_css', array($this, 'addAllowedInlineStyles'), 10, 1);
         add_filter('wp_kses_allowed_html', array($this, 'addAllowedTags'), 1);
 
@@ -1259,6 +1260,21 @@ float: left;'
 
         wp_send_json(__('Captcha is empty', 'advanced-gutenberg'), 400);
         // phpcs:enable
+    }
+
+    /**
+     * Handle failed login from our login form and redirect to that login page
+     *
+     * @return void
+     */
+    public function handleLoginFailed()
+    {
+        $referrer = $_SERVER['HTTP_REFERER'];
+        $from_advgb = isset($_POST['advgb_login_form']); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- redirect
+        if (!empty($referrer) && $from_advgb) {
+            wp_safe_redirect($referrer . '?login=failed');
+            exit;
+        }
     }
 
     /**
@@ -4125,9 +4141,12 @@ float: left;'
                 'login_url' => wp_login_url(),
                 'register_url' => wp_registration_url(),
                 'lostpwd_url' => wp_lostpassword_url(),
+                'home_url' => home_url(),
+                'admin_url' => admin_url(),
                 'register_enabled' => get_option('users_can_register'),
                 'unregistrable_notice' => __('User registration is currently not allowed.', 'advanced-gutenberg'),
                 'captcha_empty_warning' => __('Captcha must be checked!', 'advanced-gutenberg'),
+                'login_failed_notice' => __('Username or password is incorrect!', 'advanced-gutenberg'),
             ));
         }
 
