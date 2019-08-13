@@ -387,6 +387,7 @@ float: left;'
             'post_thumb' => $rp_default_thumb['url'],
             'avatarHolder' => $avatarHolder,
             'home_logo' => $home_logo,
+            'home_url' => home_url(),
             'config_url' => admin_url('admin.php?page=advgb_main'),
             'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
             'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
@@ -1272,7 +1273,8 @@ float: left;'
         $referrer = $_SERVER['HTTP_REFERER'];
         $from_advgb = isset($_POST['advgb_login_form']); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- redirect
         if (!empty($referrer) && $from_advgb) {
-            wp_safe_redirect($referrer . '?login=failed');
+            $redirect = add_query_arg('login', 'failed', $referrer);
+            wp_safe_redirect($redirect);
             exit;
         }
     }

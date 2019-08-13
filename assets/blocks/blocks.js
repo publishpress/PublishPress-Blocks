@@ -13619,12 +13619,88 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'advgb-category',
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: blockAttrs,
+        supports: {
+            align: true
+        },
         styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'alternative', label: __('Alternative') }],
         edit: SearchBarEdit,
         save: function save(_ref) {
-            var attributes = _ref.attributes;
+            var attributes = _ref.attributes,
+                className = _ref.className;
+            var fullWidth = attributes.fullWidth,
+                width = attributes.width,
+                textColor = attributes.textColor,
+                backgroundColor = attributes.backgroundColor,
+                searchIcon = attributes.searchIcon,
+                searchIconOnRight = attributes.searchIconOnRight,
+                searchPlaceholder = attributes.searchPlaceholder,
+                searchButtonEnabled = attributes.searchButtonEnabled,
+                searchButtonText = attributes.searchButtonText,
+                searchButtonTextColor = attributes.searchButtonTextColor,
+                searchButtonBgColor = attributes.searchButtonBgColor,
+                searchButtonRadius = attributes.searchButtonRadius,
+                searchButtonOnLeft = attributes.searchButtonOnLeft;
 
-            return null;
+
+            var searchBarIcon = React.createElement(
+                "span",
+                { className: "advgb-search-bar-icon" },
+                searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon
+            );
+
+            var searchBarButton = !searchButtonEnabled ? '' : React.createElement(
+                "div",
+                { className: "advgb-search-button-wrapper" },
+                React.createElement(
+                    "button",
+                    {
+                        type: "submit",
+                        className: "advgb-search-bar-button",
+                        style: {
+                            color: searchButtonTextColor,
+                            backgroundColor: searchButtonBgColor,
+                            borderRadius: searchButtonRadius
+                        }
+                    },
+                    searchButtonText
+                )
+            );
+
+            return React.createElement(
+                "div",
+                { className: "advgb-search-bar-wrapper " + className },
+                React.createElement(
+                    "form",
+                    { method: "get",
+                        action: advgbBlocks.home_url,
+                        className: "advgb-search-bar-form",
+                        role: "search"
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-search-bar-inner", style: { width: fullWidth ? '100%' : width } },
+                        searchButtonOnLeft && searchBarButton,
+                        React.createElement(
+                            "div",
+                            { className: "advgb-search-bar",
+                                style: {
+                                    backgroundColor: backgroundColor,
+                                    color: textColor,
+                                    borderRadius: searchButtonRadius
+                                }
+                            },
+                            !searchIconOnRight && searchBarIcon,
+                            React.createElement("input", { type: "text",
+                                className: "advgb-search-bar-input",
+                                name: "s",
+                                placeholder: searchPlaceholder ? searchPlaceholder : __('Type to search…')
+                            }),
+                            searchIconOnRight && searchBarIcon
+                        ),
+                        !searchButtonOnLeft && searchBarButton
+                    )
+                )
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);

@@ -149,19 +149,24 @@
     text-align: center;
 }
 
+.advgb-icon-items .advgb-icon-items-header {
+    margin: 10px 0;
+}
+
 .advgb-icon-items-wrapper {
     display: flex;
     flex: auto;
     flex-wrap:  wrap;
+    color: #000;
 }
 
-.advgb-icon-item {
+.advgb-icon-items-wrapper .advgb-icon-item {
     min-width: 25%;
     text-align: center;
     margin: 5px 0;
 }
 
-.advgb-icon-item > span {
+.advgb-icon-items-wrapper .advgb-icon-item > span {
     display: inline-block;
     line-height: 0.9;
     border-radius: 4px;
@@ -169,7 +174,7 @@
     cursor: pointer;
 }
 
-.advgb-icon-item .active {
+.advgb-icon-items-wrapper .advgb-icon-item .active {
     background-color: #ddd;
 }
 
@@ -1712,6 +1717,68 @@ form .advgb-grecaptcha > div {
     top: 49%;
     left: 49%;
     z-index: 9;
+}
+
+/*Search bar block*/
+.advgb-search-bar-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: auto;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner > *:first-child {
+    margin-right: 10px;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-right: 10px;
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+
+.advgb-search-bar-wrapper.is-style-alternative .advgb-search-bar-inner .advgb-search-bar {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar .advgb-search-bar-icon {
+    width: 30px;
+    text-align: center;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar .advgb-search-bar-icon svg {
+    vertical-align: middle;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar input.advgb-search-bar-input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 100%;
+    padding: 0 5px;
+    margin: 0;
+    background-color: transparent;
+    color: inherit;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-button-wrapper .advgb-search-bar-button {
+    vertical-align: middle;
+    padding: 5px 15px;
+    background-color: #2196f3;
+    color: #fff;
+    height: 100%;
+    cursor: pointer;
+    display: inline-block;
 }
 
 /*Columns Manager block*/

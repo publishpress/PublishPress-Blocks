@@ -315,13 +315,82 @@
         category: 'advgb-category',
         keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
         attributes: blockAttrs,
+        supports: {
+            align: true,
+        },
         styles: [
             { name: 'default', label: __( 'Default' ), isDefault: true },
             { name: 'alternative', label: __( 'Alternative' ) },
         ],
         edit: SearchBarEdit,
-        save: function ( { attributes } ) {
-            return null;
+        save: function ( { attributes, className } ) {
+            const {
+                fullWidth,
+                width,
+                textColor,
+                backgroundColor,
+                searchIcon,
+                searchIconOnRight,
+                searchPlaceholder,
+                searchButtonEnabled,
+                searchButtonText,
+                searchButtonTextColor,
+                searchButtonBgColor,
+                searchButtonRadius,
+                searchButtonOnLeft,
+            } = attributes;
+
+            const searchBarIcon = (
+                <span className="advgb-search-bar-icon">
+                    {searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon}
+                </span>
+            );
+
+            const searchBarButton = !searchButtonEnabled ? '' : (
+                <div className="advgb-search-button-wrapper">
+                    <button
+                        type="submit"
+                        className="advgb-search-bar-button"
+                        style={ {
+                            color: searchButtonTextColor,
+                            backgroundColor: searchButtonBgColor,
+                            borderRadius: searchButtonRadius,
+                        } }
+                    >
+                        {searchButtonText}
+                    </button>
+                </div>
+            );
+
+            return (
+                <div className={`advgb-search-bar-wrapper ${className}`}>
+                    <form method="get"
+                          action={advgbBlocks.home_url}
+                          className="advgb-search-bar-form"
+                          role="search"
+                    >
+                        <div className="advgb-search-bar-inner" style={ { width: fullWidth ? '100%' : width } }>
+                            {searchButtonOnLeft && searchBarButton}
+                            <div className="advgb-search-bar"
+                                 style={ {
+                                     backgroundColor: backgroundColor,
+                                     color: textColor,
+                                     borderRadius: searchButtonRadius,
+                                 } }
+                            >
+                                {!searchIconOnRight && searchBarIcon}
+                                <input type="text"
+                                       className="advgb-search-bar-input"
+                                       name="s"
+                                       placeholder={ searchPlaceholder ? searchPlaceholder : __( 'Type to search…' ) }
+                                />
+                                {searchIconOnRight && searchBarIcon}
+                            </div>
+                            {!searchButtonOnLeft && searchBarButton}
+                        </div>
+                    </form>
+                </div>
+            );
         }
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
