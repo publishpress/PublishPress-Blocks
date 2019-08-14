@@ -13206,6 +13206,507 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/blocks/search-bar/block.jsx":
+/*!********************************************!*\
+  !*** ./assets/blocks/search-bar/block.jsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var _wpBlockEditor = wpBlockEditor,
+        InspectorControls = _wpBlockEditor.InspectorControls,
+        BlockControls = _wpBlockEditor.BlockControls,
+        RichText = _wpBlockEditor.RichText,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings;
+    var RangeControl = wpComponents.RangeControl,
+        PanelBody = wpComponents.PanelBody,
+        TextControl = wpComponents.TextControl,
+        ToggleControl = wpComponents.ToggleControl;
+
+
+    var searchBlockIcon = React.createElement(
+        "svg",
+        { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" }),
+        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+    );
+
+    var SEARCH_ICONS = {
+        icon1: searchBlockIcon,
+        icon2: React.createElement(
+            "svg",
+            { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+            React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0zm0 0h24v24H0V0z" }),
+            React.createElement("path", { d: "M17.01 14h-.8l-.27-.27c.98-1.14 1.57-2.61 1.57-4.23 0-3.59-2.91-6.5-6.5-6.5s-6.5 3-6.5 6.5H2l3.84 4 4.16-4H6.51C6.51 7 8.53 5 11.01 5s4.5 2.01 4.5 4.5c0 2.48-2.02 4.5-4.5 4.5-.65 0-1.26-.14-1.82-.38L7.71 15.1c.97.57 2.09.9 3.3.9 1.61 0 3.08-.59 4.22-1.57l.27.27v.79l5.01 4.99L22 19l-4.99-5z" })
+        ),
+        icon3: React.createElement(
+            "svg",
+            { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+            React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
+            React.createElement("path", { d: "M20.94 11c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" })
+        ),
+        icon4: React.createElement(
+            "svg",
+            { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+            React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+            React.createElement("path", { d: "M18 13v7H4V6h5.02c.05-.71.22-1.38.48-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-5l-2-2zm-1.5 5h-11l2.75-3.53 1.96 2.36 2.75-3.54zm2.8-9.11c.44-.7.7-1.51.7-2.39C20 4.01 17.99 2 15.5 2S11 4.01 11 6.5s2.01 4.5 4.49 4.5c.88 0 1.7-.26 2.39-.7L21 13.42 22.42 12 19.3 8.89zM15.5 9C14.12 9 13 7.88 13 6.5S14.12 4 15.5 4 18 5.12 18 6.5 16.88 9 15.5 9z" }),
+            React.createElement("path", { fill: "none", d: "M0 0h24v24H0z" })
+        ),
+        icon5: React.createElement(
+            "svg",
+            { fill: "none", height: "20", width: "20", stroke: "currentColor", strokeWidth: "2", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+            React.createElement("circle", { cx: "11", cy: "11", r: "8" }),
+            React.createElement("line", { x1: "21", x2: "16.65", y1: "21", y2: "16.65" })
+        ),
+        icon6: React.createElement(
+            "svg",
+            { width: "20", height: "20", viewBox: "0 0 26 26", xmlns: "http://www.w3.org/2000/svg" },
+            React.createElement("path", { d: "M14.9462891,1C9.4033203,1,4.8935547,5.5097656,4.8935547,11.0532227  c0,2.5022583,0.9248047,4.7885132,2.4428101,6.5498657l-6.1166382,6.1166382c-0.2929688,0.2929688-0.2929688,0.7675781,0,1.0605469  C1.3662109,24.9267578,1.5576172,25,1.75,25s0.3837891-0.0732422,0.5302734-0.2197266l6.1165771-6.1165771  c1.7612305,1.5180054,4.0474243,2.442749,6.5494385,2.442749C20.4902344,21.1064453,25,16.5966797,25,11.0532227  S20.4902344,1,14.9462891,1z M14.9462891,19.6064453c-4.7158203,0-8.5527344-3.8369141-8.5527344-8.5532227  S10.2304688,2.5,14.9462891,2.5C19.6630859,2.5,23.5,6.3369141,23.5,11.0532227S19.6630859,19.6064453,14.9462891,19.6064453z", fill: "currentColor" })
+        )
+    };
+
+    var SearchBarEdit = function (_Component) {
+        _inherits(SearchBarEdit, _Component);
+
+        function SearchBarEdit() {
+            _classCallCheck(this, SearchBarEdit);
+
+            return _possibleConstructorReturn(this, (SearchBarEdit.__proto__ || Object.getPrototypeOf(SearchBarEdit)).apply(this, arguments));
+        }
+
+        _createClass(SearchBarEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-search-bar'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    className = _props2.className;
+                var fullWidth = attributes.fullWidth,
+                    width = attributes.width,
+                    textColor = attributes.textColor,
+                    backgroundColor = attributes.backgroundColor,
+                    searchIcon = attributes.searchIcon,
+                    searchIconOnRight = attributes.searchIconOnRight,
+                    searchPlaceholder = attributes.searchPlaceholder,
+                    searchButtonEnabled = attributes.searchButtonEnabled,
+                    searchButtonText = attributes.searchButtonText,
+                    searchButtonTextColor = attributes.searchButtonTextColor,
+                    searchButtonBgColor = attributes.searchButtonBgColor,
+                    searchButtonRadius = attributes.searchButtonRadius,
+                    searchButtonOnLeft = attributes.searchButtonOnLeft;
+
+
+                var searchBarIcon = React.createElement(
+                    "span",
+                    { className: "advgb-search-bar-icon" },
+                    searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon
+                );
+
+                var searchBarButton = !searchButtonEnabled ? '' : React.createElement(
+                    "div",
+                    { className: "advgb-search-button-wrapper" },
+                    React.createElement(
+                        "span",
+                        { className: "advgb-search-bar-button",
+                            style: {
+                                color: searchButtonTextColor,
+                                backgroundColor: searchButtonBgColor,
+                                borderRadius: searchButtonRadius
+                            }
+                        },
+                        React.createElement(RichText, {
+                            tagName: "span",
+                            value: searchButtonText,
+                            onChange: function onChange(value) {
+                                return setAttributes({ searchButtonText: value.trim() });
+                            },
+                            onReplace: function onReplace() {
+                                return null;
+                            },
+                            onSplit: function onSplit() {
+                                return null;
+                            },
+                            placeholder: __('Search'),
+                            keepPlaceholderOnFocus: true
+                        })
+                    )
+                );
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Search Bar Settings') },
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Search Bar State') },
+                                React.createElement(ToggleControl, {
+                                    label: __('Full width'),
+                                    checked: fullWidth,
+                                    onChange: function onChange() {
+                                        return setAttributes({ fullWidth: !fullWidth });
+                                    }
+                                }),
+                                !fullWidth && React.createElement(RangeControl, {
+                                    label: __('Width'),
+                                    value: width,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ width: value });
+                                    },
+                                    min: 300,
+                                    max: 2000
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Search Icon Settings') },
+                                React.createElement(ToggleControl, {
+                                    label: __('Search icon on the right'),
+                                    checked: searchIconOnRight,
+                                    onChange: function onChange() {
+                                        return setAttributes({ searchIconOnRight: !searchIconOnRight });
+                                    }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items" },
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-icon-items-header" },
+                                        __('Search icon')
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-icon-items-wrapper" },
+                                        Object.keys(SEARCH_ICONS).map(function (icon, idx) {
+                                            return React.createElement(
+                                                "div",
+                                                { className: "advgb-icon-item", key: idx },
+                                                React.createElement(
+                                                    "span",
+                                                    { className: icon === searchIcon ? 'active' : '',
+                                                        onClick: function onClick() {
+                                                            return setAttributes({ searchIcon: icon });
+                                                        }
+                                                    },
+                                                    SEARCH_ICONS[icon]
+                                                )
+                                            );
+                                        })
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Search Input Settings'), initialOpen: false },
+                                React.createElement(TextControl, {
+                                    label: __('Search placeholder'),
+                                    value: searchPlaceholder,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchPlaceholder: value });
+                                    }
+                                }),
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Input Color'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Background color'),
+                                        value: backgroundColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ backgroundColor: value });
+                                        }
+                                    }, {
+                                        label: __('Text color'),
+                                        value: textColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ textColor: value });
+                                        }
+                                    }]
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Search Button Settings'), initialOpen: false },
+                                React.createElement(ToggleControl, {
+                                    label: __('Show submit button'),
+                                    checked: searchButtonEnabled,
+                                    onChange: function onChange() {
+                                        return setAttributes({ searchButtonEnabled: !searchButtonEnabled });
+                                    }
+                                }),
+                                React.createElement(ToggleControl, {
+                                    label: __('Search button on the left'),
+                                    checked: searchButtonOnLeft,
+                                    onChange: function onChange() {
+                                        return setAttributes({ searchButtonOnLeft: !searchButtonOnLeft });
+                                    }
+                                }),
+                                searchButtonEnabled && React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(PanelColorSettings, {
+                                        title: __('Button Color'),
+                                        initialOpen: false,
+                                        colorSettings: [{
+                                            label: __('Background color'),
+                                            value: searchButtonBgColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ searchButtonBgColor: value });
+                                            }
+                                        }, {
+                                            label: __('Text color'),
+                                            value: searchButtonTextColor,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ searchButtonTextColor: value });
+                                            }
+                                        }]
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Border radius (px)'),
+                                        help: __('Affect both input and button.'),
+                                        value: searchButtonRadius,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchButtonRadius: value });
+                                        },
+                                        min: 0,
+                                        max: 100
+                                    })
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-search-bar-wrapper " + className },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-search-bar-inner", style: { width: fullWidth ? '100%' : width } },
+                            searchButtonOnLeft && searchBarButton,
+                            React.createElement(
+                                "div",
+                                { className: "advgb-search-bar",
+                                    style: {
+                                        backgroundColor: backgroundColor,
+                                        color: textColor,
+                                        borderRadius: searchButtonRadius
+                                    }
+                                },
+                                !searchIconOnRight && searchBarIcon,
+                                React.createElement("input", { type: "text", disabled: true,
+                                    className: "advgb-search-bar-input",
+                                    value: searchPlaceholder ? searchPlaceholder : __('Type to search…')
+                                }),
+                                searchIconOnRight && searchBarIcon
+                            ),
+                            !searchButtonOnLeft && searchBarButton
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return SearchBarEdit;
+    }(Component);
+
+    var blockAttrs = {
+        fullWidth: {
+            type: 'boolean',
+            default: false
+        },
+        width: {
+            type: 'number',
+            default: 500
+        },
+        textColor: {
+            type: 'string'
+        },
+        backgroundColor: {
+            type: 'string'
+        },
+        searchIcon: {
+            type: 'string',
+            default: 'icon1'
+        },
+        searchIconOnRight: {
+            type: 'boolean'
+        },
+        searchPlaceholder: {
+            type: 'string'
+        },
+        searchButtonEnabled: {
+            type: 'boolean',
+            default: true
+        },
+        searchButtonText: {
+            type: 'string',
+            default: __('Search')
+        },
+        searchButtonTextColor: {
+            type: 'string'
+        },
+        searchButtonBgColor: {
+            type: 'string'
+        },
+        searchButtonRadius: {
+            type: 'number',
+            default: 4
+        },
+        searchButtonOnLeft: {
+            type: 'boolean',
+            default: false
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/search-bar', {
+        title: __('Search Bar'),
+        description: __('Easy to create a search bar for your site.'),
+        icon: {
+            src: searchBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('accordion'), __('list'), __('faq')],
+        attributes: blockAttrs,
+        supports: {
+            align: true
+        },
+        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'alternative', label: __('Alternative') }],
+        edit: SearchBarEdit,
+        save: function save(_ref) {
+            var attributes = _ref.attributes,
+                className = _ref.className;
+            var fullWidth = attributes.fullWidth,
+                width = attributes.width,
+                textColor = attributes.textColor,
+                backgroundColor = attributes.backgroundColor,
+                searchIcon = attributes.searchIcon,
+                searchIconOnRight = attributes.searchIconOnRight,
+                searchPlaceholder = attributes.searchPlaceholder,
+                searchButtonEnabled = attributes.searchButtonEnabled,
+                searchButtonText = attributes.searchButtonText,
+                searchButtonTextColor = attributes.searchButtonTextColor,
+                searchButtonBgColor = attributes.searchButtonBgColor,
+                searchButtonRadius = attributes.searchButtonRadius,
+                searchButtonOnLeft = attributes.searchButtonOnLeft;
+
+
+            var searchBarIcon = React.createElement(
+                "span",
+                { className: "advgb-search-bar-icon" },
+                searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon
+            );
+
+            var searchBarButton = !searchButtonEnabled ? '' : React.createElement(
+                "div",
+                { className: "advgb-search-button-wrapper" },
+                React.createElement(
+                    "button",
+                    {
+                        type: "submit",
+                        className: "advgb-search-bar-button",
+                        style: {
+                            color: searchButtonTextColor,
+                            backgroundColor: searchButtonBgColor,
+                            borderRadius: searchButtonRadius
+                        }
+                    },
+                    searchButtonText
+                )
+            );
+
+            return React.createElement(
+                "div",
+                { className: "advgb-search-bar-wrapper " + className },
+                React.createElement(
+                    "form",
+                    { method: "get",
+                        action: advgbBlocks.home_url,
+                        className: "advgb-search-bar-form",
+                        role: "search"
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-search-bar-inner", style: { width: fullWidth ? '100%' : width } },
+                        searchButtonOnLeft && searchBarButton,
+                        React.createElement(
+                            "div",
+                            { className: "advgb-search-bar",
+                                style: {
+                                    backgroundColor: backgroundColor,
+                                    color: textColor,
+                                    borderRadius: searchButtonRadius
+                                }
+                            },
+                            !searchIconOnRight && searchBarIcon,
+                            React.createElement("input", { type: "text",
+                                className: "advgb-search-bar-input",
+                                name: "s",
+                                placeholder: searchPlaceholder ? searchPlaceholder : __('Type to search…')
+                            }),
+                            searchIconOnRight && searchBarIcon
+                        ),
+                        !searchButtonOnLeft && searchBarButton
+                    )
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/blocks/social-links/block.jsx":
 /*!**********************************************!*\
   !*** ./assets/blocks/social-links/block.jsx ***!
@@ -16159,9 +16660,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/search-bar/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16185,6 +16686,7 @@ __webpack_require__(/*! ./assets/blocks/login-form/block.jsx */"./assets/blocks/
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
 __webpack_require__(/*! ./assets/blocks/newsletter/block.jsx */"./assets/blocks/newsletter/block.jsx");
 __webpack_require__(/*! ./assets/blocks/recent-posts/block.jsx */"./assets/blocks/recent-posts/block.jsx");
+__webpack_require__(/*! ./assets/blocks/search-bar/block.jsx */"./assets/blocks/search-bar/block.jsx");
 __webpack_require__(/*! ./assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");
 __webpack_require__(/*! ./assets/blocks/summary/block.jsx */"./assets/blocks/summary/block.jsx");
 __webpack_require__(/*! ./assets/blocks/tabs/block.jsx */"./assets/blocks/tabs/block.jsx");
