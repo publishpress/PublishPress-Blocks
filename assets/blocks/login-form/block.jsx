@@ -64,44 +64,13 @@
             const { registerView } = this.state;
             const { attributes, setAttributes } = this.props;
             const {
-                formType,
-                formWidth,
-                redirect,
-                redirectLink,
-                showLogo,
-                showInputFieldIcon,
-                showRegisterLink,
-                showLostPasswordLink,
-                logoImg,
-                logoID,
-                logoWidth,
-                welcomeText,
-                loginLabel,
-                loginText,
-                passwordText,
-                usernameLabel,
-                userText,
-                emailLabel,
-                emailText,
-                rememberMeText,
-                loginSubmitLabel,
-                registerSubmitLabel,
-                registerText,
-                registerLinkText,
-                registerWelcome,
-                backToLoginText,
-                lostPasswordText,
-                headerBgColor,
-                bgColor,
-                textColor,
-                inputColor,
-                borderColor,
-                borderStyle,
-                borderWidth,
-                submitColor,
-                submitBgColor,
-                submitRadius,
-                submitPosition,
+                formType, formWidth, redirect, redirectLink, showLogo, showInputFieldIcon,
+                showRegisterLink, showLostPasswordLink, logoImg, logoID, registerLogoImg, registerLogoID,
+                logoWidth, welcomeText, loginLabel, loginText, passwordText, usernameLabel, userText,
+                emailLabel, emailText, rememberMeText, loginSubmitLabel, registerSubmitLabel,
+                registerText, registerLinkText, registerWelcome, backToLoginText, lostPasswordText,
+                headerBgColor, bgColor, textColor, inputColor, borderColor, borderStyle, borderWidth,
+                submitColor, submitBgColor, submitRadius, submitPosition,
             } = attributes;
 
             const logoElm = (
@@ -121,6 +90,36 @@
                                     <img className="advgb-lores-form-logo"
                                          onClick={ open }
                                          src={ logoImg }
+                                         alt={ __( 'Site logo' ) }
+                                         style={ {
+                                             width: logoWidth ? logoWidth + 'px' : undefined,
+                                             cursor: 'pointer',
+                                         } }
+                                    />
+                                </span>
+                            </Tooltip>
+                        </div>
+                    ) }
+                />
+            );
+
+            const regLogoElm = (
+                <MediaUpload
+                    allowedTypes={ ["image"] }
+                    onSelect={ (media) => setAttributes( {
+                        registerLogoImg: media.sizes.medium ? media.sizes.medium.url : media.sizes.full.url,
+                        registerLogoID: media.id
+                    } ) }
+                    value={ registerLogoID }
+                    render={ ( { open } ) => (
+                        <div className="advgb-lores-form-logo-wrapper">
+                            <Tooltip text={ __( 'Click to change logo' ) }>
+                                <span style={ {
+                                    display: 'block',
+                                } }>
+                                    <img className="advgb-lores-form-logo"
+                                         onClick={ open }
+                                         src={ registerLogoImg }
                                          alt={ __( 'Site logo' ) }
                                          style={ {
                                              width: logoWidth ? logoWidth + 'px' : undefined,
@@ -272,22 +271,24 @@
                                 </div>
                             </label>
                             <div className="advgb-lores-submit advgb-login-submit">
-                                <RichText
-                                    tagName="span"
-                                    value={ loginSubmitLabel }
-                                    onChange={ (value) => setAttributes( { loginSubmitLabel: value.trim() } ) }
-                                    style={ {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius,
-                                    } }
-                                    className="advgb-lores-submit-button"
-                                    onReplace={ () => null }
-                                    onSplit={ () => null }
-                                    placeholder={ __( 'Login…' ) }
-                                    keepPlaceholderOnFocus
-                                />
+                                <span className="advgb-lores-submit-button"
+                                      style={ {
+                                          borderColor: submitColor,
+                                          color: submitColor,
+                                          backgroundColor: submitBgColor,
+                                          borderRadius: submitRadius,
+                                      } }
+                                >
+                                    <RichText
+                                        tagName="span"
+                                        value={ loginSubmitLabel }
+                                        onChange={ (value) => setAttributes( { loginSubmitLabel: value.trim() } ) }
+                                        onReplace={ () => null }
+                                        onSplit={ () => null }
+                                        placeholder={ __( 'Login…' ) }
+                                        keepPlaceholderOnFocus
+                                    />
+                                </span>
                             </div>
                         </div>
                         {!!showLostPasswordLink && (
@@ -336,7 +337,7 @@
                     ) }
                     <div className="advgb-register-form advgb-form-inner">
                         <div className="advgb-lores-form-header">
-                            {!!showLogo && logoElm}
+                            {!!showLogo && regLogoElm}
                             <RichText
                                 tagName="h3"
                                 value={ registerWelcome }
@@ -421,22 +422,24 @@
                         </div>
                         <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
                             <div className="advgb-lores-submit advgb-register-submit">
-                                <RichText
-                                    tagName="span"
-                                    value={ registerSubmitLabel }
-                                    onChange={ (value) => setAttributes( { registerSubmitLabel: value.trim() } ) }
-                                    style={ {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius,
-                                    } }
-                                    className="advgb-lores-submit-button"
-                                    onReplace={ () => null }
-                                    onSplit={ () => null }
-                                    placeholder={ __( 'Register…' ) }
-                                    keepPlaceholderOnFocus
-                                />
+                                <span className="advgb-lores-submit-button"
+                                      style={ {
+                                          borderColor: submitColor,
+                                          color: submitColor,
+                                          backgroundColor: submitBgColor,
+                                          borderRadius: submitRadius,
+                                      } }
+                                >
+                                    <RichText
+                                        tagName="span"
+                                        value={ registerSubmitLabel }
+                                        onChange={ (value) => setAttributes( { registerSubmitLabel: value.trim() } ) }
+                                        onReplace={ () => null }
+                                        onSplit={ () => null }
+                                        placeholder={ __( 'Register…' ) }
+                                        keepPlaceholderOnFocus
+                                    />
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -456,14 +459,6 @@
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Form Settings' ) }>
-                            {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled)) && (
-                                <PanelBody title={ __( 'Notice' ) }>
-                                    <p style={ { fontStyle: 'italic', color: '#ff0000' } }>
-                                        { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in' ) }
-                                        <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings' ) }.</a>
-                                    </p>
-                                </PanelBody>
-                            ) }
                             <PanelBody title={ __( 'Form State' ) }>
                                 <SelectControl
                                     label={ __( 'Initial Form' ) }
@@ -651,6 +646,14 @@
                                 />
                             </PanelBody>
                         </PanelBody>
+                        {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled)) && (
+                            <PanelBody title={ __( 'Notice' ) }>
+                                <p style={ { fontStyle: 'italic', color: '#ff8800' } }>
+                                    { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in' ) }
+                                    <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings' ) }.</a>
+                                </p>
+                            </PanelBody>
+                        ) }
                     </InspectorControls>
                     <div className="advgb-lores-form-wrapper" style={ { width: formWidth } }>
                         {!registerView
@@ -660,7 +663,7 @@
                                     <Placeholder
                                         icon={userIcon}
                                         label={ __( 'Registration Form' ) }
-                                        instructions={ __( 'Registration for your site is currently disabled, enable it in Settings to use registration form.' ) }
+                                        instructions={ __( 'Registration for your website is currently disabled, enable it in WordPress General settings to use registration form' ) }
                                     />
                                 )
                                 : registerForm
@@ -672,8 +675,9 @@
     }
 
     const loginFormBlockIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-            <path d="M8 9v-4l8 7-8 7v-4h-8v-6h8zm2-7v2h12v16h-12v2h14v-20h-14z"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M11 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM5 18c.2-.63 2.57-1.68 4.96-1.94l2.04-2c-.39-.04-.68-.06-1-.06-2.67 0-8 1.34-8 4v2h9l-2-2H5zm15.6-5.5l-5.13 5.17-2.07-2.08L12 17l3.47 3.5L22 13.91z"/>
         </svg>
     );
 
@@ -711,9 +715,16 @@
         },
         logoImg: {
             type: 'string',
-            default: advgbBlocks.home_logo,
+            default: advgbBlocks.login_logo,
         },
         logoID: {
+            type: 'number',
+        },
+        registerLogoImg: {
+            type: 'string',
+            default: advgbBlocks.reg_logo,
+        },
+        registerLogoID: {
             type: 'number',
         },
         logoWidth: {
@@ -722,14 +733,14 @@
         },
         welcomeText: {
             type: 'string',
-            default: __( 'Welcome' ),
+            default: __( 'Welcome back' ),
         },
         loginLabel: {
             type: 'string',
         },
         loginText: {
             type: 'string',
-            default: __( 'Username or Email Address' ),
+            default: __( 'Username or Email' ),
         },
         passwordText: {
             type: 'string',
@@ -755,7 +766,7 @@
         },
         loginSubmitLabel: {
             type: 'string',
-            default: __( 'Login' ),
+            default: __( 'LOGIN' ),
         },
         registerSubmitLabel: {
             type: 'string',
@@ -834,43 +845,13 @@
         edit: LoginFormEdit,
         save: function ( { attributes } ) {
             const {
-                formType,
-                formWidth,
-                redirect,
-                redirectLink,
-                showLogo,
-                showInputFieldIcon,
-                showRegisterLink,
-                showLostPasswordLink,
-                logoImg,
-                logoWidth,
-                welcomeText,
-                loginLabel,
-                loginText,
-                passwordText,
-                usernameLabel,
-                userText,
-                emailLabel,
-                emailText,
-                rememberMeText,
-                loginSubmitLabel,
-                registerSubmitLabel,
-                registerText,
-                registerLinkText,
-                registerWelcome,
-                backToLoginText,
-                lostPasswordText,
-                headerBgColor,
-                bgColor,
-                textColor,
-                inputColor,
-                borderColor,
-                borderStyle,
-                borderWidth,
-                submitColor,
-                submitBgColor,
-                submitRadius,
-                submitPosition,
+                formType, formWidth, redirect, redirectLink, showLogo, showInputFieldIcon,
+                showRegisterLink, showLostPasswordLink, logoImg, registerLogoImg, logoWidth,
+                welcomeText, loginLabel, loginText, passwordText, usernameLabel, userText,
+                emailLabel, emailText, rememberMeText, loginSubmitLabel, registerSubmitLabel, registerText,
+                registerLinkText, registerWelcome, backToLoginText, lostPasswordText,
+                headerBgColor, bgColor, textColor, inputColor, borderColor, borderStyle, borderWidth,
+                submitColor, submitBgColor, submitRadius, submitPosition,
             } = attributes;
 
             const logoElmSave = (
@@ -878,6 +859,21 @@
                     <span style={ {display: 'block',} }>
                         <img className="advgb-lores-form-logo"
                              src={ logoImg }
+                             alt={ __( 'Site logo' ) }
+                             style={ {
+                                 width: logoWidth ? logoWidth + 'px' : undefined,
+                                 cursor: 'pointer',
+                             } }
+                        />
+                    </span>
+                </div>
+            );
+
+            const regLogoElmSave = (
+                <div className="advgb-lores-form-logo-wrapper">
+                    <span style={ {display: 'block',} }>
+                        <img className="advgb-lores-form-logo"
+                             src={ registerLogoImg }
                              alt={ __( 'Site logo' ) }
                              style={ {
                                  width: logoWidth ? logoWidth + 'px' : undefined,
@@ -1059,7 +1055,7 @@
                     <form action="" className="advgb-form-register" method="post">
                         <div className="advgb-register-form advgb-form-inner">
                             <div className="advgb-lores-form-header">
-                                {!!showLogo && logoElmSave}
+                                {!!showLogo && regLogoElmSave}
                                 <h3 className="advgb-lores-form-welcome"
                                     style={ { color: textColor } }
                                 >

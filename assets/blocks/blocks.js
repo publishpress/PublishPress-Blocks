@@ -2978,6 +2978,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -3875,14 +3879,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 var fromCell = rangeSelected.fromCell,
                                     toCell = rangeSelected.toCell;
 
-                                var fCell = attributes[sectionSelected][fromCell.rowIdx].cells[fromCell.colIdx];
-                                var tCell = attributes[sectionSelected][toCell.rowIdx].cells[toCell.colIdx];
-                                var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
-                                var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
-                                var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
-                                var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                                if (attributes[sectionSelected][fromCell.rowIdx] && attributes[sectionSelected][toCell.rowIdx]) {
+                                    var fCell = attributes[sectionSelected][fromCell.rowIdx].cells[fromCell.colIdx];
+                                    var tCell = attributes[sectionSelected][toCell.rowIdx].cells[toCell.colIdx];
+                                    var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                                    var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                                    var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                                    var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
 
-                                isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan) && section === sectionSelected;
+                                    isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan) && section === sectionSelected;
+                                }
                             }
 
                             if (_this3.isMultiSelected()) {
@@ -4303,6 +4309,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(DropdownMenu, {
+                                hasArrowIndicator: true,
                                 icon: "editor-table",
                                 label: __('Edit Table'),
                                 controls: TABLE_CONTROLS
@@ -4772,6 +4779,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+var AdvColorPalette = exports.AdvColorPalette = React.createElement(
+    "div",
+    null,
+    "123"
+);
 
 /***/ }),
 
@@ -9438,6 +9451,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     showLostPasswordLink = attributes.showLostPasswordLink,
                     logoImg = attributes.logoImg,
                     logoID = attributes.logoID,
+                    registerLogoImg = attributes.registerLogoImg,
+                    registerLogoID = attributes.registerLogoID,
                     logoWidth = attributes.logoWidth,
                     welcomeText = attributes.welcomeText,
                     loginLabel = attributes.loginLabel,
@@ -9493,6 +9508,43 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement("img", { className: "advgb-lores-form-logo",
                                         onClick: open,
                                         src: logoImg,
+                                        alt: __('Site logo'),
+                                        style: {
+                                            width: logoWidth ? logoWidth + 'px' : undefined,
+                                            cursor: 'pointer'
+                                        }
+                                    })
+                                )
+                            )
+                        );
+                    }
+                });
+
+                var regLogoElm = React.createElement(MediaUpload, {
+                    allowedTypes: ["image"],
+                    onSelect: function onSelect(media) {
+                        return setAttributes({
+                            registerLogoImg: media.sizes.medium ? media.sizes.medium.url : media.sizes.full.url,
+                            registerLogoID: media.id
+                        });
+                    },
+                    value: registerLogoID,
+                    render: function render(_ref2) {
+                        var open = _ref2.open;
+                        return React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-logo-wrapper" },
+                            React.createElement(
+                                Tooltip,
+                                { text: __('Click to change logo') },
+                                React.createElement(
+                                    "span",
+                                    { style: {
+                                            display: 'block'
+                                        } },
+                                    React.createElement("img", { className: "advgb-lores-form-logo",
+                                        onClick: open,
+                                        src: registerLogoImg,
                                         alt: __('Site logo'),
                                         style: {
                                             width: logoWidth ? logoWidth + 'px' : undefined,
@@ -9702,28 +9754,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-submit advgb-login-submit" },
-                                React.createElement(RichText, {
-                                    tagName: "span",
-                                    value: loginSubmitLabel,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ loginSubmitLabel: value.trim() });
+                                React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-submit-button",
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
                                     },
-                                    style: {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius
-                                    },
-                                    className: "advgb-lores-submit-button",
-                                    onReplace: function onReplace() {
-                                        return null;
-                                    },
-                                    onSplit: function onSplit() {
-                                        return null;
-                                    },
-                                    placeholder: __('Login…'),
-                                    keepPlaceholderOnFocus: true
-                                })
+                                    React.createElement(RichText, {
+                                        tagName: "span",
+                                        value: loginSubmitLabel,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ loginSubmitLabel: value.trim() });
+                                        },
+                                        onReplace: function onReplace() {
+                                            return null;
+                                        },
+                                        onSplit: function onSplit() {
+                                            return null;
+                                        },
+                                        placeholder: __('Login…'),
+                                        keepPlaceholderOnFocus: true
+                                    })
+                                )
                             )
                         ),
                         !!showLostPasswordLink && React.createElement(
@@ -9792,7 +9848,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             "div",
                             { className: "advgb-lores-form-header" },
-                            !!showLogo && logoElm,
+                            !!showLogo && regLogoElm,
                             React.createElement(RichText, {
                                 tagName: "h3",
                                 value: registerWelcome,
@@ -9907,28 +9963,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-submit advgb-register-submit" },
-                                React.createElement(RichText, {
-                                    tagName: "span",
-                                    value: registerSubmitLabel,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ registerSubmitLabel: value.trim() });
+                                React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-submit-button",
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
                                     },
-                                    style: {
-                                        borderColor: submitColor,
-                                        color: submitColor,
-                                        backgroundColor: submitBgColor,
-                                        borderRadius: submitRadius
-                                    },
-                                    className: "advgb-lores-submit-button",
-                                    onReplace: function onReplace() {
-                                        return null;
-                                    },
-                                    onSplit: function onSplit() {
-                                        return null;
-                                    },
-                                    placeholder: __('Register…'),
-                                    keepPlaceholderOnFocus: true
-                                })
+                                    React.createElement(RichText, {
+                                        tagName: "span",
+                                        value: registerSubmitLabel,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ registerSubmitLabel: value.trim() });
+                                        },
+                                        onReplace: function onReplace() {
+                                            return null;
+                                        },
+                                        onSplit: function onSplit() {
+                                            return null;
+                                        },
+                                        placeholder: __('Register…'),
+                                        keepPlaceholderOnFocus: true
+                                    })
+                                )
                             )
                         )
                     )
@@ -9958,22 +10018,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Form Settings') },
-                            typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
-                                PanelBody,
-                                { title: __('Notice') },
-                                React.createElement(
-                                    "p",
-                                    { style: { fontStyle: 'italic', color: '#ff0000' } },
-                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
-                                    React.createElement(
-                                        "a",
-                                        { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
-                                        " ",
-                                        __('settings'),
-                                        "."
-                                    )
-                                )
-                            ),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Form State') },
@@ -10180,6 +10224,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 })
                             )
+                        ),
+                        typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
+                            PanelBody,
+                            { title: __('Notice') },
+                            React.createElement(
+                                "p",
+                                { style: { fontStyle: 'italic', color: '#ff8800' } },
+                                __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
+                                React.createElement(
+                                    "a",
+                                    { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
+                                    " ",
+                                    __('settings'),
+                                    "."
+                                )
+                            )
                         )
                     ),
                     React.createElement(
@@ -10188,7 +10248,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         !registerView ? loginForm : typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled) ? React.createElement(Placeholder, {
                             icon: userIcon,
                             label: __('Registration Form'),
-                            instructions: __('Registration for your site is currently disabled, enable it in Settings to use registration form.')
+                            instructions: __('Registration for your website is currently disabled, enable it in WordPress General settings to use registration form')
                         }) : registerForm
                     )
                 );
@@ -10200,8 +10260,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var loginFormBlockIcon = React.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
-        React.createElement("path", { d: "M8 9v-4l8 7-8 7v-4h-8v-6h8zm2-7v2h12v16h-12v2h14v-20h-14z" })
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+        React.createElement("path", { d: "M11 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM5 18c.2-.63 2.57-1.68 4.96-1.94l2.04-2c-.39-.04-.68-.06-1-.06-2.67 0-8 1.34-8 4v2h9l-2-2H5zm15.6-5.5l-5.13 5.17-2.07-2.08L12 17l3.47 3.5L22 13.91z" })
     );
 
     var blockAttrs = {
@@ -10238,9 +10299,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         logoImg: {
             type: 'string',
-            default: advgbBlocks.home_logo
+            default: advgbBlocks.login_logo
         },
         logoID: {
+            type: 'number'
+        },
+        registerLogoImg: {
+            type: 'string',
+            default: advgbBlocks.reg_logo
+        },
+        registerLogoID: {
             type: 'number'
         },
         logoWidth: {
@@ -10249,14 +10317,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         welcomeText: {
             type: 'string',
-            default: __('Welcome')
+            default: __('Welcome back')
         },
         loginLabel: {
             type: 'string'
         },
         loginText: {
             type: 'string',
-            default: __('Username or Email Address')
+            default: __('Username or Email')
         },
         passwordText: {
             type: 'string',
@@ -10282,7 +10350,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         loginSubmitLabel: {
             type: 'string',
-            default: __('Login')
+            default: __('LOGIN')
         },
         registerSubmitLabel: {
             type: 'string',
@@ -10359,8 +10427,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: blockAttrs,
         edit: LoginFormEdit,
-        save: function save(_ref2) {
-            var attributes = _ref2.attributes;
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
             var formType = attributes.formType,
                 formWidth = attributes.formWidth,
                 redirect = attributes.redirect,
@@ -10370,6 +10438,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 showRegisterLink = attributes.showRegisterLink,
                 showLostPasswordLink = attributes.showLostPasswordLink,
                 logoImg = attributes.logoImg,
+                registerLogoImg = attributes.registerLogoImg,
                 logoWidth = attributes.logoWidth,
                 welcomeText = attributes.welcomeText,
                 loginLabel = attributes.loginLabel,
@@ -10408,6 +10477,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { style: { display: 'block' } },
                     React.createElement("img", { className: "advgb-lores-form-logo",
                         src: logoImg,
+                        alt: __('Site logo'),
+                        style: {
+                            width: logoWidth ? logoWidth + 'px' : undefined,
+                            cursor: 'pointer'
+                        }
+                    })
+                )
+            );
+
+            var regLogoElmSave = React.createElement(
+                "div",
+                { className: "advgb-lores-form-logo-wrapper" },
+                React.createElement(
+                    "span",
+                    { style: { display: 'block' } },
+                    React.createElement("img", { className: "advgb-lores-form-logo",
+                        src: registerLogoImg,
                         alt: __('Site logo'),
                         style: {
                             width: logoWidth ? logoWidth + 'px' : undefined,
@@ -10645,7 +10731,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             "div",
                             { className: "advgb-lores-form-header" },
-                            !!showLogo && logoElmSave,
+                            !!showLogo && regLogoElmSave,
                             React.createElement(
                                 "h3",
                                 { className: "advgb-lores-form-welcome",
@@ -13245,9 +13331,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var searchBlockIcon = React.createElement(
         "svg",
-        { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
-        React.createElement("path", { d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" }),
-        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+        { fill: "none", height: "20", width: "20", stroke: "currentColor", strokeWidth: "2", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("circle", { fill: "none", cx: "11", cy: "11", r: "8" }),
+        React.createElement("line", { x1: "21", x2: "16.65", y1: "21", y2: "16.65" })
     );
 
     var SEARCH_ICONS = {
@@ -13273,9 +13359,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ),
         icon5: React.createElement(
             "svg",
-            { fill: "none", height: "20", width: "20", stroke: "currentColor", strokeWidth: "2", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
-            React.createElement("circle", { cx: "11", cy: "11", r: "8" }),
-            React.createElement("line", { x1: "21", x2: "16.65", y1: "21", y2: "16.65" })
+            { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+            React.createElement("path", { d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" }),
+            React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
         ),
         icon6: React.createElement(
             "svg",
@@ -13597,7 +13683,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         searchButtonRadius: {
             type: 'number',
-            default: 4
+            default: 0
         },
         searchButtonOnLeft: {
             type: 'boolean',
@@ -13622,7 +13708,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             align: true
         },
-        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'alternative', label: __('Alternative') }],
+        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'classic', label: __('Classic') }],
         edit: SearchBarEdit,
         save: function save(_ref) {
             var attributes = _ref.attributes,

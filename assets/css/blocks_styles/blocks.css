@@ -192,8 +192,9 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     text-align: center;
 }
 
-.wp-block-advgb-button_link {
+.wp-block-advgb-button a.wp-block-advgb-button_link {
     display: inline-block;
+    text-decoration: none;
 }
 
 /*Advanced Image block styles*/
@@ -1698,7 +1699,8 @@ form .advgb-grecaptcha > div {
     outline: none;
     background-color: #2196f3;
     color: #fff;
-    font-weight: normal;
+    font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 .advgb-lores-form.sending:before {
@@ -1741,14 +1743,12 @@ form .advgb-grecaptcha > div {
     flex-wrap: nowrap;
     margin-right: 10px;
     padding: 3px;
-    border: 1px solid #ccc;
-}
-
-.advgb-search-bar-wrapper.is-style-alternative .advgb-search-bar-inner .advgb-search-bar {
     border: none;
     border-bottom: 1px solid #ccc;
-    border-bottom-right-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
+}
+
+.advgb-search-bar-wrapper.is-style-classic .advgb-search-bar-inner .advgb-search-bar {
+    border: 1px solid #ccc;
 }
 
 .advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar .advgb-search-bar-icon {

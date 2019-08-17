@@ -172,7 +172,7 @@ $recaptcha_theme      = isset($recaptcha_config['recaptcha_theme']) ? $recaptcha
                         </div>
                     </div>
                 </li>
-                <li>
+                <li class="ju-settings-option full-width clearfix" style="background-color: transparent">
                     <div class="advgb-captcha-intro">
                         <?php esc_html_e('Use the Google reCaptcha to avoid spam in Contact and Newsletter forms. Get credentials for your domain by registering', 'advanced-gutenberg') ?>
                         <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank">

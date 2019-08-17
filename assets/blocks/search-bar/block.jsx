@@ -7,9 +7,9 @@
     const { RangeControl, PanelBody, TextControl , ToggleControl } = wpComponents;
 
     const searchBlockIcon = (
-        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
-            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
+        <svg fill="none" height="20" width="20" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle fill="none" cx="11" cy="11" r="8"/>
+            <line x1="21" x2="16.65" y1="21" y2="16.65"/>
         </svg>
     );
 
@@ -35,9 +35,9 @@
             </svg>
         ),
         icon5: (
-            <svg fill="none" height="20" width="20" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="8"/>
-                <line x1="21" x2="16.65" y1="21" y2="16.65"/>
+            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
         ),
         icon6: (
@@ -293,7 +293,7 @@
         },
         searchButtonRadius: {
             type: 'number',
-            default: 4,
+            default: 0,
         },
         searchButtonOnLeft: {
             type: 'boolean',
@@ -320,7 +320,7 @@
         },
         styles: [
             { name: 'default', label: __( 'Default' ), isDefault: true },
-            { name: 'alternative', label: __( 'Alternative' ) },
+            { name: 'classic', label: __( 'Classic' ) },
         ],
         edit: SearchBarEdit,
         save: function ( { attributes, className } ) {

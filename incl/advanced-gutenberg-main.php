@@ -374,7 +374,8 @@ float: left;'
         // Set variable needed by blocks editor
         $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
         $default_thumb      = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
-        $home_logo          = plugins_url('assets/blocks/login-form/home.png', ADVANCED_GUTENBERG_PLUGIN);
+        $login_logo          = plugins_url('assets/blocks/login-form/login.svg', ADVANCED_GUTENBERG_PLUGIN);
+        $reg_logo          = plugins_url('assets/blocks/login-form/reg.svg', ADVANCED_GUTENBERG_PLUGIN);
         $saved_settings     = get_option('advgb_settings');
         $custom_styles_data = get_option('advgb_custom_styles');
         $recaptcha_config   = get_option('advgb_recaptcha_config');
@@ -386,7 +387,8 @@ float: left;'
             'color' => $blocks_icon_color,
             'post_thumb' => $rp_default_thumb['url'],
             'avatarHolder' => $avatarHolder,
-            'home_logo' => $home_logo,
+            'login_logo' => $login_logo,
+            'reg_logo' => $reg_logo,
             'home_url' => home_url(),
             'config_url' => admin_url('admin.php?page=advgb_main'),
             'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
