@@ -1,3 +1,5 @@
+import {AdvColorControl} from "../0-adv-components/components.jsx";
+
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
@@ -60,6 +62,15 @@
             this.setState( { registerView: attributes.formType === 'register' } );
         }
 
+        componentDidMount() {
+            const { clientId, attributes, setAttributes } = this.props;
+            const { submitButtonId } = attributes;
+
+            if (!submitButtonId) {
+                setAttributes( { submitButtonId: `submit-btn-${clientId}` } )
+            }
+        }
+
         render() {
             const { registerView } = this.state;
             const { attributes, setAttributes } = this.props;
@@ -70,7 +81,9 @@
                 emailLabel, emailText, rememberMeText, loginSubmitLabel, registerSubmitLabel,
                 registerText, registerLinkText, registerWelcome, backToLoginText, lostPasswordText,
                 headerBgColor, bgColor, textColor, inputColor, borderColor, borderStyle, borderWidth,
-                submitColor, submitBgColor, submitRadius, submitPosition,
+                submitColor, submitBgColor, submitRadius, submitPosition, submitButtonId,
+                submitHoverColor, submitHoverBgColor, submitHoverShadow, submitHoverShadowH, submitHoverShadowV,
+                submitHoverShadowBlur, submitHoverShadowSpread, submitHoverOpacity, submitHoverTranSpeed,
             } = attributes;
 
             const logoElm = (
@@ -271,7 +284,7 @@
                                 </div>
                             </label>
                             <div className="advgb-lores-submit advgb-login-submit">
-                                <span className="advgb-lores-submit-button"
+                                <span className={`advgb-lores-submit-button ${submitButtonId}`}
                                       style={ {
                                           borderColor: submitColor,
                                           color: submitColor,
@@ -422,7 +435,7 @@
                         </div>
                         <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
                             <div className="advgb-lores-submit advgb-register-submit">
-                                <span className="advgb-lores-submit-button"
+                                <span className={`advgb-lores-submit-button ${submitButtonId}`}
                                       style={ {
                                           borderColor: submitColor,
                                           color: submitColor,
@@ -458,191 +471,250 @@
                         </Toolbar>
                     </BlockControls>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Form Settings' ) }>
-                            <PanelBody title={ __( 'Form State' ) }>
-                                <SelectControl
-                                    label={ __( 'Initial Form' ) }
-                                    help={ __( 'Form that show on load.' ) }
-                                    value={ formType }
-                                    options={ [
-                                        { label: __( 'Login' ), value: 'login' },
-                                        { label: __( 'Register' ), value: 'register' },
-                                    ] }
-                                    onChange={ (value) => {
-                                        setAttributes( { formType: value } );
-                                        this.setState( { registerView: value === 'register' } );
-                                    } }
+                        <PanelBody title={ __( 'Form State' ) }>
+                            <SelectControl
+                                label={ __( 'Initial Form' ) }
+                                help={ __( 'Form that show on load.' ) }
+                                value={ formType }
+                                options={ [
+                                    { label: __( 'Login' ), value: 'login' },
+                                    { label: __( 'Register' ), value: 'register' },
+                                ] }
+                                onChange={ (value) => {
+                                    setAttributes( { formType: value } );
+                                    this.setState( { registerView: value === 'register' } );
+                                } }
+                            />
+                            <SelectControl
+                                label={ __( 'Redirect After Login' ) }
+                                value={ redirect }
+                                options={ [
+                                    { label: __( 'Home' ), value: 'home' },
+                                    { label: __( 'Dashboard' ), value: 'dashboard' },
+                                    { label: __( 'Custom' ), value: 'custom' },
+                                ] }
+                                onChange={ (value) => setAttributes( { redirect: value } ) }
+                            />
+                            {redirect === 'custom' && (
+                                <TextControl
+                                    label={ __( 'Custom redirect link' ) }
+                                    value={ redirectLink }
+                                    onChange={ (value) => setAttributes( { redirectLink: value } ) }
                                 />
-                                <SelectControl
-                                    label={ __( 'Redirect After Login' ) }
-                                    value={ redirect }
-                                    options={ [
-                                        { label: __( 'Home' ), value: 'home' },
-                                        { label: __( 'Dashboard' ), value: 'dashboard' },
-                                        { label: __( 'Custom' ), value: 'custom' },
-                                    ] }
-                                    onChange={ (value) => setAttributes( { redirect: value } ) }
-                                />
-                                {redirect === 'custom' && (
-                                    <TextControl
-                                        label={ __( 'Custom redirect link' ) }
-                                        value={ redirectLink }
-                                        onChange={ (value) => setAttributes( { redirectLink: value } ) }
-                                    />
-                                ) }
+                            ) }
+                            <RangeControl
+                                label={ __( 'Form Width (px)' ) }
+                                value={ formWidth }
+                                onChange={ ( value ) => setAttributes( { formWidth: value } ) }
+                                min={ 300 }
+                                max={ 1500 }
+                            />
+                            <ToggleControl
+                                label={ __( 'Show Logo' ) }
+                                checked={ !!showLogo }
+                                onChange={ () => setAttributes( { showLogo: !showLogo } ) }
+                            />
+                            {!!showLogo && (
                                 <RangeControl
-                                    label={ __( 'Form Width (px)' ) }
-                                    value={ formWidth }
-                                    onChange={ ( value ) => setAttributes( { formWidth: value } ) }
-                                    min={ 300 }
+                                    label={ __( 'Logo Width (px)' ) }
+                                    value={ logoWidth }
+                                    onChange={ ( value ) => setAttributes( { logoWidth: value } ) }
+                                    min={ 100 }
                                     max={ 1500 }
                                 />
-                                <ToggleControl
-                                    label={ __( 'Show Logo' ) }
-                                    checked={ !!showLogo }
-                                    onChange={ () => setAttributes( { showLogo: !showLogo } ) }
+                            ) }
+                            <ToggleControl
+                                label={ __( 'Show input field icon' ) }
+                                checked={ !!showInputFieldIcon }
+                                onChange={ () => setAttributes( { showInputFieldIcon: !showInputFieldIcon } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Show register/header link' ) }
+                                checked={ !!showRegisterLink }
+                                onChange={ () => setAttributes( { showRegisterLink: !showRegisterLink } ) }
+                            />
+                            {!!showRegisterLink && (
+                                <PanelColorSettings
+                                    title={ __( 'Header Color' ) }
+                                    initialOpen={ false }
+                                    colorSettings={ [
+                                        {
+                                            label: __( 'Header color' ),
+                                            value: headerBgColor,
+                                            onChange: (value) => setAttributes( { headerBgColor: value } ),
+                                        },
+                                    ] }
                                 />
-                                {!!showLogo && (
-                                    <RangeControl
-                                        label={ __( 'Logo Width (px)' ) }
-                                        value={ logoWidth }
-                                        onChange={ ( value ) => setAttributes( { logoWidth: value } ) }
-                                        min={ 100 }
-                                        max={ 1500 }
-                                    />
-                                ) }
-                                <ToggleControl
-                                    label={ __( 'Show input field icon' ) }
-                                    checked={ !!showInputFieldIcon }
-                                    onChange={ () => setAttributes( { showInputFieldIcon: !showInputFieldIcon } ) }
-                                />
-                                <ToggleControl
-                                    label={ __( 'Show register/header link' ) }
-                                    checked={ !!showRegisterLink }
-                                    onChange={ () => setAttributes( { showRegisterLink: !showRegisterLink } ) }
-                                />
-                                {!!showRegisterLink && (
-                                    <PanelColorSettings
-                                        title={ __( 'Header Color' ) }
-                                        initialOpen={ false }
-                                        colorSettings={ [
-                                            {
-                                                label: __( 'Header color' ),
-                                                value: headerBgColor,
-                                                onChange: (value) => setAttributes( { headerBgColor: value } ),
-                                            },
-                                        ] }
-                                    />
-                                ) }
-                                <ToggleControl
-                                    label={ __( 'Show lost password link' ) }
-                                    checked={ !!showLostPasswordLink }
-                                    onChange={ () => setAttributes( { showLostPasswordLink: !showLostPasswordLink } ) }
-                                />
-                            </PanelBody>
-                            <PanelBody title={ __( 'Input placeholder' ) } initialOpen={ false }>
-                                <TextControl
-                                    label={ __( 'Login input placeholder' ) }
-                                    value={ loginLabel }
-                                    onChange={ (value) => setAttributes( { loginLabel: value } ) }
-                                />
-                                <TextControl
-                                    label={ __( 'Username input placeholder' ) }
-                                    help={ __( 'Use in register form' ) }
-                                    value={ usernameLabel }
-                                    onChange={ (value) => setAttributes( { usernameLabel: value } ) }
-                                />
-                                <TextControl
-                                    label={ __( 'Email input placeholder' ) }
-                                    help={ __( 'Use in register form' ) }
-                                    value={ emailLabel }
-                                    onChange={ (value) => setAttributes( { emailLabel: value } ) }
-                                />
-                            </PanelBody>
+                            ) }
+                            <ToggleControl
+                                label={ __( 'Show lost password link' ) }
+                                checked={ !!showLostPasswordLink }
+                                onChange={ () => setAttributes( { showLostPasswordLink: !showLostPasswordLink } ) }
+                            />
+                        </PanelBody>
+                        <PanelBody title={ __( 'Input placeholder' ) } initialOpen={ false }>
+                            <TextControl
+                                label={ __( 'Login input placeholder' ) }
+                                value={ loginLabel }
+                                onChange={ (value) => setAttributes( { loginLabel: value } ) }
+                            />
+                            <TextControl
+                                label={ __( 'Username input placeholder' ) }
+                                help={ __( 'Use in register form' ) }
+                                value={ usernameLabel }
+                                onChange={ (value) => setAttributes( { usernameLabel: value } ) }
+                            />
+                            <TextControl
+                                label={ __( 'Email input placeholder' ) }
+                                help={ __( 'Use in register form' ) }
+                                value={ emailLabel }
+                                onChange={ (value) => setAttributes( { emailLabel: value } ) }
+                            />
+                        </PanelBody>
+                        <PanelColorSettings
+                            title={ __( 'Text/Input Color' ) }
+                            initialOpen={ false }
+                            colorSettings={ [
+                                {
+                                    label: __( 'Input background color' ),
+                                    value: bgColor,
+                                    onChange: (value) => setAttributes( { bgColor: value } ),
+                                },
+                                {
+                                    label: __( 'Input color' ),
+                                    value: inputColor,
+                                    onChange: (value) => setAttributes( { inputColor: value } ),
+                                },
+                                {
+                                    label: __( 'Text color' ),
+                                    value: textColor,
+                                    onChange: (value) => setAttributes( { textColor: value } ),
+                                },
+                            ] }
+                        />
+                        <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
                             <PanelColorSettings
-                                title={ __( 'Text/Input Color' ) }
+                                title={ __( 'Border Color' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Input background color' ),
-                                        value: bgColor,
-                                        onChange: (value) => setAttributes( { bgColor: value } ),
-                                    },
-                                    {
-                                        label: __( 'Input color' ),
-                                        value: inputColor,
-                                        onChange: (value) => setAttributes( { inputColor: value } ),
-                                    },
-                                    {
-                                        label: __( 'Text color' ),
-                                        value: textColor,
-                                        onChange: (value) => setAttributes( { textColor: value } ),
+                                        label: __( 'Border color' ),
+                                        value: borderColor,
+                                        onChange: (value) => setAttributes( { borderColor: value } ),
                                     },
                                 ] }
                             />
-                            <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
-                                <PanelColorSettings
-                                    title={ __( 'Border Color' ) }
-                                    initialOpen={ false }
-                                    colorSettings={ [
-                                        {
-                                            label: __( 'Border color' ),
-                                            value: borderColor,
-                                            onChange: (value) => setAttributes( { borderColor: value } ),
-                                        },
-                                    ] }
-                                />
-                                <SelectControl
-                                    label={ __( 'Border Style' ) }
-                                    value={ borderStyle }
-                                    options={ [
-                                        { label: __( 'Solid' ), value: 'solid' },
-                                        { label: __( 'Dashed' ), value: 'dashed' },
-                                        { label: __( 'Dotted' ), value: 'dotted' },
-                                    ] }
-                                    onChange={ (value) => setAttributes( { borderStyle: value } ) }
-                                />
+                            <SelectControl
+                                label={ __( 'Border Style' ) }
+                                value={ borderStyle }
+                                options={ [
+                                    { label: __( 'Solid' ), value: 'solid' },
+                                    { label: __( 'Dashed' ), value: 'dashed' },
+                                    { label: __( 'Dotted' ), value: 'dotted' },
+                                ] }
+                                onChange={ (value) => setAttributes( { borderStyle: value } ) }
+                            />
+                            <RangeControl
+                                label={ __( 'Border width' ) }
+                                value={ borderWidth }
+                                onChange={ (value) => setAttributes( { borderWidth: value } ) }
+                                min={ 0 }
+                                max={ 10 }
+                            />
+                        </PanelBody>
+                        <PanelBody title={ __( 'Submit Button Settings' ) }>
+                            <AdvColorControl
+                                label={ __('Border and Text') }
+                                value={ submitColor }
+                                onChange={ (value) => setAttributes( { submitColor: value } ) }
+                            />
+                            <AdvColorControl
+                                label={ __('Background') }
+                                value={ submitBgColor }
+                                onChange={ (value) => setAttributes({submitBgColor: value}) }
+                            />
+                            <RangeControl
+                                label={ __( 'Button border radius' ) }
+                                value={ submitRadius }
+                                onChange={ (value) => setAttributes( { submitRadius: value } ) }
+                                min={ 0 }
+                                max={ 50 }
+                            />
+                            <SelectControl
+                                label={ __( 'Button position' ) }
+                                value={ submitPosition }
+                                options={ [
+                                    { label: __( 'Center' ), value: 'center' },
+                                    { label: __( 'Left' ), value: 'left' },
+                                    { label: __( 'Right' ), value: 'right' },
+                                ] }
+                                onChange={ (value) => setAttributes( { submitPosition: value } ) }
+                            />
+                        </PanelBody>
+                        <PanelBody title={ __( 'Submit Button Hover' ) } initialOpen={false}>
+                            <PanelColorSettings
+                                title={ __( 'Hover Colors' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Background color' ),
+                                        value: submitHoverBgColor,
+                                        onChange: (value) => setAttributes( { submitHoverBgColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Text color' ),
+                                        value: submitHoverColor,
+                                        onChange: (value) => setAttributes( { submitHoverColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Shadow color' ),
+                                        value: submitHoverShadow,
+                                        onChange: (value) => setAttributes( { submitHoverShadow: value } ),
+                                    },
+                                ] }
+                            />
+                            <PanelBody title={ __( 'Shadow' ) } initialOpen={false}>
                                 <RangeControl
-                                    label={ __( 'Border width' ) }
-                                    value={ borderWidth }
-                                    onChange={ (value) => setAttributes( { borderWidth: value } ) }
+                                    label={ __('Opacity (%)') }
+                                    value={ submitHoverOpacity }
+                                    onChange={ ( value ) => setAttributes( { submitHoverOpacity: value } ) }
                                     min={ 0 }
-                                    max={ 10 }
-                                />
-                            </PanelBody>
-                            <PanelBody title={ __( 'Submit Button Settings' ) }>
-                                <PanelColorSettings
-                                    title={ __( 'Color Settings' ) }
-                                    initialOpen={ false }
-                                    colorSettings={ [
-                                        {
-                                            label: __( 'Border and Text' ),
-                                            value: submitColor,
-                                            onChange: (value) => setAttributes( { submitColor: value } ),
-                                        },
-                                        {
-                                            label: __( 'Background' ),
-                                            value: submitBgColor,
-                                            onChange: (value) => setAttributes( { submitBgColor: value } ),
-                                        },
-                                    ] }
+                                    max={ 100 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Button border radius' ) }
-                                    value={ submitRadius }
-                                    onChange={ (value) => setAttributes( { submitRadius: value } ) }
+                                    label={ __('Transition speed (ms)') }
+                                    value={ submitHoverTranSpeed || '' }
+                                    onChange={ ( value ) => setAttributes( { submitHoverTranSpeed: value } ) }
+                                    min={ 0 }
+                                    max={ 3000 }
+                                />
+                                <RangeControl
+                                    label={ __( 'Shadow H offset' ) }
+                                    value={ submitHoverShadowH || '' }
+                                    onChange={ ( value ) => setAttributes( { submitHoverShadowH: value } ) }
+                                    min={ -50 }
+                                    max={ 50 }
+                                />
+                                <RangeControl
+                                    label={ __( 'Shadow V offset' ) }
+                                    value={ submitHoverShadowV || '' }
+                                    onChange={ ( value ) => setAttributes( { submitHoverShadowV: value } ) }
+                                    min={ -50 }
+                                    max={ 50 }
+                                />
+                                <RangeControl
+                                    label={ __( 'Shadow blur' ) }
+                                    value={ submitHoverShadowBlur || '' }
+                                    onChange={ ( value ) => setAttributes( { submitHoverShadowBlur: value } ) }
                                     min={ 0 }
                                     max={ 50 }
                                 />
-                                <SelectControl
-                                    label={ __( 'Button position' ) }
-                                    value={ submitPosition }
-                                    options={ [
-                                        { label: __( 'Center' ), value: 'center' },
-                                        { label: __( 'Left' ), value: 'left' },
-                                        { label: __( 'Right' ), value: 'right' },
-                                    ] }
-                                    onChange={ (value) => setAttributes( { submitPosition: value } ) }
+                                <RangeControl
+                                    label={ __( 'Shadow spread' ) }
+                                    value={ submitHoverShadowSpread || '' }
+                                    onChange={ ( value ) => setAttributes( { submitHoverShadowSpread: value } ) }
+                                    min={ 0 }
+                                    max={ 50 }
                                 />
                             </PanelBody>
                         </PanelBody>
@@ -668,6 +740,15 @@
                                 )
                                 : registerForm
                         }
+                        <style>
+                            {`.${submitButtonId}:hover {
+                                color: ${submitHoverColor} !important;
+                                background-color: ${submitHoverBgColor} !important;
+                                box-shadow: ${submitHoverShadowH}px ${submitHoverShadowV}px ${submitHoverShadowBlur}px ${submitHoverShadowSpread}px ${submitHoverShadow};
+                                transition: all ${submitHoverTranSpeed}s ease;
+                                opacity: ${submitHoverOpacity/100}
+                            }`}
+                        </style>
                     </div>
                 </Fragment>
             )
@@ -813,6 +894,9 @@
         borderWidth: {
             type: 'number',
         },
+        submitButtonId : {
+            type: 'string',
+        },
         submitColor: {
             type: 'string',
         },
@@ -825,6 +909,39 @@
         submitPosition: {
             type: 'string',
             default: 'right',
+        },
+        submitHoverColor: {
+            type: 'string',
+        },
+        submitHoverBgColor: {
+            type: 'string',
+        },
+        submitHoverShadow: {
+            type: 'string',
+        },
+        submitHoverShadowH: {
+            type: 'number',
+            default: 1,
+        },
+        submitHoverShadowV: {
+            type: 'number',
+            default: 1,
+        },
+        submitHoverShadowBlur: {
+            type: 'number',
+            default: 12,
+        },
+        submitHoverShadowSpread: {
+            type: 'number',
+            default: 0,
+        },
+        submitHoverOpacity: {
+            type: 'number',
+            default: 100,
+        },
+        submitHoverTranSpeed: {
+            type: 'number',
+            default: 200,
         },
         changed: {
             type: 'boolean',
@@ -851,7 +968,7 @@
                 emailLabel, emailText, rememberMeText, loginSubmitLabel, registerSubmitLabel, registerText,
                 registerLinkText, registerWelcome, backToLoginText, lostPasswordText,
                 headerBgColor, bgColor, textColor, inputColor, borderColor, borderStyle, borderWidth,
-                submitColor, submitBgColor, submitRadius, submitPosition,
+                submitColor, submitBgColor, submitRadius, submitPosition, submitButtonId,
             } = attributes;
 
             const logoElmSave = (
@@ -997,7 +1114,7 @@
                                     </div>
                                 </label>
                                 <div className="advgb-lores-submit advgb-login-submit">
-                                    <button className="advgb-lores-submit-button"
+                                    <button className={`advgb-lores-submit-button ${submitButtonId}`}
                                             type="submit"
                                             name="wp-submit"
                                             style={ {
@@ -1131,7 +1248,7 @@
                             <div className={`advgb-grecaptcha clearfix position-${submitPosition}`}/>
                             <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
                                 <div className="advgb-lores-submit advgb-register-submit">
-                                    <button className="advgb-lores-submit-button"
+                                    <button className={`advgb-lores-submit-button ${submitButtonId}`}
                                             type="submit"
                                             name="wp-submit"
                                             style={ {

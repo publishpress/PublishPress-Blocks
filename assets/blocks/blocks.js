@@ -86,6 +86,54 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./assets/blocks/0-adv-components/components.jsx":
+/*!*******************************************************!*\
+  !*** ./assets/blocks/0-adv-components/components.jsx ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.AdvColorControl = AdvColorControl;
+function AdvColorControl(props) {
+    var _wp$components = wp.components,
+        ColorIndicator = _wp$components.ColorIndicator,
+        BaseControl = _wp$components.BaseControl;
+
+    var _ref = wp.blockEditor || wp.editor,
+        ColorPalette = _ref.ColorPalette;
+
+    var label = props.label,
+        value = props.value,
+        onChange = props.onChange;
+
+
+    return React.createElement(
+        BaseControl,
+        {
+            className: "editor-color-palette-control block-editor-color-palette-control"
+        },
+        React.createElement(
+            BaseControl.VisualLabel,
+            null,
+            label,
+            value && React.createElement(ColorIndicator, { colorValue: value })
+        ),
+        React.createElement(ColorPalette, {
+            className: "editor-color-palette-control__color-palette block-editor-color-palette-control__color-palette",
+            value: value,
+            onChange: onChange
+        })
+    );
+}
+
+/***/ }),
+
 /***/ "./assets/blocks/accordion/block.jsx":
 /*!*******************************************!*\
   !*** ./assets/blocks/accordion/block.jsx ***!
@@ -1413,6 +1461,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./assets/blocks/0-adv-components/components.jsx");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1431,8 +1481,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BlockControls = _wpBlockEditor.BlockControls,
         BlockAlignmentToolbar = _wpBlockEditor.BlockAlignmentToolbar,
         RichText = _wpBlockEditor.RichText,
-        PanelColorSettings = _wpBlockEditor.PanelColorSettings;
-    var RangeControl = wpComponents.RangeControl,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings,
+        URLInput = _wpBlockEditor.URLInput;
+    var BaseControl = wpComponents.BaseControl,
+        RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         TextControl = wpComponents.TextControl,
         ToggleControl = wpComponents.ToggleControl,
@@ -1549,7 +1601,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         'span',
-                        { style: { display: 'inline-block' } },
+                        { className: className,
+                            style: { display: 'inline-block' }
+                        },
                         React.createElement(RichText, {
                             tagName: 'span',
                             placeholder: __('Add text…'),
@@ -1566,7 +1620,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'style',
                         null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ' !important;\n                        background-color: ' + bgColor + ' !important;\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ' !important;\n                        border-radius: ' + borderRadius + 'px !important;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ' !important;\n                        background-color: ' + hoverBgColor + ' !important;\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
                     ),
                     React.createElement(
                         InspectorControls,
@@ -1574,18 +1628,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Button link') },
-                            React.createElement(TextControl, {
-                                label: [__('Link URL'), url && React.createElement(
-                                    'a',
-                                    { href: url || '#', key: 'link_url', target: '_blank', style: { float: 'right' } },
-                                    __('Preview')
-                                )],
-                                value: url || '',
-                                placeholder: __('Enter URL…'),
-                                onChange: function onChange(text) {
-                                    return setAttributes({ url: text });
-                                }
-                            }),
+                            React.createElement(
+                                BaseControl,
+                                {
+                                    label: [__('Link URL'), url && React.createElement(
+                                        'a',
+                                        { href: url || '#', key: 'link_url', target: '_blank', style: { float: 'right' } },
+                                        __('Preview')
+                                    )]
+                                },
+                                React.createElement(URLInput, {
+                                    value: url,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ url: value });
+                                    },
+                                    isFullWidth: true,
+                                    hasBorder: true
+                                })
+                            ),
                             React.createElement(ToggleControl, {
                                 label: __('Open in new tab'),
                                 checked: !!urlOpenNewTab,
@@ -1608,22 +1668,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 beforeIcon: 'editor-textcolor',
                                 allowReset: true
                             }),
-                            React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
-                                initialOpen: false,
-                                colorSettings: [{
-                                    label: __('Background Color'),
-                                    value: bgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ bgColor: value === undefined ? '#2196f3' : value });
-                                    }
-                                }, {
-                                    label: __('Text Color'),
-                                    value: textColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textColor: value === undefined ? '#fff' : value });
-                                    }
-                                }]
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Background Color'),
+                                value: bgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bgColor: value });
+                                }
+                            }),
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Text Color'),
+                                value: textColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ textColor: value });
+                                }
                             })
                         ),
                         React.createElement(
@@ -1741,6 +1798,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 PanelBody,
                                 { title: __('Shadow'), initialOpen: false },
                                 React.createElement(RangeControl, {
+                                    label: __('Opacity (%)'),
+                                    value: hoverOpacity,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ hoverOpacity: value });
+                                    },
+                                    min: 0,
+                                    max: 100
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Transition speed (ms)'),
+                                    value: transitionSpeed || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ transitionSpeed: value });
+                                    },
+                                    min: 0,
+                                    max: 3000
+                                }),
+                                React.createElement(RangeControl, {
                                     label: __('Shadow H offset'),
                                     value: hoverShadowH || '',
                                     onChange: function onChange(value) {
@@ -1776,25 +1851,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 0,
                                     max: 50
                                 })
-                            ),
-                            React.createElement(RangeControl, {
-                                label: __('Opacity (%)'),
-                                value: hoverOpacity,
-                                onChange: function onChange(value) {
-                                    return setAttributes({ hoverOpacity: value });
-                                },
-                                min: 0,
-                                max: 100
-                            }),
-                            React.createElement(RangeControl, {
-                                label: __('Transition speed (ms)'),
-                                value: transitionSpeed || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ transitionSpeed: value });
-                                },
-                                min: 0,
-                                max: 3000
-                            })
+                            )
                         )
                     )
                 );
@@ -1826,15 +1883,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         text: {
             source: 'children',
-            selector: 'a'
+            selector: 'a',
+            default: __('PUSH THE BUTTON')
         },
         bgColor: {
-            type: 'string',
-            default: '#2196f3'
+            type: 'string'
         },
         textColor: {
-            type: 'string',
-            default: '#fff'
+            type: 'string'
         },
         textSize: {
             type: 'number',
@@ -1842,27 +1898,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         paddingTop: {
             type: 'number',
-            default: 6
+            default: 10
         },
         paddingRight: {
             type: 'number',
-            default: 12
+            default: 30
         },
         paddingBottom: {
             type: 'number',
-            default: 6
+            default: 10
         },
         paddingLeft: {
             type: 'number',
-            default: 12
+            default: 30
         },
         borderWidth: {
             type: 'number',
             default: 1
         },
         borderColor: {
-            type: 'string',
-            default: '#2196f3'
+            type: 'string'
         },
         borderStyle: {
             type: 'string',
@@ -1886,15 +1941,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         hoverShadowH: {
             type: 'number',
-            default: 3
+            default: 1
         },
         hoverShadowV: {
             type: 'number',
-            default: 3
+            default: 1
         },
         hoverShadowBlur: {
             type: 'number',
-            default: 1
+            default: 12
         },
         hoverShadowSpread: {
             type: 'number',
@@ -1948,6 +2003,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }]
         },
+        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'outlined', label: __('Outlined') }, { name: 'squared', label: __('Squared') }],
         edit: AdvButton,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -9337,6 +9393,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./assets/blocks/0-adv-components/components.jsx");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -9433,14 +9491,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ registerView: attributes.formType === 'register' });
             }
         }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    clientId = _props2.clientId,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var submitButtonId = attributes.submitButtonId;
+
+
+                if (!submitButtonId) {
+                    setAttributes({ submitButtonId: "submit-btn-" + clientId });
+                }
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
                 var registerView = this.state.registerView;
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
                 var formType = attributes.formType,
                     formWidth = attributes.formWidth,
                     redirect = attributes.redirect,
@@ -9480,7 +9552,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     submitColor = attributes.submitColor,
                     submitBgColor = attributes.submitBgColor,
                     submitRadius = attributes.submitRadius,
-                    submitPosition = attributes.submitPosition;
+                    submitPosition = attributes.submitPosition,
+                    submitButtonId = attributes.submitButtonId,
+                    submitHoverColor = attributes.submitHoverColor,
+                    submitHoverBgColor = attributes.submitHoverBgColor,
+                    submitHoverShadow = attributes.submitHoverShadow,
+                    submitHoverShadowH = attributes.submitHoverShadowH,
+                    submitHoverShadowV = attributes.submitHoverShadowV,
+                    submitHoverShadowBlur = attributes.submitHoverShadowBlur,
+                    submitHoverShadowSpread = attributes.submitHoverShadowSpread,
+                    submitHoverOpacity = attributes.submitHoverOpacity,
+                    submitHoverTranSpeed = attributes.submitHoverTranSpeed;
 
 
                 var logoElm = React.createElement(MediaUpload, {
@@ -9756,7 +9838,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-lores-submit advgb-login-submit" },
                                 React.createElement(
                                     "span",
-                                    { className: "advgb-lores-submit-button",
+                                    { className: "advgb-lores-submit-button " + submitButtonId,
                                         style: {
                                             borderColor: submitColor,
                                             color: submitColor,
@@ -9965,7 +10047,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-lores-submit advgb-register-submit" },
                                 React.createElement(
                                     "span",
-                                    { className: "advgb-lores-submit-button",
+                                    { className: "advgb-lores-submit-button " + submitButtonId,
                                         style: {
                                             borderColor: submitColor,
                                             color: submitColor,
@@ -10017,211 +10099,289 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Form Settings') },
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Form State') },
-                                React.createElement(SelectControl, {
-                                    label: __('Initial Form'),
-                                    help: __('Form that show on load.'),
-                                    value: formType,
-                                    options: [{ label: __('Login'), value: 'login' }, { label: __('Register'), value: 'register' }],
-                                    onChange: function onChange(value) {
-                                        setAttributes({ formType: value });
-                                        _this2.setState({ registerView: value === 'register' });
-                                    }
-                                }),
-                                React.createElement(SelectControl, {
-                                    label: __('Redirect After Login'),
-                                    value: redirect,
-                                    options: [{ label: __('Home'), value: 'home' }, { label: __('Dashboard'), value: 'dashboard' }, { label: __('Custom'), value: 'custom' }],
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ redirect: value });
-                                    }
-                                }),
-                                redirect === 'custom' && React.createElement(TextControl, {
-                                    label: __('Custom redirect link'),
-                                    value: redirectLink,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ redirectLink: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Form Width (px)'),
-                                    value: formWidth,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ formWidth: value });
-                                    },
-                                    min: 300,
-                                    max: 1500
-                                }),
-                                React.createElement(ToggleControl, {
-                                    label: __('Show Logo'),
-                                    checked: !!showLogo,
-                                    onChange: function onChange() {
-                                        return setAttributes({ showLogo: !showLogo });
-                                    }
-                                }),
-                                !!showLogo && React.createElement(RangeControl, {
-                                    label: __('Logo Width (px)'),
-                                    value: logoWidth,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ logoWidth: value });
-                                    },
-                                    min: 100,
-                                    max: 1500
-                                }),
-                                React.createElement(ToggleControl, {
-                                    label: __('Show input field icon'),
-                                    checked: !!showInputFieldIcon,
-                                    onChange: function onChange() {
-                                        return setAttributes({ showInputFieldIcon: !showInputFieldIcon });
-                                    }
-                                }),
-                                React.createElement(ToggleControl, {
-                                    label: __('Show register/header link'),
-                                    checked: !!showRegisterLink,
-                                    onChange: function onChange() {
-                                        return setAttributes({ showRegisterLink: !showRegisterLink });
-                                    }
-                                }),
-                                !!showRegisterLink && React.createElement(PanelColorSettings, {
-                                    title: __('Header Color'),
-                                    initialOpen: false,
-                                    colorSettings: [{
-                                        label: __('Header color'),
-                                        value: headerBgColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ headerBgColor: value });
-                                        }
-                                    }]
-                                }),
-                                React.createElement(ToggleControl, {
-                                    label: __('Show lost password link'),
-                                    checked: !!showLostPasswordLink,
-                                    onChange: function onChange() {
-                                        return setAttributes({ showLostPasswordLink: !showLostPasswordLink });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Input placeholder'), initialOpen: false },
-                                React.createElement(TextControl, {
-                                    label: __('Login input placeholder'),
-                                    value: loginLabel,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ loginLabel: value });
-                                    }
-                                }),
-                                React.createElement(TextControl, {
-                                    label: __('Username input placeholder'),
-                                    help: __('Use in register form'),
-                                    value: usernameLabel,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ usernameLabel: value });
-                                    }
-                                }),
-                                React.createElement(TextControl, {
-                                    label: __('Email input placeholder'),
-                                    help: __('Use in register form'),
-                                    value: emailLabel,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ emailLabel: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(PanelColorSettings, {
-                                title: __('Text/Input Color'),
+                            { title: __('Form State') },
+                            React.createElement(SelectControl, {
+                                label: __('Initial Form'),
+                                help: __('Form that show on load.'),
+                                value: formType,
+                                options: [{ label: __('Login'), value: 'login' }, { label: __('Register'), value: 'register' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ formType: value });
+                                    _this2.setState({ registerView: value === 'register' });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Redirect After Login'),
+                                value: redirect,
+                                options: [{ label: __('Home'), value: 'home' }, { label: __('Dashboard'), value: 'dashboard' }, { label: __('Custom'), value: 'custom' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ redirect: value });
+                                }
+                            }),
+                            redirect === 'custom' && React.createElement(TextControl, {
+                                label: __('Custom redirect link'),
+                                value: redirectLink,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ redirectLink: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Form Width (px)'),
+                                value: formWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ formWidth: value });
+                                },
+                                min: 300,
+                                max: 1500
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Show Logo'),
+                                checked: !!showLogo,
+                                onChange: function onChange() {
+                                    return setAttributes({ showLogo: !showLogo });
+                                }
+                            }),
+                            !!showLogo && React.createElement(RangeControl, {
+                                label: __('Logo Width (px)'),
+                                value: logoWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ logoWidth: value });
+                                },
+                                min: 100,
+                                max: 1500
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Show input field icon'),
+                                checked: !!showInputFieldIcon,
+                                onChange: function onChange() {
+                                    return setAttributes({ showInputFieldIcon: !showInputFieldIcon });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Show register/header link'),
+                                checked: !!showRegisterLink,
+                                onChange: function onChange() {
+                                    return setAttributes({ showRegisterLink: !showRegisterLink });
+                                }
+                            }),
+                            !!showRegisterLink && React.createElement(PanelColorSettings, {
+                                title: __('Header Color'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Input background color'),
-                                    value: bgColor,
+                                    label: __('Header color'),
+                                    value: headerBgColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ bgColor: value });
+                                        return setAttributes({ headerBgColor: value });
                                     }
-                                }, {
-                                    label: __('Input color'),
-                                    value: inputColor,
+                                }]
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Show lost password link'),
+                                checked: !!showLostPasswordLink,
+                                onChange: function onChange() {
+                                    return setAttributes({ showLostPasswordLink: !showLostPasswordLink });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Input placeholder'), initialOpen: false },
+                            React.createElement(TextControl, {
+                                label: __('Login input placeholder'),
+                                value: loginLabel,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ loginLabel: value });
+                                }
+                            }),
+                            React.createElement(TextControl, {
+                                label: __('Username input placeholder'),
+                                help: __('Use in register form'),
+                                value: usernameLabel,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ usernameLabel: value });
+                                }
+                            }),
+                            React.createElement(TextControl, {
+                                label: __('Email input placeholder'),
+                                help: __('Use in register form'),
+                                value: emailLabel,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ emailLabel: value });
+                                }
+                            })
+                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Text/Input Color'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Input background color'),
+                                value: bgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bgColor: value });
+                                }
+                            }, {
+                                label: __('Input color'),
+                                value: inputColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ inputColor: value });
+                                }
+                            }, {
+                                label: __('Text color'),
+                                value: textColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ textColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Border Settings'), initialOpen: false },
+                            React.createElement(PanelColorSettings, {
+                                title: __('Border Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border color'),
+                                    value: borderColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ inputColor: value });
+                                        return setAttributes({ borderColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Border Style'),
+                                value: borderStyle,
+                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderStyle: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border width'),
+                                value: borderWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderWidth: value });
+                                },
+                                min: 0,
+                                max: 10
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Submit Button Settings') },
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Border and Text'),
+                                value: submitColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ submitColor: value });
+                                }
+                            }),
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Background'),
+                                value: submitBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ submitBgColor: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Button border radius'),
+                                value: submitRadius,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ submitRadius: value });
+                                },
+                                min: 0,
+                                max: 50
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Button position'),
+                                value: submitPosition,
+                                options: [{ label: __('Center'), value: 'center' }, { label: __('Left'), value: 'left' }, { label: __('Right'), value: 'right' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ submitPosition: value });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Submit Button Hover'), initialOpen: false },
+                            React.createElement(PanelColorSettings, {
+                                title: __('Hover Colors'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background color'),
+                                    value: submitHoverBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverBgColor: value });
                                     }
                                 }, {
                                     label: __('Text color'),
-                                    value: textColor,
+                                    value: submitHoverColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ textColor: value });
+                                        return setAttributes({ submitHoverColor: value });
+                                    }
+                                }, {
+                                    label: __('Shadow color'),
+                                    value: submitHoverShadow,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadow: value });
                                     }
                                 }]
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Border Settings'), initialOpen: false },
-                                React.createElement(PanelColorSettings, {
-                                    title: __('Border Color'),
-                                    initialOpen: false,
-                                    colorSettings: [{
-                                        label: __('Border color'),
-                                        value: borderColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ borderColor: value });
-                                        }
-                                    }]
-                                }),
-                                React.createElement(SelectControl, {
-                                    label: __('Border Style'),
-                                    value: borderStyle,
-                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ borderStyle: value });
-                                    }
-                                }),
+                                { title: __('Shadow'), initialOpen: false },
                                 React.createElement(RangeControl, {
-                                    label: __('Border width'),
-                                    value: borderWidth,
+                                    label: __('Opacity (%)'),
+                                    value: submitHoverOpacity,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ borderWidth: value });
+                                        return setAttributes({ submitHoverOpacity: value });
                                     },
                                     min: 0,
-                                    max: 10
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Submit Button Settings') },
-                                React.createElement(PanelColorSettings, {
-                                    title: __('Color Settings'),
-                                    initialOpen: false,
-                                    colorSettings: [{
-                                        label: __('Border and Text'),
-                                        value: submitColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ submitColor: value });
-                                        }
-                                    }, {
-                                        label: __('Background'),
-                                        value: submitBgColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ submitBgColor: value });
-                                        }
-                                    }]
+                                    max: 100
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Button border radius'),
-                                    value: submitRadius,
+                                    label: __('Transition speed (ms)'),
+                                    value: submitHoverTranSpeed || '',
                                     onChange: function onChange(value) {
-                                        return setAttributes({ submitRadius: value });
+                                        return setAttributes({ submitHoverTranSpeed: value });
+                                    },
+                                    min: 0,
+                                    max: 3000
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow H offset'),
+                                    value: submitHoverShadowH || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadowH: value });
+                                    },
+                                    min: -50,
+                                    max: 50
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow V offset'),
+                                    value: submitHoverShadowV || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadowV: value });
+                                    },
+                                    min: -50,
+                                    max: 50
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow blur'),
+                                    value: submitHoverShadowBlur || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadowBlur: value });
                                     },
                                     min: 0,
                                     max: 50
                                 }),
-                                React.createElement(SelectControl, {
-                                    label: __('Button position'),
-                                    value: submitPosition,
-                                    options: [{ label: __('Center'), value: 'center' }, { label: __('Left'), value: 'left' }, { label: __('Right'), value: 'right' }],
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow spread'),
+                                    value: submitHoverShadowSpread || '',
                                     onChange: function onChange(value) {
-                                        return setAttributes({ submitPosition: value });
-                                    }
+                                        return setAttributes({ submitHoverShadowSpread: value });
+                                    },
+                                    min: 0,
+                                    max: 50
                                 })
                             )
                         ),
@@ -10249,7 +10409,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             icon: userIcon,
                             label: __('Registration Form'),
                             instructions: __('Registration for your website is currently disabled, enable it in WordPress General settings to use registration form')
-                        }) : registerForm
+                        }) : registerForm,
+                        React.createElement(
+                            "style",
+                            null,
+                            "." + submitButtonId + ":hover {\n                                color: " + submitHoverColor + " !important;\n                                background-color: " + submitHoverBgColor + " !important;\n                                box-shadow: " + submitHoverShadowH + "px " + submitHoverShadowV + "px " + submitHoverShadowBlur + "px " + submitHoverShadowSpread + "px " + submitHoverShadow + ";\n                                transition: all " + submitHoverTranSpeed + "s ease;\n                                opacity: " + submitHoverOpacity / 100 + "\n                            }"
+                        )
                     )
                 );
             }
@@ -10397,6 +10562,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         borderWidth: {
             type: 'number'
         },
+        submitButtonId: {
+            type: 'string'
+        },
         submitColor: {
             type: 'string'
         },
@@ -10409,6 +10577,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         submitPosition: {
             type: 'string',
             default: 'right'
+        },
+        submitHoverColor: {
+            type: 'string'
+        },
+        submitHoverBgColor: {
+            type: 'string'
+        },
+        submitHoverShadow: {
+            type: 'string'
+        },
+        submitHoverShadowH: {
+            type: 'number',
+            default: 1
+        },
+        submitHoverShadowV: {
+            type: 'number',
+            default: 1
+        },
+        submitHoverShadowBlur: {
+            type: 'number',
+            default: 12
+        },
+        submitHoverShadowSpread: {
+            type: 'number',
+            default: 0
+        },
+        submitHoverOpacity: {
+            type: 'number',
+            default: 100
+        },
+        submitHoverTranSpeed: {
+            type: 'number',
+            default: 200
         },
         changed: {
             type: 'boolean',
@@ -10466,7 +10667,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 submitColor = attributes.submitColor,
                 submitBgColor = attributes.submitBgColor,
                 submitRadius = attributes.submitRadius,
-                submitPosition = attributes.submitPosition;
+                submitPosition = attributes.submitPosition,
+                submitButtonId = attributes.submitButtonId;
 
 
             var logoElmSave = React.createElement(
@@ -10659,7 +10861,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-lores-submit advgb-login-submit" },
                                 React.createElement(
                                     "button",
-                                    { className: "advgb-lores-submit-button",
+                                    { className: "advgb-lores-submit-button " + submitButtonId,
                                         type: "submit",
                                         name: "wp-submit",
                                         style: {
@@ -10831,7 +11033,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-lores-submit advgb-register-submit" },
                                 React.createElement(
                                     "button",
-                                    { className: "advgb-lores-submit-button",
+                                    { className: "advgb-lores-submit-button " + submitButtonId,
                                         type: "submit",
                                         name: "wp-submit",
                                         style: {
@@ -13306,6 +13508,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./assets/blocks/0-adv-components/components.jsx");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -13320,7 +13524,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
-        BlockControls = _wpBlockEditor.BlockControls,
         RichText = _wpBlockEditor.RichText,
         PanelColorSettings = _wpBlockEditor.PanelColorSettings;
     var RangeControl = wpComponents.RangeControl,
@@ -13440,6 +13643,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-search-bar-button",
                             style: {
                                 color: searchButtonTextColor,
+                                borderColor: searchButtonTextColor,
                                 backgroundColor: searchButtonBgColor,
                                 borderRadius: searchButtonRadius
                             }
@@ -13470,142 +13674,135 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Search Bar Settings') },
+                            { title: __('Search Bar State') },
+                            React.createElement(ToggleControl, {
+                                label: __('Full width'),
+                                checked: fullWidth,
+                                onChange: function onChange() {
+                                    return setAttributes({ fullWidth: !fullWidth });
+                                }
+                            }),
+                            !fullWidth && React.createElement(RangeControl, {
+                                label: __('Width'),
+                                value: width,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ width: value });
+                                },
+                                min: 300,
+                                max: 2000
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Search Icon Settings') },
+                            React.createElement(ToggleControl, {
+                                label: __('Search icon on the right'),
+                                checked: searchIconOnRight,
+                                onChange: function onChange() {
+                                    return setAttributes({ searchIconOnRight: !searchIconOnRight });
+                                }
+                            }),
                             React.createElement(
-                                PanelBody,
-                                { title: __('Search Bar State') },
-                                React.createElement(ToggleControl, {
-                                    label: __('Full width'),
-                                    checked: fullWidth,
-                                    onChange: function onChange() {
-                                        return setAttributes({ fullWidth: !fullWidth });
-                                    }
-                                }),
-                                !fullWidth && React.createElement(RangeControl, {
-                                    label: __('Width'),
-                                    value: width,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ width: value });
-                                    },
-                                    min: 300,
-                                    max: 2000
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Search Icon Settings') },
-                                React.createElement(ToggleControl, {
-                                    label: __('Search icon on the right'),
-                                    checked: searchIconOnRight,
-                                    onChange: function onChange() {
-                                        return setAttributes({ searchIconOnRight: !searchIconOnRight });
-                                    }
-                                }),
+                                "div",
+                                { className: "advgb-icon-items" },
                                 React.createElement(
                                     "div",
-                                    { className: "advgb-icon-items" },
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-icon-items-header" },
-                                        __('Search icon')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-icon-items-wrapper" },
-                                        Object.keys(SEARCH_ICONS).map(function (icon, idx) {
-                                            return React.createElement(
-                                                "div",
-                                                { className: "advgb-icon-item", key: idx },
-                                                React.createElement(
-                                                    "span",
-                                                    { className: icon === searchIcon ? 'active' : '',
-                                                        onClick: function onClick() {
-                                                            return setAttributes({ searchIcon: icon });
-                                                        }
-                                                    },
-                                                    SEARCH_ICONS[icon]
-                                                )
-                                            );
-                                        })
-                                    )
-                                )
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Search Input Settings'), initialOpen: false },
-                                React.createElement(TextControl, {
-                                    label: __('Search placeholder'),
-                                    value: searchPlaceholder,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchPlaceholder: value });
-                                    }
-                                }),
-                                React.createElement(PanelColorSettings, {
-                                    title: __('Input Color'),
-                                    initialOpen: false,
-                                    colorSettings: [{
-                                        label: __('Background color'),
-                                        value: backgroundColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ backgroundColor: value });
-                                        }
-                                    }, {
-                                        label: __('Text color'),
-                                        value: textColor,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ textColor: value });
-                                        }
-                                    }]
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Search Button Settings'), initialOpen: false },
-                                React.createElement(ToggleControl, {
-                                    label: __('Show submit button'),
-                                    checked: searchButtonEnabled,
-                                    onChange: function onChange() {
-                                        return setAttributes({ searchButtonEnabled: !searchButtonEnabled });
-                                    }
-                                }),
-                                React.createElement(ToggleControl, {
-                                    label: __('Search button on the left'),
-                                    checked: searchButtonOnLeft,
-                                    onChange: function onChange() {
-                                        return setAttributes({ searchButtonOnLeft: !searchButtonOnLeft });
-                                    }
-                                }),
-                                searchButtonEnabled && React.createElement(
-                                    Fragment,
-                                    null,
-                                    React.createElement(PanelColorSettings, {
-                                        title: __('Button Color'),
-                                        initialOpen: false,
-                                        colorSettings: [{
-                                            label: __('Background color'),
-                                            value: searchButtonBgColor,
-                                            onChange: function onChange(value) {
-                                                return setAttributes({ searchButtonBgColor: value });
-                                            }
-                                        }, {
-                                            label: __('Text color'),
-                                            value: searchButtonTextColor,
-                                            onChange: function onChange(value) {
-                                                return setAttributes({ searchButtonTextColor: value });
-                                            }
-                                        }]
-                                    }),
-                                    React.createElement(RangeControl, {
-                                        label: __('Border radius (px)'),
-                                        help: __('Affect both input and button.'),
-                                        value: searchButtonRadius,
-                                        onChange: function onChange(value) {
-                                            return setAttributes({ searchButtonRadius: value });
-                                        },
-                                        min: 0,
-                                        max: 100
+                                    { className: "advgb-icon-items-header" },
+                                    __('Search icon')
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper" },
+                                    Object.keys(SEARCH_ICONS).map(function (icon, idx) {
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: idx },
+                                            React.createElement(
+                                                "span",
+                                                { className: icon === searchIcon ? 'active' : '',
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ searchIcon: icon });
+                                                    }
+                                                },
+                                                SEARCH_ICONS[icon]
+                                            )
+                                        );
                                     })
                                 )
+                            )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Search Input Settings'), initialOpen: false },
+                            React.createElement(TextControl, {
+                                label: __('Search placeholder'),
+                                value: searchPlaceholder,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ searchPlaceholder: value });
+                                }
+                            }),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Input Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background color'),
+                                    value: backgroundColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ backgroundColor: value });
+                                    }
+                                }, {
+                                    label: __('Text color'),
+                                    value: textColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ textColor: value });
+                                    }
+                                }]
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Search Button Settings'), initialOpen: false },
+                            React.createElement(ToggleControl, {
+                                label: __('Show submit button'),
+                                checked: searchButtonEnabled,
+                                onChange: function onChange() {
+                                    return setAttributes({ searchButtonEnabled: !searchButtonEnabled });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Search button on the left'),
+                                checked: searchButtonOnLeft,
+                                onChange: function onChange() {
+                                    return setAttributes({ searchButtonOnLeft: !searchButtonOnLeft });
+                                }
+                            }),
+                            searchButtonEnabled && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(_components.AdvColorControl, {
+                                    label: __('Background color'),
+                                    value: searchButtonBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchButtonBgColor: value });
+                                    }
+                                }),
+                                React.createElement(_components.AdvColorControl, {
+                                    label: __('Text color'),
+                                    value: searchButtonTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchButtonTextColor: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Border radius (px)'),
+                                    help: __('Affect both input and button.'),
+                                    value: searchButtonRadius,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchButtonRadius: value });
+                                    },
+                                    min: 0,
+                                    max: 100
+                                })
                             )
                         )
                     ),
@@ -13744,6 +13941,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         className: "advgb-search-bar-button",
                         style: {
                             color: searchButtonTextColor,
+                            borderColor: searchButtonTextColor,
                             backgroundColor: searchButtonBgColor,
                             borderRadius: searchButtonRadius
                         }
@@ -16746,12 +16944,13 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/search-bar/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/0-adv-components/components.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/search-bar/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(/*! ./assets/blocks/0-adv-components/components.jsx */"./assets/blocks/0-adv-components/components.jsx");
 __webpack_require__(/*! ./assets/blocks/accordion/block.jsx */"./assets/blocks/accordion/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advaccordion/accordion.jsx */"./assets/blocks/advaccordion/accordion.jsx");
 __webpack_require__(/*! ./assets/blocks/advaccordion/block.jsx */"./assets/blocks/advaccordion/block.jsx");

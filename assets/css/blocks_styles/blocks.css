@@ -192,9 +192,24 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     text-align: center;
 }
 
-.wp-block-advgb-button a.wp-block-advgb-button_link {
+.wp-block-advgb-button .wp-block-advgb-button_link {
     display: inline-block;
     text-decoration: none;
+    background-color: #2196f3;
+    color: #fff;
+    border-color: #fff;
+    border-radius: 50px;
+}
+
+.wp-block-advgb-button.is-style-outlined .wp-block-advgb-button_link {
+    background-color: transparent !important;
+    color: #000;
+    border-color: #000;
+    border-radius: 50px;
+}
+
+.wp-block-advgb-button.is-style-squared .wp-block-advgb-button_link {
+    border-radius: 0 !important;
 }
 
 /*Advanced Image block styles*/
@@ -1779,6 +1794,7 @@ form .advgb-grecaptcha > div {
     height: 100%;
     cursor: pointer;
     display: inline-block;
+    border: 1px solid #fff;
 }
 
 /*Columns Manager block*/
