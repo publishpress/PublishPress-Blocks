@@ -839,7 +839,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         emailText: {
             type: 'string',
-            default: __( 'Email Address' ),
+            default: __( 'Email' ),
         },
         rememberMeText: {
             type: 'string',
@@ -851,7 +851,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         registerSubmitLabel: {
             type: 'string',
-            default: __( 'Register' ),
+            default: __( 'REGISTER' ),
         },
         registerText: {
             type: 'string',

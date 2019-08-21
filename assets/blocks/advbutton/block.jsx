@@ -104,7 +104,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             />
                         </Toolbar>
                     </BlockControls>
-                    <span className={className}
+                    <span className={`${className} align${align}`}
                           style={ { display: 'inline-block' } }
                     >
                         <RichText
@@ -381,7 +381,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         borderStyle: {
             type: 'string',
-            default: 'solid',
+            default: 'none',
         },
         borderRadius: {
             type: 'number',

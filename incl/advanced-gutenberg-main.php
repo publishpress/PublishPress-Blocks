@@ -4206,7 +4206,7 @@ float: left;'
                 $pd_left        = isset($blockAttrs['paddingLeft']) ? intval($blockAttrs['paddingLeft']) : 30;
                 $border_width   = isset($blockAttrs['borderWidth']) ? intval($blockAttrs['borderWidth']) : 1;
                 $border_color   = isset($blockAttrs['borderColor']) ? $blockAttrs['borderColor'] : '';
-                $border_style   = isset($blockAttrs['borderStyle']) ? $blockAttrs['borderStyle'] : 'solid';
+                $border_style   = isset($blockAttrs['borderStyle']) ? $blockAttrs['borderStyle'] : 'none';
                 $border_radius  = isset($blockAttrs['borderRadius']) ? intval($blockAttrs['borderRadius']) : 50;
                 $hover_t_color  = isset($blockAttrs['hoverTextColor']) ? $blockAttrs['hoverTextColor'] : '#fff';
                 $hover_bg_color = isset($blockAttrs['hoverBgColor']) ? $blockAttrs['hoverBgColor'] : '#2196f3';

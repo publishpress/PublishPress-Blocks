@@ -13,6 +13,11 @@
     width: 100%;
 }
 
+.editor-styles-wrapper .wp-block .wp-block {
+    max-width: 100%;
+    width: 100%;
+}
+
 /*#editor .slick-slide {*/
     /*pointer-events: none;*/
 /*}*/
@@ -182,7 +187,7 @@
 .components-panel__body.is-opened > .components-panel__body {
     margin-left: -6px;
 }
-.editor-block-list__block[data-type="advgb/button"][data-align=center] {
+#editor .editor-block-list__block[data-type="advgb/button"][data-align=center] {
     text-align: center;
 }
 span.wp-block-advgb-button[data-is-placeholder-visible=true] {

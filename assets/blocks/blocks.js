@@ -1121,7 +1121,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 if (childBlocks.length < 1) {
                     // No accordion left, we will remove this block
-                    removeBlock(clientId);
+                    // removeBlock(clientId);
                 }
             }
         }, {
@@ -1601,7 +1601,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         'span',
-                        { className: className,
+                        { className: className + ' align' + align,
                             style: { display: 'inline-block' }
                         },
                         React.createElement(RichText, {
@@ -1921,7 +1921,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         borderStyle: {
             type: 'string',
-            default: 'solid'
+            default: 'none'
         },
         borderRadius: {
             type: 'number',
@@ -10507,7 +10507,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         emailText: {
             type: 'string',
-            default: __('Email Address')
+            default: __('Email')
         },
         rememberMeText: {
             type: 'string',
@@ -10519,7 +10519,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         registerSubmitLabel: {
             type: 'string',
-            default: __('Register')
+            default: __('REGISTER')
         },
         registerText: {
             type: 'string',
