@@ -1620,7 +1620,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'style',
                         null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ' !important;\n                        background-color: ' + bgColor + ' !important;\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ' !important;\n                        border-radius: ' + borderRadius + 'px !important;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ' !important;\n                        background-color: ' + hoverBgColor + ' !important;\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ' !important;\n                        background-color: ' + bgColor + ' !important;\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ' !important;\n                        border-radius: ' + borderRadius + 'px !important;\n                        border-style: ' + borderStyle + ' ' + (borderStyle !== 'none' && '!important') + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ' !important;\n                        background-color: ' + hoverBgColor + ' !important;\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
                     ),
                     React.createElement(
                         InspectorControls,
@@ -2003,7 +2003,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }]
         },
-        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'outlined', label: __('Outlined') }, { name: 'squared', label: __('Squared') }],
+        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'outlined', label: __('Outlined') }, { name: 'squared', label: __('Squared') }, { name: 'squared-outline', label: __('Squared Outline') }],
         edit: AdvButton,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -9501,7 +9501,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
                 if (!submitButtonId) {
-                    setAttributes({ submitButtonId: "submit-btn-" + clientId });
+                    setAttributes({ submitButtonId: "advgb-submit-btn-" + clientId });
                 }
             }
         }, {
@@ -13608,12 +13608,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    clientId = _props2.clientId,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var searchBtnId = attributes.searchBtnId;
+
+
+                if (!searchBtnId) {
+                    setAttributes({ searchBtnId: "advgb-search-btn-" + clientId });
+                }
+            }
+        }, {
             key: "render",
             value: function render() {
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    className = _props2.className;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    className = _props3.className;
                 var fullWidth = attributes.fullWidth,
                     width = attributes.width,
                     textColor = attributes.textColor,
@@ -13626,7 +13640,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     searchButtonTextColor = attributes.searchButtonTextColor,
                     searchButtonBgColor = attributes.searchButtonBgColor,
                     searchButtonRadius = attributes.searchButtonRadius,
-                    searchButtonOnLeft = attributes.searchButtonOnLeft;
+                    searchButtonOnLeft = attributes.searchButtonOnLeft,
+                    searchBtnId = attributes.searchBtnId,
+                    searchBtnHoverColor = attributes.searchBtnHoverColor,
+                    searchBtnHoverBgColor = attributes.searchBtnHoverBgColor,
+                    searchBtnHoverShadow = attributes.searchBtnHoverShadow,
+                    searchBtnHoverShadowH = attributes.searchBtnHoverShadowH,
+                    searchBtnHoverShadowV = attributes.searchBtnHoverShadowV,
+                    searchBtnHoverShadowBlur = attributes.searchBtnHoverShadowBlur,
+                    searchBtnHoverShadowSpread = attributes.searchBtnHoverShadowSpread,
+                    searchBtnHoverOpacity = attributes.searchBtnHoverOpacity,
+                    searchBtnHoverTranSpeed = attributes.searchBtnHoverTranSpeed;
 
 
                 var searchBarIcon = React.createElement(
@@ -13804,6 +13828,91 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 100
                                 })
                             )
+                        ),
+                        searchButtonEnabled && React.createElement(
+                            PanelBody,
+                            { title: __('Search Button Hover'), initialOpen: false },
+                            React.createElement(PanelColorSettings, {
+                                title: __('Hover Colors'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background color'),
+                                    value: searchBtnHoverBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverBgColor: value });
+                                    }
+                                }, {
+                                    label: __('Text color'),
+                                    value: searchBtnHoverColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverColor: value });
+                                    }
+                                }, {
+                                    label: __('Shadow color'),
+                                    value: searchBtnHoverShadow,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverShadow: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Shadow'), initialOpen: false },
+                                React.createElement(RangeControl, {
+                                    label: __('Opacity (%)'),
+                                    value: searchBtnHoverOpacity,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverOpacity: value });
+                                    },
+                                    min: 0,
+                                    max: 100
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Transition speed (ms)'),
+                                    value: searchBtnHoverTranSpeed || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverTranSpeed: value });
+                                    },
+                                    min: 0,
+                                    max: 3000
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow H offset'),
+                                    value: searchBtnHoverShadowH || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverShadowH: value });
+                                    },
+                                    min: -50,
+                                    max: 50
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow V offset'),
+                                    value: searchBtnHoverShadowV || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverShadowV: value });
+                                    },
+                                    min: -50,
+                                    max: 50
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow blur'),
+                                    value: searchBtnHoverShadowBlur || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverShadowBlur: value });
+                                    },
+                                    min: 0,
+                                    max: 50
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow spread'),
+                                    value: searchBtnHoverShadowSpread || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchBtnHoverShadowSpread: value });
+                                    },
+                                    min: 0,
+                                    max: 50
+                                })
+                            )
                         )
                     ),
                     React.createElement(
@@ -13830,6 +13939,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 searchIconOnRight && searchBarIcon
                             ),
                             !searchButtonOnLeft && searchBarButton
+                        ),
+                        React.createElement(
+                            "style",
+                            null,
+                            "." + searchBtnId + ":hover {\n                                color: " + searchBtnHoverColor + " !important;\n                                background-color: " + searchBtnHoverBgColor + " !important;\n                                box-shadow: " + searchBtnHoverShadowH + "px " + searchBtnHoverShadowV + "px " + searchBtnHoverShadowBlur + "px " + searchBtnHoverShadowSpread + "px " + searchBtnHoverShadow + ";\n                                transition: all " + searchBtnHoverTranSpeed + "s ease;\n                                opacity: " + searchBtnHoverOpacity / 100 + "\n                            }"
                         )
                     )
                 );
@@ -13870,7 +13984,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         searchButtonText: {
             type: 'string',
-            default: __('Search')
+            default: __('SEARCH')
         },
         searchButtonTextColor: {
             type: 'string'
@@ -13885,6 +13999,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         searchButtonOnLeft: {
             type: 'boolean',
             default: false
+        },
+        searchBtnId: {
+            type: 'string'
+        },
+        searchBtnHoverColor: {
+            type: 'string'
+        },
+        searchBtnHoverBgColor: {
+            type: 'string'
+        },
+        searchBtnHoverShadow: {
+            type: 'string'
+        },
+        searchBtnHoverShadowH: {
+            type: 'number',
+            default: 1
+        },
+        searchBtnHoverShadowV: {
+            type: 'number',
+            default: 1
+        },
+        searchBtnHoverShadowBlur: {
+            type: 'number',
+            default: 12
+        },
+        searchBtnHoverShadowSpread: {
+            type: 'number',
+            default: 0
+        },
+        searchBtnHoverOpacity: {
+            type: 'number',
+            default: 100
+        },
+        searchBtnHoverTranSpeed: {
+            type: 'number',
+            default: 200
         },
         changed: {
             type: 'boolean',
@@ -13922,7 +14072,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 searchButtonTextColor = attributes.searchButtonTextColor,
                 searchButtonBgColor = attributes.searchButtonBgColor,
                 searchButtonRadius = attributes.searchButtonRadius,
-                searchButtonOnLeft = attributes.searchButtonOnLeft;
+                searchButtonOnLeft = attributes.searchButtonOnLeft,
+                searchBtnId = attributes.searchBtnId;
 
 
             var searchBarIcon = React.createElement(
@@ -13938,7 +14089,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     "button",
                     {
                         type: "submit",
-                        className: "advgb-search-bar-button",
+                        className: "advgb-search-bar-button " + searchBtnId,
                         style: {
                             color: searchButtonTextColor,
                             borderColor: searchButtonTextColor,

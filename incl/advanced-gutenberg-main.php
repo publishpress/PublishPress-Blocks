@@ -4223,9 +4223,9 @@ float: left;'
                 $style_html .= 'color:'.$color.' !important;';
                 $style_html .= 'background-color:'.$bg_color.' !important;';
                 $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
-                $style_html .= 'border-width:'.$border_width.'px;';
+                $style_html .= 'border-width:'.$border_width.'px !important;';
                 $style_html .= 'border-color:'.$border_color.' !important;';
-                $style_html .= 'border-style:'.$border_style.';';
+                $style_html .= 'border-style:'.$border_style. ($border_style === 'none' ? '' : ' !important') .';';
                 $style_html .= 'border-radius:'.$border_radius.'px !important;';
                 $style_html .= '}';
 
@@ -4298,6 +4298,25 @@ float: left;'
                 $hover_sh_sprd  = isset($blockAttrs['submitHoverShadowSpread']) ? intval($blockAttrs['submitHoverShadowSpread']) : 0;
                 $hover_opacity  = isset($blockAttrs['submitHoverOpacity']) ? intval($blockAttrs['submitHoverOpacity'])/100 : 1;
                 $transition_spd = isset($blockAttrs['submitHoverTranSpeed']) ? floatval($blockAttrs['submitHoverTranSpeed'])/1000 : 0.2;
+
+                $style_html .= '.'. $block_class . ':hover{';
+                $style_html .= 'color:'.$hover_t_color.' !important;';
+                $style_html .= 'background-color:'.$hover_bg_color.' !important;';
+                $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.' !important;';
+                $style_html .= 'opacity:'.$hover_opacity.';';
+                $style_html .= 'transition:all '.$transition_spd.'s ease;';
+                $style_html .= '}';
+            } elseif ($blockName === 'advgb/search-bar') {
+                $block_class    = $blockAttrs['searchBtnId'];
+                $hover_t_color  = isset($blockAttrs['searchBtnHoverColor']) ? $blockAttrs['searchBtnHoverColor'] : '';
+                $hover_bg_color = isset($blockAttrs['searchBtnHoverBgColor']) ? $blockAttrs['searchBtnHoverBgColor'] : '';
+                $hover_sh_color = isset($blockAttrs['searchBtnHoverShadow']) ? $blockAttrs['searchBtnHoverShadow'] : '#ccc';
+                $hover_sh_h     = isset($blockAttrs['searchBtnHoverShadowH']) ? intval($blockAttrs['searchBtnHoverShadowH']) : 1;
+                $hover_sh_v     = isset($blockAttrs['searchBtnHoverShadowV']) ? intval($blockAttrs['searchBtnHoverShadowV']) : 1;
+                $hover_sh_blur  = isset($blockAttrs['searchBtnHoverShadowBlur']) ? intval($blockAttrs['searchBtnHoverShadowBlur']) : 12;
+                $hover_sh_sprd  = isset($blockAttrs['searchBtnHoverShadowSpread']) ? intval($blockAttrs['searchBtnHoverShadowSpread']) : 0;
+                $hover_opacity  = isset($blockAttrs['searchBtnHoverOpacity']) ? intval($blockAttrs['searchBtnHoverOpacity'])/100 : 1;
+                $transition_spd = isset($blockAttrs['searchBtnHoverTranSpeed']) ? floatval($blockAttrs['searchBtnHoverTranSpeed'])/1000 : 0.2;
 
                 $style_html .= '.'. $block_class . ':hover{';
                 $style_html .= 'color:'.$hover_t_color.' !important;';

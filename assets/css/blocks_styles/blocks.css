@@ -199,7 +199,7 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 
 .wp-block-advgb-button .wp-block-advgb-button_link {
     display: inline-block;
-    text-decoration: none;
+    text-decoration: none !important;
     background-color: #2196f3;
     color: #fff;
     border-color: #fff;
@@ -209,12 +209,23 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
 .wp-block-advgb-button.is-style-outlined .wp-block-advgb-button_link {
     background-color: transparent !important;
     color: #000;
-    border-color: #000;
     border-radius: 50px;
+    border-color: #000;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .wp-block-advgb-button.is-style-squared .wp-block-advgb-button_link {
     border-radius: 0 !important;
+}
+
+.wp-block-advgb-button.is-style-squared-outline .wp-block-advgb-button_link {
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    color: #000;
+    border-color: #000;
+    border-style: solid;
+    border-width: 1px;
 }
 
 /*Advanced Image block styles*/

@@ -127,7 +127,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         border-width: ${borderWidth}px;
                         border-color: ${borderColor} !important;
                         border-radius: ${borderRadius}px !important;
-                        border-style: ${borderStyle};
+                        border-style: ${borderStyle} ${borderStyle !== 'none' && '!important'};
                     }
                     .${id}:hover {
                         color: ${hoverTextColor} !important;
@@ -473,6 +473,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             { name: 'default', label: __( 'Default' ), isDefault: true },
             { name: 'outlined', label: __( 'Outlined' ) },
             { name: 'squared', label: __( 'Squared' ) },
+            { name: 'squared-outline', label: __( 'Squared Outline' ) },
         ],
         edit: AdvButton,
         save: function ( { attributes } ) {

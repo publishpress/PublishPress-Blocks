@@ -75,22 +75,24 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             }
         }
 
+        componentDidMount() {
+            const { clientId, attributes, setAttributes } = this.props;
+            const { searchBtnId } = attributes;
+
+            if (!searchBtnId) {
+                setAttributes( { searchBtnId: `advgb-search-btn-${clientId}` } )
+            }
+        }
+
+
         render() {
             const { attributes, setAttributes, className } = this.props;
             const {
-                fullWidth,
-                width,
-                textColor,
-                backgroundColor,
-                searchIcon,
-                searchIconOnRight,
-                searchPlaceholder,
-                searchButtonEnabled,
-                searchButtonText,
-                searchButtonTextColor,
-                searchButtonBgColor,
-                searchButtonRadius,
-                searchButtonOnLeft,
+                fullWidth, width, textColor, backgroundColor, searchIcon, searchIconOnRight,
+                searchPlaceholder, searchButtonEnabled, searchButtonText, searchButtonTextColor,
+                searchButtonBgColor, searchButtonRadius, searchButtonOnLeft, searchBtnId,
+                searchBtnHoverColor, searchBtnHoverBgColor, searchBtnHoverShadow, searchBtnHoverShadowH, searchBtnHoverShadowV,
+                searchBtnHoverShadowBlur, searchBtnHoverShadowSpread, searchBtnHoverOpacity, searchBtnHoverTranSpeed,
             } = attributes;
 
             const searchBarIcon = (
@@ -221,6 +223,75 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 </Fragment>
                             ) }
                         </PanelBody>
+                        {searchButtonEnabled && (
+                            <PanelBody title={ __( 'Search Button Hover' ) } initialOpen={false}>
+                                <PanelColorSettings
+                                    title={ __( 'Hover Colors' ) }
+                                    initialOpen={ false }
+                                    colorSettings={ [
+                                        {
+                                            label: __( 'Background color' ),
+                                            value: searchBtnHoverBgColor,
+                                            onChange: (value) => setAttributes( { searchBtnHoverBgColor: value } ),
+                                        },
+                                        {
+                                            label: __( 'Text color' ),
+                                            value: searchBtnHoverColor,
+                                            onChange: (value) => setAttributes( { searchBtnHoverColor: value } ),
+                                        },
+                                        {
+                                            label: __( 'Shadow color' ),
+                                            value: searchBtnHoverShadow,
+                                            onChange: (value) => setAttributes( { searchBtnHoverShadow: value } ),
+                                        },
+                                    ] }
+                                />
+                                <PanelBody title={ __( 'Shadow' ) } initialOpen={false}>
+                                    <RangeControl
+                                        label={ __('Opacity (%)') }
+                                        value={ searchBtnHoverOpacity }
+                                        onChange={ ( value ) => setAttributes( { searchBtnHoverOpacity: value } ) }
+                                        min={ 0 }
+                                        max={ 100 }
+                                    />
+                                    <RangeControl
+                                        label={ __('Transition speed (ms)') }
+                                        value={ searchBtnHoverTranSpeed || '' }
+                                        onChange={ ( value ) => setAttributes( { searchBtnHoverTranSpeed: value } ) }
+                                        min={ 0 }
+                                        max={ 3000 }
+                                    />
+                                    <RangeControl
+                                        label={ __( 'Shadow H offset' ) }
+                                        value={ searchBtnHoverShadowH || '' }
+                                        onChange={ ( value ) => setAttributes( { searchBtnHoverShadowH: value } ) }
+                                        min={ -50 }
+                                        max={ 50 }
+                                    />
+                                    <RangeControl
+                                        label={ __( 'Shadow V offset' ) }
+                                        value={ searchBtnHoverShadowV || '' }
+                                        onChange={ ( value ) => setAttributes( { searchBtnHoverShadowV: value } ) }
+                                        min={ -50 }
+                                        max={ 50 }
+                                    />
+                                    <RangeControl
+                                        label={ __( 'Shadow blur' ) }
+                                        value={ searchBtnHoverShadowBlur || '' }
+                                        onChange={ ( value ) => setAttributes( { searchBtnHoverShadowBlur: value } ) }
+                                        min={ 0 }
+                                        max={ 50 }
+                                    />
+                                    <RangeControl
+                                        label={ __( 'Shadow spread' ) }
+                                        value={ searchBtnHoverShadowSpread || '' }
+                                        onChange={ ( value ) => setAttributes( { searchBtnHoverShadowSpread: value } ) }
+                                        min={ 0 }
+                                        max={ 50 }
+                                    />
+                                </PanelBody>
+                            </PanelBody>
+                        ) }
                     </InspectorControls>
                     <div className={`advgb-search-bar-wrapper ${className}`}>
                         <div className="advgb-search-bar-inner" style={ { width: fullWidth ? '100%' : width } }>
@@ -241,6 +312,15 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             </div>
                             {!searchButtonOnLeft && searchBarButton}
                         </div>
+                        <style>
+                            {`.${searchBtnId}:hover {
+                                color: ${searchBtnHoverColor} !important;
+                                background-color: ${searchBtnHoverBgColor} !important;
+                                box-shadow: ${searchBtnHoverShadowH}px ${searchBtnHoverShadowV}px ${searchBtnHoverShadowBlur}px ${searchBtnHoverShadowSpread}px ${searchBtnHoverShadow};
+                                transition: all ${searchBtnHoverTranSpeed}s ease;
+                                opacity: ${searchBtnHoverOpacity/100}
+                            }`}
+                        </style>
                     </div>
                 </Fragment>
             )
@@ -278,7 +358,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         searchButtonText: {
             type: 'string',
-            default: __( 'Search' ),
+            default: __( 'SEARCH' ),
         },
         searchButtonTextColor: {
             type: 'string',
@@ -293,6 +373,42 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         searchButtonOnLeft: {
             type: 'boolean',
             default: false,
+        },
+        searchBtnId : {
+            type: 'string',
+        },
+        searchBtnHoverColor: {
+            type: 'string',
+        },
+        searchBtnHoverBgColor: {
+            type: 'string',
+        },
+        searchBtnHoverShadow: {
+            type: 'string',
+        },
+        searchBtnHoverShadowH: {
+            type: 'number',
+            default: 1,
+        },
+        searchBtnHoverShadowV: {
+            type: 'number',
+            default: 1,
+        },
+        searchBtnHoverShadowBlur: {
+            type: 'number',
+            default: 12,
+        },
+        searchBtnHoverShadowSpread: {
+            type: 'number',
+            default: 0,
+        },
+        searchBtnHoverOpacity: {
+            type: 'number',
+            default: 100,
+        },
+        searchBtnHoverTranSpeed: {
+            type: 'number',
+            default: 200,
         },
         changed: {
             type: 'boolean',
@@ -320,19 +436,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         edit: SearchBarEdit,
         save: function ( { attributes, className } ) {
             const {
-                fullWidth,
-                width,
-                textColor,
-                backgroundColor,
-                searchIcon,
-                searchIconOnRight,
-                searchPlaceholder,
-                searchButtonEnabled,
-                searchButtonText,
-                searchButtonTextColor,
-                searchButtonBgColor,
-                searchButtonRadius,
-                searchButtonOnLeft,
+                fullWidth, width, textColor, backgroundColor, searchIcon, searchIconOnRight,
+                searchPlaceholder, searchButtonEnabled, searchButtonText, searchButtonTextColor,
+                searchButtonBgColor, searchButtonRadius, searchButtonOnLeft, searchBtnId,
             } = attributes;
 
             const searchBarIcon = (
@@ -345,7 +451,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 <div className="advgb-search-button-wrapper">
                     <button
                         type="submit"
-                        className="advgb-search-bar-button"
+                        className={`advgb-search-bar-button ${searchBtnId}`}
                         style={ {
                             color: searchButtonTextColor,
                             borderColor: searchButtonTextColor,

@@ -67,7 +67,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             const { submitButtonId } = attributes;
 
             if (!submitButtonId) {
-                setAttributes( { submitButtonId: `submit-btn-${clientId}` } )
+                setAttributes( { submitButtonId: `advgb-submit-btn-${clientId}` } )
             }
         }
 
