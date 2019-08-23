@@ -35,7 +35,13 @@
 }
 
 .ju-main-wrapper .ju-right-panel .ju-content-wrapper {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Roboto", "Nunito Sans", sans-serif;
+}
+
+.ju-settings-option .ju-setting-label {
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
 }
 
 /*Search input styles*/

@@ -389,11 +389,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         hoverTextColor: {
             type: 'string',
-            default: '#fff'
         },
         hoverBgColor: {
             type: 'string',
-            default: '#2196f3'
         },
         hoverShadowColor: {
             type: 'string',

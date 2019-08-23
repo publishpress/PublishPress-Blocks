@@ -1928,12 +1928,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             default: 50
         },
         hoverTextColor: {
-            type: 'string',
-            default: '#fff'
+            type: 'string'
         },
         hoverBgColor: {
-            type: 'string',
-            default: '#2196f3'
+            type: 'string'
         },
         hoverShadowColor: {
             type: 'string',
@@ -13826,92 +13824,88 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     min: 0,
                                     max: 100
-                                })
-                            )
-                        ),
-                        searchButtonEnabled && React.createElement(
-                            PanelBody,
-                            { title: __('Search Button Hover'), initialOpen: false },
-                            React.createElement(PanelColorSettings, {
-                                title: __('Hover Colors'),
-                                initialOpen: false,
-                                colorSettings: [{
-                                    label: __('Background color'),
-                                    value: searchBtnHoverBgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverBgColor: value });
-                                    }
-                                }, {
-                                    label: __('Text color'),
-                                    value: searchBtnHoverColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverColor: value });
-                                    }
-                                }, {
-                                    label: __('Shadow color'),
-                                    value: searchBtnHoverShadow,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverShadow: value });
-                                    }
-                                }]
-                            }),
-                            React.createElement(
-                                PanelBody,
-                                { title: __('Shadow'), initialOpen: false },
-                                React.createElement(RangeControl, {
-                                    label: __('Opacity (%)'),
-                                    value: searchBtnHoverOpacity,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverOpacity: value });
-                                    },
-                                    min: 0,
-                                    max: 100
                                 }),
-                                React.createElement(RangeControl, {
-                                    label: __('Transition speed (ms)'),
-                                    value: searchBtnHoverTranSpeed || '',
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverTranSpeed: value });
-                                    },
-                                    min: 0,
-                                    max: 3000
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Hover Colors'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Background color'),
+                                        value: searchBtnHoverBgColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverBgColor: value });
+                                        }
+                                    }, {
+                                        label: __('Text color'),
+                                        value: searchBtnHoverColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverColor: value });
+                                        }
+                                    }, {
+                                        label: __('Shadow color'),
+                                        value: searchBtnHoverShadow,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadow: value });
+                                        }
+                                    }]
                                 }),
-                                React.createElement(RangeControl, {
-                                    label: __('Shadow H offset'),
-                                    value: searchBtnHoverShadowH || '',
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverShadowH: value });
-                                    },
-                                    min: -50,
-                                    max: 50
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Shadow V offset'),
-                                    value: searchBtnHoverShadowV || '',
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverShadowV: value });
-                                    },
-                                    min: -50,
-                                    max: 50
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Shadow blur'),
-                                    value: searchBtnHoverShadowBlur || '',
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverShadowBlur: value });
-                                    },
-                                    min: 0,
-                                    max: 50
-                                }),
-                                React.createElement(RangeControl, {
-                                    label: __('Shadow spread'),
-                                    value: searchBtnHoverShadowSpread || '',
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ searchBtnHoverShadowSpread: value });
-                                    },
-                                    min: 0,
-                                    max: 50
-                                })
+                                React.createElement(
+                                    PanelBody,
+                                    { title: __('Hover Shadow'), initialOpen: false },
+                                    React.createElement(RangeControl, {
+                                        label: __('Opacity (%)'),
+                                        value: searchBtnHoverOpacity,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverOpacity: value });
+                                        },
+                                        min: 0,
+                                        max: 100
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Transition speed (ms)'),
+                                        value: searchBtnHoverTranSpeed || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverTranSpeed: value });
+                                        },
+                                        min: 0,
+                                        max: 3000
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Shadow H offset'),
+                                        value: searchBtnHoverShadowH || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadowH: value });
+                                        },
+                                        min: -50,
+                                        max: 50
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Shadow V offset'),
+                                        value: searchBtnHoverShadowV || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadowV: value });
+                                        },
+                                        min: -50,
+                                        max: 50
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Shadow blur'),
+                                        value: searchBtnHoverShadowBlur || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadowBlur: value });
+                                        },
+                                        min: 0,
+                                        max: 50
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Shadow spread'),
+                                        value: searchBtnHoverShadowSpread || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadowSpread: value });
+                                        },
+                                        min: 0,
+                                        max: 50
+                                    })
+                                )
                             )
                         )
                     ),

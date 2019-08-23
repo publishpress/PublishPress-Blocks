@@ -206,6 +206,11 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     border-radius: 50px;
 }
 
+.wp-block-advgb-button .wp-block-advgb-button_link:hover {
+    background-color: #2196f3;
+    color: #fff;
+}
+
 .wp-block-advgb-button.is-style-outlined .wp-block-advgb-button_link {
     background-color: transparent !important;
     color: #000;
@@ -1810,7 +1815,7 @@ form .advgb-grecaptcha > div {
     height: 100%;
     cursor: pointer;
     display: inline-block;
-    border: 1px solid #fff;
+    border: 1px solid transparent;
 }
 
 /*Columns Manager block*/

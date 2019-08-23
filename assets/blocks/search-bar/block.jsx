@@ -220,78 +220,74 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         min={ 0 }
                                         max={ 100 }
                                     />
+                                    <PanelColorSettings
+                                        title={ __( 'Hover Colors' ) }
+                                        initialOpen={ false }
+                                        colorSettings={ [
+                                            {
+                                                label: __( 'Background color' ),
+                                                value: searchBtnHoverBgColor,
+                                                onChange: (value) => setAttributes( { searchBtnHoverBgColor: value } ),
+                                            },
+                                            {
+                                                label: __( 'Text color' ),
+                                                value: searchBtnHoverColor,
+                                                onChange: (value) => setAttributes( { searchBtnHoverColor: value } ),
+                                            },
+                                            {
+                                                label: __( 'Shadow color' ),
+                                                value: searchBtnHoverShadow,
+                                                onChange: (value) => setAttributes( { searchBtnHoverShadow: value } ),
+                                            },
+                                        ] }
+                                    />
+                                    <PanelBody title={ __( 'Hover Shadow' ) } initialOpen={false}>
+                                        <RangeControl
+                                            label={ __('Opacity (%)') }
+                                            value={ searchBtnHoverOpacity }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverOpacity: value } ) }
+                                            min={ 0 }
+                                            max={ 100 }
+                                        />
+                                        <RangeControl
+                                            label={ __('Transition speed (ms)') }
+                                            value={ searchBtnHoverTranSpeed || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverTranSpeed: value } ) }
+                                            min={ 0 }
+                                            max={ 3000 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Shadow H offset' ) }
+                                            value={ searchBtnHoverShadowH || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverShadowH: value } ) }
+                                            min={ -50 }
+                                            max={ 50 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Shadow V offset' ) }
+                                            value={ searchBtnHoverShadowV || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverShadowV: value } ) }
+                                            min={ -50 }
+                                            max={ 50 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Shadow blur' ) }
+                                            value={ searchBtnHoverShadowBlur || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverShadowBlur: value } ) }
+                                            min={ 0 }
+                                            max={ 50 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Shadow spread' ) }
+                                            value={ searchBtnHoverShadowSpread || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverShadowSpread: value } ) }
+                                            min={ 0 }
+                                            max={ 50 }
+                                        />
+                                    </PanelBody>
                                 </Fragment>
                             ) }
                         </PanelBody>
-                        {searchButtonEnabled && (
-                            <PanelBody title={ __( 'Search Button Hover' ) } initialOpen={false}>
-                                <PanelColorSettings
-                                    title={ __( 'Hover Colors' ) }
-                                    initialOpen={ false }
-                                    colorSettings={ [
-                                        {
-                                            label: __( 'Background color' ),
-                                            value: searchBtnHoverBgColor,
-                                            onChange: (value) => setAttributes( { searchBtnHoverBgColor: value } ),
-                                        },
-                                        {
-                                            label: __( 'Text color' ),
-                                            value: searchBtnHoverColor,
-                                            onChange: (value) => setAttributes( { searchBtnHoverColor: value } ),
-                                        },
-                                        {
-                                            label: __( 'Shadow color' ),
-                                            value: searchBtnHoverShadow,
-                                            onChange: (value) => setAttributes( { searchBtnHoverShadow: value } ),
-                                        },
-                                    ] }
-                                />
-                                <PanelBody title={ __( 'Shadow' ) } initialOpen={false}>
-                                    <RangeControl
-                                        label={ __('Opacity (%)') }
-                                        value={ searchBtnHoverOpacity }
-                                        onChange={ ( value ) => setAttributes( { searchBtnHoverOpacity: value } ) }
-                                        min={ 0 }
-                                        max={ 100 }
-                                    />
-                                    <RangeControl
-                                        label={ __('Transition speed (ms)') }
-                                        value={ searchBtnHoverTranSpeed || '' }
-                                        onChange={ ( value ) => setAttributes( { searchBtnHoverTranSpeed: value } ) }
-                                        min={ 0 }
-                                        max={ 3000 }
-                                    />
-                                    <RangeControl
-                                        label={ __( 'Shadow H offset' ) }
-                                        value={ searchBtnHoverShadowH || '' }
-                                        onChange={ ( value ) => setAttributes( { searchBtnHoverShadowH: value } ) }
-                                        min={ -50 }
-                                        max={ 50 }
-                                    />
-                                    <RangeControl
-                                        label={ __( 'Shadow V offset' ) }
-                                        value={ searchBtnHoverShadowV || '' }
-                                        onChange={ ( value ) => setAttributes( { searchBtnHoverShadowV: value } ) }
-                                        min={ -50 }
-                                        max={ 50 }
-                                    />
-                                    <RangeControl
-                                        label={ __( 'Shadow blur' ) }
-                                        value={ searchBtnHoverShadowBlur || '' }
-                                        onChange={ ( value ) => setAttributes( { searchBtnHoverShadowBlur: value } ) }
-                                        min={ 0 }
-                                        max={ 50 }
-                                    />
-                                    <RangeControl
-                                        label={ __( 'Shadow spread' ) }
-                                        value={ searchBtnHoverShadowSpread || '' }
-                                        onChange={ ( value ) => setAttributes( { searchBtnHoverShadowSpread: value } ) }
-                                        min={ 0 }
-                                        max={ 50 }
-                                    />
-                                </PanelBody>
-                            </PanelBody>
-                        ) }
                     </InspectorControls>
                     <div className={`advgb-search-bar-wrapper ${className}`}>
                         <div className="advgb-search-bar-inner" style={ { width: fullWidth ? '100%' : width } }>
