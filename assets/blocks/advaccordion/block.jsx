@@ -2,9 +2,10 @@
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
-    const { registerBlockType, createBlock } = wpBlocks;
-    const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
-    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl } = wpComponents;
+    const { registerBlockType } = wpBlocks;
+    const { InspectorControls, BlockControls, PanelColorSettings, InnerBlocks } = wpBlockEditor;
+    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl, Toolbar, IconButton } = wpComponents;
+    const { select, dispatch } = wp.data;
 
     const HEADER_ICONS = {
         plus: (
@@ -52,17 +53,16 @@
         )
     };
 
-    class AdvAccordion extends Component {
+    class AccordionsEdit extends Component {
         constructor() {
             super( ...arguments );
-            this.state = {
-                currentAccordion: null,
-            }
+
+            this.updateAccordionAttrs = this.updateAccordionAttrs.bind( this );
         }
 
         componentWillMount() {
             const { attributes, setAttributes } = this.props;
-            const currentBlockConfig = advgbDefaultConfig['advgb-accordion'];
+            const currentBlockConfig = advgbDefaultConfig['advgb-accordions'];
 
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
@@ -81,10 +81,40 @@
             }
         }
 
+        componentDidUpdate() {
+            const { clientId } = this.props;
+            const { removeBlock } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            if (childBlocks.length < 1) {
+                // No accordion left, we will remove this block
+                // removeBlock(clientId);
+            }
+        }
+
+        updateAccordionAttrs( attrs ) {
+            const { setAttributes, clientId } = this.props;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            setAttributes( attrs );
+            childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attrs ) );
+        }
+
+        resyncAccordions() {
+            const { attributes, clientId } = this.props;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attributes ) );
+        }
+
         render() {
             const { attributes, setAttributes } = this.props;
             const {
-                header,
                 headerBgColor,
                 headerTextColor,
                 headerIcon,
@@ -101,23 +131,29 @@
 
             return (
                 <Fragment>
+                    <BlockControls>
+                        <Toolbar>
+                            <IconButton
+                                icon="update"
+                                onClick={ () => this.resyncAccordions() }
+                            />
+                        </Toolbar>
+                    </BlockControls>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Notice' ) }>
-                            <p style={ { color: '#ff0000', fontStyle: 'italic' } }>
-                                { __( `We have Adv. Accordion block to replace for this block.
-                                This block will be removed in the some next version.
-                                Please transform this to an Accordion Item block and drag them into
-                                new Adv. Accordion block as soon as possible.` ) }
-                            </p>
-                        </PanelBody>
                         <PanelBody title={ __( 'Accordion Settings' ) }>
                             <RangeControl
                                 label={ __( 'Bottom spacing' ) }
                                 value={ marginBottom }
-                                help={ __( 'Define space to next block. This will override Block spacing option (Frontend view only)' ) }
+                                help={ __( 'Define space between each accordion (Frontend view only)' ) }
                                 min={ 0 }
                                 max={ 50 }
-                                onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { marginBottom: value } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Initial Collapsed' ) }
+                                help={ __( 'Make all accordions collapsed by default.' ) }
+                                checked={ collapsedAll }
+                                onChange={ () => setAttributes( { collapsedAll: !collapsedAll } ) }
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Header Settings' ) }>
@@ -126,7 +162,7 @@
                                     {Object.keys( HEADER_ICONS ).map( ( key, index ) => (
                                         <div className="advgb-icon-item" key={ index }>
                                                 <span className={ key === headerIcon ? 'active' : '' }
-                                                      onClick={ () => setAttributes( { headerIcon: key } ) }>
+                                                      onClick={ () => this.updateAccordionAttrs( { headerIcon: key } ) }>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                                         { HEADER_ICONS[key] }
                                                     </svg>
@@ -142,17 +178,17 @@
                                     {
                                         label: __( 'Background Color' ),
                                         value: headerBgColor,
-                                        onChange: ( value ) => setAttributes( { headerBgColor: value === undefined ? '#000' : value } ),
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerBgColor: value === undefined ? '#000' : value } ),
                                     },
                                     {
                                         label: __( 'Text Color' ),
                                         value: headerTextColor,
-                                        onChange: ( value ) => setAttributes( { headerTextColor: value === undefined ? '#eee' : value } ),
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerTextColor: value === undefined ? '#eee' : value } ),
                                     },
                                     {
                                         label: __( 'Icon Color' ),
                                         value: headerIconColor,
-                                        onChange: ( value ) => setAttributes( { headerIconColor: value === undefined ? '#fff' : value } ),
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerIconColor: value === undefined ? '#fff' : value } ),
                                     },
                                 ] }
                             />
@@ -164,12 +200,12 @@
                                 {
                                     label: __( 'Background Color' ),
                                     value: bodyBgColor,
-                                    onChange: ( value ) => setAttributes( { bodyBgColor: value } ),
+                                    onChange: ( value ) => this.updateAccordionAttrs( { bodyBgColor: value } ),
                                 },
                                 {
                                     label: __( 'Text Color' ),
                                     value: bodyTextColor,
-                                    onChange: ( value ) => setAttributes( { bodyTextColor: value } ),
+                                    onChange: ( value ) => this.updateAccordionAttrs( { bodyTextColor: value } ),
                                 },
                             ] }
                         />
@@ -182,7 +218,7 @@
                                     { label: __( 'Dashed' ), value: 'dashed' },
                                     { label: __( 'Dotted' ), value: 'dotted' },
                                 ] }
-                                onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderStyle: value } ) }
                             />
                             <PanelColorSettings
                                 title={ __( 'Color Settings' ) }
@@ -191,7 +227,7 @@
                                     {
                                         label: __( 'Border Color' ),
                                         value: borderColor,
-                                        onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                        onChange: ( value ) => this.updateAccordionAttrs( { borderColor: value } ),
                                     },
                                 ] }
                             />
@@ -200,62 +236,23 @@
                                 value={ borderWidth }
                                 min={ 0 }
                                 max={ 10 }
-                                onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderWidth: value } ) }
                             />
                             <RangeControl
                                 label={ __( 'Border radius' ) }
                                 value={ borderRadius }
                                 min={ 0 }
                                 max={ 100 }
-                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
-                            />
-                        </PanelBody>
-                        <PanelBody title={ __( 'Accordions State' ) } initialOpen={  false }>
-                            <ToggleControl
-                                label={ __( 'Initial Collapsed' ) }
-                                help={ __( 'Make all accordions collapsed by default, enable this setting to apply to all accordions.' ) }
-                                checked={ collapsedAll }
-                                onChange={ () => setAttributes( { collapsedAll: !collapsedAll } ) }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderRadius: value } ) }
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className="advgb-accordion-block">
-                        <div className="advgb-accordion-header"
-                             style={ {
-                                 backgroundColor: headerBgColor,
-                                 color: headerTextColor,
-                                 borderStyle: borderStyle,
-                                 borderWidth: borderWidth + 'px',
-                                 borderColor: borderColor,
-                                 borderRadius: borderRadius + 'px',
-                             } }
-                        >
-                            <span className="advgb-accordion-header-icon">
-                                <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    { HEADER_ICONS[headerIcon] }
-                                </svg>
-                            </span>
-                            <RichText
-                                tagName="h4"
-                                value={ header }
-                                onChange={ ( value ) => setAttributes( { header: value } ) }
-                                unstableOnSplit={ () => null }
-                                className="advgb-accordion-header-title"
-                                placeholder={ __( 'Enter header…' ) }
-                            />
-                        </div>
-                        <div className="advgb-accordion-body"
-                             style={ {
-                                 backgroundColor: bodyBgColor,
-                                 color: bodyTextColor,
-                                 borderStyle: borderStyle,
-                                 borderWidth: borderWidth + 'px',
-                                 borderColor: borderColor,
-                                 borderRadius: borderRadius + 'px',
-                             } }
-                        >
-                            <InnerBlocks />
-                        </div>
+                    <div className="advgb-accordions-wrapper">
+                        <InnerBlocks
+                            template={ [ ['advgb/accordion-item'], ['advgb/accordion-item'] ] }
+                            templateLock={ false }
+                            allowedBlocks={ [ 'advgb/accordion-item' ] }
+                        />
                     </div>
                 </Fragment>
             )
@@ -264,18 +261,12 @@
 
     const accordionBlockIcon = (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
-            <path fill="none" d="M0,0h24v24H0V0z"/>
-            <rect x="3" y="17" width="18" height="2"/>
-            <path d="M19,12v1H5v-1H19 M21,10H3v5h18V10L21,10z"/>
-            <rect x="3" y="6" width="18" height="2"/>
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z"/>
         </svg>
     );
 
-    const accordionAttrs = {
-        header: {
-            type: 'string',
-            default: __( 'Header text' ),
-        },
+    const blockAttrs = {
         headerBgColor: {
             type: 'string',
             default: '#000',
@@ -325,10 +316,14 @@
             type: 'boolean',
             default: false,
         },
+        needUpdate: {
+            type: 'boolean',
+            default: true,
+        }
     };
 
-    registerBlockType( 'advgb/accordion', {
-        title: __( 'Accordion' ),
+    registerBlockType( 'advgb/accordions', {
+        title: __( 'Advanced Accordion' ),
         description: __( 'Easy to create an accordion for your post/page.' ),
         icon: {
             src: accordionBlockIcon,
@@ -336,82 +331,16 @@
         },
         category: 'advgb-category',
         keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
-        attributes: accordionAttrs,
-        supports: {
-            inserter: false,
-        },
-        edit: AdvAccordion,
+        attributes: blockAttrs,
+        edit: AccordionsEdit,
         save: function ( { attributes } ) {
-            const {
-                header,
-                headerBgColor,
-                headerTextColor,
-                headerIcon,
-                headerIconColor,
-                bodyBgColor,
-                bodyTextColor,
-                borderStyle,
-                borderWidth,
-                borderColor,
-                borderRadius,
-                marginBottom,
-                collapsedAll,
-            } = attributes;
+            const { collapsedAll } = attributes;
 
             return (
-                <div className="advgb-accordion-block" style={ { marginBottom } } data-collapsed={ collapsedAll ? collapsedAll : undefined }>
-                    <div className="advgb-accordion-header"
-                         style={ {
-                             backgroundColor: headerBgColor,
-                             color: headerTextColor,
-                             borderStyle: borderStyle,
-                             borderWidth: borderWidth + 'px',
-                             borderColor: borderColor,
-                             borderRadius: borderRadius + 'px',
-                         } }
-                    >
-                        <span className="advgb-accordion-header-icon">
-                            <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                { HEADER_ICONS[headerIcon] }
-                            </svg>
-                        </span>
-                        <h4 className="advgb-accordion-header-title">{ header }</h4>
-                    </div>
-                    <div className="advgb-accordion-body"
-                         style={ {
-                             backgroundColor: bodyBgColor,
-                             color: bodyTextColor,
-                             borderStyle: borderStyle,
-                             borderWidth: borderWidth + 'px',
-                             borderColor: borderColor,
-                             borderRadius: borderRadius + 'px',
-                         } }
-                    >
-                        <InnerBlocks.Content />
-                    </div>
+                <div className="advgb-accordion-wrapper" data-collapsed={ collapsedAll ? collapsedAll : undefined }>
+                    <InnerBlocks.Content />
                 </div>
             );
-        },
-        transforms: {
-            to: [
-                {
-                    type: 'block',
-                    blocks: [ 'advgb/accordions' ],
-                    transform: ( attributes, innerBlocks ) => {
-                        const accordion = createBlock(
-                            'advgb/accordion-item',
-                            { ...attributes, changed: false },
-                            innerBlocks,
-                        );
-
-                        return createBlock(
-                            'advgb/accordions',
-                            { ...attributes, header: undefined, needUpdate: false },
-                            [ accordion ],
-                        )
-                    }
-                }
-            ]
-        },
-    } );
+        }
+    } )
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

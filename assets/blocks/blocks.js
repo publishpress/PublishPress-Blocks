@@ -86,6 +86,54 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./assets/blocks/0-adv-components/components.jsx":
+/*!*******************************************************!*\
+  !*** ./assets/blocks/0-adv-components/components.jsx ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.AdvColorControl = AdvColorControl;
+function AdvColorControl(props) {
+    var _wp$components = wp.components,
+        ColorIndicator = _wp$components.ColorIndicator,
+        BaseControl = _wp$components.BaseControl;
+
+    var _ref = wp.blockEditor || wp.editor,
+        ColorPalette = _ref.ColorPalette;
+
+    var label = props.label,
+        value = props.value,
+        onChange = props.onChange;
+
+
+    return React.createElement(
+        BaseControl,
+        {
+            className: "editor-color-palette-control block-editor-color-palette-control"
+        },
+        React.createElement(
+            BaseControl.VisualLabel,
+            null,
+            label,
+            value && React.createElement(ColorIndicator, { colorValue: value })
+        ),
+        React.createElement(ColorPalette, {
+            className: "editor-color-palette-control__color-palette block-editor-color-palette-control__color-palette",
+            value: value,
+            onChange: onChange
+        })
+    );
+}
+
+/***/ }),
+
 /***/ "./assets/blocks/accordion/block.jsx":
 /*!*******************************************!*\
   !*** ./assets/blocks/accordion/block.jsx ***!
@@ -95,6 +143,8 @@
 
 "use strict";
 
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -111,7 +161,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
-    var registerBlockType = wpBlocks.registerBlockType;
+    var registerBlockType = wpBlocks.registerBlockType,
+        createBlock = wpBlocks.createBlock;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
         RichText = _wpBlockEditor.RichText,
@@ -213,7 +264,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "render",
             value: function render() {
                 var _props2 = this.props,
-                    isSelected = _props2.isSelected,
                     attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes;
                 var header = attributes.header,
@@ -237,6 +287,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         InspectorControls,
                         null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Notice') },
+                            React.createElement(
+                                "p",
+                                { style: { color: '#ff0000', fontStyle: 'italic' } },
+                                __("We have Adv. Accordion block to replace for this block.\n                                This block will be removed in the some next version.\n                                Please transform this to an Accordion Item block and drag them into\n                                new Adv. Accordion block as soon as possible.")
+                            )
+                        ),
                         React.createElement(
                             PanelBody,
                             { title: __('Accordion Settings') },
@@ -509,6 +568,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'advgb-category',
         keywords: [__('accordion'), __('list'), __('faq')],
         attributes: accordionAttrs,
+        supports: {
+            inserter: false
+        },
         edit: AdvAccordion,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -572,6 +634,811 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
+        },
+        transforms: {
+            to: [{
+                type: 'block',
+                blocks: ['advgb/accordions'],
+                transform: function transform(attributes, innerBlocks) {
+                    var accordion = createBlock('advgb/accordion-item', _extends({}, attributes, { changed: false }), innerBlocks);
+
+                    return createBlock('advgb/accordions', _extends({}, attributes, { header: undefined, needUpdate: false }), [accordion]);
+                }
+            }]
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/advaccordion/accordion.jsx":
+/*!**************************************************!*\
+  !*** ./assets/blocks/advaccordion/accordion.jsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Fragment = wpElement.Fragment,
+        Component = wpElement.Component;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var _wpBlockEditor = wpBlockEditor,
+        RichText = _wpBlockEditor.RichText,
+        InnerBlocks = _wpBlockEditor.InnerBlocks;
+    var select = wp.data.select;
+
+
+    var HEADER_ICONS = {
+        plus: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z" })
+        ),
+        plusCircle: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z" })
+        ),
+        plusCircleOutline: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M13,7h-2v4H7v2h4v4h2v-4h4v-2h-4V7z M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20 c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8S16.41,20,12,20z" })
+        ),
+        plusBox: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M19,3H5C3.89,3,3,3.9,3,5v14c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z" }),
+            React.createElement("polygon", { points: "11,17 13,17 13,13 17,13 17,11 13,11 13,7 11,7 11,11 7,11 7,13 11,13" })
+        ),
+        unfold: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M12,5.83L15.17,9l1.41-1.41L12,3L7.41,7.59L8.83,9L12,5.83z M12,18.17L8.83,15l-1.41,1.41L12,21l4.59-4.59L15.17,15 L12,18.17z" })
+        ),
+        threeDots: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M6,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S7.1,10,6,10z M18,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S19.1,10,18,10z M12,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S13.1,10,12,10z" })
+        ),
+        arrowDown: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { opacity: "0.87", fill: "none", d: "M24,24H0L0,0l24,0V24z" }),
+            React.createElement("path", { d: "M16.59,8.59L12,13.17L7.41,8.59L6,10l6,6l6-6L16.59,8.59z" })
+        )
+    };
+
+    var AccordionItemEdit = function (_Component) {
+        _inherits(AccordionItemEdit, _Component);
+
+        function AccordionItemEdit() {
+            _classCallCheck(this, AccordionItemEdit);
+
+            return _possibleConstructorReturn(this, (AccordionItemEdit.__proto__ || Object.getPrototypeOf(AccordionItemEdit)).apply(this, arguments));
+        }
+
+        _createClass(AccordionItemEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes,
+                    clientId = _props.clientId;
+
+                // Apply parent style if newly inserted
+
+                if (attributes.changed !== true) {
+                    var _ref = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                        getBlockRootClientId = _ref.getBlockRootClientId,
+                        getBlockAttributes = _ref.getBlockAttributes;
+
+                    var rootBlockId = getBlockRootClientId(clientId);
+                    var rootBlockAttrs = getBlockAttributes(rootBlockId);
+
+                    if (rootBlockAttrs !== null && rootBlockAttrs.needUpdate !== false) {
+                        Object.keys(rootBlockAttrs).map(function (attribute) {
+                            attributes[attribute] = rootBlockAttrs[attribute];
+                        });
+
+                        // Done applied, we will not do this again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var header = attributes.header,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    headerIcon = attributes.headerIcon,
+                    headerIconColor = attributes.headerIconColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-accordion-item" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-header",
+                            style: {
+                                backgroundColor: headerBgColor,
+                                color: headerTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        React.createElement(
+                            "span",
+                            { className: "advgb-accordion-header-icon" },
+                            React.createElement(
+                                "svg",
+                                { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                HEADER_ICONS[headerIcon]
+                            )
+                        ),
+                        React.createElement(RichText, {
+                            tagName: "h4",
+                            value: header,
+                            onChange: function onChange(value) {
+                                return setAttributes({ header: value });
+                            },
+                            unstableOnSplit: function unstableOnSplit() {
+                                return null;
+                            },
+                            className: "advgb-accordion-header-title",
+                            placeholder: __('Enter header…'),
+                            style: { color: 'inherit' }
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-body",
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        React.createElement(InnerBlocks, null)
+                    )
+                );
+            }
+        }]);
+
+        return AccordionItemEdit;
+    }(Component);
+
+    var accordionBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("rect", { x: "3", y: "17", width: "18", height: "2" }),
+        React.createElement("path", { d: "M19,12v1H5v-1H19 M21,10H3v5h18V10L21,10z" }),
+        React.createElement("rect", { x: "3", y: "6", width: "18", height: "2" })
+    );
+
+    registerBlockType('advgb/accordion-item', {
+        title: __('Accordion Item'),
+        description: __('Easy to create an accordion for your post/page.'),
+        icon: {
+            src: accordionBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        parent: ['advgb/accordions'],
+        category: 'advgb-category',
+        keywords: [__('accordion'), __('list'), __('faq')],
+        attributes: {
+            header: {
+                type: 'string',
+                default: __('Header text')
+            },
+            headerBgColor: {
+                type: 'string',
+                default: '#000'
+            },
+            headerTextColor: {
+                type: 'string',
+                default: '#eee'
+            },
+            headerIcon: {
+                type: 'string',
+                default: 'unfold'
+            },
+            headerIconColor: {
+                type: 'string',
+                default: '#fff'
+            },
+            bodyBgColor: {
+                type: 'string'
+            },
+            bodyTextColor: {
+                type: 'string'
+            },
+            borderStyle: {
+                type: 'string',
+                default: 'solid'
+            },
+            borderWidth: {
+                type: 'number',
+                default: 0
+            },
+            borderColor: {
+                type: 'string'
+            },
+            borderRadius: {
+                type: 'number',
+                default: 2
+            },
+            marginBottom: {
+                type: 'number',
+                default: 15
+            },
+            changed: {
+                type: 'boolean',
+                default: false
+            }
+        },
+        edit: AccordionItemEdit,
+        save: function save(_ref2) {
+            var attributes = _ref2.attributes;
+            var header = attributes.header,
+                headerBgColor = attributes.headerBgColor,
+                headerTextColor = attributes.headerTextColor,
+                headerIcon = attributes.headerIcon,
+                headerIconColor = attributes.headerIconColor,
+                bodyBgColor = attributes.bodyBgColor,
+                bodyTextColor = attributes.bodyTextColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                borderColor = attributes.borderColor,
+                borderRadius = attributes.borderRadius,
+                marginBottom = attributes.marginBottom;
+
+
+            return React.createElement(
+                "div",
+                { className: "advgb-accordion-item", style: { marginBottom: marginBottom } },
+                React.createElement(
+                    "div",
+                    { className: "advgb-accordion-header",
+                        style: {
+                            backgroundColor: headerBgColor,
+                            color: headerTextColor,
+                            borderStyle: borderStyle,
+                            borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
+                            borderColor: borderColor,
+                            borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
+                        }
+                    },
+                    React.createElement(
+                        "span",
+                        { className: "advgb-accordion-header-icon" },
+                        React.createElement(
+                            "svg",
+                            { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                            HEADER_ICONS[headerIcon]
+                        )
+                    ),
+                    React.createElement(
+                        "h4",
+                        { className: "advgb-accordion-header-title", style: { color: 'inherit' } },
+                        header
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "advgb-accordion-body",
+                        style: {
+                            backgroundColor: bodyBgColor,
+                            color: bodyTextColor,
+                            borderStyle: borderStyle,
+                            borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
+                            borderColor: borderColor,
+                            borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
+                        }
+                    },
+                    React.createElement(InnerBlocks.Content, null)
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/advaccordion/block.jsx":
+/*!**********************************************!*\
+  !*** ./assets/blocks/advaccordion/block.jsx ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var _wpBlockEditor = wpBlockEditor,
+        InspectorControls = _wpBlockEditor.InspectorControls,
+        BlockControls = _wpBlockEditor.BlockControls,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings,
+        InnerBlocks = _wpBlockEditor.InnerBlocks;
+    var RangeControl = wpComponents.RangeControl,
+        PanelBody = wpComponents.PanelBody,
+        BaseControl = wpComponents.BaseControl,
+        SelectControl = wpComponents.SelectControl,
+        ToggleControl = wpComponents.ToggleControl,
+        Toolbar = wpComponents.Toolbar,
+        IconButton = wpComponents.IconButton;
+    var _wp$data = wp.data,
+        select = _wp$data.select,
+        dispatch = _wp$data.dispatch;
+
+
+    var HEADER_ICONS = {
+        plus: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6V13z" })
+        ),
+        plusCircle: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z" })
+        ),
+        plusCircleOutline: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M13,7h-2v4H7v2h4v4h2v-4h4v-2h-4V7z M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20 c-4.41,0-8-3.59-8-8s3.59-8,8-8s8,3.59,8,8S16.41,20,12,20z" })
+        ),
+        plusBox: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M19,3H5C3.89,3,3,3.9,3,5v14c0,1.1,0.89,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V5h14V19z" }),
+            React.createElement("polygon", { points: "11,17 13,17 13,13 17,13 17,11 13,11 13,7 11,7 11,11 7,11 7,13 11,13" })
+        ),
+        unfold: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M12,5.83L15.17,9l1.41-1.41L12,3L7.41,7.59L8.83,9L12,5.83z M12,18.17L8.83,15l-1.41,1.41L12,21l4.59-4.59L15.17,15 L12,18.17z" })
+        ),
+        threeDots: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+            React.createElement("path", { d: "M6,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S7.1,10,6,10z M18,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S19.1,10,18,10z M12,10c-1.1,0-2,0.9-2,2s0.9,2,2,2s2-0.9,2-2S13.1,10,12,10z" })
+        ),
+        arrowDown: React.createElement(
+            Fragment,
+            null,
+            React.createElement("path", { opacity: "0.87", fill: "none", d: "M24,24H0L0,0l24,0V24z" }),
+            React.createElement("path", { d: "M16.59,8.59L12,13.17L7.41,8.59L6,10l6,6l6-6L16.59,8.59z" })
+        )
+    };
+
+    var AccordionsEdit = function (_Component) {
+        _inherits(AccordionsEdit, _Component);
+
+        function AccordionsEdit() {
+            _classCallCheck(this, AccordionsEdit);
+
+            var _this = _possibleConstructorReturn(this, (AccordionsEdit.__proto__ || Object.getPrototypeOf(AccordionsEdit)).apply(this, arguments));
+
+            _this.updateAccordionAttrs = _this.updateAccordionAttrs.bind(_this);
+            return _this;
+        }
+
+        _createClass(AccordionsEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-accordions'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate() {
+                var clientId = this.props.clientId;
+
+                var _ref = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    removeBlock = _ref.removeBlock;
+
+                var _ref2 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref2.getBlockOrder;
+
+                var childBlocks = getBlockOrder(clientId);
+
+                if (childBlocks.length < 1) {
+                    // No accordion left, we will remove this block
+                    // removeBlock(clientId);
+                }
+            }
+        }, {
+            key: "updateAccordionAttrs",
+            value: function updateAccordionAttrs(attrs) {
+                var _props2 = this.props,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+
+                var _ref3 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref3.updateBlockAttributes;
+
+                var _ref4 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref4.getBlockOrder;
+
+                var childBlocks = getBlockOrder(clientId);
+
+                setAttributes(attrs);
+                childBlocks.forEach(function (childBlockId) {
+                    return updateBlockAttributes(childBlockId, attrs);
+                });
+            }
+        }, {
+            key: "resyncAccordions",
+            value: function resyncAccordions() {
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
+
+                var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref5.updateBlockAttributes;
+
+                var _ref6 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref6.getBlockOrder;
+
+                var childBlocks = getBlockOrder(clientId);
+
+                childBlocks.forEach(function (childBlockId) {
+                    return updateBlockAttributes(childBlockId, attributes);
+                });
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
+                var headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    headerIcon = attributes.headerIcon,
+                    headerIconColor = attributes.headerIconColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    marginBottom = attributes.marginBottom,
+                    collapsedAll = attributes.collapsedAll;
+
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(
+                            Toolbar,
+                            null,
+                            React.createElement(IconButton, {
+                                icon: "update",
+                                onClick: function onClick() {
+                                    return _this2.resyncAccordions();
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Accordion Settings') },
+                            React.createElement(RangeControl, {
+                                label: __('Bottom spacing'),
+                                value: marginBottom,
+                                help: __('Define space between each accordion (Frontend view only)'),
+                                min: 0,
+                                max: 50,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ marginBottom: value });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Initial Collapsed'),
+                                help: __('Make all accordions collapsed by default.'),
+                                checked: collapsedAll,
+                                onChange: function onChange() {
+                                    return setAttributes({ collapsedAll: !collapsedAll });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Header Settings') },
+                            React.createElement(
+                                BaseControl,
+                                { label: __('Header Icon Style') },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper" },
+                                    Object.keys(HEADER_ICONS).map(function (key, index) {
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: index },
+                                            React.createElement(
+                                                "span",
+                                                { className: key === headerIcon ? 'active' : '',
+                                                    onClick: function onClick() {
+                                                        return _this2.updateAccordionAttrs({ headerIcon: key });
+                                                    } },
+                                                React.createElement(
+                                                    "svg",
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    HEADER_ICONS[key]
+                                                )
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color'),
+                                    value: headerBgColor,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateAccordionAttrs({ headerBgColor: value === undefined ? '#000' : value });
+                                    }
+                                }, {
+                                    label: __('Text Color'),
+                                    value: headerTextColor,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateAccordionAttrs({ headerTextColor: value === undefined ? '#eee' : value });
+                                    }
+                                }, {
+                                    label: __('Icon Color'),
+                                    value: headerIconColor,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateAccordionAttrs({ headerIconColor: value === undefined ? '#fff' : value });
+                                    }
+                                }]
+                            })
+                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Body Color Settings'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color'),
+                                value: bodyBgColor,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ bodyBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color'),
+                                value: bodyTextColor,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ bodyTextColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Border Settings'), initialOpen: false },
+                            React.createElement(SelectControl, {
+                                label: __('Border Style'),
+                                value: borderStyle,
+                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ borderStyle: value });
+                                }
+                            }),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border Color'),
+                                    value: borderColor,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateAccordionAttrs({ borderColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border width'),
+                                value: borderWidth,
+                                min: 0,
+                                max: 10,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ borderWidth: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border radius'),
+                                value: borderRadius,
+                                min: 0,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ borderRadius: value });
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordions-wrapper" },
+                        React.createElement(InnerBlocks, {
+                            template: [['advgb/accordion-item'], ['advgb/accordion-item']],
+                            templateLock: false,
+                            allowedBlocks: ['advgb/accordion-item']
+                        })
+                    )
+                );
+            }
+        }]);
+
+        return AccordionsEdit;
+    }(Component);
+
+    var accordionBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
+        React.createElement("path", { d: "M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z" })
+    );
+
+    var blockAttrs = {
+        headerBgColor: {
+            type: 'string',
+            default: '#000'
+        },
+        headerTextColor: {
+            type: 'string',
+            default: '#eee'
+        },
+        headerIcon: {
+            type: 'string',
+            default: 'unfold'
+        },
+        headerIconColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        bodyBgColor: {
+            type: 'string'
+        },
+        bodyTextColor: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid'
+        },
+        borderWidth: {
+            type: 'number',
+            default: 0
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderRadius: {
+            type: 'number',
+            default: 2
+        },
+        marginBottom: {
+            type: 'number',
+            default: 15
+        },
+        collapsedAll: {
+            type: 'boolean',
+            default: false
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        },
+        needUpdate: {
+            type: 'boolean',
+            default: true
+        }
+    };
+
+    registerBlockType('advgb/accordions', {
+        title: __('Advanced Accordion'),
+        description: __('Easy to create an accordion for your post/page.'),
+        icon: {
+            src: accordionBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('accordion'), __('list'), __('faq')],
+        attributes: blockAttrs,
+        edit: AccordionsEdit,
+        save: function save(_ref7) {
+            var attributes = _ref7.attributes;
+            var collapsedAll = attributes.collapsedAll;
+
+
+            return React.createElement(
+                "div",
+                { className: "advgb-accordion-wrapper", "data-collapsed": collapsedAll ? collapsedAll : undefined },
+                React.createElement(InnerBlocks.Content, null)
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
@@ -594,6 +1461,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./assets/blocks/0-adv-components/components.jsx");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -612,8 +1481,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BlockControls = _wpBlockEditor.BlockControls,
         BlockAlignmentToolbar = _wpBlockEditor.BlockAlignmentToolbar,
         RichText = _wpBlockEditor.RichText,
-        PanelColorSettings = _wpBlockEditor.PanelColorSettings;
-    var RangeControl = wpComponents.RangeControl,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings,
+        URLInput = _wpBlockEditor.URLInput;
+    var BaseControl = wpComponents.BaseControl,
+        RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         TextControl = wpComponents.TextControl,
         ToggleControl = wpComponents.ToggleControl,
@@ -702,8 +1573,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hoverShadowV = attributes.hoverShadowV,
                     hoverShadowBlur = attributes.hoverShadowBlur,
                     hoverShadowSpread = attributes.hoverShadowSpread,
+                    hoverOpacity = attributes.hoverOpacity,
                     transitionSpeed = attributes.transitionSpeed;
 
+
+                var isStyleSquared = className.indexOf('-squared') > -1;
+                var isStyleOutlined = className.indexOf('-outline') > -1;
+                var hoverColorSettings = [{
+                    label: __('Background Color'),
+                    value: hoverBgColor,
+                    onChange: function onChange(value) {
+                        return setAttributes({ hoverBgColor: value === undefined ? '#2196f3' : value });
+                    }
+                }, {
+                    label: __('Text Color'),
+                    value: hoverTextColor,
+                    onChange: function onChange(value) {
+                        return setAttributes({ hoverTextColor: value === undefined ? '#fff' : value });
+                    }
+                }, {
+                    label: __('Shadow Color'),
+                    value: hoverShadowColor,
+                    onChange: function onChange(value) {
+                        return setAttributes({ hoverShadowColor: value === undefined ? '#ccc' : value });
+                    }
+                }];
+
+                if (isStyleOutlined) {
+                    hoverColorSettings.shift();
+                }
 
                 return React.createElement(
                     Fragment,
@@ -729,8 +1627,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         'span',
-                        { style: { display: 'inline-block' } },
+                        { className: className + ' align' + align,
+                            style: { display: 'inline-block' }
+                        },
                         React.createElement(RichText, {
+                            tagName: 'span',
                             placeholder: __('Add text…'),
                             value: text,
                             onChange: function onChange(value) {
@@ -745,7 +1646,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'style',
                         null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ';\n                        background-color: ' + bgColor + ';\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ';\n                        border-radius: ' + borderRadius + 'px;\n                        border-style: ' + borderStyle + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ';\n                        background-color: ' + hoverBgColor + ';\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                    }'
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ' !important;\n                        background-color: ' + bgColor + ' !important;\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ' !important;\n                        border-radius: ' + borderRadius + 'px !important;\n                        border-style: ' + borderStyle + ' ' + (borderStyle !== 'none' && '!important') + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ' !important;\n                        background-color: ' + hoverBgColor + ' !important;\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
                     ),
                     React.createElement(
                         InspectorControls,
@@ -753,18 +1654,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Button link') },
-                            React.createElement(TextControl, {
-                                label: [__('Link URL'), url && React.createElement(
-                                    'a',
-                                    { href: url || '#', key: 'link_url', target: '_blank', style: { float: 'right' } },
-                                    __('Preview')
-                                )],
-                                value: url || '',
-                                placeholder: __('Enter URL…'),
-                                onChange: function onChange(text) {
-                                    return setAttributes({ url: text });
-                                }
-                            }),
+                            React.createElement(
+                                BaseControl,
+                                {
+                                    label: [__('Link URL'), url && React.createElement(
+                                        'a',
+                                        { href: url || '#', key: 'link_url', target: '_blank', style: { float: 'right' } },
+                                        __('Preview')
+                                    )]
+                                },
+                                React.createElement(URLInput, {
+                                    value: url,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ url: value });
+                                    },
+                                    isFullWidth: true,
+                                    hasBorder: true
+                                })
+                            ),
                             React.createElement(ToggleControl, {
                                 label: __('Open in new tab'),
                                 checked: !!urlOpenNewTab,
@@ -787,28 +1694,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 beforeIcon: 'editor-textcolor',
                                 allowReset: true
                             }),
-                            React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
-                                initialOpen: false,
-                                colorSettings: [{
-                                    label: __('Background Color'),
-                                    value: bgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ bgColor: value === undefined ? '#2196f3' : value });
-                                    }
-                                }, {
-                                    label: __('Text Color'),
-                                    value: textColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textColor: value === undefined ? '#fff' : value });
-                                    }
-                                }]
+                            !isStyleOutlined && React.createElement(_components.AdvColorControl, {
+                                label: __('Background Color'),
+                                value: bgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bgColor: value });
+                                }
+                            }),
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Text Color'),
+                                value: textColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ textColor: value });
+                                }
                             })
                         ),
                         React.createElement(
                             PanelBody,
                             { title: __('Border'), initialOpen: false },
-                            React.createElement(RangeControl, {
+                            !isStyleSquared && React.createElement(RangeControl, {
                                 label: __('Border radius'),
                                 value: borderRadius || '',
                                 onChange: function onChange(value) {
@@ -896,29 +1800,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(PanelColorSettings, {
                                 title: __('Color Settings'),
                                 initialOpen: false,
-                                colorSettings: [{
-                                    label: __('Background Color'),
-                                    value: hoverBgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ hoverBgColor: value === undefined ? '#2196f3' : value });
-                                    }
-                                }, {
-                                    label: __('Text Color'),
-                                    value: hoverTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ hoverTextColor: value === undefined ? '#fff' : value });
-                                    }
-                                }, {
-                                    label: __('Shadow Color'),
-                                    value: hoverShadowColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ hoverShadowColor: value === undefined ? '#ccc' : value });
-                                    }
-                                }]
+                                colorSettings: hoverColorSettings
                             }),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Shadow'), initialOpen: false },
+                                React.createElement(RangeControl, {
+                                    label: __('Opacity (%)'),
+                                    value: hoverOpacity,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ hoverOpacity: value });
+                                    },
+                                    min: 0,
+                                    max: 100
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Transition speed (ms)'),
+                                    value: transitionSpeed || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ transitionSpeed: value });
+                                    },
+                                    min: 0,
+                                    max: 3000
+                                }),
                                 React.createElement(RangeControl, {
                                     label: __('Shadow H offset'),
                                     value: hoverShadowH || '',
@@ -955,16 +1859,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     min: 0,
                                     max: 50
                                 })
-                            ),
-                            React.createElement(RangeControl, {
-                                label: __('Transition speed (ms)'),
-                                value: transitionSpeed || '',
-                                onChange: function onChange(value) {
-                                    return setAttributes({ transitionSpeed: value });
-                                },
-                                min: 0,
-                                max: 3000
-                            })
+                            )
                         )
                     )
                 );
@@ -996,15 +1891,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         text: {
             source: 'children',
-            selector: 'a'
+            selector: 'a',
+            default: __('PUSH THE BUTTON')
         },
         bgColor: {
-            type: 'string',
-            default: '#2196f3'
+            type: 'string'
         },
         textColor: {
-            type: 'string',
-            default: '#fff'
+            type: 'string'
         },
         textSize: {
             type: 'number',
@@ -1012,43 +1906,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         paddingTop: {
             type: 'number',
-            default: 6
+            default: 10
         },
         paddingRight: {
             type: 'number',
-            default: 12
+            default: 30
         },
         paddingBottom: {
             type: 'number',
-            default: 6
+            default: 10
         },
         paddingLeft: {
             type: 'number',
-            default: 12
+            default: 30
         },
         borderWidth: {
             type: 'number',
             default: 1
         },
         borderColor: {
-            type: 'string',
-            default: '#2196f3'
+            type: 'string'
         },
         borderStyle: {
             type: 'string',
-            default: 'solid'
+            default: 'none'
         },
         borderRadius: {
             type: 'number',
             default: 50
         },
         hoverTextColor: {
-            type: 'string',
-            default: '#fff'
+            type: 'string'
         },
         hoverBgColor: {
-            type: 'string',
-            default: '#2196f3'
+            type: 'string'
         },
         hoverShadowColor: {
             type: 'string',
@@ -1056,19 +1947,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         hoverShadowH: {
             type: 'number',
-            default: 3
+            default: 1
         },
         hoverShadowV: {
             type: 'number',
-            default: 3
+            default: 1
         },
         hoverShadowBlur: {
             type: 'number',
-            default: 1
+            default: 12
         },
         hoverShadowSpread: {
             type: 'number',
             default: 0
+        },
+        hoverOpacity: {
+            type: 'number',
+            default: 100
         },
         transitionSpeed: {
             type: 'number',
@@ -1114,6 +2009,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }]
         },
+        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'outlined', label: __('Outlined') }, { name: 'squared', label: __('Squared') }, { name: 'squared-outline', label: __('Squared Outline') }],
         edit: AdvButton,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -2144,6 +3040,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -3041,14 +3941,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 var fromCell = rangeSelected.fromCell,
                                     toCell = rangeSelected.toCell;
 
-                                var fCell = attributes[sectionSelected][fromCell.rowIdx].cells[fromCell.colIdx];
-                                var tCell = attributes[sectionSelected][toCell.rowIdx].cells[toCell.colIdx];
-                                var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
-                                var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
-                                var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
-                                var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                                if (attributes[sectionSelected][fromCell.rowIdx] && attributes[sectionSelected][toCell.rowIdx]) {
+                                    var fCell = attributes[sectionSelected][fromCell.rowIdx].cells[fromCell.colIdx];
+                                    var tCell = attributes[sectionSelected][toCell.rowIdx].cells[toCell.colIdx];
+                                    var fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                                    var frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                                    var tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                                    var trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
 
-                                isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan) && section === sectionSelected;
+                                    isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx) && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan) && cI >= Math.min(fromCell.RCI, toCell.RCI) && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan) && section === sectionSelected;
+                                }
                             }
 
                             if (_this3.isMultiSelected()) {
@@ -3469,6 +4371,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(DropdownMenu, {
+                                hasArrowIndicator: true,
                                 icon: "editor-table",
                                 label: __('Edit Table'),
                                 controls: TABLE_CONTROLS
@@ -3938,6 +4841,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+var AdvColorPalette = exports.AdvColorPalette = React.createElement(
+    "div",
+    null,
+    "123"
+);
 
 /***/ }),
 
@@ -5703,7 +6612,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     getBlockRootClientId = _ref.getBlockRootClientId,
                     getBlockAttributes = _ref.getBlockAttributes;
 
-                ;
                 var hasChildBlocks = getBlockOrder(clientId).length > 0;
                 var rootBlockId = getBlockRootClientId(clientId);
                 var rootChildBlocks = getBlockOrder(rootBlockId).filter(function (blockId) {
@@ -5814,6 +6722,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' text alignment')
                                 },
                                 React.createElement(AlignmentToolbar, {
+                                    isCollapsed: false,
                                     value: attributes['textAlign' + deviceLetter],
                                     onChange: function onChange(align) {
                                         return setAttributes(_defineProperty({}, 'textAlign' + deviceLetter, align));
@@ -8476,6 +9385,1690 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/blocks/login-form/block.jsx":
+/*!********************************************!*\
+  !*** ./assets/blocks/login-form/block.jsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./assets/blocks/0-adv-components/components.jsx");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var _wpBlockEditor = wpBlockEditor,
+        InspectorControls = _wpBlockEditor.InspectorControls,
+        BlockControls = _wpBlockEditor.BlockControls,
+        RichText = _wpBlockEditor.RichText,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings,
+        MediaUpload = _wpBlockEditor.MediaUpload;
+    var RangeControl = wpComponents.RangeControl,
+        PanelBody = wpComponents.PanelBody,
+        TextControl = wpComponents.TextControl,
+        SelectControl = wpComponents.SelectControl,
+        ToggleControl = wpComponents.ToggleControl,
+        Tooltip = wpComponents.Tooltip,
+        Toolbar = wpComponents.Toolbar,
+        IconButton = wpComponents.IconButton,
+        Placeholder = wpComponents.Placeholder;
+
+
+    var userIcon = React.createElement(
+        "svg",
+        { fill: "currentColor", width: "24", height: "24", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("path", { d: "M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z" }),
+        React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+    );
+    var emailIcon = React.createElement(
+        "svg",
+        { fill: "currentColor", width: "24", height: "24", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10h5v-2h-5c-4.34 0-8-3.66-8-8s3.66-8 8-8 8 3.66 8 8v1.43c0 .79-.71 1.57-1.5 1.57s-1.5-.78-1.5-1.57V12c0-2.76-2.24-5-5-5s-5 2.24-5 5 2.24 5 5 5c1.38 0 2.64-.56 3.54-1.47.65.89 1.77 1.47 2.96 1.47 1.97 0 3.5-1.6 3.5-3.57V12c0-5.52-4.48-10-10-10zm0 13c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" }),
+        React.createElement("path", { fill: "none", d: "M0 0h24v24H0z" })
+    );
+    var passwordIcon = React.createElement(
+        "svg",
+        { fill: "currentColor", width: "24", height: "24", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement(
+            "g",
+            { fill: "none" },
+            React.createElement("path", { d: "M0 0h24v24H0V0z" }),
+            React.createElement("path", { opacity: ".87", d: "M0 0h24v24H0V0z" })
+        ),
+        React.createElement("path", { d: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" })
+    );
+
+    var LoginFormEdit = function (_Component) {
+        _inherits(LoginFormEdit, _Component);
+
+        function LoginFormEdit() {
+            _classCallCheck(this, LoginFormEdit);
+
+            var _this = _possibleConstructorReturn(this, (LoginFormEdit.__proto__ || Object.getPrototypeOf(LoginFormEdit)).apply(this, arguments));
+
+            _this.state = {
+                registerView: false
+            };
+            return _this;
+        }
+
+        _createClass(LoginFormEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-login-form'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+
+                // Change view to Register form regard to initial form option
+                this.setState({ registerView: attributes.formType === 'register' });
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    clientId = _props2.clientId,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var submitButtonId = attributes.submitButtonId;
+
+
+                if (!submitButtonId) {
+                    setAttributes({ submitButtonId: "advgb-submit-btn-" + clientId });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var registerView = this.state.registerView;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
+                var formType = attributes.formType,
+                    formWidth = attributes.formWidth,
+                    redirect = attributes.redirect,
+                    redirectLink = attributes.redirectLink,
+                    showLogo = attributes.showLogo,
+                    showInputFieldIcon = attributes.showInputFieldIcon,
+                    showRegisterLink = attributes.showRegisterLink,
+                    showLostPasswordLink = attributes.showLostPasswordLink,
+                    logoImg = attributes.logoImg,
+                    logoID = attributes.logoID,
+                    registerLogoImg = attributes.registerLogoImg,
+                    registerLogoID = attributes.registerLogoID,
+                    logoWidth = attributes.logoWidth,
+                    welcomeText = attributes.welcomeText,
+                    loginLabel = attributes.loginLabel,
+                    loginText = attributes.loginText,
+                    passwordText = attributes.passwordText,
+                    usernameLabel = attributes.usernameLabel,
+                    userText = attributes.userText,
+                    emailLabel = attributes.emailLabel,
+                    emailText = attributes.emailText,
+                    rememberMeText = attributes.rememberMeText,
+                    loginSubmitLabel = attributes.loginSubmitLabel,
+                    registerSubmitLabel = attributes.registerSubmitLabel,
+                    registerText = attributes.registerText,
+                    registerLinkText = attributes.registerLinkText,
+                    registerWelcome = attributes.registerWelcome,
+                    backToLoginText = attributes.backToLoginText,
+                    lostPasswordText = attributes.lostPasswordText,
+                    headerBgColor = attributes.headerBgColor,
+                    bgColor = attributes.bgColor,
+                    textColor = attributes.textColor,
+                    inputColor = attributes.inputColor,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    submitColor = attributes.submitColor,
+                    submitBgColor = attributes.submitBgColor,
+                    submitRadius = attributes.submitRadius,
+                    submitPosition = attributes.submitPosition,
+                    submitButtonId = attributes.submitButtonId,
+                    submitHoverColor = attributes.submitHoverColor,
+                    submitHoverBgColor = attributes.submitHoverBgColor,
+                    submitHoverShadow = attributes.submitHoverShadow,
+                    submitHoverShadowH = attributes.submitHoverShadowH,
+                    submitHoverShadowV = attributes.submitHoverShadowV,
+                    submitHoverShadowBlur = attributes.submitHoverShadowBlur,
+                    submitHoverShadowSpread = attributes.submitHoverShadowSpread,
+                    submitHoverOpacity = attributes.submitHoverOpacity,
+                    submitHoverTranSpeed = attributes.submitHoverTranSpeed;
+
+
+                var logoElm = React.createElement(MediaUpload, {
+                    allowedTypes: ["image"],
+                    onSelect: function onSelect(media) {
+                        return setAttributes({
+                            logoImg: media.sizes.medium ? media.sizes.medium.url : media.sizes.full.url,
+                            logoID: media.id
+                        });
+                    },
+                    value: logoID,
+                    render: function render(_ref) {
+                        var open = _ref.open;
+                        return React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-logo-wrapper" },
+                            React.createElement(
+                                Tooltip,
+                                { text: __('Click to change logo') },
+                                React.createElement(
+                                    "span",
+                                    { style: {
+                                            display: 'block'
+                                        } },
+                                    React.createElement("img", { className: "advgb-lores-form-logo",
+                                        onClick: open,
+                                        src: logoImg,
+                                        alt: __('Site logo'),
+                                        style: {
+                                            width: logoWidth ? logoWidth + 'px' : undefined,
+                                            cursor: 'pointer'
+                                        }
+                                    })
+                                )
+                            )
+                        );
+                    }
+                });
+
+                var regLogoElm = React.createElement(MediaUpload, {
+                    allowedTypes: ["image"],
+                    onSelect: function onSelect(media) {
+                        return setAttributes({
+                            registerLogoImg: media.sizes.medium ? media.sizes.medium.url : media.sizes.full.url,
+                            registerLogoID: media.id
+                        });
+                    },
+                    value: registerLogoID,
+                    render: function render(_ref2) {
+                        var open = _ref2.open;
+                        return React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-logo-wrapper" },
+                            React.createElement(
+                                Tooltip,
+                                { text: __('Click to change logo') },
+                                React.createElement(
+                                    "span",
+                                    { style: {
+                                            display: 'block'
+                                        } },
+                                    React.createElement("img", { className: "advgb-lores-form-logo",
+                                        onClick: open,
+                                        src: registerLogoImg,
+                                        alt: __('Site logo'),
+                                        style: {
+                                            width: logoWidth ? logoWidth + 'px' : undefined,
+                                            cursor: 'pointer'
+                                        }
+                                    })
+                                )
+                            )
+                        );
+                    }
+                });
+
+                var loginForm = React.createElement(
+                    "div",
+                    { className: "advgb-login-form-wrapper advgb-lores-form" },
+                    !!showRegisterLink && React.createElement(
+                        "div",
+                        { className: "advgb-register-link-wrapper advgb-header-navigation",
+                            style: { backgroundColor: headerBgColor }
+                        },
+                        React.createElement(RichText, {
+                            tagName: "span",
+                            value: registerText,
+                            className: "advgb-register-text",
+                            onChange: function onChange(value) {
+                                return setAttributes({ registerText: value.trim() });
+                            },
+                            style: { color: textColor },
+                            onReplace: function onReplace() {
+                                return null;
+                            },
+                            onSplit: function onSplit() {
+                                return null;
+                            },
+                            placeholder: __('Text…'),
+                            keepPlaceholderOnFocus: true
+                        }),
+                        React.createElement(RichText, {
+                            tagName: "a",
+                            value: registerLinkText,
+                            className: "advgb-register-link",
+                            onChange: function onChange(value) {
+                                return setAttributes({ registerLinkText: value.trim() });
+                            },
+                            style: { color: submitBgColor },
+                            onReplace: function onReplace() {
+                                return null;
+                            },
+                            onSplit: function onSplit() {
+                                return null;
+                            },
+                            placeholder: __('Register…'),
+                            keepPlaceholderOnFocus: true
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-login-form advgb-form-inner" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-header" },
+                            !!showLogo && logoElm,
+                            React.createElement(RichText, {
+                                tagName: "h3",
+                                value: welcomeText,
+                                className: "advgb-lores-form-welcome",
+                                onChange: function onChange(value) {
+                                    return setAttributes({ welcomeText: value.trim() });
+                                },
+                                style: { color: textColor },
+                                placeholder: __('Welcome text…'),
+                                keepPlaceholderOnFocus: true
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-login-user" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(RichText, {
+                                    tagName: "label",
+                                    value: loginText,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ loginText: value.trim() });
+                                    },
+                                    style: { color: textColor },
+                                    onReplace: function onReplace() {
+                                        return null;
+                                    },
+                                    onSplit: function onSplit() {
+                                        return null;
+                                    },
+                                    placeholder: __('Username label…'),
+                                    keepPlaceholderOnFocus: true
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    emailIcon
+                                ),
+                                React.createElement("input", { type: "text", disabled: true,
+                                    className: "advgb-lores-input",
+                                    style: { color: inputColor },
+                                    value: loginLabel ? loginLabel : __('user@email.com')
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-login-password" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(RichText, {
+                                    tagName: "label",
+                                    value: passwordText,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ passwordText: value.trim() });
+                                    },
+                                    style: { color: textColor },
+                                    onReplace: function onReplace() {
+                                        return null;
+                                    },
+                                    onSplit: function onSplit() {
+                                        return null;
+                                    },
+                                    placeholder: __('Password label…'),
+                                    keepPlaceholderOnFocus: true
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    passwordIcon
+                                ),
+                                React.createElement("input", { type: "password", disabled: true,
+                                    className: "advgb-lores-input",
+                                    style: { color: inputColor },
+                                    value: "password"
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-" + submitPosition },
+                            React.createElement(
+                                "label",
+                                { htmlFor: "rememberme", className: "remember-me-label" },
+                                React.createElement("input", { type: "checkbox",
+                                    checked: true,
+                                    className: "advgb-lores-checkbox",
+                                    style: { color: submitBgColor }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "remember-me-switch", style: { color: submitBgColor } },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        React.createElement(RichText, {
+                                            tagName: "span",
+                                            value: rememberMeText,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ passwordText: value.trim() });
+                                            },
+                                            style: { color: textColor },
+                                            onReplace: function onReplace() {
+                                                return null;
+                                            },
+                                            onSplit: function onSplit() {
+                                                return null;
+                                            },
+                                            placeholder: __('Remember me…'),
+                                            keepPlaceholderOnFocus: true
+                                        })
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-submit advgb-login-submit" },
+                                React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-submit-button " + submitButtonId,
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
+                                    },
+                                    React.createElement(RichText, {
+                                        tagName: "span",
+                                        value: loginSubmitLabel,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ loginSubmitLabel: value.trim() });
+                                        },
+                                        onReplace: function onReplace() {
+                                            return null;
+                                        },
+                                        onSplit: function onSplit() {
+                                            return null;
+                                        },
+                                        placeholder: __('Login…'),
+                                        keepPlaceholderOnFocus: true
+                                    })
+                                )
+                            )
+                        ),
+                        !!showLostPasswordLink && React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lost-password-field" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lost-password" },
+                                React.createElement(RichText, {
+                                    tagName: "a",
+                                    value: lostPasswordText,
+                                    className: "advgb-lost-password-link",
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ lostPasswordText: value.trim() });
+                                    },
+                                    style: { color: submitBgColor },
+                                    onReplace: function onReplace() {
+                                        return null;
+                                    },
+                                    onSplit: function onSplit() {
+                                        return null;
+                                    },
+                                    placeholder: __('Lost password…'),
+                                    keepPlaceholderOnFocus: true
+                                })
+                            )
+                        )
+                    )
+                );
+
+                var registerForm = React.createElement(
+                    "div",
+                    { className: "advgb-register-form-wrapper advgb-lores-form" },
+                    !!showRegisterLink && React.createElement(
+                        "div",
+                        { className: "advgb-header-navigation advgb-back-to-login",
+                            style: { backgroundColor: headerBgColor }
+                        },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-back-to-login-link",
+                                style: { color: submitBgColor }
+                            },
+                            React.createElement(RichText, {
+                                tagName: "span",
+                                value: backToLoginText,
+                                className: "advgb-register-text",
+                                onChange: function onChange(value) {
+                                    return setAttributes({ backToLoginText: value.trim() });
+                                },
+                                style: { color: submitBgColor },
+                                onReplace: function onReplace() {
+                                    return null;
+                                },
+                                onSplit: function onSplit() {
+                                    return null;
+                                },
+                                placeholder: __('Back…'),
+                                keepPlaceholderOnFocus: true
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-register-form advgb-form-inner" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-header" },
+                            !!showLogo && regLogoElm,
+                            React.createElement(RichText, {
+                                tagName: "h3",
+                                value: registerWelcome,
+                                className: "advgb-lores-form-welcome",
+                                onChange: function onChange(value) {
+                                    return setAttributes({ registerWelcome: value.trim() });
+                                },
+                                style: { color: textColor },
+                                placeholder: __('Register…'),
+                                keepPlaceholderOnFocus: true
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-register-username" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(RichText, {
+                                    tagName: "label",
+                                    value: userText,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ userText: value.trim() });
+                                    },
+                                    style: { color: textColor },
+                                    onReplace: function onReplace() {
+                                        return null;
+                                    },
+                                    onSplit: function onSplit() {
+                                        return null;
+                                    },
+                                    placeholder: __('Username label…'),
+                                    keepPlaceholderOnFocus: true
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    userIcon
+                                ),
+                                React.createElement("input", { type: "text", disabled: true,
+                                    className: "advgb-lores-input",
+                                    style: { color: inputColor },
+                                    value: usernameLabel ? usernameLabel : __('username')
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-register-email" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(RichText, {
+                                    tagName: "label",
+                                    value: emailText,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ emailText: value.trim() });
+                                    },
+                                    style: { color: textColor },
+                                    onReplace: function onReplace() {
+                                        return null;
+                                    },
+                                    onSplit: function onSplit() {
+                                        return null;
+                                    },
+                                    placeholder: __('Email label…'),
+                                    keepPlaceholderOnFocus: true
+                                })
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    emailIcon
+                                ),
+                                React.createElement("input", { type: "text", disabled: true,
+                                    className: "advgb-lores-input",
+                                    style: { color: inputColor },
+                                    value: emailLabel ? emailLabel : __('user@email.com')
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-" + submitPosition },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-submit advgb-register-submit" },
+                                React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-submit-button " + submitButtonId,
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
+                                    },
+                                    React.createElement(RichText, {
+                                        tagName: "span",
+                                        value: registerSubmitLabel,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ registerSubmitLabel: value.trim() });
+                                        },
+                                        onReplace: function onReplace() {
+                                            return null;
+                                        },
+                                        onSplit: function onSplit() {
+                                            return null;
+                                        },
+                                        placeholder: __('Register…'),
+                                        keepPlaceholderOnFocus: true
+                                    })
+                                )
+                            )
+                        )
+                    )
+                );
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(
+                            Toolbar,
+                            null,
+                            React.createElement(IconButton, {
+                                icon: "image-flip-horizontal",
+                                label: __('Switch View'),
+                                onClick: function onClick() {
+                                    return _this2.setState({ registerView: !registerView });
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Form State') },
+                            React.createElement(SelectControl, {
+                                label: __('Initial Form'),
+                                help: __('Form that show on load.'),
+                                value: formType,
+                                options: [{ label: __('Login'), value: 'login' }, { label: __('Register'), value: 'register' }],
+                                onChange: function onChange(value) {
+                                    setAttributes({ formType: value });
+                                    _this2.setState({ registerView: value === 'register' });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Redirect After Login'),
+                                value: redirect,
+                                options: [{ label: __('Home'), value: 'home' }, { label: __('Dashboard'), value: 'dashboard' }, { label: __('Custom'), value: 'custom' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ redirect: value });
+                                }
+                            }),
+                            redirect === 'custom' && React.createElement(TextControl, {
+                                label: __('Custom redirect link'),
+                                value: redirectLink,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ redirectLink: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Form Width (px)'),
+                                value: formWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ formWidth: value });
+                                },
+                                min: 300,
+                                max: 1500
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Show Logo'),
+                                checked: !!showLogo,
+                                onChange: function onChange() {
+                                    return setAttributes({ showLogo: !showLogo });
+                                }
+                            }),
+                            !!showLogo && React.createElement(RangeControl, {
+                                label: __('Logo Width (px)'),
+                                value: logoWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ logoWidth: value });
+                                },
+                                min: 100,
+                                max: 1500
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Show input field icon'),
+                                checked: !!showInputFieldIcon,
+                                onChange: function onChange() {
+                                    return setAttributes({ showInputFieldIcon: !showInputFieldIcon });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Show register/header link'),
+                                checked: !!showRegisterLink,
+                                onChange: function onChange() {
+                                    return setAttributes({ showRegisterLink: !showRegisterLink });
+                                }
+                            }),
+                            !!showRegisterLink && React.createElement(PanelColorSettings, {
+                                title: __('Header Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Header color'),
+                                    value: headerBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ headerBgColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Show lost password link'),
+                                checked: !!showLostPasswordLink,
+                                onChange: function onChange() {
+                                    return setAttributes({ showLostPasswordLink: !showLostPasswordLink });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Input placeholder'), initialOpen: false },
+                            React.createElement(TextControl, {
+                                label: __('Login input placeholder'),
+                                value: loginLabel,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ loginLabel: value });
+                                }
+                            }),
+                            React.createElement(TextControl, {
+                                label: __('Username input placeholder'),
+                                help: __('Use in register form'),
+                                value: usernameLabel,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ usernameLabel: value });
+                                }
+                            }),
+                            React.createElement(TextControl, {
+                                label: __('Email input placeholder'),
+                                help: __('Use in register form'),
+                                value: emailLabel,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ emailLabel: value });
+                                }
+                            })
+                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Text/Input Color'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Input background color'),
+                                value: bgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bgColor: value });
+                                }
+                            }, {
+                                label: __('Input color'),
+                                value: inputColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ inputColor: value });
+                                }
+                            }, {
+                                label: __('Text color'),
+                                value: textColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ textColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Border Settings'), initialOpen: false },
+                            React.createElement(PanelColorSettings, {
+                                title: __('Border Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border color'),
+                                    value: borderColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Border Style'),
+                                value: borderStyle,
+                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderStyle: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border width'),
+                                value: borderWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderWidth: value });
+                                },
+                                min: 0,
+                                max: 10
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Submit Button Settings') },
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Border and Text'),
+                                value: submitColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ submitColor: value });
+                                }
+                            }),
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Background'),
+                                value: submitBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ submitBgColor: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Button border radius'),
+                                value: submitRadius,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ submitRadius: value });
+                                },
+                                min: 0,
+                                max: 50
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Button position'),
+                                value: submitPosition,
+                                options: [{ label: __('Center'), value: 'center' }, { label: __('Left'), value: 'left' }, { label: __('Right'), value: 'right' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ submitPosition: value });
+                                }
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Submit Button Hover'), initialOpen: false },
+                            React.createElement(PanelColorSettings, {
+                                title: __('Hover Colors'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background color'),
+                                    value: submitHoverBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverBgColor: value });
+                                    }
+                                }, {
+                                    label: __('Text color'),
+                                    value: submitHoverColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverColor: value });
+                                    }
+                                }, {
+                                    label: __('Shadow color'),
+                                    value: submitHoverShadow,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadow: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                { title: __('Shadow'), initialOpen: false },
+                                React.createElement(RangeControl, {
+                                    label: __('Opacity (%)'),
+                                    value: submitHoverOpacity,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverOpacity: value });
+                                    },
+                                    min: 0,
+                                    max: 100
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Transition speed (ms)'),
+                                    value: submitHoverTranSpeed || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverTranSpeed: value });
+                                    },
+                                    min: 0,
+                                    max: 3000
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow H offset'),
+                                    value: submitHoverShadowH || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadowH: value });
+                                    },
+                                    min: -50,
+                                    max: 50
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow V offset'),
+                                    value: submitHoverShadowV || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadowV: value });
+                                    },
+                                    min: -50,
+                                    max: 50
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow blur'),
+                                    value: submitHoverShadowBlur || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadowBlur: value });
+                                    },
+                                    min: 0,
+                                    max: 50
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Shadow spread'),
+                                    value: submitHoverShadowSpread || '',
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ submitHoverShadowSpread: value });
+                                    },
+                                    min: 0,
+                                    max: 50
+                                })
+                            )
+                        ),
+                        typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
+                            PanelBody,
+                            { title: __('Notice') },
+                            React.createElement(
+                                "p",
+                                { style: { fontStyle: 'italic', color: '#ff8800' } },
+                                __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
+                                React.createElement(
+                                    "a",
+                                    { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
+                                    " ",
+                                    __('settings'),
+                                    "."
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-lores-form-wrapper", style: { width: formWidth } },
+                        !registerView ? loginForm : typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled) ? React.createElement(Placeholder, {
+                            icon: userIcon,
+                            label: __('Registration Form'),
+                            instructions: __('Registration for your website is currently disabled, enable it in WordPress General settings to use registration form')
+                        }) : registerForm,
+                        React.createElement(
+                            "style",
+                            null,
+                            "." + submitButtonId + ":hover {\n                                color: " + submitHoverColor + " !important;\n                                background-color: " + submitHoverBgColor + " !important;\n                                box-shadow: " + submitHoverShadowH + "px " + submitHoverShadowV + "px " + submitHoverShadowBlur + "px " + submitHoverShadowSpread + "px " + submitHoverShadow + ";\n                                transition: all " + submitHoverTranSpeed + "s ease;\n                                opacity: " + submitHoverOpacity / 100 + "\n                            }"
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return LoginFormEdit;
+    }(Component);
+
+    var loginFormBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+        React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+        React.createElement("path", { d: "M11 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM5 18c.2-.63 2.57-1.68 4.96-1.94l2.04-2c-.39-.04-.68-.06-1-.06-2.67 0-8 1.34-8 4v2h9l-2-2H5zm15.6-5.5l-5.13 5.17-2.07-2.08L12 17l3.47 3.5L22 13.91z" })
+    );
+
+    var blockAttrs = {
+        formType: {
+            type: 'string',
+            default: 'login'
+        },
+        formWidth: {
+            type: 'number',
+            default: 500
+        },
+        redirect: {
+            type: 'string',
+            default: 'home'
+        },
+        redirectLink: {
+            type: 'string'
+        },
+        showLogo: {
+            type: 'boolean',
+            default: true
+        },
+        showInputFieldIcon: {
+            type: 'boolean',
+            default: true
+        },
+        showRegisterLink: {
+            type: 'boolean',
+            default: true
+        },
+        showLostPasswordLink: {
+            type: 'boolean',
+            default: true
+        },
+        logoImg: {
+            type: 'string',
+            default: advgbBlocks.login_logo
+        },
+        logoID: {
+            type: 'number'
+        },
+        registerLogoImg: {
+            type: 'string',
+            default: advgbBlocks.reg_logo
+        },
+        registerLogoID: {
+            type: 'number'
+        },
+        logoWidth: {
+            type: 'number',
+            default: 150
+        },
+        welcomeText: {
+            type: 'string',
+            default: __('Welcome back')
+        },
+        loginLabel: {
+            type: 'string'
+        },
+        loginText: {
+            type: 'string',
+            default: __('Username or Email')
+        },
+        passwordText: {
+            type: 'string',
+            default: __('Password')
+        },
+        usernameLabel: {
+            type: 'string'
+        },
+        userText: {
+            type: 'string',
+            default: __('Username')
+        },
+        emailLabel: {
+            type: 'string'
+        },
+        emailText: {
+            type: 'string',
+            default: __('Email')
+        },
+        rememberMeText: {
+            type: 'string',
+            default: __('Remember me')
+        },
+        loginSubmitLabel: {
+            type: 'string',
+            default: __('LOGIN')
+        },
+        registerSubmitLabel: {
+            type: 'string',
+            default: __('REGISTER')
+        },
+        registerText: {
+            type: 'string',
+            default: __("Don't have an account?")
+        },
+        registerLinkText: {
+            type: 'string',
+            default: __('Register now')
+        },
+        registerWelcome: {
+            type: 'string',
+            default: __('Register new account')
+        },
+        backToLoginText: {
+            type: 'string',
+            default: __('Login')
+        },
+        lostPasswordText: {
+            type: 'string',
+            default: __('Lost your password?')
+        },
+        headerBgColor: {
+            type: 'string'
+        },
+        bgColor: {
+            type: 'string'
+        },
+        textColor: {
+            type: 'string'
+        },
+        inputColor: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string'
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderWidth: {
+            type: 'number'
+        },
+        submitButtonId: {
+            type: 'string'
+        },
+        submitColor: {
+            type: 'string'
+        },
+        submitBgColor: {
+            type: 'string'
+        },
+        submitRadius: {
+            type: 'number'
+        },
+        submitPosition: {
+            type: 'string',
+            default: 'right'
+        },
+        submitHoverColor: {
+            type: 'string'
+        },
+        submitHoverBgColor: {
+            type: 'string'
+        },
+        submitHoverShadow: {
+            type: 'string'
+        },
+        submitHoverShadowH: {
+            type: 'number',
+            default: 1
+        },
+        submitHoverShadowV: {
+            type: 'number',
+            default: 1
+        },
+        submitHoverShadowBlur: {
+            type: 'number',
+            default: 12
+        },
+        submitHoverShadowSpread: {
+            type: 'number',
+            default: 0
+        },
+        submitHoverOpacity: {
+            type: 'number',
+            default: 100
+        },
+        submitHoverTranSpeed: {
+            type: 'number',
+            default: 200
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/login-form', {
+        title: __('Login/Register Form'),
+        description: __('Create a login form for your post/page.'),
+        icon: {
+            src: loginFormBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('accordion'), __('list'), __('faq')],
+        attributes: blockAttrs,
+        edit: LoginFormEdit,
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
+            var formType = attributes.formType,
+                formWidth = attributes.formWidth,
+                redirect = attributes.redirect,
+                redirectLink = attributes.redirectLink,
+                showLogo = attributes.showLogo,
+                showInputFieldIcon = attributes.showInputFieldIcon,
+                showRegisterLink = attributes.showRegisterLink,
+                showLostPasswordLink = attributes.showLostPasswordLink,
+                logoImg = attributes.logoImg,
+                registerLogoImg = attributes.registerLogoImg,
+                logoWidth = attributes.logoWidth,
+                welcomeText = attributes.welcomeText,
+                loginLabel = attributes.loginLabel,
+                loginText = attributes.loginText,
+                passwordText = attributes.passwordText,
+                usernameLabel = attributes.usernameLabel,
+                userText = attributes.userText,
+                emailLabel = attributes.emailLabel,
+                emailText = attributes.emailText,
+                rememberMeText = attributes.rememberMeText,
+                loginSubmitLabel = attributes.loginSubmitLabel,
+                registerSubmitLabel = attributes.registerSubmitLabel,
+                registerText = attributes.registerText,
+                registerLinkText = attributes.registerLinkText,
+                registerWelcome = attributes.registerWelcome,
+                backToLoginText = attributes.backToLoginText,
+                lostPasswordText = attributes.lostPasswordText,
+                headerBgColor = attributes.headerBgColor,
+                bgColor = attributes.bgColor,
+                textColor = attributes.textColor,
+                inputColor = attributes.inputColor,
+                borderColor = attributes.borderColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                submitColor = attributes.submitColor,
+                submitBgColor = attributes.submitBgColor,
+                submitRadius = attributes.submitRadius,
+                submitPosition = attributes.submitPosition,
+                submitButtonId = attributes.submitButtonId;
+
+
+            var logoElmSave = React.createElement(
+                "div",
+                { className: "advgb-lores-form-logo-wrapper" },
+                React.createElement(
+                    "span",
+                    { style: { display: 'block' } },
+                    React.createElement("img", { className: "advgb-lores-form-logo",
+                        src: logoImg,
+                        alt: __('Site logo'),
+                        style: {
+                            width: logoWidth ? logoWidth + 'px' : undefined,
+                            cursor: 'pointer'
+                        }
+                    })
+                )
+            );
+
+            var regLogoElmSave = React.createElement(
+                "div",
+                { className: "advgb-lores-form-logo-wrapper" },
+                React.createElement(
+                    "span",
+                    { style: { display: 'block' } },
+                    React.createElement("img", { className: "advgb-lores-form-logo",
+                        src: registerLogoImg,
+                        alt: __('Site logo'),
+                        style: {
+                            width: logoWidth ? logoWidth + 'px' : undefined,
+                            cursor: 'pointer'
+                        }
+                    })
+                )
+            );
+
+            var loginFormSave = React.createElement(
+                "div",
+                { className: "advgb-login-form-wrapper advgb-lores-form",
+                    style: {
+                        display: formType === 'login' ? 'block' : 'none'
+                    }
+                },
+                !!showRegisterLink && React.createElement(
+                    "div",
+                    { className: "advgb-register-link-wrapper advgb-header-navigation",
+                        style: { backgroundColor: headerBgColor }
+                    },
+                    React.createElement(
+                        "span",
+                        { className: "advgb-register-text",
+                            style: { color: textColor }
+                        },
+                        registerText
+                    ),
+                    React.createElement(
+                        "a",
+                        { href: "#",
+                            className: "advgb-register-link",
+                            style: { color: submitBgColor }
+                        },
+                        registerLinkText
+                    )
+                ),
+                React.createElement(
+                    "form",
+                    { action: "", className: "advgb-form-login", method: "post" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-login-form advgb-form-inner" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-header" },
+                            !!showLogo && logoElmSave,
+                            React.createElement(
+                                "h3",
+                                { className: "advgb-lores-form-welcome",
+                                    style: { color: textColor }
+                                },
+                                welcomeText
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-login-user",
+                                style: { borderColor: textColor }
+                            },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "advgb-login-user", style: { color: textColor } },
+                                    loginText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    emailIcon
+                                ),
+                                React.createElement("input", { type: "text",
+                                    id: "advgb-login-user",
+                                    className: "advgb-lores-input",
+                                    name: "log",
+                                    style: { color: inputColor },
+                                    placeholder: loginLabel ? loginLabel : __('user@email.com')
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-login-password",
+                                style: { borderColor: textColor }
+                            },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "advgb-login-password", style: { color: textColor } },
+                                    passwordText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    passwordIcon
+                                ),
+                                React.createElement("input", { type: "password",
+                                    id: "advgb-login-password",
+                                    className: "advgb-lores-input",
+                                    name: "pwd",
+                                    style: { color: inputColor },
+                                    placeholder: "password"
+                                })
+                            )
+                        ),
+                        React.createElement("div", { className: "advgb-grecaptcha clearfix position-" + submitPosition }),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-" + submitPosition },
+                            React.createElement(
+                                "label",
+                                { htmlFor: "rememberme", className: "remember-me-label" },
+                                React.createElement("input", { type: "checkbox",
+                                    value: "forever",
+                                    id: "rememberme",
+                                    name: "rememberme",
+                                    className: "advgb-lores-checkbox"
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { style: { color: submitBgColor }, className: "remember-me-switch" },
+                                    React.createElement(
+                                        "span",
+                                        { style: { color: textColor } },
+                                        rememberMeText
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-submit advgb-login-submit" },
+                                React.createElement(
+                                    "button",
+                                    { className: "advgb-lores-submit-button " + submitButtonId,
+                                        type: "submit",
+                                        name: "wp-submit",
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
+                                    },
+                                    loginSubmitLabel
+                                ),
+                                React.createElement("input", { type: "hidden", name: "redirect_to", "data-redirect": redirect, className: "redirect_to", value: redirectLink }),
+                                React.createElement("input", { type: "hidden", name: "testcookie", value: "1" }),
+                                React.createElement("input", { type: "hidden", name: "advgb_login_form", value: "1" })
+                            )
+                        ),
+                        !!showLostPasswordLink && React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lost-password-field" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lost-password" },
+                                React.createElement(
+                                    "a",
+                                    { href: "#",
+                                        className: "advgb-lost-password-link",
+                                        style: { color: submitBgColor }
+                                    },
+                                    lostPasswordText
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            var registerFormSave = React.createElement(
+                "div",
+                { className: "advgb-register-form-wrapper advgb-lores-form",
+                    style: {
+                        display: formType === 'register' ? 'block' : 'none'
+                    }
+                },
+                !!showRegisterLink && React.createElement(
+                    "div",
+                    { className: "advgb-header-navigation advgb-back-to-login",
+                        style: { backgroundColor: headerBgColor }
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-back-to-login-link",
+                            style: { color: submitBgColor }
+                        },
+                        React.createElement(
+                            "span",
+                            { className: "advgb-register-text",
+                                style: { color: submitBgColor }
+                            },
+                            backToLoginText
+                        )
+                    )
+                ),
+                React.createElement(
+                    "form",
+                    { action: "", className: "advgb-form-register", method: "post" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-register-form advgb-form-inner" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-form-header" },
+                            !!showLogo && regLogoElmSave,
+                            React.createElement(
+                                "h3",
+                                { className: "advgb-lores-form-welcome",
+                                    style: { color: textColor }
+                                },
+                                registerWelcome
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-register-username",
+                                style: { borderColor: textColor }
+                            },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "advgb-register-username", style: { color: textColor } },
+                                    userText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    userIcon
+                                ),
+                                React.createElement("input", { type: "text",
+                                    id: "advgb-register-username",
+                                    className: "advgb-lores-input",
+                                    name: "user_login",
+                                    style: { color: inputColor },
+                                    placeholder: usernameLabel ? usernameLabel : __('username')
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-register-email",
+                                style: { borderColor: textColor }
+                            },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-label" },
+                                React.createElement(
+                                    "label",
+                                    { htmlFor: "advgb-register-email", style: { color: textColor } },
+                                    emailText
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-field-input",
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        color: inputColor,
+                                        borderBottomColor: borderColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth
+                                    }
+                                },
+                                !!showInputFieldIcon && React.createElement(
+                                    "span",
+                                    { className: "advgb-lores-input-icon",
+                                        style: { color: textColor }
+                                    },
+                                    emailIcon
+                                ),
+                                React.createElement("input", { type: "email",
+                                    id: "advgb-register-email",
+                                    className: "advgb-lores-input",
+                                    name: "user_email",
+                                    style: { color: inputColor },
+                                    placeholder: emailLabel ? emailLabel : __('user@email.com')
+                                })
+                            )
+                        ),
+                        React.createElement("div", { className: "advgb-grecaptcha clearfix position-" + submitPosition }),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-" + submitPosition },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-lores-submit advgb-register-submit" },
+                                React.createElement(
+                                    "button",
+                                    { className: "advgb-lores-submit-button " + submitButtonId,
+                                        type: "submit",
+                                        name: "wp-submit",
+                                        style: {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius
+                                        }
+                                    },
+                                    registerSubmitLabel
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            return React.createElement(
+                "div",
+                { className: "advgb-lores-form-wrapper", style: { width: formWidth } },
+                loginFormSave,
+                registerFormSave
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/blocks/map/block.jsx":
 /*!*************************************!*\
   !*** ./assets/blocks/map/block.jsx ***!
@@ -10904,6 +13497,650 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, lodash, wp.htmlEntities, wp.date);
+
+/***/ }),
+
+/***/ "./assets/blocks/search-bar/block.jsx":
+/*!********************************************!*\
+  !*** ./assets/blocks/search-bar/block.jsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./assets/blocks/0-adv-components/components.jsx");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var _wpBlockEditor = wpBlockEditor,
+        InspectorControls = _wpBlockEditor.InspectorControls,
+        RichText = _wpBlockEditor.RichText,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings;
+    var RangeControl = wpComponents.RangeControl,
+        PanelBody = wpComponents.PanelBody,
+        TextControl = wpComponents.TextControl,
+        ToggleControl = wpComponents.ToggleControl;
+
+
+    var searchBlockIcon = React.createElement(
+        "svg",
+        { fill: "none", height: "20", width: "20", stroke: "currentColor", strokeWidth: "2", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+        React.createElement("circle", { fill: "none", cx: "11", cy: "11", r: "8" }),
+        React.createElement("line", { x1: "21", x2: "16.65", y1: "21", y2: "16.65" })
+    );
+
+    var SEARCH_ICONS = {
+        icon1: searchBlockIcon,
+        icon2: React.createElement(
+            "svg",
+            { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+            React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0zm0 0h24v24H0V0z" }),
+            React.createElement("path", { d: "M17.01 14h-.8l-.27-.27c.98-1.14 1.57-2.61 1.57-4.23 0-3.59-2.91-6.5-6.5-6.5s-6.5 3-6.5 6.5H2l3.84 4 4.16-4H6.51C6.51 7 8.53 5 11.01 5s4.5 2.01 4.5 4.5c0 2.48-2.02 4.5-4.5 4.5-.65 0-1.26-.14-1.82-.38L7.71 15.1c.97.57 2.09.9 3.3.9 1.61 0 3.08-.59 4.22-1.57l.27.27v.79l5.01 4.99L22 19l-4.99-5z" })
+        ),
+        icon3: React.createElement(
+            "svg",
+            { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+            React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
+            React.createElement("path", { d: "M20.94 11c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" })
+        ),
+        icon4: React.createElement(
+            "svg",
+            { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+            React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
+            React.createElement("path", { d: "M18 13v7H4V6h5.02c.05-.71.22-1.38.48-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-5l-2-2zm-1.5 5h-11l2.75-3.53 1.96 2.36 2.75-3.54zm2.8-9.11c.44-.7.7-1.51.7-2.39C20 4.01 17.99 2 15.5 2S11 4.01 11 6.5s2.01 4.5 4.49 4.5c.88 0 1.7-.26 2.39-.7L21 13.42 22.42 12 19.3 8.89zM15.5 9C14.12 9 13 7.88 13 6.5S14.12 4 15.5 4 18 5.12 18 6.5 16.88 9 15.5 9z" }),
+            React.createElement("path", { fill: "none", d: "M0 0h24v24H0z" })
+        ),
+        icon5: React.createElement(
+            "svg",
+            { fill: "currentColor", xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22" },
+            React.createElement("path", { d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" }),
+            React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+        ),
+        icon6: React.createElement(
+            "svg",
+            { width: "20", height: "20", viewBox: "0 0 26 26", xmlns: "http://www.w3.org/2000/svg" },
+            React.createElement("path", { d: "M14.9462891,1C9.4033203,1,4.8935547,5.5097656,4.8935547,11.0532227  c0,2.5022583,0.9248047,4.7885132,2.4428101,6.5498657l-6.1166382,6.1166382c-0.2929688,0.2929688-0.2929688,0.7675781,0,1.0605469  C1.3662109,24.9267578,1.5576172,25,1.75,25s0.3837891-0.0732422,0.5302734-0.2197266l6.1165771-6.1165771  c1.7612305,1.5180054,4.0474243,2.442749,6.5494385,2.442749C20.4902344,21.1064453,25,16.5966797,25,11.0532227  S20.4902344,1,14.9462891,1z M14.9462891,19.6064453c-4.7158203,0-8.5527344-3.8369141-8.5527344-8.5532227  S10.2304688,2.5,14.9462891,2.5C19.6630859,2.5,23.5,6.3369141,23.5,11.0532227S19.6630859,19.6064453,14.9462891,19.6064453z", fill: "currentColor" })
+        )
+    };
+
+    var SearchBarEdit = function (_Component) {
+        _inherits(SearchBarEdit, _Component);
+
+        function SearchBarEdit() {
+            _classCallCheck(this, SearchBarEdit);
+
+            return _possibleConstructorReturn(this, (SearchBarEdit.__proto__ || Object.getPrototypeOf(SearchBarEdit)).apply(this, arguments));
+        }
+
+        _createClass(SearchBarEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-search-bar'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    clientId = _props2.clientId,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var searchBtnId = attributes.searchBtnId;
+
+
+                if (!searchBtnId) {
+                    setAttributes({ searchBtnId: "advgb-search-btn-" + clientId });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    className = _props3.className;
+                var fullWidth = attributes.fullWidth,
+                    width = attributes.width,
+                    textColor = attributes.textColor,
+                    backgroundColor = attributes.backgroundColor,
+                    searchIcon = attributes.searchIcon,
+                    searchIconOnRight = attributes.searchIconOnRight,
+                    searchPlaceholder = attributes.searchPlaceholder,
+                    searchButtonEnabled = attributes.searchButtonEnabled,
+                    searchButtonText = attributes.searchButtonText,
+                    searchButtonTextColor = attributes.searchButtonTextColor,
+                    searchButtonBgColor = attributes.searchButtonBgColor,
+                    searchButtonRadius = attributes.searchButtonRadius,
+                    searchButtonOnLeft = attributes.searchButtonOnLeft,
+                    searchBtnId = attributes.searchBtnId,
+                    searchBtnHoverColor = attributes.searchBtnHoverColor,
+                    searchBtnHoverBgColor = attributes.searchBtnHoverBgColor,
+                    searchBtnHoverShadow = attributes.searchBtnHoverShadow,
+                    searchBtnHoverShadowH = attributes.searchBtnHoverShadowH,
+                    searchBtnHoverShadowV = attributes.searchBtnHoverShadowV,
+                    searchBtnHoverShadowBlur = attributes.searchBtnHoverShadowBlur,
+                    searchBtnHoverShadowSpread = attributes.searchBtnHoverShadowSpread,
+                    searchBtnHoverOpacity = attributes.searchBtnHoverOpacity,
+                    searchBtnHoverTranSpeed = attributes.searchBtnHoverTranSpeed;
+
+
+                var searchBarIcon = React.createElement(
+                    "span",
+                    { className: "advgb-search-bar-icon" },
+                    searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon
+                );
+
+                var searchBarButton = !searchButtonEnabled ? '' : React.createElement(
+                    "div",
+                    { className: "advgb-search-button-wrapper" },
+                    React.createElement(
+                        "span",
+                        { className: "advgb-search-bar-button",
+                            style: {
+                                color: searchButtonTextColor,
+                                borderColor: searchButtonTextColor,
+                                backgroundColor: searchButtonBgColor,
+                                borderRadius: searchButtonRadius
+                            }
+                        },
+                        React.createElement(RichText, {
+                            tagName: "span",
+                            value: searchButtonText,
+                            onChange: function onChange(value) {
+                                return setAttributes({ searchButtonText: value.trim() });
+                            },
+                            onReplace: function onReplace() {
+                                return null;
+                            },
+                            onSplit: function onSplit() {
+                                return null;
+                            },
+                            placeholder: __('Search'),
+                            keepPlaceholderOnFocus: true
+                        })
+                    )
+                );
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Search Bar State') },
+                            React.createElement(ToggleControl, {
+                                label: __('Full width'),
+                                checked: fullWidth,
+                                onChange: function onChange() {
+                                    return setAttributes({ fullWidth: !fullWidth });
+                                }
+                            }),
+                            !fullWidth && React.createElement(RangeControl, {
+                                label: __('Width'),
+                                value: width,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ width: value });
+                                },
+                                min: 300,
+                                max: 2000
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Search Icon Settings') },
+                            React.createElement(ToggleControl, {
+                                label: __('Search icon on the right'),
+                                checked: searchIconOnRight,
+                                onChange: function onChange() {
+                                    return setAttributes({ searchIconOnRight: !searchIconOnRight });
+                                }
+                            }),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-icon-items" },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-header" },
+                                    __('Search icon')
+                                ),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper" },
+                                    Object.keys(SEARCH_ICONS).map(function (icon, idx) {
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: idx },
+                                            React.createElement(
+                                                "span",
+                                                { className: icon === searchIcon ? 'active' : '',
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ searchIcon: icon });
+                                                    }
+                                                },
+                                                SEARCH_ICONS[icon]
+                                            )
+                                        );
+                                    })
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Search Input Settings'), initialOpen: false },
+                            React.createElement(TextControl, {
+                                label: __('Search placeholder'),
+                                value: searchPlaceholder,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ searchPlaceholder: value });
+                                }
+                            }),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Input Color'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background color'),
+                                    value: backgroundColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ backgroundColor: value });
+                                    }
+                                }, {
+                                    label: __('Text color'),
+                                    value: textColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ textColor: value });
+                                    }
+                                }]
+                            })
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Search Button Settings'), initialOpen: false },
+                            React.createElement(ToggleControl, {
+                                label: __('Show submit button'),
+                                checked: searchButtonEnabled,
+                                onChange: function onChange() {
+                                    return setAttributes({ searchButtonEnabled: !searchButtonEnabled });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Search button on the left'),
+                                checked: searchButtonOnLeft,
+                                onChange: function onChange() {
+                                    return setAttributes({ searchButtonOnLeft: !searchButtonOnLeft });
+                                }
+                            }),
+                            searchButtonEnabled && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(_components.AdvColorControl, {
+                                    label: __('Background color'),
+                                    value: searchButtonBgColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchButtonBgColor: value });
+                                    }
+                                }),
+                                React.createElement(_components.AdvColorControl, {
+                                    label: __('Text color'),
+                                    value: searchButtonTextColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchButtonTextColor: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Border radius (px)'),
+                                    help: __('Affect both input and button.'),
+                                    value: searchButtonRadius,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ searchButtonRadius: value });
+                                    },
+                                    min: 0,
+                                    max: 100
+                                }),
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Hover Colors'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Background color'),
+                                        value: searchBtnHoverBgColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverBgColor: value });
+                                        }
+                                    }, {
+                                        label: __('Text color'),
+                                        value: searchBtnHoverColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverColor: value });
+                                        }
+                                    }, {
+                                        label: __('Shadow color'),
+                                        value: searchBtnHoverShadow,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadow: value });
+                                        }
+                                    }]
+                                }),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: __('Hover Shadow'), initialOpen: false },
+                                    React.createElement(RangeControl, {
+                                        label: __('Opacity (%)'),
+                                        value: searchBtnHoverOpacity,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverOpacity: value });
+                                        },
+                                        min: 0,
+                                        max: 100
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Transition speed (ms)'),
+                                        value: searchBtnHoverTranSpeed || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverTranSpeed: value });
+                                        },
+                                        min: 0,
+                                        max: 3000
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Shadow H offset'),
+                                        value: searchBtnHoverShadowH || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadowH: value });
+                                        },
+                                        min: -50,
+                                        max: 50
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Shadow V offset'),
+                                        value: searchBtnHoverShadowV || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadowV: value });
+                                        },
+                                        min: -50,
+                                        max: 50
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Shadow blur'),
+                                        value: searchBtnHoverShadowBlur || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadowBlur: value });
+                                        },
+                                        min: 0,
+                                        max: 50
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Shadow spread'),
+                                        value: searchBtnHoverShadowSpread || '',
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ searchBtnHoverShadowSpread: value });
+                                        },
+                                        min: 0,
+                                        max: 50
+                                    })
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-search-bar-wrapper " + className },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-search-bar-inner", style: { width: fullWidth ? '100%' : width } },
+                            searchButtonOnLeft && searchBarButton,
+                            React.createElement(
+                                "div",
+                                { className: "advgb-search-bar",
+                                    style: {
+                                        backgroundColor: backgroundColor,
+                                        color: textColor,
+                                        borderRadius: searchButtonRadius
+                                    }
+                                },
+                                !searchIconOnRight && searchBarIcon,
+                                React.createElement("input", { type: "text", disabled: true,
+                                    className: "advgb-search-bar-input",
+                                    value: searchPlaceholder ? searchPlaceholder : __('Type to search…')
+                                }),
+                                searchIconOnRight && searchBarIcon
+                            ),
+                            !searchButtonOnLeft && searchBarButton
+                        ),
+                        React.createElement(
+                            "style",
+                            null,
+                            "." + searchBtnId + ":hover {\n                                color: " + searchBtnHoverColor + " !important;\n                                background-color: " + searchBtnHoverBgColor + " !important;\n                                box-shadow: " + searchBtnHoverShadowH + "px " + searchBtnHoverShadowV + "px " + searchBtnHoverShadowBlur + "px " + searchBtnHoverShadowSpread + "px " + searchBtnHoverShadow + ";\n                                transition: all " + searchBtnHoverTranSpeed + "s ease;\n                                opacity: " + searchBtnHoverOpacity / 100 + "\n                            }"
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return SearchBarEdit;
+    }(Component);
+
+    var blockAttrs = {
+        fullWidth: {
+            type: 'boolean',
+            default: false
+        },
+        width: {
+            type: 'number',
+            default: 500
+        },
+        textColor: {
+            type: 'string'
+        },
+        backgroundColor: {
+            type: 'string'
+        },
+        searchIcon: {
+            type: 'string',
+            default: 'icon1'
+        },
+        searchIconOnRight: {
+            type: 'boolean'
+        },
+        searchPlaceholder: {
+            type: 'string'
+        },
+        searchButtonEnabled: {
+            type: 'boolean',
+            default: true
+        },
+        searchButtonText: {
+            type: 'string',
+            default: __('SEARCH')
+        },
+        searchButtonTextColor: {
+            type: 'string'
+        },
+        searchButtonBgColor: {
+            type: 'string'
+        },
+        searchButtonRadius: {
+            type: 'number',
+            default: 0
+        },
+        searchButtonOnLeft: {
+            type: 'boolean',
+            default: false
+        },
+        searchBtnId: {
+            type: 'string'
+        },
+        searchBtnHoverColor: {
+            type: 'string'
+        },
+        searchBtnHoverBgColor: {
+            type: 'string'
+        },
+        searchBtnHoverShadow: {
+            type: 'string'
+        },
+        searchBtnHoverShadowH: {
+            type: 'number',
+            default: 1
+        },
+        searchBtnHoverShadowV: {
+            type: 'number',
+            default: 1
+        },
+        searchBtnHoverShadowBlur: {
+            type: 'number',
+            default: 12
+        },
+        searchBtnHoverShadowSpread: {
+            type: 'number',
+            default: 0
+        },
+        searchBtnHoverOpacity: {
+            type: 'number',
+            default: 100
+        },
+        searchBtnHoverTranSpeed: {
+            type: 'number',
+            default: 200
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/search-bar', {
+        title: __('Search Bar'),
+        description: __('Easy to create a search bar for your site.'),
+        icon: {
+            src: searchBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        keywords: [__('accordion'), __('list'), __('faq')],
+        attributes: blockAttrs,
+        supports: {
+            align: true
+        },
+        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'classic', label: __('Classic') }],
+        edit: SearchBarEdit,
+        save: function save(_ref) {
+            var attributes = _ref.attributes,
+                className = _ref.className;
+            var fullWidth = attributes.fullWidth,
+                width = attributes.width,
+                textColor = attributes.textColor,
+                backgroundColor = attributes.backgroundColor,
+                searchIcon = attributes.searchIcon,
+                searchIconOnRight = attributes.searchIconOnRight,
+                searchPlaceholder = attributes.searchPlaceholder,
+                searchButtonEnabled = attributes.searchButtonEnabled,
+                searchButtonText = attributes.searchButtonText,
+                searchButtonTextColor = attributes.searchButtonTextColor,
+                searchButtonBgColor = attributes.searchButtonBgColor,
+                searchButtonRadius = attributes.searchButtonRadius,
+                searchButtonOnLeft = attributes.searchButtonOnLeft,
+                searchBtnId = attributes.searchBtnId;
+
+
+            var searchBarIcon = React.createElement(
+                "span",
+                { className: "advgb-search-bar-icon" },
+                searchIcon ? SEARCH_ICONS[searchIcon] : searchBlockIcon
+            );
+
+            var searchBarButton = !searchButtonEnabled ? '' : React.createElement(
+                "div",
+                { className: "advgb-search-button-wrapper" },
+                React.createElement(
+                    "button",
+                    {
+                        type: "submit",
+                        className: "advgb-search-bar-button " + searchBtnId,
+                        style: {
+                            color: searchButtonTextColor,
+                            borderColor: searchButtonTextColor,
+                            backgroundColor: searchButtonBgColor,
+                            borderRadius: searchButtonRadius
+                        }
+                    },
+                    searchButtonText
+                )
+            );
+
+            return React.createElement(
+                "div",
+                { className: "advgb-search-bar-wrapper " + className },
+                React.createElement(
+                    "form",
+                    { method: "get",
+                        action: advgbBlocks.home_url,
+                        className: "advgb-search-bar-form",
+                        role: "search"
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-search-bar-inner", style: { width: fullWidth ? '100%' : width } },
+                        searchButtonOnLeft && searchBarButton,
+                        React.createElement(
+                            "div",
+                            { className: "advgb-search-bar",
+                                style: {
+                                    backgroundColor: backgroundColor,
+                                    color: textColor,
+                                    borderRadius: searchButtonRadius
+                                }
+                            },
+                            !searchIconOnRight && searchBarIcon,
+                            React.createElement("input", { type: "text",
+                                className: "advgb-search-bar-input",
+                                name: "s",
+                                placeholder: searchPlaceholder ? searchPlaceholder : __('Type to search…')
+                            }),
+                            searchIconOnRight && searchBarIcon
+                        ),
+                        !searchButtonOnLeft && searchBarButton
+                    )
+                )
+            );
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
 /***/ }),
 
@@ -13768,6 +17005,11 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                 var missing_block = false;
                 // Retrieve all registered blocks
                 var blocks = wp.blocks.getBlockTypes();
+                var savedBlocks = {
+                    active_blocks: Object.values(advgb_blocks_vars.blocks.active_blocks),
+                    inactive_blocks: Object.values(advgb_blocks_vars.blocks.inactive_blocks)
+                };
+
                 for (var block in blocks) {
                     var blockItemIcon = '';
                     var blockItem = {
@@ -13802,10 +17044,10 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     list_blocks.push(blockItem);
 
                     // Compare current block with the list of blocks we have
-                    if (advgb_blocks_vars.blocks.active_blocks.indexOf(blocks[block].name) >= 0) {
+                    if (savedBlocks.active_blocks.indexOf(blocks[block].name) >= 0) {
                         // Block is active
                         granted_blocks.push(blocks[block].name);
-                    } else if (advgb_blocks_vars.blocks.inactive_blocks.indexOf(blocks[block].name) >= 0) {
+                    } else if (savedBlocks.inactive_blocks.indexOf(blocks[block].name) >= 0) {
                         // Block is inactive
                     } else {
                         // This block is not in our database yet, but by default we allow the usage
@@ -13855,13 +17097,16 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/accordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/0-adv-components/components.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/search-bar/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(/*! ./assets/blocks/0-adv-components/components.jsx */"./assets/blocks/0-adv-components/components.jsx");
 __webpack_require__(/*! ./assets/blocks/accordion/block.jsx */"./assets/blocks/accordion/block.jsx");
+__webpack_require__(/*! ./assets/blocks/advaccordion/accordion.jsx */"./assets/blocks/advaccordion/accordion.jsx");
+__webpack_require__(/*! ./assets/blocks/advaccordion/block.jsx */"./assets/blocks/advaccordion/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advbutton/block.jsx */"./assets/blocks/advbutton/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advimage/block.jsx */"./assets/blocks/advimage/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advlist/block.jsx */"./assets/blocks/advlist/block.jsx");
@@ -13875,9 +17120,11 @@ __webpack_require__(/*! ./assets/blocks/count-up/block.jsx */"./assets/blocks/co
 __webpack_require__(/*! ./assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
 __webpack_require__(/*! ./assets/blocks/editor-sidebar/sidebar.jsx */"./assets/blocks/editor-sidebar/sidebar.jsx");
 __webpack_require__(/*! ./assets/blocks/images-slider/block.jsx */"./assets/blocks/images-slider/block.jsx");
+__webpack_require__(/*! ./assets/blocks/login-form/block.jsx */"./assets/blocks/login-form/block.jsx");
 __webpack_require__(/*! ./assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
 __webpack_require__(/*! ./assets/blocks/newsletter/block.jsx */"./assets/blocks/newsletter/block.jsx");
 __webpack_require__(/*! ./assets/blocks/recent-posts/block.jsx */"./assets/blocks/recent-posts/block.jsx");
+__webpack_require__(/*! ./assets/blocks/search-bar/block.jsx */"./assets/blocks/search-bar/block.jsx");
 __webpack_require__(/*! ./assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");
 __webpack_require__(/*! ./assets/blocks/summary/block.jsx */"./assets/blocks/summary/block.jsx");
 __webpack_require__(/*! ./assets/blocks/tabs/block.jsx */"./assets/blocks/tabs/block.jsx");
