@@ -25,7 +25,7 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Define Gutenberg editor size and column materialization
 
 
-## ADVANCED GUTENBERG SPECIAL BLOCKS
+## ADVANCED GUTENBERG BLOCKS
 
 - Column manager with pre-defined layouts
 - Latest post slider and latest post slider
@@ -40,6 +40,8 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Testimonial block: define avatar, title, text, colors, slider
 - Contact Form block: get email and export contact form data
 - Email Opt-In block: get email and export data
+- WordPress login block
+- WordPress register block
 - Counter block: display numbers in a dynamic, fun and engaging way
 - Advanced Image block: hover text, overlay, colors, link and more
 - Advanced Image block: load and display local and remote video
