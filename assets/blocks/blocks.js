@@ -1577,6 +1577,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     transitionSpeed = attributes.transitionSpeed;
 
 
+                var isStyleSquared = className.indexOf('-squared') > -1;
+                var isStyleOutlined = className.indexOf('-outline') > -1;
+                var hoverColorSettings = [{
+                    label: __('Background Color'),
+                    value: hoverBgColor,
+                    onChange: function onChange(value) {
+                        return setAttributes({ hoverBgColor: value === undefined ? '#2196f3' : value });
+                    }
+                }, {
+                    label: __('Text Color'),
+                    value: hoverTextColor,
+                    onChange: function onChange(value) {
+                        return setAttributes({ hoverTextColor: value === undefined ? '#fff' : value });
+                    }
+                }, {
+                    label: __('Shadow Color'),
+                    value: hoverShadowColor,
+                    onChange: function onChange(value) {
+                        return setAttributes({ hoverShadowColor: value === undefined ? '#ccc' : value });
+                    }
+                }];
+
+                if (isStyleOutlined) {
+                    hoverColorSettings.shift();
+                }
+
                 return React.createElement(
                     Fragment,
                     null,
@@ -1668,7 +1694,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 beforeIcon: 'editor-textcolor',
                                 allowReset: true
                             }),
-                            React.createElement(_components.AdvColorControl, {
+                            !isStyleOutlined && React.createElement(_components.AdvColorControl, {
                                 label: __('Background Color'),
                                 value: bgColor,
                                 onChange: function onChange(value) {
@@ -1686,7 +1712,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             { title: __('Border'), initialOpen: false },
-                            React.createElement(RangeControl, {
+                            !isStyleSquared && React.createElement(RangeControl, {
                                 label: __('Border radius'),
                                 value: borderRadius || '',
                                 onChange: function onChange(value) {
@@ -1774,25 +1800,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(PanelColorSettings, {
                                 title: __('Color Settings'),
                                 initialOpen: false,
-                                colorSettings: [{
-                                    label: __('Background Color'),
-                                    value: hoverBgColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ hoverBgColor: value === undefined ? '#2196f3' : value });
-                                    }
-                                }, {
-                                    label: __('Text Color'),
-                                    value: hoverTextColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ hoverTextColor: value === undefined ? '#fff' : value });
-                                    }
-                                }, {
-                                    label: __('Shadow Color'),
-                                    value: hoverShadowColor,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ hoverShadowColor: value === undefined ? '#ccc' : value });
-                                    }
-                                }]
+                                colorSettings: hoverColorSettings
                             }),
                             React.createElement(
                                 PanelBody,

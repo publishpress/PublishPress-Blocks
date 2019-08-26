@@ -63,33 +63,36 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 clientId: blockID,
             } = this.props;
             const {
-                id,
-                align,
-                url,
-                urlOpenNewTab,
-                title,
-                text,
-                bgColor,
-                textColor,
-                textSize,
-                paddingTop,
-                paddingRight,
-                paddingBottom,
-                paddingLeft,
-                borderWidth,
-                borderColor,
-                borderRadius,
-                borderStyle,
-                hoverTextColor,
-                hoverBgColor,
-                hoverShadowColor,
-                hoverShadowH,
-                hoverShadowV,
-                hoverShadowBlur,
-                hoverShadowSpread,
-                hoverOpacity,
-                transitionSpeed,
+                id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
+                paddingTop, paddingRight, paddingBottom, paddingLeft,
+                borderWidth, borderColor, borderRadius, borderStyle,
+                hoverTextColor, hoverBgColor, hoverShadowColor, hoverShadowH, hoverShadowV, hoverShadowBlur, hoverShadowSpread,
+                hoverOpacity, transitionSpeed,
             } = attributes;
+
+            const isStyleSquared = className.indexOf('-squared') > -1;
+            const isStyleOutlined = className.indexOf('-outline') > -1;
+            const hoverColorSettings = [
+                {
+                    label: __( 'Background Color' ),
+                    value: hoverBgColor,
+                    onChange: ( value ) => setAttributes( { hoverBgColor: value === undefined ? '#2196f3' : value } ),
+                },
+                {
+                    label: __( 'Text Color' ),
+                    value: hoverTextColor,
+                    onChange: ( value ) => setAttributes( { hoverTextColor: value === undefined ? '#fff' : value } ),
+                },
+                {
+                    label: __( 'Shadow Color' ),
+                    value: hoverShadowColor,
+                    onChange: ( value ) => setAttributes( { hoverShadowColor: value === undefined ? '#ccc' : value } ),
+                },
+            ];
+
+            if (isStyleOutlined) {
+                hoverColorSettings.shift();
+            }
 
             return (
                 <Fragment>
@@ -170,11 +173,13 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 beforeIcon="editor-textcolor"
                                 allowReset
                             />
-                            <AdvColorControl
-                                label={ __('Background Color') }
-                                value={ bgColor }
-                                onChange={ (value) => setAttributes( { bgColor: value } ) }
-                            />
+                            {!isStyleOutlined && (
+                                <AdvColorControl
+                                    label={ __('Background Color') }
+                                    value={ bgColor }
+                                    onChange={ (value) => setAttributes( { bgColor: value } ) }
+                                />
+                            )}
                             <AdvColorControl
                                 label={ __('Text Color') }
                                 value={ textColor }
@@ -182,13 +187,15 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
-                            <RangeControl
-                                label={ __( 'Border radius' ) }
-                                value={ borderRadius || '' }
-                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
+                            {!isStyleSquared && (
+                                <RangeControl
+                                    label={ __( 'Border radius' ) }
+                                    value={ borderRadius || '' }
+                                    onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                                    min={ 0 }
+                                    max={ 100 }
+                                />
+                            ) }
                             <SelectControl
                                 label={ __( 'Border style' ) }
                                 value={ borderStyle }
@@ -252,23 +259,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             <PanelColorSettings
                                 title={ __( 'Color Settings' ) }
                                 initialOpen={ false }
-                                colorSettings={ [
-                                    {
-                                        label: __( 'Background Color' ),
-                                        value: hoverBgColor,
-                                        onChange: ( value ) => setAttributes( { hoverBgColor: value === undefined ? '#2196f3' : value } ),
-                                    },
-                                    {
-                                        label: __( 'Text Color' ),
-                                        value: hoverTextColor,
-                                        onChange: ( value ) => setAttributes( { hoverTextColor: value === undefined ? '#fff' : value } ),
-                                    },
-                                    {
-                                        label: __( 'Shadow Color' ),
-                                        value: hoverShadowColor,
-                                        onChange: ( value ) => setAttributes( { hoverShadowColor: value === undefined ? '#ccc' : value } ),
-                                    },
-                                ] }
+                                colorSettings={ hoverColorSettings }
                             />
                             <PanelBody title={ __( 'Shadow' ) } initialOpen={ false }  >
                                 <RangeControl
