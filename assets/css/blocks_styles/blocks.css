@@ -13,9 +13,14 @@
     width: 100%;
 }
 
-#editor .slick-slide {
-    pointer-events: none;
+.editor-styles-wrapper .wp-block .wp-block {
+    max-width: 100%;
+    width: 100%;
 }
+
+/*#editor .slick-slide {*/
+    /*pointer-events: none;*/
+/*}*/
 
 .slick-arrow:focus {
     background: transparent;
@@ -149,19 +154,24 @@
     text-align: center;
 }
 
+.advgb-icon-items .advgb-icon-items-header {
+    margin: 10px 0;
+}
+
 .advgb-icon-items-wrapper {
     display: flex;
     flex: auto;
     flex-wrap:  wrap;
+    color: #000;
 }
 
-.advgb-icon-item {
+.advgb-icon-items-wrapper .advgb-icon-item {
     min-width: 25%;
     text-align: center;
     margin: 5px 0;
 }
 
-.advgb-icon-item > span {
+.advgb-icon-items-wrapper .advgb-icon-item > span {
     display: inline-block;
     line-height: 0.9;
     border-radius: 4px;
@@ -169,7 +179,7 @@
     cursor: pointer;
 }
 
-.advgb-icon-item .active {
+.advgb-icon-items-wrapper .advgb-icon-item .active {
     background-color: #ddd;
 }
 
@@ -177,7 +187,7 @@
 .components-panel__body.is-opened > .components-panel__body {
     margin-left: -6px;
 }
-.editor-block-list__block[data-type="advgb/button"][data-align=center] {
+#editor .editor-block-list__block[data-type="advgb/button"][data-align=center] {
     text-align: center;
 }
 span.wp-block-advgb-button[data-is-placeholder-visible=true] {
@@ -187,8 +197,40 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     text-align: center;
 }
 
-.wp-block-advgb-button_link {
+.wp-block-advgb-button .wp-block-advgb-button_link {
     display: inline-block;
+    text-decoration: none !important;
+    background-color: #2196f3;
+    color: #fff;
+    border-color: #fff;
+    border-radius: 50px;
+}
+
+.wp-block-advgb-button .wp-block-advgb-button_link:hover {
+    background-color: #2196f3;
+    color: #fff;
+}
+
+.wp-block-advgb-button.is-style-outlined .wp-block-advgb-button_link {
+    background-color: transparent !important;
+    color: #000;
+    border-radius: 50px;
+    border-color: #000;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.wp-block-advgb-button.is-style-squared .wp-block-advgb-button_link {
+    border-radius: 0 !important;
+}
+
+.wp-block-advgb-button.is-style-squared-outline .wp-block-advgb-button_link {
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    color: #000;
+    border-color: #000;
+    border-style: solid;
+    border-width: 1px;
 }
 
 /*Advanced Image block styles*/
@@ -766,6 +808,13 @@ div.advgb-tab-body {
 
 #editor .advgb-testimonial {
     padding: 15px 0;
+}
+
+.advgb-testimonial .advgb-testimonial-item {
+    flex: auto;
+    margin: 0 10px;
+    text-align: center;
+    pointer-events: all;
 }
 
 .advgb-testimonial > div {
@@ -1444,7 +1493,330 @@ form .advgb-grecaptcha > div {
     margin-left: 3%;
 }
 
-/*Container block*/
+/*Login-Register Form block*/
+.advgb-lores-form-wrapper {
+    width: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.advgb-lores-form-wrapper > * {
+    box-sizing: border-box;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form {
+    width: 100%;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation {
+    background-color: #eee;
+    padding: 5px;
+    text-align: center;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation > .editor-rich-text {
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-register-text {
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-register-link {
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner {
+    padding: 20px 50px;
+    width: 100%;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-login-failed-notice {
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+    border-left: 5px solid #ff0000;
+    background-color: #fff;
+    color: #333;
+    font-size: 1em;
+    box-shadow: 0 0 5px #ccc;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-form-logo-wrapper {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-form-logo-wrapper .advgb-lores-form-logo {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-form-welcome {
+    font-weight: normal;
+    font-size: 1.7em;
+    margin: 0 0 20px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field {
+    text-align: left;
+    margin-bottom: 20px;
+    border-width: 0;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input {
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    border-bottom-color: #ccc;
+    background-color: transparent;
+    padding: 5px;
+    outline: none;
+    transition: all 0.5s ease;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input.focused {
+    border-bottom-color: inherit !important;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input .advgb-lores-input-icon {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input .advgb-lores-input-icon svg {
+    vertical-align: middle;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input .advgb-lores-input {
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    width: calc(100% - 40px);
+    border: none;
+    background-color: transparent;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-input .advgb-lores-input:focus {
+    outline: none;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .advgb-lores-field-label > label {
+    display: block;
+    cursor: pointer;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper label {
+    cursor: pointer;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-right {
+    flex-direction: row;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-left  {
+    flex-direction: row-reverse;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form.advgb-register-form-wrapper .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-right {
+    justify-content: flex-end;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form.advgb-register-form-wrapper .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-left {
+    flex-direction: row;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-center {
+    flex-direction: column;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper.advgb-submit-align-center .advgb-lores-submit {
+    margin-top: 20px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field input.advgb-lores-checkbox {
+    display: none;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .remember-me-label .remember-me-switch {
+    color: #2196f3;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .remember-me-label .remember-me-switch span {
+    vertical-align: middle;
+    color: initial;
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .remember-me-label .remember-me-switch:before {
+    content: "\f147";
+    font-family: dashicons;
+    background-color: #fff;
+    margin: 0;
+    margin-right: 5px;
+    color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 0;
+    vertical-align: middle;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field .remember-me-label input.advgb-lores-checkbox:checked + .remember-me-switch:before {
+    color: inherit;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper .advgb-lores-submit .advgb-lores-submit-button {
+    padding: 10px 25px;
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lost-password-field {
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 30px;
+    text-align: center;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-back-to-login-link {
+    display: inline-block;
+    cursor: pointer;
+    color: #2196f3;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation.advgb-back-to-login {
+    text-align: left;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-back-to-login-link:before {
+    content: "\f341";
+    font-family: dashicons;
+    float: left;
+    margin-right: 5px;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-header-navigation .advgb-back-to-login-link > * {
+    display: inline-block;
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-inner .advgb-lores-field.advgb-lores-submit-wrapper .advgb-lores-submit-button {
+    background: none;
+    border: 1px solid transparent;
+    box-shadow: none;
+    outline: none;
+    background-color: #2196f3;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.advgb-lores-form.sending:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.advgb-lores-form-wrapper .advgb-lores-form .advgb-form-sending {
+    top: 49%;
+    left: 49%;
+    z-index: 9;
+}
+
+/*Search bar block*/
+.advgb-search-bar-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: auto;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner > *:first-child {
+    margin-right: 10px;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-right: 10px;
+    padding: 3px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.advgb-search-bar-wrapper.is-style-classic .advgb-search-bar-inner .advgb-search-bar {
+    border: 1px solid #ccc;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar .advgb-search-bar-icon {
+    width: 30px;
+    text-align: center;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar .advgb-search-bar-icon svg {
+    vertical-align: middle;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-bar input.advgb-search-bar-input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 100%;
+    padding: 0 5px;
+    margin: 0;
+    background-color: transparent;
+    color: inherit;
+}
+
+.advgb-search-bar-wrapper .advgb-search-bar-inner .advgb-search-button-wrapper .advgb-search-bar-button {
+    vertical-align: middle;
+    padding: 5px 15px;
+    background-color: #2196f3;
+    color: #fff;
+    height: 100%;
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid transparent;
+}
 
 /*Columns Manager block*/
 .advgb-columns-select-wrapper {

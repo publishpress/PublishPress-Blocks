@@ -48,6 +48,11 @@ function sortBy($key)
 }
 
 usort($advgb_blocks, sortBy('title'));
+$excluded_blocks_config = array(
+    'advgb/container',
+    'advgb/accordion-item',
+    'advgb/accordion',
+);
 
 $gallery_lightbox_checked         = $saved_settings['gallery_lightbox'] ? 'checked' : '';
 $gallery_lightbox_caption_checked = $saved_settings['gallery_lightbox_caption'] ? 'checked' : '';
@@ -359,6 +364,9 @@ if (!isset($saved_settings['enable_columns_visual_guide'])) {
         <ul class="blocks-config-list clearfix">
             <?php foreach ($advgb_blocks as $block) : ?>
                 <?php $iconColor = '';
+                if (in_array($block['name'], $excluded_blocks_config)) {
+                    continue;
+                }
                 if (isset($block['iconColor'])) :
                     $iconColor = 'style=color:' . $block['iconColor'];
                 endif; ?>

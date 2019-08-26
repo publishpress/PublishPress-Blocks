@@ -771,18 +771,20 @@
 
                         if (this.isRangeSelected()) {
                             const { fromCell, toCell } = rangeSelected;
-                            const fCell = attributes[ sectionSelected ][fromCell.rowIdx].cells[fromCell.colIdx];
-                            const tCell = attributes[ sectionSelected ][toCell.rowIdx].cells[toCell.colIdx];
-                            const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
-                            const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
-                            const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
-                            const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
+                            if (attributes[ sectionSelected ][fromCell.rowIdx] && attributes[ sectionSelected ][toCell.rowIdx]) {
+                                const fCell = attributes[ sectionSelected ][fromCell.rowIdx].cells[fromCell.colIdx];
+                                const tCell = attributes[ sectionSelected ][toCell.rowIdx].cells[toCell.colIdx];
+                                const fcSpan = typeof fCell.colSpan === 'undefined' ? 0 : parseInt(fCell.colSpan) - 1;
+                                const frSpan = typeof fCell.rowSpan === 'undefined' ? 0 : parseInt(fCell.rowSpan) - 1;
+                                const tcSpan = typeof tCell.colSpan === 'undefined' ? 0 : parseInt(tCell.colSpan) - 1;
+                                const trSpan = typeof tCell.rowSpan === 'undefined' ? 0 : parseInt(tCell.rowSpan) - 1;
 
-                            isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx)
-                                && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
-                                && cI >= Math.min(fromCell.RCI, toCell.RCI)
-                                && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
-                                && section === sectionSelected
+                                isSelected = rowIndex >= Math.min(fromCell.rowIdx, toCell.rowIdx)
+                                    && rowIndex <= Math.max(fromCell.rowIdx + frSpan, toCell.rowIdx + trSpan)
+                                    && cI >= Math.min(fromCell.RCI, toCell.RCI)
+                                    && cI <= Math.max(fromCell.RCI + fcSpan, toCell.RCI + tcSpan)
+                                    && section === sectionSelected;
+                            }
                         }
 
                         if (this.isMultiSelected()) {
@@ -1157,6 +1159,7 @@
                     <BlockControls>
                         <Toolbar>
                             <DropdownMenu
+                                hasArrowIndicator
                                 icon="editor-table"
                                 label={ __( 'Edit Table' ) }
                                 controls={ TABLE_CONTROLS }
@@ -1531,3 +1534,5 @@
         },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+
+export const AdvColorPalette = <div>123</div>;
