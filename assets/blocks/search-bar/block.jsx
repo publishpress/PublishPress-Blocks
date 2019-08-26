@@ -1,15 +1,17 @@
+import {AdvColorControl} from "../0-adv-components/components.jsx";
+
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, RichText, PanelColorSettings } = wpBlockEditor;
+    const { InspectorControls, RichText, PanelColorSettings } = wpBlockEditor;
     const { RangeControl, PanelBody, TextControl , ToggleControl } = wpComponents;
 
     const searchBlockIcon = (
-        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
-            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
+        <svg fill="none" height="20" width="20" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle fill="none" cx="11" cy="11" r="8"/>
+            <line x1="21" x2="16.65" y1="21" y2="16.65"/>
         </svg>
     );
 
@@ -35,9 +37,9 @@
             </svg>
         ),
         icon5: (
-            <svg fill="none" height="20" width="20" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="8"/>
-                <line x1="21" x2="16.65" y1="21" y2="16.65"/>
+            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
         ),
         icon6: (
@@ -73,22 +75,24 @@
             }
         }
 
+        componentDidMount() {
+            const { clientId, attributes, setAttributes } = this.props;
+            const { searchBtnId } = attributes;
+
+            if (!searchBtnId) {
+                setAttributes( { searchBtnId: `advgb-search-btn-${clientId}` } )
+            }
+        }
+
+
         render() {
             const { attributes, setAttributes, className } = this.props;
             const {
-                fullWidth,
-                width,
-                textColor,
-                backgroundColor,
-                searchIcon,
-                searchIconOnRight,
-                searchPlaceholder,
-                searchButtonEnabled,
-                searchButtonText,
-                searchButtonTextColor,
-                searchButtonBgColor,
-                searchButtonRadius,
-                searchButtonOnLeft,
+                fullWidth, width, textColor, backgroundColor, searchIcon, searchIconOnRight,
+                searchPlaceholder, searchButtonEnabled, searchButtonText, searchButtonTextColor,
+                searchButtonBgColor, searchButtonRadius, searchButtonOnLeft, searchBtnId,
+                searchBtnHoverColor, searchBtnHoverBgColor, searchBtnHoverShadow, searchBtnHoverShadowH, searchBtnHoverShadowV,
+                searchBtnHoverShadowBlur, searchBtnHoverShadowSpread, searchBtnHoverOpacity, searchBtnHoverTranSpeed,
             } = attributes;
 
             const searchBarIcon = (
@@ -102,6 +106,7 @@
                     <span className="advgb-search-bar-button"
                           style={ {
                               color: searchButtonTextColor,
+                              borderColor: searchButtonTextColor,
                               backgroundColor: searchButtonBgColor,
                               borderRadius: searchButtonRadius,
                           } }
@@ -122,109 +127,166 @@
             return (
                 <Fragment>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Search Bar Settings' ) }>
-                            <PanelBody title={ __( 'Search Bar State' ) }>
-                                <ToggleControl
-                                    label={ __( 'Full width' ) }
-                                    checked={ fullWidth }
-                                    onChange={ () => setAttributes( { fullWidth: !fullWidth } ) }
+                        <PanelBody title={ __( 'Search Bar State' ) }>
+                            <ToggleControl
+                                label={ __( 'Full width' ) }
+                                checked={ fullWidth }
+                                onChange={ () => setAttributes( { fullWidth: !fullWidth } ) }
+                            />
+                            {!fullWidth && (
+                                <RangeControl
+                                    label={ __( 'Width' ) }
+                                    value={ width }
+                                    onChange={ (value) => setAttributes( { width: value } ) }
+                                    min={ 300 }
+                                    max={ 2000 }
                                 />
-                                {!fullWidth && (
-                                    <RangeControl
-                                        label={ __( 'Width' ) }
-                                        value={ width }
-                                        onChange={ (value) => setAttributes( { width: value } ) }
-                                        min={ 300 }
-                                        max={ 2000 }
-                                    />
-                                ) }
-                            </PanelBody>
-                            <PanelBody title={ __( 'Search Icon Settings' ) }>
-                                <ToggleControl
-                                    label={ __( 'Search icon on the right' ) }
-                                    checked={ searchIconOnRight }
-                                    onChange={ () => setAttributes( { searchIconOnRight: !searchIconOnRight } ) }
-                                />
-                                <div className="advgb-icon-items">
-                                    <div className="advgb-icon-items-header">
-                                        { __( 'Search icon' ) }
-                                    </div>
-                                    <div className="advgb-icon-items-wrapper">
-                                        {Object.keys(SEARCH_ICONS).map((icon, idx) => (
-                                            <div className="advgb-icon-item" key={idx}>
-                                                <span className={ icon === searchIcon ? 'active' : '' }
-                                                      onClick={ () => setAttributes( { searchIcon: icon } ) }
-                                                >
-                                                    {SEARCH_ICONS[icon]}
-                                                </span>
-                                            </div>
-                                        ))}
-                                    </div>
+                            ) }
+                        </PanelBody>
+                        <PanelBody title={ __( 'Search Icon Settings' ) }>
+                            <ToggleControl
+                                label={ __( 'Search icon on the right' ) }
+                                checked={ searchIconOnRight }
+                                onChange={ () => setAttributes( { searchIconOnRight: !searchIconOnRight } ) }
+                            />
+                            <div className="advgb-icon-items">
+                                <div className="advgb-icon-items-header">
+                                    { __( 'Search icon' ) }
                                 </div>
-                            </PanelBody>
-                            <PanelBody title={ __( 'Search Input Settings' ) } initialOpen={false}>
-                                <TextControl
-                                    label={ __( 'Search placeholder' ) }
-                                    value={ searchPlaceholder }
-                                    onChange={ (value) => setAttributes( { searchPlaceholder: value } ) }
-                                />
-                                <PanelColorSettings
-                                    title={ __( 'Input Color' ) }
-                                    initialOpen={ false }
-                                    colorSettings={ [
-                                        {
-                                            label: __( 'Background color' ),
-                                            value: backgroundColor,
-                                            onChange: (value) => setAttributes( { backgroundColor: value } ),
-                                        },
-                                        {
-                                            label: __( 'Text color' ),
-                                            value: textColor,
-                                            onChange: (value) => setAttributes( { textColor: value } ),
-                                        },
-                                    ] }
-                                />
-                            </PanelBody>
-                            <PanelBody title={ __( 'Search Button Settings' ) } initialOpen={false}>
-                                <ToggleControl
-                                    label={ __( 'Show submit button' ) }
-                                    checked={ searchButtonEnabled }
-                                    onChange={ () => setAttributes( { searchButtonEnabled: !searchButtonEnabled } ) }
-                                />
-                                <ToggleControl
-                                    label={ __( 'Search button on the left' ) }
-                                    checked={ searchButtonOnLeft }
-                                    onChange={ () => setAttributes( { searchButtonOnLeft: !searchButtonOnLeft } ) }
-                                />
-                                {searchButtonEnabled && (
-                                    <Fragment>
-                                        <PanelColorSettings
-                                            title={ __( 'Button Color' ) }
-                                            initialOpen={ false }
-                                            colorSettings={ [
-                                                {
-                                                    label: __( 'Background color' ),
-                                                    value: searchButtonBgColor,
-                                                    onChange: (value) => setAttributes( { searchButtonBgColor: value } ),
-                                                },
-                                                {
-                                                    label: __( 'Text color' ),
-                                                    value: searchButtonTextColor,
-                                                    onChange: (value) => setAttributes( { searchButtonTextColor: value } ),
-                                                },
-                                            ] }
-                                        />
+                                <div className="advgb-icon-items-wrapper">
+                                    {Object.keys(SEARCH_ICONS).map((icon, idx) => (
+                                        <div className="advgb-icon-item" key={idx}>
+                                            <span className={ icon === searchIcon ? 'active' : '' }
+                                                  onClick={ () => setAttributes( { searchIcon: icon } ) }
+                                            >
+                                                {SEARCH_ICONS[icon]}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </PanelBody>
+                        <PanelBody title={ __( 'Search Input Settings' ) } initialOpen={false}>
+                            <TextControl
+                                label={ __( 'Search placeholder' ) }
+                                value={ searchPlaceholder }
+                                onChange={ (value) => setAttributes( { searchPlaceholder: value } ) }
+                            />
+                            <PanelColorSettings
+                                title={ __( 'Input Color' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Background color' ),
+                                        value: backgroundColor,
+                                        onChange: (value) => setAttributes( { backgroundColor: value } ),
+                                    },
+                                    {
+                                        label: __( 'Text color' ),
+                                        value: textColor,
+                                        onChange: (value) => setAttributes( { textColor: value } ),
+                                    },
+                                ] }
+                            />
+                        </PanelBody>
+                        <PanelBody title={ __( 'Search Button Settings' ) } initialOpen={false}>
+                            <ToggleControl
+                                label={ __( 'Show submit button' ) }
+                                checked={ searchButtonEnabled }
+                                onChange={ () => setAttributes( { searchButtonEnabled: !searchButtonEnabled } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Search button on the left' ) }
+                                checked={ searchButtonOnLeft }
+                                onChange={ () => setAttributes( { searchButtonOnLeft: !searchButtonOnLeft } ) }
+                            />
+                            {searchButtonEnabled && (
+                                <Fragment>
+                                    <AdvColorControl
+                                        label={ __('Background color') }
+                                        value={ searchButtonBgColor }
+                                        onChange={ (value) => setAttributes( { searchButtonBgColor: value } ) }
+                                    />
+                                    <AdvColorControl
+                                        label={ __('Text color') }
+                                        value={ searchButtonTextColor }
+                                        onChange={ (value) => setAttributes( { searchButtonTextColor: value } ) }
+                                    />
+                                    <RangeControl
+                                        label={ __( 'Border radius (px)' ) }
+                                        help={ __( 'Affect both input and button.' ) }
+                                        value={ searchButtonRadius }
+                                        onChange={ (value) => setAttributes( { searchButtonRadius: value } ) }
+                                        min={ 0 }
+                                        max={ 100 }
+                                    />
+                                    <PanelColorSettings
+                                        title={ __( 'Hover Colors' ) }
+                                        initialOpen={ false }
+                                        colorSettings={ [
+                                            {
+                                                label: __( 'Background color' ),
+                                                value: searchBtnHoverBgColor,
+                                                onChange: (value) => setAttributes( { searchBtnHoverBgColor: value } ),
+                                            },
+                                            {
+                                                label: __( 'Text color' ),
+                                                value: searchBtnHoverColor,
+                                                onChange: (value) => setAttributes( { searchBtnHoverColor: value } ),
+                                            },
+                                            {
+                                                label: __( 'Shadow color' ),
+                                                value: searchBtnHoverShadow,
+                                                onChange: (value) => setAttributes( { searchBtnHoverShadow: value } ),
+                                            },
+                                        ] }
+                                    />
+                                    <PanelBody title={ __( 'Hover Shadow' ) } initialOpen={false}>
                                         <RangeControl
-                                            label={ __( 'Border radius (px)' ) }
-                                            help={ __( 'Affect both input and button.' ) }
-                                            value={ searchButtonRadius }
-                                            onChange={ (value) => setAttributes( { searchButtonRadius: value } ) }
+                                            label={ __('Opacity (%)') }
+                                            value={ searchBtnHoverOpacity }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverOpacity: value } ) }
                                             min={ 0 }
                                             max={ 100 }
                                         />
-                                    </Fragment>
-                                ) }
-                            </PanelBody>
+                                        <RangeControl
+                                            label={ __('Transition speed (ms)') }
+                                            value={ searchBtnHoverTranSpeed || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverTranSpeed: value } ) }
+                                            min={ 0 }
+                                            max={ 3000 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Shadow H offset' ) }
+                                            value={ searchBtnHoverShadowH || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverShadowH: value } ) }
+                                            min={ -50 }
+                                            max={ 50 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Shadow V offset' ) }
+                                            value={ searchBtnHoverShadowV || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverShadowV: value } ) }
+                                            min={ -50 }
+                                            max={ 50 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Shadow blur' ) }
+                                            value={ searchBtnHoverShadowBlur || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverShadowBlur: value } ) }
+                                            min={ 0 }
+                                            max={ 50 }
+                                        />
+                                        <RangeControl
+                                            label={ __( 'Shadow spread' ) }
+                                            value={ searchBtnHoverShadowSpread || '' }
+                                            onChange={ ( value ) => setAttributes( { searchBtnHoverShadowSpread: value } ) }
+                                            min={ 0 }
+                                            max={ 50 }
+                                        />
+                                    </PanelBody>
+                                </Fragment>
+                            ) }
                         </PanelBody>
                     </InspectorControls>
                     <div className={`advgb-search-bar-wrapper ${className}`}>
@@ -246,6 +308,15 @@
                             </div>
                             {!searchButtonOnLeft && searchBarButton}
                         </div>
+                        <style>
+                            {`.${searchBtnId}:hover {
+                                color: ${searchBtnHoverColor} !important;
+                                background-color: ${searchBtnHoverBgColor} !important;
+                                box-shadow: ${searchBtnHoverShadowH}px ${searchBtnHoverShadowV}px ${searchBtnHoverShadowBlur}px ${searchBtnHoverShadowSpread}px ${searchBtnHoverShadow};
+                                transition: all ${searchBtnHoverTranSpeed}s ease;
+                                opacity: ${searchBtnHoverOpacity/100}
+                            }`}
+                        </style>
                     </div>
                 </Fragment>
             )
@@ -283,7 +354,7 @@
         },
         searchButtonText: {
             type: 'string',
-            default: __( 'Search' ),
+            default: __( 'SEARCH' ),
         },
         searchButtonTextColor: {
             type: 'string',
@@ -293,11 +364,47 @@
         },
         searchButtonRadius: {
             type: 'number',
-            default: 4,
+            default: 0,
         },
         searchButtonOnLeft: {
             type: 'boolean',
             default: false,
+        },
+        searchBtnId : {
+            type: 'string',
+        },
+        searchBtnHoverColor: {
+            type: 'string',
+        },
+        searchBtnHoverBgColor: {
+            type: 'string',
+        },
+        searchBtnHoverShadow: {
+            type: 'string',
+        },
+        searchBtnHoverShadowH: {
+            type: 'number',
+            default: 1,
+        },
+        searchBtnHoverShadowV: {
+            type: 'number',
+            default: 1,
+        },
+        searchBtnHoverShadowBlur: {
+            type: 'number',
+            default: 12,
+        },
+        searchBtnHoverShadowSpread: {
+            type: 'number',
+            default: 0,
+        },
+        searchBtnHoverOpacity: {
+            type: 'number',
+            default: 100,
+        },
+        searchBtnHoverTranSpeed: {
+            type: 'number',
+            default: 200,
         },
         changed: {
             type: 'boolean',
@@ -320,24 +427,14 @@
         },
         styles: [
             { name: 'default', label: __( 'Default' ), isDefault: true },
-            { name: 'alternative', label: __( 'Alternative' ) },
+            { name: 'classic', label: __( 'Classic' ) },
         ],
         edit: SearchBarEdit,
         save: function ( { attributes, className } ) {
             const {
-                fullWidth,
-                width,
-                textColor,
-                backgroundColor,
-                searchIcon,
-                searchIconOnRight,
-                searchPlaceholder,
-                searchButtonEnabled,
-                searchButtonText,
-                searchButtonTextColor,
-                searchButtonBgColor,
-                searchButtonRadius,
-                searchButtonOnLeft,
+                fullWidth, width, textColor, backgroundColor, searchIcon, searchIconOnRight,
+                searchPlaceholder, searchButtonEnabled, searchButtonText, searchButtonTextColor,
+                searchButtonBgColor, searchButtonRadius, searchButtonOnLeft, searchBtnId,
             } = attributes;
 
             const searchBarIcon = (
@@ -350,9 +447,10 @@
                 <div className="advgb-search-button-wrapper">
                     <button
                         type="submit"
-                        className="advgb-search-bar-button"
+                        className={`advgb-search-bar-button ${searchBtnId}`}
                         style={ {
                             color: searchButtonTextColor,
+                            borderColor: searchButtonTextColor,
                             backgroundColor: searchButtonBgColor,
                             borderRadius: searchButtonRadius,
                         } }

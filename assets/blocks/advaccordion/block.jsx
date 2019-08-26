@@ -89,7 +89,7 @@
 
             if (childBlocks.length < 1) {
                 // No accordion left, we will remove this block
-                removeBlock(clientId);
+                // removeBlock(clientId);
             }
         }
 

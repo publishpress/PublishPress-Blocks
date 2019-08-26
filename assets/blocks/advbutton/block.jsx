@@ -1,10 +1,12 @@
+import {AdvColorControl} from "../0-adv-components/components.jsx";
+
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
-    const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, PanelColorSettings } = wpBlockEditor;
-    const { RangeControl, PanelBody, TextControl, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
+    const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
+    const { BaseControl, RangeControl, PanelBody, TextControl, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
 
     class AdvButton extends Component {
         constructor() {
@@ -61,33 +63,36 @@
                 clientId: blockID,
             } = this.props;
             const {
-                id,
-                align,
-                url,
-                urlOpenNewTab,
-                title,
-                text,
-                bgColor,
-                textColor,
-                textSize,
-                paddingTop,
-                paddingRight,
-                paddingBottom,
-                paddingLeft,
-                borderWidth,
-                borderColor,
-                borderRadius,
-                borderStyle,
-                hoverTextColor,
-                hoverBgColor,
-                hoverShadowColor,
-                hoverShadowH,
-                hoverShadowV,
-                hoverShadowBlur,
-                hoverShadowSpread,
-                hoverOpacity,
-                transitionSpeed,
+                id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
+                paddingTop, paddingRight, paddingBottom, paddingLeft,
+                borderWidth, borderColor, borderRadius, borderStyle,
+                hoverTextColor, hoverBgColor, hoverShadowColor, hoverShadowH, hoverShadowV, hoverShadowBlur, hoverShadowSpread,
+                hoverOpacity, transitionSpeed,
             } = attributes;
+
+            const isStyleSquared = className.indexOf('-squared') > -1;
+            const isStyleOutlined = className.indexOf('-outline') > -1;
+            const hoverColorSettings = [
+                {
+                    label: __( 'Background Color' ),
+                    value: hoverBgColor,
+                    onChange: ( value ) => setAttributes( { hoverBgColor: value === undefined ? '#2196f3' : value } ),
+                },
+                {
+                    label: __( 'Text Color' ),
+                    value: hoverTextColor,
+                    onChange: ( value ) => setAttributes( { hoverTextColor: value === undefined ? '#fff' : value } ),
+                },
+                {
+                    label: __( 'Shadow Color' ),
+                    value: hoverShadowColor,
+                    onChange: ( value ) => setAttributes( { hoverShadowColor: value === undefined ? '#ccc' : value } ),
+                },
+            ];
+
+            if (isStyleOutlined) {
+                hoverColorSettings.shift();
+            }
 
             return (
                 <Fragment>
@@ -102,7 +107,9 @@
                             />
                         </Toolbar>
                     </BlockControls>
-                    <span style={ { display: 'inline-block' } } >
+                    <span className={`${className} align${align}`}
+                          style={ { display: 'inline-block' } }
+                    >
                         <RichText
                             tagName="span"
                             placeholder={ __( 'Add text…' ) }
@@ -117,17 +124,17 @@
                     <style>
                         {`.${id} {
                         font-size: ${textSize}px;
-                        color: ${textColor};
-                        background-color: ${bgColor};
+                        color: ${textColor} !important;
+                        background-color: ${bgColor} !important;
                         padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
                         border-width: ${borderWidth}px;
-                        border-color: ${borderColor};
-                        border-radius: ${borderRadius}px;
-                        border-style: ${borderStyle};
+                        border-color: ${borderColor} !important;
+                        border-radius: ${borderRadius}px !important;
+                        border-style: ${borderStyle} ${borderStyle !== 'none' && '!important'};
                     }
                     .${id}:hover {
-                        color: ${hoverTextColor};
-                        background-color: ${hoverBgColor};
+                        color: ${hoverTextColor} !important;
+                        background-color: ${hoverBgColor} !important;
                         box-shadow: ${hoverShadowH}px ${hoverShadowV}px ${hoverShadowBlur}px ${hoverShadowSpread}px ${hoverShadowColor};
                         transition: all ${transitionSpeed}s ease;
                         opacity: ${hoverOpacity/100}
@@ -135,17 +142,21 @@
                     </style>
                     <InspectorControls>
                         <PanelBody title={ __( 'Button link' ) }>
-                            <TextControl
+                            <BaseControl
                                 label={ [
                                     __( 'Link URL' ),
                                     (url && <a href={ url || '#' } key="link_url" target="_blank" style={ { float: 'right' } }>
                                         { __( 'Preview' ) }
                                     </a>)
                                 ] }
-                                value={ url || '' }
-                                placeholder={ __( 'Enter URL…' ) }
-                                onChange={ ( text ) => setAttributes( { url: text } ) }
-                            />
+                            >
+                                <URLInput
+                                    value={url}
+                                    onChange={ (value) => setAttributes( { url: value } ) }
+                                    isFullWidth
+                                    hasBorder
+                                />
+                            </BaseControl>
                             <ToggleControl
                                 label={ __( 'Open in new tab' ) }
                                 checked={ !!urlOpenNewTab }
@@ -162,31 +173,29 @@
                                 beforeIcon="editor-textcolor"
                                 allowReset
                             />
-                            <PanelColorSettings
-                                title={ __( 'Color Settings' ) }
-                                initialOpen={ false }
-                                colorSettings={ [
-                                    {
-                                        label: __( 'Background Color' ),
-                                        value: bgColor,
-                                        onChange: ( value ) => setAttributes( { bgColor: value === undefined ? '#2196f3' : value } ),
-                                    },
-                                    {
-                                        label: __( 'Text Color' ),
-                                        value: textColor,
-                                        onChange: ( value ) => setAttributes( { textColor: value === undefined ? '#fff' : value } ),
-                                    },
-                                ] }
+                            {!isStyleOutlined && (
+                                <AdvColorControl
+                                    label={ __('Background Color') }
+                                    value={ bgColor }
+                                    onChange={ (value) => setAttributes( { bgColor: value } ) }
+                                />
+                            )}
+                            <AdvColorControl
+                                label={ __('Text Color') }
+                                value={ textColor }
+                                onChange={ (value) => setAttributes( { textColor: value } ) }
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
-                            <RangeControl
-                                label={ __( 'Border radius' ) }
-                                value={ borderRadius || '' }
-                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
+                            {!isStyleSquared && (
+                                <RangeControl
+                                    label={ __( 'Border radius' ) }
+                                    value={ borderRadius || '' }
+                                    onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                                    min={ 0 }
+                                    max={ 100 }
+                                />
+                            ) }
                             <SelectControl
                                 label={ __( 'Border style' ) }
                                 value={ borderStyle }
@@ -250,25 +259,23 @@
                             <PanelColorSettings
                                 title={ __( 'Color Settings' ) }
                                 initialOpen={ false }
-                                colorSettings={ [
-                                    {
-                                        label: __( 'Background Color' ),
-                                        value: hoverBgColor,
-                                        onChange: ( value ) => setAttributes( { hoverBgColor: value === undefined ? '#2196f3' : value } ),
-                                    },
-                                    {
-                                        label: __( 'Text Color' ),
-                                        value: hoverTextColor,
-                                        onChange: ( value ) => setAttributes( { hoverTextColor: value === undefined ? '#fff' : value } ),
-                                    },
-                                    {
-                                        label: __( 'Shadow Color' ),
-                                        value: hoverShadowColor,
-                                        onChange: ( value ) => setAttributes( { hoverShadowColor: value === undefined ? '#ccc' : value } ),
-                                    },
-                                ] }
+                                colorSettings={ hoverColorSettings }
                             />
                             <PanelBody title={ __( 'Shadow' ) } initialOpen={ false }  >
+                                <RangeControl
+                                    label={ __('Opacity (%)') }
+                                    value={ hoverOpacity }
+                                    onChange={ ( value ) => setAttributes( { hoverOpacity: value } ) }
+                                    min={ 0 }
+                                    max={ 100 }
+                                />
+                                <RangeControl
+                                    label={ __('Transition speed (ms)') }
+                                    value={ transitionSpeed || '' }
+                                    onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) }
+                                    min={ 0 }
+                                    max={ 3000 }
+                                />
                                 <RangeControl
                                     label={ __( 'Shadow H offset' ) }
                                     value={ hoverShadowH || '' }
@@ -298,20 +305,6 @@
                                     max={ 50 }
                                 />
                             </PanelBody>
-                            <RangeControl
-                                label={ __('Opacity (%)') }
-                                value={ hoverOpacity }
-                                onChange={ ( value ) => setAttributes( { hoverOpacity: value } ) }
-                                min={ 0 }
-                                max={ 100 }
-                            />
-                            <RangeControl
-                                label={ __('Transition speed (ms)') }
-                                value={ transitionSpeed || '' }
-                                onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) }
-                                min={ 0 }
-                                max={ 3000 }
-                            />
                         </PanelBody>
                     </InspectorControls>
                 </Fragment>
@@ -342,14 +335,13 @@
         text: {
             source: 'children',
             selector: 'a',
+            default: __( 'PUSH THE BUTTON' ),
         },
         bgColor: {
             type: 'string',
-            default: '#2196f3',
         },
         textColor: {
             type: 'string',
-            default: '#fff',
         },
         textSize: {
             type: 'number',
@@ -357,19 +349,19 @@
         },
         paddingTop: {
             type: 'number',
-            default: 6,
+            default: 10,
         },
         paddingRight: {
             type: 'number',
-            default: 12,
+            default: 30,
         },
         paddingBottom: {
             type: 'number',
-            default: 6,
+            default: 10,
         },
         paddingLeft: {
             type: 'number',
-            default: 12,
+            default: 30,
         },
         borderWidth: {
             type: 'number',
@@ -377,11 +369,10 @@
         },
         borderColor: {
             type: 'string',
-            default: '#2196f3'
         },
         borderStyle: {
             type: 'string',
-            default: 'solid',
+            default: 'none',
         },
         borderRadius: {
             type: 'number',
@@ -389,11 +380,9 @@
         },
         hoverTextColor: {
             type: 'string',
-            default: '#fff'
         },
         hoverBgColor: {
             type: 'string',
-            default: '#2196f3'
         },
         hoverShadowColor: {
             type: 'string',
@@ -401,15 +390,15 @@
         },
         hoverShadowH: {
             type: 'number',
-            default: 3,
+            default: 1,
         },
         hoverShadowV: {
             type: 'number',
-            default: 3,
+            default: 1,
         },
         hoverShadowBlur: {
             type: 'number',
-            default: 1,
+            default: 12,
         },
         hoverShadowSpread: {
             type: 'number',
@@ -469,6 +458,12 @@
                 }
             ]
         },
+        styles: [
+            { name: 'default', label: __( 'Default' ), isDefault: true },
+            { name: 'outlined', label: __( 'Outlined' ) },
+            { name: 'squared', label: __( 'Squared' ) },
+            { name: 'squared-outline', label: __( 'Squared Outline' ) },
+        ],
         edit: AdvButton,
         save: function ( { attributes } ) {
             const {
