@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.0.7",
+  "version": "2.1.0",
   "platform": "wordpress",
   "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,32 @@
     ]
   },
   "changelog": {
+    "2.1.0": [
+      {
+        "type": "feature",
+        "title": "New Login/Register Form block: Easy to create login and register form"
+      },
+      {
+        "type": "feature",
+        "title": "New Search bar block: Create a search bar block"
+      },
+      {
+        "type": "feature",
+        "title": "New Accordions Wrapper block: Enhance and improve accordions"
+      },
+      {
+        "type": "feature",
+        "title": "Adv Button block: add predefined styles and hover opacity"
+      },
+      {
+        "type": "fix",
+        "title": "Adv Table block: block error in some rare cases"
+      },
+      {
+        "type": "fix",
+        "title": "Cannot verify newsletter form captcha"
+      }
+    ],
     "2.0.7": [
       {
         "type": "fix",
