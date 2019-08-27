@@ -41,7 +41,7 @@
     "2.1.1": [
       {
         "type": "fix",
-        "title": "Error while using without Gutenberg plugin"
+        "title": "Error on login block with Gutenberg core"
       }
     ],
     "2.1.0": [
