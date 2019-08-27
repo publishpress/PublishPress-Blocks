@@ -30,6 +30,10 @@
     margin-left: 8px;
 }
 
+.components-base-control__label .component-color-indicator {
+    vertical-align: text-bottom;
+}
+
 /*Editor sidebar controls*/
 .advgb-editor-width-default #editor .editor-writing-flow {
     max-width: 750px;

@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "platform": "wordpress",
   "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
@@ -38,10 +38,16 @@
     ]
   },
   "changelog": {
+    "2.1.1": [
+      {
+        "type": "fix",
+        "title": "Error on login block with Gutenberg core"
+      }
+    ],
     "2.1.0": [
       {
         "type": "feature",
-        "title": "New Login/Register Form block: Easy to create login and register form"
+        "title": "Login/Register Form block: Easy to create login and register form"
       },
       {
         "type": "feature",
@@ -49,7 +55,7 @@
       },
       {
         "type": "feature",
-        "title": "New Accordions Wrapper block: Enhance and improve accordions"
+        "title": "New Accordions Wrapper block: group accordions elements"
       },
       {
         "type": "feature",
@@ -57,7 +63,7 @@
       },
       {
         "type": "fix",
-        "title": "Adv Table block: block error in some rare cases"
+        "title": "Adv Table block: block error on headers in some cases"
       },
       {
         "type": "fix",
