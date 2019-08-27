@@ -108,19 +108,20 @@ function AdvColorControl(props) {
     var _ref = wp.blockEditor || wp.editor,
         ColorPalette = _ref.ColorPalette;
 
+    var BaseLabel = BaseControl.VisualLabel ? BaseControl.VisualLabel : "span";
+
     var label = props.label,
         value = props.value,
         onChange = props.onChange;
-
-
+    "";
     return React.createElement(
         BaseControl,
         {
             className: "editor-color-palette-control block-editor-color-palette-control"
         },
         React.createElement(
-            BaseControl.VisualLabel,
-            null,
+            BaseLabel,
+            { className: "components-base-control__label" },
             label,
             value && React.createElement(ColorIndicator, { colorValue: value })
         ),
