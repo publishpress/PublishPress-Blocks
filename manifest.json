@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "platform": "wordpress",
   "wp_version": "5.2.2",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,12 @@
     ]
   },
   "changelog": {
+    "2.1.1": [
+      {
+        "type": "fix",
+        "title": "Error while using without Gutenberg plugin"
+      }
+    ],
     "2.1.0": [
       {
         "type": "feature",
