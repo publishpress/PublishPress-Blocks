@@ -18,9 +18,9 @@
     width: 100%;
 }
 
-/*#editor .slick-slide {*/
-    /*pointer-events: none;*/
-/*}*/
+#editor .slick-slide {
+    pointer-events: none;
+}
 
 .slick-arrow:focus {
     background: transparent;

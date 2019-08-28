@@ -35,8 +35,7 @@ class AdvancedButtonBlockCest
         // Insert block
         $I->insertBlock('Advanced Button');
 
-        $I->waitForElement('//div[contains(@class, "wp-block-advgb-button_link")]');
-        $I->pressKeys('Button Text');
+        $I->waitForElement('//span[contains(@class, "wp-block-advgb-button_link")]');
 
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
@@ -47,7 +46,7 @@ class AdvancedButtonBlockCest
         $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
 
         // Check button rendered
-        $I->seeElement('//a[contains(@class, "wp-block-advgb-button_link")][text()="Button Text"]');
+        $I->seeElement('//a[contains(@class, "wp-block-advgb-button_link")][text()="PUSH THE BUTTON"]');
     }
 
     public function changeButtonSizeAndColor(AcceptanceTester $I)
@@ -62,13 +61,12 @@ class AdvancedButtonBlockCest
         $I->fillField('//label[text()="Text size"]/following-sibling::node()/following-sibling::node()/following-sibling::node()', 22);
 
         // Change text color
-        $I->click('//span[text()="Color Settings"]');
         $I->clickAndWait('//span[text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($textColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+        $I->clickWithLeftButton('//span[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         // Change background color
         $I->clickAndWait('//span[text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
@@ -76,7 +74,7 @@ class AdvancedButtonBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys($bgColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+        $I->clickWithLeftButton('//span[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         // Update post
         $I->updatePost();
@@ -99,15 +97,15 @@ class AdvancedButtonBlockCest
     {
         $I->wantTo('Change button border styles');
 
-        // Change border radius
+        // Change border style
         $I->click('//button[text()="Border"]');
+        $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dashed'));
+
+        // Change border radius
         $I->fillField('//label[text()="Border radius"]/following-sibling::node()/following-sibling::node()', 10);
 
         // Change border width
         $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 2);
-
-        // Change border style
-        $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dashed'));
 
         // Change border color
         $I->click('//span[text()="Border Color"]');
@@ -116,7 +114,7 @@ class AdvancedButtonBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('#ff0000');
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+        $I->clickWithLeftButton('//span[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         // Update post
         $I->updatePost();
@@ -179,29 +177,30 @@ class AdvancedButtonBlockCest
         $I->fillField('//label[text()="Shadow blur"]/following-sibling::node()/following-sibling::node()', 3);
         $I->fillField('//label[text()="Shadow spread"]/following-sibling::node()/following-sibling::node()', 2);
         $I->fillField('//label[text()="Transition speed (ms)"]/following-sibling::node()/following-sibling::node()', 500);
+        $I->fillField('//label[text()="Opacity (%)"]/following-sibling::node()/following-sibling::node()', 10);
 
         // Change hover color
-        $I->click('//h2/button[text()="Hover"]/parent::node()/following-sibling::node()//span[text()="Color Settings"]');
-        $I->clickAndWait('//span[text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->click('//span[text()="Color Settings"]');
+        $I->clickAndWait('//h2/button[text()="Hover"]/parent::node()/following-sibling::node()//span[text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($hoverBgColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+        $I->clickWithLeftButton('//span[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
-        $I->clickAndWait('//span[text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('//h2/button[text()="Hover"]/parent::node()/following-sibling::node()//span[text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($hoverTextColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+        $I->clickWithLeftButton('//span[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         $I->clickAndWait('//span[text()="Shadow Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($hoverShadowColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
+        $I->clickWithLeftButton('//span[contains(@class, "wp-block-advgb-button_link")]'); // click block to hide picker
 
         // Update post
         $I->updatePost();
@@ -222,5 +221,8 @@ class AdvancedButtonBlockCest
 
         $transition = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("transition")');
         $I->assertTrue(strpos($transition, '0.5s') !== false);
+
+        $opacity = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("opacity")');
+        $I->assertEquals("0.1", $opacity);
     }
 }

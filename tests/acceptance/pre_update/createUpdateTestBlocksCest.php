@@ -124,7 +124,7 @@ class createUpdateTestBlocksCest
         /***** Add advanced button *****/
         $I->insertBlock('Advanced Button');
 
-        $I->waitForElement('//div[contains(@class, "wp-block-advgb-button_link")]');
+        $I->waitForElement('//span[contains(@class, "wp-block-advgb-button_link")]');
         $I->pressKeys('My button');
     }
 
@@ -298,20 +298,15 @@ class createUpdateTestBlocksCest
     public function createAccordionBlock(AcceptanceTester $I)
     {
         /***** Add Accordion *****/
-        $I->insertBlock('Accordion');
-        $I->waitForElement('.advgb-accordion-block');
+        $I->insertBlock('Advanced Accordion');
+        $I->waitForElement('.advgb-accordions-wrapper');
 
-        $I->fillField('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 1');
-        $I->click('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
+        $I->fillField('//div[@data-type="advgb/accordion-item"][1]//div[@class="advgb-accordion-item"]//h4', 'Accordion title 1');
+        $I->click('//div[@data-type="advgb/accordion-item"][1]//div[@class="advgb-accordion-item"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
         $I->pressKeys('Flexi umentia agitabilis bene. Circumdare orbis iuga in locis convexi. Vesper mentisque alto neu. Levius circumdare perpetuum ventis aethere.');
 
-        $I->pressKeys(\WebDriverKeys::DOWN);
-
-        $I->insertBlock('Accordion');
-        $I->waitForElement('.advgb-accordion-block');
-
-        $I->fillField('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 2');
-        $I->click('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
+        $I->fillField('//div[@data-type="advgb/accordion-item"][2]//div[@class="advgb-accordion-item"]//h4', 'Accordion title 2');
+        $I->click('//div[@data-type="advgb/accordion-item"][2]//div[@class="advgb-accordion-item"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
         $I->pressKeys('Dextra galeae moles. Erat: ponderibus valles circumdare tuti sic? Orbis limitibus recens titan inmensa extendi valles nisi aera.');
 
         $I->pressKeys(\WebDriverKeys::DOWN);
