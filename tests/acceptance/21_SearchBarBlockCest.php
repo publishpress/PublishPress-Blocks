@@ -36,5 +36,18 @@ class SearchBarBlockCest
         // Insert block
         $I->insertBlock('Search Bar');
         $I->waitForElement('.advgb-search-bar-wrapper');
+
+        // Change width
+        $I->fillField('//label[text()="Width"]/following-sibling::node()/following-sibling::node()', 600);
+
+        // Publish post
+        $I->click('Publish…');
+        $I->waitForElementVisible('.editor-post-publish-button');
+
+        $I->click('Publish');
+        $I->waitForText('Post published.');
+
+        $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
+        $I->waitForElement('.advgb-search-bar-form');
     }
 }

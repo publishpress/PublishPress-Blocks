@@ -83,7 +83,8 @@ class AcceptanceTester extends \Codeception\Actor
         } catch (Exception $e) {
             // not latest, do stuff
         }
-        $I->click('View Post');
+
+        $I->click('//li/a[text()="View Post"]');
     }
 
     /**

@@ -100,6 +100,7 @@ class TestimonialBlockCest
         $I->click('.advgb-testimonial .advgb-testimonial-item:last-child p.advgb-testimonial-desc');
         $I->selectCurrentElementText();
         $I->pressKeys('An alien person. Come to earth from a meteor. He has many super powers.');
+        $I->wait(1);
 
         // Update post
         $I->updatePost();
