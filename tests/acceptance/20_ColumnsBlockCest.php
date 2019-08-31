@@ -94,6 +94,7 @@ class ColumnsBlockCest
         $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child .advgb-column .wp-block-paragraph');
         $I->selectCurrentElementText();
         $I->pressKeys("Third column text");
+        $I->wait(1);
 
         // Publish post
         $I->click('Publish…');

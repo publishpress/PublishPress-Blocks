@@ -51,6 +51,7 @@ class TestimonialBlockCest
         $I->click('.advgb-testimonial .advgb-testimonial-item p.advgb-testimonial-desc');
         $I->selectCurrentElementText();
         $I->pressKeys('Coding is the passion of his life.');
+        $I->wait(1);
 
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');

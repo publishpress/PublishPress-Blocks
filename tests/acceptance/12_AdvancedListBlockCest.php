@@ -36,6 +36,7 @@ class AdvancedListBlockCest
         $I->insertBlock('Advanced List');
         $I->waitForElement('.advgb-list-item');
 
+        $I->wait(0.5);
         $I->pressKeys('List item 1'.\WebDriverKeys::ENTER.'List item 2'.\WebDriverKeys::ENTER.'List item 3'.\WebDriverKeys::ENTER.'List item 4'.\WebDriverKeys::ENTER.'List item 5');
         $I->click('//div[@class="advgb-icon-items-wrapper"]/div[contains(@class, "advgb-icon-item")][5]/span');
 
