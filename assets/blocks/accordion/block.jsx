@@ -104,10 +104,10 @@
                     <InspectorControls>
                         <PanelBody title={ __( 'Notice' ) }>
                             <p style={ { color: '#ff0000', fontStyle: 'italic' } }>
-                                { __( `We have Adv. Accordion block to replace for this block.
-                                This block will be removed in the some next version.
-                                Please transform this to an Accordion Item block and drag them into
-                                new Adv. Accordion block as soon as possible.` ) }
+                                { __( `This accordion block has been replaced by a new and better one.
+                                 This block will be removed in a future version.
+                                 Please transform this to an Accordion Item block
+                                 and drag them into new Adv. Accordion block as soon as possible.` ) }
                             </p>
                         </PanelBody>
                         <PanelBody title={ __( 'Accordion Settings' ) }>
