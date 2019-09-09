@@ -51,6 +51,7 @@ class TestimonialBlockCest
         $I->click('.advgb-testimonial .advgb-testimonial-item p.advgb-testimonial-desc');
         $I->selectCurrentElementText();
         $I->pressKeys('Coding is the passion of his life.');
+        $I->wait(1);
 
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
@@ -100,6 +101,7 @@ class TestimonialBlockCest
         $I->click('.advgb-testimonial .advgb-testimonial-item:last-child p.advgb-testimonial-desc');
         $I->selectCurrentElementText();
         $I->pressKeys('An alien person. Come to earth from a meteor. He has many super powers.');
+        $I->wait(1);
 
         // Update post
         $I->updatePost();

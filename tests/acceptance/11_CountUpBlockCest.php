@@ -49,6 +49,7 @@ class CountUpBlockCest
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-one"]/div[3]//div');
         $I->selectCurrentElementText();
         $I->pressKeys('per day');
+        $I->wait(1);
 
         // Publish post
         $I->click('Publish…');
@@ -99,6 +100,7 @@ class CountUpBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('per month');
 
+        $I->wait(1);
         $I->updatePost();
         $I->waitForElement('.wp-block-advgb-count-up');
 

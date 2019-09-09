@@ -1669,6 +1669,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return setAttributes({ url: value });
                                     },
+                                    autoFocus: false,
                                     isFullWidth: true,
                                     hasBorder: true
                                 })
