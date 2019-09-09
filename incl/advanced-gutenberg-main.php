@@ -3963,6 +3963,12 @@ float: left;'
                 array(),
                 ADVANCED_GUTENBERG_VERSION
             );
+
+            $content = preg_replace_callback(
+                '@<div[^>]*?advgb\-count\-up\-columns.*?(</p></div>)@s',
+                array($this, 'decodeHtmlEntity'),
+                $content
+            );
         }
 
         if (strpos($content, 'advgb-image-block') !== false) {
