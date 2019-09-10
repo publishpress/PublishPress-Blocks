@@ -294,7 +294,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "p",
                                 { style: { color: '#ff0000', fontStyle: 'italic' } },
-                                __("We have Adv. Accordion block to replace for this block.\n                                This block will be removed in the some next version.\n                                Please transform this to an Accordion Item block and drag them into\n                                new Adv. Accordion block as soon as possible.")
+                                __("This accordion block has been replaced by a new and better one.\n                                 This block will be removed in a future version.\n                                 Please transform this to an Accordion Item block\n                                 and drag them into new Adv. Accordion block as soon as possible.")
                             )
                         ),
                         React.createElement(
@@ -1669,6 +1669,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return setAttributes({ url: value });
                                     },
+                                    autoFocus: false,
                                     isFullWidth: true,
                                     hasBorder: true
                                 })

@@ -124,7 +124,7 @@ class createUpdateTestBlocksCest
         /***** Add advanced button *****/
         $I->insertBlock('Advanced Button');
 
-        $I->waitForElement('//div[contains(@class, "wp-block-advgb-button_link")]');
+        $I->waitForElement('//span[contains(@class, "wp-block-advgb-button_link")]');
         $I->pressKeys('My button');
     }
 
@@ -298,20 +298,15 @@ class createUpdateTestBlocksCest
     public function createAccordionBlock(AcceptanceTester $I)
     {
         /***** Add Accordion *****/
-        $I->insertBlock('Accordion');
-        $I->waitForElement('.advgb-accordion-block');
+        $I->insertBlock('Advanced Accordion');
+        $I->waitForElement('.advgb-accordions-wrapper');
 
-        $I->fillField('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 1');
-        $I->click('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
+        $I->fillField('//div[@data-type="advgb/accordion-item"][1]//div[@class="advgb-accordion-item"]//h4', 'Accordion title 1');
+        $I->click('//div[@data-type="advgb/accordion-item"][1]//div[@class="advgb-accordion-item"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
         $I->pressKeys('Flexi umentia agitabilis bene. Circumdare orbis iuga in locis convexi. Vesper mentisque alto neu. Levius circumdare perpetuum ventis aethere.');
 
-        $I->pressKeys(\WebDriverKeys::DOWN);
-
-        $I->insertBlock('Accordion');
-        $I->waitForElement('.advgb-accordion-block');
-
-        $I->fillField('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 2');
-        $I->click('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
+        $I->fillField('//div[@data-type="advgb/accordion-item"][2]//div[@class="advgb-accordion-item"]//h4', 'Accordion title 2');
+        $I->click('//div[@data-type="advgb/accordion-item"][2]//div[@class="advgb-accordion-item"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
         $I->pressKeys('Dextra galeae moles. Erat: ponderibus valles circumdare tuti sic? Orbis limitibus recens titan inmensa extendi valles nisi aera.');
 
         $I->pressKeys(\WebDriverKeys::DOWN);
@@ -469,6 +464,46 @@ class createUpdateTestBlocksCest
         $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child .advgb-column .wp-block-paragraph');
         $I->selectCurrentElementText();
         $I->pressKeys("Third column text");
+    }
+
+    public function createSearchBarBlock(AcceptanceTester $I)
+    {
+        /***** Add Search Bar *****/
+        $I->insertBlock('Search Bar');
+        $I->waitForElement('.advgb-search-bar-wrapper');
+
+        // Change search icon
+        $I->click('//div[text()="Search icon"]/following-sibling::node()/div[3]');
+
+        // Change width to full width
+        $I->click('//label[text()="Full width"]/preceding-sibling::node()');
+
+        // Change input settings
+        $I->click('//button[text()="Search Input Settings"]');
+        // Change search input placeholder
+        $I->fillField('//label[text()="Search placeholder"]/following-sibling::node()', "Search now");
+
+        // Change input background color to black
+        $I->click('//span[text()="Input Color"]');
+        $I->click('//span[text()="Background color"]/following-sibling::node()//div[3]');
+        // Change input text color to white
+        $I->click('//span[text()="Text color"]/following-sibling::node()//div[5]');
+    }
+
+    public function createLoginFormBlock(AcceptanceTester $I)
+    {
+        /***** Add Login Form *****/
+        $I->insertBlock('Login/Register Form');
+        $I->waitForElement('.advgb-lores-form-wrapper');
+
+        // Change submit button text color to white
+        $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
+        // Change submit button background color to black
+        $I->click('//span[text()="Background"]/following-sibling::node()//div[3]');
+        // Change submit button border radius to 4px
+        $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
+        // Change button position to center
+        $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
     }
 
     public function publishPost(AcceptanceTester $I)

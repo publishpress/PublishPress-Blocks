@@ -8,8 +8,10 @@ class AccordionBlockCest
             // Back to edit post
             $I->click('Edit Post');
             $I->waitForElement('#editor');
-            $I->waitForElement('.advgb-accordion-block');
-            $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4');
+            $I->waitForElement('.advgb-accordions-wrapper');
+            $I->click(".editor-block-navigation");
+            $I->waitForText("Block Navigation");
+            $I->clickWithLeftButton('//button[text()="Advanced Accordion"]');
         } catch(Exception $e) {
             // do stuff
         }
@@ -33,20 +35,15 @@ class AccordionBlockCest
         $I->fillField('.editor-post-title__input', 'Accordion Block');
 
         // Insert block
-        $I->insertBlock('Accordion');
-        $I->waitForElement('.advgb-accordion-block');
+        $I->insertBlock('Advanced Accordion');
+        $I->waitForElement('.advgb-accordions-wrapper');
 
-        $I->fillField('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 1');
-        $I->click('//div[@data-type="advgb/accordion"]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
+        $I->fillField('//div[@data-type="advgb/accordion-item"][1]//div[@class="advgb-accordion-item"]//h4', 'Accordion title 1');
+        $I->click('//div[@data-type="advgb/accordion-item"][1]//div[@class="advgb-accordion-item"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
         $I->pressKeys('Flexi umentia agitabilis bene. Circumdare orbis iuga in locis convexi. Vesper mentisque alto neu. Levius circumdare perpetuum ventis aethere.');
 
-        $I->pressKeys(\WebDriverKeys::DOWN);
-
-        $I->insertBlock('Accordion');
-        $I->waitForElement('.advgb-accordion-block');
-
-        $I->fillField('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//h4', 'Accordion title 2');
-        $I->click('//div[@data-type="advgb/accordion"][2]//div[@class="advgb-accordion-block"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
+        $I->fillField('//div[@data-type="advgb/accordion-item"][2]//div[@class="advgb-accordion-item"]//h4', 'Accordion title 2');
+        $I->click('//div[@data-type="advgb/accordion-item"][2]//div[@class="advgb-accordion-item"]//div[@class="advgb-accordion-body"]//div[contains(@class, "editor-inner-blocks")]');
         $I->pressKeys('Dextra galeae moles. Erat: ponderibus valles circumdare tuti sic? Orbis limitibus recens titan inmensa extendi valles nisi aera.');
 
         // Publish post
@@ -57,11 +54,11 @@ class AccordionBlockCest
         $I->waitForText('Post published.');
 
         $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
-        $I->waitForElement('.wp-block-advgb-accordion');
+        $I->waitForElement('.wp-block-advgb-accordions');
 
         // Check
-        $I->seeNumberOfElements('.advgb-accordion-block', 2);
-        $I->seeElement('.advgb-accordion-block .ui-accordion-header');
+        $I->seeNumberOfElements('.advgb-accordion-item', 2);
+        $I->seeElement('.advgb-accordion-item .ui-accordion-header');
     }
 
     public function changeHeaderStyles(AcceptanceTester $I)
@@ -81,28 +78,28 @@ class AccordionBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys($headerBgColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
 
         $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($headerTextColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
 
         $I->clickAndWait('//span[@class="components-base-control__label"][text()="Icon Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($headerIconColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Icon Color"]/following-sibling::node()/div[last()]/*[1]');
 
         $I->updatePost();
-        $I->waitForElement('.wp-block-advgb-accordion');
+        $I->waitForElement('.wp-block-advgb-accordions');
 
         // Check
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "background-color:'.$headerBgColor.'")]');
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "color:'.$headerTextColor.'")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "background-color:'.$headerBgColor.'")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "color:'.$headerTextColor.'")]');
         //$I->seeElementInDOM('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")]/span/*[@fill="#ffff00"]');
     }
 
@@ -121,21 +118,21 @@ class AccordionBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys($bodyBgColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Background Color"]/following-sibling::node()/div[last()]/*[1]');
 
         $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
         $I->selectCurrentElementText();
         $I->pressKeys($bodyTextColor);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Text Color"]/following-sibling::node()/div[last()]/*[1]');
 
         $I->updatePost();
-        $I->waitForElement('.wp-block-advgb-accordion');
+        $I->waitForElement('.wp-block-advgb-accordions');
 
         // Check
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "background-color: '.$bodyBgColorRgb.'")]');
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "color: '.$bodyTextColorRgb.'")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "background-color: '.$bodyBgColorRgb.'")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "color: '.$bodyTextColorRgb.'")]');
     }
 
     public function changeBorderStyles(AcceptanceTester $I)
@@ -154,22 +151,22 @@ class AccordionBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('#ff0000');
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@data-type="advgb/accordion"][1]//h4'); // click block to hide picker
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
 
         $I->updatePost();
-        $I->waitForElement('.wp-block-advgb-accordion');
+        $I->waitForElement('.wp-block-advgb-accordions');
 
         // Check
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-color:#ff0000")]');
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-color: rgb(255, 0, 0)")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-color:#ff0000")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-color: rgb(255, 0, 0)")]');
 
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-style:dashed")]');
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-style: dashed")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-style:dashed")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-style: dashed")]');
 
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-width:2px")]');
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-width: 2px")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-width:2px")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-width: 2px")]');
 
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-radius:10px")]');
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-radius: 10px")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-radius:10px")]');
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-radius: 10px")]');
     }
 }
