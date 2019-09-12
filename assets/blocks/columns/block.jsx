@@ -299,6 +299,8 @@
                 contentMaxWidthUnit,
                 contentMinHeight,
                 contentMinHeightUnit,
+                contentMaxHeight,
+                contentMaxHeightUnit,
                 wrapperTag,
             } = attributes;
 
@@ -602,6 +604,24 @@
                                     max={ contentMinHeightUnit === 'px' ? 2000 : 200 }
                                     onChange={ (value) => setAttributes( { contentMinHeight: value } ) }
                                 />
+                                <RangeControl
+                                    label={ [
+                                        __( 'Content Max Height' ),
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            { ['px', 'vw', 'vh'].map( (unit, idx) => (
+                                                <span className={`advgb-unit ${contentMaxHeightUnit === unit ? 'selected' : ''}`} key={idx}
+                                                      onClick={ () => setAttributes( { contentMaxHeightUnit: unit } ) }
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) ) }
+                                        </div>
+                                    ] }
+                                    value={ contentMaxHeight }
+                                    min={ 0 }
+                                    max={ contentMaxHeightUnit === 'px' ? 2000 : 200 }
+                                    onChange={ (value) => setAttributes( { contentMaxHeight: value } ) }
+                                />
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
@@ -610,6 +630,7 @@
                              style={ {
                                  maxWidth: !!contentMaxWidth ? `${contentMaxWidth}${contentMaxWidthUnit}` : undefined,
                                  minHeight: !!contentMinHeight ? `${contentMinHeight}${contentMinHeightUnit}` : undefined,
+                                 maxHeight: !!contentMaxHeight ? `${contentMaxHeight}${contentMaxHeightUnit}` : undefined,
                              } }
                         >
                             <InnerBlocks
@@ -772,6 +793,13 @@
             type: 'string',
             default: 'px',
         },
+        contentMaxHeight: {
+            type: 'number',
+        },
+        contentMaxHeightUnit: {
+            type: 'string',
+            default: 'px',
+        },
         wrapperTag: {
             type: 'string',
             default: 'div',
@@ -813,6 +841,8 @@
                 contentMaxWidthUnit,
                 contentMinHeight,
                 contentMinHeightUnit,
+                contentMaxHeight,
+                contentMaxHeightUnit,
                 wrapperTag,
                 colId,
             } = attributes;
@@ -838,6 +868,7 @@
                          style={ {
                              maxWidth: !!contentMaxWidth ? `${contentMaxWidth}${contentMaxWidthUnit}` : undefined,
                              minHeight: !!contentMinHeight ? `${contentMinHeight}${contentMinHeightUnit}` : undefined,
+                             maxHeight: !!contentMaxHeight ? `${contentMaxHeight}${contentMaxHeightUnit}` : undefined,
                          } }
                     >
                         <InnerBlocks.Content />

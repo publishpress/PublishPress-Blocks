@@ -4206,6 +4206,10 @@ float: left;'
                 $font_size      = isset($blockAttrs['textSize']) ? intval($blockAttrs['textSize']) : 18;
                 $color          = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '';
                 $bg_color       = isset($blockAttrs['bgColor']) ? $blockAttrs['bgColor'] : '';
+                $mg_top         = isset($blockAttrs['marginTop']) ? intval($blockAttrs['marginTop']) : 0;
+                $mg_right       = isset($blockAttrs['marginRight']) ? intval($blockAttrs['marginRight']) : 0;
+                $mg_bottom      = isset($blockAttrs['marginBottom']) ? intval($blockAttrs['marginBottom']) : 0;
+                $mg_left        = isset($blockAttrs['marginLeft']) ? intval($blockAttrs['marginLeft']) : 0;
                 $pd_top         = isset($blockAttrs['paddingTop']) ? intval($blockAttrs['paddingTop']) : 10;
                 $pd_right       = isset($blockAttrs['paddingRight']) ? intval($blockAttrs['paddingRight']) : 30;
                 $pd_bottom      = isset($blockAttrs['paddingBottom']) ? intval($blockAttrs['paddingBottom']) : 10;
@@ -4228,6 +4232,7 @@ float: left;'
                 $style_html .= 'font-size:'.$font_size.'px;';
                 $style_html .= 'color:'.$color.' !important;';
                 $style_html .= 'background-color:'.$bg_color.' !important;';
+                $style_html .= 'margin:'.$mg_top.'px '.$mg_right.'px '.$mg_bottom.'px '.$mg_left.'px;';
                 $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
                 $style_html .= 'border-width:'.$border_width.'px !important;';
                 $style_html .= 'border-color:'.$border_color.' !important;';
@@ -4330,6 +4335,13 @@ float: left;'
                 $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.' !important;';
                 $style_html .= 'opacity:'.$hover_opacity.';';
                 $style_html .= 'transition:all '.$transition_spd.'s ease;';
+                $style_html .= '}';
+            } elseif ($blockName === 'advgb/image') {
+                $block_class    = $blockAttrs['blockIDX'];
+                $hover_opacity  = isset($blockAttrs['overlayOpacity']) ? $blockAttrs['overlayOpacity'] : 20;
+
+                $style_html .= '.'. $block_class . '.advgb-image-block:hover .advgb-image-overlay{';
+                $style_html .= 'opacity:'.($hover_opacity/100).' !important;';
                 $style_html .= '}';
             }
         }

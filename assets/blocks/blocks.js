@@ -1559,6 +1559,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     bgColor = attributes.bgColor,
                     textColor = attributes.textColor,
                     textSize = attributes.textSize,
+                    marginTop = attributes.marginTop,
+                    marginRight = attributes.marginRight,
+                    marginBottom = attributes.marginBottom,
+                    marginLeft = attributes.marginLeft,
                     paddingTop = attributes.paddingTop,
                     paddingRight = attributes.paddingRight,
                     paddingBottom = attributes.paddingBottom,
@@ -1647,7 +1651,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'style',
                         null,
-                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ' !important;\n                        background-color: ' + bgColor + ' !important;\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ' !important;\n                        border-radius: ' + borderRadius + 'px !important;\n                        border-style: ' + borderStyle + ' ' + (borderStyle !== 'none' && '!important') + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ' !important;\n                        background-color: ' + hoverBgColor + ' !important;\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
+                        '.' + id + ' {\n                        font-size: ' + textSize + 'px;\n                        color: ' + textColor + ' !important;\n                        background-color: ' + bgColor + ' !important;\n                        margin: ' + marginTop + 'px ' + marginRight + 'px ' + marginBottom + 'px ' + marginLeft + 'px;\n                        padding: ' + paddingTop + 'px ' + paddingRight + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px;\n                        border-width: ' + borderWidth + 'px;\n                        border-color: ' + borderColor + ' !important;\n                        border-radius: ' + borderRadius + 'px !important;\n                        border-style: ' + borderStyle + ' ' + (borderStyle !== 'none' && '!important') + ';\n                    }\n                    .' + id + ':hover {\n                        color: ' + hoverTextColor + ' !important;\n                        background-color: ' + hoverBgColor + ' !important;\n                        box-shadow: ' + hoverShadowH + 'px ' + hoverShadowV + 'px ' + hoverShadowBlur + 'px ' + hoverShadowSpread + 'px ' + hoverShadowColor + ';\n                        transition: all ' + transitionSpeed + 's ease;\n                        opacity: ' + hoverOpacity / 100 + '\n                    }'
                     ),
                     React.createElement(
                         InspectorControls,
@@ -1755,6 +1759,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 100
                                 })
                             )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Margin'), initialOpen: false },
+                            React.createElement(RangeControl, {
+                                label: __('Margin top'),
+                                value: marginTop || '',
+                                onChange: function onChange(value) {
+                                    return setAttributes({ marginTop: value });
+                                },
+                                min: 0,
+                                max: 100
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Margin right'),
+                                value: marginRight || '',
+                                onChange: function onChange(value) {
+                                    return setAttributes({ marginRight: value });
+                                },
+                                min: 0,
+                                max: 100
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Margin bottom'),
+                                value: marginBottom || '',
+                                onChange: function onChange(value) {
+                                    return setAttributes({ marginBottom: value });
+                                },
+                                min: 0,
+                                max: 100
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Margin left'),
+                                value: marginLeft || '',
+                                onChange: function onChange(value) {
+                                    return setAttributes({ marginLeft: value });
+                                },
+                                min: 0,
+                                max: 100
+                            })
                         ),
                         React.createElement(
                             PanelBody,
@@ -1905,6 +1949,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         textSize: {
             type: 'number',
             default: 18
+        },
+        marginTop: {
+            type: 'number',
+            default: 0
+        },
+        marginRight: {
+            type: 'number',
+            default: 0
+        },
+        marginBottom: {
+            type: 'number',
+            default: 0
+        },
+        marginLeft: {
+            type: 'number',
+            default: 0
         },
         paddingTop: {
             type: 'number',
@@ -2131,7 +2191,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         TextControl = wpComponents.TextControl,
         IconButton = wpComponents.IconButton,
         Button = wpComponents.Button,
-        Toolbar = wpComponents.Toolbar;
+        Toolbar = wpComponents.Toolbar,
+        FocalPointPicker = wpComponents.FocalPointPicker;
 
     var AdvImage = function (_Component) {
         _inherits(AdvImage, _Component);
@@ -2173,16 +2234,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+                var blockIDX = attributes.blockIDX;
+
+
+                if (!blockIDX) {
+                    setAttributes({ blockIDX: 'advgb-img-' + clientId });
+                }
+            }
+        }, {
             key: 'render',
             value: function render() {
                 var _this2 = this;
 
                 var currentEdit = this.state.currentEdit;
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    isSelected = _props2.isSelected;
-                var openOnClick = attributes.openOnClick,
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    isSelected = _props3.isSelected;
+                var blockIDX = attributes.blockIDX,
+                    openOnClick = attributes.openOnClick,
                     openUrl = attributes.openUrl,
                     linkInNewTab = attributes.linkInNewTab,
                     imageUrl = attributes.imageUrl,
@@ -2196,9 +2272,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     width = attributes.width,
                     height = attributes.height,
                     vAlign = attributes.vAlign,
-                    hAlign = attributes.hAlign;
+                    hAlign = attributes.hAlign,
+                    overlayOpacity = attributes.overlayOpacity,
+                    focalPoint = attributes.focalPoint;
 
-                var blockClassName = ['advgb-image-block', fullWidth && 'full-width'].filter(Boolean).join(' ');
+                var blockClassName = ['advgb-image-block', fullWidth && 'full-width', blockIDX].filter(Boolean).join(' ');
 
                 return React.createElement(
                     Fragment,
@@ -2299,6 +2377,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return setAttributes({ width: value });
                                     }
+                                }),
+                                React.createElement(FocalPointPicker, {
+                                    label: __('Focal Point Picker'),
+                                    url: imageUrl,
+                                    value: focalPoint,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ focalPoint: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Overlay opacity'),
+                                    value: overlayOpacity,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ overlayOpacity: value });
+                                    }
                                 })
                             ),
                             React.createElement(PanelColorSettings, {
@@ -2351,6 +2446,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: blockClassName,
                             style: {
                                 backgroundImage: 'url( ' + imageUrl + ')',
+                                backgroundPosition: focalPoint ? focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%' : undefined,
                                 height: height,
                                 width: width,
                                 justifyContent: vAlign,
@@ -2364,7 +2460,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             allowedTypes: ['image'],
                             value: imageID,
                             onSelect: function onSelect(image) {
-                                return setAttributes({ imageUrl: image.url, imageID: image.id });
+                                return setAttributes({ imageUrl: image.url, imageID: image.id, focalPoint: {} });
                             },
                             render: function render(_ref2) {
                                 var open = _ref2.open;
@@ -2411,7 +2507,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return null;
                             },
                             placeholder: __('Enter subtitle…')
-                        })
+                        }),
+                        React.createElement(
+                            'style',
+                            null,
+                            '.' + blockIDX + '.advgb-image-block:hover .advgb-image-overlay {opacity: ' + overlayOpacity / 100 + ';}'
+                        )
                     )
                 );
             }
@@ -2428,6 +2529,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     var blockAttrs = {
+        blockIDX: {
+            type: 'string'
+        },
         openOnClick: {
             type: 'string',
             default: 'none'
@@ -2485,6 +2589,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'center'
         },
+        overlayOpacity: {
+            type: 'number',
+            default: 20
+        },
+        focalPoint: {
+            type: 'object'
+        },
         changed: {
             type: 'boolean',
             default: false
@@ -2504,7 +2615,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvImage,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
-            var openOnClick = attributes.openOnClick,
+            var blockIDX = attributes.blockIDX,
+                openOnClick = attributes.openOnClick,
                 openUrl = attributes.openUrl,
                 linkInNewTab = attributes.linkInNewTab,
                 imageUrl = attributes.imageUrl,
@@ -2517,16 +2629,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 width = attributes.width,
                 height = attributes.height,
                 vAlign = attributes.vAlign,
-                hAlign = attributes.hAlign;
+                hAlign = attributes.hAlign,
+                focalPoint = attributes.focalPoint;
 
             var linkURL = openOnClick === 'url' && !!openUrl ? openUrl : undefined;
-            var blockClassName = ['advgb-image-block', fullWidth && 'full-width', openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox'].filter(Boolean).join(' ');
+            var blockClassName = ['advgb-image-block', fullWidth && 'full-width', openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox', blockIDX].filter(Boolean).join(' ');
 
             return React.createElement(
                 'div',
                 { className: blockClassName,
                     style: {
                         backgroundImage: 'url(' + imageUrl + ')',
+                        backgroundPosition: focalPoint ? focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%' : undefined,
                         height: height,
                         width: width,
                         justifyContent: vAlign,
@@ -2578,7 +2692,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     'div',
                     { className: blockClassName,
                         style: {
-                            backgroundImage: 'url( ' + imageUrl + ')',
+                            backgroundImage: 'url(' + imageUrl + ')',
                             height: height,
                             width: width,
                             justifyContent: vAlign,
@@ -2592,12 +2706,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         rel: 'noopener noreferrer',
                         href: linkURL
                     }),
-                    React.createElement(
+                    title && React.createElement(
                         'h4',
                         { className: 'advgb-image-title', style: { color: titleColor } },
                         title
                     ),
-                    React.createElement(
+                    subtitle && React.createElement(
                         'p',
                         { className: 'advgb-image-subtitle', style: { color: subtitleColor } },
                         subtitle
@@ -5711,6 +5825,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     contentMaxWidthUnit = attributes.contentMaxWidthUnit,
                     contentMinHeight = attributes.contentMinHeight,
                     contentMinHeightUnit = attributes.contentMinHeightUnit,
+                    contentMaxHeight = attributes.contentMaxHeight,
+                    contentMaxHeightUnit = attributes.contentMaxHeightUnit,
                     wrapperTag = attributes.wrapperTag;
 
 
@@ -6050,6 +6166,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return setAttributes({ contentMinHeight: value });
                                     }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: [__('Content Max Height'), React.createElement(
+                                        'div',
+                                        { className: 'advgb-unit-wrapper', key: 'unit' },
+                                        ['px', 'vw', 'vh'].map(function (unit, idx) {
+                                            return React.createElement(
+                                                'span',
+                                                { className: 'advgb-unit ' + (contentMaxHeightUnit === unit ? 'selected' : ''), key: idx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ contentMaxHeightUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )],
+                                    value: contentMaxHeight,
+                                    min: 0,
+                                    max: contentMaxHeightUnit === 'px' ? 2000 : 200,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ contentMaxHeight: value });
+                                    }
                                 })
                             )
                         )
@@ -6062,7 +6201,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: blockClasses,
                                 style: {
                                     maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
-                                    minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined
+                                    minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined,
+                                    maxHeight: !!contentMaxHeight ? '' + contentMaxHeight + contentMaxHeightUnit : undefined
                                 }
                             },
                             React.createElement(InnerBlocks, {
@@ -6363,6 +6503,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'string',
             default: 'px'
         },
+        contentMaxHeight: {
+            type: 'number'
+        },
+        contentMaxHeightUnit: {
+            type: 'string',
+            default: 'px'
+        },
         wrapperTag: {
             type: 'string',
             default: 'div'
@@ -6406,6 +6553,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 contentMaxWidthUnit = attributes.contentMaxWidthUnit,
                 contentMinHeight = attributes.contentMinHeight,
                 contentMinHeightUnit = attributes.contentMinHeightUnit,
+                contentMaxHeight = attributes.contentMaxHeight,
+                contentMaxHeightUnit = attributes.contentMaxHeightUnit,
                 wrapperTag = attributes.wrapperTag,
                 colId = attributes.colId;
 
@@ -6421,7 +6570,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { className: blockClasses, id: colId,
                         style: {
                             maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
-                            minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined
+                            minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined,
+                            maxHeight: !!contentMaxHeight ? '' + contentMaxHeight + contentMaxHeightUnit : undefined
                         }
                     },
                     React.createElement(InnerBlocks.Content, null)
