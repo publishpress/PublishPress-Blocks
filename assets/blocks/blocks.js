@@ -11259,6 +11259,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         TextareaControl = wpComponents.TextareaControl,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
+        ToggleControl = wpComponents.ToggleControl,
         BaseControl = wpComponents.BaseControl,
         Button = wpComponents.Button,
         Placeholder = wpComponents.Placeholder,
@@ -12004,7 +12005,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     markerIcon = _props$attributes2.markerIcon,
                     markerDesc = _props$attributes2.markerDesc,
                     mapStyle = _props$attributes2.mapStyle,
-                    mapStyleCustom = _props$attributes2.mapStyleCustom;
+                    mapStyleCustom = _props$attributes2.mapStyleCustom,
+                    infoWindowDefaultShown = _props$attributes2.infoWindowDefaultShown;
 
                 var location = { lat: parseFloat(lat), lng: parseFloat(lng) };
                 var that = this;
@@ -12068,10 +12070,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     scaledSize: new google.maps.Size(27, 43)
                 });
 
-                if (!!markerTitle) {
-                    marker.addListener('click', function () {
+                if (!!markerTitle || !!markerDesc) {
+                    if (!infoWindowDefaultShown) {
+                        marker.addListener('click', function () {
+                            infoWindow.open(map, marker);
+                        });
+                    } else {
                         infoWindow.open(map, marker);
-                    });
+                    }
+                } else {
+                    infoWindow.close();
                 }
 
                 marker.addListener('dragend', function () {
@@ -12143,7 +12151,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     markerTitle = attributes.markerTitle,
                     markerDesc = attributes.markerDesc,
                     mapStyle = attributes.mapStyle,
-                    mapStyleCustom = attributes.mapStyleCustom;
+                    mapStyleCustom = attributes.mapStyleCustom,
+                    infoWindowDefaultShown = attributes.infoWindowDefaultShown;
 
 
                 var listStyles = Object.keys(MAP_STYLES).map(function (style) {
@@ -12310,6 +12319,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ markerDesc: value });
                                 }
                             }),
+                            React.createElement(ToggleControl, {
+                                label: __('Open marker description by default'),
+                                checked: infoWindowDefaultShown,
+                                onChange: function onChange() {
+                                    return setAttributes({ infoWindowDefaultShown: !infoWindowDefaultShown });
+                                }
+                            }),
                             React.createElement(SelectControl, {
                                 label: __('Map styles'),
                                 help: __('Custom map style is recommended for experienced users only.'),
@@ -12437,6 +12453,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             mapStyleCustom: {
                 type: 'string'
+            },
+            infoWindowDefaultShown: {
+                type: 'boolean',
+                default: true
             }
         }),
         edit: AdvMap,
@@ -12451,7 +12471,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 markerTitle = attributes.markerTitle,
                 markerDesc = attributes.markerDesc,
                 mapStyle = attributes.mapStyle,
-                mapStyleCustom = attributes.mapStyleCustom;
+                mapStyleCustom = attributes.mapStyleCustom,
+                infoWindowDefaultShown = attributes.infoWindowDefaultShown;
 
 
             var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
@@ -12484,6 +12505,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     "data-title": formattedTitle,
                     "data-desc": formattedDesc,
                     "data-icon": markerIcon,
+                    "data-shown": infoWindowDefaultShown,
                     "data-style": encodeURIComponent(mapStyleApply)
                 })
             );
@@ -12514,7 +12536,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var formattedDesc = markerDesc.replace(/\n/g, '<br/>').replace(/'/, '\\\'');
                 var formattedTitle = markerTitle.replace(/'/, '\\\'');
                 var DEFAULT_MARKER = 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png';
-                var infoWindowHtml = '' + '<div class="advgbmap-wrapper">' + '<h2 class="advgbmap-title">' + formattedTitle + '</h2>' + '<p class="advgbmap-desc">' + formattedDesc + '</p>' + '</div>';
                 var mapStyleApply = MAP_STYLES[mapStyle];
                 if (mapStyle === 'custom') {
                     try {
@@ -12540,8 +12561,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "data-lng": lng,
                         "data-zoom": zoom,
                         "data-title": formattedTitle,
+                        "data-desc": formattedDesc,
                         "data-icon": markerIcon,
-                        "data-info": encodeURIComponent(infoWindowHtml),
                         "data-style": encodeURIComponent(mapStyleApply)
                     })
                 );

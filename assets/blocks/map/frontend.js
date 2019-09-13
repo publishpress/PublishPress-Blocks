@@ -13,6 +13,7 @@ window.addEventListener('load', function () {
             icon = elm.dataset.icon,
             title = elm.dataset.title,
             desc = elm.dataset.desc,
+            infoShown = elm.dataset.shown === 'true',
             info = '',
             mapStyle = decodeURIComponent(elm.dataset.style);
 
@@ -51,9 +52,15 @@ window.addEventListener('load', function () {
             var infoWindow = new google.maps.InfoWindow({
                 content: info
             });
-            marker.addListener('click', function () {
+
+            if (!infoShown) {
+                marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                });
+            } else {
                 infoWindow.open(map, marker);
-            });
+            }
+
         }
     }
 });
