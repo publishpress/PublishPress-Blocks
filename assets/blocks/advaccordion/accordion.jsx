@@ -116,7 +116,7 @@
                             onChange={ ( value ) => setAttributes( { header: value } ) }
                             unstableOnSplit={ () => null }
                             className="advgb-accordion-header-title"
-                            placeholder={ __( 'Enter header…' ) }
+                            placeholder={ __( 'Enter header…', 'advanced-gutenberg' ) }
                             style={ { color: 'inherit' } }
                         />
                     </div>
@@ -147,8 +147,8 @@
     );
 
     registerBlockType( 'advgb/accordion-item', {
-        title: __( 'Accordion Item' ),
-        description: __( 'Easy to create an accordion for your post/page.' ),
+        title: __( 'Accordion Item', 'advanced-gutenberg' ),
+        description: __( 'Easy to create an accordion for your post/page.', 'advanced-gutenberg' ),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
@@ -159,7 +159,7 @@
         attributes: {
             header: {
                 type: 'string',
-                default: __( 'Header text' ),
+                default: __( 'Header text', 'advanced-gutenberg' ),
             },
             headerBgColor: {
                 type: 'string',

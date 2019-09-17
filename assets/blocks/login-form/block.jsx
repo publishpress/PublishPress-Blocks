@@ -96,14 +96,14 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     value={ logoID }
                     render={ ( { open } ) => (
                         <div className="advgb-lores-form-logo-wrapper">
-                            <Tooltip text={ __( 'Click to change logo' ) }>
+                            <Tooltip text={ __( 'Click to change logo', 'advanced-gutenberg' ) }>
                                 <span style={ {
                                     display: 'block',
                                 } }>
                                     <img className="advgb-lores-form-logo"
                                          onClick={ open }
                                          src={ logoImg }
-                                         alt={ __( 'Site logo' ) }
+                                         alt={ __( 'Site logo', 'advanced-gutenberg' ) }
                                          style={ {
                                              width: logoWidth ? logoWidth + 'px' : undefined,
                                              cursor: 'pointer',
@@ -126,14 +126,14 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     value={ registerLogoID }
                     render={ ( { open } ) => (
                         <div className="advgb-lores-form-logo-wrapper">
-                            <Tooltip text={ __( 'Click to change logo' ) }>
+                            <Tooltip text={ __( 'Click to change logo', 'advanced-gutenberg' ) }>
                                 <span style={ {
                                     display: 'block',
                                 } }>
                                     <img className="advgb-lores-form-logo"
                                          onClick={ open }
                                          src={ registerLogoImg }
-                                         alt={ __( 'Site logo' ) }
+                                         alt={ __( 'Site logo', 'advanced-gutenberg' ) }
                                          style={ {
                                              width: logoWidth ? logoWidth + 'px' : undefined,
                                              cursor: 'pointer',
@@ -160,7 +160,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 style={ { color: textColor } }
                                 onReplace={ () => null }
                                 onSplit={ () => null }
-                                placeholder={ __( 'Text…' ) }
+                                placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
                                 keepPlaceholderOnFocus
                             />
                             <RichText
@@ -171,7 +171,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 style={ { color: submitBgColor } }
                                 onReplace={ () => null }
                                 onSplit={ () => null }
-                                placeholder={ __( 'Register…' ) }
+                                placeholder={ __( 'Register…', 'advanced-gutenberg' ) }
                                 keepPlaceholderOnFocus
                             />
                         </div>
@@ -185,7 +185,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 className="advgb-lores-form-welcome"
                                 onChange={ (value) => setAttributes( { welcomeText: value.trim() } ) }
                                 style={ { color: textColor } }
-                                placeholder={ __( 'Welcome text…' ) }
+                                placeholder={ __( 'Welcome text…', 'advanced-gutenberg' ) }
                                 keepPlaceholderOnFocus
                             />
                         </div>
@@ -198,7 +198,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     style={ { color: textColor } }
                                     onReplace={ () => null }
                                     onSplit={ () => null }
-                                    placeholder={ __( 'Username label…' ) }
+                                    placeholder={ __( 'Username label…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
                                 />
                             </div>
@@ -221,7 +221,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 <input type="text" disabled={ true }
                                        className="advgb-lores-input"
                                        style={ { color: inputColor } }
-                                       value={ loginLabel ? loginLabel : __( 'user@email.com' ) }
+                                       value={ loginLabel ? loginLabel : __( 'user@email.com', 'advanced-gutenberg' ) }
                                 />
                             </div>
                         </div>
@@ -234,7 +234,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     style={ { color: textColor } }
                                     onReplace={ () => null }
                                     onSplit={ () => null }
-                                    placeholder={ __( 'Password label…' ) }
+                                    placeholder={ __( 'Password label…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
                                 />
                             </div>
@@ -277,7 +277,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                             style={ { color: textColor } }
                                             onReplace={ () => null }
                                             onSplit={ () => null }
-                                            placeholder={ __( 'Remember me…' ) }
+                                            placeholder={ __( 'Remember me…', 'advanced-gutenberg' ) }
                                             keepPlaceholderOnFocus
                                         />
                                     </span>
@@ -298,7 +298,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         onChange={ (value) => setAttributes( { loginSubmitLabel: value.trim() } ) }
                                         onReplace={ () => null }
                                         onSplit={ () => null }
-                                        placeholder={ __( 'Login…' ) }
+                                        placeholder={ __( 'Login…', 'advanced-gutenberg' ) }
                                         keepPlaceholderOnFocus
                                     />
                                 </span>
@@ -315,7 +315,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         style={ { color: submitBgColor } }
                                         onReplace={ () => null }
                                         onSplit={ () => null }
-                                        placeholder={ __( 'Lost password…' ) }
+                                        placeholder={ __( 'Lost password…', 'advanced-gutenberg' ) }
                                         keepPlaceholderOnFocus
                                     />
                                 </div>
@@ -342,7 +342,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     style={ { color: submitBgColor } }
                                     onReplace={ () => null }
                                     onSplit={ () => null }
-                                    placeholder={ __( 'Back…' ) }
+                                    placeholder={ __( 'Back…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
                                 />
                             </div>
@@ -357,7 +357,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 className="advgb-lores-form-welcome"
                                 onChange={ (value) => setAttributes( { registerWelcome: value.trim() } ) }
                                 style={ { color: textColor } }
-                                placeholder={ __( 'Register…' ) }
+                                placeholder={ __( 'Register…', 'advanced-gutenberg' ) }
                                 keepPlaceholderOnFocus
                             />
                         </div>
@@ -370,7 +370,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     style={ { color: textColor } }
                                     onReplace={ () => null }
                                     onSplit={ () => null }
-                                    placeholder={ __( 'Username label…' ) }
+                                    placeholder={ __( 'Username label…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
                                 />
                             </div>
@@ -393,7 +393,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 <input type="text" disabled={ true }
                                        className="advgb-lores-input"
                                        style={ { color: inputColor } }
-                                       value={ usernameLabel ? usernameLabel : __( 'username' ) }
+                                       value={ usernameLabel ? usernameLabel : __( 'username', 'advanced-gutenberg' ) }
                                 />
                             </div>
                         </div>
@@ -406,7 +406,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     style={ { color: textColor } }
                                     onReplace={ () => null }
                                     onSplit={ () => null }
-                                    placeholder={ __( 'Email label…' ) }
+                                    placeholder={ __( 'Email label…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
                                 />
                             </div>
@@ -429,7 +429,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 <input type="text" disabled={ true }
                                        className="advgb-lores-input"
                                        style={ { color: inputColor } }
-                                       value={ emailLabel ? emailLabel : __( 'user@email.com' ) }
+                                       value={ emailLabel ? emailLabel : __( 'user@email.com', 'advanced-gutenberg' ) }
                                 />
                             </div>
                         </div>
@@ -449,7 +449,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         onChange={ (value) => setAttributes( { registerSubmitLabel: value.trim() } ) }
                                         onReplace={ () => null }
                                         onSplit={ () => null }
-                                        placeholder={ __( 'Register…' ) }
+                                        placeholder={ __( 'Register…', 'advanced-gutenberg' ) }
                                         keepPlaceholderOnFocus
                                     />
                                 </span>
@@ -465,20 +465,20 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         <Toolbar>
                             <IconButton
                                 icon="image-flip-horizontal"
-                                label={ __( 'Switch View' ) }
+                                label={ __( 'Switch View', 'advanced-gutenberg' ) }
                                 onClick={ () => this.setState( { registerView: !registerView } ) }
                             />
                         </Toolbar>
                     </BlockControls>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Form State' ) }>
+                        <PanelBody title={ __( 'Form State', 'advanced-gutenberg' ) }>
                             <SelectControl
-                                label={ __( 'Initial Form' ) }
-                                help={ __( 'Form that show on load.' ) }
+                                label={ __( 'Initial Form', 'advanced-gutenberg' ) }
+                                help={ __( 'Form that show on load.', 'advanced-gutenberg' ) }
                                 value={ formType }
                                 options={ [
-                                    { label: __( 'Login' ), value: 'login' },
-                                    { label: __( 'Register' ), value: 'register' },
+                                    { label: __( 'Login', 'advanced-gutenberg' ), value: 'login' },
+                                    { label: __( 'Register', 'advanced-gutenberg' ), value: 'register' },
                                 ] }
                                 onChange={ (value) => {
                                     setAttributes( { formType: value } );
@@ -486,37 +486,37 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 } }
                             />
                             <SelectControl
-                                label={ __( 'Redirect After Login' ) }
+                                label={ __( 'Redirect After Login', 'advanced-gutenberg' ) }
                                 value={ redirect }
                                 options={ [
-                                    { label: __( 'Home' ), value: 'home' },
-                                    { label: __( 'Dashboard' ), value: 'dashboard' },
-                                    { label: __( 'Custom' ), value: 'custom' },
+                                    { label: __( 'Home', 'advanced-gutenberg' ), value: 'home' },
+                                    { label: __( 'Dashboard', 'advanced-gutenberg' ), value: 'dashboard' },
+                                    { label: __( 'Custom', 'advanced-gutenberg' ), value: 'custom' },
                                 ] }
                                 onChange={ (value) => setAttributes( { redirect: value } ) }
                             />
                             {redirect === 'custom' && (
                                 <TextControl
-                                    label={ __( 'Custom redirect link' ) }
+                                    label={ __( 'Custom redirect link', 'advanced-gutenberg' ) }
                                     value={ redirectLink }
                                     onChange={ (value) => setAttributes( { redirectLink: value } ) }
                                 />
                             ) }
                             <RangeControl
-                                label={ __( 'Form Width (px)' ) }
+                                label={ __( 'Form Width (px)', 'advanced-gutenberg' ) }
                                 value={ formWidth }
                                 onChange={ ( value ) => setAttributes( { formWidth: value } ) }
                                 min={ 300 }
                                 max={ 1500 }
                             />
                             <ToggleControl
-                                label={ __( 'Show Logo' ) }
+                                label={ __( 'Show Logo', 'advanced-gutenberg' ) }
                                 checked={ !!showLogo }
                                 onChange={ () => setAttributes( { showLogo: !showLogo } ) }
                             />
                             {!!showLogo && (
                                 <RangeControl
-                                    label={ __( 'Logo Width (px)' ) }
+                                    label={ __( 'Logo Width (px)', 'advanced-gutenberg' ) }
                                     value={ logoWidth }
                                     onChange={ ( value ) => setAttributes( { logoWidth: value } ) }
                                     min={ 100 }
@@ -524,22 +524,22 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 />
                             ) }
                             <ToggleControl
-                                label={ __( 'Show input field icon' ) }
+                                label={ __( 'Show input field icon', 'advanced-gutenberg' ) }
                                 checked={ !!showInputFieldIcon }
                                 onChange={ () => setAttributes( { showInputFieldIcon: !showInputFieldIcon } ) }
                             />
                             <ToggleControl
-                                label={ __( 'Show register/header link' ) }
+                                label={ __( 'Show register/header link', 'advanced-gutenberg' ) }
                                 checked={ !!showRegisterLink }
                                 onChange={ () => setAttributes( { showRegisterLink: !showRegisterLink } ) }
                             />
                             {!!showRegisterLink && (
                                 <PanelColorSettings
-                                    title={ __( 'Header Color' ) }
+                                    title={ __( 'Header Color', 'advanced-gutenberg' ) }
                                     initialOpen={ false }
                                     colorSettings={ [
                                         {
-                                            label: __( 'Header color' ),
+                                            label: __( 'Header color', 'advanced-gutenberg' ),
                                             value: headerBgColor,
                                             onChange: (value) => setAttributes( { headerBgColor: value } ),
                                         },
@@ -547,170 +547,170 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 />
                             ) }
                             <ToggleControl
-                                label={ __( 'Show lost password link' ) }
+                                label={ __( 'Show lost password link', 'advanced-gutenberg' ) }
                                 checked={ !!showLostPasswordLink }
                                 onChange={ () => setAttributes( { showLostPasswordLink: !showLostPasswordLink } ) }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Input placeholder' ) } initialOpen={ false }>
+                        <PanelBody title={ __( 'Input placeholder', 'advanced-gutenberg' ) } initialOpen={ false }>
                             <TextControl
-                                label={ __( 'Login input placeholder' ) }
+                                label={ __( 'Login input placeholder', 'advanced-gutenberg' ) }
                                 value={ loginLabel }
                                 onChange={ (value) => setAttributes( { loginLabel: value } ) }
                             />
                             <TextControl
-                                label={ __( 'Username input placeholder' ) }
-                                help={ __( 'Use in register form' ) }
+                                label={ __( 'Username input placeholder', 'advanced-gutenberg' ) }
+                                help={ __( 'Use in register form', 'advanced-gutenberg' ) }
                                 value={ usernameLabel }
                                 onChange={ (value) => setAttributes( { usernameLabel: value } ) }
                             />
                             <TextControl
-                                label={ __( 'Email input placeholder' ) }
-                                help={ __( 'Use in register form' ) }
+                                label={ __( 'Email input placeholder', 'advanced-gutenberg' ) }
+                                help={ __( 'Use in register form', 'advanced-gutenberg' ) }
                                 value={ emailLabel }
                                 onChange={ (value) => setAttributes( { emailLabel: value } ) }
                             />
                         </PanelBody>
                         <PanelColorSettings
-                            title={ __( 'Text/Input Color' ) }
+                            title={ __( 'Text/Input Color', 'advanced-gutenberg' ) }
                             initialOpen={ false }
                             colorSettings={ [
                                 {
-                                    label: __( 'Input background color' ),
+                                    label: __( 'Input background color', 'advanced-gutenberg' ),
                                     value: bgColor,
                                     onChange: (value) => setAttributes( { bgColor: value } ),
                                 },
                                 {
-                                    label: __( 'Input color' ),
+                                    label: __( 'Input color', 'advanced-gutenberg' ),
                                     value: inputColor,
                                     onChange: (value) => setAttributes( { inputColor: value } ),
                                 },
                                 {
-                                    label: __( 'Text color' ),
+                                    label: __( 'Text color', 'advanced-gutenberg' ),
                                     value: textColor,
                                     onChange: (value) => setAttributes( { textColor: value } ),
                                 },
                             ] }
                         />
-                        <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
+                        <PanelBody title={ __( 'Border Settings', 'advanced-gutenberg' ) } initialOpen={ false }>
                             <PanelColorSettings
-                                title={ __( 'Border Color' ) }
+                                title={ __( 'Border Color', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Border color' ),
+                                        label: __( 'Border color', 'advanced-gutenberg' ),
                                         value: borderColor,
                                         onChange: (value) => setAttributes( { borderColor: value } ),
                                     },
                                 ] }
                             />
                             <SelectControl
-                                label={ __( 'Border Style' ) }
+                                label={ __( 'Border Style', 'advanced-gutenberg' ) }
                                 value={ borderStyle }
                                 options={ [
-                                    { label: __( 'Solid' ), value: 'solid' },
-                                    { label: __( 'Dashed' ), value: 'dashed' },
-                                    { label: __( 'Dotted' ), value: 'dotted' },
+                                    { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
+                                    { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
+                                    { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },
                                 ] }
                                 onChange={ (value) => setAttributes( { borderStyle: value } ) }
                             />
                             <RangeControl
-                                label={ __( 'Border width' ) }
+                                label={ __( 'Border width', 'advanced-gutenberg' ) }
                                 value={ borderWidth }
                                 onChange={ (value) => setAttributes( { borderWidth: value } ) }
                                 min={ 0 }
                                 max={ 10 }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Submit Button Settings' ) }>
+                        <PanelBody title={ __( 'Submit Button Settings', 'advanced-gutenberg' ) }>
                             <AdvColorControl
-                                label={ __('Border and Text') }
+                                label={ __('Border and Text', 'advanced-gutenberg') }
                                 value={ submitColor }
                                 onChange={ (value) => setAttributes( { submitColor: value } ) }
                             />
                             <AdvColorControl
-                                label={ __('Background') }
+                                label={ __('Background', 'advanced-gutenberg') }
                                 value={ submitBgColor }
                                 onChange={ (value) => setAttributes({submitBgColor: value}) }
                             />
                             <RangeControl
-                                label={ __( 'Button border radius' ) }
+                                label={ __( 'Button border radius', 'advanced-gutenberg' ) }
                                 value={ submitRadius }
                                 onChange={ (value) => setAttributes( { submitRadius: value } ) }
                                 min={ 0 }
                                 max={ 50 }
                             />
                             <SelectControl
-                                label={ __( 'Button position' ) }
+                                label={ __( 'Button position', 'advanced-gutenberg' ) }
                                 value={ submitPosition }
                                 options={ [
-                                    { label: __( 'Center' ), value: 'center' },
-                                    { label: __( 'Left' ), value: 'left' },
-                                    { label: __( 'Right' ), value: 'right' },
+                                    { label: __( 'Center', 'advanced-gutenberg' ), value: 'center' },
+                                    { label: __( 'Left', 'advanced-gutenberg' ), value: 'left' },
+                                    { label: __( 'Right', 'advanced-gutenberg' ), value: 'right' },
                                 ] }
                                 onChange={ (value) => setAttributes( { submitPosition: value } ) }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Submit Button Hover' ) } initialOpen={false}>
+                        <PanelBody title={ __( 'Submit Button Hover', 'advanced-gutenberg' ) } initialOpen={false}>
                             <PanelColorSettings
-                                title={ __( 'Hover Colors' ) }
+                                title={ __( 'Hover Colors', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Background color' ),
+                                        label: __( 'Background color', 'advanced-gutenberg' ),
                                         value: submitHoverBgColor,
                                         onChange: (value) => setAttributes( { submitHoverBgColor: value } ),
                                     },
                                     {
-                                        label: __( 'Text color' ),
+                                        label: __( 'Text color', 'advanced-gutenberg' ),
                                         value: submitHoverColor,
                                         onChange: (value) => setAttributes( { submitHoverColor: value } ),
                                     },
                                     {
-                                        label: __( 'Shadow color' ),
+                                        label: __( 'Shadow color', 'advanced-gutenberg' ),
                                         value: submitHoverShadow,
                                         onChange: (value) => setAttributes( { submitHoverShadow: value } ),
                                     },
                                 ] }
                             />
-                            <PanelBody title={ __( 'Shadow' ) } initialOpen={false}>
+                            <PanelBody title={ __( 'Shadow', 'advanced-gutenberg' ) } initialOpen={false}>
                                 <RangeControl
-                                    label={ __('Opacity (%)') }
+                                    label={ __('Opacity (%)', 'advanced-gutenberg') }
                                     value={ submitHoverOpacity }
                                     onChange={ ( value ) => setAttributes( { submitHoverOpacity: value } ) }
                                     min={ 0 }
                                     max={ 100 }
                                 />
                                 <RangeControl
-                                    label={ __('Transition speed (ms)') }
+                                    label={ __('Transition speed (ms)', 'advanced-gutenberg') }
                                     value={ submitHoverTranSpeed || '' }
                                     onChange={ ( value ) => setAttributes( { submitHoverTranSpeed: value } ) }
                                     min={ 0 }
                                     max={ 3000 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Shadow H offset' ) }
+                                    label={ __( 'Shadow H offset', 'advanced-gutenberg' ) }
                                     value={ submitHoverShadowH || '' }
                                     onChange={ ( value ) => setAttributes( { submitHoverShadowH: value } ) }
                                     min={ -50 }
                                     max={ 50 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Shadow V offset' ) }
+                                    label={ __( 'Shadow V offset', 'advanced-gutenberg' ) }
                                     value={ submitHoverShadowV || '' }
                                     onChange={ ( value ) => setAttributes( { submitHoverShadowV: value } ) }
                                     min={ -50 }
                                     max={ 50 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Shadow blur' ) }
+                                    label={ __( 'Shadow blur', 'advanced-gutenberg' ) }
                                     value={ submitHoverShadowBlur || '' }
                                     onChange={ ( value ) => setAttributes( { submitHoverShadowBlur: value } ) }
                                     min={ 0 }
                                     max={ 50 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Shadow spread' ) }
+                                    label={ __( 'Shadow spread', 'advanced-gutenberg' ) }
                                     value={ submitHoverShadowSpread || '' }
                                     onChange={ ( value ) => setAttributes( { submitHoverShadowSpread: value } ) }
                                     min={ 0 }
@@ -719,10 +719,10 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             </PanelBody>
                         </PanelBody>
                         {(typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled)) && (
-                            <PanelBody title={ __( 'Notice' ) }>
+                            <PanelBody title={ __( 'Notice', 'advanced-gutenberg' ) }>
                                 <p style={ { fontStyle: 'italic', color: '#ff8800' } }>
-                                    { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in' ) }
-                                    <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings' ) }.</a>
+                                    { __( 'We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg' ) }
+                                    <a href={advgbBlocks.config_url + '#email-form'} target="_blank"> { __( 'settings', 'advanced-gutenberg' ) }.</a>
                                 </p>
                             </PanelBody>
                         ) }
@@ -734,8 +734,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 ? (
                                     <Placeholder
                                         icon={userIcon}
-                                        label={ __( 'Registration Form' ) }
-                                        instructions={ __( 'Registration for your website is currently disabled, enable it in WordPress General settings to use registration form' ) }
+                                        label={ __( 'Registration Form', 'advanced-gutenberg' ) }
+                                        instructions={ __( 'Registration for your website is currently disabled, enable it in WordPress General settings to use registration form', 'advanced-gutenberg' ) }
                                     />
                                 )
                                 : registerForm
@@ -814,44 +814,44 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         welcomeText: {
             type: 'string',
-            default: __( 'Welcome back' ),
+            default: __( 'Welcome back', 'advanced-gutenberg' ),
         },
         loginLabel: {
             type: 'string',
         },
         loginText: {
             type: 'string',
-            default: __( 'Username or Email' ),
+            default: __( 'Username or Email', 'advanced-gutenberg' ),
         },
         passwordText: {
             type: 'string',
-            default: __( 'Password' )
+            default: __( 'Password', 'advanced-gutenberg' )
         },
         usernameLabel: {
             type: 'string',
         },
         userText: {
             type: 'string',
-            default: __( 'Username' ),
+            default: __( 'Username', 'advanced-gutenberg' ),
         },
         emailLabel: {
             type: 'string',
         },
         emailText: {
             type: 'string',
-            default: __( 'Email' ),
+            default: __( 'Email', 'advanced-gutenberg' ),
         },
         rememberMeText: {
             type: 'string',
-            default: __( 'Remember me' ),
+            default: __( 'Remember me', 'advanced-gutenberg' ),
         },
         loginSubmitLabel: {
             type: 'string',
-            default: __( 'LOGIN' ),
+            default: __( 'LOGIN', 'advanced-gutenberg' ),
         },
         registerSubmitLabel: {
             type: 'string',
-            default: __( 'REGISTER' ),
+            default: __( 'REGISTER', 'advanced-gutenberg' ),
         },
         registerText: {
             type: 'string',
@@ -859,19 +859,19 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         registerLinkText: {
             type: 'string',
-            default: __( 'Register now' ),
+            default: __( 'Register now', 'advanced-gutenberg' ),
         },
         registerWelcome: {
             type: 'string',
-            default: __( 'Register new account' ),
+            default: __( 'Register new account', 'advanced-gutenberg' ),
         },
         backToLoginText: {
             type: 'string',
-            default: __( 'Login' ),
+            default: __( 'Login', 'advanced-gutenberg' ),
         },
         lostPasswordText: {
             type: 'string',
-            default: __( 'Lost your password?' ),
+            default: __( 'Lost your password?', 'advanced-gutenberg' ),
         },
         headerBgColor: {
             type: 'string',
@@ -950,8 +950,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     };
 
     registerBlockType( 'advgb/login-form', {
-        title: __( 'Login/Register Form' ),
-        description: __( 'Create a login form for your post/page.' ),
+        title: __( 'Login/Register Form', 'advanced-gutenberg' ),
+        description: __( 'Create a login form for your post/page.', 'advanced-gutenberg' ),
         icon: {
             src: loginFormBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
@@ -976,7 +976,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     <span style={ {display: 'block',} }>
                         <img className="advgb-lores-form-logo"
                              src={ logoImg }
-                             alt={ __( 'Site logo' ) }
+                             alt={ __( 'Site logo', 'advanced-gutenberg' ) }
                              style={ {
                                  width: logoWidth ? logoWidth + 'px' : undefined,
                                  cursor: 'pointer',
@@ -991,7 +991,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     <span style={ {display: 'block',} }>
                         <img className="advgb-lores-form-logo"
                              src={ registerLogoImg }
-                             alt={ __( 'Site logo' ) }
+                             alt={ __( 'Site logo', 'advanced-gutenberg' ) }
                              style={ {
                                  width: logoWidth ? logoWidth + 'px' : undefined,
                                  cursor: 'pointer',
@@ -1063,7 +1063,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                            className="advgb-lores-input"
                                            name="log"
                                            style={ { color: inputColor } }
-                                           placeholder={ loginLabel ? loginLabel : __( 'user@email.com' ) }
+                                           placeholder={ loginLabel ? loginLabel : __( 'user@email.com', 'advanced-gutenberg' ) }
                                     />
                                 </div>
                             </div>
@@ -1208,7 +1208,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                            className="advgb-lores-input"
                                            name="user_login"
                                            style={ { color: inputColor } }
-                                           placeholder={ usernameLabel ? usernameLabel : __( 'username' ) }
+                                           placeholder={ usernameLabel ? usernameLabel : __( 'username', 'advanced-gutenberg' ) }
                                     />
                                 </div>
                             </div>
@@ -1241,7 +1241,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                            className="advgb-lores-input"
                                            name="user_email"
                                            style={ { color: inputColor } }
-                                           placeholder={ emailLabel ? emailLabel : __( 'user@email.com' ) }
+                                           placeholder={ emailLabel ? emailLabel : __( 'user@email.com', 'advanced-gutenberg' ) }
                                     />
                                 </div>
                             </div>

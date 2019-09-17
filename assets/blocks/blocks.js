@@ -290,20 +290,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Notice') },
+                            { title: __('Notice', 'advanced-gutenberg') },
                             React.createElement(
                                 "p",
                                 { style: { color: '#ff0000', fontStyle: 'italic' } },
-                                __("This accordion block has been replaced by a new and better one.\n                                 This block will be removed in a future version.\n                                 Please transform this to an Accordion Item block\n                                 and drag them into new Adv. Accordion block as soon as possible.")
+                                __("This accordion block has been replaced by a new and better one.\n                                 This block will be removed in a future version.\n                                 Please transform this to an Accordion Item block\n                                 and drag them into new Adv. Accordion block as soon as possible.", 'advanced-gutenberg')
                             )
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Accordion Settings') },
+                            { title: __('Accordion Settings', 'advanced-gutenberg') },
                             React.createElement(RangeControl, {
-                                label: __('Bottom spacing'),
+                                label: __('Bottom spacing', 'advanced-gutenberg'),
                                 value: marginBottom,
-                                help: __('Define space to next block. This will override Block spacing option (Frontend view only)'),
+                                help: __('Define space to next block. This will override Block spacing option (Frontend view only)', 'advanced-gutenberg'),
                                 min: 0,
                                 max: 50,
                                 onChange: function onChange(value) {
@@ -313,10 +313,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Header Settings') },
+                            { title: __('Header Settings', 'advanced-gutenberg') },
                             React.createElement(
                                 BaseControl,
-                                { label: __('Header Icon Style') },
+                                { label: __('Header Icon Style', 'advanced-gutenberg') },
                                 React.createElement(
                                     "div",
                                     { className: "advgb-icon-items-wrapper" },
@@ -341,22 +341,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 )
                             ),
                             React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
+                                title: __('Color Settings', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Background Color'),
+                                    label: __('Background Color', 'advanced-gutenberg'),
                                     value: headerBgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerBgColor: value === undefined ? '#000' : value });
                                     }
                                 }, {
-                                    label: __('Text Color'),
+                                    label: __('Text Color', 'advanced-gutenberg'),
                                     value: headerTextColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerTextColor: value === undefined ? '#eee' : value });
                                     }
                                 }, {
-                                    label: __('Icon Color'),
+                                    label: __('Icon Color', 'advanced-gutenberg'),
                                     value: headerIconColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerIconColor: value === undefined ? '#fff' : value });
@@ -365,16 +365,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ),
                         React.createElement(PanelColorSettings, {
-                            title: __('Body Color Settings'),
+                            title: __('Body Color Settings', 'advanced-gutenberg'),
                             initialOpen: false,
                             colorSettings: [{
-                                label: __('Background Color'),
+                                label: __('Background Color', 'advanced-gutenberg'),
                                 value: bodyBgColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ bodyBgColor: value });
                                 }
                             }, {
-                                label: __('Text Color'),
+                                label: __('Text Color', 'advanced-gutenberg'),
                                 value: bodyTextColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ bodyTextColor: value });
@@ -383,20 +383,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }),
                         React.createElement(
                             PanelBody,
-                            { title: __('Border Settings'), initialOpen: false },
+                            { title: __('Border Settings', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(SelectControl, {
-                                label: __('Border Style'),
+                                label: __('Border Style', 'advanced-gutenberg'),
                                 value: borderStyle,
-                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
                             React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
+                                title: __('Color Settings', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Border Color'),
+                                    label: __('Border Color', 'advanced-gutenberg'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderColor: value });
@@ -404,7 +404,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }]
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Border width'),
+                                label: __('Border width', 'advanced-gutenberg'),
                                 value: borderWidth,
                                 min: 0,
                                 max: 10,
@@ -413,7 +413,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Border radius'),
+                                label: __('Border radius', 'advanced-gutenberg'),
                                 value: borderRadius,
                                 min: 0,
                                 max: 100,
@@ -424,10 +424,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Accordions State'), initialOpen: false },
+                            { title: __('Accordions State', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(ToggleControl, {
-                                label: __('Initial Collapsed'),
-                                help: __('Make all accordions collapsed by default, enable this setting to apply to all accordions.'),
+                                label: __('Initial Collapsed', 'advanced-gutenberg'),
+                                help: __('Make all accordions collapsed by default, enable this setting to apply to all accordions.', 'advanced-gutenberg'),
                                 checked: collapsedAll,
                                 onChange: function onChange() {
                                     return setAttributes({ collapsedAll: !collapsedAll });
@@ -469,7 +469,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return null;
                                 },
                                 className: "advgb-accordion-header-title",
-                                placeholder: __('Enter header…')
+                                placeholder: __('Enter header…', 'advanced-gutenberg')
                             })
                         ),
                         React.createElement(
@@ -506,7 +506,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var accordionAttrs = {
         header: {
             type: 'string',
-            default: __('Header text')
+            default: __('Header text', 'advanced-gutenberg')
         },
         headerBgColor: {
             type: 'string',
@@ -560,8 +560,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/accordion', {
-        title: __('Accordion'),
-        description: __('Easy to create an accordion for your post/page.'),
+        title: __('Accordion', 'advanced-gutenberg'),
+        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -818,7 +818,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return null;
                             },
                             className: "advgb-accordion-header-title",
-                            placeholder: __('Enter header…'),
+                            placeholder: __('Enter header…', 'advanced-gutenberg'),
                             style: { color: 'inherit' }
                         })
                     ),
@@ -853,8 +853,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     registerBlockType('advgb/accordion-item', {
-        title: __('Accordion Item'),
-        description: __('Easy to create an accordion for your post/page.'),
+        title: __('Accordion Item', 'advanced-gutenberg'),
+        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -865,7 +865,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             header: {
                 type: 'string',
-                default: __('Header text')
+                default: __('Header text', 'advanced-gutenberg')
             },
             headerBgColor: {
                 type: 'string',
@@ -1208,11 +1208,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Accordion Settings') },
+                            { title: __('Accordion Settings', 'advanced-gutenberg') },
                             React.createElement(RangeControl, {
-                                label: __('Bottom spacing'),
+                                label: __('Bottom spacing', 'advanced-gutenberg'),
                                 value: marginBottom,
-                                help: __('Define space between each accordion (Frontend view only)'),
+                                help: __('Define space between each accordion (Frontend view only)', 'advanced-gutenberg'),
                                 min: 0,
                                 max: 50,
                                 onChange: function onChange(value) {
@@ -1220,8 +1220,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Initial Collapsed'),
-                                help: __('Make all accordions collapsed by default.'),
+                                label: __('Initial Collapsed', 'advanced-gutenberg'),
+                                help: __('Make all accordions collapsed by default.', 'advanced-gutenberg'),
                                 checked: collapsedAll,
                                 onChange: function onChange() {
                                     return setAttributes({ collapsedAll: !collapsedAll });
@@ -1230,10 +1230,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Header Settings') },
+                            { title: __('Header Settings', 'advanced-gutenberg') },
                             React.createElement(
                                 BaseControl,
-                                { label: __('Header Icon Style') },
+                                { label: __('Header Icon Style', 'advanced-gutenberg') },
                                 React.createElement(
                                     "div",
                                     { className: "advgb-icon-items-wrapper" },
@@ -1258,22 +1258,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 )
                             ),
                             React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
+                                title: __('Color Settings', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Background Color'),
+                                    label: __('Background Color', 'advanced-gutenberg'),
                                     value: headerBgColor,
                                     onChange: function onChange(value) {
                                         return _this2.updateAccordionAttrs({ headerBgColor: value === undefined ? '#000' : value });
                                     }
                                 }, {
-                                    label: __('Text Color'),
+                                    label: __('Text Color', 'advanced-gutenberg'),
                                     value: headerTextColor,
                                     onChange: function onChange(value) {
                                         return _this2.updateAccordionAttrs({ headerTextColor: value === undefined ? '#eee' : value });
                                     }
                                 }, {
-                                    label: __('Icon Color'),
+                                    label: __('Icon Color', 'advanced-gutenberg'),
                                     value: headerIconColor,
                                     onChange: function onChange(value) {
                                         return _this2.updateAccordionAttrs({ headerIconColor: value === undefined ? '#fff' : value });
@@ -1282,16 +1282,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ),
                         React.createElement(PanelColorSettings, {
-                            title: __('Body Color Settings'),
+                            title: __('Body Color Settings', 'advanced-gutenberg'),
                             initialOpen: false,
                             colorSettings: [{
-                                label: __('Background Color'),
+                                label: __('Background Color', 'advanced-gutenberg'),
                                 value: bodyBgColor,
                                 onChange: function onChange(value) {
                                     return _this2.updateAccordionAttrs({ bodyBgColor: value });
                                 }
                             }, {
-                                label: __('Text Color'),
+                                label: __('Text Color', 'advanced-gutenberg'),
                                 value: bodyTextColor,
                                 onChange: function onChange(value) {
                                     return _this2.updateAccordionAttrs({ bodyTextColor: value });
@@ -1300,20 +1300,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }),
                         React.createElement(
                             PanelBody,
-                            { title: __('Border Settings'), initialOpen: false },
+                            { title: __('Border Settings', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(SelectControl, {
-                                label: __('Border Style'),
+                                label: __('Border Style', 'advanced-gutenberg'),
                                 value: borderStyle,
-                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
                                 onChange: function onChange(value) {
                                     return _this2.updateAccordionAttrs({ borderStyle: value });
                                 }
                             }),
                             React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
+                                title: __('Color Settings', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Border Color'),
+                                    label: __('Border Color', 'advanced-gutenberg'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
                                         return _this2.updateAccordionAttrs({ borderColor: value });
@@ -1321,7 +1321,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }]
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Border width'),
+                                label: __('Border width', 'advanced-gutenberg'),
                                 value: borderWidth,
                                 min: 0,
                                 max: 10,
@@ -1330,7 +1330,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Border radius'),
+                                label: __('Border radius', 'advanced-gutenberg'),
                                 value: borderRadius,
                                 min: 0,
                                 max: 100,
@@ -1420,8 +1420,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/accordions', {
-        title: __('Advanced Accordion'),
-        description: __('Easy to create an accordion for your post/page.'),
+        title: __('Advanced Accordion', 'advanced-gutenberg'),
+        description: __('Easy to create an accordion for your post/page.', 'advanced-gutenberg'),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -1543,7 +1543,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'render',
             value: function render() {
-                var listBorderStyles = [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }];
+                var listBorderStyles = [{ label: __('None', 'advanced-gutenberg'), value: 'none' }, { label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Double', 'advanced-gutenberg'), value: 'double' }, { label: __('Groove', 'advanced-gutenberg'), value: 'groove' }, { label: __('Ridge', 'advanced-gutenberg'), value: 'ridge' }, { label: __('Inset', 'advanced-gutenberg'), value: 'inset' }, { label: __('Outset', 'advanced-gutenberg'), value: 'outset' }];
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     setAttributes = _props3.setAttributes,
@@ -1585,19 +1585,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var isStyleSquared = className.indexOf('-squared') > -1;
                 var isStyleOutlined = className.indexOf('-outline') > -1;
                 var hoverColorSettings = [{
-                    label: __('Background Color'),
+                    label: __('Background Color', 'advanced-gutenberg'),
                     value: hoverBgColor,
                     onChange: function onChange(value) {
                         return setAttributes({ hoverBgColor: value === undefined ? '#2196f3' : value });
                     }
                 }, {
-                    label: __('Text Color'),
+                    label: __('Text Color', 'advanced-gutenberg'),
                     value: hoverTextColor,
                     onChange: function onChange(value) {
                         return setAttributes({ hoverTextColor: value === undefined ? '#fff' : value });
                     }
                 }, {
-                    label: __('Shadow Color'),
+                    label: __('Shadow Color', 'advanced-gutenberg'),
                     value: hoverShadowColor,
                     onChange: function onChange(value) {
                         return setAttributes({ hoverShadowColor: value === undefined ? '#ccc' : value });
@@ -1621,7 +1621,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(IconButton, {
-                                label: __('Refresh this button when it conflict with other buttons styles'),
+                                label: __('Refresh this button when it conflict with other buttons styles', 'advanced-gutenberg'),
                                 icon: 'update',
                                 className: 'components-toolbar__control',
                                 onClick: function onClick() {
@@ -1637,7 +1637,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         },
                         React.createElement(RichText, {
                             tagName: 'span',
-                            placeholder: __('Add text…'),
+                            placeholder: __('Add text…', 'advanced-gutenberg'),
                             value: text,
                             onChange: function onChange(value) {
                                 return setAttributes({ text: value });
@@ -1658,14 +1658,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Button link') },
+                            { title: __('Button link', 'advanced-gutenberg') },
                             React.createElement(
                                 BaseControl,
                                 {
-                                    label: [__('Link URL'), url && React.createElement(
+                                    label: [__('Link URL', 'advanced-gutenberg'), url && React.createElement(
                                         'a',
                                         { href: url || '#', key: 'link_url', target: '_blank', style: { float: 'right' } },
-                                        __('Preview')
+                                        __('Preview', 'advanced-gutenberg')
                                     )]
                                 },
                                 React.createElement(URLInput, {
@@ -1679,7 +1679,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             ),
                             React.createElement(ToggleControl, {
-                                label: __('Open in new tab'),
+                                label: __('Open in new tab', 'advanced-gutenberg'),
                                 checked: !!urlOpenNewTab,
                                 onChange: function onChange() {
                                     return setAttributes({ urlOpenNewTab: !attributes.urlOpenNewTab });
@@ -1688,9 +1688,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Text/Color') },
+                            { title: __('Text/Color', 'advanced-gutenberg') },
                             React.createElement(RangeControl, {
-                                label: __('Text size'),
+                                label: __('Text size', 'advanced-gutenberg'),
                                 value: textSize || '',
                                 onChange: function onChange(size) {
                                     return setAttributes({ textSize: size });
@@ -1701,14 +1701,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 allowReset: true
                             }),
                             !isStyleOutlined && React.createElement(_components.AdvColorControl, {
-                                label: __('Background Color'),
+                                label: __('Background Color', 'advanced-gutenberg'),
                                 value: bgColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ bgColor: value });
                                 }
                             }),
                             React.createElement(_components.AdvColorControl, {
-                                label: __('Text Color'),
+                                label: __('Text Color', 'advanced-gutenberg'),
                                 value: textColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ textColor: value });
@@ -1717,9 +1717,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Border'), initialOpen: false },
+                            { title: __('Border', 'advanced-gutenberg'), initialOpen: false },
                             !isStyleSquared && React.createElement(RangeControl, {
-                                label: __('Border radius'),
+                                label: __('Border radius', 'advanced-gutenberg'),
                                 value: borderRadius || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderRadius: value });
@@ -1728,7 +1728,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 100
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Border style'),
+                                label: __('Border style', 'advanced-gutenberg'),
                                 value: borderStyle,
                                 options: listBorderStyles,
                                 onChange: function onChange(value) {
@@ -1739,10 +1739,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 Fragment,
                                 null,
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Border Color'),
+                                    title: __('Border Color', 'advanced-gutenberg'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Border Color'),
+                                        label: __('Border Color', 'advanced-gutenberg'),
                                         value: borderColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ borderColor: value === undefined ? '#2196f3' : value });
@@ -1750,7 +1750,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }]
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Border width'),
+                                    label: __('Border width', 'advanced-gutenberg'),
                                     value: borderWidth || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderWidth: value });
@@ -1762,9 +1762,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Margin'), initialOpen: false },
+                            { title: __('Margin', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(RangeControl, {
-                                label: __('Margin top'),
+                                label: __('Margin top', 'advanced-gutenberg'),
                                 value: marginTop || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ marginTop: value });
@@ -1773,7 +1773,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 100
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Margin right'),
+                                label: __('Margin right', 'advanced-gutenberg'),
                                 value: marginRight || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ marginRight: value });
@@ -1782,7 +1782,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 100
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Margin bottom'),
+                                label: __('Margin bottom', 'advanced-gutenberg'),
                                 value: marginBottom || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ marginBottom: value });
@@ -1791,7 +1791,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 100
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Margin left'),
+                                label: __('Margin left', 'advanced-gutenberg'),
                                 value: marginLeft || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ marginLeft: value });
@@ -1802,9 +1802,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Padding'), initialOpen: false },
+                            { title: __('Padding', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(RangeControl, {
-                                label: __('Padding top'),
+                                label: __('Padding top', 'advanced-gutenberg'),
                                 value: paddingTop || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ paddingTop: value });
@@ -1813,7 +1813,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 100
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Padding right'),
+                                label: __('Padding right', 'advanced-gutenberg'),
                                 value: paddingRight || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ paddingRight: value });
@@ -1822,7 +1822,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 100
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Padding bottom'),
+                                label: __('Padding bottom', 'advanced-gutenberg'),
                                 value: paddingBottom || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ paddingBottom: value });
@@ -1831,7 +1831,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 100
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Padding left'),
+                                label: __('Padding left', 'advanced-gutenberg'),
                                 value: paddingLeft || '',
                                 onChange: function onChange(value) {
                                     return setAttributes({ paddingLeft: value });
@@ -1842,17 +1842,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Hover'), initialOpen: false },
+                            { title: __('Hover', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
+                                title: __('Color Settings', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: hoverColorSettings
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Shadow'), initialOpen: false },
+                                { title: __('Shadow', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(RangeControl, {
-                                    label: __('Opacity (%)'),
+                                    label: __('Opacity (%)', 'advanced-gutenberg'),
                                     value: hoverOpacity,
                                     onChange: function onChange(value) {
                                         return setAttributes({ hoverOpacity: value });
@@ -1861,7 +1861,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 100
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Transition speed (ms)'),
+                                    label: __('Transition speed (ms)', 'advanced-gutenberg'),
                                     value: transitionSpeed || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ transitionSpeed: value });
@@ -1870,7 +1870,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 3000
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Shadow H offset'),
+                                    label: __('Shadow H offset', 'advanced-gutenberg'),
                                     value: hoverShadowH || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ hoverShadowH: value });
@@ -1879,7 +1879,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 50
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Shadow V offset'),
+                                    label: __('Shadow V offset', 'advanced-gutenberg'),
                                     value: hoverShadowV || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ hoverShadowV: value });
@@ -1888,7 +1888,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 50
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Shadow blur'),
+                                    label: __('Shadow blur', 'advanced-gutenberg'),
                                     value: hoverShadowBlur || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ hoverShadowBlur: value });
@@ -1897,7 +1897,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 50
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Shadow spread'),
+                                    label: __('Shadow spread', 'advanced-gutenberg'),
                                     value: hoverShadowSpread || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ hoverShadowSpread: value });
@@ -1938,7 +1938,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         text: {
             source: 'children',
             selector: 'a',
-            default: __('PUSH THE BUTTON')
+            default: __('PUSH THE BUTTON', 'advanced-gutenberg')
         },
         bgColor: {
             type: 'string'
@@ -2042,8 +2042,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/button', {
-        title: __('Advanced Button'),
-        description: __('New button with more styles.'),
+        title: __('Advanced Button', 'advanced-gutenberg'),
+        description: __('New button with more styles.', 'advanced-gutenberg'),
         icon: {
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -2071,7 +2071,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }]
         },
-        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'outlined', label: __('Outlined') }, { name: 'squared', label: __('Squared') }, { name: 'squared-outline', label: __('Squared Outline') }],
+        styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'outlined', label: __('Outlined', 'advanced-gutenberg') }, { name: 'squared', label: __('Squared', 'advanced-gutenberg') }, { name: 'squared-outline', label: __('Squared Outline', 'advanced-gutenberg') }],
         edit: AdvButton,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -2297,7 +2297,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     var open = _ref.open;
                                     return React.createElement(IconButton, {
                                         className: 'components-toolbar__control',
-                                        label: __('Change image'),
+                                        label: __('Change image', 'advanced-gutenberg'),
                                         icon: 'edit',
                                         onClick: open
                                     });
@@ -2305,7 +2305,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(IconButton, {
                                 className: 'components-toolbar__control',
-                                label: __('Remove image'),
+                                label: __('Remove image', 'advanced-gutenberg'),
                                 icon: 'no',
                                 onClick: function onClick() {
                                     return setAttributes({ imageUrl: undefined, imageID: undefined });
@@ -2318,11 +2318,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Advanced Image') },
+                            { title: __('Advanced Image', 'advanced-gutenberg') },
                             React.createElement(SelectControl, {
-                                label: __('Action on click'),
+                                label: __('Action on click', 'advanced-gutenberg'),
                                 value: openOnClick,
-                                options: [{ label: __('None'), value: 'none' }, { label: __('Open image in lightbox'), value: 'lightbox' }, { label: __('Open custom URL'), value: 'url' }],
+                                options: [{ label: __('None', 'advanced-gutenberg'), value: 'none' }, { label: __('Open image in lightbox', 'advanced-gutenberg'), value: 'lightbox' }, { label: __('Open custom URL', 'advanced-gutenberg'), value: 'url' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ openOnClick: value });
                                 }
@@ -2331,19 +2331,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 Fragment,
                                 null,
                                 React.createElement(TextControl, {
-                                    label: [__('Link URL'), openUrl && React.createElement(
+                                    label: [__('Link URL', 'advanced-gutenberg'), openUrl && React.createElement(
                                         'a',
                                         { href: openUrl || '#', key: 'advgb_image_link_url', target: '_blank', style: { float: 'right' } },
-                                        __('Preview')
+                                        __('Preview', 'advanced-gutenberg')
                                     )],
                                     value: openUrl,
-                                    placeholder: __('Enter URL…'),
+                                    placeholder: __('Enter URL…', 'advanced-gutenberg'),
                                     onChange: function onChange(text) {
                                         return setAttributes({ openUrl: text });
                                     }
                                 }),
                                 React.createElement(ToggleControl, {
-                                    label: __('Open link in new tab'),
+                                    label: __('Open link in new tab', 'advanced-gutenberg'),
                                     checked: linkInNewTab,
                                     onChange: function onChange() {
                                         return setAttributes({ linkInNewTab: !linkInNewTab });
@@ -2352,16 +2352,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Image Size') },
+                                { title: __('Image Size', 'advanced-gutenberg') },
                                 React.createElement(ToggleControl, {
-                                    label: __('Full width'),
+                                    label: __('Full width', 'advanced-gutenberg'),
                                     checked: fullWidth,
                                     onChange: function onChange() {
                                         return setAttributes({ fullWidth: !fullWidth });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Height'),
+                                    label: __('Height', 'advanced-gutenberg'),
                                     value: height,
                                     min: 100,
                                     max: 1000,
@@ -2370,7 +2370,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 !fullWidth && React.createElement(RangeControl, {
-                                    label: __('Width'),
+                                    label: __('Width', 'advanced-gutenberg'),
                                     value: width,
                                     min: 200,
                                     max: 1300,
@@ -2379,7 +2379,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(FocalPointPicker, {
-                                    label: __('Focal Point Picker'),
+                                    label: __('Focal Point Picker', 'advanced-gutenberg'),
                                     url: imageUrl,
                                     value: focalPoint,
                                     onChange: function onChange(value) {
@@ -2387,7 +2387,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Overlay opacity'),
+                                    label: __('Overlay opacity', 'advanced-gutenberg'),
                                     value: overlayOpacity,
                                     min: 0,
                                     max: 100,
@@ -2397,22 +2397,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             ),
                             React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
+                                title: __('Color Settings', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Title Color'),
+                                    label: __('Title Color', 'advanced-gutenberg'),
                                     value: titleColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ titleColor: value === undefined ? '#fff' : value });
                                     }
                                 }, {
-                                    label: __('Subtitle Color'),
+                                    label: __('Subtitle Color', 'advanced-gutenberg'),
                                     value: subtitleColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ subtitleColor: value === undefined ? '#fff' : value });
                                     }
                                 }, {
-                                    label: __('Overlay Color'),
+                                    label: __('Overlay Color', 'advanced-gutenberg'),
                                     value: overlayColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ overlayColor: value === undefined ? '#2196f3' : value });
@@ -2421,19 +2421,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Text Alignment'), initialOpen: false },
+                                { title: __('Text Alignment', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(SelectControl, {
-                                    label: __('Vertical Alignment'),
+                                    label: __('Vertical Alignment', 'advanced-gutenberg'),
                                     value: vAlign,
-                                    options: [{ label: __('Top'), value: 'flex-start' }, { label: __('Center'), value: 'center' }, { label: __('Bottom'), value: 'flex-end' }],
+                                    options: [{ label: __('Top', 'advanced-gutenberg'), value: 'flex-start' }, { label: __('Center', 'advanced-gutenberg'), value: 'center' }, { label: __('Bottom', 'advanced-gutenberg'), value: 'flex-end' }],
                                     onChange: function onChange(value) {
                                         return setAttributes({ vAlign: value });
                                     }
                                 }),
                                 React.createElement(SelectControl, {
-                                    label: __('Horizontal Alignment'),
+                                    label: __('Horizontal Alignment', 'advanced-gutenberg'),
                                     value: hAlign,
-                                    options: [{ label: __('Left'), value: 'flex-start' }, { label: __('Center'), value: 'center' }, { label: __('Right'), value: 'flex-end' }],
+                                    options: [{ label: __('Left', 'advanced-gutenberg'), value: 'flex-start' }, { label: __('Center', 'advanced-gutenberg'), value: 'center' }, { label: __('Right', 'advanced-gutenberg'), value: 'flex-end' }],
                                     onChange: function onChange(value) {
                                         return setAttributes({ hAlign: value });
                                     }
@@ -2470,7 +2470,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         className: 'button button-large',
                                         onClick: open
                                     },
-                                    __('Choose image')
+                                    __('Choose image', 'advanced-gutenberg')
                                 );
                             }
                         }),
@@ -2489,7 +2489,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             unstableOnSplit: function unstableOnSplit() {
                                 return null;
                             },
-                            placeholder: __('Enter title…')
+                            placeholder: __('Enter title…', 'advanced-gutenberg')
                         }),
                         React.createElement(RichText, {
                             tagName: 'p',
@@ -2506,7 +2506,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             unstableOnSplit: function unstableOnSplit() {
                                 return null;
                             },
-                            placeholder: __('Enter subtitle…')
+                            placeholder: __('Enter subtitle…', 'advanced-gutenberg')
                         }),
                         React.createElement(
                             'style',
@@ -2551,7 +2551,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         title: {
             type: 'string',
-            default: __('Image title')
+            default: __('Image title', 'advanced-gutenberg')
         },
         titleColor: {
             type: 'string',
@@ -2559,7 +2559,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         subtitle: {
             type: 'string',
-            default: __('Your subtitle here')
+            default: __('Your subtitle here', 'advanced-gutenberg')
         },
         subtitleColor: {
             type: 'string',
@@ -2603,8 +2603,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/image', {
-        title: __('Advanced Image'),
-        description: __('Advanced image/photo block with more options and styles.'),
+        title: __('Advanced Image', 'advanced-gutenberg'),
+        description: __('Advanced image/photo block with more options and styles.', 'advanced-gutenberg'),
         icon: {
             src: advImageBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -2819,7 +2819,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'render',
             value: function render() {
-                var listIcons = [{ label: __('None'), value: '' }, { label: __('Pushpin'), value: 'admin-post' }, { label: __('Configuration'), value: 'admin-generic' }, { label: __('Flag'), value: 'flag' }, { label: __('Star'), value: 'star-filled' }, { label: __('Checkmark'), value: 'yes' }, { label: __('Minus'), value: 'minus' }, { label: __('Plus'), value: 'plus' }, { label: __('Play'), value: 'controls-play' }, { label: __('Arrow right'), value: 'arrow-right-alt' }, { label: __('X Cross'), value: 'dismiss' }, { label: __('Warning'), value: 'warning' }, { label: __('Help'), value: 'editor-help' }, { label: __('Info'), value: 'info' }, { label: __('Circle'), value: 'marker' }];
+                var listIcons = [{ label: __('None', 'advanced-gutenberg'), value: '' }, { label: __('Pushpin', 'advanced-gutenberg'), value: 'admin-post' }, { label: __('Configuration', 'advanced-gutenberg'), value: 'admin-generic' }, { label: __('Flag', 'advanced-gutenberg'), value: 'flag' }, { label: __('Star', 'advanced-gutenberg'), value: 'star-filled' }, { label: __('Checkmark', 'advanced-gutenberg'), value: 'yes' }, { label: __('Minus', 'advanced-gutenberg'), value: 'minus' }, { label: __('Plus', 'advanced-gutenberg'), value: 'plus' }, { label: __('Play', 'advanced-gutenberg'), value: 'controls-play' }, { label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt' }, { label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss' }, { label: __('Warning', 'advanced-gutenberg'), value: 'warning' }, { label: __('Help', 'advanced-gutenberg'), value: 'editor-help' }, { label: __('Info', 'advanced-gutenberg'), value: 'info' }, { label: __('Circle', 'advanced-gutenberg'), value: 'marker' }];
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     isSelected = _props3.isSelected,
@@ -2854,7 +2854,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(IconButton, {
-                                label: __('Refresh this list when it conflict with other lists styles'),
+                                label: __('Refresh this list when it conflict with other lists styles', 'advanced-gutenberg'),
                                 icon: 'update',
                                 className: 'components-toolbar__control',
                                 onClick: function onClick() {
@@ -2868,9 +2868,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Text Settings'), initialOpen: false },
+                            { title: __('Text Settings', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(RangeControl, {
-                                label: __('Text size'),
+                                label: __('Text size', 'advanced-gutenberg'),
                                 value: fontSize || '',
                                 onChange: function onChange(size) {
                                     return setAttributes({ fontSize: size });
@@ -2883,10 +2883,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Icon Settings') },
+                            { title: __('Icon Settings', 'advanced-gutenberg') },
                             React.createElement(
                                 BaseControl,
-                                { label: __('List icon') },
+                                { label: __('List icon', 'advanced-gutenberg') },
                                 React.createElement(
                                     'div',
                                     { className: 'advgb-icon-items-wrapper' },
@@ -2913,7 +2913,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     PanelBody,
                                     {
-                                        title: [__('Icon color'), React.createElement('span', { key: 'advgb-list-icon-color', className: 'dashicons dashicons-' + icon, style: { color: iconColor, marginLeft: '10px' } })],
+                                        title: [__('Icon color', 'advanced-gutenberg'), React.createElement('span', { key: 'advgb-list-icon-color', className: 'dashicons dashicons-' + icon, style: { color: iconColor, marginLeft: '10px' } })],
                                         initialOpen: false
                                     },
                                     React.createElement(ColorPalette, {
@@ -2924,7 +2924,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     })
                                 ),
                                 React.createElement(RangeControl, {
-                                    label: __('Icon size'),
+                                    label: __('Icon size', 'advanced-gutenberg'),
                                     value: iconSize || '',
                                     onChange: function onChange(size) {
                                         return setAttributes({ iconSize: size });
@@ -2934,7 +2934,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     allowReset: true
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Line height'),
+                                    label: __('Line height', 'advanced-gutenberg'),
                                     value: lineHeight || '',
                                     onChange: function onChange(size) {
                                         return setAttributes({ lineHeight: size });
@@ -2944,7 +2944,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     allowReset: true
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Margin'),
+                                    label: __('Margin', 'advanced-gutenberg'),
                                     value: margin || '',
                                     onChange: function onChange(size) {
                                         return setAttributes({ margin: size });
@@ -2954,7 +2954,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     allowReset: true
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Padding'),
+                                    label: __('Padding', 'advanced-gutenberg'),
                                     value: padding || '',
                                     onChange: function onChange(size) {
                                         return setAttributes({ padding: size });
@@ -2975,7 +2975,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         value: values,
                         wrapperClassName: 'advgb-list-item',
                         className: listClassName,
-                        placeholder: __('Write advanced list…'),
+                        placeholder: __('Write advanced list…', 'advanced-gutenberg'),
                         onMerge: mergeBlocks,
                         unstableOnSplit: insertBlocksAfter ? function (before, after) {
                             for (var _len = arguments.length, blocks = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -3073,8 +3073,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/list', {
-        title: __('Advanced List'),
-        description: __('List block with custom icons and styles.'),
+        title: __('Advanced List', 'advanced-gutenberg'),
+        description: __('List block with custom icons and styles.', 'advanced-gutenberg'),
         icon: {
             src: listBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -3155,10 +3155,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -3477,7 +3473,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 if (newSection.length < 2) {
-                    alert(__('At least 1 row of current section must present.'));
+                    alert(__('At least 1 row of current section must present.'), 'advanced-gutenberg');
                     return false;
                 }
 
@@ -4094,7 +4090,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             var _fromCell = rangeSelected.fromCell;
 
                                             if (section !== _fromCell.section) {
-                                                alert(__('Cannot select multi cells from difference section!'));
+                                                alert(__('Cannot select multi cells from difference section!'), 'advanced-gutenberg');
                                                 return;
                                             }
                                             var _toCell = {
@@ -4115,7 +4111,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             });
 
                                             if (multiCells.length && section !== multiCells[0].section) {
-                                                alert(__('Cannot select multi cells from difference section!'));
+                                                alert(__('Cannot select multi cells from difference section!'), 'advanced-gutenberg');
                                                 return;
                                             }
 
@@ -4206,7 +4202,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-init-table" },
                             React.createElement(TextControl, {
                                 type: "number",
-                                label: __('Column Count'),
+                                label: __('Column Count', 'advanced-gutenberg'),
                                 value: initCol,
                                 onChange: function onChange(value) {
                                     return _this4.setState({ initCol: value });
@@ -4215,7 +4211,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(TextControl, {
                                 type: "number",
-                                label: __('Row Count'),
+                                label: __('Row Count', 'advanced-gutenberg'),
                                 value: initRow,
                                 onChange: function onChange(value) {
                                     return _this4.setState({ initRow: value });
@@ -4227,7 +4223,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { isPrimary: true, onClick: function onClick() {
                                         return _this4.createTable();
                                     } },
-                                __('Create')
+                                __('Create', 'advanced-gutenberg')
                             ),
                             React.createElement(
                                 "div",
@@ -4235,7 +4231,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "small",
                                     null,
-                                    __('Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection.')
+                                    __('Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection.', 'advanced-gutenberg')
                                 )
                             )
                         )
@@ -4244,42 +4240,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var TABLE_CONTROLS = [{
                     icon: 'table-row-before',
-                    title: __('Add Row Before'),
+                    title: __('Add Row Before', 'advanced-gutenberg'),
                     isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
                         return _this4.insertRow(0);
                     }
                 }, {
                     icon: 'table-row-after',
-                    title: __('Add Row After'),
+                    title: __('Add Row After', 'advanced-gutenberg'),
                     isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
                         return _this4.insertRow(1);
                     }
                 }, {
                     icon: 'table-row-delete',
-                    title: __('Delete Row'),
+                    title: __('Delete Row', 'advanced-gutenberg'),
                     isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
                         return _this4.deleteRow();
                     }
                 }, {
                     icon: 'table-col-before',
-                    title: __('Add Column Before'),
+                    title: __('Add Column Before', 'advanced-gutenberg'),
                     isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
                         return _this4.insertColumn(0);
                     }
                 }, {
                     icon: 'table-col-after',
-                    title: __('Add Column After'),
+                    title: __('Add Column After', 'advanced-gutenberg'),
                     isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
                         return _this4.insertColumn(1);
                     }
                 }, {
                     icon: 'table-col-delete',
-                    title: __('Delete Column'),
+                    title: __('Delete Column', 'advanced-gutenberg'),
                     isDisabled: !selectedCell || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
                         return _this4.deleteColumn();
@@ -4291,7 +4287,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
                         React.createElement("path", { d: "M4,5v13h17V5H4z M14,7v9h-3V7H14z M6,7h3v9H6V7z M19,16h-3V7h3V16z" })
                     ),
-                    title: __('Split Merged Cells'),
+                    title: __('Split Merged Cells', 'advanced-gutenberg'),
                     isDisabled: !selectedCell || currentCell && !currentCell.rowSpan && !currentCell.colSpan || this.isRangeSelected() || this.isMultiSelected(),
                     onClick: function onClick() {
                         return _this4.splitMergedCells();
@@ -4305,7 +4301,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M19,10v4H4v-4H19 M20,8H3C2.45,8,2,8.45,2,9v6c0,0.55,0.45,1,1,1h17c0.55,0,1-0.45,1-1V9C21,8.45,20.55,8,20,8L20,8z" }),
                         React.createElement("polygon", { points: "21,4 2,4 2,6 21,6 21,4" })
                     ),
-                    title: __('Merge Cells'),
+                    title: __('Merge Cells', 'advanced-gutenberg'),
                     isDisabled: !this.isRangeSelected(),
                     onClick: function onClick() {
                         return _this4.mergeCells();
@@ -4313,7 +4309,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }];
 
                 var BORDER_SELECT = [{
-                    title: __('Border Top'),
+                    title: __('Border Top', 'advanced-gutenberg'),
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4324,7 +4320,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return _this4.updateCellsStyles({ setBorder: 'top' });
                     }
                 }, {
-                    title: __('Border Right'),
+                    title: __('Border Right', 'advanced-gutenberg'),
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4335,7 +4331,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return _this4.updateCellsStyles({ setBorder: 'right' });
                     }
                 }, {
-                    title: __('Border Bottom'),
+                    title: __('Border Bottom', 'advanced-gutenberg'),
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4346,7 +4342,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return _this4.updateCellsStyles({ setBorder: 'bottom' });
                     }
                 }, {
-                    title: __('Border Left'),
+                    title: __('Border Left', 'advanced-gutenberg'),
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4357,7 +4353,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return _this4.updateCellsStyles({ setBorder: 'left' });
                     }
                 }, {
-                    title: __('Border All'),
+                    title: __('Border All', 'advanced-gutenberg'),
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4368,7 +4364,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         return _this4.updateCellsStyles({ setBorder: 'all' });
                     }
                 }, {
-                    title: __('Border None'),
+                    title: __('Border None', 'advanced-gutenberg'),
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4382,7 +4378,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 if (this.isRangeSelected()) {
                     var EXTRA_BORDER_SELECT = [{
-                        title: __('Border Vertical'),
+                        title: __('Border Vertical', 'advanced-gutenberg'),
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4393,7 +4389,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return _this4.updateCellsStyles({ setBorder: 'vert' });
                         }
                     }, {
-                        title: __('Border Horizontal'),
+                        title: __('Border Horizontal', 'advanced-gutenberg'),
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4404,7 +4400,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return _this4.updateCellsStyles({ setBorder: 'horz' });
                         }
                     }, {
-                        title: __('Border Inner'),
+                        title: __('Border Inner', 'advanced-gutenberg'),
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4415,7 +4411,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return _this4.updateCellsStyles({ setBorder: 'inner' });
                         }
                     }, {
-                        title: __('Border Outer'),
+                        title: __('Border Outer', 'advanced-gutenberg'),
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
@@ -4432,19 +4428,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var HORZ_ALIGNMENT_CONTROLS = [{
                     icon: 'editor-alignleft',
-                    title: __('Align left'),
+                    title: __('Align left', 'advanced-gutenberg'),
                     align: 'left'
                 }, {
                     icon: 'editor-aligncenter',
-                    title: __('Align center'),
+                    title: __('Align center', 'advanced-gutenberg'),
                     align: 'center'
                 }, {
                     icon: 'editor-alignright',
-                    title: __('Align right'),
+                    title: __('Align right', 'advanced-gutenberg'),
                     align: 'right'
                 }, {
                     icon: 'editor-justify',
-                    title: __('Align justify'),
+                    title: __('Align justify', 'advanced-gutenberg'),
                     align: 'justify'
                 }];
 
@@ -4455,7 +4451,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
-                    title: __('Align top'),
+                    title: __('Align top', 'advanced-gutenberg'),
                     align: 'top'
                 }, {
                     icon: React.createElement(
@@ -4464,7 +4460,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
-                    title: __('Align middle'),
+                    title: __('Align middle', 'advanced-gutenberg'),
                     align: 'middle'
                 }, {
                     icon: React.createElement(
@@ -4473,7 +4469,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement("path", { d: "M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
-                    title: __('Align bottom'),
+                    title: __('Align bottom', 'advanced-gutenberg'),
                     align: 'bottom'
                 }];
 
@@ -4489,12 +4485,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(DropdownMenu, {
                                 hasArrowIndicator: true,
                                 icon: "editor-table",
-                                label: __('Edit Table'),
+                                label: __('Edit Table', 'advanced-gutenberg'),
                                 controls: TABLE_CONTROLS
                             }),
                             React.createElement(IconButton, {
                                 icon: "update",
-                                label: __('Refresh table (Use this after using undo or redo)'),
+                                label: __('Refresh table (Use this after using undo or redo)', 'advanced-gutenberg'),
                                 onClick: function onClick() {
                                     return _this4.calculateRealColIndex();
                                 }
@@ -4506,10 +4502,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Table Settings') },
+                            { title: __('Table Settings', 'advanced-gutenberg') },
                             React.createElement(RangeControl, {
-                                label: __('Max width (px)'),
-                                help: __('Set this to 0 to make max-width is 100%'),
+                                label: __('Max width (px)', 'advanced-gutenberg'),
+                                help: __('Set this to 0 to make max-width is 100%', 'advanced-gutenberg'),
                                 min: 0,
                                 max: 1999,
                                 value: maxWidth,
@@ -4518,28 +4514,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Fixed width table cells'),
+                                label: __('Fixed width table cells', 'advanced-gutenberg'),
                                 checked: hasFixedLayout,
                                 onChange: function onChange() {
                                     return setAttributes({ hasFixedLayout: !hasFixedLayout });
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Table header'),
+                                label: __('Table header', 'advanced-gutenberg'),
                                 checked: head && head.length,
                                 onChange: function onChange() {
                                     return _this4.toggleSection('head');
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Table footer'),
+                                label: __('Table footer', 'advanced-gutenberg'),
                                 checked: foot && foot.length,
                                 onChange: function onChange() {
                                     return _this4.toggleSection('foot');
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Border collapsed'),
+                                label: __('Border collapsed', 'advanced-gutenberg'),
                                 checked: tableCollapsed,
                                 onChange: function onChange() {
                                     return setAttributes({ tableCollapsed: !tableCollapsed });
@@ -4548,17 +4544,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Cell Settings') },
+                            { title: __('Cell Settings', 'advanced-gutenberg') },
                             React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
+                                title: __('Color Settings', 'advanced-gutenberg'),
                                 colorSettings: [{
-                                    label: __('Background Color'),
+                                    label: __('Background Color', 'advanced-gutenberg'),
                                     value: this.getCellStyles('backgroundColor'),
                                     onChange: function onChange(value) {
                                         return _this4.updateCellsStyles({ backgroundColor: value });
                                     }
                                 }, {
-                                    label: __('Text Color'),
+                                    label: __('Text Color', 'advanced-gutenberg'),
                                     value: this.getCellStyles('color'),
                                     onChange: function onChange(value) {
                                         return _this4.updateCellsStyles({ color: value });
@@ -4567,7 +4563,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Border'), initialOpen: false },
+                                { title: __('Border', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(
                                     "div",
                                     { className: "advgb-border-item-wrapper" },
@@ -4588,15 +4584,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     })
                                 ),
                                 React.createElement(SelectControl, {
-                                    label: __('Border Style'),
+                                    label: __('Border Style', 'advanced-gutenberg'),
                                     value: this.getCellStyles('borderStyle'),
-                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }, { label: __('None'), value: 'none' }],
+                                    options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }, { label: __('None', 'advanced-gutenberg'), value: 'none' }],
                                     onChange: function onChange(value) {
                                         return _this4.updateCellsStyles({ borderStyle: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Border width'),
+                                    label: __('Border width', 'advanced-gutenberg'),
                                     value: this.getCellStyles('borderWidth') || 0,
                                     min: 0,
                                     max: 10,
@@ -4605,9 +4601,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Border Color'),
+                                    title: __('Border Color', 'advanced-gutenberg'),
                                     colorSettings: [{
-                                        label: __('Border Color'),
+                                        label: __('Border Color', 'advanced-gutenberg'),
                                         value: this.getCellStyles('borderColor'),
                                         onChange: function onChange(value) {
                                             return _this4.updateCellsStyles({ borderColor: value });
@@ -4617,9 +4613,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Padding'), initialOpen: false },
+                                { title: __('Padding', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(RangeControl, {
-                                    label: __('Padding Top'),
+                                    label: __('Padding Top', 'advanced-gutenberg'),
                                     value: this.getCellStyles('paddingTop') || 0,
                                     min: 0,
                                     max: 100,
@@ -4628,7 +4624,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Padding Right'),
+                                    label: __('Padding Right', 'advanced-gutenberg'),
                                     value: this.getCellStyles('paddingRight') || 0,
                                     min: 0,
                                     max: 100,
@@ -4637,7 +4633,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Padding Bottom'),
+                                    label: __('Padding Bottom', 'advanced-gutenberg'),
                                     value: this.getCellStyles('paddingBottom') || 0,
                                     min: 0,
                                     max: 100,
@@ -4646,7 +4642,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Padding Left'),
+                                    label: __('Padding Left', 'advanced-gutenberg'),
                                     value: this.getCellStyles('paddingLeft') || 0,
                                     min: 0,
                                     max: 100,
@@ -4657,10 +4653,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Text Alignment'), initialOpen: false },
+                                { title: __('Text Alignment', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(
                                     BaseControl,
-                                    { label: __('Horizontal Align') },
+                                    { label: __('Horizontal Align', 'advanced-gutenberg') },
                                     React.createElement(Toolbar, {
                                         controls: HORZ_ALIGNMENT_CONTROLS.map(function (control) {
                                             var isActive = _this4.getCellStyles('textAlign') === control.align;
@@ -4676,7 +4672,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 ),
                                 React.createElement(
                                     BaseControl,
-                                    { label: __('Vertical Align') },
+                                    { label: __('Vertical Align', 'advanced-gutenberg') },
                                     React.createElement(Toolbar, {
                                         controls: VERT_ALIGNMENT_CONTROLS.map(function (control) {
                                             var isActive = _this4.getCellStyles('verticalAlign') === control.align;
@@ -4743,8 +4739,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/table', {
-        title: __('Advanced Table'),
-        description: __('Advanced table block with more styles and functions.'),
+        title: __('Advanced Table', 'advanced-gutenberg'),
+        description: __('Advanced table block with more styles and functions.', 'advanced-gutenberg'),
         icon: {
             src: tableBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -4879,7 +4875,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             align: true
         },
-        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'stripes', label: __('Stripes') }],
+        styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'stripes', label: __('Stripes', 'advanced-gutenberg') }],
         edit: AdvTable,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -4957,12 +4953,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
-
-var AdvColorPalette = exports.AdvColorPalette = React.createElement(
-    "div",
-    null,
-    "123"
-);
 
 /***/ }),
 
@@ -5216,7 +5206,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     var open = _ref.open;
                                     return React.createElement(IconButton, {
                                         className: "components-toolbar__control",
-                                        label: __('Change image preview'),
+                                        label: __('Change image preview', 'advanced-gutenberg'),
                                         icon: "edit",
                                         onClick: open
                                     });
@@ -5224,7 +5214,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(IconButton, {
                                 className: "components-toolbar__control",
-                                label: __('Remove image preview'),
+                                label: __('Remove image preview', 'advanced-gutenberg'),
                                 icon: "no",
                                 onClick: function onClick() {
                                     return setAttributes({ poster: undefined, posterID: undefined });
@@ -5237,24 +5227,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Advanced Video Settings') },
+                            { title: __('Advanced Video Settings', 'advanced-gutenberg') },
                             React.createElement(ToggleControl, {
-                                label: __('Open video in light box'),
-                                help: __('Lightbox offers additional display options.'),
+                                label: __('Open video in light box', 'advanced-gutenberg'),
+                                help: __('Lightbox offers additional display options.', 'advanced-gutenberg'),
                                 checked: openInLightbox,
                                 onChange: function onChange() {
                                     return setAttributes({ openInLightbox: !openInLightbox });
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Full width'),
+                                label: __('Full width', 'advanced-gutenberg'),
                                 checked: videoFullWidth,
                                 onChange: function onChange() {
                                     return setAttributes({ videoFullWidth: !videoFullWidth });
                                 }
                             }),
                             !videoFullWidth && React.createElement(RangeControl, {
-                                label: __('Video width'),
+                                label: __('Video width', 'advanced-gutenberg'),
                                 value: videoWidth,
                                 min: 100,
                                 max: 1000,
@@ -5263,7 +5253,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Video height'),
+                                label: __('Video height', 'advanced-gutenberg'),
                                 value: videoHeight,
                                 min: 300,
                                 max: 700,
@@ -5275,16 +5265,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 Fragment,
                                 null,
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Color Settings'),
+                                    title: __('Color Settings', 'advanced-gutenberg'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Overlay Color'),
+                                        label: __('Overlay Color', 'advanced-gutenberg'),
                                         value: overlayColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ overlayColor: value === undefined ? '#EEEEEE' : value });
                                         }
                                     }, {
-                                        label: __('Play Button Color'),
+                                        label: __('Play Button Color', 'advanced-gutenberg'),
                                         value: playButtonColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ playButtonColor: value === undefined ? '#fff' : value });
@@ -5293,10 +5283,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(
                                     PanelBody,
-                                    { title: __('Play Button') },
+                                    { title: __('Play Button', 'advanced-gutenberg') },
                                     React.createElement(
                                         BaseControl,
-                                        { label: __('Icon Style') },
+                                        { label: __('Icon Style', 'advanced-gutenberg') },
                                         React.createElement(
                                             "div",
                                             { className: "advgb-icon-items-wrapper" },
@@ -5321,7 +5311,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         )
                                     ),
                                     React.createElement(RangeControl, {
-                                        label: __('Play Button Size'),
+                                        label: __('Play Button Size', 'advanced-gutenberg'),
                                         value: playButtonSize,
                                         min: 40,
                                         max: 200,
@@ -5357,7 +5347,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "button button-large",
                                                 onClick: open
                                             },
-                                            __('Select image preview')
+                                            __('Select image preview', 'advanced-gutenberg')
                                         );
                                     }
                                 }),
@@ -5391,7 +5381,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     controls: true
                                 },
                                 React.createElement("source", { src: videoURL }),
-                                __('Your browser does not support HTML5 video.')
+                                __('Your browser does not support HTML5 video.', 'advanced-gutenberg')
                             ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
                         ),
                         isSelected && React.createElement(
@@ -5402,7 +5392,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-video-input" },
                                 React.createElement(Dashicon, { className: "advgb-video-link-icon", icon: "admin-links" }),
                                 React.createElement(TextControl, {
-                                    placeholder: __('Youtube/Vimeo video URL/ID…'),
+                                    placeholder: __('Youtube/Vimeo video URL/ID…', 'advanced-gutenberg'),
                                     value: videoID,
                                     onChange: function onChange(value) {
                                         setAttributes({ videoID: value, videoURL: '', videoTitle: undefined, videoSourceType: '' });
@@ -5416,12 +5406,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         style: { height: '31px' },
                                         onClick: this.fetchVideoInfo
                                     },
-                                    __('Fetch')
+                                    __('Fetch', 'advanced-gutenberg')
                                 ),
                                 React.createElement(
                                     "span",
                                     { style: { margin: 'auto 10px' } },
-                                    __('or use')
+                                    __('or use', 'advanced-gutenberg')
                                 ),
                                 React.createElement(MediaUpload, {
                                     allowedTypes: ["video"],
@@ -5437,7 +5427,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "button button-large is-primary",
                                                 onClick: open
                                             },
-                                            __('Local video')
+                                            __('Local video', 'advanced-gutenberg')
                                         );
                                     }
                                 })
@@ -5450,7 +5440,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "strong",
                                     null,
-                                    __('Current Video'),
+                                    __('Current Video', 'advanced-gutenberg'),
                                     ":"
                                 ),
                                 React.createElement(
@@ -5468,11 +5458,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "span",
                                     null,
-                                    videoTitle === 'ADVGB_FAIL_TO_LOAD' && React.createElement(
+                                    (videoTitle === 'ADVGB_FAIL_TO_LOAD' && React.createElement(
                                         "strong",
                                         { style: { color: 'red' } },
                                         __('Wrong video URL/ID. Please try another.')
-                                    ) || videoTitle || __('Not selected yet.')
+                                    ), 'advanced-gutenberg') || videoTitle || __('Not selected yet.', 'advanced-gutenberg')
                                 )
                             )
                         )
@@ -5547,8 +5537,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/video', {
-        title: __('Advanced Video'),
-        description: __('Powerful block for insert and embed video.'),
+        title: __('Advanced Video', 'advanced-gutenberg'),
+        description: __('Powerful block for insert and embed video.', 'advanced-gutenberg'),
         icon: {
             src: advVideoBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -5600,7 +5590,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             controls: true
                         },
                         React.createElement("source", { src: videoURL }),
-                        __('Your browser does not support HTML5 video.')
+                        __('Your browser does not support HTML5 video.', 'advanced-gutenberg')
                     ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
                 ),
                 !!openInLightbox && React.createElement(
@@ -5678,12 +5668,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         select = _wp$data.select;
 
 
-    var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One') }, { columns: 2, layout: '12-12', icon: '12-12', title: __('Two: 1/2 - 1/2') }, { columns: 2, layout: '23-13', icon: '23-13', title: __('Two: 2/3 - 1/3') }, { columns: 2, layout: '13-23', icon: '13-23', title: __('Two: 1/3 - 2/3') }, { columns: 2, layout: '14-34', icon: '14-34', title: __('Two: 1/4 - 3/4') }, { columns: 2, layout: '34-14', icon: '34-14', title: __('Two: 3/4 - 1/4') }, { columns: 2, layout: '15-45', icon: '15-45', title: __('Two: 1/5 - 4/5') }, { columns: 2, layout: '45-15', icon: '45-15', title: __('Two: 4/5 - 1/5') }, { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __('Three: 1/3 - 1/3 - 1/3') }, { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __('Three: 1/2 - 1/4 - 1/4') }, { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __('Three: 1/4 - 1/4 - 1/2') }, { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __('Three: 1/4 - 1/2 - 1/4') }, { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __('Three: 1/5 - 3/5 - 1/5') }, { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __('Three: 3/5 - 1/5 - 1/5') }, { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __('Three: 1/5 - 1/5 - 3/5') }, { columns: 3, layout: '16-46-16', icon: '16-46-16', title: __('Three: 1/6 - 4/6 - 1/6') }, { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __('Four: 1/4 - 1/4 - 1/4 - 1/4') }, { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __('Four: 3/6 - 1/6 - 1/6 - 1/6') }, { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __('Four: 1/6 - 1/6 - 1/6 - 3/6') }, { columns: 4, layout: '15-15-15-25', icon: '15-15-15-25', title: __('Four: 1/5 - 1/5 - 1/5 - 2/5') }, { columns: 4, layout: '25-15-15-15', icon: '25-15-15-15', title: __('Four: 2/5 - 1/5 - 1/5 - 1/5') }, { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __('Five') }, { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __('Six') }];
-    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '100-12-12', title: __('Three: 100 - 1/2 - 1/2') }, { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __('Three: 1/2 - 1/2 - 100') }, { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __('Four: Two Columns') }, { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __('Six: Two Columns') }, { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __('Six: Three Columns') }];
+    var COLUMNS_LAYOUTS = [{ columns: 1, layout: '100', icon: '100', title: __('One', 'advanced-gutenberg') }, { columns: 2, layout: '12-12', icon: '12-12', title: __('Two: 1/2 - 1/2', 'advanced-gutenberg') }, { columns: 2, layout: '23-13', icon: '23-13', title: __('Two: 2/3 - 1/3', 'advanced-gutenberg') }, { columns: 2, layout: '13-23', icon: '13-23', title: __('Two: 1/3 - 2/3', 'advanced-gutenberg') }, { columns: 2, layout: '14-34', icon: '14-34', title: __('Two: 1/4 - 3/4', 'advanced-gutenberg') }, { columns: 2, layout: '34-14', icon: '34-14', title: __('Two: 3/4 - 1/4', 'advanced-gutenberg') }, { columns: 2, layout: '15-45', icon: '15-45', title: __('Two: 1/5 - 4/5', 'advanced-gutenberg') }, { columns: 2, layout: '45-15', icon: '45-15', title: __('Two: 4/5 - 1/5', 'advanced-gutenberg') }, { columns: 3, layout: '13-13-13', icon: '13-13-13', title: __('Three: 1/3 - 1/3 - 1/3', 'advanced-gutenberg') }, { columns: 3, layout: '12-14-14', icon: '12-14-14', title: __('Three: 1/2 - 1/4 - 1/4', 'advanced-gutenberg') }, { columns: 3, layout: '14-14-12', icon: '14-14-12', title: __('Three: 1/4 - 1/4 - 1/2', 'advanced-gutenberg') }, { columns: 3, layout: '14-12-14', icon: '14-12-14', title: __('Three: 1/4 - 1/2 - 1/4', 'advanced-gutenberg') }, { columns: 3, layout: '15-35-15', icon: '15-35-15', title: __('Three: 1/5 - 3/5 - 1/5', 'advanced-gutenberg') }, { columns: 3, layout: '35-15-15', icon: '35-15-15', title: __('Three: 3/5 - 1/5 - 1/5', 'advanced-gutenberg') }, { columns: 3, layout: '15-15-35', icon: '15-15-35', title: __('Three: 1/5 - 1/5 - 3/5', 'advanced-gutenberg') }, { columns: 3, layout: '16-46-16', icon: '16-46-16', title: __('Three: 1/6 - 4/6 - 1/6', 'advanced-gutenberg') }, { columns: 4, layout: '14-14-14-14', icon: '14-14-14-14', title: __('Four: 1/4 - 1/4 - 1/4 - 1/4', 'advanced-gutenberg') }, { columns: 4, layout: '36-16-16-16', icon: '36-16-16-16', title: __('Four: 3/6 - 1/6 - 1/6 - 1/6', 'advanced-gutenberg') }, { columns: 4, layout: '16-16-16-36', icon: '16-16-16-36', title: __('Four: 1/6 - 1/6 - 1/6 - 3/6', 'advanced-gutenberg') }, { columns: 4, layout: '15-15-15-25', icon: '15-15-15-25', title: __('Four: 1/5 - 1/5 - 1/5 - 2/5', 'advanced-gutenberg') }, { columns: 4, layout: '25-15-15-15', icon: '25-15-15-15', title: __('Four: 2/5 - 1/5 - 1/5 - 1/5', 'advanced-gutenberg') }, { columns: 5, layout: 'five', icon: '15-15-15-15-15', title: __('Five', 'advanced-gutenberg') }, { columns: 6, layout: 'six', icon: '16-16-16-16-16-16', title: __('Six', 'advanced-gutenberg') }];
+    var COLUMNS_LAYOUTS_RESPONSIVE = [{ columns: 3, layout: '1-12-12', icon: '100-12-12', title: __('Three: 100 - 1/2 - 1/2', 'advanced-gutenberg') }, { columns: 3, layout: '12-12-1', icon: '12-12-100', title: __('Three: 1/2 - 1/2 - 100', 'advanced-gutenberg') }, { columns: 4, layout: '12x4', icon: '12-12-12-12', title: __('Four: Two Columns', 'advanced-gutenberg') }, { columns: 6, layout: '12x6', icon: '12-12-12-12', title: __('Six: Two Columns', 'advanced-gutenberg') }, { columns: 6, layout: '13x6', icon: '13-13-13-13-13-13', title: __('Six: Three Columns', 'advanced-gutenberg') }];
     var COLUMNS_LAYOUTS_STACKED = {
-        columns: 1, layout: 'stacked', icon: 'stacked', title: __('Stacked')
+        columns: 1, layout: 'stacked', icon: 'stacked', title: __('Stacked', 'advanced-gutenberg')
     };
-    var GUTTER_OPTIONS = [{ label: __('None'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }, { label: '70px', value: 70 }, { label: '90px', value: 90 }];
+    var GUTTER_OPTIONS = [{ label: __('None', 'advanced-gutenberg'), value: 0 }, { label: '10px', value: 10 }, { label: '20px', value: 20 }, { label: '30px', value: 30 }, { label: '40px', value: 40 }, { label: '50px', value: 50 }, { label: '70px', value: 70 }, { label: '90px', value: 90 }];
 
     var AdvColumnsEdit = function (_Component) {
         _inherits(AdvColumnsEdit, _Component);
@@ -5839,7 +5829,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'div',
                             { className: 'advgb-columns-select-title' },
-                            __('Pickup a columns layout')
+                            __('Pickup a columns layout', 'advanced-gutenberg')
                         ),
                         React.createElement(
                             'div',
@@ -5882,7 +5872,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement('path', { d: 'M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z' }),
                         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
                     ),
-                    title: __('Vertical Align Top'),
+                    title: __('Vertical Align Top', 'advanced-gutenberg'),
                     isActive: vAlign === 'top',
                     onClick: function onClick() {
                         return setAttributes({ vAlign: 'top' });
@@ -5894,7 +5884,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement('path', { d: 'M8 19h3v4h2v-4h3l-4-4-4 4zm8-14h-3V1h-2v4H8l4 4 4-4zM4 11v2h16v-2H4z' }),
                         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
                     ),
-                    title: __('Vertical Align Middle'),
+                    title: __('Vertical Align Middle', 'advanced-gutenberg'),
                     isActive: vAlign === 'middle',
                     onClick: function onClick() {
                         return setAttributes({ vAlign: 'middle' });
@@ -5906,7 +5896,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement('path', { d: 'M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z' }),
                         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
                     ),
-                    title: __('Vertical Align Bottom'),
+                    title: __('Vertical Align Bottom', 'advanced-gutenberg'),
                     isActive: vAlign === 'bottom',
                     onClick: function onClick() {
                         return setAttributes({ vAlign: 'bottom' });
@@ -5918,7 +5908,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement('polygon', { points: '8,20 8,26 12,26 6,32 0,26 4,26 4,20' }),
                         React.createElement('polygon', { points: '4,12 4,6 0,6 6,0 12,6 8,6 8,12' })
                     ),
-                    title: __('Inner Columns Full Height'),
+                    title: __('Inner Columns Full Height', 'advanced-gutenberg'),
                     isActive: vAlign === 'full',
                     onClick: function onClick() {
                         return setAttributes({ vAlign: 'full' });
@@ -5943,10 +5933,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Columns Settings') },
+                            { title: __('Columns Settings', 'advanced-gutenberg') },
                             React.createElement(
                                 PanelBody,
-                                { title: __('Responsive Settings') },
+                                { title: __('Responsive Settings', 'advanced-gutenberg') },
                                 React.createElement(
                                     'div',
                                     { className: 'advgb-columns-responsive-items' },
@@ -6010,7 +6000,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     })
                                 ),
                                 tabSelected === 'desktop' && React.createElement(SelectControl, {
-                                    label: __('Space between columns'),
+                                    label: __('Space between columns', 'advanced-gutenberg'),
                                     value: gutter,
                                     options: GUTTER_OPTIONS,
                                     onChange: function onChange(value) {
@@ -6021,7 +6011,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Fragment,
                                     null,
                                     React.createElement(SelectControl, {
-                                        label: __('Vertical space when collapsed'),
+                                        label: __('Vertical space when collapsed', 'advanced-gutenberg'),
                                         value: collapsedGutter,
                                         options: GUTTER_OPTIONS,
                                         onChange: function onChange(value) {
@@ -6029,7 +6019,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         }
                                     }),
                                     React.createElement(ToggleControl, {
-                                        label: __('Collapsed Order RTL'),
+                                        label: __('Collapsed Order RTL', 'advanced-gutenberg'),
                                         checked: collapsedRtl,
                                         onChange: function onChange() {
                                             return setAttributes({ collapsedRtl: !collapsedRtl });
@@ -6038,13 +6028,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 ),
                                 React.createElement(
                                     PanelBody,
-                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding'),
+                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Padding', 'advanced-gutenberg') : __('Padding', 'advanced-gutenberg'),
                                         initialOpen: false
                                     },
                                     React.createElement(
                                         'div',
                                         { className: 'advgb-controls-title' },
-                                        __('Unit (px)')
+                                        __('Unit (px)', 'advanced-gutenberg')
                                     ),
                                     MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
                                         return React.createElement(RangeControl, {
@@ -6061,7 +6051,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 ),
                                 React.createElement(
                                     PanelBody,
-                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin'),
+                                    { title: tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Margin', 'advanced-gutenberg') : __('Margin', 'advanced-gutenberg'),
                                         initialOpen: false
                                     },
                                     React.createElement(
@@ -6070,7 +6060,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             'span',
                                             null,
-                                            __('Unit')
+                                            __('Unit', 'advanced-gutenberg')
                                         ),
                                         React.createElement(
                                             'div',
@@ -6104,17 +6094,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Row Settings'), initialOpen: false },
+                                { title: __('Row Settings', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(ToggleControl, {
-                                    label: __('Columns Wrapped'),
-                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Spacing).'),
+                                    label: __('Columns Wrapped', 'advanced-gutenberg'),
+                                    help: __('If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Spacing).', 'advanced-gutenberg'),
                                     checked: columnsWrapped,
                                     onChange: function onChange() {
                                         return setAttributes({ columnsWrapped: !columnsWrapped });
                                     }
                                 }),
                                 React.createElement(SelectControl, {
-                                    label: __('Wrapper Tag'),
+                                    label: __('Wrapper Tag', 'advanced-gutenberg'),
                                     value: wrapperTag,
                                     options: [{ label: 'Div', value: 'div' }, { label: 'Header', value: 'header' }, { label: 'Section', value: 'section' }, { label: 'Main', value: 'main' }, { label: 'Article', value: 'article' }, { label: 'Aside', value: 'aside' }, { label: 'Footer', value: 'footer' }],
                                     onChange: function onChange(value) {
@@ -6122,7 +6112,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: [__('Content Max Width'), React.createElement(
+                                    label: [__('Content Max Width', 'advanced-gutenberg'), React.createElement(
                                         'div',
                                         { className: 'advgb-unit-wrapper', key: 'unit' },
                                         ['px', 'vw', '%'].map(function (unit, idx) {
@@ -6145,7 +6135,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: [__('Content Min Height'), React.createElement(
+                                    label: [__('Content Min Height', 'advanced-gutenberg'), React.createElement(
                                         'div',
                                         { className: 'advgb-unit-wrapper', key: 'unit' },
                                         ['px', 'vw', 'vh'].map(function (unit, idx) {
@@ -6168,7 +6158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: [__('Content Max Height'), React.createElement(
+                                    label: [__('Content Max Height', 'advanced-gutenberg'), React.createElement(
                                         'div',
                                         { className: 'advgb-unit-wrapper', key: 'unit' },
                                         ['px', 'vw', 'vh'].map(function (unit, idx) {
@@ -6524,8 +6514,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/columns', {
-        title: __('Columns Manager'),
-        description: __('Row layout with columns you decided.'),
+        title: __('Columns Manager', 'advanced-gutenberg'),
+        description: __('Row layout with columns you decided.', 'advanced-gutenberg'),
         icon: {
             src: 'layout',
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -6669,7 +6659,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M10 18h5V5h-5v13zm-6 0h5V5H4v13zM16 5v13h5V5h-5z" }),
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
-    var listBorderStyles = [{ label: __('None'), value: 'none' }, { label: __('Solid'), value: 'solid' }, { label: __('Dotted'), value: 'dotted' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Double'), value: 'double' }, { label: __('Groove'), value: 'groove' }, { label: __('Ridge'), value: 'ridge' }, { label: __('Inset'), value: 'inset' }, { label: __('Outset'), value: 'outset' }];
+    var listBorderStyles = [{ label: __('None', 'advanced-gutenberg'), value: 'none' }, { label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Double', 'advanced-gutenberg'), value: 'double' }, { label: __('Groove', 'advanced-gutenberg'), value: 'groove' }, { label: __('Ridge', 'advanced-gutenberg'), value: 'ridge' }, { label: __('Inset', 'advanced-gutenberg'), value: 'inset' }, { label: __('Outset', 'advanced-gutenberg'), value: 'outset' }];
     var MARGIN_PADDING_CONTROLS = [{ label: 'Top', icon: 'arrow-up-alt2' }, { label: 'Right', icon: 'arrow-right-alt2' }, { label: 'Bottom', icon: 'arrow-down-alt2' }, { label: 'Left', icon: 'arrow-left-alt2' }];
 
     var AdvColumnEdit = function (_Component) {
@@ -6788,14 +6778,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Column Settings') },
+                            { title: __('Column Settings', 'advanced-gutenberg') },
                             React.createElement(RangeControl, {
-                                label: [__('Width (%)'), React.createElement(
+                                label: [__('Width (%)', 'advanced-gutenberg'), React.createElement(
                                     "span",
                                     { key: "width", style: { color: '#555d66', marginLeft: 10 } },
-                                    __('Available: ') + avaiWidth + '%'
+                                    __('Available: ', 'advanced-gutenberg') + avaiWidth + '%'
                                 )],
-                                help: __('Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!'),
+                                help: __('Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!', 'advanced-gutenberg'),
                                 value: width,
                                 min: 0,
                                 max: avaiWidth,
@@ -6805,9 +6795,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Border Settings') },
+                                { title: __('Border Settings', 'advanced-gutenberg') },
                                 React.createElement(SelectControl, {
-                                    label: __('Border style'),
+                                    label: __('Border style', 'advanced-gutenberg'),
                                     value: borderStyle,
                                     options: listBorderStyles,
                                     onChange: function onChange(value) {
@@ -6818,10 +6808,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Fragment,
                                     null,
                                     React.createElement(PanelColorSettings, {
-                                        title: __('Border Color'),
+                                        title: __('Border Color', 'advanced-gutenberg'),
                                         initialOpen: false,
                                         colorSettings: [{
-                                            label: __('Border Color'),
+                                            label: __('Border Color', 'advanced-gutenberg'),
                                             value: borderColor,
                                             onChange: function onChange(value) {
                                                 return setAttributes({ borderColor: value });
@@ -6829,7 +6819,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         }]
                                     }),
                                     React.createElement(RangeControl, {
-                                        label: __('Border width'),
+                                        label: __('Border width', 'advanced-gutenberg'),
                                         value: borderWidth || '',
                                         onChange: function onChange(value) {
                                             return setAttributes({ borderWidth: value });
@@ -6838,7 +6828,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 20
                                     }),
                                     React.createElement(RangeControl, {
-                                        label: __('Border radius (px)'),
+                                        label: __('Border radius (px)', 'advanced-gutenberg'),
                                         value: borderRadius || '',
                                         onChange: function onChange(value) {
                                             return setAttributes({ borderRadius: value });
@@ -6871,7 +6861,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 BaseControl,
                                 {
-                                    label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' text alignment')
+                                    label: AdvColumnEdit.jsUcfirst(tabSelected) + __(' text alignment', 'advanced-gutenberg')
                                 },
                                 React.createElement(AlignmentToolbar, {
                                     isCollapsed: false,
@@ -6883,13 +6873,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Padding') : __('Padding'),
+                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Padding', 'advanced-gutenberg') : __('Padding', 'advanced-gutenberg'),
                                     initialOpen: false
                                 },
                                 React.createElement(
                                     "div",
                                     { className: "advgb-controls-title" },
-                                    __('Unit (px)')
+                                    __('Unit (px)', 'advanced-gutenberg')
                                 ),
                                 MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
                                     return React.createElement(RangeControl, {
@@ -6906,13 +6896,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Margin') : __('Margin'),
+                                { title: tabSelected !== 'desktop' ? AdvColumnEdit.jsUcfirst(tabSelected) + __(' Margin', 'advanced-gutenberg') : __('Margin', 'advanced-gutenberg'),
                                     initialOpen: false
                                 },
                                 React.createElement(
                                     "div",
                                     { className: "advgb-controls-title" },
-                                    __('Unit (px)')
+                                    __('Unit (px)', 'advanced-gutenberg')
                                 ),
                                 MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
                                     return React.createElement(RangeControl, {
@@ -7049,9 +7039,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/column', {
-        title: __('Adv. Column'),
+        title: __('Adv. Column', 'advanced-gutenberg'),
         parent: ['advgb/columns'],
-        description: __('Column in row.'),
+        description: __('Column in row.', 'advanced-gutenberg'),
         icon: {
             src: columnsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -7242,79 +7232,79 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Form Settings') },
+                            { title: __('Form Settings', 'advanced-gutenberg') },
                             typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
                                 PanelBody,
-                                { title: __('Notice') },
+                                { title: __('Notice', 'advanced-gutenberg') },
                                 React.createElement(
                                     "p",
                                     { style: { fontStyle: 'italic' } },
-                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
+                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg'),
                                     React.createElement(
                                         "a",
                                         { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
                                         " ",
-                                        __('settings'),
+                                        __('settings', 'advanced-gutenberg'),
                                         "."
                                     )
                                 )
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Email sender'), initialOpen: false },
+                                { title: __('Email sender', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(
                                     "p",
                                     { style: { fontStyle: 'italic' } },
-                                    __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in '),
+                                    __('An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in ', 'advanced-gutenberg'),
                                     React.createElement(
                                         "a",
                                         { href: advgbBlocks.config_url + '#settings', target: "_blank" },
                                         " ",
-                                        __('settings'),
+                                        __('settings', 'advanced-gutenberg'),
                                         "."
                                     )
                                 )
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Text Label') },
+                                { title: __('Text Label', 'advanced-gutenberg') },
                                 React.createElement(TextControl, {
-                                    label: __('Name input placeholder'),
+                                    label: __('Name input placeholder', 'advanced-gutenberg'),
                                     value: nameLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ nameLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
-                                    label: __('Email input placeholder'),
+                                    label: __('Email input placeholder', 'advanced-gutenberg'),
                                     value: emailLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ emailLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
-                                    label: __('Message input placeholder'),
+                                    label: __('Message input placeholder', 'advanced-gutenberg'),
                                     value: msgLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ msgLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
-                                    label: __('Submit text'),
+                                    label: __('Submit text', 'advanced-gutenberg'),
                                     value: submitLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
-                                    label: __('Empty field warning text'),
+                                    label: __('Empty field warning text', 'advanced-gutenberg'),
                                     value: alertLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ alertLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
-                                    label: __('Submit success text'),
+                                    label: __('Submit success text', 'advanced-gutenberg'),
                                     value: successLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ successLabel: value });
@@ -7322,15 +7312,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             ),
                             React.createElement(PanelColorSettings, {
-                                title: __('Input Color'),
+                                title: __('Input Color', 'advanced-gutenberg'),
                                 colorSettings: [{
-                                    label: __('Background color'),
+                                    label: __('Background color', 'advanced-gutenberg'),
                                     value: bgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ bgColor: value });
                                     }
                                 }, {
-                                    label: __('Text color'),
+                                    label: __('Text color', 'advanced-gutenberg'),
                                     value: textColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ textColor: value });
@@ -7339,12 +7329,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Border Settings'), initialOpen: false },
+                                { title: __('Border Settings', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Border Color'),
+                                    title: __('Border Color', 'advanced-gutenberg'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Border color'),
+                                        label: __('Border color', 'advanced-gutenberg'),
                                         value: borderColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ borderColor: value });
@@ -7352,15 +7342,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }]
                                 }),
                                 React.createElement(SelectControl, {
-                                    label: __('Border Style'),
+                                    label: __('Border Style', 'advanced-gutenberg'),
                                     value: borderStyle,
-                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                    options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderStyle: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Border radius (px)'),
+                                    label: __('Border radius (px)', 'advanced-gutenberg'),
                                     value: borderRadius,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderRadius: value });
@@ -7371,18 +7361,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Submit Button Settings') },
+                                { title: __('Submit Button Settings', 'advanced-gutenberg') },
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Color Settings'),
+                                    title: __('Color Settings', 'advanced-gutenberg'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Border and Text'),
+                                        label: __('Border and Text', 'advanced-gutenberg'),
                                         value: submitColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ submitColor: value });
                                         }
                                     }, {
-                                        label: __('Background'),
+                                        label: __('Background', 'advanced-gutenberg'),
                                         value: submitBgColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ submitBgColor: value });
@@ -7390,7 +7380,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }]
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Button border radius'),
+                                    label: __('Button border radius', 'advanced-gutenberg'),
                                     value: submitRadius,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitRadius: value });
@@ -7399,9 +7389,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 50
                                 }),
                                 React.createElement(SelectControl, {
-                                    label: __('Button position'),
+                                    label: __('Button position', 'advanced-gutenberg'),
                                     value: submitPosition,
-                                    options: [{ label: __('Center'), value: 'center' }, { label: __('Left'), value: 'left' }, { label: __('Right'), value: 'right' }],
+                                    options: [{ label: __('Center', 'advanced-gutenberg'), value: 'center' }, { label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitPosition: value });
                                     }
@@ -7417,7 +7407,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: nameLabel ? nameLabel : __('Name'),
+                                value: nameLabel ? nameLabel : __('Name', 'advanced-gutenberg'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -7432,7 +7422,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: emailLabel ? emailLabel : __('Email address'),
+                                value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -7447,7 +7437,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("textarea", { className: "advgb-form-input",
                                 disabled: true,
-                                value: msgLabel ? msgLabel : __('Message'),
+                                value: msgLabel ? msgLabel : __('Message', 'advanced-gutenberg'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -7472,7 +7462,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit')
+                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
                             )
                         )
                     )
@@ -7537,8 +7527,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/contact-form', {
-        title: __('Contact Form'),
-        description: __('Fastest way to create a contact form for your page.'),
+        title: __('Contact Form', 'advanced-gutenberg'),
+        description: __('Fastest way to create a contact form for your page.', 'advanced-gutenberg'),
         icon: {
             src: contactBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -7577,7 +7567,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "text",
                             className: "advgb-form-input advgb-form-input-name",
-                            placeholder: nameLabel ? nameLabel : __('Name'),
+                            placeholder: nameLabel ? nameLabel : __('Name', 'advanced-gutenberg'),
                             name: "contact_name",
                             style: {
                                 backgroundColor: bgColor,
@@ -7593,7 +7583,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: emailLabel ? emailLabel : __('Email address'),
+                            placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
                             name: "contact_email",
                             style: {
                                 backgroundColor: bgColor,
@@ -7608,7 +7598,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-form-field advgb-form-field-full" },
                         React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                            placeholder: msgLabel ? msgLabel : __('Message'),
+                            placeholder: msgLabel ? msgLabel : __('Message', 'advanced-gutenberg'),
                             name: "contact_message",
                             style: {
                                 backgroundColor: bgColor,
@@ -7638,7 +7628,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderRadius: submitRadius
                                 }
                             },
-                            submitLabel ? submitLabel : __('Submit')
+                            submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
                         )
                     )
                 )
@@ -7681,8 +7671,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     registerBlockType('advgb/container', {
-        title: __('Container'),
-        description: __('Block for containing other blocks.'),
+        title: __('Container', 'advanced-gutenberg'),
+        description: __('Block for containing other blocks.', 'advanced-gutenberg'),
         icon: {
             src: containerBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -7728,9 +7718,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     null,
                     React.createElement(
                         PanelBody,
-                        { title: __('Container Settings') },
+                        { title: __('Container Settings', 'advanced-gutenberg') },
                         React.createElement(SelectControl, {
-                            label: __('Wrapper Tag'),
+                            label: __('Wrapper Tag', 'advanced-gutenberg'),
                             value: wrapperTag,
                             options: [{ label: 'Div', value: 'div' }, { label: 'Header', value: 'header' }, { label: 'Section', value: 'section' }, { label: 'Main', value: 'main' }, { label: 'Article', value: 'article' }, { label: 'Aside', value: 'aside' }, { label: 'Footer', value: 'footer' }],
                             onChange: function onChange(value) {
@@ -7876,24 +7866,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Count Up Settings') },
+                            { title: __('Count Up Settings', 'advanced-gutenberg') },
                             React.createElement(PanelColorSettings, {
-                                title: __('Color Settings'),
+                                title: __('Color Settings', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Header Color'),
+                                    label: __('Header Color', 'advanced-gutenberg'),
                                     value: headerTextColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerTextColor: value });
                                     }
                                 }, {
-                                    label: __('Count Up Color'),
+                                    label: __('Count Up Color', 'advanced-gutenberg'),
                                     value: countUpNumberColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ countUpNumberColor: value });
                                     }
                                 }, {
-                                    label: __('Description Color'),
+                                    label: __('Description Color', 'advanced-gutenberg'),
                                     value: descTextColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ descTextColor: value });
@@ -7901,7 +7891,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }]
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Columns'),
+                                label: __('Columns', 'advanced-gutenberg'),
                                 min: 1,
                                 max: 3,
                                 value: columns,
@@ -7910,7 +7900,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Counter Number Size'),
+                                label: __('Counter Number Size', 'advanced-gutenberg'),
                                 min: 10,
                                 max: 100,
                                 value: countUpNumberSize,
@@ -7921,7 +7911,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 'div',
                                 null,
-                                __('Counter Up Symbol')
+                                __('Counter Up Symbol', 'advanced-gutenberg')
                             ),
                             React.createElement(
                                 'div',
@@ -7937,7 +7927,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange() {
                                         return setAttributes({ countUpSymbolAfter: !countUpSymbolAfter });
                                     },
-                                    title: !!countUpSymbolAfter ? __('After') : __('Before')
+                                    title: !!countUpSymbolAfter ? __('After', 'advanced-gutenberg') : __('Before', 'advanced-gutenberg')
                                 })
                             ),
                             parseInt(columns) > 1 && React.createElement(
@@ -7954,7 +7944,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange() {
                                         return setAttributes({ countUpSymbolAfter2: !countUpSymbolAfter2 });
                                     },
-                                    title: !!countUpSymbolAfter2 ? __('After') : __('Before')
+                                    title: !!countUpSymbolAfter2 ? __('After', 'advanced-gutenberg') : __('Before', 'advanced-gutenberg')
                                 })
                             ),
                             parseInt(columns) > 2 && React.createElement(
@@ -7971,13 +7961,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange() {
                                         return setAttributes({ countUpSymbolAfter3: !countUpSymbolAfter3 });
                                     },
-                                    title: !!countUpSymbolAfter3 ? __('After') : __('Before')
+                                    title: !!countUpSymbolAfter3 ? __('After', 'advanced-gutenberg') : __('Before', 'advanced-gutenberg')
                                 })
                             ),
                             React.createElement(
                                 'p',
                                 { className: 'components-base-control__help', style: { clear: 'both' } },
-                                __('Use toggle buttons above to define symbol placement before/after the number (toggle on is after).')
+                                __('Use toggle buttons above to define symbol placement before/after the number (toggle on is after).', 'advanced-gutenberg')
                             )
                         )
                     ),
@@ -7998,7 +7988,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'header' });
                                 },
                                 style: { color: headerTextColor },
-                                placeholder: __('Enter text…'),
+                                placeholder: __('Enter text…', 'advanced-gutenberg'),
                                 className: 'advgb-count-up-header'
                             }),
                             React.createElement(
@@ -8049,7 +8039,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'desc' });
                                 },
                                 style: { color: descTextColor },
-                                placeholder: __('Enter text…'),
+                                placeholder: __('Enter text…', 'advanced-gutenberg'),
                                 className: 'advgb-count-up-desc'
                             })
                         ),
@@ -8067,7 +8057,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'header2' });
                                 },
                                 style: { color: headerTextColor },
-                                placeholder: __('Enter text…'),
+                                placeholder: __('Enter text…', 'advanced-gutenberg'),
                                 className: 'advgb-count-up-header'
                             }),
                             React.createElement(
@@ -8118,7 +8108,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'desc2' });
                                 },
                                 style: { color: descTextColor },
-                                placeholder: __('Enter text…'),
+                                placeholder: __('Enter text…', 'advanced-gutenberg'),
                                 className: 'advgb-count-up-desc'
                             })
                         ),
@@ -8136,7 +8126,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'header3' });
                                 },
                                 style: { color: headerTextColor },
-                                placeholder: __('Enter text…'),
+                                placeholder: __('Enter text…', 'advanced-gutenberg'),
                                 className: 'advgb-count-up-header'
                             }),
                             React.createElement(
@@ -8187,7 +8177,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return _this2.setState({ currentEdit: 'desc3' });
                                 },
                                 style: { color: descTextColor },
-                                placeholder: __('Enter text…'),
+                                placeholder: __('Enter text…', 'advanced-gutenberg'),
                                 className: 'advgb-count-up-desc'
                             })
                         )
@@ -8334,8 +8324,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     );
 
     registerBlockType('advgb/count-up', {
-        title: __('Count Up'),
-        description: __('Make a block with animate counting numbers.'),
+        title: __('Count Up', 'advanced-gutenberg'),
+        description: __('Make a block with animate counting numbers.', 'advanced-gutenberg'),
         icon: {
             src: countUpBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -8345,15 +8335,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             headerText: {
                 type: 'string',
-                default: __('Header text')
+                default: __('Header text', 'advanced-gutenberg')
             },
             headerText2: {
                 type: 'string',
-                default: __('Header text')
+                default: __('Header text', 'advanced-gutenberg')
             },
             headerText3: {
                 type: 'string',
-                default: __('Header text')
+                default: __('Header text', 'advanced-gutenberg')
             },
             headerTextColor: {
                 type: 'string'
@@ -8400,15 +8390,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             descText: {
                 type: 'string',
-                default: __('and description')
+                default: __('and description', 'advanced-gutenberg')
             },
             descText2: {
                 type: 'string',
-                default: __('and description')
+                default: __('and description', 'advanced-gutenberg')
             },
             descText3: {
                 type: 'string',
-                default: __('and description')
+                default: __('and description', 'advanced-gutenberg')
             },
             descTextColor: {
                 type: 'string'
@@ -8471,7 +8461,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     if (typeof advgbBlocks.customStyles !== 'undefined' && advgbBlocks.customStyles) {
         advgbBlocks.customStyles.unshift({
             id: 0,
-            label: __('Paragraph'),
+            label: __('Paragraph', 'advanced-gutenberg'),
             value: '',
             identifyColor: ''
         });
@@ -8484,7 +8474,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 InspectorControls,
                 { key: 'advgb-custom-controls' },
                 React.createElement(SelectControl, {
-                    label: [__('Custom styles'), React.createElement('span', { className: 'components-panel__color-area',
+                    label: [__('Custom styles', 'advanced-gutenberg'), React.createElement('span', { className: 'components-panel__color-area',
                         key: 'customstyle-identify',
                         style: {
                             background: props.attributes.identifyColor,
@@ -8496,7 +8486,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             display: 'inline-block',
                             marginLeft: '10px'
                         } })],
-                    help: __('This option let you add custom style for current paragraph. (Front-end only!)'),
+                    help: __('This option let you add custom style for current paragraph. (Front-end only!)', 'advanced-gutenberg'),
                     value: props.attributes.customStyle,
                     options: advgbBlocks.customStyles.map(function (cstyle, index) {
                         if (cstyle.title) advgbBlocks.customStyles[index].label = cstyle.title;
@@ -8576,10 +8566,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
     var sidebarName = "advgb-editor-sidebar";
-    var sidebarTitle = __('Adv. Gutenberg Settings');
+    var sidebarTitle = __('Adv. Gutenberg Settings', 'advanced-gutenberg');
     var sidebarIcon = "layout";
-    var VISUAL_GUIDE_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Enable'), value: 'enable' }, { label: __('Disable'), value: 'disable' }];
-    var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings'), value: '' }, { label: __('Original'), value: 'default' }, { label: __('Large'), value: 'large' }, { label: __('Full width'), value: 'full' }];
+    var VISUAL_GUIDE_SETTINGS = [{ label: __('Inherit from global settings', 'advanced-gutenberg'), value: '' }, { label: __('Enable', 'advanced-gutenberg'), value: 'enable' }, { label: __('Disable', 'advanced-gutenberg'), value: 'disable' }];
+    var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings', 'advanced-gutenberg'), value: '' }, { label: __('Original', 'advanced-gutenberg'), value: 'default' }, { label: __('Large', 'advanced-gutenberg'), value: 'large' }, { label: __('Full width', 'advanced-gutenberg'), value: 'full' }];
 
     var updateBodyClass = function updateBodyClass() {
         var postMetaData = select('core/editor').getEditedPostAttribute('meta');
@@ -8612,7 +8602,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }
 
         _createClass(AdvSidebar, [{
-            key: "onUpdateMeta",
+            key: 'onUpdateMeta',
             value: function onUpdateMeta(metaData) {
                 var _props = this.props,
                     metaValues = _props.metaValues,
@@ -8624,7 +8614,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 updateBodyClass();
             }
         }, {
-            key: "render",
+            key: 'render',
             value: function render() {
                 var _this2 = this;
 
@@ -8637,25 +8627,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     Fragment,
                     null,
                     React.createElement(
-                        "div",
-                        { className: "advgb-editor-sidebar-note" },
-                        __('These settings will override the Adv. Gutenberg global settings.')
+                        'div',
+                        { className: 'advgb-editor-sidebar-note' },
+                        __('These settings will override the Adv. Gutenberg global settings.', 'advanced-gutenberg')
                     ),
                     React.createElement(
                         PanelBody,
-                        { title: __('Editor width') },
+                        { title: __('Editor width', 'advanced-gutenberg') },
                         React.createElement(
-                            "div",
-                            { className: "advgb-editor-sidebar-note" },
-                            __('Change your editor width')
+                            'div',
+                            { className: 'advgb-editor-sidebar-note' },
+                            __('Change your editor width', 'advanced-gutenberg')
                         ),
                         React.createElement(
                             ButtonGroup,
-                            { className: "advgb-button-group" },
+                            { className: 'advgb-button-group' },
                             EDITOR_WIDTH_SETTINGS.map(function (setting, index) {
                                 return React.createElement(
                                     Button,
-                                    { className: "advgb-button",
+                                    { className: 'advgb-button',
                                         key: index,
                                         isDefault: true,
                                         isPrimary: setting.value === editorWidth,
@@ -8670,19 +8660,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         PanelBody,
-                        { title: __('Columns Visual Guide'), initialOpen: false },
+                        { title: __('Columns Visual Guide', 'advanced-gutenberg'), initialOpen: false },
                         React.createElement(
-                            "div",
-                            { className: "advgb-editor-sidebar-note" },
-                            __('Border to materialize Adv. Gutenberg Column block')
+                            'div',
+                            { className: 'advgb-editor-sidebar-note' },
+                            __('Border to materialize Adv. Gutenberg Column block', 'advanced-gutenberg')
                         ),
                         React.createElement(
                             ButtonGroup,
-                            { className: "advgb-button-group" },
+                            { className: 'advgb-button-group' },
                             VISUAL_GUIDE_SETTINGS.map(function (setting, index) {
                                 return React.createElement(
                                     Button,
-                                    { className: "advgb-button",
+                                    { className: 'advgb-button',
                                         key: index,
                                         isDefault: true,
                                         isPrimary: setting.value === columnsVisualGuide,
@@ -8739,8 +8729,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         icon: sidebarIcon
                     },
                     React.createElement(
-                        "div",
-                        { className: "advgb-editor-sidebar-content" },
+                        'div',
+                        { className: 'advgb-editor-sidebar-content' },
                         React.createElement(AdvSidebarRender, null)
                     )
                 )
@@ -8989,8 +8979,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         Placeholder,
                         {
                             icon: imageSliderBlockIcon,
-                            label: __('Image Slider Block'),
-                            instructions: __('No images selected. Adding images to start using this block.')
+                            label: __('Image Slider Block', 'advanced-gutenberg'),
+                            instructions: __('No images selected. Adding images to start using this block.', 'advanced-gutenberg')
                         },
                         React.createElement(MediaUpload, {
                             allowedTypes: ['image'],
@@ -9013,7 +9003,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     Button,
                                     { className: "button button-large button-primary", onClick: open },
-                                    __('Add images')
+                                    __('Add images', 'advanced-gutenberg')
                                 );
                             }
                         })
@@ -9030,31 +9020,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Image Settings') },
+                            { title: __('Image Settings', 'advanced-gutenberg') },
                             React.createElement(SelectControl, {
-                                label: __('Action on click'),
+                                label: __('Action on click', 'advanced-gutenberg'),
                                 value: actionOnClick,
-                                options: [{ label: __('None'), value: '' }, { label: __('Open image in lightbox'), value: 'lightbox' }, { label: __('Open custom link'), value: 'link' }],
+                                options: [{ label: __('None', 'advanced-gutenberg'), value: '' }, { label: __('Open image in lightbox', 'advanced-gutenberg'), value: 'lightbox' }, { label: __('Open custom link', 'advanced-gutenberg'), value: 'link' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ actionOnClick: value });
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Full width'),
+                                label: __('Full width', 'advanced-gutenberg'),
                                 checked: fullWidth,
                                 onChange: function onChange() {
                                     return setAttributes({ fullWidth: !fullWidth });
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Auto height'),
+                                label: __('Auto height', 'advanced-gutenberg'),
                                 checked: autoHeight,
                                 onChange: function onChange() {
                                     return setAttributes({ autoHeight: !autoHeight });
                                 }
                             }),
                             !fullWidth && React.createElement(RangeControl, {
-                                label: __('Width'),
+                                label: __('Width', 'advanced-gutenberg'),
                                 value: width,
                                 onChange: function onChange(value) {
                                     return setAttributes({ width: value });
@@ -9063,7 +9053,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 1300
                             }),
                             !autoHeight && React.createElement(RangeControl, {
-                                label: __('Height'),
+                                label: __('Height', 'advanced-gutenberg'),
                                 value: height,
                                 onChange: function onChange(value) {
                                     return setAttributes({ height: value });
@@ -9072,7 +9062,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 1000
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Always show overlay'),
+                                label: __('Always show overlay', 'advanced-gutenberg'),
                                 checked: alwaysShowOverlay,
                                 onChange: function onChange() {
                                     return setAttributes({ alwaysShowOverlay: !alwaysShowOverlay });
@@ -9080,21 +9070,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ),
                         React.createElement(PanelColorSettings, {
-                            title: __('Color Settings'),
+                            title: __('Color Settings', 'advanced-gutenberg'),
                             colorSettings: [{
-                                label: __('Hover Color'),
+                                label: __('Hover Color', 'advanced-gutenberg'),
                                 value: hoverColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ hoverColor: value });
                                 }
                             }, {
-                                label: __('Title Color'),
+                                label: __('Title Color', 'advanced-gutenberg'),
                                 value: titleColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ titleColor: value });
                                 }
                             }, {
-                                label: __('Text Color'),
+                                label: __('Text Color', 'advanced-gutenberg'),
                                 value: textColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ textColor: value });
@@ -9103,19 +9093,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }),
                         React.createElement(
                             PanelBody,
-                            { title: __('Text Alignment'), initialOpen: false },
+                            { title: __('Text Alignment', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(SelectControl, {
-                                label: __('Vertical Alignment'),
+                                label: __('Vertical Alignment', 'advanced-gutenberg'),
                                 value: vAlign,
-                                options: [{ label: __('Top'), value: 'flex-start' }, { label: __('Center'), value: 'center' }, { label: __('Bottom'), value: 'flex-end' }],
+                                options: [{ label: __('Top', 'advanced-gutenberg'), value: 'flex-start' }, { label: __('Center', 'advanced-gutenberg'), value: 'center' }, { label: __('Bottom', 'advanced-gutenberg'), value: 'flex-end' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ vAlign: value });
                                 }
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Horizontal Alignment'),
+                                label: __('Horizontal Alignment', 'advanced-gutenberg'),
                                 value: hAlign,
-                                options: [{ label: __('Left'), value: 'flex-start' }, { label: __('Center'), value: 'center' }, { label: __('Right'), value: 'flex-end' }],
+                                options: [{ label: __('Left', 'advanced-gutenberg'), value: 'flex-start' }, { label: __('Center', 'advanced-gutenberg'), value: 'center' }, { label: __('Right', 'advanced-gutenberg'), value: 'flex-end' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ hAlign: value });
                                 }
@@ -9134,7 +9124,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-image-slider-item", key: index },
                                     React.createElement("img", { src: image.url,
                                         className: "advgb-image-slider-img",
-                                        alt: __('Slider image'),
+                                        alt: __('Slider image', 'advanced-gutenberg'),
                                         style: {
                                             width: fullWidth ? '100%' : width,
                                             height: autoHeight ? 'auto' : height
@@ -9193,7 +9183,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "div",
                                 { className: "advgb-image-slider-control" },
                                 React.createElement(TextControl, {
-                                    label: __('Title'),
+                                    label: __('Title', 'advanced-gutenberg'),
                                     value: images[currentSelected] ? images[currentSelected].title || '' : '',
                                     onChange: function onChange(value) {
                                         return _this3.updateImagesData({ title: value || '' });
@@ -9204,7 +9194,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "div",
                                 { className: "advgb-image-slider-control" },
                                 React.createElement(TextareaControl, {
-                                    label: __('Text'),
+                                    label: __('Text', 'advanced-gutenberg'),
                                     value: images[currentSelected] ? images[currentSelected].text || '' : '',
                                     onChange: function onChange(value) {
                                         return _this3.updateImagesData({ text: value || '' });
@@ -9215,7 +9205,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "div",
                                 { className: "advgb-image-slider-control" },
                                 React.createElement(TextControl, {
-                                    label: __('Link'),
+                                    label: __('Link', 'advanced-gutenberg'),
                                     value: images[currentSelected] ? images[currentSelected].link || '' : '',
                                     onChange: function onChange(value) {
                                         return _this3.updateImagesData({ link: value || '' });
@@ -9231,7 +9221,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         { className: "advgb-image-slider-image-list-item", key: index },
                                         index > 0 && React.createElement(
                                             Tooltip,
-                                            { text: __('Move Left') },
+                                            { text: __('Move Left', 'advanced-gutenberg') },
                                             React.createElement(
                                                 "span",
                                                 { className: "advgb-move-arrow advgb-move-left",
@@ -9249,7 +9239,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         ),
                                         React.createElement("img", { src: image.url,
                                             className: "advgb-image-slider-image-list-img",
-                                            alt: __('Image'),
+                                            alt: __('Image', 'advanced-gutenberg'),
                                             onClick: function onClick() {
                                                 $("#block-" + clientId + " .advgb-images-slider").slick('slickGoTo', index, false);
                                                 _this3.setState({ currentSelected: index });
@@ -9257,7 +9247,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         }),
                                         index + 1 < images.length && React.createElement(
                                             Tooltip,
-                                            { text: __('Move Right') },
+                                            { text: __('Move Right', 'advanced-gutenberg') },
                                             React.createElement(
                                                 "span",
                                                 { className: "advgb-move-arrow advgb-move-right",
@@ -9275,7 +9265,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         ),
                                         React.createElement(
                                             Tooltip,
-                                            { text: __('Remove image') },
+                                            { text: __('Remove image', 'advanced-gutenberg') },
                                             React.createElement(IconButton, {
                                                 className: "advgb-image-slider-image-list-item-remove",
                                                 icon: "no",
@@ -9306,7 +9296,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         render: function render(_ref2) {
                                             var open = _ref2.open;
                                             return React.createElement(IconButton, {
-                                                label: __('Add image'),
+                                                label: __('Add image', 'advanced-gutenberg'),
                                                 icon: "plus",
                                                 onClick: open
                                             });
@@ -9375,8 +9365,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/images-slider', {
-        title: __('Images Slider'),
-        description: __('Display your images in a slider.'),
+        title: __('Images Slider', 'advanced-gutenberg'),
+        description: __('Display your images in a slider.', 'advanced-gutenberg'),
         icon: {
             src: imageSliderBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -9414,7 +9404,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-image-slider-item", key: index },
                             React.createElement("img", { src: image.url,
                                 className: "advgb-image-slider-img",
-                                alt: __('Slider image'),
+                                alt: __('Slider image', 'advanced-gutenberg'),
                                 style: {
                                     width: fullWidth ? '100%' : width,
                                     height: autoHeight ? 'auto' : height
@@ -9488,7 +9478,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-image-slider-item", key: index },
                                 React.createElement("img", { src: image.url,
                                     className: "advgb-image-slider-img",
-                                    alt: __('Slider image'),
+                                    alt: __('Slider image', 'advanced-gutenberg'),
                                     style: {
                                         width: fullWidth ? '100%' : width,
                                         height: autoHeight ? 'auto' : height
@@ -9739,7 +9729,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-lores-form-logo-wrapper" },
                             React.createElement(
                                 Tooltip,
-                                { text: __('Click to change logo') },
+                                { text: __('Click to change logo', 'advanced-gutenberg') },
                                 React.createElement(
                                     "span",
                                     { style: {
@@ -9748,7 +9738,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement("img", { className: "advgb-lores-form-logo",
                                         onClick: open,
                                         src: logoImg,
-                                        alt: __('Site logo'),
+                                        alt: __('Site logo', 'advanced-gutenberg'),
                                         style: {
                                             width: logoWidth ? logoWidth + 'px' : undefined,
                                             cursor: 'pointer'
@@ -9776,7 +9766,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-lores-form-logo-wrapper" },
                             React.createElement(
                                 Tooltip,
-                                { text: __('Click to change logo') },
+                                { text: __('Click to change logo', 'advanced-gutenberg') },
                                 React.createElement(
                                     "span",
                                     { style: {
@@ -9785,7 +9775,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement("img", { className: "advgb-lores-form-logo",
                                         onClick: open,
                                         src: registerLogoImg,
-                                        alt: __('Site logo'),
+                                        alt: __('Site logo', 'advanced-gutenberg'),
                                         style: {
                                             width: logoWidth ? logoWidth + 'px' : undefined,
                                             cursor: 'pointer'
@@ -9819,7 +9809,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onSplit: function onSplit() {
                                 return null;
                             },
-                            placeholder: __('Text…'),
+                            placeholder: __('Text…', 'advanced-gutenberg'),
                             keepPlaceholderOnFocus: true
                         }),
                         React.createElement(RichText, {
@@ -9836,7 +9826,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onSplit: function onSplit() {
                                 return null;
                             },
-                            placeholder: __('Register…'),
+                            placeholder: __('Register…', 'advanced-gutenberg'),
                             keepPlaceholderOnFocus: true
                         })
                     ),
@@ -9855,7 +9845,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ welcomeText: value.trim() });
                                 },
                                 style: { color: textColor },
-                                placeholder: __('Welcome text…'),
+                                placeholder: __('Welcome text…', 'advanced-gutenberg'),
                                 keepPlaceholderOnFocus: true
                             })
                         ),
@@ -9878,7 +9868,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onSplit: function onSplit() {
                                         return null;
                                     },
-                                    placeholder: __('Username label…'),
+                                    placeholder: __('Username label…', 'advanced-gutenberg'),
                                     keepPlaceholderOnFocus: true
                                 })
                             ),
@@ -9903,7 +9893,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-lores-input",
                                     style: { color: inputColor },
-                                    value: loginLabel ? loginLabel : __('user@email.com')
+                                    value: loginLabel ? loginLabel : __('user@email.com', 'advanced-gutenberg')
                                 })
                             )
                         ),
@@ -9926,7 +9916,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onSplit: function onSplit() {
                                         return null;
                                     },
-                                    placeholder: __('Password label…'),
+                                    placeholder: __('Password label…', 'advanced-gutenberg'),
                                     keepPlaceholderOnFocus: true
                                 })
                             ),
@@ -9985,7 +9975,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             onSplit: function onSplit() {
                                                 return null;
                                             },
-                                            placeholder: __('Remember me…'),
+                                            placeholder: __('Remember me…', 'advanced-gutenberg'),
                                             keepPlaceholderOnFocus: true
                                         })
                                     )
@@ -10016,7 +10006,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         onSplit: function onSplit() {
                                             return null;
                                         },
-                                        placeholder: __('Login…'),
+                                        placeholder: __('Login…', 'advanced-gutenberg'),
                                         keepPlaceholderOnFocus: true
                                     })
                                 )
@@ -10042,7 +10032,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onSplit: function onSplit() {
                                         return null;
                                     },
-                                    placeholder: __('Lost password…'),
+                                    placeholder: __('Lost password…', 'advanced-gutenberg'),
                                     keepPlaceholderOnFocus: true
                                 })
                             )
@@ -10077,7 +10067,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 onSplit: function onSplit() {
                                     return null;
                                 },
-                                placeholder: __('Back…'),
+                                placeholder: __('Back…', 'advanced-gutenberg'),
                                 keepPlaceholderOnFocus: true
                             })
                         )
@@ -10097,7 +10087,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ registerWelcome: value.trim() });
                                 },
                                 style: { color: textColor },
-                                placeholder: __('Register…'),
+                                placeholder: __('Register…', 'advanced-gutenberg'),
                                 keepPlaceholderOnFocus: true
                             })
                         ),
@@ -10120,7 +10110,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onSplit: function onSplit() {
                                         return null;
                                     },
-                                    placeholder: __('Username label…'),
+                                    placeholder: __('Username label…', 'advanced-gutenberg'),
                                     keepPlaceholderOnFocus: true
                                 })
                             ),
@@ -10145,7 +10135,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-lores-input",
                                     style: { color: inputColor },
-                                    value: usernameLabel ? usernameLabel : __('username')
+                                    value: usernameLabel ? usernameLabel : __('username', 'advanced-gutenberg')
                                 })
                             )
                         ),
@@ -10168,7 +10158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onSplit: function onSplit() {
                                         return null;
                                     },
-                                    placeholder: __('Email label…'),
+                                    placeholder: __('Email label…', 'advanced-gutenberg'),
                                     keepPlaceholderOnFocus: true
                                 })
                             ),
@@ -10193,7 +10183,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-lores-input",
                                     style: { color: inputColor },
-                                    value: emailLabel ? emailLabel : __('user@email.com')
+                                    value: emailLabel ? emailLabel : __('user@email.com', 'advanced-gutenberg')
                                 })
                             )
                         ),
@@ -10225,7 +10215,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         onSplit: function onSplit() {
                                             return null;
                                         },
-                                        placeholder: __('Register…'),
+                                        placeholder: __('Register…', 'advanced-gutenberg'),
                                         keepPlaceholderOnFocus: true
                                     })
                                 )
@@ -10245,7 +10235,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             null,
                             React.createElement(IconButton, {
                                 icon: "image-flip-horizontal",
-                                label: __('Switch View'),
+                                label: __('Switch View', 'advanced-gutenberg'),
                                 onClick: function onClick() {
                                     return _this2.setState({ registerView: !registerView });
                                 }
@@ -10257,34 +10247,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Form State') },
+                            { title: __('Form State', 'advanced-gutenberg') },
                             React.createElement(SelectControl, {
-                                label: __('Initial Form'),
-                                help: __('Form that show on load.'),
+                                label: __('Initial Form', 'advanced-gutenberg'),
+                                help: __('Form that show on load.', 'advanced-gutenberg'),
                                 value: formType,
-                                options: [{ label: __('Login'), value: 'login' }, { label: __('Register'), value: 'register' }],
+                                options: [{ label: __('Login', 'advanced-gutenberg'), value: 'login' }, { label: __('Register', 'advanced-gutenberg'), value: 'register' }],
                                 onChange: function onChange(value) {
                                     setAttributes({ formType: value });
                                     _this2.setState({ registerView: value === 'register' });
                                 }
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Redirect After Login'),
+                                label: __('Redirect After Login', 'advanced-gutenberg'),
                                 value: redirect,
-                                options: [{ label: __('Home'), value: 'home' }, { label: __('Dashboard'), value: 'dashboard' }, { label: __('Custom'), value: 'custom' }],
+                                options: [{ label: __('Home', 'advanced-gutenberg'), value: 'home' }, { label: __('Dashboard', 'advanced-gutenberg'), value: 'dashboard' }, { label: __('Custom', 'advanced-gutenberg'), value: 'custom' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ redirect: value });
                                 }
                             }),
                             redirect === 'custom' && React.createElement(TextControl, {
-                                label: __('Custom redirect link'),
+                                label: __('Custom redirect link', 'advanced-gutenberg'),
                                 value: redirectLink,
                                 onChange: function onChange(value) {
                                     return setAttributes({ redirectLink: value });
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Form Width (px)'),
+                                label: __('Form Width (px)', 'advanced-gutenberg'),
                                 value: formWidth,
                                 onChange: function onChange(value) {
                                     return setAttributes({ formWidth: value });
@@ -10293,14 +10283,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 1500
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Show Logo'),
+                                label: __('Show Logo', 'advanced-gutenberg'),
                                 checked: !!showLogo,
                                 onChange: function onChange() {
                                     return setAttributes({ showLogo: !showLogo });
                                 }
                             }),
                             !!showLogo && React.createElement(RangeControl, {
-                                label: __('Logo Width (px)'),
+                                label: __('Logo Width (px)', 'advanced-gutenberg'),
                                 value: logoWidth,
                                 onChange: function onChange(value) {
                                     return setAttributes({ logoWidth: value });
@@ -10309,24 +10299,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 1500
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Show input field icon'),
+                                label: __('Show input field icon', 'advanced-gutenberg'),
                                 checked: !!showInputFieldIcon,
                                 onChange: function onChange() {
                                     return setAttributes({ showInputFieldIcon: !showInputFieldIcon });
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Show register/header link'),
+                                label: __('Show register/header link', 'advanced-gutenberg'),
                                 checked: !!showRegisterLink,
                                 onChange: function onChange() {
                                     return setAttributes({ showRegisterLink: !showRegisterLink });
                                 }
                             }),
                             !!showRegisterLink && React.createElement(PanelColorSettings, {
-                                title: __('Header Color'),
+                                title: __('Header Color', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Header color'),
+                                    label: __('Header color', 'advanced-gutenberg'),
                                     value: headerBgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ headerBgColor: value });
@@ -10334,7 +10324,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }]
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Show lost password link'),
+                                label: __('Show lost password link', 'advanced-gutenberg'),
                                 checked: !!showLostPasswordLink,
                                 onChange: function onChange() {
                                     return setAttributes({ showLostPasswordLink: !showLostPasswordLink });
@@ -10343,25 +10333,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Input placeholder'), initialOpen: false },
+                            { title: __('Input placeholder', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(TextControl, {
-                                label: __('Login input placeholder'),
+                                label: __('Login input placeholder', 'advanced-gutenberg'),
                                 value: loginLabel,
                                 onChange: function onChange(value) {
                                     return setAttributes({ loginLabel: value });
                                 }
                             }),
                             React.createElement(TextControl, {
-                                label: __('Username input placeholder'),
-                                help: __('Use in register form'),
+                                label: __('Username input placeholder', 'advanced-gutenberg'),
+                                help: __('Use in register form', 'advanced-gutenberg'),
                                 value: usernameLabel,
                                 onChange: function onChange(value) {
                                     return setAttributes({ usernameLabel: value });
                                 }
                             }),
                             React.createElement(TextControl, {
-                                label: __('Email input placeholder'),
-                                help: __('Use in register form'),
+                                label: __('Email input placeholder', 'advanced-gutenberg'),
+                                help: __('Use in register form', 'advanced-gutenberg'),
                                 value: emailLabel,
                                 onChange: function onChange(value) {
                                     return setAttributes({ emailLabel: value });
@@ -10369,22 +10359,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             })
                         ),
                         React.createElement(PanelColorSettings, {
-                            title: __('Text/Input Color'),
+                            title: __('Text/Input Color', 'advanced-gutenberg'),
                             initialOpen: false,
                             colorSettings: [{
-                                label: __('Input background color'),
+                                label: __('Input background color', 'advanced-gutenberg'),
                                 value: bgColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ bgColor: value });
                                 }
                             }, {
-                                label: __('Input color'),
+                                label: __('Input color', 'advanced-gutenberg'),
                                 value: inputColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ inputColor: value });
                                 }
                             }, {
-                                label: __('Text color'),
+                                label: __('Text color', 'advanced-gutenberg'),
                                 value: textColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ textColor: value });
@@ -10393,12 +10383,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }),
                         React.createElement(
                             PanelBody,
-                            { title: __('Border Settings'), initialOpen: false },
+                            { title: __('Border Settings', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(PanelColorSettings, {
-                                title: __('Border Color'),
+                                title: __('Border Color', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Border color'),
+                                    label: __('Border color', 'advanced-gutenberg'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderColor: value });
@@ -10406,15 +10396,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }]
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Border Style'),
+                                label: __('Border Style', 'advanced-gutenberg'),
                                 value: borderStyle,
-                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Border width'),
+                                label: __('Border width', 'advanced-gutenberg'),
                                 value: borderWidth,
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderWidth: value });
@@ -10425,23 +10415,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Submit Button Settings') },
+                            { title: __('Submit Button Settings', 'advanced-gutenberg') },
                             React.createElement(_components.AdvColorControl, {
-                                label: __('Border and Text'),
+                                label: __('Border and Text', 'advanced-gutenberg'),
                                 value: submitColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ submitColor: value });
                                 }
                             }),
                             React.createElement(_components.AdvColorControl, {
-                                label: __('Background'),
+                                label: __('Background', 'advanced-gutenberg'),
                                 value: submitBgColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ submitBgColor: value });
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Button border radius'),
+                                label: __('Button border radius', 'advanced-gutenberg'),
                                 value: submitRadius,
                                 onChange: function onChange(value) {
                                     return setAttributes({ submitRadius: value });
@@ -10450,9 +10440,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 max: 50
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Button position'),
+                                label: __('Button position', 'advanced-gutenberg'),
                                 value: submitPosition,
-                                options: [{ label: __('Center'), value: 'center' }, { label: __('Left'), value: 'left' }, { label: __('Right'), value: 'right' }],
+                                options: [{ label: __('Center', 'advanced-gutenberg'), value: 'center' }, { label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('Right', 'advanced-gutenberg'), value: 'right' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ submitPosition: value });
                                 }
@@ -10460,24 +10450,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Submit Button Hover'), initialOpen: false },
+                            { title: __('Submit Button Hover', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(PanelColorSettings, {
-                                title: __('Hover Colors'),
+                                title: __('Hover Colors', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Background color'),
+                                    label: __('Background color', 'advanced-gutenberg'),
                                     value: submitHoverBgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverBgColor: value });
                                     }
                                 }, {
-                                    label: __('Text color'),
+                                    label: __('Text color', 'advanced-gutenberg'),
                                     value: submitHoverColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverColor: value });
                                     }
                                 }, {
-                                    label: __('Shadow color'),
+                                    label: __('Shadow color', 'advanced-gutenberg'),
                                     value: submitHoverShadow,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverShadow: value });
@@ -10486,9 +10476,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Shadow'), initialOpen: false },
+                                { title: __('Shadow', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(RangeControl, {
-                                    label: __('Opacity (%)'),
+                                    label: __('Opacity (%)', 'advanced-gutenberg'),
                                     value: submitHoverOpacity,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverOpacity: value });
@@ -10497,7 +10487,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 100
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Transition speed (ms)'),
+                                    label: __('Transition speed (ms)', 'advanced-gutenberg'),
                                     value: submitHoverTranSpeed || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverTranSpeed: value });
@@ -10506,7 +10496,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 3000
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Shadow H offset'),
+                                    label: __('Shadow H offset', 'advanced-gutenberg'),
                                     value: submitHoverShadowH || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverShadowH: value });
@@ -10515,7 +10505,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 50
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Shadow V offset'),
+                                    label: __('Shadow V offset', 'advanced-gutenberg'),
                                     value: submitHoverShadowV || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverShadowV: value });
@@ -10524,7 +10514,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 50
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Shadow blur'),
+                                    label: __('Shadow blur', 'advanced-gutenberg'),
                                     value: submitHoverShadowBlur || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverShadowBlur: value });
@@ -10533,7 +10523,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 50
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Shadow spread'),
+                                    label: __('Shadow spread', 'advanced-gutenberg'),
                                     value: submitHoverShadowSpread || '',
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitHoverShadowSpread: value });
@@ -10545,16 +10535,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
                             PanelBody,
-                            { title: __('Notice') },
+                            { title: __('Notice', 'advanced-gutenberg') },
                             React.createElement(
                                 "p",
                                 { style: { fontStyle: 'italic', color: '#ff8800' } },
-                                __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
+                                __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg'),
                                 React.createElement(
                                     "a",
                                     { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
                                     " ",
-                                    __('settings'),
+                                    __('settings', 'advanced-gutenberg'),
                                     "."
                                 )
                             )
@@ -10565,8 +10555,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-lores-form-wrapper", style: { width: formWidth } },
                         !registerView ? loginForm : typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.registerEnabled) ? React.createElement(Placeholder, {
                             icon: userIcon,
-                            label: __('Registration Form'),
-                            instructions: __('Registration for your website is currently disabled, enable it in WordPress General settings to use registration form')
+                            label: __('Registration Form', 'advanced-gutenberg'),
+                            instructions: __('Registration for your website is currently disabled, enable it in WordPress General settings to use registration form', 'advanced-gutenberg')
                         }) : registerForm,
                         React.createElement(
                             "style",
@@ -10640,44 +10630,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         welcomeText: {
             type: 'string',
-            default: __('Welcome back')
+            default: __('Welcome back', 'advanced-gutenberg')
         },
         loginLabel: {
             type: 'string'
         },
         loginText: {
             type: 'string',
-            default: __('Username or Email')
+            default: __('Username or Email', 'advanced-gutenberg')
         },
         passwordText: {
             type: 'string',
-            default: __('Password')
+            default: __('Password', 'advanced-gutenberg')
         },
         usernameLabel: {
             type: 'string'
         },
         userText: {
             type: 'string',
-            default: __('Username')
+            default: __('Username', 'advanced-gutenberg')
         },
         emailLabel: {
             type: 'string'
         },
         emailText: {
             type: 'string',
-            default: __('Email')
+            default: __('Email', 'advanced-gutenberg')
         },
         rememberMeText: {
             type: 'string',
-            default: __('Remember me')
+            default: __('Remember me', 'advanced-gutenberg')
         },
         loginSubmitLabel: {
             type: 'string',
-            default: __('LOGIN')
+            default: __('LOGIN', 'advanced-gutenberg')
         },
         registerSubmitLabel: {
             type: 'string',
-            default: __('REGISTER')
+            default: __('REGISTER', 'advanced-gutenberg')
         },
         registerText: {
             type: 'string',
@@ -10685,19 +10675,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         registerLinkText: {
             type: 'string',
-            default: __('Register now')
+            default: __('Register now', 'advanced-gutenberg')
         },
         registerWelcome: {
             type: 'string',
-            default: __('Register new account')
+            default: __('Register new account', 'advanced-gutenberg')
         },
         backToLoginText: {
             type: 'string',
-            default: __('Login')
+            default: __('Login', 'advanced-gutenberg')
         },
         lostPasswordText: {
             type: 'string',
-            default: __('Lost your password?')
+            default: __('Lost your password?', 'advanced-gutenberg')
         },
         headerBgColor: {
             type: 'string'
@@ -10776,8 +10766,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/login-form', {
-        title: __('Login/Register Form'),
-        description: __('Create a login form for your post/page.'),
+        title: __('Login/Register Form', 'advanced-gutenberg'),
+        description: __('Create a login form for your post/page.', 'advanced-gutenberg'),
         icon: {
             src: loginFormBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -10837,7 +10827,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { style: { display: 'block' } },
                     React.createElement("img", { className: "advgb-lores-form-logo",
                         src: logoImg,
-                        alt: __('Site logo'),
+                        alt: __('Site logo', 'advanced-gutenberg'),
                         style: {
                             width: logoWidth ? logoWidth + 'px' : undefined,
                             cursor: 'pointer'
@@ -10854,7 +10844,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { style: { display: 'block' } },
                     React.createElement("img", { className: "advgb-lores-form-logo",
                         src: registerLogoImg,
-                        alt: __('Site logo'),
+                        alt: __('Site logo', 'advanced-gutenberg'),
                         style: {
                             width: logoWidth ? logoWidth + 'px' : undefined,
                             cursor: 'pointer'
@@ -10946,7 +10936,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     className: "advgb-lores-input",
                                     name: "log",
                                     style: { color: inputColor },
-                                    placeholder: loginLabel ? loginLabel : __('user@email.com')
+                                    placeholder: loginLabel ? loginLabel : __('user@email.com', 'advanced-gutenberg')
                                 })
                             )
                         ),
@@ -11137,7 +11127,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     className: "advgb-lores-input",
                                     name: "user_login",
                                     style: { color: inputColor },
-                                    placeholder: usernameLabel ? usernameLabel : __('username')
+                                    placeholder: usernameLabel ? usernameLabel : __('username', 'advanced-gutenberg')
                                 })
                             )
                         ),
@@ -11178,7 +11168,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     className: "advgb-lores-input",
                                     name: "user_email",
                                     style: { color: inputColor },
-                                    placeholder: emailLabel ? emailLabel : __('user@email.com')
+                                    placeholder: emailLabel ? emailLabel : __('user@email.com', 'advanced-gutenberg')
                                 })
                             )
                         ),
@@ -12120,7 +12110,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 currentAddress: res[0].formatted_address
                             });
                         } else if (stt === ZERO_RESULTS) {
-                            setAttributes({ currentAddress: __('No matching address found!') });
+                            setAttributes({ currentAddress: __('No matching address found!') }, 'advanced-gutenberg');
                         } else {
                             setAttributes({ currentAddress: stt });
                         }
@@ -12167,12 +12157,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Map settings') },
+                            { title: __('Map settings', 'advanced-gutenberg') },
                             !useLatLng && React.createElement(
                                 Fragment,
                                 null,
                                 React.createElement(TextControl, {
-                                    label: [__('Address'), React.createElement(
+                                    label: [__('Address', 'advanced-gutenberg'), React.createElement(
                                         "a",
                                         { key: "switch-type",
                                             style: { marginLeft: '10px' },
@@ -12180,10 +12170,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return setAttributes({ useLatLng: !useLatLng });
                                             }
                                         },
-                                        __('Use Lat/Lng')
+                                        __('Use Lat/Lng', 'advanced-gutenberg')
                                     )],
                                     value: address,
-                                    placeholder: __('Enter address…'),
+                                    placeholder: __('Enter address…', 'advanced-gutenberg'),
                                     onChange: function onChange(value) {
                                         return setAttributes({ address: value });
                                     }
@@ -12194,7 +12184,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement(
                                         Button,
                                         { className: "button button-large", onClick: this.fetchLocation },
-                                        __('Fetch Location')
+                                        __('Fetch Location', 'advanced-gutenberg')
                                     ),
                                     fetching && React.createElement(Spinner, null),
                                     React.createElement(
@@ -12203,7 +12193,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "strong",
                                             { style: { marginRight: '5px' } },
-                                            __('Current'),
+                                            __('Current', 'advanced-gutenberg'),
                                             ":"
                                         ),
                                         React.createElement(
@@ -12218,7 +12208,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 Fragment,
                                 null,
                                 React.createElement(TextControl, {
-                                    label: [__('Location'), React.createElement(
+                                    label: [__('Location', 'advanced-gutenberg'), React.createElement(
                                         "a",
                                         { key: "switch-type",
                                             style: { marginLeft: '10px' },
@@ -12226,26 +12216,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return setAttributes({ useLatLng: !useLatLng });
                                             }
                                         },
-                                        __('Use Address')
+                                        __('Use Address', 'advanced-gutenberg')
                                     )],
                                     value: lat,
-                                    placeholder: __('Enter latitude…'),
-                                    title: __('Latitude'),
+                                    placeholder: __('Enter latitude…', 'advanced-gutenberg'),
+                                    title: __('Latitude', 'advanced-gutenberg'),
                                     onChange: function onChange(value) {
                                         return setAttributes({ lat: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
                                     value: lng,
-                                    placeholder: __('Enter longitude…'),
-                                    title: __('Longitude'),
+                                    placeholder: __('Enter longitude…', 'advanced-gutenberg'),
+                                    title: __('Longitude', 'advanced-gutenberg'),
                                     onChange: function onChange(value) {
                                         return setAttributes({ lng: value });
                                     }
                                 })
                             ),
                             React.createElement(RangeControl, {
-                                label: __('Zoom level'),
+                                label: __('Zoom level', 'advanced-gutenberg'),
                                 value: zoom,
                                 min: 0,
                                 max: 25,
@@ -12254,7 +12244,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Height'),
+                                label: __('Height', 'advanced-gutenberg'),
                                 value: height,
                                 min: 300,
                                 max: 1000,
@@ -12276,7 +12266,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                     return React.createElement(
                                         BaseControl,
-                                        { label: [__('Marker Icon (27x43 px)'), markerIcon && React.createElement(
+                                        { label: [__('Marker Icon (27x43 px)', 'advanced-gutenberg'), markerIcon && React.createElement(
                                                 "a",
                                                 { key: "marker-icon-remove",
                                                     style: { marginLeft: '10px', cursor: 'pointer' },
@@ -12287,7 +12277,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         });
                                                     }
                                                 },
-                                                __('Remove')
+                                                __('Remove', 'advanced-gutenberg')
                                             )]
                                         },
                                         React.createElement(
@@ -12295,55 +12285,55 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: "button button-large",
                                                 onClick: open
                                             },
-                                            __('Choose icon')
+                                            __('Choose icon', 'advanced-gutenberg')
                                         ),
                                         !!markerIcon && React.createElement("img", { style: { maxHeight: '30px', marginLeft: '10px' },
                                             src: markerIcon,
-                                            alt: __('Marker icon') })
+                                            alt: __('Marker icon', 'advanced-gutenberg') })
                                     );
                                 }
                             }),
                             React.createElement(TextControl, {
-                                label: __('Marker Title'),
+                                label: __('Marker Title', 'advanced-gutenberg'),
                                 value: markerTitle,
-                                placeholder: __('Enter custom title…'),
+                                placeholder: __('Enter custom title…', 'advanced-gutenberg'),
                                 onChange: function onChange(value) {
                                     return setAttributes({ markerTitle: value });
                                 }
                             }),
                             React.createElement(TextareaControl, {
-                                label: __('Marker description'),
+                                label: __('Marker description', 'advanced-gutenberg'),
                                 value: markerDesc,
-                                placeholder: __('Enter custom description…'),
+                                placeholder: __('Enter custom description…', 'advanced-gutenberg'),
                                 onChange: function onChange(value) {
                                     return setAttributes({ markerDesc: value });
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Open marker description by default'),
+                                label: __('Open marker description by default', 'advanced-gutenberg'),
                                 checked: infoWindowDefaultShown,
                                 onChange: function onChange() {
                                     return setAttributes({ infoWindowDefaultShown: !infoWindowDefaultShown });
                                 }
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Map styles'),
-                                help: __('Custom map style is recommended for experienced users only.'),
+                                label: __('Map styles', 'advanced-gutenberg'),
+                                help: __('Custom map style is recommended for experienced users only.', 'advanced-gutenberg'),
                                 value: mapStyle,
                                 onChange: function onChange(value) {
                                     return setAttributes({ mapStyle: value });
                                 },
-                                options: [{ label: __('Standard'), value: '' }].concat(_toConsumableArray(listStyles), [{ label: __('Custom'), value: 'custom' }])
+                                options: [{ label: __('Standard', 'advanced-gutenberg'), value: '' }].concat(_toConsumableArray(listStyles), [{ label: __('Custom', 'advanced-gutenberg'), value: 'custom' }])
                             }),
                             mapStyle === 'custom' && React.createElement(TextareaControl, {
-                                label: [__('Custom code'), invalidStyle && React.createElement(
+                                label: [__('Custom code', 'advanced-gutenberg'), invalidStyle && React.createElement(
                                     "span",
                                     { key: "invalid-json",
                                         style: { fontWeight: 'bold', color: '#ff0000', marginLeft: 5 }
                                     },
-                                    __('Invalid JSON')
+                                    __('Invalid JSON', 'advanced-gutenberg')
                                 )],
-                                help: [__('Paste your custom map styles in json format into the text field. You can create your own map styles by follow one of these links: '), React.createElement(
+                                help: [__('Paste your custom map styles in json format into the text field. You can create your own map styles by follow one of these links: ', 'advanced-gutenberg'), React.createElement(
                                     "a",
                                     { href: "https://mapstyle.withgoogle.com/", target: "_blank", key: "gg-map" },
                                     "Google Map"
@@ -12353,7 +12343,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     "Snazzy Map"
                                 )],
                                 value: mapStyleCustom,
-                                placeholder: __('Enter your json code here…'),
+                                placeholder: __('Enter your json code here…', 'advanced-gutenberg'),
                                 onChange: function onChange(value) {
                                     return setAttributes({ mapStyleCustom: value });
                                 }
@@ -12368,7 +12358,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         Placeholder,
                         {
                             icon: mapBlockIcon,
-                            label: __('No API Key Provided!'),
+                            label: __('No API Key Provided!', 'advanced-gutenberg'),
                             instructions: __('Opps! Look like you have not configured your Google API Key yet. ' + 'Add an API Key and refresh the page to start using Map Block. ' + 'This is a requirement enforced by Google.')
                         },
                         React.createElement(
@@ -12377,7 +12367,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 className: "button button-large",
                                 href: advgbBlocks.config_url + '#settings'
                             },
-                            __('Add Google API Key')
+                            __('Add Google API Key', 'advanced-gutenberg')
                         )
                     )
                 );
@@ -12426,7 +12416,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         markerTitle: {
             type: 'string',
-            default: __('Eiffel Tower')
+            default: __('Eiffel Tower', 'advanced-gutenberg')
         },
         markerDesc: {
             type: 'string',
@@ -12439,8 +12429,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/map', {
-        title: __('Map'),
-        description: __('Block for inserting location map.'),
+        title: __('Map', 'advanced-gutenberg'),
+        description: __('Block for inserting location map.', 'advanced-gutenberg'),
         icon: {
             src: mapBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -12681,36 +12671,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Newsletter Settings') },
+                            { title: __('Newsletter Settings', 'advanced-gutenberg') },
                             typeof advgbBlocks !== 'undefined' && !parseInt(advgbBlocks.captchaEnabled) && React.createElement(
                                 PanelBody,
-                                { title: __('Notice') },
+                                { title: __('Notice', 'advanced-gutenberg') },
                                 React.createElement(
                                     "p",
                                     { style: { fontStyle: 'italic' } },
-                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in'),
+                                    __('We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in', 'advanced-gutenberg'),
                                     React.createElement(
                                         "a",
                                         { href: advgbBlocks.config_url + '#email-form', target: "_blank" },
                                         " ",
-                                        __('settings'),
+                                        __('settings', 'advanced-gutenberg'),
                                         "."
                                     )
                                 )
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Form Settings') },
+                                { title: __('Form Settings', 'advanced-gutenberg') },
                                 React.createElement(SelectControl, {
-                                    label: __('Form style'),
+                                    label: __('Form style', 'advanced-gutenberg'),
                                     value: formStyle,
-                                    options: [{ label: __('Default'), value: 'default' }, { label: __('Alternative'), value: 'alt' }],
+                                    options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Alternative', 'advanced-gutenberg'), value: 'alt' }],
                                     onChange: function onChange(value) {
                                         return setAttributes({ formStyle: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Form width (px)'),
+                                    label: __('Form width (px)', 'advanced-gutenberg'),
                                     value: formWidth,
                                     onChange: function onChange(value) {
                                         return setAttributes({ formWidth: value });
@@ -12721,19 +12711,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Text Label') },
+                                { title: __('Text Label', 'advanced-gutenberg') },
                                 formStyle === 'alt' && React.createElement(
                                     Fragment,
                                     null,
                                     React.createElement(TextControl, {
-                                        label: __('First Name input placeholder'),
+                                        label: __('First Name input placeholder', 'advanced-gutenberg'),
                                         value: fnameLabel,
                                         onChange: function onChange(value) {
                                             return setAttributes({ fnameLabel: value });
                                         }
                                     }),
                                     React.createElement(TextControl, {
-                                        label: __('Last Name input placeholder'),
+                                        label: __('Last Name input placeholder', 'advanced-gutenberg'),
                                         value: lnameLabel,
                                         onChange: function onChange(value) {
                                             return setAttributes({ lnameLabel: value });
@@ -12741,28 +12731,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     })
                                 ),
                                 React.createElement(TextControl, {
-                                    label: __('Email input placeholder'),
+                                    label: __('Email input placeholder', 'advanced-gutenberg'),
                                     value: emailLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ emailLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
-                                    label: __('Submit text'),
+                                    label: __('Submit text', 'advanced-gutenberg'),
                                     value: submitLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
-                                    label: __('Empty field warning text'),
+                                    label: __('Empty field warning text', 'advanced-gutenberg'),
                                     value: alertLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ alertLabel: value });
                                     }
                                 }),
                                 React.createElement(TextControl, {
-                                    label: __('Submit success text'),
+                                    label: __('Submit success text', 'advanced-gutenberg'),
                                     value: successLabel,
                                     onChange: function onChange(value) {
                                         return setAttributes({ successLabel: value });
@@ -12770,15 +12760,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             ),
                             React.createElement(PanelColorSettings, {
-                                title: __('Input Color'),
+                                title: __('Input Color', 'advanced-gutenberg'),
                                 colorSettings: [{
-                                    label: __('Background color'),
+                                    label: __('Background color', 'advanced-gutenberg'),
                                     value: bgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ bgColor: value });
                                     }
                                 }, {
-                                    label: __('Text color'),
+                                    label: __('Text color', 'advanced-gutenberg'),
                                     value: textColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ textColor: value });
@@ -12787,12 +12777,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Border Settings'), initialOpen: false },
+                                { title: __('Border Settings', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Border Color'),
+                                    title: __('Border Color', 'advanced-gutenberg'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Border color'),
+                                        label: __('Border color', 'advanced-gutenberg'),
                                         value: borderColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ borderColor: value });
@@ -12800,15 +12790,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }]
                                 }),
                                 React.createElement(SelectControl, {
-                                    label: __('Border Style'),
+                                    label: __('Border Style', 'advanced-gutenberg'),
                                     value: borderStyle,
-                                    options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                    options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderStyle: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Border radius (px)'),
+                                    label: __('Border radius (px)', 'advanced-gutenberg'),
                                     value: borderRadius,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderRadius: value });
@@ -12819,18 +12809,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Submit Button Settings') },
+                                { title: __('Submit Button Settings', 'advanced-gutenberg') },
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Color Settings'),
+                                    title: __('Color Settings', 'advanced-gutenberg'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Border and Text'),
+                                        label: __('Border and Text', 'advanced-gutenberg'),
                                         value: submitColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ submitColor: value });
                                         }
                                     }, {
-                                        label: __('Background'),
+                                        label: __('Background', 'advanced-gutenberg'),
                                         value: submitBgColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ submitBgColor: value });
@@ -12838,7 +12828,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }]
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Button border radius'),
+                                    label: __('Button border radius', 'advanced-gutenberg'),
                                     value: submitRadius,
                                     onChange: function onChange(value) {
                                         return setAttributes({ submitRadius: value });
@@ -12860,7 +12850,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-form-field" },
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-form-input",
-                                    value: emailLabel ? emailLabel : __('Email address'),
+                                    value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
                                     style: {
                                         backgroundColor: bgColor,
                                         color: textColor,
@@ -12883,7 +12873,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderRadius: submitRadius
                                             }
                                         },
-                                        submitLabel ? submitLabel : __('Submit')
+                                        submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
                                     )
                                 )
                             ),
@@ -12895,7 +12885,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-form-field advgb-form-field-full" },
                                     React.createElement("input", { type: "text", disabled: true,
                                         className: "advgb-form-input",
-                                        value: fnameLabel ? fnameLabel : __('First Name'),
+                                        value: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
                                         style: {
                                             backgroundColor: bgColor,
                                             color: textColor,
@@ -12910,7 +12900,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-form-field advgb-form-field-full" },
                                     React.createElement("input", { type: "text", disabled: true,
                                         className: "advgb-form-input",
-                                        value: lnameLabel ? lnameLabel : __('Last Name'),
+                                        value: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
                                         style: {
                                             backgroundColor: bgColor,
                                             color: textColor,
@@ -12925,7 +12915,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-form-field advgb-form-field-full" },
                                     React.createElement("input", { type: "text", disabled: true,
                                         className: "advgb-form-input",
-                                        value: emailLabel ? emailLabel : __('Email address'),
+                                        value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
                                         style: {
                                             backgroundColor: bgColor,
                                             color: textColor,
@@ -12949,7 +12939,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderRadius: submitRadius
                                             }
                                         },
-                                        submitLabel ? submitLabel : __('Submit')
+                                        submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
                                     )
                                 )
                             )
@@ -12963,8 +12953,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/newsletter', {
-        title: __('Newsletter'),
-        description: __('Fastest way to create a newsletter form for your page.'),
+        title: __('Newsletter', 'advanced-gutenberg'),
+        description: __('Fastest way to create a newsletter form for your page.', 'advanced-gutenberg'),
         icon: {
             src: newsletterBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -13059,7 +13049,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: emailLabel ? emailLabel : __('Email address'),
+                            placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
                             style: {
                                 backgroundColor: bgColor,
                                 color: textColor,
@@ -13084,7 +13074,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit')
+                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
                             )
                         )
                     ),
@@ -13096,7 +13086,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("input", { type: "text",
                                 className: "advgb-form-input advgb-form-input-fname",
-                                placeholder: fnameLabel ? fnameLabel : __('First Name'),
+                                placeholder: fnameLabel ? fnameLabel : __('First Name', 'advanced-gutenberg'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -13111,7 +13101,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("input", { type: "text",
                                 className: "advgb-form-input advgb-form-input-lname",
-                                placeholder: lnameLabel ? lnameLabel : __('Last Name'),
+                                placeholder: lnameLabel ? lnameLabel : __('Last Name', 'advanced-gutenberg'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -13126,7 +13116,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("input", { type: "email",
                                 className: "advgb-form-input advgb-form-input-email",
-                                placeholder: emailLabel ? emailLabel : __('Email address'),
+                                placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -13152,7 +13142,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit')
+                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
                             )
                         )
                     ),
@@ -13361,7 +13351,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     null,
                     React.createElement(
                         PanelBody,
-                        { title: __('Block Settings') },
+                        { title: __('Block Settings', 'advanced-gutenberg') },
                         React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
                             categoriesList: categoriesList,
                             selectedCategoryId: category,
@@ -13380,7 +13370,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }
                         })),
                         postView === 'grid' && React.createElement(RangeControl, {
-                            label: __('Columns'),
+                            label: __('Columns', 'advanced-gutenberg'),
                             value: columns,
                             min: 1,
                             max: 4,
@@ -13389,57 +13379,57 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }
                         }),
                         React.createElement(ToggleControl, {
-                            label: __('Display Featured Image'),
+                            label: __('Display Featured Image', 'advanced-gutenberg'),
                             checked: displayFeaturedImage,
                             onChange: function onChange() {
                                 return setAttributes({ displayFeaturedImage: !displayFeaturedImage });
                             }
                         }),
                         React.createElement(ToggleControl, {
-                            label: __('Display Post Author'),
+                            label: __('Display Post Author', 'advanced-gutenberg'),
                             checked: displayAuthor,
                             onChange: function onChange() {
                                 return setAttributes({ displayAuthor: !displayAuthor });
                             }
                         }),
                         React.createElement(ToggleControl, {
-                            label: __('Display Post Date'),
+                            label: __('Display Post Date', 'advanced-gutenberg'),
                             checked: displayDate,
                             onChange: function onChange() {
                                 return setAttributes({ displayDate: !displayDate });
                             }
                         }),
                         React.createElement(ToggleControl, {
-                            label: __('Display Read More Link'),
+                            label: __('Display Read More Link', 'advanced-gutenberg'),
                             checked: displayReadMore,
                             onChange: function onChange() {
                                 return setAttributes({ displayReadMore: !displayReadMore });
                             }
                         }),
                         displayReadMore && React.createElement(TextControl, {
-                            label: __('Read more text'),
+                            label: __('Read more text', 'advanced-gutenberg'),
                             value: readMoreLbl,
                             onChange: function onChange(value) {
                                 return setAttributes({ readMoreLbl: value });
                             }
                         }),
                         React.createElement(ToggleControl, {
-                            label: __('Display Post Excerpt'),
+                            label: __('Display Post Excerpt', 'advanced-gutenberg'),
                             checked: displayExcerpt,
                             onChange: function onChange() {
                                 return setAttributes({ displayExcerpt: !displayExcerpt });
                             }
                         }),
                         displayExcerpt && React.createElement(ToggleControl, {
-                            label: __('First Post text as Excerpt'),
-                            help: __('Display some part of first text found in post as excerpt.'),
+                            label: __('First Post text as Excerpt', 'advanced-gutenberg'),
+                            help: __('Display some part of first text found in post as excerpt.', 'advanced-gutenberg'),
                             checked: postTextAsExcerpt,
                             onChange: function onChange() {
                                 return setAttributes({ postTextAsExcerpt: !postTextAsExcerpt });
                             }
                         }),
                         displayExcerpt && postTextAsExcerpt && React.createElement(RangeControl, {
-                            label: __('Post Text Excerpt length'),
+                            label: __('Post Text Excerpt length', 'advanced-gutenberg'),
                             min: 50,
                             max: 300,
                             value: postTextExcerptLength,
@@ -13462,30 +13452,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Placeholder,
                             {
                                 icon: advRecentPostsBlockIcon,
-                                label: __('ADVGB Recent Posts Block')
+                                label: __('ADVGB Recent Posts Block', 'advanced-gutenberg')
                             },
-                            !Array.isArray(recentPosts) ? React.createElement(Spinner, null) : __('No posts found! Try to change category or publish posts.')
+                            !Array.isArray(recentPosts) ? React.createElement(Spinner, null) : __('No posts found! Try to change category or publish posts.', 'advanced-gutenberg')
                         )
                     );
                 }
 
                 var postViewControls = [{
                     icon: 'grid-view',
-                    title: __('Grid View'),
+                    title: __('Grid View', 'advanced-gutenberg'),
                     onClick: function onClick() {
                         return setAttributes({ postView: 'grid' });
                     },
                     isActive: postView === 'grid'
                 }, {
                     icon: 'list-view',
-                    title: __('List View'),
+                    title: __('List View', 'advanced-gutenberg'),
                     onClick: function onClick() {
                         return setAttributes({ postView: 'list' });
                     },
                     isActive: postView === 'list'
                 }, {
                     icon: 'slides',
-                    title: __('Slider View'),
+                    title: __('Slider View', 'advanced-gutenberg'),
                     onClick: function onClick() {
                         return setAttributes({ postView: 'slider' });
                     },
@@ -13508,7 +13498,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Toolbar,
                             null,
                             React.createElement(IconButton, {
-                                label: __('Refresh'),
+                                label: __('Refresh', 'advanced-gutenberg'),
                                 icon: "update",
                                 onClick: function onClick() {
                                     return setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
@@ -13533,7 +13523,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "a",
                                             { href: post.link, target: "_blank" },
-                                            React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image') })
+                                            React.createElement("img", { src: post.featured_img ? post.featured_img : advgbBlocks.post_thumb, alt: __('Post Image', 'advanced-gutenberg') })
                                         )
                                     ),
                                     React.createElement(
@@ -13578,7 +13568,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 React.createElement(
                                                     "a",
                                                     { href: post.link, target: "_blank" },
-                                                    readMoreLbl ? readMoreLbl : __('Read More')
+                                                    readMoreLbl ? readMoreLbl : __('Read More', 'advanced-gutenberg')
                                                 )
                                             )
                                         )
@@ -13627,8 +13617,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/recent-posts', {
-        title: __('Recent Posts'),
-        description: __('Display your recent posts in slider or grid view with beautiful styles.'),
+        title: __('Recent Posts', 'advanced-gutenberg'),
+        description: __('Display your recent posts in slider or grid view with beautiful styles.', 'advanced-gutenberg'),
         icon: {
             src: advRecentPostsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -13863,7 +13853,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onSplit: function onSplit() {
                                 return null;
                             },
-                            placeholder: __('Search'),
+                            placeholder: __('Search', 'advanced-gutenberg'),
                             keepPlaceholderOnFocus: true
                         })
                     )
@@ -13877,16 +13867,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Search Bar State') },
+                            { title: __('Search Bar State', 'advanced-gutenberg') },
                             React.createElement(ToggleControl, {
-                                label: __('Full width'),
+                                label: __('Full width', 'advanced-gutenberg'),
                                 checked: fullWidth,
                                 onChange: function onChange() {
                                     return setAttributes({ fullWidth: !fullWidth });
                                 }
                             }),
                             !fullWidth && React.createElement(RangeControl, {
-                                label: __('Width'),
+                                label: __('Width', 'advanced-gutenberg'),
                                 value: width,
                                 onChange: function onChange(value) {
                                     return setAttributes({ width: value });
@@ -13897,9 +13887,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Search Icon Settings') },
+                            { title: __('Search Icon Settings', 'advanced-gutenberg') },
                             React.createElement(ToggleControl, {
-                                label: __('Search icon on the right'),
+                                label: __('Search icon on the right', 'advanced-gutenberg'),
                                 checked: searchIconOnRight,
                                 onChange: function onChange() {
                                     return setAttributes({ searchIconOnRight: !searchIconOnRight });
@@ -13911,7 +13901,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "div",
                                     { className: "advgb-icon-items-header" },
-                                    __('Search icon')
+                                    __('Search icon', 'advanced-gutenberg')
                                 ),
                                 React.createElement(
                                     "div",
@@ -13936,25 +13926,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Search Input Settings'), initialOpen: false },
+                            { title: __('Search Input Settings', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(TextControl, {
-                                label: __('Search placeholder'),
+                                label: __('Search placeholder', 'advanced-gutenberg'),
                                 value: searchPlaceholder,
                                 onChange: function onChange(value) {
                                     return setAttributes({ searchPlaceholder: value });
                                 }
                             }),
                             React.createElement(PanelColorSettings, {
-                                title: __('Input Color'),
+                                title: __('Input Color', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Background color'),
+                                    label: __('Background color', 'advanced-gutenberg'),
                                     value: backgroundColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ backgroundColor: value });
                                     }
                                 }, {
-                                    label: __('Text color'),
+                                    label: __('Text color', 'advanced-gutenberg'),
                                     value: textColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ textColor: value });
@@ -13964,16 +13954,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Search Button Settings'), initialOpen: false },
+                            { title: __('Search Button Settings', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(ToggleControl, {
-                                label: __('Show submit button'),
+                                label: __('Show submit button', 'advanced-gutenberg'),
                                 checked: searchButtonEnabled,
                                 onChange: function onChange() {
                                     return setAttributes({ searchButtonEnabled: !searchButtonEnabled });
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Search button on the left'),
+                                label: __('Search button on the left', 'advanced-gutenberg'),
                                 checked: searchButtonOnLeft,
                                 onChange: function onChange() {
                                     return setAttributes({ searchButtonOnLeft: !searchButtonOnLeft });
@@ -13983,22 +13973,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 Fragment,
                                 null,
                                 React.createElement(_components.AdvColorControl, {
-                                    label: __('Background color'),
+                                    label: __('Background color', 'advanced-gutenberg'),
                                     value: searchButtonBgColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ searchButtonBgColor: value });
                                     }
                                 }),
                                 React.createElement(_components.AdvColorControl, {
-                                    label: __('Text color'),
+                                    label: __('Text color', 'advanced-gutenberg'),
                                     value: searchButtonTextColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ searchButtonTextColor: value });
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Border radius (px)'),
-                                    help: __('Affect both input and button.'),
+                                    label: __('Border radius (px)', 'advanced-gutenberg'),
+                                    help: __('Affect both input and button.', 'advanced-gutenberg'),
                                     value: searchButtonRadius,
                                     onChange: function onChange(value) {
                                         return setAttributes({ searchButtonRadius: value });
@@ -14007,22 +13997,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 100
                                 }),
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Hover Colors'),
+                                    title: __('Hover Colors', 'advanced-gutenberg'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Background color'),
+                                        label: __('Background color', 'advanced-gutenberg'),
                                         value: searchBtnHoverBgColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverBgColor: value });
                                         }
                                     }, {
-                                        label: __('Text color'),
+                                        label: __('Text color', 'advanced-gutenberg'),
                                         value: searchBtnHoverColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverColor: value });
                                         }
                                     }, {
-                                        label: __('Shadow color'),
+                                        label: __('Shadow color', 'advanced-gutenberg'),
                                         value: searchBtnHoverShadow,
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverShadow: value });
@@ -14031,9 +14021,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }),
                                 React.createElement(
                                     PanelBody,
-                                    { title: __('Hover Shadow'), initialOpen: false },
+                                    { title: __('Hover Shadow', 'advanced-gutenberg'), initialOpen: false },
                                     React.createElement(RangeControl, {
-                                        label: __('Opacity (%)'),
+                                        label: __('Opacity (%)', 'advanced-gutenberg'),
                                         value: searchBtnHoverOpacity,
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverOpacity: value });
@@ -14042,7 +14032,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 100
                                     }),
                                     React.createElement(RangeControl, {
-                                        label: __('Transition speed (ms)'),
+                                        label: __('Transition speed (ms)', 'advanced-gutenberg'),
                                         value: searchBtnHoverTranSpeed || '',
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverTranSpeed: value });
@@ -14051,7 +14041,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 3000
                                     }),
                                     React.createElement(RangeControl, {
-                                        label: __('Shadow H offset'),
+                                        label: __('Shadow H offset', 'advanced-gutenberg'),
                                         value: searchBtnHoverShadowH || '',
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverShadowH: value });
@@ -14060,7 +14050,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 50
                                     }),
                                     React.createElement(RangeControl, {
-                                        label: __('Shadow V offset'),
+                                        label: __('Shadow V offset', 'advanced-gutenberg'),
                                         value: searchBtnHoverShadowV || '',
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverShadowV: value });
@@ -14069,7 +14059,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 50
                                     }),
                                     React.createElement(RangeControl, {
-                                        label: __('Shadow blur'),
+                                        label: __('Shadow blur', 'advanced-gutenberg'),
                                         value: searchBtnHoverShadowBlur || '',
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverShadowBlur: value });
@@ -14078,7 +14068,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 50
                                     }),
                                     React.createElement(RangeControl, {
-                                        label: __('Shadow spread'),
+                                        label: __('Shadow spread', 'advanced-gutenberg'),
                                         value: searchBtnHoverShadowSpread || '',
                                         onChange: function onChange(value) {
                                             return setAttributes({ searchBtnHoverShadowSpread: value });
@@ -14109,7 +14099,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 !searchIconOnRight && searchBarIcon,
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-search-bar-input",
-                                    value: searchPlaceholder ? searchPlaceholder : __('Type to search…')
+                                    value: searchPlaceholder ? searchPlaceholder : __('Type to search…', 'advanced-gutenberg')
                                 }),
                                 searchIconOnRight && searchBarIcon
                             ),
@@ -14159,7 +14149,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         searchButtonText: {
             type: 'string',
-            default: __('SEARCH')
+            default: __('SEARCH', 'advanced-gutenberg')
         },
         searchButtonTextColor: {
             type: 'string'
@@ -14218,8 +14208,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/search-bar', {
-        title: __('Search Bar'),
-        description: __('Easy to create a search bar for your site.'),
+        title: __('Search Bar', 'advanced-gutenberg'),
+        description: __('Easy to create a search bar for your site.', 'advanced-gutenberg'),
         icon: {
             src: searchBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -14230,7 +14220,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         supports: {
             align: true
         },
-        styles: [{ name: 'default', label: __('Default'), isDefault: true }, { name: 'classic', label: __('Classic') }],
+        styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'classic', label: __('Classic', 'advanced-gutenberg') }],
         edit: SearchBarEdit,
         save: function save(_ref) {
             var attributes = _ref.attributes,
@@ -14303,7 +14293,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement("input", { type: "text",
                                 className: "advgb-search-bar-input",
                                 name: "s",
-                                placeholder: searchPlaceholder ? searchPlaceholder : __('Type to search…')
+                                placeholder: searchPlaceholder ? searchPlaceholder : __('Type to search…', 'advanced-gutenberg')
                             }),
                             searchIconOnRight && searchBarIcon
                         ),
@@ -14596,7 +14586,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(IconButton, {
                                 className: "components-toolbar__control",
                                 icon: "plus",
-                                label: __('Add item'),
+                                label: __('Add item', 'advanced-gutenberg'),
                                 onClick: function onClick() {
                                     return setAttributes({ items: [].concat(_toConsumableArray(items), [{ icon: '', iconID: '', link: '#' }]) });
                                 }
@@ -14604,7 +14594,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(IconButton, {
                                 className: "components-toolbar__control",
                                 icon: "no",
-                                label: __('Remove selected item'),
+                                label: __('Remove selected item', 'advanced-gutenberg'),
                                 onClick: function onClick() {
                                     _this2.setState({ currentSelected: Math.max(currentSelected - 1, 0) });
                                     if (items.length > 1) {
@@ -14630,9 +14620,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Preset Icons') },
+                            { title: __('Preset Icons', 'advanced-gutenberg') },
                             React.createElement(TextControl, {
-                                placeholder: __('Type here to search…'),
+                                placeholder: __('Type here to search…', 'advanced-gutenberg'),
                                 value: searchedText,
                                 onChange: function onChange(value) {
                                     return _this2.setState({ searchedText: value });
@@ -14676,7 +14666,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ),
                             React.createElement(
                                 BaseControl,
-                                { label: __('Custom icon') },
+                                { label: __('Custom icon', 'advanced-gutenberg') },
                                 React.createElement(MediaUpload, {
                                     allowedTypes: ["image"],
                                     value: items[currentSelected].iconID,
@@ -14701,16 +14691,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 className: "button button-large",
                                                 onClick: open
                                             },
-                                            __('Upload/Choose')
+                                            __('Upload/Choose', 'advanced-gutenberg')
                                         );
                                     }
                                 })
                             ),
                             React.createElement(PanelColorSettings, {
-                                title: __('Preset Icon Color'),
+                                title: __('Preset Icon Color', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Preset Icon Color'),
+                                    label: __('Preset Icon Color', 'advanced-gutenberg'),
                                     value: items[currentSelected].iconColor,
                                     onChange: function onChange(value) {
                                         var newItems = items.map(function (item, index) {
@@ -14729,9 +14719,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Icons settings') },
+                            { title: __('Icons settings', 'advanced-gutenberg') },
                             React.createElement(RangeControl, {
-                                label: __('Icon size'),
+                                label: __('Icon size', 'advanced-gutenberg'),
                                 value: iconSize,
                                 min: 20,
                                 max: 60,
@@ -14740,7 +14730,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Icon space'),
+                                label: __('Icon space', 'advanced-gutenberg'),
                                 value: iconSpace,
                                 min: 0,
                                 max: 30,
@@ -14776,7 +14766,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         "svg",
                                         { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
                                         ICONS_SET_NEW[item.icon]
-                                    ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
+                                    ) : React.createElement("img", { src: item.icon, alt: __('Social link icon', 'advanced-gutenberg') }) : React.createElement(
                                         "svg",
                                         { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
                                         socialBlockIconContent
@@ -14793,10 +14783,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "strong",
                                     null,
-                                    __('Social link:')
+                                    __('Social link:', 'advanced-gutenberg')
                                 ),
                                 React.createElement(TextControl, {
-                                    placeholder: __('Enter social link…'),
+                                    placeholder: __('Enter social link…', 'advanced-gutenberg'),
                                     value: items[currentSelected].link,
                                     onChange: function onChange(value) {
                                         var newItems = items.map(function (vl, idx) {
@@ -14839,8 +14829,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/social-links', {
-        title: __('Social Links'),
-        description: __('Insert your social link with icon.'),
+        title: __('Social Links', 'advanced-gutenberg'),
+        description: __('Insert your social link with icon.', 'advanced-gutenberg'),
         icon: {
             src: socialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -14883,7 +14873,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "svg",
                                 { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
                                 ICONS_SET_NEW[item.icon]
-                            ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
+                            ) : React.createElement("img", { src: item.icon, alt: __('Social link icon', 'advanced-gutenberg') }) : React.createElement(
                                 "svg",
                                 { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
                                 socialBlockIconContent
@@ -14934,7 +14924,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     "svg",
                                     { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 50 50" },
                                     ICONS_SET_NEW[item.icon]
-                                ) : React.createElement("img", { src: item.icon, alt: __('Social link icon') }) : React.createElement(
+                                ) : React.createElement("img", { src: item.icon, alt: __('Social link icon', 'advanced-gutenberg') }) : React.createElement(
                                     "svg",
                                     { width: iconSize - 6, height: iconSize - 6, viewBox: "0 0 24 24" },
                                     React.createElement(Fragment, null, React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }), React.createElement("path", { d: "M18,16.08c-0.76,0-1.44,0.3-1.96,0.77L8.91,12.7C8.96,12.47,9,12.24,9,12s-0.04-0.47-0.09-0.7l7.05-4.11\r C16.5,7.69,17.21,8,18,8c1.66,0,3-1.34,3-3c0-1.66-1.34-3-3-3s-3,1.34-3,3c0,0.24,0.04,0.47,0.09,0.7L8.04,9.81\r C7.5,9.31,6.79,9,6,9c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3c0.79,0,1.5-0.31,2.04-0.81l7.12,4.16c-0.05,0.21-0.08,0.43-0.08,0.65\r c0,1.61,1.31,2.92,2.92,2.92s2.92-1.31,2.92-2.92C20.92,17.39,19.61,16.08,18,16.08z M18,4c0.55,0,1,0.45,1,1s-0.45,1-1,1\r s-1-0.45-1-1S17.45,4,18,4z M6,13c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S6.55,13,6,13z M18,20.02c-0.55,0-1-0.45-1-1\r s0.45-1,1-1s1,0.45,1,1S18.55,20.02,18,20.02z" }))
@@ -15004,7 +14994,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z" }),
         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
     );
-    var summaryBlockTitle = __('Summary');
+    var summaryBlockTitle = __('Summary', 'advanced-gutenberg');
 
     // Add button to insert summary inside table of contents component
     (function () {
@@ -15026,7 +15016,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return block.name === 'advgb/summary';
                 }).length;
                 setTimeout(function () {
-                    var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Summary') + '</button>');
+                    var summaryButton = $('<button class="button" style="position: absolute; bottom: 10px; right: 15px">' + __('Insert Summary', 'advanced-gutenberg') + '</button>');
 
                     $('#editor').find('.table-of-contents__popover').find('.document-outline').append(summaryButton);
                     summaryButton.unbind('click').click(function () {
@@ -15056,7 +15046,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 React.createElement(
                     "p",
                     { style: { color: 'red', fontStyle: 'italic' } },
-                    __('After manually changing the anchor, remember to refresh summary block to make the links work!')
+                    __('After manually changing the anchor, remember to refresh summary block to make the links work!', 'advanced-gutenberg')
                 )
             )];
         };
@@ -15170,14 +15160,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     {
                         icon: summaryBlockIcon,
                         label: summaryBlockTitle,
-                        instructions: __('Your current post/page has no headings. Try add some headings and update this block later')
+                        instructions: __('Your current post/page has no headings. Try add some headings and update this block later', 'advanced-gutenberg')
                     },
                     React.createElement(
                         Button,
                         { onClick: this.updateSummary,
                             className: 'button'
                         },
-                        __('Update')
+                        __('Update', 'advanced-gutenberg')
                     )
                 );
 
@@ -15225,7 +15215,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             null,
                             React.createElement(IconButton, { className: 'components-icon-button components-toolbar__control',
                                 icon: 'update',
-                                label: __('Update Summary'),
+                                label: __('Update Summary', 'advanced-gutenberg'),
                                 onClick: this.updateSummary
                             })
                         )
@@ -15235,27 +15225,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Summary settings') },
+                            { title: __('Summary settings', 'advanced-gutenberg') },
                             React.createElement(ToggleControl, {
-                                label: __('Load minimized'),
+                                label: __('Load minimized', 'advanced-gutenberg'),
                                 checked: !!loadMinimized,
                                 onChange: function onChange() {
                                     return setAttributes({ loadMinimized: !loadMinimized, postTitle: select('core/editor').getEditedPostAttribute('title') });
                                 }
                             }),
                             loadMinimized && React.createElement(TextControl, {
-                                label: __('Summary header title'),
+                                label: __('Summary header title', 'advanced-gutenberg'),
                                 value: headerTitle || '',
-                                placeholder: __('Enter header…'),
+                                placeholder: __('Enter header…', 'advanced-gutenberg'),
                                 onChange: function onChange(value) {
                                     return setAttributes({ headerTitle: value });
                                 }
                             }),
                             React.createElement(PanelColorSettings, {
-                                title: __('Anchor Color'),
+                                title: __('Anchor Color', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Anchor Color'),
+                                    label: __('Anchor Color', 'advanced-gutenberg'),
                                     value: anchorColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ anchorColor: value });
@@ -15326,7 +15316,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     registerBlockType('advgb/summary', {
         title: summaryBlockTitle,
-        description: __('Show the table of content of current post/page.'),
+        description: __('Show the table of content of current post/page.', 'advanced-gutenberg'),
         icon: {
             src: summaryBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -15641,28 +15631,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         InspectorControls,
                         null,
                         React.createElement(PanelColorSettings, {
-                            title: __('Tab Colors'),
+                            title: __('Tab Colors', 'advanced-gutenberg'),
                             initialOpen: false,
                             colorSettings: [{
-                                label: __('Background Color'),
+                                label: __('Background Color', 'advanced-gutenberg'),
                                 value: headerBgColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ headerBgColor: value === undefined ? '#000' : value });
                                 }
                             }, {
-                                label: __('Text Color'),
+                                label: __('Text Color', 'advanced-gutenberg'),
                                 value: headerTextColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ headerTextColor: value === undefined ? '#fff' : value });
                                 }
                             }, {
-                                label: __('Active Tab Background Color'),
+                                label: __('Active Tab Background Color', 'advanced-gutenberg'),
                                 value: activeTabBgColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ activeTabBgColor: value });
                                 }
                             }, {
-                                label: __('Active Tab Text Color'),
+                                label: __('Active Tab Text Color', 'advanced-gutenberg'),
                                 value: activeTabTextColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ activeTabTextColor: value });
@@ -15670,16 +15660,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }]
                         }),
                         React.createElement(PanelColorSettings, {
-                            title: __('Body Colors'),
+                            title: __('Body Colors', 'advanced-gutenberg'),
                             initialOpen: false,
                             colorSettings: [{
-                                label: __('Background Color'),
+                                label: __('Background Color', 'advanced-gutenberg'),
                                 value: bodyBgColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ bodyBgColor: value });
                                 }
                             }, {
-                                label: __('Text Color'),
+                                label: __('Text Color', 'advanced-gutenberg'),
                                 value: bodyTextColor,
                                 onChange: function onChange(value) {
                                     return setAttributes({ bodyTextColor: value });
@@ -15688,20 +15678,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         }),
                         React.createElement(
                             PanelBody,
-                            { title: __('Border Settings'), initialOpen: false },
+                            { title: __('Border Settings', 'advanced-gutenberg'), initialOpen: false },
                             React.createElement(SelectControl, {
-                                label: __('Border Style'),
+                                label: __('Border Style', 'advanced-gutenberg'),
                                 value: borderStyle,
-                                options: [{ label: __('Solid'), value: 'solid' }, { label: __('Dashed'), value: 'dashed' }, { label: __('Dotted'), value: 'dotted' }],
+                                options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderStyle: value });
                                 }
                             }),
                             React.createElement(PanelColorSettings, {
-                                title: __('Border Color'),
+                                title: __('Border Color', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Border Color'),
+                                    label: __('Border Color', 'advanced-gutenberg'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ borderColor: value });
@@ -15709,7 +15699,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }]
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Border width'),
+                                label: __('Border width', 'advanced-gutenberg'),
                                 value: borderWidth,
                                 min: 1,
                                 max: 10,
@@ -15718,7 +15708,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Border radius'),
+                                label: __('Border radius', 'advanced-gutenberg'),
                                 value: borderRadius,
                                 min: 0,
                                 max: 100,
@@ -15762,12 +15752,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             unstableOnSplit: function unstableOnSplit() {
                                                 return null;
                                             },
-                                            placeholder: __('Title…')
+                                            placeholder: __('Title…', 'advanced-gutenberg')
                                         })
                                     ),
                                     React.createElement(
                                         Tooltip,
-                                        { text: __('Remove tab') },
+                                        { text: __('Remove tab', 'advanced-gutenberg') },
                                         React.createElement(
                                             'span',
                                             { className: 'advgb-tab-remove',
@@ -15795,12 +15785,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 React.createElement(
                                     Tooltip,
-                                    { text: __('Add tab') },
+                                    { text: __('Add tab', 'advanced-gutenberg') },
                                     React.createElement(
                                         'span',
                                         { onClick: function onClick() {
                                                 return setAttributes({
-                                                    tabItems: [].concat(_toConsumableArray(tabItems), [{ header: __('New Tab'), body: __('Enter your content.') }])
+                                                    tabItems: [].concat(_toConsumableArray(tabItems), [{ header: __('New Tab'), body: __('Enter your content.', 'advanced-gutenberg') }])
                                                 });
                                             } },
                                         React.createElement(Dashicon, { icon: 'plus-alt' })
@@ -15829,7 +15819,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return _this3.updateTabs({ body: value }, index);
                                     },
-                                    placeholder: __('Enter text…')
+                                    placeholder: __('Enter text…', 'advanced-gutenberg')
                                 })
                             );
                         })
@@ -15859,14 +15849,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         tabItems: {
             type: "array",
             default: [{
-                header: __('Tab 1'),
-                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+                header: __('Tab 1', 'advanced-gutenberg'),
+                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.', 'advanced-gutenberg')
             }, {
-                header: __('Tab 2'),
-                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+                header: __('Tab 2', 'advanced-gutenberg'),
+                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.', 'advanced-gutenberg')
             }, {
-                header: __('Tab 3'),
-                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.')
+                header: __('Tab 3', 'advanced-gutenberg'),
+                body: __('Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated.', 'advanced-gutenberg')
             }]
         },
         headerBgColor: {
@@ -15914,8 +15904,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/tabs', {
-        title: __('Tabs'),
-        description: __('Create your own tabs never easy like this.'),
+        title: __('Tabs', 'advanced-gutenberg'),
+        description: __('Create your own tabs never easy like this.', 'advanced-gutenberg'),
         icon: {
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -16210,17 +16200,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Testimonial Settings') },
+                            { title: __('Testimonial Settings', 'advanced-gutenberg') },
                             React.createElement(ToggleControl, {
-                                label: __('Slider view'),
+                                label: __('Slider view', 'advanced-gutenberg'),
                                 checked: sliderView,
                                 onChange: function onChange() {
                                     return setAttributes({ sliderView: !sliderView });
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Columns'),
-                                help: __('Columns range in Normal view is 1-3, and in Slider view is 4-10.'),
+                                label: __('Columns', 'advanced-gutenberg'),
+                                help: __('Columns range in Normal view is 1-3, and in Slider view is 4-10.', 'advanced-gutenberg'),
                                 min: minCols,
                                 max: maxCols,
                                 value: columns,
@@ -16230,18 +16220,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 PanelBody,
-                                { title: __('Avatar'), initialOpen: false },
+                                { title: __('Avatar', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(PanelColorSettings, {
-                                    title: __('Avatar Colors'),
+                                    title: __('Avatar Colors', 'advanced-gutenberg'),
                                     initialOpen: false,
                                     colorSettings: [{
-                                        label: __('Background Color'),
+                                        label: __('Background Color', 'advanced-gutenberg'),
                                         value: avatarColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ avatarColor: value });
                                         }
                                     }, {
-                                        label: __('Border Color'),
+                                        label: __('Border Color', 'advanced-gutenberg'),
                                         value: avatarBorderColor,
                                         onChange: function onChange(value) {
                                             return setAttributes({ avatarBorderColor: value });
@@ -16249,7 +16239,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }]
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Border Radius (%)'),
+                                    label: __('Border Radius (%)', 'advanced-gutenberg'),
                                     min: 0,
                                     max: 50,
                                     value: avatarBorderRadius,
@@ -16258,7 +16248,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Border Width'),
+                                    label: __('Border Width', 'advanced-gutenberg'),
                                     min: 0,
                                     max: 5,
                                     value: avatarBorderWidth,
@@ -16267,7 +16257,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Avatar Size'),
+                                    label: __('Avatar Size', 'advanced-gutenberg'),
                                     min: 50,
                                     max: 130,
                                     value: avatarSize,
@@ -16277,22 +16267,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             ),
                             React.createElement(PanelColorSettings, {
-                                title: __('Text Colors'),
+                                title: __('Text Colors', 'advanced-gutenberg'),
                                 initialOpen: false,
                                 colorSettings: [{
-                                    label: __('Name Color'),
+                                    label: __('Name Color', 'advanced-gutenberg'),
                                     value: nameColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ nameColor: value });
                                     }
                                 }, {
-                                    label: __('Position Color'),
+                                    label: __('Position Color', 'advanced-gutenberg'),
                                     value: positionColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ positionColor: value });
                                     }
                                 }, {
-                                    label: __('Description Color'),
+                                    label: __('Description Color', 'advanced-gutenberg'),
                                     value: descColor,
                                     onChange: function onChange(value) {
                                         return setAttributes({ descColor: value });
@@ -16326,7 +16316,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: 'advgb-testimonial-avatar-group' },
                                             React.createElement(
                                                 Tooltip,
-                                                { text: __('Click to change avatar') },
+                                                { text: __('Click to change avatar', 'advanced-gutenberg') },
                                                 React.createElement('div', { className: 'advgb-testimonial-avatar',
                                                     onClick: open,
                                                     style: {
@@ -16342,7 +16332,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             ),
                                             React.createElement(
                                                 Tooltip,
-                                                { text: __('Remove avatar') },
+                                                { text: __('Remove avatar', 'advanced-gutenberg') },
                                                 React.createElement('span', { className: 'dashicons dashicons-no advgb-testimonial-avatar-clear',
                                                     onClick: function onClick() {
                                                         return _this2.updateItems(idx, { avatarUrl: undefined, avatarID: undefined });
@@ -16364,7 +16354,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return _this2.updateItems(idx, { name: value });
                                     },
                                     style: { color: nameColor },
-                                    placeholder: __('Text…')
+                                    placeholder: __('Text…', 'advanced-gutenberg')
                                 }),
                                 React.createElement(RichText, {
                                     tagName: 'p',
@@ -16378,7 +16368,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return _this2.updateItems(idx, { position: value });
                                     },
                                     style: { color: positionColor },
-                                    placeholder: __('Text…')
+                                    placeholder: __('Text…', 'advanced-gutenberg')
                                 }),
                                 React.createElement(RichText, {
                                     tagName: 'p',
@@ -16392,7 +16382,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return _this2.updateItems(idx, { desc: value });
                                     },
                                     style: { color: descColor },
-                                    placeholder: __('Text…')
+                                    placeholder: __('Text…', 'advanced-gutenberg')
                                 })
                             );
                         })
@@ -16459,57 +16449,57 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         name: {
             type: 'string',
-            default: __('Person Name')
+            default: __('Person Name', 'advanced-gutenberg')
         },
         name2: {
             type: 'string',
-            default: __('Person Name')
+            default: __('Person Name', 'advanced-gutenberg')
         },
         name3: {
             type: 'string',
-            default: __('Person Name')
+            default: __('Person Name', 'advanced-gutenberg')
         },
         name4: {
             type: 'string',
-            default: __('Person Name')
+            default: __('Person Name', 'advanced-gutenberg')
         },
         nameColor: {
             type: 'string'
         },
         position: {
             type: 'string',
-            default: __('Job Position')
+            default: __('Job Position', 'advanced-gutenberg')
         },
         position2: {
             type: 'string',
-            default: __('Job Position')
+            default: __('Job Position', 'advanced-gutenberg')
         },
         position3: {
             type: 'string',
-            default: __('Job Position')
+            default: __('Job Position', 'advanced-gutenberg')
         },
         position4: {
             type: 'string',
-            default: __('Job Position')
+            default: __('Job Position', 'advanced-gutenberg')
         },
         positionColor: {
             type: 'string'
         },
         desc: {
             type: 'string',
-            default: __('A little description about this person will show up here.')
+            default: __('A little description about this person will show up here.', 'advanced-gutenberg')
         },
         desc2: {
             type: 'string',
-            default: __('A little description about this person will show up here.')
+            default: __('A little description about this person will show up here.', 'advanced-gutenberg')
         },
         desc3: {
             type: 'string',
-            default: __('A little description about this person will show up here.')
+            default: __('A little description about this person will show up here.', 'advanced-gutenberg')
         },
         desc4: {
             type: 'string',
-            default: __('A little description about this person will show up here.')
+            default: __('A little description about this person will show up here.', 'advanced-gutenberg')
         },
         descColor: {
             type: 'string'
@@ -16525,8 +16515,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     };
 
     registerBlockType('advgb/testimonial', {
-        title: __('Testimonial'),
-        description: __('Block for creating personal or team/group information.'),
+        title: __('Testimonial', 'advanced-gutenberg'),
+        description: __('Block for creating personal or team/group information.', 'advanced-gutenberg'),
         icon: {
             src: testimonialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
@@ -16540,9 +16530,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return {
                         avatarUrl: advgbBlocks.avatarHolder,
                         avatarID: undefined,
-                        name: __('Person Name'),
-                        position: __('Job Position'),
-                        desc: __('A little description about this person will show up here.')
+                        name: __('Person Name', 'advanced-gutenberg'),
+                        position: __('Job Position', 'advanced-gutenberg'),
+                        desc: __('A little description about this person will show up here.', 'advanced-gutenberg')
                     };
                 })
             },
@@ -16886,14 +16876,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var viewControls = [{
                     icon: 'grid-view',
-                    title: __('Normal View'),
+                    title: __('Normal View', 'advanced-gutenberg'),
                     onClick: function onClick() {
                         return setAttributes({ viewType: 'normal' });
                     },
                     isActive: viewType === 'normal'
                 }, {
                     icon: 'slides',
-                    title: __('Slider View'),
+                    title: __('Slider View', 'advanced-gutenberg'),
                     onClick: function onClick() {
                         return setAttributes({ viewType: 'slider' });
                     },
@@ -16917,19 +16907,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Products Settings') },
+                            { title: __('Products Settings', 'advanced-gutenberg') },
                             React.createElement(SelectControl, {
-                                label: __('Product Status'),
+                                label: __('Product Status', 'advanced-gutenberg'),
                                 value: status,
-                                options: [{ label: __('All'), value: '' }, { label: __('Featured'), value: 'featured' }, { label: __('On Sale'), value: 'on_sale' }],
+                                options: [{ label: __('All', 'advanced-gutenberg'), value: '' }, { label: __('Featured', 'advanced-gutenberg'), value: 'featured' }, { label: __('On Sale', 'advanced-gutenberg'), value: 'on_sale' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ status: value });
                                 }
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Category'),
+                                label: __('Category', 'advanced-gutenberg'),
                                 value: category,
-                                options: [{ label: __('All'), value: '' }, { label: __('Selected'), value: 'selected' }],
+                                options: [{ label: __('All', 'advanced-gutenberg'), value: '' }, { label: __('Selected', 'advanced-gutenberg'), value: 'selected' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ category: value });
                                 }
@@ -16957,9 +16947,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Layout Settings') },
+                            { title: __('Layout Settings', 'advanced-gutenberg') },
                             viewType !== 'slider' && React.createElement(RangeControl, {
-                                label: __('Columns'),
+                                label: __('Columns', 'advanced-gutenberg'),
                                 value: columns,
                                 min: 1,
                                 max: 4,
@@ -16968,7 +16958,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Number of Products'),
+                                label: __('Number of Products', 'advanced-gutenberg'),
                                 value: numberOfProducts,
                                 min: 1,
                                 max: 48,
@@ -16977,9 +16967,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(SelectControl, {
-                                label: __('Order'),
+                                label: __('Order', 'advanced-gutenberg'),
                                 value: orderBy + "-" + order,
-                                options: [{ label: __('Newest to oldest'), value: 'date-desc' }, { label: __('Price: high to low'), value: 'price-desc' }, { label: __('Price: low to high'), value: 'price-asc' }, { label: __('Highest Rating first'), value: 'rating-desc' }, { label: __('Most sale first'), value: 'popularity-desc' }, { label: __('Title: Alphabetical'), value: 'title-asc' }, { label: __('Title: Alphabetical reversed'), value: 'title-desc' }],
+                                options: [{ label: __('Newest to oldest', 'advanced-gutenberg'), value: 'date-desc' }, { label: __('Price: high to low', 'advanced-gutenberg'), value: 'price-desc' }, { label: __('Price: low to high', 'advanced-gutenberg'), value: 'price-asc' }, { label: __('Highest Rating first', 'advanced-gutenberg'), value: 'rating-desc' }, { label: __('Most sale first', 'advanced-gutenberg'), value: 'popularity-desc' }, { label: __('Title: Alphabetical', 'advanced-gutenberg'), value: 'title-asc' }, { label: __('Title: Alphabetical reversed', 'advanced-gutenberg'), value: 'title-desc' }],
                                 onChange: function onChange(value) {
                                     var splitedVal = value.split('-');
                                     return setAttributes({
@@ -17017,7 +17007,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "span",
                                             null,
-                                            __('Add to cart')
+                                            __('Add to cart', 'advanced-gutenberg')
                                         )
                                     )
                                 );
@@ -17026,7 +17016,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             "div",
                             null,
-                            __('No products found.')
+                            __('No products found.', 'advanced-gutenberg')
                         ) : // When products is fetching
                         React.createElement(
                             "div",
@@ -17034,7 +17024,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "span",
                                 null,
-                                __('Loading')
+                                __('Loading', 'advanced-gutenberg')
                             ),
                             React.createElement(Spinner, null)
                         ) : // When error
@@ -17042,12 +17032,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             Placeholder,
                             {
                                 icon: advProductsBlockIcon,
-                                label: __('ADVGB Woo Products Block')
+                                label: __('ADVGB Woo Products Block', 'advanced-gutenberg')
                             },
                             React.createElement(
                                 "div",
                                 { style: { marginBottom: 10 } },
-                                __('WooCommerce has not been detected, make sure WooCommerce is installed and activated.')
+                                __('WooCommerce has not been detected, make sure WooCommerce is installed and activated.', 'advanced-gutenberg')
                             ),
                             React.createElement(
                                 Button,
@@ -17057,7 +17047,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return _this3.fetchProducts();
                                     }
                                 },
-                                __('Try again')
+                                __('Try again', 'advanced-gutenberg')
                             )
                         )
                     )
@@ -17069,8 +17059,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/woo-products', {
-        title: __('Woo Products'),
-        description: __('Listing your products in a easy way.'),
+        title: __('Woo Products', 'advanced-gutenberg'),
+        description: __('Listing your products in a easy way.', 'advanced-gutenberg'),
         icon: {
             src: advProductsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
