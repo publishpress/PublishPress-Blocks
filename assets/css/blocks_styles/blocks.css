@@ -878,29 +878,6 @@ button.advgb-testimonial-preview {
     padding-top: 25px !important;
 }
 
-.advgb-testimonial .slick-slide {
-    opacity: 0.6;
-}
-
-.advgb-testimonial .slick-slide.slick-current {
-    opacity: 1;
-}
-
-.advgb-testimonial .slick-slide:not(.slick-current) > *:not(.advgb-testimonial-avatar-group) {
-    visibility: hidden;
-}
-
-.advgb-testimonial .slick-slide.slick-current > *:not(.advgb-testimonial-avatar-group) {
-    margin-left: -100px;
-    margin-right: -100px;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-.advgb-testimonial .slick-slide.slick-current .advgb-testimonial-avatar-group {
-    transform: scale(1.3);
-}
-
 .advgb-testimonial button.slick-arrow {
     background-color: transparent;
 }

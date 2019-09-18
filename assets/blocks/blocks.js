@@ -16075,32 +16075,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props2 = this.props,
                     attributes = _props2.attributes,
                     clientId = _props2.clientId;
-                var sliderView = attributes.sliderView;
+                var sliderView = attributes.sliderView,
+                    sliderColumn = attributes.sliderColumn,
+                    sliderPauseOnHover = attributes.sliderPauseOnHover,
+                    sliderAutoPlay = attributes.sliderAutoPlay,
+                    sliderInfiniteLoop = attributes.sliderInfiniteLoop,
+                    sliderDotsShown = attributes.sliderDotsShown,
+                    sliderSpeed = attributes.sliderSpeed,
+                    sliderAutoPlaySpeed = attributes.sliderAutoPlaySpeed,
+                    sliderArrowShown = attributes.sliderArrowShown;
 
 
                 if (sliderView) {
                     jQuery('#block-' + clientId + ' .advgb-testimonial.slider-view').slick({
-                        infinite: true,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: 3
+                        infinite: sliderInfiniteLoop,
+                        slidesToShow: sliderColumn,
+                        pauseOnHover: sliderPauseOnHover,
+                        autoplay: sliderAutoPlay,
+                        autoplaySpeed: sliderAutoPlaySpeed,
+                        dots: sliderDotsShown,
+                        arrows: sliderArrowShown,
+                        speed: sliderSpeed
                     });
                 }
             }
         }, {
             key: 'componentWillUpdate',
             value: function componentWillUpdate(nextProps) {
-                var _nextProps$attributes = nextProps.attributes,
-                    nextView = _nextProps$attributes.sliderView,
-                    nextColumns = _nextProps$attributes.columns;
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     clientId = _props3.clientId;
-                var sliderView = attributes.sliderView,
-                    columns = attributes.columns;
+                var sliderView = attributes.sliderView;
 
 
-                if (nextView !== sliderView || nextColumns !== columns) {
+                if (this.sliderNeedReload(nextProps.attributes, this.props.attributes)) {
                     if (sliderView) {
                         jQuery('#block-' + clientId + ' .advgb-testimonial.slick-initialized').slick('unslick');
                         jQuery('#block-' + clientId + ' .advgb-testimonial').removeAttr('tabindex').removeAttr('role').removeAttr('aria-describedby');
@@ -16110,26 +16118,114 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps) {
-                var _prevProps$attributes = prevProps.attributes,
-                    prevView = _prevProps$attributes.sliderView,
-                    prevColumns = _prevProps$attributes.columns;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     clientId = _props4.clientId;
                 var sliderView = attributes.sliderView,
-                    columns = attributes.columns;
+                    sliderColumn = attributes.sliderColumn,
+                    sliderPauseOnHover = attributes.sliderPauseOnHover,
+                    sliderAutoPlay = attributes.sliderAutoPlay,
+                    sliderInfiniteLoop = attributes.sliderInfiniteLoop,
+                    sliderDotsShown = attributes.sliderDotsShown,
+                    sliderSpeed = attributes.sliderSpeed,
+                    sliderAutoPlaySpeed = attributes.sliderAutoPlaySpeed,
+                    sliderArrowShown = attributes.sliderArrowShown;
 
+                var needReload = this.sliderNeedReload(prevProps.attributes, this.props.attributes);
+                var needUpdate = this.sliderNeedUpdate(prevProps.attributes, this.props.attributes);
+                var slider = jQuery('#block-' + clientId + ' .advgb-testimonial.slider-view');
 
-                if (sliderView !== prevView || columns !== prevColumns) {
+                if (needReload) {
                     if (sliderView) {
-                        jQuery('#block-' + clientId + ' .advgb-testimonial.slider-view').slick({
+                        slider.slick({
                             infinite: true,
-                            centerMode: true,
-                            centerPadding: '40px',
-                            slidesToShow: 3
+                            slidesToShow: 1
                         });
                     }
                 }
+
+                if (needUpdate && sliderView) {
+                    slider.slick('slickSetOption', 'slidesToShow', sliderColumn);
+                    slider.slick('slickSetOption', 'pauseOnHover', sliderPauseOnHover);
+                    slider.slick('slickSetOption', 'infinite', sliderInfiniteLoop);
+                    slider.slick('slickSetOption', 'dots', sliderDotsShown);
+                    slider.slick('slickSetOption', 'arrows', sliderArrowShown);
+                    slider.slick('slickSetOption', 'speed', sliderSpeed);
+                    slider.slick('slickSetOption', 'autoplay', sliderAutoPlay);
+                    slider.slick('slickSetOption', 'autoplaySpeed', sliderAutoPlaySpeed, true);
+                }
+            }
+        }, {
+            key: 'sliderNeedReload',
+            value: function sliderNeedReload(pa, ca) {
+                var checkReload = ['sliderView', 'columns'];
+                var reload = false;
+
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = checkReload[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var checkProp = _step.value;
+
+                        if (pa[checkProp] !== ca[checkProp]) {
+                            reload = true;
+                            break;
+                        }
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+
+                return reload;
+            }
+        }, {
+            key: 'sliderNeedUpdate',
+            value: function sliderNeedUpdate(pa, ca) {
+                var checkUpdate = ['sliderColumn', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop', 'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown'];
+                var update = false;
+
+                var _iteratorNormalCompletion2 = true;
+                var _didIteratorError2 = false;
+                var _iteratorError2 = undefined;
+
+                try {
+                    for (var _iterator2 = checkUpdate[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        var checkItem = _step2.value;
+
+                        if (pa[checkItem] !== ca[checkItem]) {
+                            update = true;
+                            break;
+                        }
+                    }
+                } catch (err) {
+                    _didIteratorError2 = true;
+                    _iteratorError2 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                            _iterator2.return();
+                        }
+                    } finally {
+                        if (_didIteratorError2) {
+                            throw _iteratorError2;
+                        }
+                    }
+                }
+
+                return update;
             }
         }, {
             key: 'updateItems',
@@ -16168,7 +16264,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     nameColor = attributes.nameColor,
                     positionColor = attributes.positionColor,
                     descColor = attributes.descColor,
-                    columns = attributes.columns;
+                    columns = attributes.columns,
+                    sliderColumn = attributes.sliderColumn,
+                    sliderPauseOnHover = attributes.sliderPauseOnHover,
+                    sliderAutoPlay = attributes.sliderAutoPlay,
+                    sliderInfiniteLoop = attributes.sliderInfiniteLoop,
+                    sliderDotsShown = attributes.sliderDotsShown,
+                    sliderDotsColor = attributes.sliderDotsColor,
+                    sliderSpeed = attributes.sliderSpeed,
+                    sliderAutoPlaySpeed = attributes.sliderAutoPlaySpeed,
+                    sliderArrowShown = attributes.sliderArrowShown,
+                    sliderArrowSize = attributes.sliderArrowSize,
+                    sliderArrowBorderSize = attributes.sliderArrowBorderSize,
+                    sliderArrowBorderRadius = attributes.sliderArrowBorderRadius,
+                    sliderArrowColor = attributes.sliderArrowColor;
 
 
                 var blockClass = ['advgb-testimonial', sliderView && 'slider-view'].filter(Boolean).join(' ');
@@ -16209,8 +16318,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(RangeControl, {
-                                label: __('Columns', 'advanced-gutenberg'),
-                                help: __('Columns range in Normal view is 1-3, and in Slider view is 4-10.', 'advanced-gutenberg'),
+                                label: !sliderView ? __('Columns', 'advanced-gutenberg') : __('Number of items', 'advanced-gutenberg'),
+                                help: __('Range in Normal view is 1-3, and in Slider view is 4-10.', 'advanced-gutenberg'),
                                 min: minCols,
                                 max: maxCols,
                                 value: columns,
@@ -16218,6 +16327,124 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ columns: value });
                                 }
                             }),
+                            sliderView && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(RangeControl, {
+                                    label: __('Items to show', 'advanced-gutenberg'),
+                                    min: 1,
+                                    max: columns,
+                                    value: sliderColumn,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ sliderColumn: value });
+                                    }
+                                }),
+                                React.createElement(
+                                    PanelBody,
+                                    { title: __('Slider Settings', 'advanced-gutenberg'), initialOpen: false },
+                                    React.createElement(ToggleControl, {
+                                        label: __('Pause on hover', 'advanced-gutenberg'),
+                                        checked: sliderPauseOnHover,
+                                        onChange: function onChange() {
+                                            return setAttributes({ sliderPauseOnHover: !sliderPauseOnHover });
+                                        }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Auto play', 'advanced-gutenberg'),
+                                        checked: sliderAutoPlay,
+                                        onChange: function onChange() {
+                                            return setAttributes({ sliderAutoPlay: !sliderAutoPlay });
+                                        }
+                                    }),
+                                    sliderAutoPlay && React.createElement(RangeControl, {
+                                        label: __('Autoplay speed (ms)', 'advanced-gutenberg'),
+                                        min: 0,
+                                        max: 10000,
+                                        value: sliderAutoPlaySpeed,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ sliderAutoPlaySpeed: value });
+                                        }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Infinite Loop', 'advanced-gutenberg'),
+                                        checked: sliderInfiniteLoop,
+                                        onChange: function onChange() {
+                                            return setAttributes({ sliderInfiniteLoop: !sliderInfiniteLoop });
+                                        }
+                                    }),
+                                    React.createElement(RangeControl, {
+                                        label: __('Transition speed (ms)', 'advanced-gutenberg'),
+                                        min: 0,
+                                        max: 5000,
+                                        value: sliderSpeed,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ sliderSpeed: value });
+                                        }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Show dots', 'advanced-gutenberg'),
+                                        checked: sliderDotsShown,
+                                        onChange: function onChange() {
+                                            return setAttributes({ sliderDotsShown: !sliderDotsShown });
+                                        }
+                                    }),
+                                    React.createElement(ToggleControl, {
+                                        label: __('Show arrows', 'advanced-gutenberg'),
+                                        checked: sliderArrowShown,
+                                        onChange: function onChange() {
+                                            return setAttributes({ sliderArrowShown: !sliderArrowShown });
+                                        }
+                                    }),
+                                    sliderArrowShown && React.createElement(
+                                        Fragment,
+                                        null,
+                                        React.createElement(RangeControl, {
+                                            label: __('Arrow size', 'advanced-gutenberg'),
+                                            min: 1,
+                                            max: 50,
+                                            value: sliderArrowSize,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ sliderArrowSize: value });
+                                            }
+                                        }),
+                                        React.createElement(RangeControl, {
+                                            label: __('Arrow border size', 'advanced-gutenberg'),
+                                            min: 0,
+                                            max: 15,
+                                            value: sliderArrowBorderSize,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ sliderArrowBorderSize: value });
+                                            }
+                                        }),
+                                        React.createElement(RangeControl, {
+                                            label: __('Arrow border radius (px)', 'advanced-gutenberg'),
+                                            min: 0,
+                                            max: 100,
+                                            value: sliderArrowBorderRadius,
+                                            onChange: function onChange(value) {
+                                                return setAttributes({ sliderArrowBorderRadius: value });
+                                            }
+                                        })
+                                    )
+                                ),
+                                React.createElement(PanelColorSettings, {
+                                    title: __('Slider Colors', 'advanced-gutenberg'),
+                                    initialOpen: false,
+                                    colorSettings: [{
+                                        label: __('Arrow and Border Color', 'advanced-gutenberg'),
+                                        value: sliderArrowColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ sliderArrowColor: value });
+                                        }
+                                    }, {
+                                        label: __('Dots Color', 'advanced-gutenberg'),
+                                        value: sliderDotsColor,
+                                        onChange: function onChange(value) {
+                                            return setAttributes({ sliderDotsColor: value });
+                                        }
+                                    }]
+                                })
+                            ),
                             React.createElement(
                                 PanelBody,
                                 { title: __('Avatar', 'advanced-gutenberg'), initialOpen: false },
@@ -16401,34 +16628,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
     );
 
-    var blockAttrsOld = {
-        avatarUrl: {
-            type: 'string',
-            default: advgbBlocks.avatarHolder
+    var blockAttrs = {
+        items: {
+            type: 'array',
+            default: times(10, function () {
+                return {
+                    avatarUrl: advgbBlocks.avatarHolder,
+                    avatarID: undefined,
+                    name: __('Person Name', 'advanced-gutenberg'),
+                    position: __('Job Position', 'advanced-gutenberg'),
+                    desc: __('A little description about this person will show up here.', 'advanced-gutenberg')
+                };
+            })
         },
-        avatarID: {
-            type: 'number'
-        },
-        avatarUrl2: {
-            type: 'string',
-            default: advgbBlocks.avatarHolder
-        },
-        avatarID2: {
-            type: 'number'
-        },
-        avatarUrl3: {
-            type: 'string',
-            default: advgbBlocks.avatarHolder
-        },
-        avatarID3: {
-            type: 'number'
-        },
-        avatarUrl4: {
-            type: 'string',
-            default: advgbBlocks.avatarHolder
-        },
-        avatarID4: {
-            type: 'number'
+        sliderView: {
+            type: 'boolean',
+            default: false
         },
         avatarColor: {
             type: 'string'
@@ -16447,59 +16662,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 70
         },
-        name: {
-            type: 'string',
-            default: __('Person Name', 'advanced-gutenberg')
-        },
-        name2: {
-            type: 'string',
-            default: __('Person Name', 'advanced-gutenberg')
-        },
-        name3: {
-            type: 'string',
-            default: __('Person Name', 'advanced-gutenberg')
-        },
-        name4: {
-            type: 'string',
-            default: __('Person Name', 'advanced-gutenberg')
-        },
         nameColor: {
             type: 'string'
         },
-        position: {
-            type: 'string',
-            default: __('Job Position', 'advanced-gutenberg')
-        },
-        position2: {
-            type: 'string',
-            default: __('Job Position', 'advanced-gutenberg')
-        },
-        position3: {
-            type: 'string',
-            default: __('Job Position', 'advanced-gutenberg')
-        },
-        position4: {
-            type: 'string',
-            default: __('Job Position', 'advanced-gutenberg')
-        },
         positionColor: {
             type: 'string'
-        },
-        desc: {
-            type: 'string',
-            default: __('A little description about this person will show up here.', 'advanced-gutenberg')
-        },
-        desc2: {
-            type: 'string',
-            default: __('A little description about this person will show up here.', 'advanced-gutenberg')
-        },
-        desc3: {
-            type: 'string',
-            default: __('A little description about this person will show up here.', 'advanced-gutenberg')
-        },
-        desc4: {
-            type: 'string',
-            default: __('A little description about this person will show up here.', 'advanced-gutenberg')
         },
         descColor: {
             type: 'string'
@@ -16507,6 +16674,54 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         columns: {
             type: 'number',
             default: 1
+        },
+        sliderColumn: {
+            type: 'number',
+            default: 1
+        },
+        sliderPauseOnHover: {
+            type: 'boolean',
+            default: true
+        },
+        sliderAutoPlay: {
+            type: 'boolean',
+            default: true
+        },
+        sliderAutoPlaySpeed: {
+            type: 'number',
+            default: 2500
+        },
+        sliderInfiniteLoop: {
+            type: 'boolean',
+            default: true
+        },
+        sliderDotsShown: {
+            type: 'boolean',
+            default: true
+        },
+        sliderDotsColor: {
+            type: 'string'
+        },
+        sliderArrowShown: {
+            type: 'boolean',
+            default: true
+        },
+        sliderArrowSize: {
+            type: 'number',
+            default: 20
+        },
+        sliderArrowBorderSize: {
+            type: 'number'
+        },
+        sliderArrowBorderRadius: {
+            type: 'number'
+        },
+        sliderArrowColor: {
+            type: 'string'
+        },
+        sliderSpeed: {
+            type: 'number',
+            default: 500
         },
         changed: {
             type: 'boolean',
@@ -16523,24 +16738,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         keywords: [__('testimonial'), __('personal'), __('about')],
-        attributes: _extends({}, blockAttrsOld, {
-            items: {
-                type: 'array',
-                default: times(10, function () {
-                    return {
-                        avatarUrl: advgbBlocks.avatarHolder,
-                        avatarID: undefined,
-                        name: __('Person Name', 'advanced-gutenberg'),
-                        position: __('Job Position', 'advanced-gutenberg'),
-                        desc: __('A little description about this person will show up here.', 'advanced-gutenberg')
-                    };
-                })
-            },
-            sliderView: {
-                type: 'boolean',
-                default: false
-            }
-        }),
+        attributes: blockAttrs,
         edit: AdvTestimonial,
         save: function save(_ref2) {
             var attributes = _ref2.attributes;
