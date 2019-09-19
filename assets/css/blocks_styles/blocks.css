@@ -805,6 +805,11 @@ div.advgb-tab-body {
 }
 
 /*Testimonial block styles*/
+.advgb-testimonial-wrapper {
+    position: relative;
+    padding: 1px 30px;
+}
+
 .advgb-testimonial:not(.slider-view) {
     display: flex;
     margin: 20px auto;
@@ -816,7 +821,7 @@ div.advgb-tab-body {
 
 .advgb-testimonial .advgb-testimonial-item {
     flex: auto;
-    margin: 0 10px;
+    padding: 0 10px;
     text-align: center;
     pointer-events: all;
 }
@@ -880,6 +885,32 @@ button.advgb-testimonial-preview {
 
 .advgb-testimonial button.slick-arrow {
     background-color: transparent;
+}
+
+.advgb-testimonial-wrapper button.advgb-slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #000;
+    cursor: pointer;
+    padding: 7px 10px;
+    width: 20px;
+    height: auto;
+}
+
+.advgb-testimonial-wrapper button.advgb-slider-arrow svg {
+    display: block;
+}
+
+.advgb-testimonial-wrapper button.advgb-slider-arrow.advgb-slider-prev {
+    left: -10px;
+}
+
+.advgb-testimonial-wrapper button.advgb-slider-arrow.advgb-slider-next {
+    right: -10px;
 }
 
 /*Separator styles*/

@@ -4114,17 +4114,12 @@ float: left;'
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
             wp_enqueue_script('slick_js');
-            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
-                $(".advgb-testimonial.slider-view:not(.slick-initialized)").slick({
-                    infinite: true,
-                    centerMode: true,
-                    centerPadding: "40px",
-                    slidesToShow: 3,
-                    responsive: [
-                        {breakpoint: 480, settings: {slidesToShow: 1}}
-                    ]
-                })
-            });');
+            wp_enqueue_script(
+                'advgb_testimonial_frontend',
+                plugins_url('assets/blocks/testimonial/frontend.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
         }
 
         if (strpos($content, 'advgb-testimonial') !== false) {
@@ -4342,6 +4337,13 @@ float: left;'
 
                 $style_html .= '.'. $block_class . '.advgb-image-block:hover .advgb-image-overlay{';
                 $style_html .= 'opacity:'.($hover_opacity/100).' !important;';
+                $style_html .= '}';
+            } elseif ($blockName === 'advgb/testimonial') {
+                $block_id    = $blockAttrs['pid'];
+                $dots_color  = isset($blockAttrs['sliderDotsColor']) ? $blockAttrs['sliderDotsColor'] : '#000';
+
+                $style_html .= '#'. $block_id . ' .slick-dots li button:before{';
+                $style_html .= 'color:'.$dots_color.' !important;';
                 $style_html .= '}';
             }
         }

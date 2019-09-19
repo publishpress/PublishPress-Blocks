@@ -1,11 +1,25 @@
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
-    const { Component, Fragment } = wpElement;
+    const { Component, Fragment, renderToString } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpBlockEditor;
     const { RangeControl, ToggleControl, PanelBody, Tooltip } = wpComponents;
     const { times } = lodash;
+
+    const PREV_ARROW = (
+        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24">
+            <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+        </svg>
+    );
+
+    const NEXT_ARROW = (
+        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24">
+            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+        </svg>
+    );
 
     class AdvTestimonial extends Component {
         constructor() {
@@ -37,21 +51,28 @@
         }
 
         componentDidMount() {
-            const { attributes, clientId } = this.props;
-            const { sliderView, sliderColumn, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
-                sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown,
+            const { attributes, setAttributes, clientId } = this.props;
+            const { pid, sliderView, sliderColumn, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
+                sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
+
+            if (!pid) {
+                setAttributes( { pid: `advgb-testimonial-${clientId}` } );
+            }
 
             if (sliderView) {
                 jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({
                     infinite: sliderInfiniteLoop,
                     slidesToShow: sliderColumn,
+                    slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                     pauseOnHover: sliderPauseOnHover,
                     autoplay: sliderAutoPlay,
                     autoplaySpeed: sliderAutoPlaySpeed,
                     dots: sliderDotsShown,
                     arrows: sliderArrowShown,
                     speed: sliderSpeed,
+                    prevArrow: jQuery('.advgb-slider-prev'),
+                    nextArrow: jQuery('.advgb-slider-next'),
                 });
             }
         }
@@ -74,7 +95,7 @@
         componentDidUpdate(prevProps) {
             const { attributes, clientId } = this.props;
             const { sliderView, sliderColumn, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
-                sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown,
+                sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
             const needReload = this.sliderNeedReload(prevProps.attributes, this.props.attributes);
             const needUpdate = this.sliderNeedUpdate(prevProps.attributes, this.props.attributes);
@@ -83,14 +104,24 @@
             if (needReload) {
                 if (sliderView) {
                     slider.slick({
-                        infinite: true,
-                        slidesToShow: 1,
+                        infinite: sliderInfiniteLoop,
+                        slidesToShow: sliderColumn,
+                        slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
+                        pauseOnHover: sliderPauseOnHover,
+                        autoplay: sliderAutoPlay,
+                        autoplaySpeed: sliderAutoPlaySpeed,
+                        dots: sliderDotsShown,
+                        arrows: sliderArrowShown,
+                        speed: sliderSpeed,
+                        prevArrow: jQuery('.advgb-slider-prev'),
+                        nextArrow: jQuery('.advgb-slider-next'),
                     });
                 }
             }
 
             if (needUpdate && sliderView) {
                 slider.slick('slickSetOption', 'slidesToShow', sliderColumn);
+                slider.slick('slickSetOption', 'slidesToScroll', sliderItemsToScroll);
                 slider.slick('slickSetOption', 'pauseOnHover', sliderPauseOnHover);
                 slider.slick('slickSetOption', 'infinite', sliderInfiniteLoop);
                 slider.slick('slickSetOption', 'dots', sliderDotsShown);
@@ -117,7 +148,7 @@
 
         sliderNeedUpdate(pa, ca) {
             const checkUpdate = [
-                'sliderColumn', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop',
+                'sliderColumn', 'sliderItemsToScroll', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop',
                 'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown',
             ];
             let update = false;
@@ -147,11 +178,11 @@
 
         render() {
             const { currentEdit } = this.state;
-            const { attributes, setAttributes, isSelected } = this.props;
+            const { attributes, setAttributes, isSelected, clientId } = this.props;
             const {
-                items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
-                nameColor, positionColor, descColor, columns, sliderColumn, sliderPauseOnHover, sliderAutoPlay,
-                sliderInfiniteLoop, sliderDotsShown, sliderDotsColor, sliderSpeed, sliderAutoPlaySpeed,
+                pid, items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
+                nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderPauseOnHover,
+                sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, sliderDotsColor, sliderSpeed, sliderAutoPlaySpeed,
                 sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor,
             } = attributes;
 
@@ -179,6 +210,14 @@
                 validCols = sliderView ? 4 : 1;
             }
 
+            const arrowStyle = {
+                color: sliderArrowColor,
+                borderColor: sliderArrowColor,
+                borderWidth: sliderArrowBorderSize,
+                borderRadius: sliderArrowBorderRadius ? `${sliderArrowBorderRadius}%` : undefined,
+                width: sliderArrowSize,
+            };
+
             return (
                 <Fragment>
                     <InspectorControls>
@@ -204,6 +243,13 @@
                                     max={ columns }
                                     value={ sliderColumn }
                                     onChange={ (value) => setAttributes( { sliderColumn: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Items to scroll', 'advanced-gutenberg' ) }
+                                    min={ 1 }
+                                    max={ sliderColumn }
+                                    value={ sliderItemsToScroll }
+                                    onChange={ (value) => setAttributes( { sliderItemsToScroll: value } ) }
                                 />
                                 <PanelBody title={ __( 'Slider Settings', 'advanced-gutenberg' ) } initialOpen={ false }>
                                     <ToggleControl
@@ -251,8 +297,8 @@
                                     <Fragment>
                                         <RangeControl
                                             label={ __( 'Arrow size', 'advanced-gutenberg' ) }
-                                            min={ 1 }
-                                            max={ 50 }
+                                            min={ 40 }
+                                            max={ 150 }
                                             value={ sliderArrowSize }
                                             onChange={ (value) => setAttributes( { sliderArrowSize: value } ) }
                                         />
@@ -264,7 +310,7 @@
                                             onChange={ (value) => setAttributes( { sliderArrowBorderSize: value } ) }
                                         />
                                         <RangeControl
-                                            label={ __( 'Arrow border radius (px)', 'advanced-gutenberg' ) }
+                                            label={ __( 'Arrow border radius (%)', 'advanced-gutenberg' ) }
                                             min={ 0 }
                                             max={ 100 }
                                             value={ sliderArrowBorderRadius }
@@ -353,75 +399,95 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className={ blockClass }>
-                        {items.map( (item, idx) => {
-                            i++;
-                            if (i > validCols) return false;
-                            return (
-                                <div className="advgb-testimonial-item" key={idx}>
-                                    <MediaUpload
-                                        allowedTypes={ ["image"] }
-                                        onSelect={ (media) => this.updateItems(idx, {
-                                            avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
-                                            avatarID: media.id
-                                        } ) }
-                                        value={ item.avatarID }
-                                        render={ ( { open } ) => (
-                                            <div className="advgb-testimonial-avatar-group">
-                                                <Tooltip text={ __( 'Click to change avatar', 'advanced-gutenberg' ) }>
-                                                    <div className="advgb-testimonial-avatar"
-                                                         onClick={ open }
-                                                         style={ {
-                                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
-                                                             backgroundColor: avatarColor,
-                                                             borderRadius: avatarBorderRadius + '%',
-                                                             borderWidth: avatarBorderWidth + 'px',
-                                                             borderColor: avatarBorderColor,
-                                                             width: avatarSize + 'px',
-                                                             height: avatarSize + 'px',
-                                                         } }
-                                                    />
-                                                </Tooltip>
-                                                <Tooltip text={ __( 'Remove avatar', 'advanced-gutenberg' ) }>
+                    <div className="advgb-testimonial-wrapper" id={pid}>
+                        <div className={ blockClass }>
+                            {items.map( (item, idx) => {
+                                i++;
+                                if (i > validCols) return false;
+                                return (
+                                    <div className="advgb-testimonial-item" key={idx}>
+                                        <MediaUpload
+                                            allowedTypes={ ["image"] }
+                                            onSelect={ (media) => this.updateItems(idx, {
+                                                avatarUrl: media.sizes.thumbnail ? media.sizes.thumbnail.url : media.sizes.full.url,
+                                                avatarID: media.id
+                                            } ) }
+                                            value={ item.avatarID }
+                                            render={ ( { open } ) => (
+                                                <div className="advgb-testimonial-avatar-group">
+                                                    <Tooltip text={ __( 'Click to change avatar', 'advanced-gutenberg' ) }>
+                                                        <div className="advgb-testimonial-avatar"
+                                                             onClick={ open }
+                                                             style={ {
+                                                                 backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
+                                                                 backgroundColor: avatarColor,
+                                                                 borderRadius: avatarBorderRadius + '%',
+                                                                 borderWidth: avatarBorderWidth + 'px',
+                                                                 borderColor: avatarBorderColor,
+                                                                 width: avatarSize + 'px',
+                                                                 height: avatarSize + 'px',
+                                                             } }
+                                                        />
+                                                    </Tooltip>
+                                                    <Tooltip text={ __( 'Remove avatar', 'advanced-gutenberg' ) }>
                                                 <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
                                                       onClick={ () => this.updateItems(idx, { avatarUrl: undefined, avatarID: undefined } ) }
                                                 />
-                                                </Tooltip>
-                                            </div>
-                                        ) }
-                                    />
-                                    <RichText
-                                        tagName="h4"
-                                        className="advgb-testimonial-name"
-                                        value={ item.name }
-                                        isSelected={ isSelected && currentEdit === 'name' + idx }
-                                        unstableOnFocus={ () => this.setState( { currentEdit: 'name' + idx } ) }
-                                        onChange={ (value) => this.updateItems(idx, { name: value } ) }
-                                        style={ { color: nameColor } }
-                                        placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
-                                    />
-                                    <RichText
-                                        tagName="p"
-                                        className="advgb-testimonial-position"
-                                        value={ item.position }
-                                        isSelected={ isSelected && currentEdit === 'pos' + idx }
-                                        unstableOnFocus={ () => this.setState( { currentEdit: 'pos' + idx } ) }
-                                        onChange={ (value) => this.updateItems(idx, { position: value } ) }
-                                        style={ { color: positionColor } }
-                                        placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
-                                    />
-                                    <RichText
-                                        tagName="p"
-                                        className="advgb-testimonial-desc"
-                                        value={ item.desc }
-                                        isSelected={ isSelected && currentEdit === 'desc' + idx }
-                                        unstableOnFocus={ () => this.setState( { currentEdit: 'desc' + idx } ) }
-                                        onChange={ (value) => this.updateItems(idx, { desc: value } ) }
-                                        style={ { color: descColor } }
-                                        placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
-                                    />
-                                </div>
-                        ) } ) }
+                                                    </Tooltip>
+                                                </div>
+                                            ) }
+                                        />
+                                        <RichText
+                                            tagName="h4"
+                                            className="advgb-testimonial-name"
+                                            value={ item.name }
+                                            isSelected={ isSelected && currentEdit === 'name' + idx }
+                                            unstableOnFocus={ () => this.setState( { currentEdit: 'name' + idx } ) }
+                                            onChange={ (value) => this.updateItems(idx, { name: value } ) }
+                                            style={ { color: nameColor } }
+                                            placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
+                                        />
+                                        <RichText
+                                            tagName="p"
+                                            className="advgb-testimonial-position"
+                                            value={ item.position }
+                                            isSelected={ isSelected && currentEdit === 'pos' + idx }
+                                            unstableOnFocus={ () => this.setState( { currentEdit: 'pos' + idx } ) }
+                                            onChange={ (value) => this.updateItems(idx, { position: value } ) }
+                                            style={ { color: positionColor } }
+                                            placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
+                                        />
+                                        <RichText
+                                            tagName="p"
+                                            className="advgb-testimonial-desc"
+                                            value={ item.desc }
+                                            isSelected={ isSelected && currentEdit === 'desc' + idx }
+                                            unstableOnFocus={ () => this.setState( { currentEdit: 'desc' + idx } ) }
+                                            onChange={ (value) => this.updateItems(idx, { desc: value } ) }
+                                            style={ { color: descColor } }
+                                            placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
+                                        />
+                                    </div>
+                                ) } ) }
+                        </div>
+                        {sliderView && (
+                        <Fragment>
+                            <button className="advgb-slider-arrow advgb-slider-prev"
+                                    style={ arrowStyle }
+                            >
+                                {PREV_ARROW}
+                            </button>
+                            <button className="advgb-slider-arrow advgb-slider-next"
+                                    style={ arrowStyle }
+                            >
+                                {NEXT_ARROW}
+                            </button>
+                            <style>
+                                {`#${pid} .slick-dots li.slick-active button:before {color: ${sliderDotsColor}}`}
+                                {`#${pid} .slick-dots li button:before {color: ${sliderDotsColor}}`}
+                            </style>
+                        </Fragment>
+                        )}
                     </div>
                 </Fragment>
             )
@@ -445,6 +511,9 @@
                 position: __( 'Job Position', 'advanced-gutenberg' ),
                 desc: __( 'A little description about this person will show up here.', 'advanced-gutenberg' ),
             } ) ),
+        },
+        pid: {
+            type: 'string',
         },
         sliderView: {
             type: 'boolean',
@@ -484,6 +553,10 @@
             type: 'number',
             default: 1,
         },
+        sliderItemsToScroll: {
+            type: 'number',
+            default: 1,
+        },
         sliderPauseOnHover: {
             type: 'boolean',
             default: true,
@@ -513,7 +586,7 @@
         },
         sliderArrowSize: {
             type: 'number',
-            default: 20,
+            default: 50,
         },
         sliderArrowBorderSize: {
             type: 'number',
@@ -547,17 +620,10 @@
         edit: AdvTestimonial,
         save: function ( { attributes } ) {
             const {
-                items,
-                sliderView,
-                avatarColor,
-                avatarBorderRadius,
-                avatarBorderWidth,
-                avatarBorderColor,
-                avatarSize,
-                nameColor,
-                positionColor,
-                descColor,
-                columns,
+                pid, items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
+                nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderPauseOnHover,
+                sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, sliderDotsColor, sliderSpeed, sliderAutoPlaySpeed,
+                sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor,
             } = attributes;
 
             const blockClass = [
@@ -577,45 +643,156 @@
                 validCols = 10;
             }
 
+            const arrowStyle = {
+                color: sliderArrowColor,
+                borderColor: sliderArrowColor,
+                borderWidth: sliderArrowBorderSize,
+                borderRadius: sliderArrowBorderRadius ? `${sliderArrowBorderRadius}%` : undefined,
+                width: sliderArrowSize,
+            };
+
             return (
-                <div className={ blockClass }>
-                    {items.map( (item, idx) => {
-                        i++;
-                        if (i > validCols) return false;
-                        return (
-                            <div className="advgb-testimonial-item" key={idx}>
-                                <div className="advgb-testimonial-avatar-group">
-                                    <div className="advgb-testimonial-avatar"
-                                         style={ {
-                                             backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
-                                             backgroundColor: avatarColor,
-                                             borderRadius: avatarBorderRadius + '%',
-                                             borderWidth: avatarBorderWidth + 'px',
-                                             borderColor: avatarBorderColor,
-                                             width: avatarSize + 'px',
-                                             height: avatarSize + 'px',
-                                         } }
-                                    />
+                <div className="advgb-testimonial-wrapper" id={pid}
+                     data-col={ sliderView ? sliderColumn : undefined }
+                     data-scroll={ sliderView ? sliderItemsToScroll : undefined }
+                     data-pause={ sliderView ? sliderPauseOnHover : undefined }
+                     data-autoplay={ sliderView ? sliderAutoPlay : undefined }
+                     data-apspeed={ sliderView ? sliderAutoPlaySpeed : undefined }
+                     data-loop={ sliderView ? sliderInfiniteLoop : undefined }
+                     data-dots={ sliderView ? sliderDotsShown : undefined }
+                     data-speed={ sliderView ? sliderSpeed : undefined }
+                     data-arrows={ sliderView ? sliderArrowShown : undefined }
+                >
+                    <div className={ blockClass }>
+                        {items.map( (item, idx) => {
+                            i++;
+                            if (i > validCols) return false;
+                            return (
+                                <div className="advgb-testimonial-item" key={idx}>
+                                    <div className="advgb-testimonial-avatar-group">
+                                        <div className="advgb-testimonial-avatar"
+                                             style={ {
+                                                 backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
+                                                 backgroundColor: avatarColor,
+                                                 borderRadius: avatarBorderRadius + '%',
+                                                 borderWidth: avatarBorderWidth + 'px',
+                                                 borderColor: avatarBorderColor,
+                                                 width: avatarSize + 'px',
+                                                 height: avatarSize + 'px',
+                                             } }
+                                        />
+                                    </div>
+                                    <h4 className="advgb-testimonial-name"
+                                        style={ { color: nameColor } }
+                                    >
+                                        { item.name }
+                                    </h4>
+                                    <p className="advgb-testimonial-position"
+                                       style={ { color: positionColor } }
+                                    >
+                                        { item.position }
+                                    </p>
+                                    <p className="advgb-testimonial-desc"
+                                       style={ { color: descColor } }
+                                    >
+                                        { item.desc }
+                                    </p>
                                 </div>
-                                <h4 className="advgb-testimonial-name"
-                                    style={ { color: nameColor } }
-                                >
-                                    { item.name }
-                                </h4>
-                                <p className="advgb-testimonial-position"
-                                   style={ { color: positionColor } }
-                                >
-                                    { item.position }
-                                </p>
-                                <p className="advgb-testimonial-desc"
-                                   style={ { color: descColor } }
-                                >
-                                    { item.desc }
-                                </p>
-                            </div>
-                        ) } ) }
+                            ) } ) }
+                    </div>
+                    {sliderView && (
+                        <Fragment>
+                            <button className="advgb-slider-arrow advgb-slider-prev"
+                                    style={ arrowStyle }
+                            >
+                                {PREV_ARROW}
+                            </button>
+                            <button className="advgb-slider-arrow advgb-slider-next"
+                                    style={ arrowStyle }
+                            >
+                                {NEXT_ARROW}
+                            </button>
+                        </Fragment>
+                    )}
                 </div>
             );
         },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        items,
+                        sliderView,
+                        avatarColor,
+                        avatarBorderRadius,
+                        avatarBorderWidth,
+                        avatarBorderColor,
+                        avatarSize,
+                        nameColor,
+                        positionColor,
+                        descColor,
+                        columns,
+                    } = attributes;
+
+                    const blockClass = [
+                        'advgb-testimonial',
+                        sliderView && 'slider-view',
+                    ].filter( Boolean ).join( ' ' );
+
+                    let i = 0;
+                    let validCols = columns;
+                    if (columns < 1) {
+                        validCols = 1;
+                    } else if (columns > 3 && !sliderView) {
+                        validCols = 3;
+                    } else if (columns < 4 && sliderView) {
+                        validCols = 4;
+                    } else if (columns > 10) {
+                        validCols = 10;
+                    }
+
+                    return (
+                        <div className={ blockClass }>
+                            {items.map( (item, idx) => {
+                                i++;
+                                if (i > validCols) return false;
+                                return (
+                                    <div className="advgb-testimonial-item" key={idx}>
+                                        <div className="advgb-testimonial-avatar-group">
+                                            <div className="advgb-testimonial-avatar"
+                                                 style={ {
+                                                     backgroundImage: `url(${item.avatarUrl ? item.avatarUrl : advgbBlocks.avatarHolder})`,
+                                                     backgroundColor: avatarColor,
+                                                     borderRadius: avatarBorderRadius + '%',
+                                                     borderWidth: avatarBorderWidth + 'px',
+                                                     borderColor: avatarBorderColor,
+                                                     width: avatarSize + 'px',
+                                                     height: avatarSize + 'px',
+                                                 } }
+                                            />
+                                        </div>
+                                        <h4 className="advgb-testimonial-name"
+                                            style={ { color: nameColor } }
+                                        >
+                                            { item.name }
+                                        </h4>
+                                        <p className="advgb-testimonial-position"
+                                           style={ { color: positionColor } }
+                                        >
+                                            { item.position }
+                                        </p>
+                                        <p className="advgb-testimonial-desc"
+                                           style={ { color: descColor } }
+                                        >
+                                            { item.desc }
+                                        </p>
+                                    </div>
+                                ) } ) }
+                        </div>
+                    );
+                }
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
