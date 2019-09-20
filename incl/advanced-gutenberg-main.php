@@ -4032,6 +4032,11 @@ float: left;'
                     });
                 });
             });');
+            $content = preg_replace_callback(
+                '@<div[^>]*?advgb\-accordion\-wrapper.*?(</div></div>.?</div>)@s',
+                array($this, 'decodeHtmlEntity'),
+                $content
+            );
         }
 
         if (strpos($content, 'advgb-tabs-block') !== false) {

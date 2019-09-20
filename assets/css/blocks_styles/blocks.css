@@ -18,9 +18,9 @@
     width: 100%;
 }
 
-#editor .slick-slide {
-    pointer-events: none;
-}
+/*#editor .slick-slide {*/
+/*    pointer-events: none;*/
+/*}*/
 
 .slick-arrow:focus {
     background: transparent;
@@ -824,6 +824,32 @@ div.advgb-tab-body {
     padding: 0 10px;
     text-align: center;
     pointer-events: all;
+    display: flex !important;
+    flex-direction: column;
+}
+
+.advgb-testimonial.advgb-avatar-top .advgb-testimonial-item {
+    flex-direction: column;
+}
+
+.advgb-testimonial.advgb-avatar-bottom .advgb-testimonial-item {
+    flex-direction: column-reverse;
+}
+
+.advgb-testimonial.advgb-avatar-left .advgb-testimonial-item {
+    flex-direction: row;
+}
+
+.advgb-testimonial.advgb-avatar-right .advgb-testimonial-item {
+    flex-direction: row-reverse;
+}
+
+.advgb-testimonial.advgb-avatar-right .advgb-testimonial-item .advgb-testimonial-avatar-clear {
+    left: -30px;
+}
+
+.advgb-testimonial .advgb-testimonial-item .advgb-testimonial-info {
+    flex: 1;
 }
 
 .advgb-testimonial > div {
@@ -834,9 +860,10 @@ div.advgb-tab-body {
 
 .advgb-testimonial .advgb-testimonial-avatar-group {
     position: relative;
+    align-self: center;
 }
 
-.advgb-testimonial .advgb-testimonial-avatar-group:hover .advgb-testimonial-avatar-clear {
+.advgb-testimonial:hover .advgb-testimonial-avatar-clear {
     display: inline-block;
 }
 
@@ -863,6 +890,7 @@ div.advgb-tab-body {
     margin-left: 5px;
     display: none;
     cursor: pointer;
+    z-index: 99;
 }
 
 .advgb-testimonial .advgb-testimonial-name {
@@ -895,6 +923,7 @@ button.advgb-testimonial-preview {
     outline: none;
     box-shadow: none;
     border: 1px solid #000;
+    color: #000;
     cursor: pointer;
     padding: 7px 10px;
     width: 20px;

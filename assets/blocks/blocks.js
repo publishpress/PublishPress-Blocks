@@ -16026,6 +16026,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         MediaUpload = _wpBlockEditor.MediaUpload;
     var RangeControl = wpComponents.RangeControl,
         ToggleControl = wpComponents.ToggleControl,
+        SelectControl = wpComponents.SelectControl,
         PanelBody = wpComponents.PanelBody,
         Tooltip = wpComponents.Tooltip;
     var _lodash = lodash,
@@ -16195,7 +16196,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "sliderNeedReload",
             value: function sliderNeedReload(pa, ca) {
-                var checkReload = ['sliderView', 'columns'];
+                var checkReload = ['sliderView', 'columns', 'avatarPosition'];
                 var reload = false;
 
                 var _iteratorNormalCompletion = true;
@@ -16317,10 +16318,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     sliderArrowSize = attributes.sliderArrowSize,
                     sliderArrowBorderSize = attributes.sliderArrowBorderSize,
                     sliderArrowBorderRadius = attributes.sliderArrowBorderRadius,
-                    sliderArrowColor = attributes.sliderArrowColor;
+                    sliderArrowColor = attributes.sliderArrowColor,
+                    avatarPosition = attributes.avatarPosition;
 
 
-                var blockClass = ['advgb-testimonial', sliderView && 'slider-view'].filter(Boolean).join(' ');
+                var blockClass = ['advgb-testimonial', sliderView && 'slider-view', "advgb-avatar-" + avatarPosition].filter(Boolean).join(' ');
 
                 var maxCols = sliderView ? 10 : 3;
                 var minCols = sliderView ? 4 : 1;
@@ -16548,6 +16550,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     onChange: function onChange(value) {
                                         return setAttributes({ avatarSize: value });
                                     }
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Avatar Position', 'advanced-gutenberg'),
+                                    value: avatarPosition,
+                                    options: [{ label: __('Top', 'advanced-gutenberg'), value: 'top' }, { label: __('Bottom', 'advanced-gutenberg'), value: 'bottom' }, { label: __('Left', 'advanced-gutenberg'), value: 'left' }, { label: __('right', 'advanced-gutenberg'), value: 'right' }],
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ avatarPosition: value });
+                                    }
                                 })
                             ),
                             React.createElement(PanelColorSettings, {
@@ -16629,48 +16639,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             );
                                         }
                                     }),
-                                    React.createElement(RichText, {
-                                        tagName: "h4",
-                                        className: "advgb-testimonial-name",
-                                        value: item.name,
-                                        isSelected: isSelected && currentEdit === 'name' + idx,
-                                        unstableOnFocus: function unstableOnFocus() {
-                                            return _this2.setState({ currentEdit: 'name' + idx });
-                                        },
-                                        onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { name: value });
-                                        },
-                                        style: { color: nameColor },
-                                        placeholder: __('Text…', 'advanced-gutenberg')
-                                    }),
-                                    React.createElement(RichText, {
-                                        tagName: "p",
-                                        className: "advgb-testimonial-position",
-                                        value: item.position,
-                                        isSelected: isSelected && currentEdit === 'pos' + idx,
-                                        unstableOnFocus: function unstableOnFocus() {
-                                            return _this2.setState({ currentEdit: 'pos' + idx });
-                                        },
-                                        onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { position: value });
-                                        },
-                                        style: { color: positionColor },
-                                        placeholder: __('Text…', 'advanced-gutenberg')
-                                    }),
-                                    React.createElement(RichText, {
-                                        tagName: "p",
-                                        className: "advgb-testimonial-desc",
-                                        value: item.desc,
-                                        isSelected: isSelected && currentEdit === 'desc' + idx,
-                                        unstableOnFocus: function unstableOnFocus() {
-                                            return _this2.setState({ currentEdit: 'desc' + idx });
-                                        },
-                                        onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { desc: value });
-                                        },
-                                        style: { color: descColor },
-                                        placeholder: __('Text…', 'advanced-gutenberg')
-                                    })
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-testimonial-info" },
+                                        React.createElement(RichText, {
+                                            tagName: "h4",
+                                            className: "advgb-testimonial-name",
+                                            value: item.name,
+                                            isSelected: isSelected && currentEdit === 'name' + idx,
+                                            unstableOnFocus: function unstableOnFocus() {
+                                                return _this2.setState({ currentEdit: 'name' + idx });
+                                            },
+                                            onChange: function onChange(value) {
+                                                return _this2.updateItems(idx, { name: value });
+                                            },
+                                            style: { color: nameColor },
+                                            placeholder: __('Text…', 'advanced-gutenberg')
+                                        }),
+                                        React.createElement(RichText, {
+                                            tagName: "p",
+                                            className: "advgb-testimonial-position",
+                                            value: item.position,
+                                            isSelected: isSelected && currentEdit === 'pos' + idx,
+                                            unstableOnFocus: function unstableOnFocus() {
+                                                return _this2.setState({ currentEdit: 'pos' + idx });
+                                            },
+                                            onChange: function onChange(value) {
+                                                return _this2.updateItems(idx, { position: value });
+                                            },
+                                            style: { color: positionColor },
+                                            placeholder: __('Text…', 'advanced-gutenberg')
+                                        }),
+                                        React.createElement(RichText, {
+                                            tagName: "p",
+                                            className: "advgb-testimonial-desc",
+                                            value: item.desc,
+                                            isSelected: isSelected && currentEdit === 'desc' + idx,
+                                            unstableOnFocus: function unstableOnFocus() {
+                                                return _this2.setState({ currentEdit: 'desc' + idx });
+                                            },
+                                            onChange: function onChange(value) {
+                                                return _this2.updateItems(idx, { desc: value });
+                                            },
+                                            style: { color: descColor },
+                                            placeholder: __('Text…', 'advanced-gutenberg')
+                                        })
+                                    )
                                 );
                             })
                         ),
@@ -16749,6 +16763,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         avatarSize: {
             type: 'number',
             default: 70
+        },
+        avatarPosition: {
+            type: 'string',
+            default: 'top'
         },
         nameColor: {
             type: 'string'
@@ -16852,7 +16870,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 sliderAutoPlay = attributes.sliderAutoPlay,
                 sliderInfiniteLoop = attributes.sliderInfiniteLoop,
                 sliderDotsShown = attributes.sliderDotsShown,
-                sliderDotsColor = attributes.sliderDotsColor,
+                avatarPosition = attributes.avatarPosition,
                 sliderSpeed = attributes.sliderSpeed,
                 sliderAutoPlaySpeed = attributes.sliderAutoPlaySpeed,
                 sliderArrowShown = attributes.sliderArrowShown,
@@ -16862,7 +16880,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 sliderArrowColor = attributes.sliderArrowColor;
 
 
-            var blockClass = ['advgb-testimonial', sliderView && 'slider-view'].filter(Boolean).join(' ');
+            var blockClass = ['advgb-testimonial', sliderView && 'slider-view', "advgb-avatar-" + avatarPosition].filter(Boolean).join(' ');
 
             var i = 0;
             var validCols = columns;
@@ -16922,25 +16940,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 })
                             ),
                             React.createElement(
-                                "h4",
-                                { className: "advgb-testimonial-name",
-                                    style: { color: nameColor }
-                                },
-                                item.name
-                            ),
-                            React.createElement(
-                                "p",
-                                { className: "advgb-testimonial-position",
-                                    style: { color: positionColor }
-                                },
-                                item.position
-                            ),
-                            React.createElement(
-                                "p",
-                                { className: "advgb-testimonial-desc",
-                                    style: { color: descColor }
-                                },
-                                item.desc
+                                "div",
+                                { className: "advgb-testimonial-info" },
+                                React.createElement(
+                                    "h4",
+                                    { className: "advgb-testimonial-name",
+                                        style: { color: nameColor }
+                                    },
+                                    item.name
+                                ),
+                                React.createElement(
+                                    "p",
+                                    { className: "advgb-testimonial-position",
+                                        style: { color: positionColor }
+                                    },
+                                    item.position
+                                ),
+                                React.createElement(
+                                    "p",
+                                    { className: "advgb-testimonial-desc",
+                                        style: { color: descColor }
+                                    },
+                                    item.desc
+                                )
                             )
                         );
                     })

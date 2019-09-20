@@ -4,7 +4,7 @@
     const { Component, Fragment, renderToString } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpBlockEditor;
-    const { RangeControl, ToggleControl, PanelBody, Tooltip } = wpComponents;
+    const { RangeControl, ToggleControl, SelectControl, PanelBody, Tooltip } = wpComponents;
     const { times } = lodash;
 
     const PREV_ARROW = (
@@ -133,7 +133,7 @@
         }
 
         sliderNeedReload(pa, ca) {
-            const checkReload = ['sliderView', 'columns'];
+            const checkReload = ['sliderView', 'columns', 'avatarPosition'];
             let reload = false;
 
             for (let checkProp of checkReload) {
@@ -183,12 +183,13 @@
                 pid, items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
                 nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderPauseOnHover,
                 sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, sliderDotsColor, sliderSpeed, sliderAutoPlaySpeed,
-                sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor,
+                sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor, avatarPosition,
             } = attributes;
 
             const blockClass = [
                 'advgb-testimonial',
                 sliderView && 'slider-view',
+                `advgb-avatar-${avatarPosition}`
             ].filter( Boolean ).join( ' ' );
 
             const maxCols  = sliderView ? 10 : 3;
@@ -375,6 +376,17 @@
                                     value={ avatarSize }
                                     onChange={ (value) => setAttributes( { avatarSize: value } ) }
                                 />
+                                <SelectControl
+                                    label={ __( 'Avatar Position', 'advanced-gutenberg' ) }
+                                    value={ avatarPosition }
+                                    options={ [
+                                        {label: __( 'Top', 'advanced-gutenberg' ), value: 'top'},
+                                        {label: __( 'Bottom', 'advanced-gutenberg' ), value: 'bottom'},
+                                        {label: __( 'Left', 'advanced-gutenberg' ), value: 'left'},
+                                        {label: __( 'right', 'advanced-gutenberg' ), value: 'right'},
+                                    ] }
+                                    onChange={ (value) => setAttributes( { avatarPosition: value } ) }
+                                />
                             </PanelBody>
                             <PanelColorSettings
                                 title={ __( 'Text Colors', 'advanced-gutenberg' ) }
@@ -430,43 +442,45 @@
                                                         />
                                                     </Tooltip>
                                                     <Tooltip text={ __( 'Remove avatar', 'advanced-gutenberg' ) }>
-                                                <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
-                                                      onClick={ () => this.updateItems(idx, { avatarUrl: undefined, avatarID: undefined } ) }
-                                                />
+                                                        <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
+                                                              onClick={ () => this.updateItems(idx, { avatarUrl: undefined, avatarID: undefined } ) }
+                                                        />
                                                     </Tooltip>
                                                 </div>
                                             ) }
                                         />
-                                        <RichText
-                                            tagName="h4"
-                                            className="advgb-testimonial-name"
-                                            value={ item.name }
-                                            isSelected={ isSelected && currentEdit === 'name' + idx }
-                                            unstableOnFocus={ () => this.setState( { currentEdit: 'name' + idx } ) }
-                                            onChange={ (value) => this.updateItems(idx, { name: value } ) }
-                                            style={ { color: nameColor } }
-                                            placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
-                                        />
-                                        <RichText
-                                            tagName="p"
-                                            className="advgb-testimonial-position"
-                                            value={ item.position }
-                                            isSelected={ isSelected && currentEdit === 'pos' + idx }
-                                            unstableOnFocus={ () => this.setState( { currentEdit: 'pos' + idx } ) }
-                                            onChange={ (value) => this.updateItems(idx, { position: value } ) }
-                                            style={ { color: positionColor } }
-                                            placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
-                                        />
-                                        <RichText
-                                            tagName="p"
-                                            className="advgb-testimonial-desc"
-                                            value={ item.desc }
-                                            isSelected={ isSelected && currentEdit === 'desc' + idx }
-                                            unstableOnFocus={ () => this.setState( { currentEdit: 'desc' + idx } ) }
-                                            onChange={ (value) => this.updateItems(idx, { desc: value } ) }
-                                            style={ { color: descColor } }
-                                            placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
-                                        />
+                                        <div className="advgb-testimonial-info">
+                                            <RichText
+                                                tagName="h4"
+                                                className="advgb-testimonial-name"
+                                                value={ item.name }
+                                                isSelected={ isSelected && currentEdit === 'name' + idx }
+                                                unstableOnFocus={ () => this.setState( { currentEdit: 'name' + idx } ) }
+                                                onChange={ (value) => this.updateItems(idx, { name: value } ) }
+                                                style={ { color: nameColor } }
+                                                placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
+                                            />
+                                            <RichText
+                                                tagName="p"
+                                                className="advgb-testimonial-position"
+                                                value={ item.position }
+                                                isSelected={ isSelected && currentEdit === 'pos' + idx }
+                                                unstableOnFocus={ () => this.setState( { currentEdit: 'pos' + idx } ) }
+                                                onChange={ (value) => this.updateItems(idx, { position: value } ) }
+                                                style={ { color: positionColor } }
+                                                placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
+                                            />
+                                            <RichText
+                                                tagName="p"
+                                                className="advgb-testimonial-desc"
+                                                value={ item.desc }
+                                                isSelected={ isSelected && currentEdit === 'desc' + idx }
+                                                unstableOnFocus={ () => this.setState( { currentEdit: 'desc' + idx } ) }
+                                                onChange={ (value) => this.updateItems(idx, { desc: value } ) }
+                                                style={ { color: descColor } }
+                                                placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
+                                            />
+                                        </div>
                                     </div>
                                 ) } ) }
                         </div>
@@ -535,6 +549,10 @@
         avatarSize: {
             type: 'number',
             default: 70,
+        },
+        avatarPosition: {
+            type: 'string',
+            default: 'top',
         },
         nameColor: {
             type: 'string',
@@ -622,13 +640,14 @@
             const {
                 pid, items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
                 nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderPauseOnHover,
-                sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, sliderDotsColor, sliderSpeed, sliderAutoPlaySpeed,
+                sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, avatarPosition, sliderSpeed, sliderAutoPlaySpeed,
                 sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor,
             } = attributes;
 
             const blockClass = [
                 'advgb-testimonial',
                 sliderView && 'slider-view',
+                `advgb-avatar-${avatarPosition}`
             ].filter( Boolean ).join( ' ' );
 
             let i = 0;
@@ -682,21 +701,23 @@
                                              } }
                                         />
                                     </div>
-                                    <h4 className="advgb-testimonial-name"
-                                        style={ { color: nameColor } }
-                                    >
-                                        { item.name }
-                                    </h4>
-                                    <p className="advgb-testimonial-position"
-                                       style={ { color: positionColor } }
-                                    >
-                                        { item.position }
-                                    </p>
-                                    <p className="advgb-testimonial-desc"
-                                       style={ { color: descColor } }
-                                    >
-                                        { item.desc }
-                                    </p>
+                                    <div className="advgb-testimonial-info">
+                                        <h4 className="advgb-testimonial-name"
+                                            style={ { color: nameColor } }
+                                        >
+                                            { item.name }
+                                        </h4>
+                                        <p className="advgb-testimonial-position"
+                                           style={ { color: positionColor } }
+                                        >
+                                            { item.position }
+                                        </p>
+                                        <p className="advgb-testimonial-desc"
+                                           style={ { color: descColor } }
+                                        >
+                                            { item.desc }
+                                        </p>
+                                    </div>
                                 </div>
                             ) } ) }
                     </div>
