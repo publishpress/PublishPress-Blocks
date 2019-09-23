@@ -1151,7 +1151,7 @@
                             currentAddress: res[0].formatted_address,
                         } );
                     } else if (stt === ZERO_RESULTS) {
-                        setAttributes( { currentAddress: __( 'No matching address found!' ) }, 'advanced-gutenberg' );
+                        setAttributes( { currentAddress: __( 'No matching address found!', 'advanced-gutenberg' ) }, 'advanced-gutenberg' );
                     } else {
                         setAttributes( { currentAddress: stt } );
                     }
@@ -1434,7 +1434,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'google map' ), __( 'location' ), __( 'address' ) ],
+        keywords: [ __( 'google map', 'advanced-gutenberg' ), __( 'location', 'advanced-gutenberg' ), __( 'address', 'advanced-gutenberg' ) ],
         attributes: {
             ...mapBlockAttrs,
             mapStyle: {

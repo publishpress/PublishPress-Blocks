@@ -5,6 +5,7 @@
 }
 
 #editor .editor-writing-flow {
+    max-width: 750px;
     margin: auto;
 }
 

@@ -11,6 +11,7 @@ class AccordionBlockCest
             $I->waitForElement('.advgb-accordions-wrapper');
             $I->click(".editor-block-navigation");
             $I->waitForText("Block Navigation");
+            $I->wait(0.5);
             $I->clickWithLeftButton('//button[text()="Advanced Accordion"]');
         } catch(Exception $e) {
             // do stuff

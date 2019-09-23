@@ -227,7 +227,7 @@
             } );
 
             if (newSection.length < 2) {
-                alert( __( 'At least 1 row of current section must present.' ), 'advanced-gutenberg' );
+                alert( __( 'At least 1 row of current section must present.', 'advanced-gutenberg' ));
                 return false;
             }
 
@@ -812,7 +812,7 @@
 
                                         const { fromCell } = rangeSelected;
                                         if (section !== fromCell.section) {
-                                            alert( __( 'Cannot select multi cells from difference section!' ), 'advanced-gutenberg' );
+                                            alert( __( 'Cannot select multi cells from difference section!', 'advanced-gutenberg' ));
                                             return;
                                         }
                                         const toCell = {
@@ -831,7 +831,7 @@
                                         const existCell = multiCells.findIndex( (cel) => cel.rowIndex === rowIndex && cel.colIndex === colIndex );
 
                                         if (multiCells.length && section !== multiCells[0].section) {
-                                            alert( __( 'Cannot select multi cells from difference section!' ), 'advanced-gutenberg' );
+                                            alert( __( 'Cannot select multi cells from difference section!', 'advanced-gutenberg' ));
                                             return;
                                         }
 
@@ -1345,7 +1345,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'table' ), __( 'cell' ), __( 'data' ) ],
+        keywords: [ __( 'table', 'advanced-gutenberg' ), __( 'cell', 'advanced-gutenberg' ), __( 'data', 'advanced-gutenberg' ) ],
         attributes: {
             head: {
                 type: 'array',

@@ -409,7 +409,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'numbers' ), __( 'count' ), __( 'increase' ) ],
+        keywords: [ __( 'numbers', 'advanced-gutenberg' ), __( 'count', 'advanced-gutenberg' ), __( 'increase', 'advanced-gutenberg' ) ],
         attributes: {
             headerText: {
                 type: 'string',

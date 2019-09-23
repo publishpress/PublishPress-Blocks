@@ -228,7 +228,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 </Fragment>
                             ) }
                         </PanelBody>
-                        <PanelBody title={ __( 'Margin', 'advanced-gutenberg' ) } initialOpen={ false } >
+                        <PanelBody title={ __( 'Margin', 'advanced-gutenberg', 'advanced-gutenberg' ) } initialOpen={ false } >
                             <RangeControl
                                 label={ __( 'Margin top', 'advanced-gutenberg' ) }
                                 value={ marginTop || '' }
@@ -479,7 +479,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __('button'), __('link') ],
+        keywords: [ __( 'button', 'advanced-gutenberg' ), __( 'link', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         transforms: {
             from: [

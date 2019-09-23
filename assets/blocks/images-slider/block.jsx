@@ -500,7 +500,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'slide' ), __( 'gallery' ), __( 'photos' ) ],
+        keywords: [ __( 'slide', 'advanced-gutenberg' ), __( 'gallery', 'advanced-gutenberg' ), __( 'photos', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         edit: AdvImageSlider,
         save: function ( { attributes } ) {

@@ -235,7 +235,7 @@
                                     <span onClick={ () => setAttributes( {
                                         tabItems: [
                                             ...tabItems,
-                                            { header: __( 'New Tab' ), body: __( 'Enter your content.', 'advanced-gutenberg' ) }
+                                            { header: __( 'New Tab', 'advanced-gutenberg' ), body: __( 'Enter your content.', 'advanced-gutenberg' ) }
                                         ]
                                     } ) }>
                                         <Dashicon icon="plus-alt"/>
@@ -358,7 +358,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: "advgb-category",
-        keywords: [ __( 'tabs' ), __( 'cards' ) ],
+        keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
         attributes: tabBlockAttrs,
         edit: AdvTabsBlock,
         save: function ( { attributes } ) {

@@ -21,7 +21,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'container' ), __( 'row' ), __( 'box' ) ],
+        keywords: [ __( 'container', 'advanced-gutenberg' ), __( 'row', 'advanced-gutenberg' ), __( 'box', 'advanced-gutenberg' ) ],
         attributes: {
             wrapperTag: {
                 type: 'string',
