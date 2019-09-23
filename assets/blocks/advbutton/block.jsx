@@ -228,7 +228,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 </Fragment>
                             ) }
                         </PanelBody>
-                        <PanelBody title={ __( 'Margin', 'advanced-gutenberg', 'advanced-gutenberg' ) } initialOpen={ false } >
+                        <PanelBody title={ __( 'Margin', 'advanced-gutenberg' ) } initialOpen={ false } >
                             <RangeControl
                                 label={ __( 'Margin top', 'advanced-gutenberg' ) }
                                 value={ marginTop || '' }

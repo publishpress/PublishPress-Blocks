@@ -1151,7 +1151,7 @@
                             currentAddress: res[0].formatted_address,
                         } );
                     } else if (stt === ZERO_RESULTS) {
-                        setAttributes( { currentAddress: __( 'No matching address found!', 'advanced-gutenberg' ) }, 'advanced-gutenberg' );
+                        setAttributes( { currentAddress: __( 'No matching address found!', 'advanced-gutenberg' ) } );
                     } else {
                         setAttributes( { currentAddress: stt } );
                     }
