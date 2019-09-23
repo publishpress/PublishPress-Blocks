@@ -365,7 +365,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'latest posts' ), __( 'posts slide' ), __( 'posts grid' ) ],
+        keywords: [ __( 'latest posts', 'advanced-gutenberg' ), __( 'posts slide', 'advanced-gutenberg' ), __( 'posts grid', 'advanced-gutenberg' ) ],
         supports: {
             html: false,
         },

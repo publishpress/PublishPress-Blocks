@@ -312,7 +312,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'contact' ), __( 'form' ) ],
+        keywords: [ __( 'contact', 'advanced-gutenberg' ), __( 'form', 'advanced-gutenberg' ) ],
         attributes: contactBlockAttrs,
         edit: AdvContactForm,
         save: function ( { attributes } ) {

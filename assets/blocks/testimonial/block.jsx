@@ -419,7 +419,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'testimonial' ), __( 'personal' ), __( 'about' ) ],
+        keywords: [ __( 'testimonial', 'advanced-gutenberg' ), __( 'personal', 'advanced-gutenberg' ), __( 'about', 'advanced-gutenberg' ) ],
         attributes: {
             ...blockAttrsOld,
             items: {
