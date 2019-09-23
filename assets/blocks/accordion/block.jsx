@@ -102,26 +102,26 @@
             return (
                 <Fragment>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Notice' ) }>
+                        <PanelBody title={ __( 'Notice', 'advanced-gutenberg' ) }>
                             <p style={ { color: '#ff0000', fontStyle: 'italic' } }>
                                 { __( `This accordion block has been replaced by a new and better one.
                                  This block will be removed in a future version.
                                  Please transform this to an Accordion Item block
-                                 and drag them into new Adv. Accordion block as soon as possible.` ) }
+                                 and drag them into new Adv. Accordion block as soon as possible.`, 'advanced-gutenberg' ) }
                             </p>
                         </PanelBody>
-                        <PanelBody title={ __( 'Accordion Settings' ) }>
+                        <PanelBody title={ __( 'Accordion Settings', 'advanced-gutenberg' ) }>
                             <RangeControl
-                                label={ __( 'Bottom spacing' ) }
+                                label={ __( 'Bottom spacing', 'advanced-gutenberg' ) }
                                 value={ marginBottom }
-                                help={ __( 'Define space to next block. This will override Block spacing option (Frontend view only)' ) }
+                                help={ __( 'Define space to next block. This will override Block spacing option (Frontend view only)', 'advanced-gutenberg' ) }
                                 min={ 0 }
                                 max={ 50 }
                                 onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Header Settings' ) }>
-                            <BaseControl label={ __( 'Header Icon Style' ) }>
+                        <PanelBody title={ __( 'Header Settings', 'advanced-gutenberg' ) }>
+                            <BaseControl label={ __( 'Header Icon Style', 'advanced-gutenberg' ) }>
                                 <div className="advgb-icon-items-wrapper">
                                     {Object.keys( HEADER_ICONS ).map( ( key, index ) => (
                                         <div className="advgb-icon-item" key={ index }>
@@ -136,21 +136,21 @@
                                 </div>
                             </BaseControl>
                             <PanelColorSettings
-                                title={ __( 'Color Settings' ) }
+                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Background Color' ),
+                                        label: __( 'Background Color', 'advanced-gutenberg' ),
                                         value: headerBgColor,
                                         onChange: ( value ) => setAttributes( { headerBgColor: value === undefined ? '#000' : value } ),
                                     },
                                     {
-                                        label: __( 'Text Color' ),
+                                        label: __( 'Text Color', 'advanced-gutenberg' ),
                                         value: headerTextColor,
                                         onChange: ( value ) => setAttributes( { headerTextColor: value === undefined ? '#eee' : value } ),
                                     },
                                     {
-                                        label: __( 'Icon Color' ),
+                                        label: __( 'Icon Color', 'advanced-gutenberg' ),
                                         value: headerIconColor,
                                         onChange: ( value ) => setAttributes( { headerIconColor: value === undefined ? '#fff' : value } ),
                                     },
@@ -158,62 +158,62 @@
                             />
                         </PanelBody>
                         <PanelColorSettings
-                            title={ __( 'Body Color Settings' ) }
+                            title={ __( 'Body Color Settings', 'advanced-gutenberg' ) }
                             initialOpen={ false }
                             colorSettings={ [
                                 {
-                                    label: __( 'Background Color' ),
+                                    label: __( 'Background Color', 'advanced-gutenberg' ),
                                     value: bodyBgColor,
                                     onChange: ( value ) => setAttributes( { bodyBgColor: value } ),
                                 },
                                 {
-                                    label: __( 'Text Color' ),
+                                    label: __( 'Text Color', 'advanced-gutenberg' ),
                                     value: bodyTextColor,
                                     onChange: ( value ) => setAttributes( { bodyTextColor: value } ),
                                 },
                             ] }
                         />
-                        <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
+                        <PanelBody title={ __( 'Border Settings', 'advanced-gutenberg' ) } initialOpen={ false }>
                             <SelectControl
-                                label={ __( 'Border Style' ) }
+                                label={ __( 'Border Style', 'advanced-gutenberg' ) }
                                 value={ borderStyle }
                                 options={ [
-                                    { label: __( 'Solid' ), value: 'solid' },
-                                    { label: __( 'Dashed' ), value: 'dashed' },
-                                    { label: __( 'Dotted' ), value: 'dotted' },
+                                    { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
+                                    { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
+                                    { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },
                                 ] }
                                 onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
                             />
                             <PanelColorSettings
-                                title={ __( 'Color Settings' ) }
+                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Border Color' ),
+                                        label: __( 'Border Color', 'advanced-gutenberg' ),
                                         value: borderColor,
                                         onChange: ( value ) => setAttributes( { borderColor: value } ),
                                     },
                                 ] }
                             />
                             <RangeControl
-                                label={ __( 'Border width' ) }
+                                label={ __( 'Border width', 'advanced-gutenberg' ) }
                                 value={ borderWidth }
                                 min={ 0 }
                                 max={ 10 }
                                 onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
                             />
                             <RangeControl
-                                label={ __( 'Border radius' ) }
+                                label={ __( 'Border radius', 'advanced-gutenberg' ) }
                                 value={ borderRadius }
                                 min={ 0 }
                                 max={ 100 }
                                 onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Accordions State' ) } initialOpen={  false }>
+                        <PanelBody title={ __( 'Accordions State', 'advanced-gutenberg' ) } initialOpen={  false }>
                             <ToggleControl
-                                label={ __( 'Initial Collapsed' ) }
-                                help={ __( 'Make all accordions collapsed by default, enable this setting to apply to all accordions.' ) }
+                                label={ __( 'Initial Collapsed', 'advanced-gutenberg' ) }
+                                help={ __( 'Make all accordions collapsed by default, enable this setting to apply to all accordions.', 'advanced-gutenberg' ) }
                                 checked={ collapsedAll }
                                 onChange={ () => setAttributes( { collapsedAll: !collapsedAll } ) }
                             />
@@ -241,7 +241,7 @@
                                 onChange={ ( value ) => setAttributes( { header: value } ) }
                                 unstableOnSplit={ () => null }
                                 className="advgb-accordion-header-title"
-                                placeholder={ __( 'Enter header…' ) }
+                                placeholder={ __( 'Enter header…', 'advanced-gutenberg' ) }
                             />
                         </div>
                         <div className="advgb-accordion-body"
@@ -274,7 +274,7 @@
     const accordionAttrs = {
         header: {
             type: 'string',
-            default: __( 'Header text' ),
+            default: __( 'Header text', 'advanced-gutenberg' ),
         },
         headerBgColor: {
             type: 'string',
@@ -328,8 +328,8 @@
     };
 
     registerBlockType( 'advgb/accordion', {
-        title: __( 'Accordion' ),
-        description: __( 'Easy to create an accordion for your post/page.' ),
+        title: __( 'Accordion', 'advanced-gutenberg' ),
+        description: __( 'Easy to create an accordion for your post/page.', 'advanced-gutenberg' ),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
