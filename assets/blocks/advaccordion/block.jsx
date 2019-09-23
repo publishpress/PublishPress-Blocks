@@ -140,24 +140,24 @@
                         </Toolbar>
                     </BlockControls>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Accordion Settings' ) }>
+                        <PanelBody title={ __( 'Accordion Settings', 'advanced-gutenberg' ) }>
                             <RangeControl
-                                label={ __( 'Bottom spacing' ) }
+                                label={ __( 'Bottom spacing', 'advanced-gutenberg' ) }
                                 value={ marginBottom }
-                                help={ __( 'Define space between each accordion (Frontend view only)' ) }
+                                help={ __( 'Define space between each accordion (Frontend view only)', 'advanced-gutenberg' ) }
                                 min={ 0 }
                                 max={ 50 }
                                 onChange={ ( value ) => this.updateAccordionAttrs( { marginBottom: value } ) }
                             />
                             <ToggleControl
-                                label={ __( 'Initial Collapsed' ) }
-                                help={ __( 'Make all accordions collapsed by default.' ) }
+                                label={ __( 'Initial Collapsed', 'advanced-gutenberg' ) }
+                                help={ __( 'Make all accordions collapsed by default.', 'advanced-gutenberg' ) }
                                 checked={ collapsedAll }
                                 onChange={ () => setAttributes( { collapsedAll: !collapsedAll } ) }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Header Settings' ) }>
-                            <BaseControl label={ __( 'Header Icon Style' ) }>
+                        <PanelBody title={ __( 'Header Settings', 'advanced-gutenberg' ) }>
+                            <BaseControl label={ __( 'Header Icon Style', 'advanced-gutenberg' ) }>
                                 <div className="advgb-icon-items-wrapper">
                                     {Object.keys( HEADER_ICONS ).map( ( key, index ) => (
                                         <div className="advgb-icon-item" key={ index }>
@@ -172,21 +172,21 @@
                                 </div>
                             </BaseControl>
                             <PanelColorSettings
-                                title={ __( 'Color Settings' ) }
+                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Background Color' ),
+                                        label: __( 'Background Color', 'advanced-gutenberg' ),
                                         value: headerBgColor,
                                         onChange: ( value ) => this.updateAccordionAttrs( { headerBgColor: value === undefined ? '#000' : value } ),
                                     },
                                     {
-                                        label: __( 'Text Color' ),
+                                        label: __( 'Text Color', 'advanced-gutenberg' ),
                                         value: headerTextColor,
                                         onChange: ( value ) => this.updateAccordionAttrs( { headerTextColor: value === undefined ? '#eee' : value } ),
                                     },
                                     {
-                                        label: __( 'Icon Color' ),
+                                        label: __( 'Icon Color', 'advanced-gutenberg' ),
                                         value: headerIconColor,
                                         onChange: ( value ) => this.updateAccordionAttrs( { headerIconColor: value === undefined ? '#fff' : value } ),
                                     },
@@ -194,52 +194,52 @@
                             />
                         </PanelBody>
                         <PanelColorSettings
-                            title={ __( 'Body Color Settings' ) }
+                            title={ __( 'Body Color Settings', 'advanced-gutenberg' ) }
                             initialOpen={ false }
                             colorSettings={ [
                                 {
-                                    label: __( 'Background Color' ),
+                                    label: __( 'Background Color', 'advanced-gutenberg' ),
                                     value: bodyBgColor,
                                     onChange: ( value ) => this.updateAccordionAttrs( { bodyBgColor: value } ),
                                 },
                                 {
-                                    label: __( 'Text Color' ),
+                                    label: __( 'Text Color', 'advanced-gutenberg' ),
                                     value: bodyTextColor,
                                     onChange: ( value ) => this.updateAccordionAttrs( { bodyTextColor: value } ),
                                 },
                             ] }
                         />
-                        <PanelBody title={ __( 'Border Settings' ) } initialOpen={ false }>
+                        <PanelBody title={ __( 'Border Settings', 'advanced-gutenberg' ) } initialOpen={ false }>
                             <SelectControl
-                                label={ __( 'Border Style' ) }
+                                label={ __( 'Border Style', 'advanced-gutenberg' ) }
                                 value={ borderStyle }
                                 options={ [
-                                    { label: __( 'Solid' ), value: 'solid' },
-                                    { label: __( 'Dashed' ), value: 'dashed' },
-                                    { label: __( 'Dotted' ), value: 'dotted' },
+                                    { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
+                                    { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
+                                    { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },
                                 ] }
                                 onChange={ ( value ) => this.updateAccordionAttrs( { borderStyle: value } ) }
                             />
                             <PanelColorSettings
-                                title={ __( 'Color Settings' ) }
+                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Border Color' ),
+                                        label: __( 'Border Color', 'advanced-gutenberg' ),
                                         value: borderColor,
                                         onChange: ( value ) => this.updateAccordionAttrs( { borderColor: value } ),
                                     },
                                 ] }
                             />
                             <RangeControl
-                                label={ __( 'Border width' ) }
+                                label={ __( 'Border width', 'advanced-gutenberg' ) }
                                 value={ borderWidth }
                                 min={ 0 }
                                 max={ 10 }
                                 onChange={ ( value ) => this.updateAccordionAttrs( { borderWidth: value } ) }
                             />
                             <RangeControl
-                                label={ __( 'Border radius' ) }
+                                label={ __( 'Border radius', 'advanced-gutenberg' ) }
                                 value={ borderRadius }
                                 min={ 0 }
                                 max={ 100 }
@@ -323,14 +323,14 @@
     };
 
     registerBlockType( 'advgb/accordions', {
-        title: __( 'Advanced Accordion' ),
-        description: __( 'Easy to create an accordion for your post/page.' ),
+        title: __( 'Advanced Accordion', 'advanced-gutenberg' ),
+        description: __( 'Easy to create an accordion for your post/page.', 'advanced-gutenberg' ),
         icon: {
             src: accordionBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
+        keywords: [ __( 'accordion', 'advanced-gutenberg' ), __( 'list', 'advanced-gutenberg' ), __( 'faq', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         edit: AccordionsEdit,
         save: function ( { attributes } ) {

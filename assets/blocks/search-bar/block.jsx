@@ -117,7 +117,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             onChange={ (value) => setAttributes( { searchButtonText: value.trim() } ) }
                             onReplace={ () => null }
                             onSplit={ () => null }
-                            placeholder={ __( 'Search' ) }
+                            placeholder={ __( 'Search', 'advanced-gutenberg' ) }
                             keepPlaceholderOnFocus
                         />
                     </span>
@@ -127,15 +127,15 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             return (
                 <Fragment>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Search Bar State' ) }>
+                        <PanelBody title={ __( 'Search Bar State', 'advanced-gutenberg' ) }>
                             <ToggleControl
-                                label={ __( 'Full width' ) }
+                                label={ __( 'Full width', 'advanced-gutenberg' ) }
                                 checked={ fullWidth }
                                 onChange={ () => setAttributes( { fullWidth: !fullWidth } ) }
                             />
                             {!fullWidth && (
                                 <RangeControl
-                                    label={ __( 'Width' ) }
+                                    label={ __( 'Width', 'advanced-gutenberg' ) }
                                     value={ width }
                                     onChange={ (value) => setAttributes( { width: value } ) }
                                     min={ 300 }
@@ -143,15 +143,15 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 />
                             ) }
                         </PanelBody>
-                        <PanelBody title={ __( 'Search Icon Settings' ) }>
+                        <PanelBody title={ __( 'Search Icon Settings', 'advanced-gutenberg' ) }>
                             <ToggleControl
-                                label={ __( 'Search icon on the right' ) }
+                                label={ __( 'Search icon on the right', 'advanced-gutenberg' ) }
                                 checked={ searchIconOnRight }
                                 onChange={ () => setAttributes( { searchIconOnRight: !searchIconOnRight } ) }
                             />
                             <div className="advgb-icon-items">
                                 <div className="advgb-icon-items-header">
-                                    { __( 'Search icon' ) }
+                                    { __( 'Search icon', 'advanced-gutenberg' ) }
                                 </div>
                                 <div className="advgb-icon-items-wrapper">
                                     {Object.keys(SEARCH_ICONS).map((icon, idx) => (
@@ -166,119 +166,119 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 </div>
                             </div>
                         </PanelBody>
-                        <PanelBody title={ __( 'Search Input Settings' ) } initialOpen={false}>
+                        <PanelBody title={ __( 'Search Input Settings', 'advanced-gutenberg' ) } initialOpen={false}>
                             <TextControl
-                                label={ __( 'Search placeholder' ) }
+                                label={ __( 'Search placeholder', 'advanced-gutenberg' ) }
                                 value={ searchPlaceholder }
                                 onChange={ (value) => setAttributes( { searchPlaceholder: value } ) }
                             />
                             <PanelColorSettings
-                                title={ __( 'Input Color' ) }
+                                title={ __( 'Input Color', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Background color' ),
+                                        label: __( 'Background color', 'advanced-gutenberg' ),
                                         value: backgroundColor,
                                         onChange: (value) => setAttributes( { backgroundColor: value } ),
                                     },
                                     {
-                                        label: __( 'Text color' ),
+                                        label: __( 'Text color', 'advanced-gutenberg' ),
                                         value: textColor,
                                         onChange: (value) => setAttributes( { textColor: value } ),
                                     },
                                 ] }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Search Button Settings' ) } initialOpen={false}>
+                        <PanelBody title={ __( 'Search Button Settings', 'advanced-gutenberg' ) } initialOpen={false}>
                             <ToggleControl
-                                label={ __( 'Show submit button' ) }
+                                label={ __( 'Show submit button', 'advanced-gutenberg' ) }
                                 checked={ searchButtonEnabled }
                                 onChange={ () => setAttributes( { searchButtonEnabled: !searchButtonEnabled } ) }
                             />
                             <ToggleControl
-                                label={ __( 'Search button on the left' ) }
+                                label={ __( 'Search button on the left', 'advanced-gutenberg' ) }
                                 checked={ searchButtonOnLeft }
                                 onChange={ () => setAttributes( { searchButtonOnLeft: !searchButtonOnLeft } ) }
                             />
                             {searchButtonEnabled && (
                                 <Fragment>
                                     <AdvColorControl
-                                        label={ __('Background color') }
+                                        label={ __('Background color', 'advanced-gutenberg') }
                                         value={ searchButtonBgColor }
                                         onChange={ (value) => setAttributes( { searchButtonBgColor: value } ) }
                                     />
                                     <AdvColorControl
-                                        label={ __('Text color') }
+                                        label={ __('Text color', 'advanced-gutenberg') }
                                         value={ searchButtonTextColor }
                                         onChange={ (value) => setAttributes( { searchButtonTextColor: value } ) }
                                     />
                                     <RangeControl
-                                        label={ __( 'Border radius (px)' ) }
-                                        help={ __( 'Affect both input and button.' ) }
+                                        label={ __( 'Border radius (px)', 'advanced-gutenberg' ) }
+                                        help={ __( 'Affect both input and button.', 'advanced-gutenberg' ) }
                                         value={ searchButtonRadius }
                                         onChange={ (value) => setAttributes( { searchButtonRadius: value } ) }
                                         min={ 0 }
                                         max={ 100 }
                                     />
                                     <PanelColorSettings
-                                        title={ __( 'Hover Colors' ) }
+                                        title={ __( 'Hover Colors', 'advanced-gutenberg' ) }
                                         initialOpen={ false }
                                         colorSettings={ [
                                             {
-                                                label: __( 'Background color' ),
+                                                label: __( 'Background color', 'advanced-gutenberg' ),
                                                 value: searchBtnHoverBgColor,
                                                 onChange: (value) => setAttributes( { searchBtnHoverBgColor: value } ),
                                             },
                                             {
-                                                label: __( 'Text color' ),
+                                                label: __( 'Text color', 'advanced-gutenberg' ),
                                                 value: searchBtnHoverColor,
                                                 onChange: (value) => setAttributes( { searchBtnHoverColor: value } ),
                                             },
                                             {
-                                                label: __( 'Shadow color' ),
+                                                label: __( 'Shadow color', 'advanced-gutenberg' ),
                                                 value: searchBtnHoverShadow,
                                                 onChange: (value) => setAttributes( { searchBtnHoverShadow: value } ),
                                             },
                                         ] }
                                     />
-                                    <PanelBody title={ __( 'Hover Shadow' ) } initialOpen={false}>
+                                    <PanelBody title={ __( 'Hover Shadow', 'advanced-gutenberg' ) } initialOpen={false}>
                                         <RangeControl
-                                            label={ __('Opacity (%)') }
+                                            label={ __('Opacity (%)', 'advanced-gutenberg') }
                                             value={ searchBtnHoverOpacity }
                                             onChange={ ( value ) => setAttributes( { searchBtnHoverOpacity: value } ) }
                                             min={ 0 }
                                             max={ 100 }
                                         />
                                         <RangeControl
-                                            label={ __('Transition speed (ms)') }
+                                            label={ __('Transition speed (ms)', 'advanced-gutenberg') }
                                             value={ searchBtnHoverTranSpeed || '' }
                                             onChange={ ( value ) => setAttributes( { searchBtnHoverTranSpeed: value } ) }
                                             min={ 0 }
                                             max={ 3000 }
                                         />
                                         <RangeControl
-                                            label={ __( 'Shadow H offset' ) }
+                                            label={ __( 'Shadow H offset', 'advanced-gutenberg' ) }
                                             value={ searchBtnHoverShadowH || '' }
                                             onChange={ ( value ) => setAttributes( { searchBtnHoverShadowH: value } ) }
                                             min={ -50 }
                                             max={ 50 }
                                         />
                                         <RangeControl
-                                            label={ __( 'Shadow V offset' ) }
+                                            label={ __( 'Shadow V offset', 'advanced-gutenberg' ) }
                                             value={ searchBtnHoverShadowV || '' }
                                             onChange={ ( value ) => setAttributes( { searchBtnHoverShadowV: value } ) }
                                             min={ -50 }
                                             max={ 50 }
                                         />
                                         <RangeControl
-                                            label={ __( 'Shadow blur' ) }
+                                            label={ __( 'Shadow blur', 'advanced-gutenberg' ) }
                                             value={ searchBtnHoverShadowBlur || '' }
                                             onChange={ ( value ) => setAttributes( { searchBtnHoverShadowBlur: value } ) }
                                             min={ 0 }
                                             max={ 50 }
                                         />
                                         <RangeControl
-                                            label={ __( 'Shadow spread' ) }
+                                            label={ __( 'Shadow spread', 'advanced-gutenberg' ) }
                                             value={ searchBtnHoverShadowSpread || '' }
                                             onChange={ ( value ) => setAttributes( { searchBtnHoverShadowSpread: value } ) }
                                             min={ 0 }
@@ -302,7 +302,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 {!searchIconOnRight && searchBarIcon}
                                 <input type="text" disabled={true}
                                        className="advgb-search-bar-input"
-                                       value={ searchPlaceholder ? searchPlaceholder : __( 'Type to search…' ) }
+                                       value={ searchPlaceholder ? searchPlaceholder : __( 'Type to search…', 'advanced-gutenberg' ) }
                                 />
                                 {searchIconOnRight && searchBarIcon}
                             </div>
@@ -354,7 +354,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         searchButtonText: {
             type: 'string',
-            default: __( 'SEARCH' ),
+            default: __( 'SEARCH', 'advanced-gutenberg' ),
         },
         searchButtonTextColor: {
             type: 'string',
@@ -413,21 +413,21 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     };
 
     registerBlockType('advgb/search-bar', {
-        title: __( 'Search Bar' ),
-        description: __( 'Easy to create a search bar for your site.' ),
+        title: __( 'Search Bar', 'advanced-gutenberg' ),
+        description: __( 'Easy to create a search bar for your site.', 'advanced-gutenberg' ),
         icon: {
             src: searchBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
+        keywords: [ __( 'accordion', 'advanced-gutenberg' ), __( 'list', 'advanced-gutenberg' ), __( 'faq', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         supports: {
             align: true,
         },
         styles: [
-            { name: 'default', label: __( 'Default' ), isDefault: true },
-            { name: 'classic', label: __( 'Classic' ) },
+            { name: 'default', label: __( 'Default', 'advanced-gutenberg' ), isDefault: true },
+            { name: 'classic', label: __( 'Classic', 'advanced-gutenberg' ) },
         ],
         edit: SearchBarEdit,
         save: function ( { attributes, className } ) {
@@ -480,7 +480,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 <input type="text"
                                        className="advgb-search-bar-input"
                                        name="s"
-                                       placeholder={ searchPlaceholder ? searchPlaceholder : __( 'Type to search…' ) }
+                                       placeholder={ searchPlaceholder ? searchPlaceholder : __( 'Type to search…', 'advanced-gutenberg' ) }
                                 />
                                 {searchIconOnRight && searchBarIcon}
                             </div>

@@ -12,6 +12,7 @@ class ColumnsBlockCest
             $I->clickWithLeftButton('.advgb-columns-wrapper');
             $I->clickWithLeftButton('.editor-block-navigation');
             $I->waitForText('Block Navigation');
+            $I->wait(0.5);
             $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]');
         } catch(Exception $e) {
             // do stuff
@@ -165,6 +166,7 @@ class ColumnsBlockCest
         // Change column 1
         $I->clickWithLeftButton('.editor-block-navigation');
         $I->waitForText('Block Navigation');
+        $I->wait(0.5);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[1]/div/button');
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Solid'));
@@ -184,6 +186,7 @@ class ColumnsBlockCest
         // Change column 2
         $I->clickWithLeftButton('.editor-block-navigation');
         $I->waitForText('Block Navigation');
+        $I->wait(0.5);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[2]/div/button');
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dotted'));
@@ -203,6 +206,7 @@ class ColumnsBlockCest
         // Change column 3
         $I->clickWithLeftButton('.editor-block-navigation');
         $I->waitForText('Block Navigation');
+        $I->wait(0.5);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[3]/div/button');
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dashed'));
@@ -259,6 +263,7 @@ class ColumnsBlockCest
         // Change column 1
         $I->clickWithLeftButton('.editor-block-navigation');
         $I->waitForText('Block Navigation');
+        $I->wait(0.5);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[1]/div/button');
 
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 30);
@@ -266,6 +271,7 @@ class ColumnsBlockCest
         // Change column 2
         $I->clickWithLeftButton('.editor-block-navigation');
         $I->waitForText('Block Navigation');
+        $I->wait(0.5);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[2]/div/button');
 
         $I->see('Available: 70%');
@@ -274,6 +280,7 @@ class ColumnsBlockCest
         // Change column 2
         $I->clickWithLeftButton('.editor-block-navigation');
         $I->waitForText('Block Navigation');
+        $I->wait(0.5);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[3]/div/button');
 
         $I->see('Available: 20%');

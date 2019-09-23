@@ -1441,7 +1441,7 @@ float: left;'
             if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
                 wp_add_inline_style(
                     'dashicons',
-                    '#editor .editor-writing-flow {max-width: ' . $saved_settings['editor_width'] . '%}'
+                    '#editor div.editor-writing-flow {max-width: ' . $saved_settings['editor_width'] . '%}'
                 );
             }
 
@@ -4032,6 +4032,11 @@ float: left;'
                     });
                 });
             });');
+            $content = preg_replace_callback(
+                '@<div[^>]*?advgb\-accordion\-wrapper.*?(</div></div>.?</div>)@s',
+                array($this, 'decodeHtmlEntity'),
+                $content
+            );
         }
 
         if (strpos($content, 'advgb-tabs-block') !== false) {

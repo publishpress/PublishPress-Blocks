@@ -45,15 +45,15 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
 
         render() {
             const listBorderStyles = [
-                { label: __( 'None' ), value: 'none' },
-                { label: __( 'Solid' ), value: 'solid' },
-                { label: __( 'Dotted' ), value: 'dotted' },
-                { label: __( 'Dashed' ), value: 'dashed' },
-                { label: __( 'Double' ), value: 'double' },
-                { label: __( 'Groove' ), value: 'groove' },
-                { label: __( 'Ridge' ), value: 'ridge' },
-                { label: __( 'Inset' ), value: 'inset' },
-                { label: __( 'Outset' ), value: 'outset' },
+                { label: __( 'None', 'advanced-gutenberg' ), value: 'none' },
+                { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
+                { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },
+                { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
+                { label: __( 'Double', 'advanced-gutenberg' ), value: 'double' },
+                { label: __( 'Groove', 'advanced-gutenberg' ), value: 'groove' },
+                { label: __( 'Ridge', 'advanced-gutenberg' ), value: 'ridge' },
+                { label: __( 'Inset', 'advanced-gutenberg' ), value: 'inset' },
+                { label: __( 'Outset', 'advanced-gutenberg' ), value: 'outset' },
             ];
             const {
                 attributes,
@@ -74,17 +74,17 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             const isStyleOutlined = className.indexOf('-outline') > -1;
             const hoverColorSettings = [
                 {
-                    label: __( 'Background Color' ),
+                    label: __( 'Background Color', 'advanced-gutenberg' ),
                     value: hoverBgColor,
                     onChange: ( value ) => setAttributes( { hoverBgColor: value === undefined ? '#2196f3' : value } ),
                 },
                 {
-                    label: __( 'Text Color' ),
+                    label: __( 'Text Color', 'advanced-gutenberg' ),
                     value: hoverTextColor,
                     onChange: ( value ) => setAttributes( { hoverTextColor: value === undefined ? '#fff' : value } ),
                 },
                 {
-                    label: __( 'Shadow Color' ),
+                    label: __( 'Shadow Color', 'advanced-gutenberg' ),
                     value: hoverShadowColor,
                     onChange: ( value ) => setAttributes( { hoverShadowColor: value === undefined ? '#ccc' : value } ),
                 },
@@ -100,7 +100,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
                         <Toolbar>
                             <IconButton
-                                label={ __( 'Refresh this button when it conflict with other buttons styles' ) }
+                                label={ __( 'Refresh this button when it conflict with other buttons styles', 'advanced-gutenberg' ) }
                                 icon="update"
                                 className="components-toolbar__control"
                                 onClick={ () => setAttributes( { id: 'advgbbutton-' + blockID } ) }
@@ -112,7 +112,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     >
                         <RichText
                             tagName="span"
-                            placeholder={ __( 'Add text…' ) }
+                            placeholder={ __( 'Add text…', 'advanced-gutenberg' ) }
                             value={ text }
                             onChange={ ( value ) => setAttributes( { text: value } ) }
                             formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
@@ -141,12 +141,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     }`}
                     </style>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Button link' ) }>
+                        <PanelBody title={ __( 'Button link', 'advanced-gutenberg' ) }>
                             <BaseControl
                                 label={ [
-                                    __( 'Link URL' ),
+                                    __( 'Link URL', 'advanced-gutenberg' ),
                                     (url && <a href={ url || '#' } key="link_url" target="_blank" style={ { float: 'right' } }>
-                                        { __( 'Preview' ) }
+                                        { __( 'Preview', 'advanced-gutenberg' ) }
                                     </a>)
                                 ] }
                             >
@@ -159,14 +159,14 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 />
                             </BaseControl>
                             <ToggleControl
-                                label={ __( 'Open in new tab' ) }
+                                label={ __( 'Open in new tab', 'advanced-gutenberg' ) }
                                 checked={ !!urlOpenNewTab }
                                 onChange={ () => setAttributes( { urlOpenNewTab: !attributes.urlOpenNewTab } ) }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Text/Color' ) }>
+                        <PanelBody title={ __( 'Text/Color', 'advanced-gutenberg' ) }>
                             <RangeControl
-                                label={ __( 'Text size' ) }
+                                label={ __( 'Text size', 'advanced-gutenberg' ) }
                                 value={ textSize || '' }
                                 onChange={ ( size ) => setAttributes( { textSize: size } ) }
                                 min={ 10 }
@@ -176,21 +176,21 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             />
                             {!isStyleOutlined && (
                                 <AdvColorControl
-                                    label={ __('Background Color') }
+                                    label={ __('Background Color', 'advanced-gutenberg') }
                                     value={ bgColor }
                                     onChange={ (value) => setAttributes( { bgColor: value } ) }
                                 />
                             )}
                             <AdvColorControl
-                                label={ __('Text Color') }
+                                label={ __('Text Color', 'advanced-gutenberg') }
                                 value={ textColor }
                                 onChange={ (value) => setAttributes( { textColor: value } ) }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Border' ) } initialOpen={ false } >
+                        <PanelBody title={ __( 'Border', 'advanced-gutenberg' ) } initialOpen={ false } >
                             {!isStyleSquared && (
                                 <RangeControl
-                                    label={ __( 'Border radius' ) }
+                                    label={ __( 'Border radius', 'advanced-gutenberg' ) }
                                     value={ borderRadius || '' }
                                     onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
                                     min={ 0 }
@@ -198,7 +198,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 />
                             ) }
                             <SelectControl
-                                label={ __( 'Border style' ) }
+                                label={ __( 'Border style', 'advanced-gutenberg' ) }
                                 value={ borderStyle }
                                 options={ listBorderStyles }
                                 onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
@@ -206,18 +206,18 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             {borderStyle !== 'none' && (
                                 <Fragment>
                                     <PanelColorSettings
-                                        title={ __( 'Border Color' ) }
+                                        title={ __( 'Border Color', 'advanced-gutenberg' ) }
                                         initialOpen={ false }
                                         colorSettings={ [
                                             {
-                                                label: __( 'Border Color' ),
+                                                label: __( 'Border Color', 'advanced-gutenberg' ),
                                                 value: borderColor,
                                                 onChange: ( value ) => setAttributes( { borderColor: value === undefined ? '#2196f3' : value } ),
                                             },
                                         ] }
                                     />
                                     <RangeControl
-                                        label={ __( 'Border width' ) }
+                                        label={ __( 'Border width', 'advanced-gutenberg' ) }
                                         value={ borderWidth || '' }
                                         onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
                                         min={ 0 }
@@ -226,80 +226,80 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 </Fragment>
                             ) }
                         </PanelBody>
-                        <PanelBody title={ __( 'Padding' ) } initialOpen={ false } >
+                        <PanelBody title={ __( 'Padding', 'advanced-gutenberg' ) } initialOpen={ false } >
                             <RangeControl
-                                label={ __( 'Padding top' ) }
+                                label={ __( 'Padding top', 'advanced-gutenberg' ) }
                                 value={ paddingTop || '' }
                                 onChange={ ( value ) => setAttributes( { paddingTop: value } ) }
                                 min={ 0 }
                                 max={ 100 }
                             />
                             <RangeControl
-                                label={ __( 'Padding right' ) }
+                                label={ __( 'Padding right', 'advanced-gutenberg' ) }
                                 value={ paddingRight || '' }
                                 onChange={ ( value ) => setAttributes( { paddingRight: value } ) }
                                 min={ 0 }
                                 max={ 100 }
                             />
                             <RangeControl
-                                label={ __( 'Padding bottom' ) }
+                                label={ __( 'Padding bottom', 'advanced-gutenberg' ) }
                                 value={ paddingBottom || '' }
                                 onChange={ ( value ) => setAttributes( { paddingBottom: value } ) }
                                 min={ 0 }
                                 max={ 100 }
                             />
                             <RangeControl
-                                label={ __( 'Padding left' ) }
+                                label={ __( 'Padding left', 'advanced-gutenberg' ) }
                                 value={ paddingLeft || '' }
                                 onChange={ ( value ) => setAttributes( { paddingLeft: value } ) }
                                 min={ 0 }
                                 max={ 100 }
                             />
                         </PanelBody>
-                        <PanelBody title={ __( 'Hover' ) } initialOpen={ false } >
+                        <PanelBody title={ __( 'Hover', 'advanced-gutenberg' ) } initialOpen={ false } >
                             <PanelColorSettings
-                                title={ __( 'Color Settings' ) }
+                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ hoverColorSettings }
                             />
-                            <PanelBody title={ __( 'Shadow' ) } initialOpen={ false }  >
+                            <PanelBody title={ __( 'Shadow', 'advanced-gutenberg' ) } initialOpen={ false }  >
                                 <RangeControl
-                                    label={ __('Opacity (%)') }
+                                    label={ __('Opacity (%)', 'advanced-gutenberg') }
                                     value={ hoverOpacity }
                                     onChange={ ( value ) => setAttributes( { hoverOpacity: value } ) }
                                     min={ 0 }
                                     max={ 100 }
                                 />
                                 <RangeControl
-                                    label={ __('Transition speed (ms)') }
+                                    label={ __('Transition speed (ms)', 'advanced-gutenberg') }
                                     value={ transitionSpeed || '' }
                                     onChange={ ( value ) => setAttributes( { transitionSpeed: value } ) }
                                     min={ 0 }
                                     max={ 3000 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Shadow H offset' ) }
+                                    label={ __( 'Shadow H offset', 'advanced-gutenberg' ) }
                                     value={ hoverShadowH || '' }
                                     onChange={ ( value ) => setAttributes( { hoverShadowH: value } ) }
                                     min={ -50 }
                                     max={ 50 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Shadow V offset' ) }
+                                    label={ __( 'Shadow V offset', 'advanced-gutenberg' ) }
                                     value={ hoverShadowV || '' }
                                     onChange={ ( value ) => setAttributes( { hoverShadowV: value } ) }
                                     min={ -50 }
                                     max={ 50 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Shadow blur' ) }
+                                    label={ __( 'Shadow blur', 'advanced-gutenberg' ) }
                                     value={ hoverShadowBlur || '' }
                                     onChange={ ( value ) => setAttributes( { hoverShadowBlur: value } ) }
                                     min={ 0 }
                                     max={ 50 }
                                 />
                                 <RangeControl
-                                    label={ __( 'Shadow spread' ) }
+                                    label={ __( 'Shadow spread', 'advanced-gutenberg' ) }
                                     value={ hoverShadowSpread || '' }
                                     onChange={ ( value ) => setAttributes( { hoverShadowSpread: value } ) }
                                     min={ 0 }
@@ -336,7 +336,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         text: {
             source: 'children',
             selector: 'a',
-            default: __( 'PUSH THE BUTTON' ),
+            default: __( 'PUSH THE BUTTON', 'advanced-gutenberg' ),
         },
         bgColor: {
             type: 'string',
@@ -424,14 +424,14 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     };
 
     registerBlockType( 'advgb/button', {
-        title: __( 'Advanced Button' ),
-        description: __( 'New button with more styles.' ),
+        title: __( 'Advanced Button', 'advanced-gutenberg' ),
+        description: __( 'New button with more styles.', 'advanced-gutenberg' ),
         icon: {
             src: buttonBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __('button'), __('link') ],
+        keywords: [ __( 'button', 'advanced-gutenberg' ), __( 'link', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         transforms: {
             from: [
@@ -460,10 +460,10 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             ]
         },
         styles: [
-            { name: 'default', label: __( 'Default' ), isDefault: true },
-            { name: 'outlined', label: __( 'Outlined' ) },
-            { name: 'squared', label: __( 'Squared' ) },
-            { name: 'squared-outline', label: __( 'Squared Outline' ) },
+            { name: 'default', label: __( 'Default', 'advanced-gutenberg' ), isDefault: true },
+            { name: 'outlined', label: __( 'Outlined', 'advanced-gutenberg' ) },
+            { name: 'squared', label: __( 'Squared', 'advanced-gutenberg' ) },
+            { name: 'squared-outline', label: __( 'Squared Outline', 'advanced-gutenberg' ) },
         ],
         edit: AdvButton,
         save: function ( { attributes } ) {

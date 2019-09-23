@@ -11,6 +11,7 @@ class ImagesSliderBlockCest
             $I->waitForElement('.advgb-images-slider-block');
             $I->click(".editor-block-navigation");
             $I->waitForText("Block Navigation");
+            $I->wait(0.5);
             $I->clickWithLeftButton('//button[text()="Images Slider"]');
         } catch(Exception $e) {
             // do stuff

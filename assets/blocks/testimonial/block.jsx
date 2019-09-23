@@ -140,53 +140,53 @@
             return (
                 <Fragment>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Testimonial Settings' ) }>
+                        <PanelBody title={ __( 'Testimonial Settings', 'advanced-gutenberg' ) }>
                             <ToggleControl
-                                label={ __( 'Slider view' ) }
+                                label={ __( 'Slider view', 'advanced-gutenberg' ) }
                                 checked={ sliderView }
                                 onChange={ () => setAttributes( { sliderView: !sliderView } ) }
                             />
                             <RangeControl
-                                label={ __( 'Columns' ) }
-                                help={ __( 'Columns range in Normal view is 1-3, and in Slider view is 4-10.' ) }
+                                label={ __( 'Columns', 'advanced-gutenberg' ) }
+                                help={ __( 'Columns range in Normal view is 1-3, and in Slider view is 4-10.', 'advanced-gutenberg' ) }
                                 min={ minCols }
                                 max={ maxCols }
                                 value={ columns }
                                 onChange={ (value) => setAttributes( { columns: value } ) }
                             />
-                            <PanelBody title={ __( 'Avatar' ) } initialOpen={ false }>
+                            <PanelBody title={ __( 'Avatar', 'advanced-gutenberg' ) } initialOpen={ false }>
                                 <PanelColorSettings
-                                    title={ __( 'Avatar Colors' ) }
+                                    title={ __( 'Avatar Colors', 'advanced-gutenberg' ) }
                                     initialOpen={ false }
                                     colorSettings={ [
                                         {
-                                            label: __( 'Background Color' ),
+                                            label: __( 'Background Color', 'advanced-gutenberg' ),
                                             value: avatarColor,
                                             onChange: ( value ) => setAttributes( { avatarColor: value } ),
                                         },
                                         {
-                                            label: __( 'Border Color' ),
+                                            label: __( 'Border Color', 'advanced-gutenberg' ),
                                             value: avatarBorderColor,
                                             onChange: ( value ) => setAttributes( { avatarBorderColor: value } ),
                                         },
                                     ] }
                                 />
                                 <RangeControl
-                                    label={ __( 'Border Radius (%)' ) }
+                                    label={ __( 'Border Radius (%)', 'advanced-gutenberg' ) }
                                     min={ 0 }
                                     max={ 50 }
                                     value={ avatarBorderRadius }
                                     onChange={ (value) => setAttributes( { avatarBorderRadius: value } ) }
                                 />
                                 <RangeControl
-                                    label={ __( 'Border Width' ) }
+                                    label={ __( 'Border Width', 'advanced-gutenberg' ) }
                                     min={ 0 }
                                     max={ 5 }
                                     value={ avatarBorderWidth }
                                     onChange={ (value) => setAttributes( { avatarBorderWidth: value } ) }
                                 />
                                 <RangeControl
-                                    label={ __( 'Avatar Size' ) }
+                                    label={ __( 'Avatar Size', 'advanced-gutenberg' ) }
                                     min={ 50 }
                                     max={ 130 }
                                     value={ avatarSize }
@@ -194,21 +194,21 @@
                                 />
                             </PanelBody>
                             <PanelColorSettings
-                                title={ __( 'Text Colors' ) }
+                                title={ __( 'Text Colors', 'advanced-gutenberg' ) }
                                 initialOpen={ false }
                                 colorSettings={ [
                                     {
-                                        label: __( 'Name Color' ),
+                                        label: __( 'Name Color', 'advanced-gutenberg' ),
                                         value: nameColor,
                                         onChange: ( value ) => setAttributes( { nameColor: value } ),
                                     },
                                     {
-                                        label: __( 'Position Color' ),
+                                        label: __( 'Position Color', 'advanced-gutenberg' ),
                                         value: positionColor,
                                         onChange: ( value ) => setAttributes( { positionColor: value } ),
                                     },
                                     {
-                                        label: __( 'Description Color' ),
+                                        label: __( 'Description Color', 'advanced-gutenberg' ),
                                         value: descColor,
                                         onChange: ( value ) => setAttributes( { descColor: value } ),
                                     },
@@ -231,7 +231,7 @@
                                         value={ item.avatarID }
                                         render={ ( { open } ) => (
                                             <div className="advgb-testimonial-avatar-group">
-                                                <Tooltip text={ __( 'Click to change avatar' ) }>
+                                                <Tooltip text={ __( 'Click to change avatar', 'advanced-gutenberg' ) }>
                                                     <div className="advgb-testimonial-avatar"
                                                          onClick={ open }
                                                          style={ {
@@ -245,7 +245,7 @@
                                                          } }
                                                     />
                                                 </Tooltip>
-                                                <Tooltip text={ __( 'Remove avatar' ) }>
+                                                <Tooltip text={ __( 'Remove avatar', 'advanced-gutenberg' ) }>
                                                 <span className="dashicons dashicons-no advgb-testimonial-avatar-clear"
                                                       onClick={ () => this.updateItems(idx, { avatarUrl: undefined, avatarID: undefined } ) }
                                                 />
@@ -261,7 +261,7 @@
                                         unstableOnFocus={ () => this.setState( { currentEdit: 'name' + idx } ) }
                                         onChange={ (value) => this.updateItems(idx, { name: value } ) }
                                         style={ { color: nameColor } }
-                                        placeholder={ __( 'Text…' ) }
+                                        placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
                                     />
                                     <RichText
                                         tagName="p"
@@ -271,7 +271,7 @@
                                         unstableOnFocus={ () => this.setState( { currentEdit: 'pos' + idx } ) }
                                         onChange={ (value) => this.updateItems(idx, { position: value } ) }
                                         style={ { color: positionColor } }
-                                        placeholder={ __( 'Text…' ) }
+                                        placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
                                     />
                                     <RichText
                                         tagName="p"
@@ -281,7 +281,7 @@
                                         unstableOnFocus={ () => this.setState( { currentEdit: 'desc' + idx } ) }
                                         onChange={ (value) => this.updateItems(idx, { desc: value } ) }
                                         style={ { color: descColor } }
-                                        placeholder={ __( 'Text…' ) }
+                                        placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
                                     />
                                 </div>
                         ) } ) }
@@ -346,57 +346,57 @@
         },
         name: {
             type: 'string',
-            default: __( 'Person Name' ),
+            default: __( 'Person Name', 'advanced-gutenberg' ),
         },
         name2: {
             type: 'string',
-            default: __( 'Person Name' ),
+            default: __( 'Person Name', 'advanced-gutenberg' ),
         },
         name3: {
             type: 'string',
-            default: __( 'Person Name' ),
+            default: __( 'Person Name', 'advanced-gutenberg' ),
         },
         name4: {
             type: 'string',
-            default: __( 'Person Name' ),
+            default: __( 'Person Name', 'advanced-gutenberg' ),
         },
         nameColor: {
             type: 'string',
         },
         position: {
             type: 'string',
-            default: __( 'Job Position' ),
+            default: __( 'Job Position', 'advanced-gutenberg' ),
         },
         position2: {
             type: 'string',
-            default: __( 'Job Position' ),
+            default: __( 'Job Position', 'advanced-gutenberg' ),
         },
         position3: {
             type: 'string',
-            default: __( 'Job Position' ),
+            default: __( 'Job Position', 'advanced-gutenberg' ),
         },
         position4: {
             type: 'string',
-            default: __( 'Job Position' ),
+            default: __( 'Job Position', 'advanced-gutenberg' ),
         },
         positionColor: {
             type: 'string'
         },
         desc: {
             type: 'string',
-            default: __( 'A little description about this person will show up here.' ),
+            default: __( 'A little description about this person will show up here.', 'advanced-gutenberg' ),
         },
         desc2: {
             type: 'string',
-            default: __( 'A little description about this person will show up here.' ),
+            default: __( 'A little description about this person will show up here.', 'advanced-gutenberg' ),
         },
         desc3: {
             type: 'string',
-            default: __( 'A little description about this person will show up here.' ),
+            default: __( 'A little description about this person will show up here.', 'advanced-gutenberg' ),
         },
         desc4: {
             type: 'string',
-            default: __( 'A little description about this person will show up here.' ),
+            default: __( 'A little description about this person will show up here.', 'advanced-gutenberg' ),
         },
         descColor: {
             type: 'string',
@@ -412,14 +412,14 @@
     };
 
     registerBlockType( 'advgb/testimonial', {
-        title: __( 'Testimonial' ),
-        description: __( 'Block for creating personal or team/group information.' ),
+        title: __( 'Testimonial', 'advanced-gutenberg' ),
+        description: __( 'Block for creating personal or team/group information.', 'advanced-gutenberg' ),
         icon: {
             src: testimonialBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'testimonial' ), __( 'personal' ), __( 'about' ) ],
+        keywords: [ __( 'testimonial', 'advanced-gutenberg' ), __( 'personal', 'advanced-gutenberg' ), __( 'about', 'advanced-gutenberg' ) ],
         attributes: {
             ...blockAttrsOld,
             items: {
@@ -427,9 +427,9 @@
                 default: times(10, () => ( {
                     avatarUrl: advgbBlocks.avatarHolder,
                     avatarID: undefined,
-                    name: __( 'Person Name' ),
-                    position: __( 'Job Position' ),
-                    desc: __( 'A little description about this person will show up here.' ),
+                    name: __( 'Person Name', 'advanced-gutenberg' ),
+                    position: __( 'Job Position', 'advanced-gutenberg' ),
+                    desc: __( 'A little description about this person will show up here.', 'advanced-gutenberg' ),
                 } ) ),
             },
             sliderView: {
