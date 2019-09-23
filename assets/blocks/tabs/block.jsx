@@ -235,7 +235,7 @@
                                     <span onClick={ () => setAttributes( {
                                         tabItems: [
                                             ...tabItems,
-                                            { header: __( 'New Tab' ), body: __( 'Enter your content.', 'advanced-gutenberg' ) }
+                                            { header: __( 'New Tab', 'advanced-gutenberg' ), body: __( 'Enter your content.', 'advanced-gutenberg' ) }
                                         ]
                                     } ) }>
                                         <Dashicon icon="plus-alt"/>
