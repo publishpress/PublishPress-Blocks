@@ -155,7 +155,7 @@
         },
         parent: [ 'advgb/accordions' ],
         category: 'advgb-category',
-        keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
+        keywords: [ __( 'accordion', 'advanced-gutenberg' ), __( 'list', 'advanced-gutenberg' ), __( 'faq', 'advanced-gutenberg' ) ],
         attributes: {
             header: {
                 type: 'string',

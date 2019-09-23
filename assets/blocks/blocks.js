@@ -567,7 +567,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('accordion'), __('list'), __('faq')],
+        keywords: [__('accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
         attributes: accordionAttrs,
         supports: {
             inserter: false
@@ -861,7 +861,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         parent: ['advgb/accordions'],
         category: 'advgb-category',
-        keywords: [__('accordion'), __('list'), __('faq')],
+        keywords: [__('accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
         attributes: {
             header: {
                 type: 'string',
@@ -1427,7 +1427,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('accordion'), __('list'), __('faq')],
+        keywords: [__('accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
         attributes: blockAttrs,
         edit: AccordionsEdit,
         save: function save(_ref7) {
@@ -1989,7 +1989,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('button'), __('link')],
+        keywords: [__('button', 'advanced-gutenberg'), __('link', 'advanced-gutenberg')],
         attributes: blockAttrs,
         transforms: {
             from: [{
@@ -2499,7 +2499,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('image'), __('photo'), __('box')],
+        keywords: [__('image', 'advanced-gutenberg'), __('photo', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
         attributes: blockAttrs,
         edit: AdvImage,
         save: function save(_ref3) {
@@ -2966,7 +2966,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('list'), __('icon')],
+        keywords: [__('list', 'advanced-gutenberg'), __('icon', 'advanced-gutenberg')],
         attributes: listBlockAttrs,
         transforms: {
             from: [{
@@ -3976,7 +3976,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             var _fromCell = rangeSelected.fromCell;
 
                                             if (section !== _fromCell.section) {
-                                                alert(__('Cannot select multi cells from difference section!'), 'advanced-gutenberg');
+                                                alert(__('Cannot select multi cells from difference section!', 'advanced-gutenberg'));
                                                 return;
                                             }
                                             var _toCell = {
@@ -3997,7 +3997,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             });
 
                                             if (multiCells.length && section !== multiCells[0].section) {
-                                                alert(__('Cannot select multi cells from difference section!'), 'advanced-gutenberg');
+                                                alert(__('Cannot select multi cells from difference section!', 'advanced-gutenberg'));
                                                 return;
                                             }
 
@@ -4632,7 +4632,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('table'), __('cell'), __('data')],
+        keywords: [__('table', 'advanced-gutenberg'), __('cell', 'advanced-gutenberg'), __('data', 'advanced-gutenberg')],
         attributes: {
             head: {
                 type: 'array',
@@ -5344,11 +5344,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "span",
                                     null,
-                                    (videoTitle === 'ADVGB_FAIL_TO_LOAD' && React.createElement(
+                                    videoTitle === 'ADVGB_FAIL_TO_LOAD' && React.createElement(
                                         "strong",
                                         { style: { color: 'red' } },
-                                        __('Wrong video URL/ID. Please try another.')
-                                    ), 'advanced-gutenberg') || videoTitle || __('Not selected yet.', 'advanced-gutenberg')
+                                        __('Wrong video URL/ID. Please try another.', 'advanced-gutenberg')
+                                    ) || videoTitle || __('Not selected yet.', 'advanced-gutenberg')
                                 )
                             )
                         )
@@ -5430,7 +5430,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('video'), __('embed'), __('media')],
+        keywords: [__('video', 'advanced-gutenberg'), __('embed', 'advanced-gutenberg'), __('media', 'advanced-gutenberg')],
         attributes: blockAttrs,
         edit: AdvVideo,
         save: function save(_ref4) {
@@ -6374,7 +6374,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('columns'), __('row'), __('layout')],
+        keywords: [__('columns', 'advanced-gutenberg'), __('row', 'advanced-gutenberg'), __('layout', 'advanced-gutenberg')],
         supports: {
             align: ['wide', 'full'],
             html: false
@@ -6897,7 +6897,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('columns'), __('row'), __('layout')],
+        keywords: [__('columns', 'advanced-gutenberg'), __('row', 'advanced-gutenberg'), __('layout', 'advanced-gutenberg')],
         supports: {
             inserter: false,
             reusable: false,
@@ -7384,7 +7384,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('contact'), __('form')],
+        keywords: [__('contact', 'advanced-gutenberg'), __('form', 'advanced-gutenberg')],
         attributes: contactBlockAttrs,
         edit: AdvContactForm,
         save: function save(_ref) {
@@ -7528,7 +7528,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('container'), __('row'), __('box')],
+        keywords: [__('container', 'advanced-gutenberg'), __('row', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
         attributes: {
             wrapperTag: {
                 type: 'string',
@@ -8181,7 +8181,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('numbers'), __('count'), __('increase')],
+        keywords: [__('numbers', 'advanced-gutenberg'), __('count', 'advanced-gutenberg'), __('increase', 'advanced-gutenberg')],
         attributes: {
             headerText: {
                 type: 'string',
@@ -9222,7 +9222,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('slide'), __('gallery'), __('photos')],
+        keywords: [__('slide', 'advanced-gutenberg'), __('gallery', 'advanced-gutenberg'), __('photos', 'advanced-gutenberg')],
         attributes: blockAttrs,
         edit: AdvImageSlider,
         save: function save(_ref3) {
@@ -10521,7 +10521,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         registerText: {
             type: 'string',
-            default: __("Don't have an account?")
+            default: __("Don't have an account?", 'advanced-gutenberg')
         },
         registerLinkText: {
             type: 'string',
@@ -10623,7 +10623,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('accordion'), __('list'), __('faq')],
+        keywords: [__('accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
         attributes: blockAttrs,
         edit: LoginFormEdit,
         save: function save(_ref3) {
@@ -11952,7 +11952,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 currentAddress: res[0].formatted_address
                             });
                         } else if (stt === ZERO_RESULTS) {
-                            setAttributes({ currentAddress: __('No matching address found!') }, 'advanced-gutenberg');
+                            setAttributes({ currentAddress: __('No matching address found!', 'advanced-gutenberg') });
                         } else {
                             setAttributes({ currentAddress: stt });
                         }
@@ -12270,7 +12270,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('google map'), __('location'), __('address')],
+        keywords: [__('google map', 'advanced-gutenberg'), __('location', 'advanced-gutenberg'), __('address', 'advanced-gutenberg')],
         attributes: _extends({}, mapBlockAttrs, {
             mapStyle: {
                 type: 'string'
@@ -12789,7 +12789,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('newsletter'), __('form'), __('email')],
+        keywords: [__('newsletter', 'advanced-gutenberg'), __('form', 'advanced-gutenberg'), __('email', 'advanced-gutenberg')],
         attributes: {
             formStyle: {
                 type: 'string',
@@ -13453,7 +13453,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('latest posts'), __('posts slide'), __('posts grid')],
+        keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg')],
         supports: {
             html: false
         },
@@ -14044,7 +14044,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('accordion'), __('list'), __('faq')],
+        keywords: [__('accordion', 'advanced-gutenberg'), __('list', 'advanced-gutenberg'), __('faq', 'advanced-gutenberg')],
         attributes: blockAttrs,
         supports: {
             align: true
@@ -14665,7 +14665,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('social icons'), __('shares'), __('icon link')],
+        keywords: [__('social icons', 'advanced-gutenberg'), __('shares', 'advanced-gutenberg'), __('icon link', 'advanced-gutenberg')],
         attributes: socialBlockAttrs,
         edit: AdvSocialBlock,
         save: function save(_ref2) {
@@ -15151,7 +15151,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('summary'), __('table of content'), __('list')],
+        keywords: [__('summary', 'advanced-gutenberg'), __('table of content', 'advanced-gutenberg'), __('list', 'advanced-gutenberg')],
         attributes: blockAttrs,
         supports: {
             multiple: false
@@ -15740,7 +15740,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: "advgb-category",
-        keywords: [__('tabs'), __('cards')],
+        keywords: [__('tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
         attributes: tabBlockAttrs,
         edit: AdvTabsBlock,
         save: function save(_ref) {
@@ -16351,7 +16351,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('testimonial'), __('personal'), __('about')],
+        keywords: [__('testimonial', 'advanced-gutenberg'), __('personal', 'advanced-gutenberg'), __('about', 'advanced-gutenberg')],
         attributes: _extends({}, blockAttrsOld, {
             items: {
                 type: 'array',
@@ -16895,7 +16895,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('woo commerce'), __('products list'), __('price list')],
+        keywords: [__('woo commerce', 'advanced-gutenberg'), __('products list', 'advanced-gutenberg'), __('price list', 'advanced-gutenberg')],
         attributes: {
             viewType: {
                 type: 'string',

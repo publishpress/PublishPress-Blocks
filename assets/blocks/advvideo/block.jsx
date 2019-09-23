@@ -399,7 +399,7 @@
                                 </span>
                                 <span>
                                     {
-                                        ( videoTitle === 'ADVGB_FAIL_TO_LOAD' && <strong style={ { color: 'red' } }>{ __( 'Wrong video URL/ID. Please try another.' ) }</strong>, 'advanced-gutenberg' )
+                                        ( videoTitle === 'ADVGB_FAIL_TO_LOAD' && <strong style={ { color: 'red' } }>{ __( 'Wrong video URL/ID. Please try another.', 'advanced-gutenberg' ) }</strong> )
                                         || videoTitle
                                         || __( 'Not selected yet.', 'advanced-gutenberg' )
                                     }
@@ -483,7 +483,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'video' ), __( 'embed' ), __( 'media' ) ],
+        keywords: [ __( 'video', 'advanced-gutenberg' ), __( 'embed', 'advanced-gutenberg' ), __( 'media', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         edit: AdvVideo,
         save: function ( { attributes } ) {

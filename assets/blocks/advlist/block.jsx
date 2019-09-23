@@ -294,7 +294,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'list' ), __( 'icon' ) ],
+        keywords: [ __( 'list', 'advanced-gutenberg' ), __( 'icon', 'advanced-gutenberg' ) ],
         attributes: listBlockAttrs,
         transforms: {
             from: [
