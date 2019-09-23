@@ -227,7 +227,7 @@
             } );
 
             if (newSection.length < 2) {
-                alert( __( 'At least 1 row of current section must present.' ), 'advanced-gutenberg' );
+                alert( __( 'At least 1 row of current section must present.', 'advanced-gutenberg' ));
                 return false;
             }
 

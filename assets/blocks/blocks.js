@@ -3359,7 +3359,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 if (newSection.length < 2) {
-                    alert(__('At least 1 row of current section must present.'), 'advanced-gutenberg');
+                    alert(__('At least 1 row of current section must present.', 'advanced-gutenberg'));
                     return false;
                 }
 
@@ -15619,7 +15619,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         'span',
                                         { onClick: function onClick() {
                                                 return setAttributes({
-                                                    tabItems: [].concat(_toConsumableArray(tabItems), [{ header: __('New Tab'), body: __('Enter your content.', 'advanced-gutenberg') }])
+                                                    tabItems: [].concat(_toConsumableArray(tabItems), [{ header: __('New Tab', 'advanced-gutenberg'), body: __('Enter your content.', 'advanced-gutenberg') }])
                                                 });
                                             } },
                                         React.createElement(Dashicon, { icon: 'plus-alt' })
