@@ -431,7 +431,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __('button'), __('link') ],
+        keywords: [ __( 'button', 'advanced-gutenberg' ), __( 'link', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         transforms: {
             from: [

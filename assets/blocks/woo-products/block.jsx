@@ -356,7 +356,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'woo commerce' ), __( 'products list' ), __( 'price list' ) ],
+        keywords: [ __( 'woo commerce', 'advanced-gutenberg' ), __( 'products list', 'advanced-gutenberg' ), __( 'price list', 'advanced-gutenberg' ) ],
         attributes: {
             viewType: {
                 type: 'string',

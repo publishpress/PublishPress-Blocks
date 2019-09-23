@@ -358,7 +358,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: "advgb-category",
-        keywords: [ __( 'tabs' ), __( 'cards' ) ],
+        keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
         attributes: tabBlockAttrs,
         edit: AdvTabsBlock,
         save: function ( { attributes } ) {

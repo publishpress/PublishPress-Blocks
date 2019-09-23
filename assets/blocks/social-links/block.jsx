@@ -382,7 +382,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'social icons' ), __( 'shares' ), __( 'icon link' ) ],
+        keywords: [ __( 'social icons', 'advanced-gutenberg' ), __( 'shares', 'advanced-gutenberg' ), __( 'icon link', 'advanced-gutenberg' ) ],
         attributes: socialBlockAttrs,
         edit: AdvSocialBlock,
         save: function ( { attributes } ) {

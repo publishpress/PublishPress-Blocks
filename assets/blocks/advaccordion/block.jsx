@@ -330,7 +330,7 @@
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'accordion' ), __( 'list' ), __( 'faq' ) ],
+        keywords: [ __( 'accordion', 'advanced-gutenberg' ), __( 'list', 'advanced-gutenberg' ), __( 'faq', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
         edit: AccordionsEdit,
         save: function ( { attributes } ) {
