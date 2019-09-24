@@ -16121,8 +16121,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         dots: sliderDotsShown,
                         arrows: sliderArrowShown,
                         speed: sliderSpeed,
-                        prevArrow: jQuery('.advgb-slider-prev'),
-                        nextArrow: jQuery('.advgb-slider-next')
+                        prevArrow: jQuery("#block-" + clientId + " .advgb-slider-prev"),
+                        nextArrow: jQuery("#block-" + clientId + " .advgb-slider-next")
                     });
                 }
             }
@@ -16175,8 +16175,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             dots: sliderDotsShown,
                             arrows: sliderArrowShown,
                             speed: sliderSpeed,
-                            prevArrow: jQuery('.advgb-slider-prev'),
-                            nextArrow: jQuery('.advgb-slider-next')
+                            prevArrow: jQuery("#block-" + clientId + " .advgb-slider-prev"),
+                            nextArrow: jQuery("#block-" + clientId + " .advgb-slider-next")
                         });
                     }
                 }

@@ -21,8 +21,8 @@ jQuery(document).ready(function ($) {
             dots: dotsShown,
             arrows: arrowsShown,
             speed: speed,
-            prevArrow: $('.advgb-slider-prev'),
-            nextArrow: $('.advgb-slider-next')
+            prevArrow: wrapper.find('.advgb-slider-prev'),
+            nextArrow: wrapper.find('.advgb-slider-next')
         })
     })
 });

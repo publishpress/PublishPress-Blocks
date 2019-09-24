@@ -71,8 +71,8 @@
                     dots: sliderDotsShown,
                     arrows: sliderArrowShown,
                     speed: sliderSpeed,
-                    prevArrow: jQuery('.advgb-slider-prev'),
-                    nextArrow: jQuery('.advgb-slider-next'),
+                    prevArrow: jQuery(`#block-${clientId} .advgb-slider-prev`),
+                    nextArrow: jQuery(`#block-${clientId} .advgb-slider-next`),
                 });
             }
         }
@@ -113,8 +113,8 @@
                         dots: sliderDotsShown,
                         arrows: sliderArrowShown,
                         speed: sliderSpeed,
-                        prevArrow: jQuery('.advgb-slider-prev'),
-                        nextArrow: jQuery('.advgb-slider-next'),
+                        prevArrow: jQuery(`#block-${clientId} .advgb-slider-prev`),
+                        nextArrow: jQuery(`#block-${clientId} .advgb-slider-next`),
                     });
                 }
             }
