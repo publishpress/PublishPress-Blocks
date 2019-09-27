@@ -348,7 +348,6 @@ float: left;'
         );
 
         // Include needed JS libraries
-        wp_enqueue_script('jquery-ui-accordion');
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('jquery-ui-sortable');
         wp_enqueue_script('slick_js');

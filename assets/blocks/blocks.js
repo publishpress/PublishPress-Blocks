@@ -678,8 +678,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         RichText = _wpBlockEditor.RichText,
-        InnerBlocks = _wpBlockEditor.InnerBlocks;
-    var select = wp.data.select;
+        InnerBlocks = _wpBlockEditor.InnerBlocks,
+        InspectorControls = _wpBlockEditor.InspectorControls,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings;
+    var RangeControl = wpComponents.RangeControl,
+        PanelBody = wpComponents.PanelBody,
+        BaseControl = wpComponents.BaseControl,
+        SelectControl = wpComponents.SelectControl,
+        ToggleControl = wpComponents.ToggleControl;
+    var _wp$data = wp.data,
+        select = _wp$data.select,
+        dispatch = _wp$data.dispatch;
 
 
     var HEADER_ICONS = {
@@ -734,7 +743,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AccordionItemEdit() {
             _classCallCheck(this, AccordionItemEdit);
 
-            return _possibleConstructorReturn(this, (AccordionItemEdit.__proto__ || Object.getPrototypeOf(AccordionItemEdit)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (AccordionItemEdit.__proto__ || Object.getPrototypeOf(AccordionItemEdit)).apply(this, arguments));
+
+            _this.updateAccordionAttrs = _this.updateAccordionAttrs.bind(_this);
+            return _this;
         }
 
         _createClass(AccordionItemEdit, [{
@@ -766,11 +778,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "updateAccordionAttrs",
+            value: function updateAccordionAttrs(attrs) {
+                var clientId = this.props.clientId;
+
+                var _ref2 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref2.updateBlockAttributes;
+
+                var _ref3 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref3.getBlockOrder,
+                    getBlockRootClientId = _ref3.getBlockRootClientId;
+
+                var rootBlockId = getBlockRootClientId(clientId);
+                var childBlocks = getBlockOrder(rootBlockId);
+
+                updateBlockAttributes(rootBlockId, attrs);
+                childBlocks.forEach(function (childBlockId) {
+                    return updateBlockAttributes(childBlockId, attrs);
+                });
+            }
+        }, {
             key: "render",
             value: function render() {
+                var _this2 = this;
+
                 var _props2 = this.props,
                     attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
                 var header = attributes.header,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
@@ -781,60 +816,216 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderStyle = attributes.borderStyle,
                     borderWidth = attributes.borderWidth,
                     borderColor = attributes.borderColor,
-                    borderRadius = attributes.borderRadius;
+                    borderRadius = attributes.borderRadius,
+                    marginBottom = attributes.marginBottom,
+                    blockCollapsed = attributes.collapsedAll;
 
+                var _ref4 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockRootClientId = _ref4.getBlockRootClientId,
+                    getBlockAttributes = _ref4.getBlockAttributes;
+
+                var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref5.updateBlockAttributes;
+
+                var rootBlockId = getBlockRootClientId(clientId);
+                var rootBlockAttrs = getBlockAttributes(rootBlockId);
+                var collapsedAll = rootBlockAttrs.collapsedAll;
+
+                if (blockCollapsed !== collapsedAll) setAttributes({ collapsedAll: collapsedAll });
 
                 return React.createElement(
-                    "div",
-                    { className: "advgb-accordion-item" },
+                    Fragment,
+                    null,
                     React.createElement(
-                        "div",
-                        { className: "advgb-accordion-header",
-                            style: {
-                                backgroundColor: headerBgColor,
-                                color: headerTextColor,
-                                borderStyle: borderStyle,
-                                borderWidth: borderWidth + 'px',
-                                borderColor: borderColor,
-                                borderRadius: borderRadius + 'px'
-                            }
-                        },
+                        InspectorControls,
+                        null,
                         React.createElement(
-                            "span",
-                            { className: "advgb-accordion-header-icon" },
-                            React.createElement(
-                                "svg",
-                                { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                                HEADER_ICONS[headerIcon]
-                            )
+                            PanelBody,
+                            { title: __('Accordion Settings', 'advanced-gutenberg') },
+                            React.createElement(RangeControl, {
+                                label: __('Bottom spacing', 'advanced-gutenberg'),
+                                value: marginBottom,
+                                help: __('Define space between each accordion (Frontend view only)', 'advanced-gutenberg'),
+                                min: 0,
+                                max: 50,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ marginBottom: value });
+                                }
+                            }),
+                            React.createElement(ToggleControl, {
+                                label: __('Initial Collapsed', 'advanced-gutenberg'),
+                                help: __('Make all accordions collapsed by default.', 'advanced-gutenberg'),
+                                checked: collapsedAll,
+                                onChange: function onChange() {
+                                    updateBlockAttributes(rootBlockId, { collapsedAll: !collapsedAll });
+                                    setAttributes({ collapsedAll: !collapsedAll });
+                                }
+                            })
                         ),
-                        React.createElement(RichText, {
-                            tagName: "h4",
-                            value: header,
-                            onChange: function onChange(value) {
-                                return setAttributes({ header: value });
-                            },
-                            unstableOnSplit: function unstableOnSplit() {
-                                return null;
-                            },
-                            className: "advgb-accordion-header-title",
-                            placeholder: __('Enter header…', 'advanced-gutenberg'),
-                            style: { color: 'inherit' }
-                        })
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Header Settings', 'advanced-gutenberg') },
+                            React.createElement(
+                                BaseControl,
+                                { label: __('Header Icon Style', 'advanced-gutenberg') },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper" },
+                                    Object.keys(HEADER_ICONS).map(function (key, index) {
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: index },
+                                            React.createElement(
+                                                "span",
+                                                { className: key === headerIcon ? 'active' : '',
+                                                    onClick: function onClick() {
+                                                        return _this2.updateAccordionAttrs({ headerIcon: key });
+                                                    } },
+                                                React.createElement(
+                                                    "svg",
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    HEADER_ICONS[key]
+                                                )
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings', 'advanced-gutenberg'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Background Color', 'advanced-gutenberg'),
+                                    value: headerBgColor,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateAccordionAttrs({ headerBgColor: value === undefined ? '#000' : value });
+                                    }
+                                }, {
+                                    label: __('Text Color', 'advanced-gutenberg'),
+                                    value: headerTextColor,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateAccordionAttrs({ headerTextColor: value === undefined ? '#eee' : value });
+                                    }
+                                }, {
+                                    label: __('Icon Color', 'advanced-gutenberg'),
+                                    value: headerIconColor,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateAccordionAttrs({ headerIconColor: value === undefined ? '#fff' : value });
+                                    }
+                                }]
+                            })
+                        ),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Body Color Settings', 'advanced-gutenberg'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color', 'advanced-gutenberg'),
+                                value: bodyBgColor,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ bodyBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color', 'advanced-gutenberg'),
+                                value: bodyTextColor,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ bodyTextColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Border Settings', 'advanced-gutenberg'), initialOpen: false },
+                            React.createElement(SelectControl, {
+                                label: __('Border Style', 'advanced-gutenberg'),
+                                value: borderStyle,
+                                options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ borderStyle: value });
+                                }
+                            }),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Color Settings', 'advanced-gutenberg'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border Color', 'advanced-gutenberg'),
+                                    value: borderColor,
+                                    onChange: function onChange(value) {
+                                        return _this2.updateAccordionAttrs({ borderColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border width', 'advanced-gutenberg'),
+                                value: borderWidth,
+                                min: 0,
+                                max: 10,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ borderWidth: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border radius', 'advanced-gutenberg'),
+                                value: borderRadius,
+                                min: 0,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return _this2.updateAccordionAttrs({ borderRadius: value });
+                                }
+                            })
+                        )
                     ),
                     React.createElement(
                         "div",
-                        { className: "advgb-accordion-body",
-                            style: {
-                                backgroundColor: bodyBgColor,
-                                color: bodyTextColor,
-                                borderStyle: borderStyle,
-                                borderWidth: borderWidth + 'px',
-                                borderColor: borderColor,
-                                borderRadius: borderRadius + 'px'
-                            }
-                        },
-                        React.createElement(InnerBlocks, null)
+                        { className: "advgb-accordion-item" },
+                        React.createElement(
+                            "div",
+                            { className: "advgb-accordion-header",
+                                style: {
+                                    backgroundColor: headerBgColor,
+                                    color: headerTextColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
+                                }
+                            },
+                            React.createElement(
+                                "span",
+                                { className: "advgb-accordion-header-icon" },
+                                React.createElement(
+                                    "svg",
+                                    { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                    HEADER_ICONS[headerIcon]
+                                )
+                            ),
+                            React.createElement(RichText, {
+                                tagName: "h4",
+                                value: header,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ header: value });
+                                },
+                                unstableOnSplit: function unstableOnSplit() {
+                                    return null;
+                                },
+                                className: "advgb-accordion-header-title",
+                                placeholder: __('Enter header…', 'advanced-gutenberg'),
+                                style: { color: 'inherit' }
+                            })
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-accordion-body",
+                                style: {
+                                    backgroundColor: bodyBgColor,
+                                    color: bodyTextColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px'
+                                }
+                            },
+                            React.createElement(InnerBlocks, null)
+                        )
                     )
                 );
             }
@@ -908,14 +1099,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 type: 'number',
                 default: 15
             },
+            collapsedAll: {
+                type: 'boolean',
+                default: false
+            },
             changed: {
                 type: 'boolean',
                 default: false
             }
         },
         edit: AccordionItemEdit,
-        save: function save(_ref2) {
-            var attributes = _ref2.attributes;
+        save: function save(_ref6) {
+            var attributes = _ref6.attributes;
             var header = attributes.header,
                 headerBgColor = attributes.headerBgColor,
                 headerTextColor = attributes.headerTextColor,
