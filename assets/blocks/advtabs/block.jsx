@@ -1,0 +1,374 @@
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    const { __ } = wpI18n;
+    const { Component, Fragment } = wpElement;
+    const { registerBlockType } = wpBlocks;
+    const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
+    const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl } = wpComponents;
+
+    let path = "M464.4,488h-440c-14.131,0-24-8.882-24-21.6v-440C0.4,13.938,10.664,0,24.4,0h440 ";
+    path += "c13.736,0,24,13.938,24,26.4v440C488.4,479.118,478.531,488,464.4,488z M24.4,16c-3.813,0-8,5.443-8,10.4v440 ";
+    path += "c0,5.054,5.595,5.6,8,5.6h440c2.405,0,8-0.546,8-5.6v-440c0-4.957-4.187-10.4-8-10.4C464.4,16,24.4,16,24.4,16z";
+
+    let path2 = "M464.4,488.8h-440c-14.58,0-24-7.223-24-18.399V36h16v434.4c0,1.301,3.664,2.399,8,2.399h440 ";
+    path2 += "c4.337,0,8-1.099,8-2.399V121.6c0-0.074-0.003-0.132-0.007-0.178c-0.587-0.447-2.915-1.422-7.993-1.422H207.305L154.75,7.383 ";
+    path2 += "l14.499-6.766L217.495,104H464.4c22.27,0,24,13.471,24,17.6v348.8C488.4,481.577,478.979,488.8,464.4,488.8z";
+
+    const tabHorizontalIcon = (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.8 488.8" width="50px" height="50px">
+            <polygon fill="#ddd" points="476.4,105.6 214.8,109.6 162,4 476.4,4 "/>
+            <path d={path} />
+            <path d={path2} />
+            <rect x="328.4" y="3" width="16" height="114"/>
+        </svg>
+    );
+
+    const tabVerticalIcon = (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.8 488.8" width="50px" height="50px" transform="rotate(-90) scale(-1, 1)">
+            <polygon fill="#ddd" points="476.4,105.6 214.8,109.6 162,4 476.4,4 "/>
+            <path d={path} />
+            <path d={path2} />
+            <rect x="328.4" y="3" width="16" height="114"/>
+        </svg>
+    );
+
+    class AdvTabsBlock extends Component {
+        constructor() {
+            super( ...arguments );
+        }
+
+        componentWillMount() {
+            const { attributes, setAttributes } = this.props;
+            const currentBlockConfig = advgbDefaultConfig['advgb-adv-tabs'];
+
+            // No override attributes of blocks inserted before
+            if (attributes.changed !== true) {
+                if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
+                    Object.keys(currentBlockConfig).map((attribute) => {
+                        if (typeof attributes[attribute] === 'boolean') {
+                            attributes[attribute] = !!currentBlockConfig[attribute];
+                        } else {
+                            attributes[attribute] = currentBlockConfig[attribute];
+                        }
+                    });
+                }
+
+                // Finally set changed attribute to true, so we don't modify anything again
+                setAttributes( { changed: true } );
+            }
+        }
+
+        componentDidMount() {
+            setTimeout(() => this.initTabs(), 100);
+            if (!this.props.attributes.blockID) {
+                this.props.setAttributes( { blockID: this.props.clientId } );
+            }
+        }
+
+        componentDidUpdate( prevProps ) {
+            const { tabItems: prevItems } = prevProps.attributes;
+            const { tabItems } = this.props.attributes;
+
+            if (prevItems !== tabItems) {
+                this.initTabs( true );
+            }
+        }
+
+        initTabs( refresh = false ) {
+            if (typeof jQuery !== "undefined") {
+                if (!refresh) {
+                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs();
+                } else {
+                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs('refresh');
+                }
+
+                jQuery(`#block-${this.props.clientId} .advgb-tabs-block a`).on( 'keydown', function ( e ) {
+                    e.stopPropagation();
+                } )
+            }
+        }
+
+        updateTabs( value, index ) {
+            const { attributes, setAttributes } = this.props;
+            const { tabItems } = attributes;
+
+            let newItems = tabItems.map( ( item, thisIndex ) => {
+                if ( index === thisIndex ) {
+                    item = { ...item, ...value };
+                }
+
+                return item;
+            } );
+
+            setAttributes( { tabItems: newItems } );
+        }
+
+        render() {
+            const { attributes, setAttributes, clientId } = this.props;
+            const {
+                tabHeaders,
+                headerBgColor,
+                headerTextColor,
+                bodyBgColor,
+                bodyTextColor,
+                borderStyle,
+                borderWidth,
+                borderColor,
+                borderRadius,
+                blockID,
+                activeTabBgColor,
+                activeTabTextColor,
+            } = attributes;
+
+            return (
+                <Fragment>
+                    <InspectorControls>
+                        <PanelColorSettings
+                            title={ __( 'Tab Colors', 'advanced-gutenberg' ) }
+                            initialOpen={ false }
+                            colorSettings={ [
+                                {
+                                    label: __( 'Background Color', 'advanced-gutenberg' ),
+                                    value: headerBgColor,
+                                    onChange: ( value ) => setAttributes( { headerBgColor: value === undefined ? '#000' : value } ),
+                                },
+                                {
+                                    label: __( 'Text Color', 'advanced-gutenberg' ),
+                                    value: headerTextColor,
+                                    onChange: ( value ) => setAttributes( { headerTextColor: value === undefined ? '#fff' : value } ),
+                                },
+                                {
+                                    label: __( 'Active Tab Background Color', 'advanced-gutenberg' ),
+                                    value: activeTabBgColor,
+                                    onChange: ( value ) => setAttributes( { activeTabBgColor: value } ),
+                                },
+                                {
+                                    label: __( 'Active Tab Text Color', 'advanced-gutenberg' ),
+                                    value: activeTabTextColor,
+                                    onChange: ( value ) => setAttributes( { activeTabTextColor: value } ),
+                                },
+                            ] }
+                        />
+                        <PanelColorSettings
+                            title={ __( 'Body Colors', 'advanced-gutenberg' ) }
+                            initialOpen={ false }
+                            colorSettings={ [
+                                {
+                                    label: __( 'Background Color', 'advanced-gutenberg' ),
+                                    value: bodyBgColor,
+                                    onChange: ( value ) => setAttributes( { bodyBgColor: value } ),
+                                },
+                                {
+                                    label: __( 'Text Color', 'advanced-gutenberg' ),
+                                    value: bodyTextColor,
+                                    onChange: ( value ) => setAttributes( { bodyTextColor: value } ),
+                                },
+                            ] }
+                        />
+                        <PanelBody title={ __( 'Border Settings', 'advanced-gutenberg' ) } initialOpen={ false }>
+                            <SelectControl
+                                label={ __( 'Border Style', 'advanced-gutenberg' ) }
+                                value={ borderStyle }
+                                options={ [
+                                    { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
+                                    { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
+                                    { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },
+                                ] }
+                                onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
+                            />
+                            <PanelColorSettings
+                                title={ __( 'Border Color', 'advanced-gutenberg' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Border Color', 'advanced-gutenberg' ),
+                                        value: borderColor,
+                                        onChange: ( value ) => setAttributes( { borderColor: value } ),
+                                    },
+                                ] }
+                            />
+                            <RangeControl
+                                label={ __( 'Border width', 'advanced-gutenberg' ) }
+                                value={ borderWidth }
+                                min={ 1 }
+                                max={ 10 }
+                                onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+                            />
+                            <RangeControl
+                                label={ __( 'Border radius', 'advanced-gutenberg' ) }
+                                value={ borderRadius }
+                                min={ 0 }
+                                max={ 100 }
+                                onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+                            />
+                        </PanelBody>
+                    </InspectorControls>
+                    <div className="advgb-tabs-block" style={ { border: 'none' } }>
+                        <ul className="advgb-tabs-panel">
+                            {tabHeaders.map( ( item, index ) => (
+                                <li key={ index }
+                                    className="advgb-tab"
+                                    style={ {
+                                        backgroundColor: headerBgColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth + 'px',
+                                        borderColor: borderColor,
+                                        borderRadius: borderRadius + 'px',
+                                        margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
+                                    } }
+                                >
+                                    <a href={`#advgb-tab-${blockID}-${index}`}
+                                       style={ { color: headerTextColor } }
+                                    >
+                                        <RichText
+                                            tagName="p"
+                                            value={ item }
+                                            onChange={ ( value ) => this.updateTabs( value, index ) }
+                                            unstableOnSplit={ () => null }
+                                            placeholder={ __( 'Title…', 'advanced-gutenberg' ) }
+                                        />
+                                    </a>
+                                    {tabHeaders.length > 1 && (
+                                        <Tooltip text={ __( 'Remove tab', 'advanced-gutenberg' ) }>
+                                            <span className="advgb-tab-remove"
+                                                  onClick={ () => setAttributes( {
+                                                      tabItems: tabItems.filter( (vl, idx) => idx !== index )
+                                                  } ) }
+                                            >
+                                                <Dashicon icon="no"/>
+                                            </span>
+                                        </Tooltip>
+                                    )}
+                                </li>
+                            ) ) }
+                            <li className="advgb-tab advgb-add-tab ui-state-default"
+                                style={ {
+                                    borderRadius: borderRadius + 'px',
+                                    borderWidth: borderWidth + 'px',
+                                    margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
+                                } }
+                            >
+                                <Tooltip text={ __( 'Add tab', 'advanced-gutenberg' ) }>
+                                    <span onClick={ () => setAttributes( {
+                                        tabHeaders: [
+                                            ...tabHeaders,
+                                            __( 'Enter your content.', 'advanced-gutenberg' )
+                                        ]
+                                    } ) }>
+                                        <Dashicon icon="plus-alt"/>
+                                    </span>
+                                </Tooltip>
+                            </li>
+                        </ul>
+                        <InnerBlocks/>
+                    </div>
+                    {!!blockID &&
+                    <style>
+                        {activeTabBgColor && `#block-${clientId} li.advgb-tab.ui-tabs-active {
+                                background-color: ${activeTabBgColor} !important;
+                            }`}
+                        {activeTabTextColor && `#block-${clientId} li.advgb-tab.ui-tabs-active a {
+                                color: ${activeTabTextColor} !important;
+                            }`}
+                    </style>
+                    }
+                </Fragment>
+            )
+        }
+    }
+
+    const tabsBlockIcon = (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.8 488.8" width="20px" height="20px">
+            <polygon fill="#ddd" points="476.4,105.6 214.8,109.6 162,4 476.4,4 "/>
+            <path d={path} />
+            <path d={path2} />
+            <rect x="328.4" y="3" width="16" height="114"/>
+        </svg>
+    );
+
+    const tabBlockAttrs = {
+        tabHeaders: {
+            type: "array",
+            default: [
+                __( 'Tab 1', 'advanced-gutenberg' ),
+                __( 'Tab 2', 'advanced-gutenberg' ),
+                __( 'Tab 3', 'advanced-gutenberg' ),
+            ]
+        },
+        headerBgColor: {
+            type: 'string',
+            default: '#000',
+        },
+        headerTextColor: {
+            type: 'string',
+            default: '#fff',
+        },
+        bodyBgColor: {
+            type: 'string',
+        },
+        bodyTextColor: {
+            type: 'string',
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid',
+        },
+        borderWidth: {
+            type: 'number',
+            default: 1,
+        },
+        borderColor: {
+            type: 'string',
+        },
+        borderRadius: {
+            type: 'number',
+            default: 2,
+        },
+        blockID: {
+            type: 'string',
+        },
+        activeTabBgColor: {
+            type: 'string',
+        },
+        activeTabTextColor: {
+            type: 'string',
+        },
+        changed: {
+            type: 'boolean',
+            default: false,
+        },
+    };
+
+    registerBlockType( 'advgb/adv-tabs', {
+        title: __( 'Advanced Tabs', 'advanced-gutenberg' ),
+        description: __( 'Create your own tabs never easy like this.', 'advanced-gutenberg' ),
+        icon: {
+            src: tabsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
+        },
+        category: "advgb-category",
+        keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
+        attributes: tabBlockAttrs,
+        edit: AdvTabsBlock,
+        save: function ( { attributes } ) {
+            const {
+                tabHeaders,
+                headerBgColor,
+                headerTextColor,
+                bodyBgColor,
+                bodyTextColor,
+                borderStyle,
+                borderWidth,
+                borderColor,
+                borderRadius,
+                blockID,
+                activeTabBgColor,
+                activeTabTextColor,
+            } = attributes;
+
+            return (
+                null
+            );
+        },
+    } );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

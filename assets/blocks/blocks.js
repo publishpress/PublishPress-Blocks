@@ -5151,6 +5151,636 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/blocks/advtabs/block.jsx":
+/*!*****************************************!*\
+  !*** ./assets/blocks/advtabs/block.jsx ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var _wpBlockEditor = wpBlockEditor,
+        InspectorControls = _wpBlockEditor.InspectorControls,
+        RichText = _wpBlockEditor.RichText,
+        PanelColorSettings = _wpBlockEditor.PanelColorSettings,
+        InnerBlocks = _wpBlockEditor.InnerBlocks;
+    var Dashicon = wpComponents.Dashicon,
+        Tooltip = wpComponents.Tooltip,
+        PanelBody = wpComponents.PanelBody,
+        RangeControl = wpComponents.RangeControl,
+        SelectControl = wpComponents.SelectControl;
+
+
+    var path = "M464.4,488h-440c-14.131,0-24-8.882-24-21.6v-440C0.4,13.938,10.664,0,24.4,0h440 ";
+    path += "c13.736,0,24,13.938,24,26.4v440C488.4,479.118,478.531,488,464.4,488z M24.4,16c-3.813,0-8,5.443-8,10.4v440 ";
+    path += "c0,5.054,5.595,5.6,8,5.6h440c2.405,0,8-0.546,8-5.6v-440c0-4.957-4.187-10.4-8-10.4C464.4,16,24.4,16,24.4,16z";
+
+    var path2 = "M464.4,488.8h-440c-14.58,0-24-7.223-24-18.399V36h16v434.4c0,1.301,3.664,2.399,8,2.399h440 ";
+    path2 += "c4.337,0,8-1.099,8-2.399V121.6c0-0.074-0.003-0.132-0.007-0.178c-0.587-0.447-2.915-1.422-7.993-1.422H207.305L154.75,7.383 ";
+    path2 += "l14.499-6.766L217.495,104H464.4c22.27,0,24,13.471,24,17.6v348.8C488.4,481.577,478.979,488.8,464.4,488.8z";
+
+    var tabHorizontalIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 488.8 488.8", width: "50px", height: "50px" },
+        React.createElement("polygon", { fill: "#ddd", points: "476.4,105.6 214.8,109.6 162,4 476.4,4 " }),
+        React.createElement("path", { d: path }),
+        React.createElement("path", { d: path2 }),
+        React.createElement("rect", { x: "328.4", y: "3", width: "16", height: "114" })
+    );
+
+    var tabVerticalIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 488.8 488.8", width: "50px", height: "50px", transform: "rotate(-90) scale(-1, 1)" },
+        React.createElement("polygon", { fill: "#ddd", points: "476.4,105.6 214.8,109.6 162,4 476.4,4 " }),
+        React.createElement("path", { d: path }),
+        React.createElement("path", { d: path2 }),
+        React.createElement("rect", { x: "328.4", y: "3", width: "16", height: "114" })
+    );
+
+    var AdvTabsBlock = function (_Component) {
+        _inherits(AdvTabsBlock, _Component);
+
+        function AdvTabsBlock() {
+            _classCallCheck(this, AdvTabsBlock);
+
+            return _possibleConstructorReturn(this, (AdvTabsBlock.__proto__ || Object.getPrototypeOf(AdvTabsBlock)).apply(this, arguments));
+        }
+
+        _createClass(AdvTabsBlock, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes;
+
+                var currentBlockConfig = advgbDefaultConfig['advgb-adv-tabs'];
+
+                // No override attributes of blocks inserted before
+                if (attributes.changed !== true) {
+                    if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
+                        Object.keys(currentBlockConfig).map(function (attribute) {
+                            if (typeof attributes[attribute] === 'boolean') {
+                                attributes[attribute] = !!currentBlockConfig[attribute];
+                            } else {
+                                attributes[attribute] = currentBlockConfig[attribute];
+                            }
+                        });
+                    }
+
+                    // Finally set changed attribute to true, so we don't modify anything again
+                    setAttributes({ changed: true });
+                }
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _this2 = this;
+
+                setTimeout(function () {
+                    return _this2.initTabs();
+                }, 100);
+                if (!this.props.attributes.blockID) {
+                    this.props.setAttributes({ blockID: this.props.clientId });
+                }
+            }
+        }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate(prevProps) {
+                var prevItems = prevProps.attributes.tabItems;
+                var tabItems = this.props.attributes.tabItems;
+
+
+                if (prevItems !== tabItems) {
+                    this.initTabs(true);
+                }
+            }
+        }, {
+            key: "initTabs",
+            value: function initTabs() {
+                var refresh = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+                if (typeof jQuery !== "undefined") {
+                    if (!refresh) {
+                        jQuery("#block-" + this.props.clientId + " .advgb-tabs-block").tabs();
+                    } else {
+                        jQuery("#block-" + this.props.clientId + " .advgb-tabs-block").tabs('refresh');
+                    }
+
+                    jQuery("#block-" + this.props.clientId + " .advgb-tabs-block a").on('keydown', function (e) {
+                        e.stopPropagation();
+                    });
+                }
+            }
+        }, {
+            key: "updateTabs",
+            value: function updateTabs(value, index) {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var tabItems = attributes.tabItems;
+
+
+                var newItems = tabItems.map(function (item, thisIndex) {
+                    if (index === thisIndex) {
+                        item = _extends({}, item, value);
+                    }
+
+                    return item;
+                });
+
+                setAttributes({ tabItems: newItems });
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this3 = this;
+
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes,
+                    clientId = _props3.clientId;
+                var tabHeaders = attributes.tabHeaders,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    blockID = attributes.blockID,
+                    activeTabBgColor = attributes.activeTabBgColor,
+                    activeTabTextColor = attributes.activeTabTextColor;
+
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(PanelColorSettings, {
+                            title: __('Tab Colors', 'advanced-gutenberg'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color', 'advanced-gutenberg'),
+                                value: headerBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ headerBgColor: value === undefined ? '#000' : value });
+                                }
+                            }, {
+                                label: __('Text Color', 'advanced-gutenberg'),
+                                value: headerTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ headerTextColor: value === undefined ? '#fff' : value });
+                                }
+                            }, {
+                                label: __('Active Tab Background Color', 'advanced-gutenberg'),
+                                value: activeTabBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ activeTabBgColor: value });
+                                }
+                            }, {
+                                label: __('Active Tab Text Color', 'advanced-gutenberg'),
+                                value: activeTabTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ activeTabTextColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(PanelColorSettings, {
+                            title: __('Body Colors', 'advanced-gutenberg'),
+                            initialOpen: false,
+                            colorSettings: [{
+                                label: __('Background Color', 'advanced-gutenberg'),
+                                value: bodyBgColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyBgColor: value });
+                                }
+                            }, {
+                                label: __('Text Color', 'advanced-gutenberg'),
+                                value: bodyTextColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ bodyTextColor: value });
+                                }
+                            }]
+                        }),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Border Settings', 'advanced-gutenberg'), initialOpen: false },
+                            React.createElement(SelectControl, {
+                                label: __('Border Style', 'advanced-gutenberg'),
+                                value: borderStyle,
+                                options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderStyle: value });
+                                }
+                            }),
+                            React.createElement(PanelColorSettings, {
+                                title: __('Border Color', 'advanced-gutenberg'),
+                                initialOpen: false,
+                                colorSettings: [{
+                                    label: __('Border Color', 'advanced-gutenberg'),
+                                    value: borderColor,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ borderColor: value });
+                                    }
+                                }]
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border width', 'advanced-gutenberg'),
+                                value: borderWidth,
+                                min: 1,
+                                max: 10,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderWidth: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border radius', 'advanced-gutenberg'),
+                                value: borderRadius,
+                                min: 0,
+                                max: 100,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ borderRadius: value });
+                                }
+                            })
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-tabs-block", style: { border: 'none' } },
+                        React.createElement(
+                            "ul",
+                            { className: "advgb-tabs-panel" },
+                            tabHeaders.map(function (item, index) {
+                                return React.createElement(
+                                    "li",
+                                    { key: index,
+                                        className: "advgb-tab",
+                                        style: {
+                                            backgroundColor: headerBgColor,
+                                            borderStyle: borderStyle,
+                                            borderWidth: borderWidth + 'px',
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px',
+                                            margin: "-" + borderWidth + "px 0 -" + borderWidth + "px -" + borderWidth + "px"
+                                        }
+                                    },
+                                    React.createElement(
+                                        "a",
+                                        { href: "#advgb-tab-" + blockID + "-" + index,
+                                            style: { color: headerTextColor }
+                                        },
+                                        React.createElement(RichText, {
+                                            tagName: "p",
+                                            value: item,
+                                            onChange: function onChange(value) {
+                                                return _this3.updateTabs(value, index);
+                                            },
+                                            unstableOnSplit: function unstableOnSplit() {
+                                                return null;
+                                            },
+                                            placeholder: __('Title…', 'advanced-gutenberg')
+                                        })
+                                    ),
+                                    tabHeaders.length > 1 && React.createElement(
+                                        Tooltip,
+                                        { text: __('Remove tab', 'advanced-gutenberg') },
+                                        React.createElement(
+                                            "span",
+                                            { className: "advgb-tab-remove",
+                                                onClick: function onClick() {
+                                                    return setAttributes({
+                                                        tabItems: tabItems.filter(function (vl, idx) {
+                                                            return idx !== index;
+                                                        })
+                                                    });
+                                                }
+                                            },
+                                            React.createElement(Dashicon, { icon: "no" })
+                                        )
+                                    )
+                                );
+                            }),
+                            React.createElement(
+                                "li",
+                                { className: "advgb-tab advgb-add-tab ui-state-default",
+                                    style: {
+                                        borderRadius: borderRadius + 'px',
+                                        borderWidth: borderWidth + 'px',
+                                        margin: "-" + borderWidth + "px 0 -" + borderWidth + "px -" + borderWidth + "px"
+                                    }
+                                },
+                                React.createElement(
+                                    Tooltip,
+                                    { text: __('Add tab', 'advanced-gutenberg') },
+                                    React.createElement(
+                                        "span",
+                                        { onClick: function onClick() {
+                                                return setAttributes({
+                                                    tabHeaders: [].concat(_toConsumableArray(tabHeaders), [__('Enter your content.', 'advanced-gutenberg')])
+                                                });
+                                            } },
+                                        React.createElement(Dashicon, { icon: "plus-alt" })
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(InnerBlocks, null)
+                    ),
+                    !!blockID && React.createElement(
+                        "style",
+                        null,
+                        activeTabBgColor && "#block-" + clientId + " li.advgb-tab.ui-tabs-active {\n                                background-color: " + activeTabBgColor + " !important;\n                            }",
+                        activeTabTextColor && "#block-" + clientId + " li.advgb-tab.ui-tabs-active a {\n                                color: " + activeTabTextColor + " !important;\n                            }"
+                    )
+                );
+            }
+        }]);
+
+        return AdvTabsBlock;
+    }(Component);
+
+    var tabsBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 488.8 488.8", width: "20px", height: "20px" },
+        React.createElement("polygon", { fill: "#ddd", points: "476.4,105.6 214.8,109.6 162,4 476.4,4 " }),
+        React.createElement("path", { d: path }),
+        React.createElement("path", { d: path2 }),
+        React.createElement("rect", { x: "328.4", y: "3", width: "16", height: "114" })
+    );
+
+    var tabBlockAttrs = {
+        tabHeaders: {
+            type: "array",
+            default: [__('Tab 1', 'advanced-gutenberg'), __('Tab 2', 'advanced-gutenberg'), __('Tab 3', 'advanced-gutenberg')]
+        },
+        headerBgColor: {
+            type: 'string',
+            default: '#000'
+        },
+        headerTextColor: {
+            type: 'string',
+            default: '#fff'
+        },
+        bodyBgColor: {
+            type: 'string'
+        },
+        bodyTextColor: {
+            type: 'string'
+        },
+        borderStyle: {
+            type: 'string',
+            default: 'solid'
+        },
+        borderWidth: {
+            type: 'number',
+            default: 1
+        },
+        borderColor: {
+            type: 'string'
+        },
+        borderRadius: {
+            type: 'number',
+            default: 2
+        },
+        blockID: {
+            type: 'string'
+        },
+        activeTabBgColor: {
+            type: 'string'
+        },
+        activeTabTextColor: {
+            type: 'string'
+        },
+        changed: {
+            type: 'boolean',
+            default: false
+        }
+    };
+
+    registerBlockType('advgb/adv-tabs', {
+        title: __('Advanced Tabs', 'advanced-gutenberg'),
+        description: __('Create your own tabs never easy like this.', 'advanced-gutenberg'),
+        icon: {
+            src: tabsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: "advgb-category",
+        keywords: [__('tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
+        attributes: tabBlockAttrs,
+        edit: AdvTabsBlock,
+        save: function save(_ref) {
+            var attributes = _ref.attributes;
+            var tabHeaders = attributes.tabHeaders,
+                headerBgColor = attributes.headerBgColor,
+                headerTextColor = attributes.headerTextColor,
+                bodyBgColor = attributes.bodyBgColor,
+                bodyTextColor = attributes.bodyTextColor,
+                borderStyle = attributes.borderStyle,
+                borderWidth = attributes.borderWidth,
+                borderColor = attributes.borderColor,
+                borderRadius = attributes.borderRadius,
+                blockID = attributes.blockID,
+                activeTabBgColor = attributes.activeTabBgColor,
+                activeTabTextColor = attributes.activeTabTextColor;
+
+
+            return null;
+        }
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
+/***/ "./assets/blocks/advtabs/tab.jsx":
+/*!***************************************!*\
+  !*** ./assets/blocks/advtabs/tab.jsx ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+    wpBlockEditor = wp.blockEditor || wp.editor;
+    var __ = wpI18n.__;
+    var Component = wpElement.Component,
+        Fragment = wpElement.Fragment;
+    var registerBlockType = wpBlocks.registerBlockType;
+    var _wpBlockEditor = wpBlockEditor,
+        InnerBlocks = _wpBlockEditor.InnerBlocks;
+    var select = wp.data.select;
+
+
+    var tabsBlockIcon = React.createElement(
+        "svg",
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("path", { d: "M21,3H3C1.9,3,1,3.9,1,5v14c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V5C23,3.9,22.1,3,21,3z M21,19H3V5h10v4h8V19z" })
+    );
+
+    var TabItemEdit = function (_Component) {
+        _inherits(TabItemEdit, _Component);
+
+        function TabItemEdit() {
+            _classCallCheck(this, TabItemEdit);
+
+            return _possibleConstructorReturn(this, (TabItemEdit.__proto__ || Object.getPrototypeOf(TabItemEdit)).apply(this, arguments));
+        }
+
+        _createClass(TabItemEdit, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _props = this.props,
+                    attributes = _props.attributes,
+                    setAttributes = _props.setAttributes,
+                    clientId = _props.clientId;
+
+                var _ref = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockRootClientId = _ref.getBlockRootClientId,
+                    getBlockAttributes = _ref.getBlockAttributes;
+
+                var rootBlockId = getBlockRootClientId(clientId);
+                var rootBlockAttrs = getBlockAttributes(rootBlockId);
+
+                // Apply parent style if newly inserted
+                if (attributes.changed !== true) {
+                    if (rootBlockAttrs !== null && rootBlockAttrs.needUpdate !== false) {
+                        Object.keys(rootBlockAttrs).map(function (attribute) {
+                            attributes[attribute] = rootBlockAttrs[attribute];
+                        });
+
+                        // Done applied, we will not do this again
+                        setAttributes({ changed: true });
+                    }
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    clientId = _props2.clientId;
+                var bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor;
+
+                var _ref2 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockRootClientId = _ref2.getBlockRootClientId;
+
+                var rootBlockId = getBlockRootClientId(clientId);
+
+                var _ref3 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref3.getBlockOrder;
+
+                var childBlocks = getBlockOrder(rootBlockId);
+
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: "advgb-tab-body",
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor
+                            }
+                        },
+                        React.createElement(InnerBlocks, {
+                            template: [['core/paragraph']],
+                            templateLock: false
+                        })
+                    )
+                );
+            }
+        }]);
+
+        return TabItemEdit;
+    }(Component);
+
+    registerBlockType('advgb/tab-item', {
+        title: __('Tab Item'),
+        parent: ['advgb/tabs'],
+        icon: {
+            src: tabsBlockIcon,
+            foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
+        },
+        category: 'advgb-category',
+        attributes: {
+            bodyBgColor: {
+                type: 'string'
+            },
+            bodyTextColor: {
+                type: 'string'
+            },
+            active: {
+                type: 'boolean',
+                default: false
+            },
+            changed: {
+                type: 'boolean',
+                default: false
+            }
+        },
+        keywords: [__('tab')],
+        edit: TabItemEdit,
+        save: function save(_ref4) {
+            var attributes = _ref4.attributes;
+            var bodyBgColor = attributes.bodyBgColor,
+                bodyTextColor = attributes.bodyTextColor,
+                blockID = attributes.blockID;
+
+
+            return React.createElement(
+                "div",
+                { className: "advgb-tab-body",
+                    style: {
+                        backgroundColor: bodyBgColor,
+                        color: bodyTextColor
+                    }
+                },
+                React.createElement(InnerBlocks.Content, null)
+            );
+        }
+
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+
+/***/ }),
+
 /***/ "./assets/blocks/advvideo/block.jsx":
 /*!******************************************!*\
   !*** ./assets/blocks/advvideo/block.jsx ***!
@@ -17903,9 +18533,9 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/0-adv-components/components.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/search-bar/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/0-adv-components/components.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advtabs/block.jsx ./assets/blocks/advtabs/tab.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/search-bar/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17917,6 +18547,8 @@ __webpack_require__(/*! ./assets/blocks/advbutton/block.jsx */"./assets/blocks/a
 __webpack_require__(/*! ./assets/blocks/advimage/block.jsx */"./assets/blocks/advimage/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advlist/block.jsx */"./assets/blocks/advlist/block.jsx");
 __webpack_require__(/*! ./assets/blocks/advtable/block.jsx */"./assets/blocks/advtable/block.jsx");
+__webpack_require__(/*! ./assets/blocks/advtabs/block.jsx */"./assets/blocks/advtabs/block.jsx");
+__webpack_require__(/*! ./assets/blocks/advtabs/tab.jsx */"./assets/blocks/advtabs/tab.jsx");
 __webpack_require__(/*! ./assets/blocks/advvideo/block.jsx */"./assets/blocks/advvideo/block.jsx");
 __webpack_require__(/*! ./assets/blocks/columns/block.jsx */"./assets/blocks/columns/block.jsx");
 __webpack_require__(/*! ./assets/blocks/columns/column.jsx */"./assets/blocks/columns/column.jsx");
