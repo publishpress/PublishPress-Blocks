@@ -39,21 +39,33 @@
             }
         }
 
+        componentDidMount() {
+            const { setAttributes, clientId } = this.props;
+            const { getBlockRootClientId, getBlockIndex, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const rootBlockId = getBlockRootClientId( clientId );
+            const rootBlockAttrs = getBlockAttributes(rootBlockId);
+            const { pid } = rootBlockAttrs;
+            const blockIndex = getBlockIndex(clientId, rootBlockId);
+
+            setAttributes( { pid: `advgb-tab-${pid}-${blockIndex}` } )
+        }
+
         render() {
             const { attributes, clientId } = this.props;
-            const {bodyBgColor, bodyTextColor} = attributes;
+            const {bodyBgColor, bodyTextColor, tabActive, pid} = attributes;
 
-            const { getBlockRootClientId } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const { getBlockRootClientId, getBlockIndex } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
             const rootBlockId = getBlockRootClientId( clientId );
-            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
-            const childBlocks = getBlockOrder(rootBlockId);
+            const blockIndex = getBlockIndex(clientId, rootBlockId);
 
             return (
                 <Fragment>
                     <div className="advgb-tab-body"
+                         id={pid}
                          style={ {
                              backgroundColor: bodyBgColor,
                              color: bodyTextColor,
+                             display: blockIndex === tabActive ? 'block' : 'none',
                          } }
                     >
                         <InnerBlocks
@@ -66,7 +78,7 @@
         }
     }
 
-    registerBlockType( 'advgb/tab-item', {
+    registerBlockType( 'advgb/tab', {
         title: __( 'Tab Item' ),
         parent: [ 'advgb/tabs' ],
         icon: {
@@ -81,9 +93,12 @@
             bodyTextColor: {
                 type: 'string',
             },
-            active: {
-                type: 'boolean',
-                default: false,
+            pid: {
+                type: 'string',
+            },
+            tabActive: {
+                type: 'number',
+                default: 0,
             },
             changed: {
                 type: 'boolean',
@@ -93,11 +108,11 @@
         keywords: [ __( 'tab' ) ],
         edit: TabItemEdit,
         save: function( { attributes } ) {
-
-            const {bodyBgColor, bodyTextColor, blockID} = attributes;
+            const {bodyBgColor, bodyTextColor, pid} = attributes;
 
             return (
                 <div className="advgb-tab-body"
+                     id={pid}
                      style={ {
                          backgroundColor: bodyBgColor,
                          color: bodyTextColor,

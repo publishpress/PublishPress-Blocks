@@ -5,6 +5,7 @@
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl } = wpComponents;
+    const { dispatch, select } = wp.data;
 
     let path = "M464.4,488h-440c-14.131,0-24-8.882-24-21.6v-440C0.4,13.938,10.664,0,24.4,0h440 ";
     path += "c13.736,0,24,13.938,24,26.4v440C488.4,479.118,478.531,488,464.4,488z M24.4,16c-3.813,0-8,5.443-8,10.4v440 ";
@@ -32,7 +33,7 @@
         </svg>
     );
 
-    class AdvTabsBlock extends Component {
+    class AdvTabsWrapper extends Component {
         constructor() {
             super( ...arguments );
         }
@@ -59,54 +60,26 @@
         }
 
         componentDidMount() {
-            setTimeout(() => this.initTabs(), 100);
-            if (!this.props.attributes.blockID) {
-                this.props.setAttributes( { blockID: this.props.clientId } );
+            if (!this.props.attributes.pid) {
+                this.props.setAttributes( { pid: this.props.clientId } );
             }
         }
 
-        componentDidUpdate( prevProps ) {
-            const { tabItems: prevItems } = prevProps.attributes;
-            const { tabItems } = this.props.attributes;
+        updateTabsAttr( attrs ) {
+            const { setAttributes, clientId } = this.props;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
 
-            if (prevItems !== tabItems) {
-                this.initTabs( true );
-            }
-        }
-
-        initTabs( refresh = false ) {
-            if (typeof jQuery !== "undefined") {
-                if (!refresh) {
-                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs();
-                } else {
-                    jQuery(`#block-${this.props.clientId} .advgb-tabs-block`).tabs('refresh');
-                }
-
-                jQuery(`#block-${this.props.clientId} .advgb-tabs-block a`).on( 'keydown', function ( e ) {
-                    e.stopPropagation();
-                } )
-            }
-        }
-
-        updateTabs( value, index ) {
-            const { attributes, setAttributes } = this.props;
-            const { tabItems } = attributes;
-
-            let newItems = tabItems.map( ( item, thisIndex ) => {
-                if ( index === thisIndex ) {
-                    item = { ...item, ...value };
-                }
-
-                return item;
-            } );
-
-            setAttributes( { tabItems: newItems } );
+            setAttributes( attrs );
+            childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attrs ) );
         }
 
         render() {
             const { attributes, setAttributes, clientId } = this.props;
             const {
                 tabHeaders,
+                tabActive,
                 headerBgColor,
                 headerTextColor,
                 bodyBgColor,
@@ -115,7 +88,7 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
-                blockID,
+                pid,
                 activeTabBgColor,
                 activeTabTextColor,
             } = attributes;
@@ -203,11 +176,11 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className="advgb-tabs-block" style={ { border: 'none' } }>
+                    <div className="advgb-tabs-wrapper" style={ { border: 'none' } }>
                         <ul className="advgb-tabs-panel">
                             {tabHeaders.map( ( item, index ) => (
                                 <li key={ index }
-                                    className="advgb-tab"
+                                    className={`advgb-tab ${tabActive === index && 'ui-tabs-active'}`}
                                     style={ {
                                         backgroundColor: headerBgColor,
                                         borderStyle: borderStyle,
@@ -217,13 +190,23 @@
                                         margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
                                     } }
                                 >
-                                    <a href={`#advgb-tab-${blockID}-${index}`}
+                                    <a href={`#advgb-tab-${pid}-${index}`}
                                        style={ { color: headerTextColor } }
+                                       onClick={ () => this.updateTabsAttr( {tabActive: index} ) }
                                     >
                                         <RichText
                                             tagName="p"
                                             value={ item }
-                                            onChange={ ( value ) => this.updateTabs( value, index ) }
+                                            onChange={ ( value ) => {
+                                                let newHeaders = tabHeaders.map( ( item, thisIndex ) => {
+                                                    if ( index === thisIndex ) {
+                                                        item = value;
+                                                    }
+                                                    return item;
+                                                } );
+
+                                                return setAttributes( { tabHeaders: newHeaders} );
+                                            } }
                                             unstableOnSplit={ () => null }
                                             placeholder={ __( 'Title…', 'advanced-gutenberg' ) }
                                         />
@@ -232,7 +215,7 @@
                                         <Tooltip text={ __( 'Remove tab', 'advanced-gutenberg' ) }>
                                             <span className="advgb-tab-remove"
                                                   onClick={ () => setAttributes( {
-                                                      tabItems: tabItems.filter( (vl, idx) => idx !== index )
+                                                      tabHeaders: tabHeaders.filter( (vl, idx) => idx !== index )
                                                   } ) }
                                             >
                                                 <Dashicon icon="no"/>
@@ -241,7 +224,7 @@
                                     )}
                                 </li>
                             ) ) }
-                            <li className="advgb-tab advgb-add-tab ui-state-default"
+                            <li className="advgb-tab advgb-add-tab"
                                 style={ {
                                     borderRadius: borderRadius + 'px',
                                     borderWidth: borderWidth + 'px',
@@ -252,7 +235,7 @@
                                     <span onClick={ () => setAttributes( {
                                         tabHeaders: [
                                             ...tabHeaders,
-                                            __( 'Enter your content.', 'advanced-gutenberg' )
+                                            __( 'Tab header', 'advanced-gutenberg' )
                                         ]
                                     } ) }>
                                         <Dashicon icon="plus-alt"/>
@@ -260,9 +243,15 @@
                                 </Tooltip>
                             </li>
                         </ul>
-                        <InnerBlocks/>
+                        <div className="advgb-tab-body-wrapper">
+                            <InnerBlocks
+                                template={ [ ['advgb/tab'], ['advgb/tab'], ['advgb/tab']] }
+                                templateLock="all"
+                                allowedBlocks={ [ 'advgb/tab' ] }
+                            />
+                        </div>
                     </div>
-                    {!!blockID &&
+                    {!!pid &&
                     <style>
                         {activeTabBgColor && `#block-${clientId} li.advgb-tab.ui-tabs-active {
                                 background-color: ${activeTabBgColor} !important;
@@ -288,12 +277,16 @@
 
     const tabBlockAttrs = {
         tabHeaders: {
-            type: "array",
+            type: 'array',
             default: [
                 __( 'Tab 1', 'advanced-gutenberg' ),
                 __( 'Tab 2', 'advanced-gutenberg' ),
                 __( 'Tab 3', 'advanced-gutenberg' ),
             ]
+        },
+        tabActive: {
+            type: 'number',
+            default: 0,
         },
         headerBgColor: {
             type: 'string',
@@ -324,7 +317,7 @@
             type: 'number',
             default: 2,
         },
-        blockID: {
+        pid: {
             type: 'string',
         },
         activeTabBgColor: {
@@ -349,10 +342,11 @@
         category: "advgb-category",
         keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
         attributes: tabBlockAttrs,
-        edit: AdvTabsBlock,
+        edit: AdvTabsWrapper,
         save: function ( { attributes } ) {
             const {
                 tabHeaders,
+                tabActive,
                 headerBgColor,
                 headerTextColor,
                 bodyBgColor,
@@ -361,13 +355,37 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
-                blockID,
+                pid,
                 activeTabBgColor,
                 activeTabTextColor,
             } = attributes;
 
             return (
-                null
+                <div id={`advgb-tabs-${pid}`} className="advgb-tabs-wrapper" data-tab-active={tabActive}>
+                    <ul className="advgb-tabs-panel">
+                        {tabHeaders.map( ( header, index ) => (
+                            <li key={ index } className="advgb-tab"
+                                style={ {
+                                    backgroundColor: headerBgColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px',
+                                    margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
+                                } }
+                            >
+                                <a href={`#advgb-tab-${pid}-${index}`}
+                                   style={ { color: headerTextColor } }
+                                >
+                                    <span>{header}</span>
+                                </a>
+                            </li>
+                        ) ) }
+                    </ul>
+                    <div className="advgb-tab-body-wrapper">
+                        <InnerBlocks.Content />
+                    </div>
+                </div>
             );
         },
     } );

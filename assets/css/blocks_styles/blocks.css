@@ -803,6 +803,7 @@ div.advgb-tab-body {
     padding: 10px 10px 10px 15px;
     border: 1px solid #ccc;
     background: none;
+    display: none;
 }
 
 /*Testimonial block styles*/

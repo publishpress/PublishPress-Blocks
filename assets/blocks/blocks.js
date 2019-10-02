@@ -5161,8 +5161,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5191,6 +5189,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl;
+    var _wp$data = wp.data,
+        dispatch = _wp$data.dispatch,
+        select = _wp$data.select;
 
 
     var path = "M464.4,488h-440c-14.131,0-24-8.882-24-21.6v-440C0.4,13.938,10.664,0,24.4,0h440 ";
@@ -5219,16 +5220,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("rect", { x: "328.4", y: "3", width: "16", height: "114" })
     );
 
-    var AdvTabsBlock = function (_Component) {
-        _inherits(AdvTabsBlock, _Component);
+    var AdvTabsWrapper = function (_Component) {
+        _inherits(AdvTabsWrapper, _Component);
 
-        function AdvTabsBlock() {
-            _classCallCheck(this, AdvTabsBlock);
+        function AdvTabsWrapper() {
+            _classCallCheck(this, AdvTabsWrapper);
 
-            return _possibleConstructorReturn(this, (AdvTabsBlock.__proto__ || Object.getPrototypeOf(AdvTabsBlock)).apply(this, arguments));
+            return _possibleConstructorReturn(this, (AdvTabsWrapper.__proto__ || Object.getPrototypeOf(AdvTabsWrapper)).apply(this, arguments));
         }
 
-        _createClass(AdvTabsBlock, [{
+        _createClass(AdvTabsWrapper, [{
             key: "componentWillMount",
             value: function componentWillMount() {
                 var _props = this.props,
@@ -5256,72 +5257,41 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidMount",
             value: function componentDidMount() {
-                var _this2 = this;
-
-                setTimeout(function () {
-                    return _this2.initTabs();
-                }, 100);
-                if (!this.props.attributes.blockID) {
-                    this.props.setAttributes({ blockID: this.props.clientId });
+                if (!this.props.attributes.pid) {
+                    this.props.setAttributes({ pid: this.props.clientId });
                 }
             }
         }, {
-            key: "componentDidUpdate",
-            value: function componentDidUpdate(prevProps) {
-                var prevItems = prevProps.attributes.tabItems;
-                var tabItems = this.props.attributes.tabItems;
-
-
-                if (prevItems !== tabItems) {
-                    this.initTabs(true);
-                }
-            }
-        }, {
-            key: "initTabs",
-            value: function initTabs() {
-                var refresh = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-                if (typeof jQuery !== "undefined") {
-                    if (!refresh) {
-                        jQuery("#block-" + this.props.clientId + " .advgb-tabs-block").tabs();
-                    } else {
-                        jQuery("#block-" + this.props.clientId + " .advgb-tabs-block").tabs('refresh');
-                    }
-
-                    jQuery("#block-" + this.props.clientId + " .advgb-tabs-block a").on('keydown', function (e) {
-                        e.stopPropagation();
-                    });
-                }
-            }
-        }, {
-            key: "updateTabs",
-            value: function updateTabs(value, index) {
+            key: "updateTabsAttr",
+            value: function updateTabsAttr(attrs) {
                 var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes;
-                var tabItems = attributes.tabItems;
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
 
+                var _ref = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref.updateBlockAttributes;
 
-                var newItems = tabItems.map(function (item, thisIndex) {
-                    if (index === thisIndex) {
-                        item = _extends({}, item, value);
-                    }
+                var _ref2 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref2.getBlockOrder;
 
-                    return item;
+                var childBlocks = getBlockOrder(clientId);
+
+                setAttributes(attrs);
+                childBlocks.forEach(function (childBlockId) {
+                    return updateBlockAttributes(childBlockId, attrs);
                 });
-
-                setAttributes({ tabItems: newItems });
             }
         }, {
             key: "render",
             value: function render() {
-                var _this3 = this;
+                var _this2 = this;
 
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     setAttributes = _props3.setAttributes,
                     clientId = _props3.clientId;
                 var tabHeaders = attributes.tabHeaders,
+                    tabActive = attributes.tabActive,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
                     bodyBgColor = attributes.bodyBgColor,
@@ -5330,7 +5300,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderWidth = attributes.borderWidth,
                     borderColor = attributes.borderColor,
                     borderRadius = attributes.borderRadius,
-                    blockID = attributes.blockID,
+                    pid = attributes.pid,
                     activeTabBgColor = attributes.activeTabBgColor,
                     activeTabTextColor = attributes.activeTabTextColor;
 
@@ -5431,7 +5401,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: "advgb-tabs-block", style: { border: 'none' } },
+                        { className: "advgb-tabs-wrapper", style: { border: 'none' } },
                         React.createElement(
                             "ul",
                             { className: "advgb-tabs-panel" },
@@ -5439,7 +5409,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "li",
                                     { key: index,
-                                        className: "advgb-tab",
+                                        className: "advgb-tab " + (tabActive === index && 'ui-tabs-active'),
                                         style: {
                                             backgroundColor: headerBgColor,
                                             borderStyle: borderStyle,
@@ -5451,14 +5421,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement(
                                         "a",
-                                        { href: "#advgb-tab-" + blockID + "-" + index,
-                                            style: { color: headerTextColor }
+                                        { href: "#advgb-tab-" + pid + "-" + index,
+                                            style: { color: headerTextColor },
+                                            onClick: function onClick() {
+                                                return _this2.updateTabsAttr({ tabActive: index });
+                                            }
                                         },
                                         React.createElement(RichText, {
                                             tagName: "p",
                                             value: item,
                                             onChange: function onChange(value) {
-                                                return _this3.updateTabs(value, index);
+                                                var newHeaders = tabHeaders.map(function (item, thisIndex) {
+                                                    if (index === thisIndex) {
+                                                        item = value;
+                                                    }
+                                                    return item;
+                                                });
+
+                                                return setAttributes({ tabHeaders: newHeaders });
                                             },
                                             unstableOnSplit: function unstableOnSplit() {
                                                 return null;
@@ -5474,7 +5454,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             { className: "advgb-tab-remove",
                                                 onClick: function onClick() {
                                                     return setAttributes({
-                                                        tabItems: tabItems.filter(function (vl, idx) {
+                                                        tabHeaders: tabHeaders.filter(function (vl, idx) {
                                                             return idx !== index;
                                                         })
                                                     });
@@ -5487,7 +5467,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 "li",
-                                { className: "advgb-tab advgb-add-tab ui-state-default",
+                                { className: "advgb-tab advgb-add-tab",
                                     style: {
                                         borderRadius: borderRadius + 'px',
                                         borderWidth: borderWidth + 'px',
@@ -5501,7 +5481,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         "span",
                                         { onClick: function onClick() {
                                                 return setAttributes({
-                                                    tabHeaders: [].concat(_toConsumableArray(tabHeaders), [__('Enter your content.', 'advanced-gutenberg')])
+                                                    tabHeaders: [].concat(_toConsumableArray(tabHeaders), [__('Tab header', 'advanced-gutenberg')])
                                                 });
                                             } },
                                         React.createElement(Dashicon, { icon: "plus-alt" })
@@ -5509,9 +5489,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 )
                             )
                         ),
-                        React.createElement(InnerBlocks, null)
+                        React.createElement(
+                            "div",
+                            { className: "advgb-tab-body-wrapper" },
+                            React.createElement(InnerBlocks, {
+                                template: [['advgb/tab'], ['advgb/tab'], ['advgb/tab']],
+                                templateLock: "all",
+                                allowedBlocks: ['advgb/tab']
+                            })
+                        )
                     ),
-                    !!blockID && React.createElement(
+                    !!pid && React.createElement(
                         "style",
                         null,
                         activeTabBgColor && "#block-" + clientId + " li.advgb-tab.ui-tabs-active {\n                                background-color: " + activeTabBgColor + " !important;\n                            }",
@@ -5521,7 +5509,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }]);
 
-        return AdvTabsBlock;
+        return AdvTabsWrapper;
     }(Component);
 
     var tabsBlockIcon = React.createElement(
@@ -5535,8 +5523,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var tabBlockAttrs = {
         tabHeaders: {
-            type: "array",
+            type: 'array',
             default: [__('Tab 1', 'advanced-gutenberg'), __('Tab 2', 'advanced-gutenberg'), __('Tab 3', 'advanced-gutenberg')]
+        },
+        tabActive: {
+            type: 'number',
+            default: 0
         },
         headerBgColor: {
             type: 'string',
@@ -5567,7 +5559,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 2
         },
-        blockID: {
+        pid: {
             type: 'string'
         },
         activeTabBgColor: {
@@ -5592,10 +5584,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: "advgb-category",
         keywords: [__('tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
         attributes: tabBlockAttrs,
-        edit: AdvTabsBlock,
-        save: function save(_ref) {
-            var attributes = _ref.attributes;
+        edit: AdvTabsWrapper,
+        save: function save(_ref3) {
+            var attributes = _ref3.attributes;
             var tabHeaders = attributes.tabHeaders,
+                tabActive = attributes.tabActive,
                 headerBgColor = attributes.headerBgColor,
                 headerTextColor = attributes.headerTextColor,
                 bodyBgColor = attributes.bodyBgColor,
@@ -5604,12 +5597,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
-                blockID = attributes.blockID,
+                pid = attributes.pid,
                 activeTabBgColor = attributes.activeTabBgColor,
                 activeTabTextColor = attributes.activeTabTextColor;
 
 
-            return null;
+            return React.createElement(
+                "div",
+                { id: "advgb-tabs-" + pid, className: "advgb-tabs-wrapper", "data-tab-active": tabActive },
+                React.createElement(
+                    "ul",
+                    { className: "advgb-tabs-panel" },
+                    tabHeaders.map(function (header, index) {
+                        return React.createElement(
+                            "li",
+                            { key: index, className: "advgb-tab",
+                                style: {
+                                    backgroundColor: headerBgColor,
+                                    borderStyle: borderStyle,
+                                    borderWidth: borderWidth + 'px',
+                                    borderColor: borderColor,
+                                    borderRadius: borderRadius + 'px',
+                                    margin: "-" + borderWidth + "px 0 -" + borderWidth + "px -" + borderWidth + "px"
+                                }
+                            },
+                            React.createElement(
+                                "a",
+                                { href: "#advgb-tab-" + pid + "-" + index,
+                                    style: { color: headerTextColor }
+                                },
+                                React.createElement(
+                                    "span",
+                                    null,
+                                    header
+                                )
+                            )
+                        );
+                    })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "advgb-tab-body-wrapper" },
+                    React.createElement(InnerBlocks.Content, null)
+                )
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
@@ -5690,23 +5721,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "render",
-            value: function render() {
+            key: "componentDidMount",
+            value: function componentDidMount() {
                 var _props2 = this.props,
-                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes,
                     clientId = _props2.clientId;
-                var bodyBgColor = attributes.bodyBgColor,
-                    bodyTextColor = attributes.bodyTextColor;
 
                 var _ref2 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockRootClientId = _ref2.getBlockRootClientId;
+                    getBlockRootClientId = _ref2.getBlockRootClientId,
+                    getBlockIndex = _ref2.getBlockIndex,
+                    getBlockAttributes = _ref2.getBlockAttributes;
 
                 var rootBlockId = getBlockRootClientId(clientId);
+                var rootBlockAttrs = getBlockAttributes(rootBlockId);
+                var pid = rootBlockAttrs.pid;
+
+                var blockIndex = getBlockIndex(clientId, rootBlockId);
+
+                setAttributes({ pid: "advgb-tab-" + pid + "-" + blockIndex });
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    clientId = _props3.clientId;
+                var bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    tabActive = attributes.tabActive,
+                    pid = attributes.pid;
 
                 var _ref3 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref3.getBlockOrder;
+                    getBlockRootClientId = _ref3.getBlockRootClientId,
+                    getBlockIndex = _ref3.getBlockIndex;
 
-                var childBlocks = getBlockOrder(rootBlockId);
+                var rootBlockId = getBlockRootClientId(clientId);
+                var blockIndex = getBlockIndex(clientId, rootBlockId);
 
                 return React.createElement(
                     Fragment,
@@ -5714,9 +5764,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "div",
                         { className: "advgb-tab-body",
+                            id: pid,
                             style: {
                                 backgroundColor: bodyBgColor,
-                                color: bodyTextColor
+                                color: bodyTextColor,
+                                display: blockIndex === tabActive ? 'block' : 'none'
                             }
                         },
                         React.createElement(InnerBlocks, {
@@ -5731,7 +5783,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return TabItemEdit;
     }(Component);
 
-    registerBlockType('advgb/tab-item', {
+    registerBlockType('advgb/tab', {
         title: __('Tab Item'),
         parent: ['advgb/tabs'],
         icon: {
@@ -5746,9 +5798,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             bodyTextColor: {
                 type: 'string'
             },
-            active: {
-                type: 'boolean',
-                default: false
+            pid: {
+                type: 'string'
+            },
+            tabActive: {
+                type: 'number',
+                default: 0
             },
             changed: {
                 type: 'boolean',
@@ -5761,12 +5816,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var attributes = _ref4.attributes;
             var bodyBgColor = attributes.bodyBgColor,
                 bodyTextColor = attributes.bodyTextColor,
-                blockID = attributes.blockID;
+                pid = attributes.pid;
 
 
             return React.createElement(
                 "div",
                 { className: "advgb-tab-body",
+                    id: pid,
                     style: {
                         backgroundColor: bodyBgColor,
                         color: bodyTextColor
