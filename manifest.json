@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "platform": "wordpress",
   "wp_version": "5.2.3",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,12 @@
     ]
   },
   "changelog": {
+    "2.1.4": [
+      {
+        "type": "feature",
+        "title": "Add Opt In feedback on plugin first disabling & review message"
+      }
+    ],
     "2.1.3": [
       {
         "type": "fix",

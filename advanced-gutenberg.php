@@ -99,3 +99,14 @@ call_user_func(
     'advanced-gutenberg',
     'languages' . DIRECTORY_SEPARATOR . 'advanced-gutenberg-en_US.mo'
 );
+
+// Include jufeedback helpers
+require_once('jufeedback'. DIRECTORY_SEPARATOR . 'jufeedback.php');
+call_user_func(
+    '\Joomunited\ADVGB\Jufeedback\Jufeedback::init',
+    __FILE__,
+    'advgb',
+    'advanced-gutenberg',
+    'Advanced Gutenberg',
+    'advanced-gutenberg'
+);
