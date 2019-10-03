@@ -2,9 +2,9 @@
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
-    const { registerBlockType } = wpBlocks;
+    const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
-    const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl } = wpComponents;
+    const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, Button } = wpComponents;
     const { dispatch, select } = wp.data;
 
     let path = "M464.4,488h-440c-14.131,0-24-8.882-24-21.6v-440C0.4,13.938,10.664,0,24.4,0h440 ";
@@ -16,7 +16,7 @@
     path2 += "l14.499-6.766L217.495,104H464.4c22.27,0,24,13.471,24,17.6v348.8C488.4,481.577,478.979,488.8,464.4,488.8z";
 
     const tabHorizontalIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.8 488.8" width="50px" height="50px">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.8 488.8" width="50px" height="50px" style={{backgroundColor: "#fff"}}>
             <polygon fill="#ddd" points="476.4,105.6 214.8,109.6 162,4 476.4,4 "/>
             <path d={path} />
             <path d={path2} />
@@ -25,13 +25,18 @@
     );
 
     const tabVerticalIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.8 488.8" width="50px" height="50px" transform="rotate(-90) scale(-1, 1)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.8 488.8" width="50px" height="50px" transform="rotate(-90) scale(-1, 1)" style={{backgroundColor: "#fff"}}>
             <polygon fill="#ddd" points="476.4,105.6 214.8,109.6 162,4 476.4,4 "/>
             <path d={path} />
             <path d={path2} />
             <rect x="328.4" y="3" width="16" height="114"/>
         </svg>
     );
+
+    const TABS_STYLES = [
+        {name: 'horz', label: __('Horizontal', 'advanced-gutenberg'), icon: tabHorizontalIcon},
+        {name: 'vert', label: __('Vertical', 'advanced-gutenberg'), icon: tabVerticalIcon},
+    ];
 
     class AdvTabsWrapper extends Component {
         constructor() {
@@ -75,11 +80,39 @@
             childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attrs ) );
         }
 
+        addTab() {
+            const { attributes, setAttributes, clientId } = this.props;
+            const { insertBlock } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const tabItemBlock = createBlock('advgb/tab');
+
+            insertBlock(tabItemBlock, attributes.tabHeaders.length, clientId);
+            setAttributes( {
+                tabHeaders: [
+                    ...attributes.tabHeaders,
+                    __('Tab header', 'advanced-gutenberg')
+                ]
+            } )
+        }
+
+        removeTab(index) {
+            const { attributes, setAttributes, clientId } = this.props;
+            const { removeBlock } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            removeBlock(childBlocks[index], false);
+            setAttributes( {
+                tabHeaders: attributes.tabHeaders.filter( (vl, idx) => idx !== index )
+            } );
+            this.updateTabsAttr({tabActive: 0})
+        }
+
         render() {
             const { attributes, setAttributes, clientId } = this.props;
             const {
                 tabHeaders,
                 tabActive,
+                tabsStyle,
                 headerBgColor,
                 headerTextColor,
                 bodyBgColor,
@@ -96,6 +129,20 @@
             return (
                 <Fragment>
                     <InspectorControls>
+                        <PanelBody title={ __( 'Tab Style', 'advanced-gutenberg' ) }>
+                            <div className="advgb-tabs-styles">
+                                {TABS_STYLES.map((style, index) => (
+                                    <Tooltip key={index} text={style.label}>
+                                        <Button className="advgb-tabs-style"
+                                                isToggled={ style.name === tabsStyle }
+                                                onClick={ () => setAttributes( { tabsStyle: style.name } ) }
+                                        >
+                                            {style.icon}
+                                        </Button>
+                                    </Tooltip>
+                                ))}
+                            </div>
+                        </PanelBody>
                         <PanelColorSettings
                             title={ __( 'Tab Colors', 'advanced-gutenberg' ) }
                             initialOpen={ false }
@@ -176,7 +223,7 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className="advgb-tabs-wrapper" style={ { border: 'none' } }>
+                    <div className={`advgb-tabs-wrapper advgb-tab-${tabsStyle}`} style={ { border: 'none' } }>
                         <ul className="advgb-tabs-panel">
                             {tabHeaders.map( ( item, index ) => (
                                 <li key={ index }
@@ -214,9 +261,7 @@
                                     {tabHeaders.length > 1 && (
                                         <Tooltip text={ __( 'Remove tab', 'advanced-gutenberg' ) }>
                                             <span className="advgb-tab-remove"
-                                                  onClick={ () => setAttributes( {
-                                                      tabHeaders: tabHeaders.filter( (vl, idx) => idx !== index )
-                                                  } ) }
+                                                  onClick={ () => this.removeTab(index) }
                                             >
                                                 <Dashicon icon="no"/>
                                             </span>
@@ -232,21 +277,25 @@
                                 } }
                             >
                                 <Tooltip text={ __( 'Add tab', 'advanced-gutenberg' ) }>
-                                    <span onClick={ () => setAttributes( {
-                                        tabHeaders: [
-                                            ...tabHeaders,
-                                            __( 'Tab header', 'advanced-gutenberg' )
-                                        ]
-                                    } ) }>
+                                    <span onClick={ () => this.addTab() }>
                                         <Dashicon icon="plus-alt"/>
                                     </span>
                                 </Tooltip>
                             </li>
                         </ul>
-                        <div className="advgb-tab-body-wrapper">
+                        <div className="advgb-tab-body-wrapper"
+                             style={ {
+                                 backgroundColor: bodyBgColor,
+                                 color: bodyTextColor,
+                                 borderStyle: borderStyle,
+                                 borderWidth: borderWidth + 'px',
+                                 borderColor: borderColor,
+                                 borderRadius: borderRadius + 'px',
+                             } }
+                        >
                             <InnerBlocks
                                 template={ [ ['advgb/tab'], ['advgb/tab'], ['advgb/tab']] }
-                                templateLock="all"
+                                templateLock={false}
                                 allowedBlocks={ [ 'advgb/tab' ] }
                             />
                         </div>
@@ -287,6 +336,10 @@
         tabActive: {
             type: 'number',
             default: 0,
+        },
+        tabsStyle: {
+            type: 'string',
+            default: 'horz'
         },
         headerBgColor: {
             type: 'string',
@@ -347,6 +400,7 @@
             const {
                 tabHeaders,
                 tabActive,
+                tabsStyle,
                 headerBgColor,
                 headerTextColor,
                 bodyBgColor,
@@ -356,12 +410,10 @@
                 borderColor,
                 borderRadius,
                 pid,
-                activeTabBgColor,
-                activeTabTextColor,
             } = attributes;
 
             return (
-                <div id={`advgb-tabs-${pid}`} className="advgb-tabs-wrapper" data-tab-active={tabActive}>
+                <div id={`advgb-tabs-${pid}`} className={`advgb-tabs-wrapper advgb-tab-${tabsStyle}`} data-tab-active={tabActive}>
                     <ul className="advgb-tabs-panel">
                         {tabHeaders.map( ( header, index ) => (
                             <li key={ index } className="advgb-tab"
@@ -382,7 +434,16 @@
                             </li>
                         ) ) }
                     </ul>
-                    <div className="advgb-tab-body-wrapper">
+                    <div className="advgb-tab-body-wrapper"
+                         style={ {
+                             backgroundColor: bodyBgColor,
+                             color: bodyTextColor,
+                             borderStyle: borderStyle,
+                             borderWidth: borderWidth + 'px',
+                             borderColor: borderColor,
+                             borderRadius: borderRadius + 'px',
+                         } }
+                    >
                         <InnerBlocks.Content />
                     </div>
                 </div>

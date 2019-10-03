@@ -52,7 +52,7 @@
 
         render() {
             const { attributes, clientId } = this.props;
-            const {bodyBgColor, bodyTextColor, tabActive, pid} = attributes;
+            const {tabActive, pid} = attributes;
 
             const { getBlockRootClientId, getBlockIndex } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
             const rootBlockId = getBlockRootClientId( clientId );
@@ -63,8 +63,6 @@
                     <div className="advgb-tab-body"
                          id={pid}
                          style={ {
-                             backgroundColor: bodyBgColor,
-                             color: bodyTextColor,
                              display: blockIndex === tabActive ? 'block' : 'none',
                          } }
                     >
@@ -80,19 +78,13 @@
 
     registerBlockType( 'advgb/tab', {
         title: __( 'Tab Item' ),
-        parent: [ 'advgb/tabs' ],
+        parent: [ 'advgb/adv-tabs' ],
         icon: {
             src: tabsBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
         attributes: {
-            bodyBgColor: {
-                type: 'string',
-            },
-            bodyTextColor: {
-                type: 'string',
-            },
             pid: {
                 type: 'string',
             },
@@ -108,16 +100,10 @@
         keywords: [ __( 'tab' ) ],
         edit: TabItemEdit,
         save: function( { attributes } ) {
-            const {bodyBgColor, bodyTextColor, pid} = attributes;
+            const {pid} = attributes;
 
             return (
-                <div className="advgb-tab-body"
-                     id={pid}
-                     style={ {
-                         backgroundColor: bodyBgColor,
-                         color: bodyTextColor,
-                     } }
-                >
+                <div className="advgb-tab-body" id={pid}>
                     <InnerBlocks.Content />
                 </div>
             );
