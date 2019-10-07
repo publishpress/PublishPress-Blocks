@@ -4046,6 +4046,16 @@ float: left;'
             });');
         }
 
+        if (strpos($content, 'advgb-tabs-wrapper') !== false) {
+            wp_enqueue_script('jquery-ui-tabs');
+            wp_enqueue_script(
+                'advgb_tabs_js',
+                plugins_url('assets/blocks/advtabs/frontend.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+        }
+
         if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
@@ -4348,6 +4358,15 @@ float: left;'
 
                 $style_html .= '#'. $block_id . ' .slick-dots li button:before{';
                 $style_html .= 'color:'.$dots_color.' !important;';
+                $style_html .= '}';
+            } elseif ($blockName === 'advgb/adv-tabs') {
+                $block_id    = $blockAttrs['pid'];
+                $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#2196f3';
+                $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
+
+                $style_html .= '#'. $block_id . ' li.advgb-tab.ui-tabs-active{';
+                $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
+                $style_html .= 'color:'.$active_tab_text_color.' !important;';
                 $style_html .= '}';
             }
         }

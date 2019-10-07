@@ -47,7 +47,7 @@
             const { pid } = rootBlockAttrs;
             const blockIndex = getBlockIndex(clientId, rootBlockId);
 
-            setAttributes( { pid: `advgb-tab-${pid}-${blockIndex}` } )
+            setAttributes( { pid: `${pid}-${blockIndex}` } )
         }
 
         render() {

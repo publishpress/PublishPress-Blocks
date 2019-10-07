@@ -5262,7 +5262,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "componentDidMount",
             value: function componentDidMount() {
                 if (!this.props.attributes.pid) {
-                    this.props.setAttributes({ pid: this.props.clientId });
+                    this.props.setAttributes({ pid: "advgb-tabs-" + this.props.clientId });
                 }
             }
         }, {
@@ -5492,7 +5492,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement(
                                         "a",
-                                        { href: "#advgb-tab-" + pid + "-" + index,
+                                        { href: "#" + pid + "-" + index,
                                             style: { color: headerTextColor },
                                             onClick: function onClick() {
                                                 return _this2.updateTabsAttr({ tabActive: index });
@@ -5681,7 +5681,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             return React.createElement(
                 "div",
-                { id: "advgb-tabs-" + pid, className: "advgb-tabs-wrapper advgb-tab-" + tabsStyle, "data-tab-active": tabActive },
+                { id: pid, className: "advgb-tabs-wrapper advgb-tab-" + tabsStyle, "data-tab-active": tabActive },
                 React.createElement(
                     "ul",
                     { className: "advgb-tabs-panel" },
@@ -5700,7 +5700,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             React.createElement(
                                 "a",
-                                { href: "#advgb-tab-" + pid + "-" + index,
+                                { href: "#" + pid + "-" + index,
                                     style: { color: headerTextColor }
                                 },
                                 React.createElement(
@@ -5824,7 +5824,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var blockIndex = getBlockIndex(clientId, rootBlockId);
 
-                setAttributes({ pid: "advgb-tab-" + pid + "-" + blockIndex });
+                setAttributes({ pid: pid + "-" + blockIndex });
             }
         }, {
             key: "render",

@@ -762,6 +762,10 @@ ul.advgb-tabs-panel li.advgb-tab a, ul.advgb-tabs-panel li.advgb-tab a:focus, ul
     text-decoration: none;
     box-shadow: none;
     outline: none;
+    display: block;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 ul.advgb-tabs-panel li.advgb-tab a p {
@@ -771,10 +775,15 @@ ul.advgb-tabs-panel li.advgb-tab a p {
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active {
     background-color: #2196f3 !important;
     border-bottom-color: transparent !important;
+    color: #fff !important;
 }
 
 ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active a {
-    color: #fff !important;
+    color: inherit !important;
+}
+
+ul.advgb-tabs-panel li.advgb-add-tab {
+    text-align: center;
 }
 
 ul.advgb-tabs-panel li.advgb-tab.advgb-add-tab.ui-state-default {
@@ -826,6 +835,7 @@ div.advgb-tab-body {
 
 .advgb-tab-body-wrapper {
     border: 1px solid #ccc;
+    max-width: 100%;
 }
 
 .advgb-tab-body-wrapper div.advgb-tab-body {
@@ -840,10 +850,18 @@ div.advgb-tab-body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    min-width: 25%;
+    max-width: 25%;
+}
+
+.advgb-tabs-wrapper.advgb-tab-vert ul.advgb-tabs-panel span.advgb-tab-remove {
+    left: -8px;
+    right: unset;
 }
 
 .advgb-tabs-wrapper.advgb-tab-vert .advgb-tab-body-wrapper {
-    flex-grow: 4;
+    flex-grow: 3;
+    max-width: 75%;
 }
 
     /*Testimonial block styles*/

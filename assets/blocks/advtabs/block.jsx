@@ -66,7 +66,7 @@
 
         componentDidMount() {
             if (!this.props.attributes.pid) {
-                this.props.setAttributes( { pid: this.props.clientId } );
+                this.props.setAttributes( { pid: `advgb-tabs-${this.props.clientId}` } );
             }
         }
 
@@ -237,7 +237,7 @@
                                         margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
                                     } }
                                 >
-                                    <a href={`#advgb-tab-${pid}-${index}`}
+                                    <a href={`#${pid}-${index}`}
                                        style={ { color: headerTextColor } }
                                        onClick={ () => this.updateTabsAttr( {tabActive: index} ) }
                                     >
@@ -413,7 +413,7 @@
             } = attributes;
 
             return (
-                <div id={`advgb-tabs-${pid}`} className={`advgb-tabs-wrapper advgb-tab-${tabsStyle}`} data-tab-active={tabActive}>
+                <div id={pid} className={`advgb-tabs-wrapper advgb-tab-${tabsStyle}`} data-tab-active={tabActive}>
                     <ul className="advgb-tabs-panel">
                         {tabHeaders.map( ( header, index ) => (
                             <li key={ index } className="advgb-tab"
@@ -426,7 +426,7 @@
                                     margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
                                 } }
                             >
-                                <a href={`#advgb-tab-${pid}-${index}`}
+                                <a href={`#${pid}-${index}`}
                                    style={ { color: headerTextColor } }
                                 >
                                     <span>{header}</span>
