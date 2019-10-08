@@ -1,7 +1,7 @@
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
-    const { Component, Fragment, renderToString } = wpElement;
+    const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, MediaUpload } = wpBlockEditor;
     const { RangeControl, ToggleControl, SelectControl, PanelBody, Tooltip } = wpComponents;
@@ -52,7 +52,7 @@
 
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
-            const { pid, sliderView, sliderColumn, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
+            const { pid, sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
                 sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
 
@@ -63,6 +63,7 @@
             if (sliderView) {
                 jQuery(`#block-${clientId} .advgb-testimonial.slider-view`).slick({
                     infinite: sliderInfiniteLoop,
+                    centerMode: sliderCenterMode,
                     slidesToShow: sliderColumn,
                     slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                     pauseOnHover: sliderPauseOnHover,
@@ -94,7 +95,7 @@
 
         componentDidUpdate(prevProps) {
             const { attributes, clientId } = this.props;
-            const { sliderView, sliderColumn, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
+            const { sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
                 sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
             const needReload = this.sliderNeedReload(prevProps.attributes, this.props.attributes);
@@ -105,6 +106,7 @@
                 if (sliderView) {
                     slider.slick({
                         infinite: sliderInfiniteLoop,
+                        centerMode: sliderCenterMode,
                         slidesToShow: sliderColumn,
                         slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                         pauseOnHover: sliderPauseOnHover,
@@ -122,6 +124,7 @@
             if (needUpdate && sliderView) {
                 slider.slick('slickSetOption', 'slidesToShow', sliderColumn);
                 slider.slick('slickSetOption', 'slidesToScroll', sliderItemsToScroll);
+                slider.slick('slickSetOption', 'centerMode', sliderCenterMode);
                 slider.slick('slickSetOption', 'pauseOnHover', sliderPauseOnHover);
                 slider.slick('slickSetOption', 'infinite', sliderInfiniteLoop);
                 slider.slick('slickSetOption', 'dots', sliderDotsShown);
@@ -149,7 +152,7 @@
         sliderNeedUpdate(pa, ca) {
             const checkUpdate = [
                 'sliderColumn', 'sliderItemsToScroll', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop',
-                'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown',
+                'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown', 'sliderCenterMode',
             ];
             let update = false;
 
@@ -178,10 +181,10 @@
 
         render() {
             const { currentEdit } = this.state;
-            const { attributes, setAttributes, isSelected, clientId } = this.props;
+            const { attributes, setAttributes, isSelected } = this.props;
             const {
                 pid, items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
-                nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderPauseOnHover,
+                nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderCenterMode, sliderPauseOnHover,
                 sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, sliderDotsColor, sliderSpeed, sliderAutoPlaySpeed,
                 sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor, avatarPosition,
             } = attributes;
@@ -253,6 +256,11 @@
                                     onChange={ (value) => setAttributes( { sliderItemsToScroll: value } ) }
                                 />
                                 <PanelBody title={ __( 'Slider Settings', 'advanced-gutenberg' ) } initialOpen={ false }>
+                                    <ToggleControl
+                                        label={ __( 'Center mode', 'advanced-gutenberg' ) }
+                                        checked={ sliderCenterMode }
+                                        onChange={ () => setAttributes( { sliderCenterMode: !sliderCenterMode } ) }
+                                    />
                                     <ToggleControl
                                         label={ __( 'Pause on hover', 'advanced-gutenberg' ) }
                                         checked={ sliderPauseOnHover }
@@ -575,6 +583,10 @@
             type: 'number',
             default: 1,
         },
+        sliderCenterMode: {
+            type: 'boolean',
+            default: true,
+        },
         sliderPauseOnHover: {
             type: 'boolean',
             default: true,
@@ -639,7 +651,7 @@
         save: function ( { attributes } ) {
             const {
                 pid, items, sliderView, avatarColor, avatarBorderRadius, avatarBorderWidth, avatarBorderColor, avatarSize,
-                nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderPauseOnHover,
+                nameColor, positionColor, descColor, columns, sliderColumn, sliderItemsToScroll, sliderCenterMode, sliderPauseOnHover,
                 sliderAutoPlay, sliderInfiniteLoop, sliderDotsShown, avatarPosition, sliderSpeed, sliderAutoPlaySpeed,
                 sliderArrowShown, sliderArrowSize, sliderArrowBorderSize, sliderArrowBorderRadius, sliderArrowColor,
             } = attributes;
@@ -681,6 +693,7 @@
                      data-dots={ sliderView ? sliderDotsShown : undefined }
                      data-speed={ sliderView ? sliderSpeed : undefined }
                      data-arrows={ sliderView ? sliderArrowShown : undefined }
+                     data-center={ sliderView ? sliderCenterMode : undefined }
                 >
                     <div className={ blockClass }>
                         {items.map( (item, idx) => {

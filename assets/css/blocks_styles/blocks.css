@@ -14,6 +14,10 @@
     width: 100%;
 }
 
+#editor .components-range-control__number {
+    width: 65px;
+}
+
 .editor-styles-wrapper .wp-block .wp-block {
     max-width: 100%;
     width: 100%;

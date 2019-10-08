@@ -2,7 +2,7 @@
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
-    const { registerBlockType } = wpBlocks;
+    const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings } = wpBlockEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl } = wpComponents;
 
@@ -360,6 +360,9 @@
         category: "advgb-category",
         keywords: [ __( 'tabs', 'advanced-gutenberg' ), __( 'cards', 'advanced-gutenberg' ) ],
         attributes: tabBlockAttrs,
+        supports: {
+            inserter: false,
+        },
         edit: AdvTabsBlock,
         save: function ( { attributes } ) {
             const {
@@ -428,6 +431,41 @@
                     }
                 </div>
             );
+        },
+        transforms: {
+            to: [
+                {
+                    type: 'block',
+                    blocks: [ 'advgb/adv-tabs' ],
+                    transform: ( attributes ) => {
+                        const innerTabs = [];
+                        const tabHeaders = [];
+
+                        attributes.tabItems.map(item => {
+                            const tabContent = createBlock(
+                                'core/paragraph',
+                                {content: item.body}
+                            );
+
+                            const tab = createBlock(
+                                'advgb/tab',
+                                { tabActive: 0 },
+                                [ tabContent ]
+                            );
+
+                            tabHeaders.push(item.header);
+                            innerTabs.push(tab);
+                        });
+
+                        attributes.tabItems =  undefined;
+                        return createBlock(
+                            'advgb/adv-tabs',
+                            { ...attributes, tabHeaders: tabHeaders, changed: false },
+                            innerTabs,
+                        )
+                    }
+                }
+            ]
         },
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

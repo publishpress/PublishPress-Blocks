@@ -237,8 +237,7 @@
                                         margin: `-${borderWidth}px 0 -${borderWidth}px -${borderWidth}px`,
                                     } }
                                 >
-                                    <a href={`#${pid}-${index}`}
-                                       style={ { color: headerTextColor } }
+                                    <a style={ { color: headerTextColor } }
                                        onClick={ () => this.updateTabsAttr( {tabActive: index} ) }
                                     >
                                         <RichText

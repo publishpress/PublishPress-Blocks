@@ -2067,7 +2067,7 @@ float: left;'
             'accordions', 'button', 'image', 'list',
             'table', 'video', 'contact-form', 'container',
             'count-up','images-slider', 'map', 'newsletter',
-            'recent-posts', 'social-links', 'summary', 'tabs',
+            'recent-posts', 'social-links', 'summary', 'adv-tabs',
             'testimonial', 'woo-products', 'columns', 'column',
             'login-form', 'search-bar',
         );
@@ -3045,10 +3045,25 @@ float: left;'
                     ),
                 ),
             ),
-            'advgb-tabs' => array(
+            'advgb-adv-tabs' => array(
                 array(
                     'label'    => __('Tab Settings', 'advanced-gutenberg'),
                     'settings' => array(
+                        array(
+                            'title' => __('Tabs Style', 'advanced-gutenberg'),
+                            'type' => 'select',
+                            'name' => 'tabsStyle',
+                            'options' => array(
+                                array(
+                                    'label' => __('Horizontal', 'advanced-gutenberg'),
+                                    'value' => 'horz',
+                                ),
+                                array(
+                                    'label' => __('Vertical', 'advanced-gutenberg'),
+                                    'value' => 'vert',
+                                ),
+                            )
+                        ),
                         array(
                             'title' => __('Background Color', 'advanced-gutenberg'),
                             'type'  => 'color',
@@ -4241,7 +4256,7 @@ float: left;'
                 $style_html .= 'font-size:'.$font_size.'px;';
                 $style_html .= 'color:'.$color.' !important;';
                 $style_html .= 'background-color:'.$bg_color.' !important;';
-                $style_html .= 'margin:'.$mg_top.'px '.$mg_right.'px '.$mg_bottom.'px '.$mg_left.'px;';
+                $style_html .= 'margin:'.$mg_top.'px '.$mg_right.'px '.$mg_bottom.'px '.$mg_left.'px !important;';
                 $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
                 $style_html .= 'border-width:'.$border_width.'px !important;';
                 $style_html .= 'border-color:'.$border_color.' !important;';

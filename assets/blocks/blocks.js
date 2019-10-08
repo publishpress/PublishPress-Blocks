@@ -2573,7 +2573,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return setAttributes({ width: value });
                                     }
                                 }),
-                                React.createElement(FocalPointPicker, {
+                                imageUrl && React.createElement(FocalPointPicker, {
                                     label: __('Focal Point Picker', 'advanced-gutenberg'),
                                     url: imageUrl,
                                     value: focalPoint,
@@ -5492,8 +5492,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     },
                                     React.createElement(
                                         "a",
-                                        { href: "#" + pid + "-" + index,
-                                            style: { color: headerTextColor },
+                                        { style: { color: headerTextColor },
                                             onClick: function onClick() {
                                                 return _this2.updateTabsAttr({ tabActive: index });
                                             }
@@ -13010,11 +13009,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 if (!!markerTitle || !!markerDesc) {
-                    if (!infoWindowDefaultShown) {
-                        marker.addListener('click', function () {
-                            infoWindow.open(map, marker);
-                        });
-                    } else {
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
+
+                    if (infoWindowDefaultShown) {
                         infoWindow.open(map, marker);
                     }
                 } else {
@@ -16437,7 +16436,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var __ = wpI18n.__;
     var Component = wpElement.Component,
         Fragment = wpElement.Fragment;
-    var registerBlockType = wpBlocks.registerBlockType;
+    var registerBlockType = wpBlocks.registerBlockType,
+        createBlock = wpBlocks.createBlock;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
         RichText = _wpBlockEditor.RichText,
@@ -16862,6 +16862,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: "advgb-category",
         keywords: [__('tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
         attributes: tabBlockAttrs,
+        supports: {
+            inserter: false
+        },
         edit: AdvTabsBlock,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -16933,6 +16936,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     activeTabTextColor && '#advgb-tabs-' + blockID + ' li.advgb-tab.ui-tabs-active a {\n                                color: ' + activeTabTextColor + ' !important;\n                            }'
                 )
             );
+        },
+        transforms: {
+            to: [{
+                type: 'block',
+                blocks: ['advgb/adv-tabs'],
+                transform: function transform(attributes) {
+                    var innerTabs = [];
+                    var tabHeaders = [];
+
+                    attributes.tabItems.map(function (item) {
+                        var tabContent = createBlock('core/paragraph', { content: item.body });
+
+                        var tab = createBlock('advgb/tab', { tabActive: 0 }, [tabContent]);
+
+                        tabHeaders.push(item.header);
+                        innerTabs.push(tab);
+                    });
+
+                    attributes.tabItems = undefined;
+                    return createBlock('advgb/adv-tabs', _extends({}, attributes, { tabHeaders: tabHeaders, changed: false }), innerTabs);
+                }
+            }]
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
@@ -16965,8 +16990,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
-        Fragment = wpElement.Fragment,
-        renderToString = wpElement.renderToString;
+        Fragment = wpElement.Fragment;
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
@@ -17045,6 +17069,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var pid = attributes.pid,
                     sliderView = attributes.sliderView,
                     sliderColumn = attributes.sliderColumn,
+                    sliderCenterMode = attributes.sliderCenterMode,
                     sliderPauseOnHover = attributes.sliderPauseOnHover,
                     sliderAutoPlay = attributes.sliderAutoPlay,
                     sliderInfiniteLoop = attributes.sliderInfiniteLoop,
@@ -17062,6 +17087,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (sliderView) {
                     jQuery("#block-" + clientId + " .advgb-testimonial.slider-view").slick({
                         infinite: sliderInfiniteLoop,
+                        centerMode: sliderCenterMode,
                         slidesToShow: sliderColumn,
                         slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                         pauseOnHover: sliderPauseOnHover,
@@ -17099,6 +17125,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     clientId = _props4.clientId;
                 var sliderView = attributes.sliderView,
                     sliderColumn = attributes.sliderColumn,
+                    sliderCenterMode = attributes.sliderCenterMode,
                     sliderPauseOnHover = attributes.sliderPauseOnHover,
                     sliderAutoPlay = attributes.sliderAutoPlay,
                     sliderInfiniteLoop = attributes.sliderInfiniteLoop,
@@ -17116,6 +17143,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     if (sliderView) {
                         slider.slick({
                             infinite: sliderInfiniteLoop,
+                            centerMode: sliderCenterMode,
                             slidesToShow: sliderColumn,
                             slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                             pauseOnHover: sliderPauseOnHover,
@@ -17133,6 +17161,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 if (needUpdate && sliderView) {
                     slider.slick('slickSetOption', 'slidesToShow', sliderColumn);
                     slider.slick('slickSetOption', 'slidesToScroll', sliderItemsToScroll);
+                    slider.slick('slickSetOption', 'centerMode', sliderCenterMode);
                     slider.slick('slickSetOption', 'pauseOnHover', sliderPauseOnHover);
                     slider.slick('slickSetOption', 'infinite', sliderInfiniteLoop);
                     slider.slick('slickSetOption', 'dots', sliderDotsShown);
@@ -17181,7 +17210,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "sliderNeedUpdate",
             value: function sliderNeedUpdate(pa, ca) {
-                var checkUpdate = ['sliderColumn', 'sliderItemsToScroll', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop', 'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown'];
+                var checkUpdate = ['sliderColumn', 'sliderItemsToScroll', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop', 'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown', 'sliderCenterMode'];
                 var update = false;
 
                 var _iteratorNormalCompletion2 = true;
@@ -17240,8 +17269,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _props6 = this.props,
                     attributes = _props6.attributes,
                     setAttributes = _props6.setAttributes,
-                    isSelected = _props6.isSelected,
-                    clientId = _props6.clientId;
+                    isSelected = _props6.isSelected;
                 var pid = attributes.pid,
                     items = attributes.items,
                     sliderView = attributes.sliderView,
@@ -17256,6 +17284,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     columns = attributes.columns,
                     sliderColumn = attributes.sliderColumn,
                     sliderItemsToScroll = attributes.sliderItemsToScroll,
+                    sliderCenterMode = attributes.sliderCenterMode,
                     sliderPauseOnHover = attributes.sliderPauseOnHover,
                     sliderAutoPlay = attributes.sliderAutoPlay,
                     sliderInfiniteLoop = attributes.sliderInfiniteLoop,
@@ -17350,6 +17379,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     PanelBody,
                                     { title: __('Slider Settings', 'advanced-gutenberg'), initialOpen: false },
+                                    React.createElement(ToggleControl, {
+                                        label: __('Center mode', 'advanced-gutenberg'),
+                                        checked: sliderCenterMode,
+                                        onChange: function onChange() {
+                                            return setAttributes({ sliderCenterMode: !sliderCenterMode });
+                                        }
+                                    }),
                                     React.createElement(ToggleControl, {
                                         label: __('Pause on hover', 'advanced-gutenberg'),
                                         checked: sliderPauseOnHover,
@@ -17738,6 +17774,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 1
         },
+        sliderCenterMode: {
+            type: 'boolean',
+            default: true
+        },
         sliderPauseOnHover: {
             type: 'boolean',
             default: true
@@ -17815,6 +17855,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 columns = attributes.columns,
                 sliderColumn = attributes.sliderColumn,
                 sliderItemsToScroll = attributes.sliderItemsToScroll,
+                sliderCenterMode = attributes.sliderCenterMode,
                 sliderPauseOnHover = attributes.sliderPauseOnHover,
                 sliderAutoPlay = attributes.sliderAutoPlay,
                 sliderInfiniteLoop = attributes.sliderInfiniteLoop,
@@ -17862,7 +17903,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     "data-loop": sliderView ? sliderInfiniteLoop : undefined,
                     "data-dots": sliderView ? sliderDotsShown : undefined,
                     "data-speed": sliderView ? sliderSpeed : undefined,
-                    "data-arrows": sliderView ? sliderArrowShown : undefined
+                    "data-arrows": sliderView ? sliderArrowShown : undefined,
+                    "data-center": sliderView ? sliderCenterMode : undefined
                 },
                 React.createElement(
                     "div",

@@ -53,11 +53,11 @@ window.addEventListener('load', function () {
                 content: info
             });
 
-            if (!infoShown) {
-                marker.addListener('click', function () {
-                    infoWindow.open(map, marker);
-                });
-            } else {
+            marker.addListener('click', function () {
+                infoWindow.open(map, marker);
+            });
+
+            if (infoShown) {
                 infoWindow.open(map, marker);
             }
 

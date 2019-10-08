@@ -138,12 +138,14 @@
                                     max={ 1300 }
                                     onChange={ (value) => setAttributes( { width: value } ) }
                                 />}
-                                <FocalPointPicker
-                                    label={ __( 'Focal Point Picker', 'advanced-gutenberg' ) }
-                                    url={ imageUrl }
-                                    value={ focalPoint }
-                                    onChange={ ( value ) => setAttributes( { focalPoint: value } ) }
-                                />
+                                {imageUrl && (
+                                    <FocalPointPicker
+                                        label={ __( 'Focal Point Picker', 'advanced-gutenberg' ) }
+                                        url={ imageUrl }
+                                        value={ focalPoint }
+                                        onChange={ ( value ) => setAttributes( { focalPoint: value } ) }
+                                    />
+                                ) }
                                 <RangeControl
                                     label={ __( 'Overlay opacity', 'advanced-gutenberg' ) }
                                     value={ overlayOpacity }

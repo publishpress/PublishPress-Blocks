@@ -1109,11 +1109,11 @@
             } );
 
             if (!!markerTitle || !!markerDesc) {
-                if (!infoWindowDefaultShown) {
-                    marker.addListener('click', function() {
-                        infoWindow.open(map, marker);
-                    });
-                } else {
+                marker.addListener('click', function() {
+                    infoWindow.open(map, marker);
+                });
+
+                if (infoWindowDefaultShown) {
                     infoWindow.open(map, marker);
                 }
             } else {
