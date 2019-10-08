@@ -77,7 +77,7 @@
     }
 
     registerBlockType( 'advgb/tab', {
-        title: __( 'Tab Item' ),
+        title: __( 'Tab Item', 'advanced-gutenberg' ),
         parent: [ 'advgb/adv-tabs' ],
         icon: {
             src: tabsBlockIcon,
@@ -97,7 +97,7 @@
                 default: false,
             }
         },
-        keywords: [ __( 'tab' ) ],
+        keywords: [ __( 'tab', 'advanced-gutenberg' ) ],
         edit: TabItemEdit,
         save: function( { attributes } ) {
             const {pid} = attributes;

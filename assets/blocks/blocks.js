@@ -5865,7 +5865,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }(Component);
 
     registerBlockType('advgb/tab', {
-        title: __('Tab Item'),
+        title: __('Tab Item', 'advanced-gutenberg'),
         parent: ['advgb/adv-tabs'],
         icon: {
             src: tabsBlockIcon,
@@ -5885,7 +5885,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: false
             }
         },
-        keywords: [__('tab')],
+        keywords: [__('tab', 'advanced-gutenberg')],
         edit: TabItemEdit,
         save: function save(_ref4) {
             var attributes = _ref4.attributes;
@@ -17836,7 +17836,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined
         },
         category: 'advgb-category',
-        keywords: [__('testimonial'), __('personal'), __('about')],
+        keywords: [__('testimonial', 'advanced-gutenberg'), __('personal', 'advanced-gutenberg'), __('about', 'advanced-gutenberg')],
         attributes: blockAttrs,
         edit: AdvTestimonial,
         save: function save(_ref2) {
