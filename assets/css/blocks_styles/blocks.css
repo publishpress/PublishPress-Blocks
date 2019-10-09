@@ -715,10 +715,15 @@ span.advgb-social-icon.selected:before {
     padding: 15px 0;
 }
 
+.advgb-tabs-styles {
+    display: flex;
+}
+
 .advgb-tabs-styles .advgb-tabs-style {
     padding: 10px;
     margin-right: 10px;
     border: 1px solid transparent;
+    flex: 1;
 }
 
 .advgb-tabs-styles .advgb-tabs-style.is-toggled {

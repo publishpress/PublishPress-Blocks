@@ -5165,6 +5165,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5230,7 +5232,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AdvTabsWrapper() {
             _classCallCheck(this, AdvTabsWrapper);
 
-            return _possibleConstructorReturn(this, (AdvTabsWrapper.__proto__ || Object.getPrototypeOf(AdvTabsWrapper)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (AdvTabsWrapper.__proto__ || Object.getPrototypeOf(AdvTabsWrapper)).apply(this, arguments));
+
+            _this.state = {
+                viewport: 'desktop'
+            };
+            return _this;
         }
 
         _createClass(AdvTabsWrapper, [{
@@ -5336,9 +5343,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props5.attributes,
                     setAttributes = _props5.setAttributes,
                     clientId = _props5.clientId;
+                var viewport = this.state.viewport;
                 var tabHeaders = attributes.tabHeaders,
                     tabActive = attributes.tabActive,
-                    tabsStyle = attributes.tabsStyle,
+                    tabActiveFrontend = attributes.tabActiveFrontend,
+                    tabsStyleD = attributes.tabsStyleD,
+                    tabsStyleT = attributes.tabsStyleT,
+                    tabsStyleM = attributes.tabsStyleM,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
                     bodyBgColor = attributes.bodyBgColor,
@@ -5351,6 +5362,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     activeTabBgColor = attributes.activeTabBgColor,
                     activeTabTextColor = attributes.activeTabTextColor;
 
+                var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile"].filter(Boolean).join(' ');
+
+                var deviceLetter = 'D';
+                if (viewport === 'tablet') deviceLetter = 'T';
+                if (viewport === 'mobile') deviceLetter = 'M';
 
                 return React.createElement(
                     Fragment,
@@ -5360,7 +5376,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             PanelBody,
-                            { title: __('Tab Style', 'advanced-gutenberg') },
+                            { title: __('Tabs Style', 'advanced-gutenberg') },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-columns-responsive-items" },
+                                ['desktop', 'tablet', 'mobile'].map(function (device, index) {
+                                    var itemClasses = ["advgb-columns-responsive-item", viewport === device && 'is-selected'].filter(Boolean).join(' ');
+
+                                    return React.createElement(
+                                        "div",
+                                        { className: itemClasses,
+                                            key: index,
+                                            onClick: function onClick() {
+                                                return _this2.setState({ viewport: device });
+                                            }
+                                        },
+                                        device
+                                    );
+                                })
+                            ),
                             React.createElement(
                                 "div",
                                 { className: "advgb-tabs-styles" },
@@ -5371,16 +5405,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             Button,
                                             { className: "advgb-tabs-style",
-                                                isToggled: style.name === tabsStyle,
+                                                isToggled: style.name === attributes["tabsStyle" + deviceLetter],
                                                 onClick: function onClick() {
-                                                    return setAttributes({ tabsStyle: style.name });
+                                                    return setAttributes(_defineProperty({}, "tabsStyle" + deviceLetter, style.name));
                                                 }
                                             },
                                             style.icon
                                         )
                                     );
-                                })
+                                }),
+                                viewport === 'mobile' && React.createElement(
+                                    Tooltip,
+                                    { text: __('Stacked', 'advanced-gutenberg') },
+                                    React.createElement(
+                                        Button,
+                                        { className: "advgb-tabs-style",
+                                            isToggled: tabsStyleM === 'stack',
+                                            onClick: function onClick() {
+                                                return setAttributes({ tabsStyleM: 'stack' });
+                                            }
+                                        },
+                                        React.createElement(
+                                            "svg",
+                                            { width: "50px", height: "50px", viewBox: "0 0 26 26", xmlns: "http://www.w3.org/2000/svg" },
+                                            React.createElement("path", { fill: "#333", d: "M24.2480469,18.5H1.75C1.3359375,18.5,1,18.8359375,1,19.25v5C1,24.6640625,1.3359375,25,1.75,25   h22.4980469c0.4140625,0,0.75-0.3359375,0.75-0.75v-5C24.9980469,18.8359375,24.6621094,18.5,24.2480469,18.5z M23.4980469,23.5   H2.5V20h20.9980469V23.5z" }),
+                                            React.createElement("path", { fill: "#333", d: "M24.25,9.75H1.75C1.3359375,9.75,1,10.0859375,1,10.5v5c0,0.4140625,0.3359375,0.75,0.75,0.75h22.5   c0.4140625,0,0.75-0.3359375,0.75-0.75v-5C25,10.0859375,24.6640625,9.75,24.25,9.75z M23.5,14.75h-21v-3.5h21V14.75z" }),
+                                            React.createElement("path", { fill: "#333", d: "M1.75,7.5h22.4980469c0.4140625,0,0.75-0.3359375,0.75-0.75v-5c0-0.4140625-0.3359375-0.75-0.75-0.75H1.75   C1.3359375,1,1,1.3359375,1,1.75v5C1,7.1640625,1.3359375,7.5,1.75,7.5z M2.5,2.5h20.9980469V6H2.5V2.5z" })
+                                        )
+                                    )
+                                )
                             )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            { title: __('Tabs Settings') },
+                            React.createElement(SelectControl, {
+                                label: __('Initial Open Tab'),
+                                value: tabActiveFrontend,
+                                options: tabHeaders.map(function (tab, index) {
+                                    return { value: index, label: tab };
+                                }),
+                                onChange: function onChange(value) {
+                                    return setAttributes({ tabActiveFrontend: parseInt(value) });
+                                }
+                            })
                         ),
                         React.createElement(PanelColorSettings, {
                             title: __('Tab Colors', 'advanced-gutenberg'),
@@ -5472,7 +5540,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         "div",
-                        { className: "advgb-tabs-wrapper advgb-tab-" + tabsStyle, style: { border: 'none' } },
+                        { className: blockClass, style: { border: 'none' } },
                         React.createElement(
                             "ul",
                             { className: "advgb-tabs-panel" },
@@ -5603,9 +5671,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 0
         },
-        tabsStyle: {
+        tabActiveFrontend: {
+            type: 'number',
+            default: 0
+        },
+        tabsStyleD: {
             type: 'string',
             default: 'horz'
+        },
+        tabsStyleT: {
+            type: 'string',
+            default: 'vert'
+        },
+        tabsStyleM: {
+            type: 'string',
+            default: 'stack'
         },
         headerBgColor: {
             type: 'string',
@@ -5665,8 +5745,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         save: function save(_ref6) {
             var attributes = _ref6.attributes;
             var tabHeaders = attributes.tabHeaders,
-                tabActive = attributes.tabActive,
-                tabsStyle = attributes.tabsStyle,
+                tabActiveFrontend = attributes.tabActiveFrontend,
+                tabsStyleD = attributes.tabsStyleD,
+                tabsStyleT = attributes.tabsStyleT,
+                tabsStyleM = attributes.tabsStyleM,
                 headerBgColor = attributes.headerBgColor,
                 headerTextColor = attributes.headerTextColor,
                 bodyBgColor = attributes.bodyBgColor,
@@ -5677,10 +5759,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderRadius = attributes.borderRadius,
                 pid = attributes.pid;
 
+            var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile"].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
-                { id: pid, className: "advgb-tabs-wrapper advgb-tab-" + tabsStyle, "data-tab-active": tabActive },
+                { id: pid, className: blockClass, "data-tab-active": tabActiveFrontend },
                 React.createElement(
                     "ul",
                     { className: "advgb-tabs-panel" },

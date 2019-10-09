@@ -41,6 +41,9 @@
     class AdvTabsWrapper extends Component {
         constructor() {
             super( ...arguments );
+            this.state = {
+                viewport: 'desktop',
+            }
         }
 
         componentWillMount() {
@@ -109,10 +112,14 @@
 
         render() {
             const { attributes, setAttributes, clientId } = this.props;
+            const { viewport } = this.state;
             const {
                 tabHeaders,
                 tabActive,
-                tabsStyle,
+                tabActiveFrontend,
+                tabsStyleD,
+                tabsStyleT,
+                tabsStyleM,
                 headerBgColor,
                 headerTextColor,
                 bodyBgColor,
@@ -125,23 +132,74 @@
                 activeTabBgColor,
                 activeTabTextColor,
             } = attributes;
+            const blockClass = [
+                `advgb-tabs-wrapper`,
+                `advgb-tab-${tabsStyleD}-desktop`,
+                `advgb-tab-${tabsStyleT}-tablet`,
+                `advgb-tab-${tabsStyleM}-mobile`,
+            ].filter( Boolean ).join( ' ' );
+
+            let deviceLetter = 'D';
+            if (viewport === 'tablet') deviceLetter = 'T';
+            if (viewport === 'mobile') deviceLetter = 'M';
 
             return (
                 <Fragment>
                     <InspectorControls>
-                        <PanelBody title={ __( 'Tab Style', 'advanced-gutenberg' ) }>
+                        <PanelBody title={ __( 'Tabs Style', 'advanced-gutenberg' ) }>
+                            <div className="advgb-columns-responsive-items">
+                                {['desktop', 'tablet', 'mobile'].map( (device, index) => {
+                                    const itemClasses = [
+                                        "advgb-columns-responsive-item",
+                                        viewport === device && 'is-selected',
+                                    ].filter( Boolean ).join( ' ' );
+
+                                    return (
+                                        <div className={ itemClasses }
+                                             key={ index }
+                                             onClick={ () => this.setState( { viewport: device } ) }
+                                        >
+                                            {device}
+                                        </div>
+                                    )
+                                } ) }
+                            </div>
                             <div className="advgb-tabs-styles">
                                 {TABS_STYLES.map((style, index) => (
                                     <Tooltip key={index} text={style.label}>
                                         <Button className="advgb-tabs-style"
-                                                isToggled={ style.name === tabsStyle }
-                                                onClick={ () => setAttributes( { tabsStyle: style.name } ) }
+                                                isToggled={ style.name === attributes[`tabsStyle${deviceLetter}`] }
+                                                onClick={ () => setAttributes( { [`tabsStyle${deviceLetter}`]: style.name } ) }
                                         >
                                             {style.icon}
                                         </Button>
                                     </Tooltip>
                                 ))}
+                                {viewport === 'mobile' && (
+                                    <Tooltip text={ __( 'Stacked', 'advanced-gutenberg' ) }>
+                                        <Button className="advgb-tabs-style"
+                                                isToggled={ tabsStyleM === 'stack' }
+                                                onClick={ () => setAttributes( { tabsStyleM: 'stack' } ) }
+                                        >
+                                            <svg width="50px" height="50px" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill="#333" d="M24.2480469,18.5H1.75C1.3359375,18.5,1,18.8359375,1,19.25v5C1,24.6640625,1.3359375,25,1.75,25   h22.4980469c0.4140625,0,0.75-0.3359375,0.75-0.75v-5C24.9980469,18.8359375,24.6621094,18.5,24.2480469,18.5z M23.4980469,23.5   H2.5V20h20.9980469V23.5z"/>
+                                                <path fill="#333" d="M24.25,9.75H1.75C1.3359375,9.75,1,10.0859375,1,10.5v5c0,0.4140625,0.3359375,0.75,0.75,0.75h22.5   c0.4140625,0,0.75-0.3359375,0.75-0.75v-5C25,10.0859375,24.6640625,9.75,24.25,9.75z M23.5,14.75h-21v-3.5h21V14.75z"/>
+                                                <path fill="#333" d="M1.75,7.5h22.4980469c0.4140625,0,0.75-0.3359375,0.75-0.75v-5c0-0.4140625-0.3359375-0.75-0.75-0.75H1.75   C1.3359375,1,1,1.3359375,1,1.75v5C1,7.1640625,1.3359375,7.5,1.75,7.5z M2.5,2.5h20.9980469V6H2.5V2.5z"/>
+                                            </svg>
+                                        </Button>
+                                    </Tooltip>
+                                )}
                             </div>
+                        </PanelBody>
+                        <PanelBody title={ __( 'Tabs Settings' ) }>
+                            <SelectControl
+                                label={ __( 'Initial Open Tab' ) }
+                                value={ tabActiveFrontend }
+                                options={ tabHeaders.map((tab, index) => {
+                                    return {value: index, label: tab};
+                                } ) }
+                                onChange={ (value) => setAttributes( { tabActiveFrontend: parseInt(value) } ) }
+                            />
                         </PanelBody>
                         <PanelColorSettings
                             title={ __( 'Tab Colors', 'advanced-gutenberg' ) }
@@ -223,7 +281,7 @@
                             />
                         </PanelBody>
                     </InspectorControls>
-                    <div className={`advgb-tabs-wrapper advgb-tab-${tabsStyle}`} style={ { border: 'none' } }>
+                    <div className={blockClass} style={ { border: 'none' } }>
                         <ul className="advgb-tabs-panel">
                             {tabHeaders.map( ( item, index ) => (
                                 <li key={ index }
@@ -336,9 +394,21 @@
             type: 'number',
             default: 0,
         },
-        tabsStyle: {
+        tabActiveFrontend: {
+            type: 'number',
+            default: 0,
+        },
+        tabsStyleD: {
             type: 'string',
             default: 'horz'
+        },
+        tabsStyleT: {
+            type: 'string',
+            default: 'vert'
+        },
+        tabsStyleM: {
+            type: 'string',
+            default: 'stack'
         },
         headerBgColor: {
             type: 'string',
@@ -398,8 +468,10 @@
         save: function ( { attributes } ) {
             const {
                 tabHeaders,
-                tabActive,
-                tabsStyle,
+                tabActiveFrontend,
+                tabsStyleD,
+                tabsStyleT,
+                tabsStyleM,
                 headerBgColor,
                 headerTextColor,
                 bodyBgColor,
@@ -410,9 +482,15 @@
                 borderRadius,
                 pid,
             } = attributes;
+            const blockClass = [
+                `advgb-tabs-wrapper`,
+                `advgb-tab-${tabsStyleD}-desktop`,
+                `advgb-tab-${tabsStyleT}-tablet`,
+                `advgb-tab-${tabsStyleM}-mobile`,
+            ].filter( Boolean ).join( ' ' );
 
             return (
-                <div id={pid} className={`advgb-tabs-wrapper advgb-tab-${tabsStyle}`} data-tab-active={tabActive}>
+                <div id={pid} className={blockClass} data-tab-active={tabActiveFrontend}>
                     <ul className="advgb-tabs-panel">
                         {tabHeaders.map( ( header, index ) => (
                             <li key={ index } className="advgb-tab"
