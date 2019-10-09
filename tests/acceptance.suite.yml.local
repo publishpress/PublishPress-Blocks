@@ -1,0 +1,45 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+class_name: AcceptanceTester
+modules:
+  enabled:
+  - WebDriver
+  - \Helper\Acceptance
+  - Asserts
+  config:
+    WebDriver:
+      browser: chrome
+      url: http://localhost/advgutenberg
+      host : localhost
+      window_size: 1600x900
+      port: 4444
+      wait: 2
+      adminUsername: admin
+      adminPassword: password
+      adminUrl: /wp-admin
+      clear_cookies: false
+      log_js_errors: true
+    \Helper\Acceptance:
+      php-version: '%PHP_VERSION%'
+      map-api-key: '%MAP_API_KEY%'
+env:
+  local:
+    modules:
+      config:
+        WebDriver:
+          url: http://172.20.0.3
+          host: 172.20.0.4
+  local_chrome:
+    modules:
+      config:
+        WebDriver:
+          url: http://172.20.0.3
+          host: 127.0.0.1
+  bitbucket:
+  extensions:
+    enabled:
+    - Codeception\Extension\Recorder

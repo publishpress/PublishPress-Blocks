@@ -64,14 +64,19 @@ class TestimonialBlockCest
         // Check block loaded
         $I->waitForElement('.wp-block-advgb-testimonial');
         $I->seeElement('.advgb-testimonial-item');
-        $I->seeElement('//div[@class="advgb-testimonial-item"]/h4[@class="advgb-testimonial-name"][text()="John Doe"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"]/p[@class="advgb-testimonial-position"][text()="Developer"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"]/p[@class="advgb-testimonial-desc"][text()="Coding is the passion of his life."]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="John Doe"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Developer"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="Coding is the passion of his life."]');
     }
 
-    public function changeColumn(AcceptanceTester $I)
+    /*public function changeColumn(AcceptanceTester $I)
     {
         $I->wantTo('Change testimonial columns');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
 
         // Change columns
         $I->fillField('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()', 3);
@@ -111,18 +116,23 @@ class TestimonialBlockCest
         $I->seeNumberOfElements('.advgb-testimonial .advgb-testimonial-item', 3);
 
         // Check text
-        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/h4[@class="advgb-testimonial-name"][text()="Tony Stark"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/p[@class="advgb-testimonial-position"][text()="Iron Man"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/p[@class="advgb-testimonial-desc"][text()="A super rich and clever person. Most adorable superhero. Respect!"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Tony Stark"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Iron Man"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="A super rich and clever person. Most adorable superhero. Respect!"]');
 
-        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/h4[@class="advgb-testimonial-name"][text()="Clark Kent"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/p[@class="advgb-testimonial-position"][text()="Superman"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/p[@class="advgb-testimonial-desc"][text()="An alien person. Come to earth from a meteor. He has many super powers."]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Clark Kent"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Superman"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="An alien person. Come to earth from a meteor. He has many super powers."]');
     }
 
     public function changeAvatarStyles(AcceptanceTester $I)
     {
         $I->wantTo('Change testimonial avatar styles');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
 
         // Change avatar styles
         $I->click('//button[text()="Avatar"]');
@@ -133,7 +143,7 @@ class TestimonialBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('#2196f3');
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial-wrapper"]'); // click block to hide picker
 
         // Change border color
         $I->clickAndWait('//span[@class="components-base-control__label"][text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
@@ -141,7 +151,7 @@ class TestimonialBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('#ff0000');
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial-wrapper"]'); // click block to hide picker
 
         // Change border radius
         $I->click('//label[text()="Border Radius (%)"]/following-sibling::node()/following-sibling::node()');
@@ -172,6 +182,11 @@ class TestimonialBlockCest
     {
         $I->wantTo('Change testimonial text colors');
 
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
         // Change colors
         $I->click('//button/span[text()="Text Colors"]');
         // Change name color
@@ -180,7 +195,7 @@ class TestimonialBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('#7b17ff');
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial-wrapper"]'); // click block to hide picker
 
         // Change position color
         $I->clickAndWait('//span[@class="components-base-control__label"][text()="Position Color"]/following-sibling::node()/div[last()]/*[1]');
@@ -188,7 +203,7 @@ class TestimonialBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('#999999');
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial-wrapper"]'); // click block to hide picker
 
         // Change name color
         $I->clickAndWait('//span[@class="components-base-control__label"][text()="Description Color"]/following-sibling::node()/div[last()]/*[1]');
@@ -196,7 +211,7 @@ class TestimonialBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('#00a32e');
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[@class="advgb-testimonial"]'); // click block to hide picker
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial-wrapper"]'); // click block to hide picker
 
         // Update post
         $I->updatePost();
@@ -206,11 +221,16 @@ class TestimonialBlockCest
         $I->seeElement('//h4[@class="advgb-testimonial-name"][contains(@style, "color:#7b17ff")]');
         $I->seeElement('//p[@class="advgb-testimonial-position"][contains(@style, "color:#999999")]');
         $I->seeElement('//p[@class="advgb-testimonial-desc"][contains(@style, "color:#00a32e")]');
-    }
+    }*/
 
     public function changeToSliderView(AcceptanceTester $I)
     {
         $I->wantTo('Change testimonial to slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
 
         // Change to slider view
         $I->click('//label[text()="Slider view"]/preceding-sibling::node()');
@@ -221,5 +241,142 @@ class TestimonialBlockCest
 
         // Check view type
         $I->seeElement('//div[contains(@class, "advgb-testimonial")]/div[contains(@class, "slick-list")]/div[contains(@class, "slick-track")]/*');
+    }
+
+    public function changeAutoPlaySlideSetting(AcceptanceTester $I) {
+        $I->wantTo('Change auto play slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        // click open slider settings
+        $I->click('//button[text()="Slider Settings"]');
+        // Change to slider view
+        $I->click('//label[text()="Auto play"]/preceding-sibling::node()');
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->seeElement('//div[@class="slick-track"]/div[3][contains(@class, "slick-active")]');
+        $I->wait(2.5);
+        $I->seeElement('//div[@class="slick-track"]/div[3][contains(@class, "slick-active")]');
+        $I->dontSeeElement('//div[@class="slick-track"]/div[4][contains(@class, "slick-active")]');
+    }
+
+    public function changeLoopSlideSetting(AcceptanceTester $I) {
+        $I->wantTo('Change loop slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        // click open slider settings
+        $I->click('//button[text()="Slider Settings"]');
+        // Change to slider view
+        $I->click('//label[text()="Infinite Loop"]/preceding-sibling::node()');
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->dontSeeElement('//div[@class="slick-track"]/div[1][contains(@class, "slick-cloned")]');
+    }
+
+    public function changeSliderItems(AcceptanceTester $I) {
+        $I->wantTo('Change number of items slider');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        $I->fillField('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()', 5);
+
+        $I->waitForElement('.slick-track');
+
+        // Modify 2nd person
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) h4.advgb-testimonial-name');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Tony Stark');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) p.advgb-testimonial-position');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Iron Man');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) p.advgb-testimonial-desc');
+        $I->selectCurrentElementText();
+        $I->pressKeys('A super rich and clever person. Most adorable superhero. Respect!');
+
+        // Modify 3rd person
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(3) h4.advgb-testimonial-name');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Tony Stark 2');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(3) p.advgb-testimonial-position');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Iron Man 2');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(3) p.advgb-testimonial-desc');
+        $I->selectCurrentElementText();
+        $I->pressKeys('2 A super rich and clever person. Most adorable superhero. Respect!');
+
+        // Modify 4th person
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(4) h4.advgb-testimonial-name');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Tony Stark 3');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(4) p.advgb-testimonial-position');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Iron Man 3');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(4) p.advgb-testimonial-desc');
+        $I->selectCurrentElementText();
+        $I->pressKeys('3 A super rich and clever person. Most adorable superhero. Respect!');
+
+        // Modify 5th person
+        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child h4.advgb-testimonial-name');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Clark Kent');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child p.advgb-testimonial-position');
+        $I->selectCurrentElementText();
+        $I->pressKeys('Superman');
+
+        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child p.advgb-testimonial-desc');
+        $I->selectCurrentElementText();
+        $I->pressKeys('An alien person. Come to earth from a meteor. He has many super powers.');
+        $I->wait(1);
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        // Check columns changed
+        //$I->seeNumberOfElements('.advgb-testimonial .advgb-testimonial-item', 5);
+
+        // Check text
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Tony Stark"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Iron Man"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="A super rich and clever person. Most adorable superhero. Respect!"]');
+
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Tony Stark 2"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Iron Man 2"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="2 A super rich and clever person. Most adorable superhero. Respect!"]');
+
+        $I->seeElement('//div[@class="advgb-testimonial-item"][4]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Tony Stark 3"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][4]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Iron Man 3"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][4]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="3 A super rich and clever person. Most adorable superhero. Respect!"]');
+
+        $I->seeElement('//div[@class="advgb-testimonial-item"][5]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Clark Kent"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][5]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Superman"]');
+        $I->seeElement('//div[@class="advgb-testimonial-item"][5]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="An alien person. Come to earth from a meteor. He has many super powers."]');
     }
 }
