@@ -69,7 +69,7 @@ class TestimonialBlockCest
         $I->seeElement('//div[@class="advgb-testimonial-item"]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="Coding is the passion of his life."]');
     }
 
-    /*public function changeColumn(AcceptanceTester $I)
+    public function changeColumn(AcceptanceTester $I)
     {
         $I->wantTo('Change testimonial columns');
 
@@ -221,7 +221,7 @@ class TestimonialBlockCest
         $I->seeElement('//h4[@class="advgb-testimonial-name"][contains(@style, "color:#7b17ff")]');
         $I->seeElement('//p[@class="advgb-testimonial-position"][contains(@style, "color:#999999")]');
         $I->seeElement('//p[@class="advgb-testimonial-desc"][contains(@style, "color:#00a32e")]');
-    }*/
+    }
 
     public function changeToSliderView(AcceptanceTester $I)
     {
@@ -243,7 +243,7 @@ class TestimonialBlockCest
         $I->seeElement('//div[contains(@class, "advgb-testimonial")]/div[contains(@class, "slick-list")]/div[contains(@class, "slick-track")]/*');
     }
 
-    public function changeAutoPlaySlideSetting(AcceptanceTester $I) {
+    public function changeAutoPlaySliderSetting(AcceptanceTester $I) {
         $I->wantTo('Change auto play slider view');
 
         $I->clickAndWait('.editor-block-navigation');
@@ -268,7 +268,7 @@ class TestimonialBlockCest
         $I->dontSeeElement('//div[@class="slick-track"]/div[4][contains(@class, "slick-active")]');
     }
 
-    public function changeLoopSlideSetting(AcceptanceTester $I) {
+    public function changeLoopSliderSetting(AcceptanceTester $I) {
         $I->wantTo('Change loop slider view');
 
         $I->clickAndWait('.editor-block-navigation');
@@ -290,6 +290,189 @@ class TestimonialBlockCest
         $I->dontSeeElement('//div[@class="slick-track"]/div[1][contains(@class, "slick-cloned")]');
     }
 
+    public function changeCenterModeSliderSetting(AcceptanceTester $I) {
+        $I->wantTo('Change center mode slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        // click open slider settings
+        $I->click('//button[text()="Slider Settings"]');
+
+        // Change to slider view
+        $I->click('//label[text()="Center mode"]/preceding-sibling::node()');
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->dontSeeElement('//div[@class="slick-track"]/div[1][contains(@class, "slick-center")]');
+    }
+
+
+
+    public function changeTransitionSpeedSliderSetting(AcceptanceTester $I) {
+        $I->wantTo('Change transition speed slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        // click open slider settings
+        $I->click('//button[text()="Slider Settings"]');
+
+        $I->fillField('//label[text()="Transition speed (ms)"]/following-sibling::node()/following-sibling::node()', 3000);
+
+        $I->waitForElement('.slick-track');
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+
+        $I->seeElement('//div[@class="slick-track"]/div[contains(@class, "advgb-testimonial-item") and contains(@tabindex, "0")][1]');
+        $I->click('//button[contains(@class, "advgb-slider-next")]');
+        $I->wait(3.5);
+        $I->seeElement('//div[@class="slick-track"]/div[contains(@class, "advgb-testimonial-item") and contains(@tabindex, "-1")][1]');
+    }
+
+    public function changeShowDotsSliderSetting(AcceptanceTester $I) {
+        $I->wantTo('Change show dots slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        // click open slider settings
+        $I->click('//button[text()="Slider Settings"]');
+
+        // Change to slider view
+        $I->click('//label[text()="Show dots"]/preceding-sibling::node()');
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->dontSeeElement('//ul[@class="slick-dots"]');
+    }
+
+    public function changeShowArrowsSliderSetting(AcceptanceTester $I) {
+        $I->wantTo('Change show arrows slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        // click open slider settings
+        $I->click('//button[text()="Slider Settings"]');
+
+        // Change to slider view
+        $I->click('//label[text()="Show arrows"]/preceding-sibling::node()');
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->dontSeeElement('//button[contains(@class, "advgb-slider-arrow")]');
+    }
+
+    public function changeArrowStyleSliderSetting(AcceptanceTester $I) {
+        $I->wantTo('Change arrow style slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        // click open slider settings
+        $I->click('//button[text()="Slider Settings"]');
+
+        // Change to slider view
+        $I->click('//label[text()="Show arrows"]/preceding-sibling::node()');
+
+        $I->fillField('//label[text()="Arrow size"]/following-sibling::node()/following-sibling::node()', 55);
+
+        $I->fillField('//label[text()="Arrow border size"]/following-sibling::node()/following-sibling::node()', 2);
+
+        $I->fillField('//label[text()="Arrow border radius (%)"]/following-sibling::node()/following-sibling::node()', 10);
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->seeElement('//button[contains(@class, "advgb-slider-arrow") and contains(@style, "border-width: 2px; border-radius: 10%; width: 55px")]');
+    }
+
+    public function changeSliderColorsSliderSetting(AcceptanceTester $I) {
+        $I->wantTo('Change slider color slider view');
+
+        $I->clickAndWait('.editor-block-navigation');
+
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
+
+        // click open slider settings
+        $I->click('//button[text()="Slider Settings"]');
+        //show dots
+        $I->click('//label[text()="Show dots"]/preceding-sibling::node()');
+
+        // click open slider colors
+        $I->click('//button/span[text()="Slider Colors"]');
+
+        //Arrow and Border Color
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Arrow and Border Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#7b17ff');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial-wrapper"]'); // click block to hide picker
+
+        //Dots Color
+        $I->clickAndWait('//span[@class="components-base-control__label"][text()="Dots Color"]/following-sibling::node()/div[last()]/*[1]');
+        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+        $I->selectCurrentElementText();
+        $I->pressKeys('#01ad0d');
+        $I->pressKeys(WebDriverKeys::ENTER);
+        $I->clickWithLeftButton('//div[@class="advgb-testimonial-wrapper"]'); // click block to hide picker
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->seeElement('//button[contains(@class, "advgb-slider-arrow") and contains(@style, "color: rgb(123, 23, 255); border-color: rgb(123, 23, 255)")]');
+
+        $style = $I->executeJS('
+                let text = jQuery(".advgb-styles-renderer").text();
+                if(text.includes("color:#01ad0d")) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+        ');
+        if($style == 1) {
+            $I->dontSee('Error');
+        } else {
+            $I->see('Error');
+        }
+    }
+
     public function changeSliderItems(AcceptanceTester $I) {
         $I->wantTo('Change number of items slider');
 
@@ -302,81 +485,65 @@ class TestimonialBlockCest
 
         $I->waitForElement('.slick-track');
 
-        // Modify 2nd person
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) h4.advgb-testimonial-name');
-        $I->selectCurrentElementText();
-        $I->pressKeys('Tony Stark');
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+        $I->waitForElement('.slick-track');
 
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) p.advgb-testimonial-position');
-        $I->selectCurrentElementText();
-        $I->pressKeys('Iron Man');
+        // Check columns changed
+        $numberItem = $I->executeJS('
+            return jQuery(".slick-track").find(".advgb-testimonial-item").length;
+        ');
 
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(2) p.advgb-testimonial-desc');
-        $I->selectCurrentElementText();
-        $I->pressKeys('A super rich and clever person. Most adorable superhero. Respect!');
+        if($numberItem == 5) {
+            $I->dontSee('Error');
+        } else {
+            $I->see('Error');
+        }
+    }
 
-        // Modify 3rd person
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(3) h4.advgb-testimonial-name');
-        $I->selectCurrentElementText();
-        $I->pressKeys('Tony Stark 2');
+    public function changeItemsToShowSlider(AcceptanceTester $I) {
+        $I->wantTo('Change items to show slider view');
 
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(3) p.advgb-testimonial-position');
-        $I->selectCurrentElementText();
-        $I->pressKeys('Iron Man 2');
+        $I->clickAndWait('.editor-block-navigation');
 
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(3) p.advgb-testimonial-desc');
-        $I->selectCurrentElementText();
-        $I->pressKeys('2 A super rich and clever person. Most adorable superhero. Respect!');
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
 
-        // Modify 4th person
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(4) h4.advgb-testimonial-name');
-        $I->selectCurrentElementText();
-        $I->pressKeys('Tony Stark 3');
-
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(4) p.advgb-testimonial-position');
-        $I->selectCurrentElementText();
-        $I->pressKeys('Iron Man 3');
-
-        $I->click('.advgb-testimonial .advgb-testimonial-item:nth-child(4) p.advgb-testimonial-desc');
-        $I->selectCurrentElementText();
-        $I->pressKeys('3 A super rich and clever person. Most adorable superhero. Respect!');
-
-        // Modify 5th person
-        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child h4.advgb-testimonial-name');
-        $I->selectCurrentElementText();
-        $I->pressKeys('Clark Kent');
-
-        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child p.advgb-testimonial-position');
-        $I->selectCurrentElementText();
-        $I->pressKeys('Superman');
-
-        $I->click('.advgb-testimonial .advgb-testimonial-item:last-child p.advgb-testimonial-desc');
-        $I->selectCurrentElementText();
-        $I->pressKeys('An alien person. Come to earth from a meteor. He has many super powers.');
-        $I->wait(1);
+        $I->fillField('//label[text()="Items to show"]/following-sibling::node()/following-sibling::node()', 2);
 
         // Update post
         $I->updatePost();
         $I->waitForElement('.wp-block-advgb-testimonial');
 
-        // Check columns changed
-        //$I->seeNumberOfElements('.advgb-testimonial .advgb-testimonial-item', 5);
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->seeElement('//div[@class="slick-track"]/div[contains(@class, "advgb-testimonial-item")][1][contains(@class, "slick-active")]');
+        $I->seeElement('//div[@class="slick-track"]/div[contains(@class, "advgb-testimonial-item")][2][contains(@class, "slick-active")]');
+    }
 
-        // Check text
-        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Tony Stark"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Iron Man"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][2]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="A super rich and clever person. Most adorable superhero. Respect!"]');
+    public function changeItemsToScrollSlider(AcceptanceTester $I) {
+        $I->wantTo('Change items to scroll slider view');
 
-        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Tony Stark 2"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Iron Man 2"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][3]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="2 A super rich and clever person. Most adorable superhero. Respect!"]');
+        $I->clickAndWait('.editor-block-navigation');
 
-        $I->seeElement('//div[@class="advgb-testimonial-item"][4]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Tony Stark 3"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][4]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Iron Man 3"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][4]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="3 A super rich and clever person. Most adorable superhero. Respect!"]');
+        $I->clickAndWait('Testimonial');
+        $I->waitForText('Testimonial');
 
-        $I->seeElement('//div[@class="advgb-testimonial-item"][5]/div[@class="advgb-testimonial-info"]/h4[@class="advgb-testimonial-name"][text()="Clark Kent"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][5]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-position"][text()="Superman"]');
-        $I->seeElement('//div[@class="advgb-testimonial-item"][5]/div[@class="advgb-testimonial-info"]/p[@class="advgb-testimonial-desc"][text()="An alien person. Come to earth from a meteor. He has many super powers."]');
+        $I->fillField('//label[text()="Items to scroll"]/following-sibling::node()/following-sibling::node()', 2);
+
+        // Update post
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-testimonial');
+
+        //check view auto play
+        $I->waitForElement('.slick-track');
+        $I->waitForElement('.advgb-slider-arrow');
+        $I->click('//button[contains(@class, "advgb-slider-next")]');
+        $I->wait(1);
+        $I->dontSeeElement('//div[@class="slick-track"]/div[contains(@class, "advgb-testimonial-item")][1][contains(@class, "slick-active")]');
+        $I->dontSeeElement('//div[@class="slick-track"]/div[contains(@class, "advgb-testimonial-item")][2][contains(@class, "slick-active")]');
+        $I->seeElement('//div[@class="slick-track"]/div[contains(@class, "advgb-testimonial-item")][3][contains(@class, "slick-active")]');
+        $I->seeElement('//div[@class="slick-track"]/div[contains(@class, "advgb-testimonial-item")][4][contains(@class, "slick-active")]');
     }
 }
