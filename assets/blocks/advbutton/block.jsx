@@ -64,6 +64,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             } = this.props;
             const {
                 id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
+                marginTop, marginRight, marginBottom, marginLeft,
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 borderWidth, borderColor, borderRadius, borderStyle,
                 hoverTextColor, hoverBgColor, hoverShadowColor, hoverShadowH, hoverShadowV, hoverShadowBlur, hoverShadowSpread,
@@ -126,6 +127,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         font-size: ${textSize}px;
                         color: ${textColor} !important;
                         background-color: ${bgColor} !important;
+                        margin: ${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px;
                         padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
                         border-width: ${borderWidth}px;
                         border-color: ${borderColor} !important;
@@ -225,6 +227,36 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     />
                                 </Fragment>
                             ) }
+                        </PanelBody>
+                        <PanelBody title={ __( 'Margin', 'advanced-gutenberg' ) } initialOpen={ false } >
+                            <RangeControl
+                                label={ __( 'Margin top', 'advanced-gutenberg' ) }
+                                value={ marginTop || '' }
+                                onChange={ ( value ) => setAttributes( { marginTop: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                            <RangeControl
+                                label={ __( 'Margin right', 'advanced-gutenberg' ) }
+                                value={ marginRight || '' }
+                                onChange={ ( value ) => setAttributes( { marginRight: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                            <RangeControl
+                                label={ __( 'Margin bottom', 'advanced-gutenberg' ) }
+                                value={ marginBottom || '' }
+                                onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                            <RangeControl
+                                label={ __( 'Margin left', 'advanced-gutenberg' ) }
+                                value={ marginLeft || '' }
+                                onChange={ ( value ) => setAttributes( { marginLeft: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
                         </PanelBody>
                         <PanelBody title={ __( 'Padding', 'advanced-gutenberg' ) } initialOpen={ false } >
                             <RangeControl
@@ -347,6 +379,22 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         textSize: {
             type: 'number',
             default: 18,
+        },
+        marginTop: {
+            type: 'number',
+            default: 0,
+        },
+        marginRight: {
+            type: 'number',
+            default: 0,
+        },
+        marginBottom: {
+            type: 'number',
+            default: 0,
+        },
+        marginLeft: {
+            type: 'number',
+            default: 0,
         },
         paddingTop: {
             type: 'number',

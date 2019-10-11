@@ -52,6 +52,8 @@ $excluded_blocks_config = array(
     'advgb/container',
     'advgb/accordion-item',
     'advgb/accordion',
+    'advgb/tabs',
+    'advgb/tab',
 );
 
 $gallery_lightbox_checked         = $saved_settings['gallery_lightbox'] ? 'checked' : '';
