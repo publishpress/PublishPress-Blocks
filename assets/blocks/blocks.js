@@ -5293,15 +5293,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
-            key: "addTab",
-            value: function addTab() {
+            key: "updateTabsHeader",
+            value: function updateTabsHeader(header, index) {
                 var _props3 = this.props,
                     attributes = _props3.attributes,
                     setAttributes = _props3.setAttributes,
                     clientId = _props3.clientId;
+                var tabHeaders = attributes.tabHeaders;
 
                 var _ref3 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    insertBlock = _ref3.insertBlock;
+                    updateBlockAttributes = _ref3.updateBlockAttributes;
+
+                var _ref4 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref4.getBlockOrder;
+
+                var childBlocks = getBlockOrder(clientId);
+
+                var newHeaders = tabHeaders.map(function (item, idx) {
+                    if (index === idx) {
+                        item = header;
+                    }
+                    return item;
+                });
+
+                setAttributes({ tabHeaders: newHeaders });
+                updateBlockAttributes(childBlocks[index], { header: header });
+            }
+        }, {
+            key: "addTab",
+            value: function addTab() {
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    clientId = _props4.clientId;
+
+                var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    insertBlock = _ref5.insertBlock;
 
                 var tabItemBlock = createBlock('advgb/tab');
 
@@ -5313,16 +5340,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "removeTab",
             value: function removeTab(index) {
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes,
-                    clientId = _props4.clientId;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    clientId = _props5.clientId;
 
-                var _ref4 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    removeBlock = _ref4.removeBlock;
+                var _ref6 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    removeBlock = _ref6.removeBlock;
 
-                var _ref5 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref5.getBlockOrder;
+                var _ref7 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref7.getBlockOrder;
 
                 var childBlocks = getBlockOrder(clientId);
 
@@ -5339,10 +5366,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes,
-                    clientId = _props5.clientId;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes,
+                    clientId = _props6.clientId;
                 var viewport = this.state.viewport;
                 var tabHeaders = attributes.tabHeaders,
                     tabActive = attributes.tabActive,
@@ -5569,14 +5596,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             tagName: "p",
                                             value: item,
                                             onChange: function onChange(value) {
-                                                var newHeaders = tabHeaders.map(function (item, thisIndex) {
-                                                    if (index === thisIndex) {
-                                                        item = value;
-                                                    }
-                                                    return item;
-                                                });
-
-                                                return setAttributes({ tabHeaders: newHeaders });
+                                                return _this2.updateTabsHeader(value, index);
                                             },
                                             unstableOnSplit: function unstableOnSplit() {
                                                 return null;
@@ -5742,8 +5762,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         keywords: [__('tabs', 'advanced-gutenberg'), __('cards', 'advanced-gutenberg')],
         attributes: tabBlockAttrs,
         edit: AdvTabsWrapper,
-        save: function save(_ref6) {
-            var attributes = _ref6.attributes;
+        save: function save(_ref8) {
+            var attributes = _ref8.attributes;
             var tabHeaders = attributes.tabHeaders,
                 tabActiveFrontend = attributes.tabActiveFrontend,
                 tabsStyleD = attributes.tabsStyleD,
@@ -5902,11 +5922,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var rootBlockId = getBlockRootClientId(clientId);
                 var rootBlockAttrs = getBlockAttributes(rootBlockId);
-                var pid = rootBlockAttrs.pid;
+                var pid = rootBlockAttrs.pid,
+                    tabHeaders = rootBlockAttrs.tabHeaders;
 
                 var blockIndex = getBlockIndex(clientId, rootBlockId);
 
-                setAttributes({ pid: pid + "-" + blockIndex });
+                setAttributes({
+                    pid: pid + "-" + blockIndex,
+                    header: tabHeaders[blockIndex]
+                });
             }
         }, {
             key: "render",
@@ -5959,6 +5983,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             pid: {
                 type: 'string'
             },
+            header: {
+                type: 'html'
+            },
             tabActive: {
                 type: 'number',
                 default: 0
@@ -5972,13 +5999,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: TabItemEdit,
         save: function save(_ref4) {
             var attributes = _ref4.attributes;
-            var pid = attributes.pid;
+            var pid = attributes.pid,
+                header = attributes.header;
 
 
             return React.createElement(
                 "div",
-                { className: "advgb-tab-body", id: pid },
-                React.createElement(InnerBlocks.Content, null)
+                { className: "advgb-tab-body-container" },
+                React.createElement(
+                    "div",
+                    { className: "advgb-tab-body-header" },
+                    header
+                ),
+                React.createElement(
+                    "div",
+                    { className: "advgb-tab-body", id: pid },
+                    React.createElement(InnerBlocks.Content, null)
+                )
             );
         }
 
@@ -17221,6 +17258,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var needReload = this.sliderNeedReload(prevProps.attributes, this.props.attributes);
                 var needUpdate = this.sliderNeedUpdate(prevProps.attributes, this.props.attributes);
                 var slider = jQuery("#block-" + clientId + " .advgb-testimonial.slider-view");
+                var prevElm = jQuery("#block-" + clientId + " .advgb-slider-prev");
+                var nextElm = jQuery("#block-" + clientId + " .advgb-slider-next");
 
                 if (needReload) {
                     if (sliderView) {
@@ -17235,8 +17274,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             dots: sliderDotsShown,
                             arrows: sliderArrowShown,
                             speed: sliderSpeed,
-                            prevArrow: jQuery("#block-" + clientId + " .advgb-slider-prev"),
-                            nextArrow: jQuery("#block-" + clientId + " .advgb-slider-next")
+                            prevArrow: prevElm,
+                            nextArrow: nextElm
                         });
                     }
                 }
@@ -17251,7 +17290,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     slider.slick('slickSetOption', 'arrows', sliderArrowShown);
                     slider.slick('slickSetOption', 'speed', sliderSpeed);
                     slider.slick('slickSetOption', 'autoplay', sliderAutoPlay);
-                    slider.slick('slickSetOption', 'autoplaySpeed', sliderAutoPlaySpeed, true);
+                    slider.slick('slickSetOption', 'autoplaySpeed', sliderAutoPlaySpeed);
+                    slider.slick('slickSetOption', 'prevArrow', prevElm);
+                    slider.slick('slickSetOption', 'nextArrow', nextElm, true);
                 }
             }
         }, {
@@ -17759,19 +17800,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         sliderView && React.createElement(
                             Fragment,
                             null,
-                            React.createElement(
-                                "button",
-                                { className: "advgb-slider-arrow advgb-slider-prev",
-                                    style: arrowStyle
-                                },
-                                PREV_ARROW
-                            ),
-                            React.createElement(
-                                "button",
-                                { className: "advgb-slider-arrow advgb-slider-next",
-                                    style: arrowStyle
-                                },
-                                NEXT_ARROW
+                            sliderArrowShown && React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(
+                                    "button",
+                                    { className: "advgb-slider-arrow advgb-slider-prev",
+                                        style: arrowStyle
+                                    },
+                                    PREV_ARROW
+                                ),
+                                React.createElement(
+                                    "button",
+                                    { className: "advgb-slider-arrow advgb-slider-next",
+                                        style: arrowStyle
+                                    },
+                                    NEXT_ARROW
+                                )
                             ),
                             React.createElement(
                                 "style",

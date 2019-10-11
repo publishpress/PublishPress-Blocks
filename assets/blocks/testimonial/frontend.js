@@ -12,6 +12,10 @@ jQuery(document).ready(function ($) {
             dotsShown = wrapper.data('dots'),
             arrowsShown = wrapper.data('arrows');
 
+        if (!arrowsShown) {
+            wrapper.find('.advgb-slider-arrow').hide();
+        }
+
         $(this).slick({
             infinite: loop,
             slidesToShow: col,

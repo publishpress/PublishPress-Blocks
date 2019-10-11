@@ -101,6 +101,8 @@
             const needReload = this.sliderNeedReload(prevProps.attributes, this.props.attributes);
             const needUpdate = this.sliderNeedUpdate(prevProps.attributes, this.props.attributes);
             const slider = jQuery(`#block-${clientId} .advgb-testimonial.slider-view`);
+            const prevElm = jQuery(`#block-${clientId} .advgb-slider-prev`);
+            const nextElm = jQuery(`#block-${clientId} .advgb-slider-next`);
 
             if (needReload) {
                 if (sliderView) {
@@ -115,8 +117,8 @@
                         dots: sliderDotsShown,
                         arrows: sliderArrowShown,
                         speed: sliderSpeed,
-                        prevArrow: jQuery(`#block-${clientId} .advgb-slider-prev`),
-                        nextArrow: jQuery(`#block-${clientId} .advgb-slider-next`),
+                        prevArrow: prevElm,
+                        nextArrow: nextElm,
                     });
                 }
             }
@@ -131,7 +133,9 @@
                 slider.slick('slickSetOption', 'arrows', sliderArrowShown);
                 slider.slick('slickSetOption', 'speed', sliderSpeed);
                 slider.slick('slickSetOption', 'autoplay', sliderAutoPlay);
-                slider.slick('slickSetOption', 'autoplaySpeed', sliderAutoPlaySpeed, true);
+                slider.slick('slickSetOption', 'autoplaySpeed', sliderAutoPlaySpeed);
+                slider.slick('slickSetOption', 'prevArrow', prevElm);
+                slider.slick('slickSetOption', 'nextArrow', nextElm, true);
             }
         }
 
@@ -494,16 +498,20 @@
                         </div>
                         {sliderView && (
                         <Fragment>
-                            <button className="advgb-slider-arrow advgb-slider-prev"
-                                    style={ arrowStyle }
-                            >
-                                {PREV_ARROW}
-                            </button>
-                            <button className="advgb-slider-arrow advgb-slider-next"
-                                    style={ arrowStyle }
-                            >
-                                {NEXT_ARROW}
-                            </button>
+                            {sliderArrowShown && (
+                                <Fragment>
+                                    <button className="advgb-slider-arrow advgb-slider-prev"
+                                            style={ arrowStyle }
+                                    >
+                                        {PREV_ARROW}
+                                    </button>
+                                    <button className="advgb-slider-arrow advgb-slider-next"
+                                            style={ arrowStyle }
+                                    >
+                                        {NEXT_ARROW}
+                                    </button>
+                                </Fragment>
+                            )}
                             <style>
                                 {`#${pid} .slick-dots li.slick-active button:before {color: ${sliderDotsColor}}`}
                                 {`#${pid} .slick-dots li button:before {color: ${sliderDotsColor}}`}

@@ -717,13 +717,13 @@ span.advgb-social-icon.selected:before {
 
 .advgb-tabs-styles {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .advgb-tabs-styles .advgb-tabs-style {
     padding: 10px;
     margin-right: 10px;
     border: 1px solid transparent;
-    flex: 1;
 }
 
 .advgb-tabs-styles .advgb-tabs-style.is-toggled {
@@ -851,11 +851,21 @@ div.advgb-tab-body {
     border: none;
 }
 
-.advgb-tabs-wrapper.advgb-tab-vert {
+.advgb-tab-body-wrapper .advgb-tab-body-header {
+    cursor: pointer;
+    padding: 10px 15px;
+    display: none;
+}
+
+.advgb-tabs-wrapper[class *= 'advgb-tab-vert'] {
     display: flex;
 }
 
-.advgb-tabs-wrapper.advgb-tab-vert ul.advgb-tabs-panel {
+.advgb-tabs-wrapper.advgb-tab-horz-desktop {
+    flex-direction: column;
+}
+
+.advgb-tabs-wrapper.advgb-tab-vert-desktop ul.advgb-tabs-panel {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -863,12 +873,12 @@ div.advgb-tab-body {
     max-width: 25%;
 }
 
-.advgb-tabs-wrapper.advgb-tab-vert ul.advgb-tabs-panel span.advgb-tab-remove {
+.advgb-tabs-wrapper.advgb-tab-vert-desktop ul.advgb-tabs-panel span.advgb-tab-remove {
     left: -8px;
     right: unset;
 }
 
-.advgb-tabs-wrapper.advgb-tab-vert .advgb-tab-body-wrapper {
+.advgb-tabs-wrapper.advgb-tab-vert-desktop .advgb-tab-body-wrapper {
     flex-grow: 3;
     max-width: 75%;
 }
@@ -2309,6 +2319,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     }
 }
 
+/* Tablet */
 @media screen and (max-width: 1023px) {
     .advgb-columns.tbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
     .advgb-columns.mbl-layout-stacked > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
@@ -2358,8 +2369,42 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     .advgb-columns.tbl-layout-stacked.order-rtl > .editor-inner-blocks > .editor-block-list__layout {
         flex-direction: column-reverse;
     }
+
+    /* Tabs */
+    .advgb-tabs-wrapper.advgb-tab-horz-tablet {
+        flex-direction: column;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-horz-tablet ul.advgb-tabs-panel,
+    .advgb-tabs-wrapper.advgb-tab-horz-tablet .advgb-tab-body-wrapper {
+        max-width: 100%;
+        display: block;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-vert-tablet {
+        flex-direction: row;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-vert-tablet ul.advgb-tabs-panel {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        min-width: 25%;
+        max-width: 25%;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-vert-tablet ul.advgb-tabs-panel span.advgb-tab-remove {
+        left: -8px;
+        right: unset;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-vert-tablet .advgb-tab-body-wrapper {
+        flex-grow: 3;
+        max-width: 75%;
+    }
 }
 
+/* Mobile */
 @media screen and (max-width: 767px) {
     .advgb-columns > .editor-inner-blocks > .editor-block-list__layout {
         flex-wrap: wrap;
@@ -2412,5 +2457,50 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 
     .advgb-columns.mbl-layout-stacked.order-rtl > .editor-inner-blocks > .editor-block-list__layout {
         flex-direction: column-reverse;
+    }
+
+    /* Tabs */
+    .advgb-tabs-wrapper.advgb-tab-horz-mobile {
+        flex-direction: column;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-horz-mobile ul.advgb-tabs-panel,
+    .advgb-tabs-wrapper.advgb-tab-horz-mobile .advgb-tab-body-wrapper {
+        max-width: 100%;
+        display: block;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-vert-mobile {
+        flex-direction: row;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-vert-mobile ul.advgb-tabs-panel {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        min-width: 25%;
+        max-width: 25%;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-vert-mobile ul.advgb-tabs-panel span.advgb-tab-remove {
+        left: -8px;
+        right: unset;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-vert-mobile .advgb-tab-body-wrapper {
+        flex-grow: 3;
+        max-width: 75%;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-stack-mobile .advgb-tabs-panel {
+        display: none !important;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-stack-mobile .advgb-tab-body-header {
+        display: block;
+    }
+
+    .advgb-tabs-wrapper.advgb-tab-stack-mobile .advgb-tab-body-wrapper {
+        max-width: 100%;
     }
 }
