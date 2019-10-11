@@ -170,4 +170,12 @@ class AccordionBlockCest
         $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-header")][contains(@style, "border-radius:10px")]');
         $I->seeElement('//div[contains(@class, "wp-block-advgb-accordion-item")][1]/div[contains(@class, "advgb-accordion-body")][contains(@style, "border-radius: 10px")]');
     }
+
+    public function accordionSettingForNested(AcceptanceTester $I) {
+        $I->wantTo('check accordion settings display');
+
+        $I->clickWithLeftButton('//div[@data-type="advgb/accordion-item"][1]//div[@class="advgb-accordion-item"]//h4');
+        $I->seeElement('//button[text()="Accordion Settings"]');
+
+    }
 }
