@@ -49,7 +49,7 @@ class AdvancedButtonBlockCest
         $I->seeElement('//a[contains(@class, "wp-block-advgb-button_link")][text()="PUSH THE BUTTON"]');
     }
 
-    /*public function changeButtonSizeAndColor(AcceptanceTester $I)
+    public function changeButtonSizeAndColor(AcceptanceTester $I)
     {
         $I->wantTo('Change button size and color');
         $textColor = '#343434';
@@ -156,7 +156,7 @@ class AdvancedButtonBlockCest
         // Check padding applied
         $padding = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("padding")');
         $I->assertEquals('3px 4px 5px 6px', $padding);
-    }*/
+    }
 
     public function changeHoverStyles(AcceptanceTester $I)
     {
