@@ -4383,6 +4383,11 @@ float: left;'
                 $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
                 $style_html .= 'color:'.$active_tab_text_color.' !important;';
                 $style_html .= '}';
+
+                $style_html .= '#'. $block_id . ' .advgb-tab-body-header.header-active{';
+                $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
+                $style_html .= 'color:'.$active_tab_text_color.' !important;';
+                $style_html .= '}';
             }
         }
 

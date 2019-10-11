@@ -83,6 +83,24 @@
             childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attrs ) );
         }
 
+        updateTabsHeader(header, index) {
+            const { attributes, setAttributes, clientId } = this.props;
+            const { tabHeaders } = attributes;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const childBlocks = getBlockOrder(clientId);
+
+            let newHeaders = tabHeaders.map( ( item, idx ) => {
+                if ( index === idx ) {
+                    item = header;
+                }
+                return item;
+            } );
+
+            setAttributes( { tabHeaders: newHeaders} );
+            updateBlockAttributes(childBlocks[index], {header: header});
+        }
+
         addTab() {
             const { attributes, setAttributes, clientId } = this.props;
             const { insertBlock } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
@@ -301,16 +319,7 @@
                                         <RichText
                                             tagName="p"
                                             value={ item }
-                                            onChange={ ( value ) => {
-                                                let newHeaders = tabHeaders.map( ( item, thisIndex ) => {
-                                                    if ( index === thisIndex ) {
-                                                        item = value;
-                                                    }
-                                                    return item;
-                                                } );
-
-                                                return setAttributes( { tabHeaders: newHeaders} );
-                                            } }
+                                            onChange={ ( value ) => this.updateTabsHeader(value, index) }
                                             unstableOnSplit={ () => null }
                                             placeholder={ __( 'Title…', 'advanced-gutenberg' ) }
                                         />

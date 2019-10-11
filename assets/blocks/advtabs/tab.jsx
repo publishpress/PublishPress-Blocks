@@ -44,10 +44,13 @@
             const { getBlockRootClientId, getBlockIndex, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
             const rootBlockId = getBlockRootClientId( clientId );
             const rootBlockAttrs = getBlockAttributes(rootBlockId);
-            const { pid } = rootBlockAttrs;
+            const { pid, tabHeaders } = rootBlockAttrs;
             const blockIndex = getBlockIndex(clientId, rootBlockId);
 
-            setAttributes( { pid: `${pid}-${blockIndex}` } )
+            setAttributes( {
+                pid: `${pid}-${blockIndex}`,
+                header: tabHeaders[blockIndex],
+            } )
         }
 
         render() {
@@ -88,6 +91,9 @@
             pid: {
                 type: 'string',
             },
+            header: {
+                type: 'html',
+            },
             tabActive: {
                 type: 'number',
                 default: 0,
@@ -100,11 +106,14 @@
         keywords: [ __( 'tab', 'advanced-gutenberg' ) ],
         edit: TabItemEdit,
         save: function( { attributes } ) {
-            const {pid} = attributes;
+            const {pid, header} = attributes;
 
             return (
-                <div className="advgb-tab-body" id={pid}>
-                    <InnerBlocks.Content />
+                <div className="advgb-tab-body-container">
+                    <div className="advgb-tab-body-header">{header}</div>
+                    <div className="advgb-tab-body" id={pid}>
+                        <InnerBlocks.Content />
+                    </div>
                 </div>
             );
         }
