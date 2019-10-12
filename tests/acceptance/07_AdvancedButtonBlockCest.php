@@ -216,8 +216,19 @@ class AdvancedButtonBlockCest
         $hTextColor = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("color")');
         $I->assertEquals($hoverTextColorRgb, $hTextColor);
 
-        /*$boxShadow = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("boxShadow")');
-        $I->assertEquals($hoverShadowColorRgb.' 5px 6px 3px 2px', $boxShadow);*/
+        $boxShadow = $I->executeJS('
+            let boxShadow = jQuery(".advgb-styles-renderer").text();
+                if(boxShadow.includes("box-shadow:5px 6px 3px 2px '.$hoverShadowColor.'")) {
+                    return true;
+                } else {
+                    return false;
+                }
+        ');
+        if($boxShadow) {
+            $I->dontSee('Box shadow not equal');
+        } else {
+            $I->see('Box shadow not equal');
+        }
 
         $transition = $I->executeJS('return jQuery(".wp-block-advgb-button_link").css("transition")');
         $I->assertTrue(strpos($transition, '0.5s') !== false);
