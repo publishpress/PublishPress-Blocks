@@ -66,7 +66,7 @@ class TabsBlockCest
         $I->seeNumberOfElements('//div[contains(@class, "advgb-tabs-wrapper")]/div[contains(@class, "advgb-tab-body-wrapper")]/div', 3);
     }
 
-    /*public function changeHeaderStyles(AcceptanceTester $I)
+    public function changeHeaderStyles(AcceptanceTester $I)
     {
         $I->wantTo('Change tabs header styles');
         $tabBgColor = '#999999';
@@ -185,7 +185,7 @@ class TabsBlockCest
 
         $I->seeElement('//div[contains(@class, "advgb-tabs-wrapper")]/ul[contains(@class, "advgb-tabs-panel")]/li[contains(@class, "advgb-tab")][contains(@style, "border-radius:10px")]');
         $I->seeElement('//div[contains(@class, "advgb-tabs-wrapper")]/div[contains(@class, "advgb-tab-body")][contains(@style, "border-radius:10px")]');
-    }*/
+    }
 
     public function changeTabStyle(AcceptanceTester $I) {
         $I->wantTo('Change tabs style');
