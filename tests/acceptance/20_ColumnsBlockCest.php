@@ -9,11 +9,10 @@ class ColumnsBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-columns-wrapper');
-            $I->clickWithLeftButton('.advgb-columns-wrapper');
-            $I->clickWithLeftButton('.editor-block-navigation');
+            $I->click(".editor-block-navigation");
             $I->waitForText('Block Navigation');
             $I->wait(0.5);
-            $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]');
+            $I->clickWithLeftButton('//button[text()="Columns Manager"]');
         } catch(Exception $e) {
             // do stuff
         }
@@ -298,4 +297,6 @@ class ColumnsBlockCest
         $I->seeElement($selectorCol2.'[contains(@style, "width:50%")]');
         $I->seeElement($selectorCol3.'[contains(@style, "width:20%")]');
     }
+
+
 }

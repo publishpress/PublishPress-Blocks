@@ -166,4 +166,19 @@ class AdvancedImageBlockCest
 
         $I->seeElement('//div[contains(@class, "wp-block-advgb-image") and contains(@class, "full-width")]');
     }
+
+    public function changeOverlayOpacity(AcceptanceTester $I) {
+        $I->wantTo('Change overlay opacity');
+
+        //change overlay opacity
+        $I->fillField('//label[text()="Overlay opacity"]/following-sibling::node()/following-sibling::node()', 50);
+
+        $I->updatePost();
+        $I->waitForElementVisible('.wp-block-advgb-image');
+
+        $I->moveMouseOver('//div[contains(@class, "advgb-image-block")]');
+        $I->wait(1);
+        $opacity = $I->executeJS('return jQuery(".advgb-image-overlay").css("opacity")');
+        $I->assertEquals($opacity, '0.5');
+    }
 }
