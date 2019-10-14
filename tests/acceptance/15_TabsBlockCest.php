@@ -213,10 +213,13 @@ class TabsBlockCest
 
         $I->updatePost();
         $I->waitForElement('.wp-block-advgb-adv-tabs');
-        $I->wait(3);
 
         $I->seeElement('//div[contains(@class, "advgb-tabs-wrapper")]/ul[1]/li[2][contains(@class, "ui-tabs-active ui-state-active")]');
-        $I->seeElement('//div[contains(@class, "advgb-tabs-wrapper")]/div[1]/div[1]/div[2][contains(@style, "display: none")]');
-        $I->seeElement('//div[contains(@class, "advgb-tabs-wrapper")]/div[1]/div[3]/div[2][contains(@style, "display: none")]');
+        $tab1Display = $I->executeJS('return jQuery(".wp-block-advgb-tab").eq(0).find(".advgb-tab-body").css("display");');
+        $I->assertEquals($tab1Display, 'none');
+        $tab2Display = $I->executeJS('return jQuery(".wp-block-advgb-tab").eq(1).find(".advgb-tab-body").css("display");');
+        $I->assertEquals($tab2Display, 'block');
+        $tab3Display = $I->executeJS('return jQuery(".wp-block-advgb-tab").eq(2).find(".advgb-tab-body").css("display");');
+        $I->assertEquals($tab3Display, 'none');
     }
 }
