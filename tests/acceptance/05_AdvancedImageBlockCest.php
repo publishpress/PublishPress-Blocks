@@ -9,7 +9,7 @@ class AdvancedImageBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-image-block');
-            $I->clickWithLeftButton('//*[@class="advgb-image-block"]');
+            $I->clickWithLeftButton('//*[contains(@class,"advgb-image-block")]');
         } catch(Exception $e) {
             // do stuff
         }
@@ -36,7 +36,7 @@ class AdvancedImageBlockCest
         $I->insertBlock('Advanced Image');
 
         $I->waitForText('Choose image');
-        $I->click('//div[@class="advgb-image-block"]//h4');
+        $I->click('//div[contains(@class, "advgb-image-block")]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
         $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
@@ -98,7 +98,7 @@ class AdvancedImageBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys($colors[0]);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//*[@class="advgb-image-block"]'); // click block to hide picker
+        $I->clickWithLeftButton('//*[contains(@class, "advgb-image-block")]'); // click block to hide picker
 
         // Change subtitle color
         $I->clickAndWait('//span[text()="Subtitle Color"]/following-sibling::node()/div[last()]/*[1]');
@@ -106,7 +106,7 @@ class AdvancedImageBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys($colors[1]);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//*[@class="advgb-image-block"]'); // click block to hide picker
+        $I->clickWithLeftButton('//*[contains(@class, "advgb-image-block")]'); // click block to hide picker
 
         // Change overlay color
         $I->clickAndWait('//span[text()="Overlay Color"]/following-sibling::node()/div[last()]/*[1]');
@@ -114,7 +114,7 @@ class AdvancedImageBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys($colors[2]);
         $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//*[@class="advgb-image-block"]'); // click block to hide picker
+        $I->clickWithLeftButton('//*[contains(@class, "advgb-image-block")]'); // click block to hide picker
 
         $I->updatePost();
         $I->waitForElementVisible('.wp-block-advgb-image');
@@ -140,5 +140,30 @@ class AdvancedImageBlockCest
         // Check text position
         $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@style, "justify-content:flex-end")]');
         $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@style, "align-items:flex-start")]');
+    }
+
+    public function changeFocalPointPicker(AcceptanceTester $I) {
+        $I->wantTo('Change Focal point picker');
+
+        //change horizontal position
+        $I->fillField('//label[text()="Horizontal Pos."]/following-sibling::node()', 20);
+        //change vertical position
+        $I->fillField('//label[text()="Vertical Pos."]/following-sibling::node()', 40);
+
+        $I->updatePost();
+        $I->waitForElementVisible('.wp-block-advgb-image');
+
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@style, "background-position:20% 40%")]');
+    }
+
+    public function changeFullWidth(AcceptanceTester $I) {
+        $I->wantTo('Change image to Full width');
+
+        $I->click('//label[text()="Full width"]/preceding-sibling::node()');
+
+        $I->updatePost();
+        $I->waitForElementVisible('.wp-block-advgb-image');
+
+        $I->seeElement('//div[contains(@class, "wp-block-advgb-image") and contains(@class, "full-width")]');
     }
 }
