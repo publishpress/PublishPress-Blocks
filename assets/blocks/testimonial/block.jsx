@@ -67,8 +67,6 @@
                     slidesToShow: sliderColumn,
                     slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                     pauseOnHover: sliderPauseOnHover,
-                    autoplay: sliderAutoPlay,
-                    autoplaySpeed: sliderAutoPlaySpeed,
                     dots: sliderDotsShown,
                     arrows: sliderArrowShown,
                     speed: sliderSpeed,
@@ -112,8 +110,6 @@
                         slidesToShow: sliderColumn,
                         slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                         pauseOnHover: sliderPauseOnHover,
-                        autoplay: sliderAutoPlay,
-                        autoplaySpeed: sliderAutoPlaySpeed,
                         dots: sliderDotsShown,
                         arrows: sliderArrowShown,
                         speed: sliderSpeed,
@@ -132,15 +128,13 @@
                 slider.slick('slickSetOption', 'dots', sliderDotsShown);
                 slider.slick('slickSetOption', 'arrows', sliderArrowShown);
                 slider.slick('slickSetOption', 'speed', sliderSpeed);
-                slider.slick('slickSetOption', 'autoplay', sliderAutoPlay);
-                slider.slick('slickSetOption', 'autoplaySpeed', sliderAutoPlaySpeed);
                 slider.slick('slickSetOption', 'prevArrow', prevElm);
                 slider.slick('slickSetOption', 'nextArrow', nextElm, true);
             }
         }
 
         sliderNeedReload(pa, ca) {
-            const checkReload = ['sliderView', 'columns', 'avatarPosition'];
+            const checkReload = ['sliderView', 'columns', 'avatarPosition', 'sliderCenterMode'];
             let reload = false;
 
             for (let checkProp of checkReload) {
@@ -156,7 +150,7 @@
         sliderNeedUpdate(pa, ca) {
             const checkUpdate = [
                 'sliderColumn', 'sliderItemsToScroll', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop',
-                'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown', 'sliderCenterMode',
+                'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown',
             ];
             let update = false;
 
@@ -564,7 +558,7 @@
         },
         avatarSize: {
             type: 'number',
-            default: 70,
+            default: 120,
         },
         avatarPosition: {
             type: 'string',
@@ -593,7 +587,7 @@
         },
         sliderCenterMode: {
             type: 'boolean',
-            default: true,
+            default: false,
         },
         sliderPauseOnHover: {
             type: 'boolean',

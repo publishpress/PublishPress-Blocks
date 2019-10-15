@@ -1309,7 +1309,7 @@
                                 onChange={ (value) => setAttributes( { markerDesc: value } ) }
                             />
                             <ToggleControl
-                                label={ __( 'Open marker description by default', 'advanced-gutenberg' ) }
+                                label={ __( 'Open marker tooltip', 'advanced-gutenberg' ) }
                                 checked={ infoWindowDefaultShown }
                                 onChange={ () => setAttributes({infoWindowDefaultShown: !infoWindowDefaultShown}) }
                             />

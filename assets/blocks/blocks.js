@@ -1682,7 +1682,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        TextControl = wpComponents.TextControl,
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
         IconButton = wpComponents.IconButton,
@@ -2112,9 +2111,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var buttonBlockIcon = React.createElement(
         'svg',
-        { height: '20', viewBox: '2 2 22 22', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
-        React.createElement('path', { d: 'M0 0h24v24H0V0z', fill: 'none' }),
-        React.createElement('path', { d: 'M5 14.5h14v-6H5v6zM11 .55V3.5h2V.55h-2zm8.04 2.5l-1.79 1.79 1.41 1.41 1.8-1.79-1.42-1.41zM13 22.45V19.5h-2v2.95h2zm7.45-3.91l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM3.55 4.46l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zm1.41 15.49l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42z' })
+        { xmlns: 'http://www.w3.org/2000/svg', width: '20', height: '20', viewBox: '2 2 22 22' },
+        React.createElement('path', { fill: 'none', d: 'M0 0h24v24H0V0z' }),
+        React.createElement('path', { d: 'M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z' })
     );
     var blockAttrs = {
         id: {
@@ -2640,7 +2639,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         'div',
                         { className: blockClassName,
                             style: {
-                                backgroundImage: 'url( ' + imageUrl + ')',
+                                backgroundImage: 'url(' + (imageUrl || advgbBlocks.default_thumb) + ')',
                                 backgroundPosition: focalPoint ? focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%' : undefined,
                                 height: height,
                                 width: width,
@@ -5675,11 +5674,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var tabsBlockIcon = React.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 488.8 488.8", width: "20px", height: "20px" },
-        React.createElement("polygon", { fill: "#ddd", points: "476.4,105.6 214.8,109.6 162,4 476.4,4 " }),
-        React.createElement("path", { d: path }),
-        React.createElement("path", { d: path2 }),
-        React.createElement("rect", { x: "328.4", y: "3", width: "16", height: "114" })
+        { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "0 0 24 24" },
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
+        React.createElement("path", { d: "M21,3H3C1.9,3,1,3.9,1,5v14c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V5C23,3.9,22.1,3,21,3z M21,19H3V5h10v4h8V19z" })
     );
 
     var tabBlockAttrs = {
@@ -13378,7 +13376,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(ToggleControl, {
-                                label: __('Open marker description by default', 'advanced-gutenberg'),
+                                label: __('Open marker tooltip', 'advanced-gutenberg'),
                                 checked: infoWindowDefaultShown,
                                 onChange: function onChange() {
                                     return setAttributes({ infoWindowDefaultShown: !infoWindowDefaultShown });
@@ -17211,8 +17209,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         slidesToShow: sliderColumn,
                         slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                         pauseOnHover: sliderPauseOnHover,
-                        autoplay: sliderAutoPlay,
-                        autoplaySpeed: sliderAutoPlaySpeed,
                         dots: sliderDotsShown,
                         arrows: sliderArrowShown,
                         speed: sliderSpeed,
@@ -17269,8 +17265,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             slidesToShow: sliderColumn,
                             slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                             pauseOnHover: sliderPauseOnHover,
-                            autoplay: sliderAutoPlay,
-                            autoplaySpeed: sliderAutoPlaySpeed,
                             dots: sliderDotsShown,
                             arrows: sliderArrowShown,
                             speed: sliderSpeed,
@@ -17289,8 +17283,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     slider.slick('slickSetOption', 'dots', sliderDotsShown);
                     slider.slick('slickSetOption', 'arrows', sliderArrowShown);
                     slider.slick('slickSetOption', 'speed', sliderSpeed);
-                    slider.slick('slickSetOption', 'autoplay', sliderAutoPlay);
-                    slider.slick('slickSetOption', 'autoplaySpeed', sliderAutoPlaySpeed);
                     slider.slick('slickSetOption', 'prevArrow', prevElm);
                     slider.slick('slickSetOption', 'nextArrow', nextElm, true);
                 }
@@ -17298,7 +17290,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "sliderNeedReload",
             value: function sliderNeedReload(pa, ca) {
-                var checkReload = ['sliderView', 'columns', 'avatarPosition'];
+                var checkReload = ['sliderView', 'columns', 'avatarPosition', 'sliderCenterMode'];
                 var reload = false;
 
                 var _iteratorNormalCompletion = true;
@@ -17334,7 +17326,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "sliderNeedUpdate",
             value: function sliderNeedUpdate(pa, ca) {
-                var checkUpdate = ['sliderColumn', 'sliderItemsToScroll', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop', 'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown', 'sliderCenterMode'];
+                var checkUpdate = ['sliderColumn', 'sliderItemsToScroll', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop', 'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown'];
                 var update = false;
 
                 var _iteratorNormalCompletion2 = true;
@@ -17875,7 +17867,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         avatarSize: {
             type: 'number',
-            default: 70
+            default: 120
         },
         avatarPosition: {
             type: 'string',
@@ -17904,7 +17896,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         sliderCenterMode: {
             type: 'boolean',
-            default: true
+            default: false
         },
         sliderPauseOnHover: {
             type: 'boolean',

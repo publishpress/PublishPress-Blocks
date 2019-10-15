@@ -201,7 +201,7 @@
                     </InspectorControls>
                     <div className={ blockClassName }
                          style={ {
-                             backgroundImage: `url( ${imageUrl})`,
+                             backgroundImage: `url(${imageUrl || advgbBlocks.default_thumb})`,
                              backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
                              height: height,
                              width: width,
