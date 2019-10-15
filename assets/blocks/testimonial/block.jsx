@@ -558,7 +558,7 @@
         },
         avatarSize: {
             type: 'number',
-            default: 120,
+            default: 70,
         },
         avatarPosition: {
             type: 'string',

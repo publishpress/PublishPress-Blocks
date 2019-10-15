@@ -17867,7 +17867,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         avatarSize: {
             type: 'number',
-            default: 120
+            default: 70
         },
         avatarPosition: {
             type: 'string',
