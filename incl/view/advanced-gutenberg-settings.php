@@ -63,7 +63,7 @@ $google_api_key_saved             = isset($saved_settings['google_api_key']) ? $
 $enable_blocks_spacing            = isset($saved_settings['enable_blocks_spacing']) && $saved_settings['enable_blocks_spacing'] ? 'checked' : '';
 $blocks_spacing                   = isset($saved_settings['blocks_spacing']) ? $saved_settings['blocks_spacing'] : 0;
 $blocks_icon_color                = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '#5952de';
-$editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '75';
+$editor_width                     = isset($saved_settings['editor_width']) ? $saved_settings['editor_width'] : '0';
 $default_thumb                    = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
 $rp_default_thumb                 = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
 $enable_columns_visual_guide      = isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide'] ? 'checked' : '';

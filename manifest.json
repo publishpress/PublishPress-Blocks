@@ -4,7 +4,7 @@
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
   "version": "2.2.0",
   "platform": "wordpress",
-  "wp_version": "5.2.3",
+  "wp_version": "5.2.4",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -65,7 +65,7 @@
       },
       {
         "type": "feature",
-        "title": "Adv Image block: Add focal point picker"
+        "title": "Adv Image block: Add focal point picker, block alignment, default opacity setting"
       }
     ],
     "2.1.5": [
