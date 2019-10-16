@@ -52,8 +52,8 @@
 
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
-            const { pid, sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
-                sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown, sliderItemsToScroll,
+            const { pid, sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderInfiniteLoop,
+                sliderDotsShown, sliderSpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
 
             if (!pid) {
@@ -93,8 +93,8 @@
 
         componentDidUpdate(prevProps) {
             const { attributes, clientId } = this.props;
-            const { sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
-                sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown, sliderItemsToScroll,
+            const { sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderInfiniteLoop,
+                sliderDotsShown, sliderSpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
             const needReload = this.sliderNeedReload(prevProps.attributes, this.props.attributes);
             const needUpdate = this.sliderNeedUpdate(prevProps.attributes, this.props.attributes);
@@ -558,7 +558,7 @@
         },
         avatarSize: {
             type: 'number',
-            default: 70,
+            default: 120,
         },
         avatarPosition: {
             type: 'string',
@@ -755,7 +755,13 @@
         },
         deprecated: [
             {
-                attributes: blockAttrs,
+                attributes: {
+                    ...blockAttrs,
+                    avatarSize: {
+                        type: 'number',
+                        default: 70
+                    }
+                },
                 save: function ( { attributes } ) {
                     const {
                         items,

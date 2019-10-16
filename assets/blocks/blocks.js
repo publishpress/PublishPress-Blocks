@@ -2356,6 +2356,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2462,6 +2464,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     subtitle = attributes.subtitle,
                     subtitleColor = attributes.subtitleColor,
                     overlayColor = attributes.overlayColor,
+                    defaultOpacity = attributes.defaultOpacity,
                     fullWidth = attributes.fullWidth,
                     width = attributes.width,
                     height = attributes.height,
@@ -2581,7 +2584,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(RangeControl, {
-                                    label: __('Overlay opacity', 'advanced-gutenberg'),
+                                    label: __('Overlay opacity default', 'advanced-gutenberg'),
+                                    value: defaultOpacity,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ defaultOpacity: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    label: __('Overlay opacity hover', 'advanced-gutenberg'),
                                     value: overlayOpacity,
                                     min: 0,
                                     max: 100,
@@ -2609,7 +2621,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Overlay Color', 'advanced-gutenberg'),
                                     value: overlayColor,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ overlayColor: value === undefined ? '#2196f3' : value });
+                                        return setAttributes({ overlayColor: value === undefined ? '#000' : value });
                                     }
                                 }]
                             }),
@@ -2648,7 +2660,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }
                         },
                         React.createElement('span', { className: 'advgb-image-overlay',
-                            style: { backgroundColor: overlayColor }
+                            style: { backgroundColor: overlayColor, opacity: defaultOpacity / 100 }
                         }),
                         !imageID && React.createElement(MediaUpload, {
                             allowedTypes: ['image'],
@@ -2705,7 +2717,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'style',
                             null,
-                            '.' + blockIDX + '.advgb-image-block:hover .advgb-image-overlay {opacity: ' + overlayOpacity / 100 + ';}'
+                            '.' + blockIDX + '.advgb-image-block:hover .advgb-image-overlay {opacity: ' + overlayOpacity / 100 + ' !important;}'
                         )
                     )
                 );
@@ -2761,7 +2773,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         overlayColor: {
             type: 'string',
-            default: '#2196f3'
+            default: '#000'
         },
         fullWidth: {
             type: 'boolean',
@@ -2787,6 +2799,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 20
         },
+        defaultOpacity: {
+            type: 'number',
+            default: 40
+        },
         focalPoint: {
             type: 'object'
         },
@@ -2806,6 +2822,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'advgb-category',
         keywords: [__('image', 'advanced-gutenberg'), __('photo', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
         attributes: blockAttrs,
+        supports: {
+            align: true
+        },
         edit: AdvImage,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -2861,9 +2880,69 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         },
         deprecated: [{
-            attributes: blockAttrs,
+            attributes: _extends({}, blockAttrs, {
+                overlayColor: {
+                    type: 'string',
+                    default: '#2196f3'
+                }
+            }),
             save: function save(_ref4) {
                 var attributes = _ref4.attributes;
+                var blockIDX = attributes.blockIDX,
+                    openOnClick = attributes.openOnClick,
+                    openUrl = attributes.openUrl,
+                    linkInNewTab = attributes.linkInNewTab,
+                    imageUrl = attributes.imageUrl,
+                    title = attributes.title,
+                    titleColor = attributes.titleColor,
+                    subtitle = attributes.subtitle,
+                    subtitleColor = attributes.subtitleColor,
+                    overlayColor = attributes.overlayColor,
+                    fullWidth = attributes.fullWidth,
+                    width = attributes.width,
+                    height = attributes.height,
+                    vAlign = attributes.vAlign,
+                    hAlign = attributes.hAlign,
+                    focalPoint = attributes.focalPoint;
+
+                var linkURL = openOnClick === 'url' && !!openUrl ? openUrl : undefined;
+                var blockClassName = ['advgb-image-block', fullWidth && 'full-width', openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox', blockIDX].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    'div',
+                    { className: blockClassName,
+                        style: {
+                            backgroundImage: 'url(' + imageUrl + ')',
+                            backgroundPosition: focalPoint ? focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%' : undefined,
+                            height: height,
+                            width: width,
+                            justifyContent: vAlign,
+                            alignItems: hAlign
+                        },
+                        'data-image': imageUrl
+                    },
+                    React.createElement('a', { className: 'advgb-image-overlay',
+                        style: { backgroundColor: overlayColor },
+                        target: linkInNewTab ? '_blank' : '_self',
+                        rel: 'noopener noreferrer',
+                        href: linkURL
+                    }),
+                    title && React.createElement(
+                        'h4',
+                        { className: 'advgb-image-title', style: { color: titleColor } },
+                        title
+                    ),
+                    subtitle && React.createElement(
+                        'p',
+                        { className: 'advgb-image-subtitle', style: { color: subtitleColor } },
+                        subtitle
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
                 var openOnClick = attributes.openOnClick,
                     openUrl = attributes.openUrl,
                     linkInNewTab = attributes.linkInNewTab,
@@ -17189,11 +17268,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     sliderColumn = attributes.sliderColumn,
                     sliderCenterMode = attributes.sliderCenterMode,
                     sliderPauseOnHover = attributes.sliderPauseOnHover,
-                    sliderAutoPlay = attributes.sliderAutoPlay,
                     sliderInfiniteLoop = attributes.sliderInfiniteLoop,
                     sliderDotsShown = attributes.sliderDotsShown,
                     sliderSpeed = attributes.sliderSpeed,
-                    sliderAutoPlaySpeed = attributes.sliderAutoPlaySpeed,
                     sliderArrowShown = attributes.sliderArrowShown,
                     sliderItemsToScroll = attributes.sliderItemsToScroll;
 
@@ -17243,11 +17320,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     sliderColumn = attributes.sliderColumn,
                     sliderCenterMode = attributes.sliderCenterMode,
                     sliderPauseOnHover = attributes.sliderPauseOnHover,
-                    sliderAutoPlay = attributes.sliderAutoPlay,
                     sliderInfiniteLoop = attributes.sliderInfiniteLoop,
                     sliderDotsShown = attributes.sliderDotsShown,
                     sliderSpeed = attributes.sliderSpeed,
-                    sliderAutoPlaySpeed = attributes.sliderAutoPlaySpeed,
                     sliderArrowShown = attributes.sliderArrowShown,
                     sliderItemsToScroll = attributes.sliderItemsToScroll;
 
@@ -17867,7 +17942,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         avatarSize: {
             type: 'number',
-            default: 70
+            default: 120
         },
         avatarPosition: {
             type: 'string',
@@ -18099,7 +18174,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         },
         deprecated: [{
-            attributes: blockAttrs,
+            attributes: _extends({}, blockAttrs, {
+                avatarSize: {
+                    type: 'number',
+                    default: 70
+                }
+            }),
             save: function save(_ref3) {
                 var attributes = _ref3.attributes;
                 var items = attributes.items,

@@ -4396,7 +4396,12 @@ float: left;'
                 $style_html .= '}';
             } elseif ($blockName === 'advgb/image') {
                 $block_class    = $blockAttrs['blockIDX'];
+                $default_opacity  = isset($blockAttrs['defaultOpacity']) ? $blockAttrs['defaultOpacity'] : 40;
                 $hover_opacity  = isset($blockAttrs['overlayOpacity']) ? $blockAttrs['overlayOpacity'] : 20;
+
+                $style_html .= '.'. $block_class . '.advgb-image-block .advgb-image-overlay{';
+                $style_html .= 'opacity:'.($default_opacity/100).' !important;';
+                $style_html .= '}';
 
                 $style_html .= '.'. $block_class . '.advgb-image-block:hover .advgb-image-overlay{';
                 $style_html .= 'opacity:'.($hover_opacity/100).' !important;';
