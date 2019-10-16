@@ -382,11 +382,10 @@
     }
 
     const tabsBlockIcon = (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.8 488.8" width="20px" height="20px">
-            <polygon fill="#ddd" points="476.4,105.6 214.8,109.6 162,4 476.4,4 "/>
-            <path d={path} />
-            <path d={path2} />
-            <rect x="328.4" y="3" width="16" height="114"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+            <path fill="none" d="M0,0h24v24H0V0z"/>
+            <path fill="none" d="M0,0h24v24H0V0z"/>
+            <path d="M21,3H3C1.9,3,1,3.9,1,5v14c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V5C23,3.9,22.1,3,21,3z M21,19H3V5h10v4h8V19z"/>
         </svg>
     );
 

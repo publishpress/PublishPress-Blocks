@@ -52,8 +52,8 @@
 
         componentDidMount() {
             const { attributes, setAttributes, clientId } = this.props;
-            const { pid, sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
-                sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown, sliderItemsToScroll,
+            const { pid, sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderInfiniteLoop,
+                sliderDotsShown, sliderSpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
 
             if (!pid) {
@@ -67,8 +67,6 @@
                     slidesToShow: sliderColumn,
                     slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                     pauseOnHover: sliderPauseOnHover,
-                    autoplay: sliderAutoPlay,
-                    autoplaySpeed: sliderAutoPlaySpeed,
                     dots: sliderDotsShown,
                     arrows: sliderArrowShown,
                     speed: sliderSpeed,
@@ -95,8 +93,8 @@
 
         componentDidUpdate(prevProps) {
             const { attributes, clientId } = this.props;
-            const { sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderAutoPlay, sliderInfiniteLoop,
-                sliderDotsShown, sliderSpeed, sliderAutoPlaySpeed, sliderArrowShown, sliderItemsToScroll,
+            const { sliderView, sliderColumn, sliderCenterMode, sliderPauseOnHover, sliderInfiniteLoop,
+                sliderDotsShown, sliderSpeed, sliderArrowShown, sliderItemsToScroll,
             } = attributes;
             const needReload = this.sliderNeedReload(prevProps.attributes, this.props.attributes);
             const needUpdate = this.sliderNeedUpdate(prevProps.attributes, this.props.attributes);
@@ -112,8 +110,6 @@
                         slidesToShow: sliderColumn,
                         slidesToScroll: Math.min(sliderItemsToScroll, sliderColumn),
                         pauseOnHover: sliderPauseOnHover,
-                        autoplay: sliderAutoPlay,
-                        autoplaySpeed: sliderAutoPlaySpeed,
                         dots: sliderDotsShown,
                         arrows: sliderArrowShown,
                         speed: sliderSpeed,
@@ -132,15 +128,13 @@
                 slider.slick('slickSetOption', 'dots', sliderDotsShown);
                 slider.slick('slickSetOption', 'arrows', sliderArrowShown);
                 slider.slick('slickSetOption', 'speed', sliderSpeed);
-                slider.slick('slickSetOption', 'autoplay', sliderAutoPlay);
-                slider.slick('slickSetOption', 'autoplaySpeed', sliderAutoPlaySpeed);
                 slider.slick('slickSetOption', 'prevArrow', prevElm);
                 slider.slick('slickSetOption', 'nextArrow', nextElm, true);
             }
         }
 
         sliderNeedReload(pa, ca) {
-            const checkReload = ['sliderView', 'columns', 'avatarPosition'];
+            const checkReload = ['sliderView', 'columns', 'avatarPosition', 'sliderCenterMode'];
             let reload = false;
 
             for (let checkProp of checkReload) {
@@ -156,7 +150,7 @@
         sliderNeedUpdate(pa, ca) {
             const checkUpdate = [
                 'sliderColumn', 'sliderItemsToScroll', 'sliderPauseOnHover', 'sliderAutoPlay', 'sliderInfiniteLoop',
-                'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown', 'sliderCenterMode',
+                'sliderDotsShown', 'sliderSpeed', 'sliderAutoPlaySpeed', 'sliderArrowShown',
             ];
             let update = false;
 
@@ -564,7 +558,7 @@
         },
         avatarSize: {
             type: 'number',
-            default: 70,
+            default: 120,
         },
         avatarPosition: {
             type: 'string',
@@ -593,7 +587,7 @@
         },
         sliderCenterMode: {
             type: 'boolean',
-            default: true,
+            default: false,
         },
         sliderPauseOnHover: {
             type: 'boolean',
@@ -761,7 +755,13 @@
         },
         deprecated: [
             {
-                attributes: blockAttrs,
+                attributes: {
+                    ...blockAttrs,
+                    avatarSize: {
+                        type: 'number',
+                        default: 70
+                    }
+                },
                 save: function ( { attributes } ) {
                     const {
                         items,
