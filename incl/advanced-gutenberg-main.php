@@ -385,6 +385,7 @@ float: left;'
         wp_localize_script('wp-blocks', 'advgbBlocks', array(
             'color' => $blocks_icon_color,
             'post_thumb' => $rp_default_thumb['url'],
+            'default_thumb' => $default_thumb,
             'avatarHolder' => $avatarHolder,
             'login_logo' => $login_logo,
             'reg_logo' => $reg_logo,
@@ -2320,6 +2321,39 @@ float: left;'
                             'title' => __('Border Radius', 'advanced-gutenberg'),
                             'type'  => 'number',
                             'name'  => 'borderRadius',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Margin Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Margin Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginLeft',
                             'min'   => 0,
                             'max'   => 100,
                         ),
@@ -4362,7 +4396,12 @@ float: left;'
                 $style_html .= '}';
             } elseif ($blockName === 'advgb/image') {
                 $block_class    = $blockAttrs['blockIDX'];
+                $default_opacity  = isset($blockAttrs['defaultOpacity']) ? $blockAttrs['defaultOpacity'] : 40;
                 $hover_opacity  = isset($blockAttrs['overlayOpacity']) ? $blockAttrs['overlayOpacity'] : 20;
+
+                $style_html .= '.'. $block_class . '.advgb-image-block .advgb-image-overlay{';
+                $style_html .= 'opacity:'.($default_opacity/100).' !important;';
+                $style_html .= '}';
 
                 $style_html .= '.'. $block_class . '.advgb-image-block:hover .advgb-image-overlay{';
                 $style_html .= 'opacity:'.($hover_opacity/100).' !important;';
