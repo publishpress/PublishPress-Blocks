@@ -262,10 +262,10 @@ class TestimonialBlockCest
 
         //check view auto play
         $I->waitForElement('.slick-track');
-        $I->seeElement('//div[@class="slick-track"]/div[3][contains(@class, "slick-active")]');
+        $I->seeElement('//div[@class="slick-track"]/div[2][contains(@class, "slick-active")]');
         $I->wait(2.5);
-        $I->seeElement('//div[@class="slick-track"]/div[3][contains(@class, "slick-active")]');
-        $I->dontSeeElement('//div[@class="slick-track"]/div[4][contains(@class, "slick-active")]');
+        $I->seeElement('//div[@class="slick-track"]/div[2][contains(@class, "slick-active")]');
+        $I->dontSeeElement('//div[@class="slick-track"]/div[3][contains(@class, "slick-active")]');
     }
 
     public function changeLoopSliderSetting(AcceptanceTester $I) {
@@ -301,7 +301,7 @@ class TestimonialBlockCest
         // click open slider settings
         $I->click('//button[text()="Slider Settings"]');
 
-        // Change to slider view
+        // Change to slider center mode
         $I->click('//label[text()="Center mode"]/preceding-sibling::node()');
 
         // Update post
@@ -310,7 +310,7 @@ class TestimonialBlockCest
 
         //check view auto play
         $I->waitForElement('.slick-track');
-        $I->dontSeeElement('//div[@class="slick-track"]/div[1][contains(@class, "slick-center")]');
+        $I->seeElement('//div[@class="slick-track"]/div[1][contains(@class, "slick-center")]');
     }
 
 
@@ -325,6 +325,9 @@ class TestimonialBlockCest
 
         // click open slider settings
         $I->click('//button[text()="Slider Settings"]');
+
+        // Change to slider center mode
+        $I->click('//label[text()="Center mode"]/preceding-sibling::node()');
 
         $I->fillField('//label[text()="Transition speed (ms)"]/following-sibling::node()/following-sibling::node()', 3000);
 
