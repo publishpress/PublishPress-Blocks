@@ -5543,9 +5543,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Tabs Settings') },
+                            { title: __('Tabs Settings', 'advanced-gutenberg') },
                             React.createElement(SelectControl, {
-                                label: __('Initial Open Tab'),
+                                label: __('Initial Open Tab', 'advanced-gutenberg'),
                                 value: tabActiveFrontend,
                                 options: tabHeaders.map(function (tab, index) {
                                     return { value: index, label: tab };

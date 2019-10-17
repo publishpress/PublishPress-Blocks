@@ -209,9 +209,9 @@
                                 )}
                             </div>
                         </PanelBody>
-                        <PanelBody title={ __( 'Tabs Settings' ) }>
+                        <PanelBody title={ __( 'Tabs Settings', 'advanced-gutenberg' ) }>
                             <SelectControl
-                                label={ __( 'Initial Open Tab' ) }
+                                label={ __( 'Initial Open Tab', 'advanced-gutenberg' ) }
                                 value={ tabActiveFrontend }
                                 options={ tabHeaders.map((tab, index) => {
                                     return {value: index, label: tab};
