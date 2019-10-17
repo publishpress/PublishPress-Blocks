@@ -39,7 +39,7 @@ class AdvancedImageBlockCest
         $I->click('//div[contains(@class, "advgb-image-block")]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
-        $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
+        $I->click('//div[contains(@class, "advgb-image-block")]/p[contains(@class, "editor-rich-text")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Lorem ipsum');
 
@@ -171,14 +171,20 @@ class AdvancedImageBlockCest
         $I->wantTo('Change overlay opacity');
 
         //change overlay opacity
-        $I->fillField('//label[text()="Overlay opacity"]/following-sibling::node()/following-sibling::node()', 50);
+        $I->fillField('//label[text()="Overlay opacity default"]/following-sibling::node()/following-sibling::node()', 50);
+        //change overlay opacity hover
+        $I->fillField('//label[text()="Overlay opacity hover"]/following-sibling::node()/following-sibling::node()', 30);
 
         $I->updatePost();
         $I->waitForElementVisible('.wp-block-advgb-image');
 
-        $I->moveMouseOver('//div[contains(@class, "advgb-image-block")]');
-        $I->wait(1);
         $opacity = $I->executeJS('return jQuery(".advgb-image-overlay").css("opacity")');
         $I->assertEquals($opacity, '0.5');
+
+        // Check hover styles applied
+        $I->moveMouseOver('//div[contains(@class, "advgb-image-block")]');
+        $I->wait(1);
+        $opacity_hover = $I->executeJS('return jQuery(".advgb-image-overlay").css("opacity")');
+        $I->assertEquals($opacity_hover, '0.3');
     }
 }
