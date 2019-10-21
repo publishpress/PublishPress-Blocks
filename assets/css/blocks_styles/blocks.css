@@ -253,6 +253,8 @@ div.advgb-image-block {
     height: 500px;
     width: 500px;
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     margin: 10px auto;
     padding: 15px;
 }
