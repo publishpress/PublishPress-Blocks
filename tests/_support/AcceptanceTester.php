@@ -121,3 +121,4 @@ class AcceptanceTester extends \Codeception\Actor
         $I->clickViewPost();
     }
 }
+

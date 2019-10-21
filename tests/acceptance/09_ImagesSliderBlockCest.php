@@ -41,6 +41,9 @@ class ImagesSliderBlockCest
         $I->waitForText('Add images');
         $I->click('Add images');
 
+        $I->waitForText('Media Library');
+        $I->click('Media Library');
+
         // Add some images
         $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');

@@ -39,7 +39,7 @@ class AdvancedImageBlockCest
         $I->click('//div[contains(@class, "advgb-image-block")]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
-        $I->click('//div[contains(@class, "advgb-image-block")]/p[contains(@class, "editor-rich-text")]');
+        $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
         $I->selectCurrentElementText();
         $I->pressKeys('Lorem ipsum');
 
@@ -50,7 +50,10 @@ class AdvancedImageBlockCest
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
         $I->click('Select');
 
-        $I->wait(1);
+        /*$I->wait(1);
+        $I->click('Publish…');
+        $I->waitForElementVisible('.editor-post-publish-button');*/
+
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
 
