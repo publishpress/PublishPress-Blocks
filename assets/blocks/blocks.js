@@ -2651,7 +2651,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         'div',
                         { className: blockClassName,
                             style: {
-                                backgroundImage: 'url(' + (imageUrl || advgbBlocks.default_thumb) + ')',
+                                backgroundImage: 'url(' + (imageUrl || advgbBlocks.image_holder) + ')',
                                 backgroundPosition: focalPoint ? focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%' : undefined,
                                 height: height,
                                 width: width,
@@ -2777,7 +2777,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         fullWidth: {
             type: 'boolean',
-            default: false
+            default: true
         },
         width: {
             type: 'number',
@@ -2884,6 +2884,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 overlayColor: {
                     type: 'string',
                     default: '#2196f3'
+                },
+                fullWidth: {
+                    type: 'boolean',
+                    default: false
                 }
             }),
             save: function save(_ref4) {
@@ -5543,9 +5547,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             PanelBody,
-                            { title: __('Tabs Settings') },
+                            { title: __('Tabs Settings', 'advanced-gutenberg') },
                             React.createElement(SelectControl, {
-                                label: __('Initial Open Tab'),
+                                label: __('Initial Open Tab', 'advanced-gutenberg'),
                                 value: tabActiveFrontend,
                                 options: tabHeaders.map(function (tab, index) {
                                     return { value: index, label: tab };

@@ -208,7 +208,7 @@
                     </InspectorControls>
                     <div className={ blockClassName }
                          style={ {
-                             backgroundImage: `url(${imageUrl || advgbBlocks.default_thumb})`,
+                             backgroundImage: `url(${imageUrl || advgbBlocks.image_holder})`,
                              backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
                              height: height,
                              width: width,
@@ -315,7 +315,7 @@
         },
         fullWidth: {
             type: 'boolean',
-            default: false,
+            default: true,
         },
         width: {
             type: 'number',
@@ -429,7 +429,11 @@
                     overlayColor: {
                         type: 'string',
                         default: '#2196f3',
-                    }
+                    },
+                    fullWidth: {
+                        type: 'boolean',
+                        default: false,
+                    },
                 },
                 save: ( { attributes } ) => {
                     const {
