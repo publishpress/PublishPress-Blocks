@@ -10,7 +10,10 @@ class LoginBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-lores-form-wrapper');
-            $I->clickWithLeftButton('.advgb-lores-form-wrapper');
+            $I->click(".editor-block-navigation");
+            $I->waitForText('Block Navigation');
+            $I->wait(0.5);
+            $I->clickWithLeftButton('//button[text()="Login/Register Form"]');
         } catch(Exception $e) {
             // do stuff
         }

@@ -425,7 +425,7 @@ class createUpdateTestBlocksCest
             // not latest gutenberg
         }
 
-        $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:first-child .advgb-column .wp-block-paragraph');
+        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[@class="editor-inner-blocks"]/div[@class="editor-block-list__layout"]/div[contains(@class,"wp-block")][1]//div[contains(@class, "advgb-column")]');
         $I->selectCurrentElementText();
         $I->pressKeys("First column text");
 
@@ -443,7 +443,7 @@ class createUpdateTestBlocksCest
             // not latest gutenberg
         }
 
-        $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:nth-child(2) .advgb-column .wp-block-paragraph');
+        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[@class="editor-inner-blocks"]/div[@class="editor-block-list__layout"]/div[contains(@class,"wp-block")][2]//div[contains(@class, "advgb-column")]');
         $I->selectCurrentElementText();
         $I->pressKeys("Second column text");
 
@@ -461,9 +461,15 @@ class createUpdateTestBlocksCest
             // not latest gutenberg
         }
 
-        $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child .advgb-column .wp-block-paragraph');
+        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[@class="editor-inner-blocks"]/div[@class="editor-block-list__layout"]/div[contains(@class,"wp-block")][3]//div[contains(@class, "advgb-column")]');
         $I->selectCurrentElementText();
         $I->pressKeys("Third column text");
+        $I->wait(0.5);
+
+        $I->clickWithLeftButton('.editor-block-navigation');
+        $I->waitForText('Block Navigation');
+        $I->wait(0.5);
+        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]');
     }
 
     public function createSearchBarBlock(AcceptanceTester $I)
