@@ -5280,30 +5280,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         select = _wp$data.select;
 
 
-    var path = "M464.4,488h-440c-14.131,0-24-8.882-24-21.6v-440C0.4,13.938,10.664,0,24.4,0h440 ";
-    path += "c13.736,0,24,13.938,24,26.4v440C488.4,479.118,478.531,488,464.4,488z M24.4,16c-3.813,0-8,5.443-8,10.4v440 ";
-    path += "c0,5.054,5.595,5.6,8,5.6h440c2.405,0,8-0.546,8-5.6v-440c0-4.957-4.187-10.4-8-10.4C464.4,16,24.4,16,24.4,16z";
-
-    var path2 = "M464.4,488.8h-440c-14.58,0-24-7.223-24-18.399V36h16v434.4c0,1.301,3.664,2.399,8,2.399h440 ";
-    path2 += "c4.337,0,8-1.099,8-2.399V121.6c0-0.074-0.003-0.132-0.007-0.178c-0.587-0.447-2.915-1.422-7.993-1.422H207.305L154.75,7.383 ";
-    path2 += "l14.499-6.766L217.495,104H464.4c22.27,0,24,13.471,24,17.6v348.8C488.4,481.577,478.979,488.8,464.4,488.8z";
+    var svgPath = React.createElement(
+        Fragment,
+        null,
+        React.createElement("path", { fill: "currentColor", d: "M491.2,474.55a1.93,1.93,0,0,1,0-2.84Z" }),
+        React.createElement("path", { fill: "none", stroke: "currentColor", strokeMiterlimit: "10", strokeWidth: "7.43",
+            d: "M248.71,475.78H34.46c-10.59,0-11.37-.8-11.37-11.22q0-206.92,0-413.84c0-4.89-.2-9.78-.08-14.66.21-8.43,3.91-12,12.18-12,41.14,0,82.29.08,123.44-.12,4.38,0,6.31,1.52,8,5.29,14.32,31.05,28.91,62,43.22,93,1.7,3.69,3.65,5,7.74,5q122.26-.18,244.52-.09c12.73,0,12.73,0,12.73,12.59V463.22c0,12.14-.4,12.56-12.39,12.56Z" }),
+        React.createElement("path", { fill: "currentColor",
+            d: "M257,24.15c23,0,46,.11,69-.09,4.67,0,6.33,1.24,6.29,6.12q-.33,37.57,0,75.17c0,4.52-1.39,6-5.93,6q-49.17-.24-98.34,0c-4.29,0-6.49-1.5-8.24-5.32C208,80.21,196,54.53,184.06,28.81c-2.08-4.48-2-4.64,3-4.65Q222.05,24.13,257,24.15Z" }),
+        React.createElement("path", { fill: "currentColor",
+            d: "M411.32,111.22c-18.92,0-37.85-.12-56.77.08-4.59,0-6.39-1.09-6.35-6q.33-37.6,0-75.21c0-4.53,1.41-6,5.95-6,36.43.15,72.85.07,109.27.1,6.91,0,9.69,2.29,11.09,9.08a27.87,27.87,0,0,1,.53,5.62q0,33.12,0,66.23c0,6.05-.13,6.13-6.05,6.13Z" })
+    );
 
     var tabHorizontalIcon = React.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 488.8 488.8", width: "50px", height: "50px", style: { backgroundColor: "#fff" } },
-        React.createElement("polygon", { fill: "#ddd", points: "476.4,105.6 214.8,109.6 162,4 476.4,4 " }),
-        React.createElement("path", { d: path }),
-        React.createElement("path", { d: path2 }),
-        React.createElement("rect", { x: "328.4", y: "3", width: "16", height: "114" })
+        { color: "#5954d6", xmlns: "http://www.w3.org/2000/svg", width: "50", height: "50", viewBox: "0 0 500 500", style: { backgroundColor: "#fff" } },
+        svgPath
     );
 
     var tabVerticalIcon = React.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 488.8 488.8", width: "50px", height: "50px", transform: "rotate(-90) scale(-1, 1)", style: { backgroundColor: "#fff" } },
-        React.createElement("polygon", { fill: "#ddd", points: "476.4,105.6 214.8,109.6 162,4 476.4,4 " }),
-        React.createElement("path", { d: path }),
-        React.createElement("path", { d: path2 }),
-        React.createElement("rect", { x: "328.4", y: "3", width: "16", height: "114" })
+        { color: "#5954d6", xmlns: "http://www.w3.org/2000/svg", width: "50", height: "50", viewBox: "0 0 500 500", style: { backgroundColor: "#fff" }, transform: "rotate(-90) scale(-1, 1)" },
+        svgPath
     );
 
     var TABS_STYLES = [{ name: 'horz', label: __('Horizontal', 'advanced-gutenberg'), icon: tabHorizontalIcon }, { name: 'vert', label: __('Vertical', 'advanced-gutenberg'), icon: tabVerticalIcon }];
@@ -5536,10 +5534,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         },
                                         React.createElement(
                                             "svg",
-                                            { width: "50px", height: "50px", viewBox: "0 0 26 26", xmlns: "http://www.w3.org/2000/svg" },
-                                            React.createElement("path", { fill: "#333", d: "M24.2480469,18.5H1.75C1.3359375,18.5,1,18.8359375,1,19.25v5C1,24.6640625,1.3359375,25,1.75,25   h22.4980469c0.4140625,0,0.75-0.3359375,0.75-0.75v-5C24.9980469,18.8359375,24.6621094,18.5,24.2480469,18.5z M23.4980469,23.5   H2.5V20h20.9980469V23.5z" }),
-                                            React.createElement("path", { fill: "#333", d: "M24.25,9.75H1.75C1.3359375,9.75,1,10.0859375,1,10.5v5c0,0.4140625,0.3359375,0.75,0.75,0.75h22.5   c0.4140625,0,0.75-0.3359375,0.75-0.75v-5C25,10.0859375,24.6640625,9.75,24.25,9.75z M23.5,14.75h-21v-3.5h21V14.75z" }),
-                                            React.createElement("path", { fill: "#333", d: "M1.75,7.5h22.4980469c0.4140625,0,0.75-0.3359375,0.75-0.75v-5c0-0.4140625-0.3359375-0.75-0.75-0.75H1.75   C1.3359375,1,1,1.3359375,1,1.75v5C1,7.1640625,1.3359375,7.5,1.75,7.5z M2.5,2.5h20.9980469V6H2.5V2.5z" })
+                                            { color: "#5954d6", width: "50px", height: "50px", viewBox: "0 0 26 26", xmlns: "http://www.w3.org/2000/svg", style: { backgroundColor: "#fff" } },
+                                            React.createElement("path", { fill: "currentColor", d: "M24.2480469,18.5H1.75C1.3359375,18.5,1,18.8359375,1,19.25v5C1,24.6640625,1.3359375,25,1.75,25   h22.4980469c0.4140625,0,0.75-0.3359375,0.75-0.75v-5C24.9980469,18.8359375,24.6621094,18.5,24.2480469,18.5z M23.4980469,23.5   H2.5V20h20.9980469V23.5z" }),
+                                            React.createElement("path", { fill: "currentColor", d: "M24.25,9.75H1.75C1.3359375,9.75,1,10.0859375,1,10.5v5c0,0.4140625,0.3359375,0.75,0.75,0.75h22.5   c0.4140625,0,0.75-0.3359375,0.75-0.75v-5C25,10.0859375,24.6640625,9.75,24.25,9.75z M23.5,14.75h-21v-3.5h21V14.75z" }),
+                                            React.createElement("path", { fill: "currentColor", d: "M1.75,7.5h22.4980469c0.4140625,0,0.75-0.3359375,0.75-0.75v-5c0-0.4140625-0.3359375-0.75-0.75-0.75H1.75   C1.3359375,1,1,1.3359375,1,1.75v5C1,7.1640625,1.3359375,7.5,1.75,7.5z M2.5,2.5h20.9980469V6H2.5V2.5z" })
                                         )
                                     )
                                 )
@@ -5566,7 +5564,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Background Color', 'advanced-gutenberg'),
                                 value: headerBgColor,
                                 onChange: function onChange(value) {
-                                    return setAttributes({ headerBgColor: value === undefined ? '#000' : value });
+                                    return setAttributes({ headerBgColor: value === undefined ? '#e0e0e0' : value });
                                 }
                             }, {
                                 label: __('Text Color', 'advanced-gutenberg'),
@@ -5663,8 +5661,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             borderStyle: borderStyle,
                                             borderWidth: borderWidth + 'px',
                                             borderColor: borderColor,
-                                            borderRadius: borderRadius + 'px',
-                                            margin: "-" + borderWidth + "px 0 -" + borderWidth + "px -" + borderWidth + "px"
+                                            borderRadius: borderRadius + 'px'
                                         }
                                     },
                                     React.createElement(
@@ -5706,8 +5703,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-tab advgb-add-tab",
                                     style: {
                                         borderRadius: borderRadius + 'px',
-                                        borderWidth: borderWidth + 'px',
-                                        margin: "-" + borderWidth + "px 0 -" + borderWidth + "px -" + borderWidth + "px"
+                                        borderWidth: borderWidth + 'px'
                                     }
                                 },
                                 React.createElement(
@@ -5718,7 +5714,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         { onClick: function onClick() {
                                                 return _this2.addTab();
                                             } },
-                                        React.createElement(Dashicon, { icon: "plus-alt" })
+                                        React.createElement(Dashicon, { icon: "plus" })
                                     )
                                 )
                             )
@@ -5790,7 +5786,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         headerBgColor: {
             type: 'string',
-            default: '#000'
+            default: '#e0e0e0'
         },
         headerTextColor: {
             type: 'string',
@@ -5815,7 +5811,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         borderRadius: {
             type: 'number',
-            default: 2
+            default: 10
         },
         pid: {
             type: 'string'
@@ -5877,8 +5873,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderStyle: borderStyle,
                                     borderWidth: borderWidth + 'px',
                                     borderColor: borderColor,
-                                    borderRadius: borderRadius + 'px',
-                                    margin: "-" + borderWidth + "px 0 -" + borderWidth + "px -" + borderWidth + "px"
+                                    borderRadius: borderRadius + 'px'
                                 }
                             },
                             React.createElement(
