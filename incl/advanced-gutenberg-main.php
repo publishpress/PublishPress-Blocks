@@ -4397,7 +4397,7 @@ float: left;'
                 $style_html .= 'transition:all '.$transition_spd.'s ease;';
                 $style_html .= '}';
             } elseif ($blockName === 'advgb/image') {
-                $block_class    = $blockAttrs['blockIDX'];
+                /*$block_class    = $blockAttrs['blockIDX'];
                 $default_opacity  = isset($blockAttrs['defaultOpacity']) ? $blockAttrs['defaultOpacity'] : 40;
                 $hover_opacity  = isset($blockAttrs['overlayOpacity']) ? $blockAttrs['overlayOpacity'] : 20;
 
@@ -4407,14 +4407,14 @@ float: left;'
 
                 $style_html .= '.'. $block_class . '.advgb-image-block:hover .advgb-image-overlay{';
                 $style_html .= 'opacity:'.($hover_opacity/100).' !important;';
-                $style_html .= '}';
+                $style_html .= '}';*/
             } elseif ($blockName === 'advgb/testimonial') {
-                $block_id    = $blockAttrs['pid'];
+                /*$block_id    = $blockAttrs['pid'];
                 $dots_color  = isset($blockAttrs['sliderDotsColor']) ? $blockAttrs['sliderDotsColor'] : '#000';
 
                 $style_html .= '#'. $block_id . ' .slick-dots li button:before{';
                 $style_html .= 'color:'.$dots_color.' !important;';
-                $style_html .= '}';
+                $style_html .= '}';*/
             } elseif ($blockName === 'advgb/adv-tabs') {
                 $block_id    = $blockAttrs['pid'];
                 $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
