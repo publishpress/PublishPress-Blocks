@@ -4417,7 +4417,7 @@ float: left;'
                 $style_html .= '}';
             } elseif ($blockName === 'advgb/adv-tabs') {
                 $block_id    = $blockAttrs['pid'];
-                $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#2196f3';
+                $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
                 $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
 
                 $style_html .= '#'. $block_id . ' li.advgb-tab.ui-tabs-active{';
