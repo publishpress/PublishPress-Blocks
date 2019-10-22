@@ -425,7 +425,7 @@ class createUpdateTestBlocksCest
             // not latest gutenberg
         }
 
-        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[@class="editor-inner-blocks"]/div[@class="editor-block-list__layout"]/div[contains(@class,"wp-block")][1]//div[contains(@class, "advgb-column")]');
+        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[contains(@class, "editor-inner-blocks")]/div[contains(@class,"editor-block-list__layout")]/div[contains(@class,"wp-block")][1]//div[contains(@class, "advgb-column")]');
         $I->selectCurrentElementText();
         $I->pressKeys("First column text");
 
@@ -443,7 +443,7 @@ class createUpdateTestBlocksCest
             // not latest gutenberg
         }
 
-        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[@class="editor-inner-blocks"]/div[@class="editor-block-list__layout"]/div[contains(@class,"wp-block")][2]//div[contains(@class, "advgb-column")]');
+        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[contains(@class, "editor-inner-blocks")]/div[contains(@class,"editor-block-list__layout")]/div[contains(@class,"wp-block")][2]//div[contains(@class, "advgb-column")]');
         $I->selectCurrentElementText();
         $I->pressKeys("Second column text");
 
@@ -461,7 +461,7 @@ class createUpdateTestBlocksCest
             // not latest gutenberg
         }
 
-        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[@class="editor-inner-blocks"]/div[@class="editor-block-list__layout"]/div[contains(@class,"wp-block")][3]//div[contains(@class, "advgb-column")]');
+        $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[contains(@class, "editor-inner-blocks")]/div[contains(@class,"editor-block-list__layout")]/div[contains(@class,"wp-block")][3]//div[contains(@class, "advgb-column")]');
         $I->selectCurrentElementText();
         $I->pressKeys("Third column text");
         $I->wait(0.5);

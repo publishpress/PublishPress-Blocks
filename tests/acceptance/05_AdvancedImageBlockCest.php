@@ -48,6 +48,7 @@ class AdvancedImageBlockCest
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
+        $I->click('Select');
 
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
@@ -58,6 +59,17 @@ class AdvancedImageBlockCest
         $I->click('//div[@class="post-publish-panel__postpublish-buttons"]/a[text()="View Post"]');
 
         $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@data-image, "galaxy.jpg")]');
+    }
+
+    public function changeFullWidth(AcceptanceTester $I) {
+        $I->wantTo('Change image to Full width');
+
+        $I->click('//label[text()="Full width"]/preceding-sibling::node()');
+
+        $I->updatePost();
+        $I->waitForElementVisible('.wp-block-advgb-image');
+
+        $I->dontSeeElement('//div[contains(@class, "wp-block-advgb-image") and contains(@class, "full-width")]');
     }
 
     public function changeWidthHeight(AcceptanceTester $I)
@@ -152,17 +164,6 @@ class AdvancedImageBlockCest
         $I->waitForElementVisible('.wp-block-advgb-image');
 
         $I->seeElement('//div[contains(@class, "wp-block-advgb-image")][contains(@style, "background-position:20% 40%")]');
-    }
-
-    public function changeFullWidth(AcceptanceTester $I) {
-        $I->wantTo('Change image to Full width');
-
-        $I->click('//label[text()="Full width"]/preceding-sibling::node()');
-
-        $I->updatePost();
-        $I->waitForElementVisible('.wp-block-advgb-image');
-
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-image") and contains(@class, "full-width")]');
     }
 
     public function changeOverlayOpacity(AcceptanceTester $I) {
