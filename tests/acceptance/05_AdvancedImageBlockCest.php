@@ -48,11 +48,6 @@ class AdvancedImageBlockCest
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
         $I->click('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
-        $I->click('Select');
-
-        /*$I->wait(1);
-        $I->click('Publish…');
-        $I->waitForElementVisible('.editor-post-publish-button');*/
 
         $I->click('Publish…');
         $I->waitForElementVisible('.editor-post-publish-button');
