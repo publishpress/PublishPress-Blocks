@@ -272,6 +272,16 @@ div.advgb-image-block {
     z-index: 3;
 }
 
+div.advgb-image-block .advgb-browse-image-btn {
+    background-color: #227eb7;
+    border-color: #227eb7;
+    outline: none;
+    color: #fff;
+    box-shadow: none;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
 .advgb-image-overlay {
     opacity: 0;
     background-color: #000;
@@ -287,6 +297,10 @@ div.advgb-image-block {
     z-index: 3;
     margin: 0;
     padding: 0;
+}
+
+.advgb-image-title {
+    margin-bottom: 30px;
 }
 
 .advgb-image-block:hover .advgb-image-overlay {

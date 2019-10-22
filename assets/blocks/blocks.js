@@ -2673,10 +2673,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     Button,
                                     {
-                                        className: 'button button-large',
+                                        className: 'button button-large advgb-browse-image-btn',
                                         onClick: open
                                     },
-                                    __('Choose image', 'advanced-gutenberg')
+                                    __('Open media library', 'advanced-gutenberg')
                                 );
                             }
                         }),

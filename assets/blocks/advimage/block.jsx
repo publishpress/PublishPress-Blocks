@@ -226,10 +226,10 @@
                             onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id, focalPoint: {} } ) }
                             render={ ( { open } ) => (
                                 <Button
-                                    className="button button-large"
+                                    className="button button-large advgb-browse-image-btn"
                                     onClick={ open }
                                 >
-                                    { __( 'Choose image', 'advanced-gutenberg' ) }
+                                    { __( 'Open media library', 'advanced-gutenberg' ) }
                                 </Button>
                             ) }
                         />
