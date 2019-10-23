@@ -62,13 +62,6 @@ class Jufeedback
     public static $mailto = 'feedback@joomunited.com';
 
     /**
-     * Define technical information
-     *
-     * @var string $technical_data
-     */
-    public static $technical_data = array();
-
-    /**
      * Initialize Jutranslation
      *
      * @param string $main_plugin_file Main plugin file
@@ -143,6 +136,7 @@ class Jufeedback
             add_action('wp_ajax_ju_send_feedback_deactive_' . self::$plugin_slug, array(__CLASS__, 'sendFeedbackDeactive'));
             add_action('wp_ajax_ju_disable_feedback_' . self::$plugin_slug, array(__CLASS__, 'disableFeedback'));
             add_action('wp_ajax_jureview_ajax_hide_review_' . self::$plugin_slug, array(__CLASS__, 'ajaxHideReview'));
+            add_action('wp_ajax_ju_feedback_get_technical_data_' . self::$plugin_slug, array(__CLASS__, 'ajaxGetTechnicalData'));
         }
 
         self::juUpdatePlugin();
@@ -184,14 +178,6 @@ class Jufeedback
         $allow_feedback = get_option(self::$plugin_prefix . '_disallow_feedback', false);
         if (!$allow_feedback) {
             self::enqueueFeedbackScript();
-
-            // Load JuCheckDebugData class
-            if (!class_exists('JuCheckDebugData')) {
-                require_once(plugin_dir_path(self::$main_plugin_file) . 'jufeedback/ju-check-debug-data.php');
-            }
-
-            // Get server information
-            self::$technical_data = call_user_func('JuCheckDebugData::debugData');
         }
     }
 
@@ -243,7 +229,6 @@ class Jufeedback
      */
     public static function renderFeedbackModal()
     {
-        $technical_data = self::getTechnicalData();
         //phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralDomain -- Already use text domain for extensions
         ?>
         <!--Dialog-->
@@ -279,11 +264,7 @@ class Jufeedback
                         <i class="material-icons signaling tooltipped" data-position="top"
                            data-tooltip="<?php esc_html_e('We get 100% anonymously info for debug and statistics purpose only (theme name, server informations...), click the drop down icon to see what information is sent', self::$text_domain) ?>">chat</i>
                         <i class="material-icons more">arrow_drop_down</i>
-                        <textarea name="technical" readonly="readonly" class="technical" rows="5"
-                                  data-info="<?php echo esc_html(($technical_data) ? json_encode($technical_data) : '') ?>"><?php
-                            //phpcs:ignore PHPCompatibility.Constants.NewConstants.json_pretty_printFound -- We do not use for php <5.3
-                                    echo esc_html(($technical_data) ? json_encode($technical_data, JSON_PRETTY_PRINT) : '')
-                                    ?></textarea>
+                        <textarea name="technical" readonly="readonly" class="technical" rows="5" data-info=""></textarea>
                     </div>
                 </div>
                 <div class="feedback-result-notice"></div>
@@ -384,17 +365,45 @@ class Jufeedback
     }
 
     /**
+     * Ajax get technical data
+     *
+     * @return void
+     */
+    public static function ajaxGetTechnicalData()
+    {
+        check_ajax_referer('ju-feedback', 'ajax_nonce');
+
+        // Load JuCheckDebugData class
+        if (!class_exists('JuCheckDebugData')) {
+            require_once(plugin_dir_path(self::$main_plugin_file) . 'jufeedback/ju-check-debug-data.php');
+        }
+
+        // Get server information
+        $technical_data = call_user_func('JuCheckDebugData::debugData');
+        // Filter data
+        $result_data = self::getTechnicalData($technical_data);
+
+        if (!empty($result_data)) {
+            wp_send_json(array('get_status' => true, 'data' => $result_data));
+        }
+
+        wp_send_json(array('get_status' => false, 'data' => false));
+    }
+
+    /**
      * Get technical data by json
+     *
+     * @param array $technical_data Data to filter
      *
      * @return array|boolean
      */
-    public static function getTechnicalData()
+    public static function getTechnicalData($technical_data)
     {
         $output = array();
         $sub_output = array();
 
-        if (!empty(self::$technical_data)) {
-            foreach (self::$technical_data as $key => $data) {
+        if (!empty($technical_data)) {
+            foreach ($technical_data as $key => $data) {
                 if (!isset($data['fields']) || empty($data['fields'])) {
                     continue;
                 }
