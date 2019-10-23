@@ -41,15 +41,23 @@
     "2.2.0": [
       {
         "type": "feature",
-        "title": "Adv Tabs block: Rework Tabs block, allow to add other block inside, more tabs style"
+        "title": "Tabs block: Rework Tabs block, allow nested block in tabs"
       },
       {
         "type": "feature",
-        "title": "Testimonial block: Improve slider view, add more option, add avatar position settings"
+        "title": "Tabs block: news design and new option for design"
       },
       {
         "type": "feature",
-        "title": "Columns block: Add max height settings"
+        "title": "Testimonial block: Improve slider view, new option for slider effects"
+      },
+       {
+        "type": "feature",
+        "title": "Testimonial block: add design options, add avatar position setting"
+      },
+      {
+        "type": "feature",
+        "title": "Columns block: Add max height for each line"
       },
       {
         "type": "feature",
@@ -57,7 +65,7 @@
       },
       {
         "type": "feature",
-        "title": "Accordions block: Show settings on all accordion level"
+        "title": "Accordions block: Show settings on all accordion levels"
       },
       {
         "type": "feature",
@@ -65,7 +73,15 @@
       },
       {
         "type": "feature",
-        "title": "Adv Image block: Add focal point picker, block alignment, default opacity setting"
+        "title": "Adv Image block: Add focal point picker, block alignment, default opacity settings"
+      },
+      {
+        "type": "feature",
+        "title": "Add a defulat svg image for test purpose when none is selected"
+      },
+       {
+        "type": "feature",
+        "title": "Add back profile list"
       }
     ],
     "2.1.5": [
