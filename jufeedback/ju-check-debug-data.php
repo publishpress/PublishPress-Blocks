@@ -545,7 +545,16 @@ class JuCheckDebugData
 
         // Get Ghostscript information, if available.
         if (function_exists('exec')) {
-            $gs = exec('gs --version');
+            $command = 'gs --version';
+            if (function_exists('php_uname')) {
+                $os_name = php_uname('s');
+
+                if (!stristr($os_name, 'windows')) {
+                    $command .= ' 2>/dev/null';
+                }
+            }
+
+            $gs = exec($command);
 
             if (empty($gs)) {
                 $gs = $not_available;
