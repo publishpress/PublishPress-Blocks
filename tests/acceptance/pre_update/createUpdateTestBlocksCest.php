@@ -31,7 +31,7 @@ class createUpdateTestBlocksCest
 
         // Change post title
         $I->waitForElement('.editor-post-title__input');
-        $I->fillField('.editor-post-title__input', 'Update test');
+        $I->fillField('.editor-post-title__input', 'Update ');
     }
 
     public function createRecentPostsBlock(AcceptanceTester $I)
@@ -76,9 +76,10 @@ class createUpdateTestBlocksCest
         $I->pressKeys('World');
 
         // Change color
-        $I->click('//span[text()="Background Color"]/following-sibling::node()//div'); // Todo: remove this line color picket selection as it's buggy in the last version
+        /*$I->click('//span[text()="Background Color"]/following-sibling::node()//div'); // Todo: remove this line color picket selection as it's buggy in the last version
         $I->click('//span[text()="Background Color"]/following-sibling::node()//div[last()]');
-        $I->fillField('.components-color-picker__inputs-wrapper input', '#ff006a');
+        $I->fillField('.components-color-picker__inputs-wrapper input', '#ff006a');*/
+        $I->click('//span[text()="Background Color"]/following-sibling::node()//div[2]');
 
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
         // Change border to 3px
@@ -100,7 +101,7 @@ class createUpdateTestBlocksCest
         $I->click('//div[@class="advgb-image-block"]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
-        $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
+        $I->click('//div[contains(@class, "advgb-image-block")]//p[contains(@class, "advgb-image-subtitle")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Lorem ipsum');
 
@@ -144,7 +145,7 @@ class createUpdateTestBlocksCest
         $I->click('Select');
 
         // change first person name
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][1]//div[2]//h4');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][1]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('John Doe');
 
@@ -163,7 +164,7 @@ class createUpdateTestBlocksCest
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="woman"]');
         $I->click('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//button[contains(@class, "media-button-select")]');
 
-        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][2]//div[2]//h4');
+        $I->click('//div[contains(@class, "advgb-testimonial")]//div[@class="advgb-testimonial-item"][2]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Jane Doe');
 
@@ -239,11 +240,11 @@ class createUpdateTestBlocksCest
         $I->selectCurrentElementText();
         $I->pressKeys('Visitors');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-one"]/div[2]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-count-up-columns-one"]/div[@class="advgb-counter"]//div[contains(@class, "advgb-counter-number")]');
         $I->selectCurrentElementText();
         $I->pressKeys('3 M');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-one"]/div[3]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-count-up-columns-one"]//p[contains(@class, "advgb-count-up-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('per year');
 
@@ -252,11 +253,11 @@ class createUpdateTestBlocksCest
         $I->selectCurrentElementText();
         $I->pressKeys('Downloaded');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]/div[2]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-count-up-columns-two"]/div[@class="advgb-counter"]//div[contains(@class, "advgb-counter-number")]');
         $I->selectCurrentElementText();
         $I->pressKeys('180 000');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]/div[3]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-count-up-columns-one"]//p[contains(@class, "advgb-count-up-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('times');
 
@@ -264,11 +265,11 @@ class createUpdateTestBlocksCest
         $I->selectCurrentElementText();
         $I->pressKeys('Developed since');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[2]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-count-up-columns-three"]/div[@class="advgb-counter"]//div[contains(@class, "advgb-counter-number")]');
         $I->selectCurrentElementText();
         $I->pressKeys('2010');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[3]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]/div[@class="advgb-count-up-columns-three"]//p[contains(@class, "advgb-count-up-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys(\WebDriverKeys::DELETE);
     }
@@ -331,15 +332,15 @@ class createUpdateTestBlocksCest
         /***** Add some heading *****/
         $I->insertBlock('Heading');
 
-        $I->waitForElement('//div[@data-type="core/heading"]//div[contains(@class, "wp-block-heading")]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"]//h2');
         $I->pressKeys('I am');
         $I->wait(0.1);
 
         $I->insertBlock('Heading');
 
-        $I->waitForElement('//div[@data-type="core/heading"][2]//div[contains(@class, "wp-block-heading")]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"]//h2');
         $I->pressKeys('your father');
-        $I->click('//p[text()="Level"]/following-sibling::node()//div[3]');
+        $I->click('//p[text()="Level"]/following-sibling::node()//button[contains(@aria-label, "Heading 3")]');
 
         /***** Add summary *****/
         $I->insertBlock('Summary');
@@ -360,7 +361,7 @@ class createUpdateTestBlocksCest
         $I->click('//button[text()="Border Settings"]');
         // Change border color to blue
         $I->click('//span[text()="Border Color"]');
-        $I->click('//span[text()="Border color"]/following-sibling::node()//div[1]');
+        $I->click('//span[text()="Border color"]/following-sibling::node()/div[1]');
         // Change border radius to 4px
         $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 4);
 
@@ -464,12 +465,8 @@ class createUpdateTestBlocksCest
         $I->click('//div[@class="advgb-columns-wrapper"]/div[contains(@class,"advgb-columns")]/div[contains(@class, "editor-inner-blocks")]/div[contains(@class,"editor-block-list__layout")]/div[contains(@class,"wp-block")][3]//div[contains(@class, "advgb-column")]');
         $I->selectCurrentElementText();
         $I->pressKeys("Third column text");
-        $I->wait(0.5);
 
-        $I->clickWithLeftButton('.editor-block-navigation');
-        $I->waitForText('Block Navigation');
-        $I->wait(0.5);
-        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]');
+        $I->clickWithLeftButton('//button[contains(@data-label, "Document")]');
     }
 
     public function createSearchBarBlock(AcceptanceTester $I)

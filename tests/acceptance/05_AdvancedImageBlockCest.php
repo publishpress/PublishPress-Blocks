@@ -39,7 +39,7 @@ class AdvancedImageBlockCest
         $I->click('//div[contains(@class, "advgb-image-block")]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
-        $I->click('//div[contains(@class, "advgb-image-block")]//div[contains(@class, "editor-rich-text")][2]//p');
+        $I->click('//div[contains(@class, "advgb-image-block")]//p[contains(@class, "advgb-image-subtitle")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Lorem ipsum');
 
