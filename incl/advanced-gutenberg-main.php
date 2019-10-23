@@ -4397,7 +4397,7 @@ float: left;'
                 $style_html .= 'transition:all '.$transition_spd.'s ease;';
                 $style_html .= '}';
             } elseif ($blockName === 'advgb/image') {
-                if(array_key_exists('blockIDX', $blockAttrs)) {
+                if (array_key_exists('blockIDX', $blockAttrs)) {
                     $block_class     = $blockAttrs['blockIDX'];
                     $default_opacity = isset($blockAttrs['defaultOpacity']) ? $blockAttrs['defaultOpacity'] : 40;
                     $hover_opacity   = isset($blockAttrs['overlayOpacity']) ? $blockAttrs['overlayOpacity'] : 20;
@@ -4411,7 +4411,7 @@ float: left;'
                     $style_html .= '}';
                 }
             } elseif ($blockName === 'advgb/testimonial') {
-                if(array_key_exists('pid', $blockAttrs)) {
+                if (array_key_exists('pid', $blockAttrs)) {
                     $block_id   = $blockAttrs['pid'];
                     $dots_color = isset($blockAttrs['sliderDotsColor']) ? $blockAttrs['sliderDotsColor'] : '#000';
 
