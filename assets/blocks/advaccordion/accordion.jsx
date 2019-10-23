@@ -3,8 +3,9 @@
     const { __ } = wpI18n;
     const { Fragment, Component } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { RichText, InnerBlocks } = wpBlockEditor;
-    const { select } = wp.data;
+    const { RichText, InnerBlocks, InspectorControls, PanelColorSettings } = wpBlockEditor;
+    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl } = wpComponents;
+    const { select, dispatch } = wp.data;
 
     const HEADER_ICONS = {
         plus: (
@@ -55,6 +56,8 @@
     class AccordionItemEdit extends Component {
         constructor() {
             super( ...arguments );
+
+            this.updateAccordionAttrs = this.updateAccordionAttrs.bind(this);
         }
 
         componentWillMount() {
@@ -77,8 +80,19 @@
             }
         }
 
+        updateAccordionAttrs( attrs ) {
+            const { clientId } = this.props;
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const { getBlockOrder, getBlockRootClientId } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const rootBlockId = getBlockRootClientId(clientId);
+            const childBlocks = getBlockOrder(rootBlockId);
+
+            updateBlockAttributes( rootBlockId, attrs );
+            childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attrs ) );
+        }
+
         render() {
-            const { attributes, setAttributes } = this.props;
+            const { attributes, setAttributes, clientId } = this.props;
             const {
                 header,
                 headerBgColor,
@@ -91,48 +105,169 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
+                marginBottom,
+                collapsedAll: blockCollapsed,
             } = attributes;
+            const { getBlockRootClientId, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+            const { updateBlockAttributes } = !wp.blockEditor ? dispatch( 'core/editor' ) : dispatch( 'core/block-editor' );
+            const rootBlockId = getBlockRootClientId(clientId);
+            const rootBlockAttrs = getBlockAttributes(rootBlockId);
+            const { collapsedAll } = rootBlockAttrs;
+            if (blockCollapsed !== collapsedAll) setAttributes({collapsedAll: collapsedAll});
 
             return (
-                <div className="advgb-accordion-item">
-                    <div className="advgb-accordion-header"
-                         style={ {
-                             backgroundColor: headerBgColor,
-                             color: headerTextColor,
-                             borderStyle: borderStyle,
-                             borderWidth: borderWidth + 'px',
-                             borderColor: borderColor,
-                             borderRadius: borderRadius + 'px',
-                         } }
-                    >
+                <Fragment>
+                    <InspectorControls>
+                        <PanelBody title={ __( 'Accordion Settings', 'advanced-gutenberg' ) }>
+                            <RangeControl
+                                label={ __( 'Bottom spacing', 'advanced-gutenberg' ) }
+                                value={ marginBottom }
+                                help={ __( 'Define space between each accordion (Frontend view only)', 'advanced-gutenberg' ) }
+                                min={ 0 }
+                                max={ 50 }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { marginBottom: value } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Initial Collapsed', 'advanced-gutenberg' ) }
+                                help={ __( 'Make all accordions collapsed by default.', 'advanced-gutenberg' ) }
+                                checked={ collapsedAll }
+                                onChange={ () => {
+                                    updateBlockAttributes( rootBlockId, { collapsedAll: !collapsedAll } );
+                                    setAttributes( { collapsedAll: !collapsedAll } );
+                                } }
+                            />
+                        </PanelBody>
+                        <PanelBody title={ __( 'Header Settings', 'advanced-gutenberg' ) }>
+                            <BaseControl label={ __( 'Header Icon Style', 'advanced-gutenberg' ) }>
+                                <div className="advgb-icon-items-wrapper">
+                                    {Object.keys( HEADER_ICONS ).map( ( key, index ) => (
+                                        <div className="advgb-icon-item" key={ index }>
+                                                <span className={ key === headerIcon ? 'active' : '' }
+                                                      onClick={ () => this.updateAccordionAttrs( { headerIcon: key } ) }>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        { HEADER_ICONS[key] }
+                                                    </svg>
+                                                </span>
+                                        </div>
+                                    ) ) }
+                                </div>
+                            </BaseControl>
+                            <PanelColorSettings
+                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Background Color', 'advanced-gutenberg' ),
+                                        value: headerBgColor,
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerBgColor: value === undefined ? '#000' : value } ),
+                                    },
+                                    {
+                                        label: __( 'Text Color', 'advanced-gutenberg' ),
+                                        value: headerTextColor,
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerTextColor: value === undefined ? '#eee' : value } ),
+                                    },
+                                    {
+                                        label: __( 'Icon Color', 'advanced-gutenberg' ),
+                                        value: headerIconColor,
+                                        onChange: ( value ) => this.updateAccordionAttrs( { headerIconColor: value === undefined ? '#fff' : value } ),
+                                    },
+                                ] }
+                            />
+                        </PanelBody>
+                        <PanelColorSettings
+                            title={ __( 'Body Color Settings', 'advanced-gutenberg' ) }
+                            initialOpen={ false }
+                            colorSettings={ [
+                                {
+                                    label: __( 'Background Color', 'advanced-gutenberg' ),
+                                    value: bodyBgColor,
+                                    onChange: ( value ) => this.updateAccordionAttrs( { bodyBgColor: value } ),
+                                },
+                                {
+                                    label: __( 'Text Color', 'advanced-gutenberg' ),
+                                    value: bodyTextColor,
+                                    onChange: ( value ) => this.updateAccordionAttrs( { bodyTextColor: value } ),
+                                },
+                            ] }
+                        />
+                        <PanelBody title={ __( 'Border Settings', 'advanced-gutenberg' ) } initialOpen={ false }>
+                            <SelectControl
+                                label={ __( 'Border Style', 'advanced-gutenberg' ) }
+                                value={ borderStyle }
+                                options={ [
+                                    { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
+                                    { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
+                                    { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },
+                                ] }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderStyle: value } ) }
+                            />
+                            <PanelColorSettings
+                                title={ __( 'Color Settings', 'advanced-gutenberg' ) }
+                                initialOpen={ false }
+                                colorSettings={ [
+                                    {
+                                        label: __( 'Border Color', 'advanced-gutenberg' ),
+                                        value: borderColor,
+                                        onChange: ( value ) => this.updateAccordionAttrs( { borderColor: value } ),
+                                    },
+                                ] }
+                            />
+                            <RangeControl
+                                label={ __( 'Border width', 'advanced-gutenberg' ) }
+                                value={ borderWidth }
+                                min={ 0 }
+                                max={ 10 }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderWidth: value } ) }
+                            />
+                            <RangeControl
+                                label={ __( 'Border radius', 'advanced-gutenberg' ) }
+                                value={ borderRadius }
+                                min={ 0 }
+                                max={ 100 }
+                                onChange={ ( value ) => this.updateAccordionAttrs( { borderRadius: value } ) }
+                            />
+                        </PanelBody>
+                    </InspectorControls>
+                    <div className="advgb-accordion-item">
+                        <div className="advgb-accordion-header"
+                             style={ {
+                                 backgroundColor: headerBgColor,
+                                 color: headerTextColor,
+                                 borderStyle: borderStyle,
+                                 borderWidth: borderWidth + 'px',
+                                 borderColor: borderColor,
+                                 borderRadius: borderRadius + 'px',
+                             } }
+                        >
                         <span className="advgb-accordion-header-icon">
                             <svg fill={ headerIconColor } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 { HEADER_ICONS[headerIcon] }
                             </svg>
                         </span>
-                        <RichText
-                            tagName="h4"
-                            value={ header }
-                            onChange={ ( value ) => setAttributes( { header: value } ) }
-                            unstableOnSplit={ () => null }
-                            className="advgb-accordion-header-title"
-                            placeholder={ __( 'Enter header…', 'advanced-gutenberg' ) }
-                            style={ { color: 'inherit' } }
-                        />
+                            <RichText
+                                tagName="h4"
+                                value={ header }
+                                onChange={ ( value ) => setAttributes( { header: value } ) }
+                                unstableOnSplit={ () => null }
+                                className="advgb-accordion-header-title"
+                                placeholder={ __( 'Enter header…', 'advanced-gutenberg' ) }
+                                style={ { color: 'inherit' } }
+                            />
+                        </div>
+                        <div className="advgb-accordion-body"
+                             style={ {
+                                 backgroundColor: bodyBgColor,
+                                 color: bodyTextColor,
+                                 borderStyle: borderStyle,
+                                 borderWidth: borderWidth + 'px',
+                                 borderColor: borderColor,
+                                 borderRadius: borderRadius + 'px',
+                             } }
+                        >
+                            <InnerBlocks />
+                        </div>
                     </div>
-                    <div className="advgb-accordion-body"
-                         style={ {
-                             backgroundColor: bodyBgColor,
-                             color: bodyTextColor,
-                             borderStyle: borderStyle,
-                             borderWidth: borderWidth + 'px',
-                             borderColor: borderColor,
-                             borderRadius: borderRadius + 'px',
-                         } }
-                    >
-                        <InnerBlocks />
-                    </div>
-                </div>
+                </Fragment>
             )
         }
     }
@@ -201,6 +336,10 @@
             marginBottom: {
                 type: 'number',
                 default: 15,
+            },
+            collapsedAll: {
+                type: 'boolean',
+                default: false,
             },
             changed: {
                 type: 'boolean',

@@ -348,7 +348,6 @@ float: left;'
         );
 
         // Include needed JS libraries
-        wp_enqueue_script('jquery-ui-accordion');
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('jquery-ui-sortable');
         wp_enqueue_script('slick_js');
@@ -374,8 +373,9 @@ float: left;'
         // Set variable needed by blocks editor
         $avatarHolder       = plugins_url('assets/blocks/testimonial/avatar-placeholder.png', ADVANCED_GUTENBERG_PLUGIN);
         $default_thumb      = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
-        $login_logo          = plugins_url('assets/blocks/login-form/login.svg', ADVANCED_GUTENBERG_PLUGIN);
-        $reg_logo          = plugins_url('assets/blocks/login-form/reg.svg', ADVANCED_GUTENBERG_PLUGIN);
+        $image_holder       = plugins_url('assets/blocks/advimage/imageholder.svg', ADVANCED_GUTENBERG_PLUGIN);
+        $login_logo         = plugins_url('assets/blocks/login-form/login.svg', ADVANCED_GUTENBERG_PLUGIN);
+        $reg_logo           = plugins_url('assets/blocks/login-form/reg.svg', ADVANCED_GUTENBERG_PLUGIN);
         $saved_settings     = get_option('advgb_settings');
         $custom_styles_data = get_option('advgb_custom_styles');
         $recaptcha_config   = get_option('advgb_recaptcha_config');
@@ -386,6 +386,8 @@ float: left;'
         wp_localize_script('wp-blocks', 'advgbBlocks', array(
             'color' => $blocks_icon_color,
             'post_thumb' => $rp_default_thumb['url'],
+            'default_thumb' => $default_thumb,
+            'image_holder' => $image_holder,
             'avatarHolder' => $avatarHolder,
             'login_logo' => $login_logo,
             'reg_logo' => $reg_logo,
@@ -2068,7 +2070,7 @@ float: left;'
             'accordions', 'button', 'image', 'list',
             'table', 'video', 'contact-form', 'container',
             'count-up','images-slider', 'map', 'newsletter',
-            'recent-posts', 'social-links', 'summary', 'tabs',
+            'recent-posts', 'social-links', 'summary', 'adv-tabs',
             'testimonial', 'woo-products', 'columns', 'column',
             'login-form', 'search-bar',
         );
@@ -2321,6 +2323,39 @@ float: left;'
                             'title' => __('Border Radius', 'advanced-gutenberg'),
                             'type'  => 'number',
                             'name'  => 'borderRadius',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Margin Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Margin Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'marginLeft',
                             'min'   => 0,
                             'max'   => 100,
                         ),
@@ -3046,10 +3081,25 @@ float: left;'
                     ),
                 ),
             ),
-            'advgb-tabs' => array(
+            'advgb-adv-tabs' => array(
                 array(
                     'label'    => __('Tab Settings', 'advanced-gutenberg'),
                     'settings' => array(
+                        array(
+                            'title' => __('Tabs Style', 'advanced-gutenberg'),
+                            'type' => 'select',
+                            'name' => 'tabsStyle',
+                            'options' => array(
+                                array(
+                                    'label' => __('Horizontal', 'advanced-gutenberg'),
+                                    'value' => 'horz',
+                                ),
+                                array(
+                                    'label' => __('Vertical', 'advanced-gutenberg'),
+                                    'value' => 'vert',
+                                ),
+                            )
+                        ),
                         array(
                             'title' => __('Background Color', 'advanced-gutenberg'),
                             'type'  => 'color',
@@ -4047,6 +4097,16 @@ float: left;'
             });');
         }
 
+        if (strpos($content, 'advgb-tabs-wrapper') !== false) {
+            wp_enqueue_script('jquery-ui-tabs');
+            wp_enqueue_script(
+                'advgb_tabs_js',
+                plugins_url('assets/blocks/advtabs/frontend.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
+        }
+
         if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
@@ -4119,17 +4179,12 @@ float: left;'
             wp_enqueue_style('slick_style');
             wp_enqueue_style('slick_theme_style');
             wp_enqueue_script('slick_js');
-            wp_add_inline_script('slick_js', 'jQuery(document).ready(function($){
-                $(".advgb-testimonial.slider-view:not(.slick-initialized)").slick({
-                    infinite: true,
-                    centerMode: true,
-                    centerPadding: "40px",
-                    slidesToShow: 3,
-                    responsive: [
-                        {breakpoint: 480, settings: {slidesToShow: 1}}
-                    ]
-                })
-            });');
+            wp_enqueue_script(
+                'advgb_testimonial_frontend',
+                plugins_url('assets/blocks/testimonial/frontend.js', dirname(__FILE__)),
+                array(),
+                ADVANCED_GUTENBERG_VERSION
+            );
         }
 
         if (strpos($content, 'advgb-testimonial') !== false) {
@@ -4211,6 +4266,10 @@ float: left;'
                 $font_size      = isset($blockAttrs['textSize']) ? intval($blockAttrs['textSize']) : 18;
                 $color          = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '';
                 $bg_color       = isset($blockAttrs['bgColor']) ? $blockAttrs['bgColor'] : '';
+                $mg_top         = isset($blockAttrs['marginTop']) ? intval($blockAttrs['marginTop']) : 0;
+                $mg_right       = isset($blockAttrs['marginRight']) ? intval($blockAttrs['marginRight']) : 0;
+                $mg_bottom      = isset($blockAttrs['marginBottom']) ? intval($blockAttrs['marginBottom']) : 0;
+                $mg_left        = isset($blockAttrs['marginLeft']) ? intval($blockAttrs['marginLeft']) : 0;
                 $pd_top         = isset($blockAttrs['paddingTop']) ? intval($blockAttrs['paddingTop']) : 10;
                 $pd_right       = isset($blockAttrs['paddingRight']) ? intval($blockAttrs['paddingRight']) : 30;
                 $pd_bottom      = isset($blockAttrs['paddingBottom']) ? intval($blockAttrs['paddingBottom']) : 10;
@@ -4233,6 +4292,7 @@ float: left;'
                 $style_html .= 'font-size:'.$font_size.'px;';
                 $style_html .= 'color:'.$color.' !important;';
                 $style_html .= 'background-color:'.$bg_color.' !important;';
+                $style_html .= 'margin:'.$mg_top.'px '.$mg_right.'px '.$mg_bottom.'px '.$mg_left.'px !important;';
                 $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
                 $style_html .= 'border-width:'.$border_width.'px !important;';
                 $style_html .= 'border-color:'.$border_color.' !important;';
@@ -4335,6 +4395,43 @@ float: left;'
                 $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.' !important;';
                 $style_html .= 'opacity:'.$hover_opacity.';';
                 $style_html .= 'transition:all '.$transition_spd.'s ease;';
+                $style_html .= '}';
+            } elseif ($blockName === 'advgb/image') {
+                if (array_key_exists('blockIDX', $blockAttrs)) {
+                    $block_class     = $blockAttrs['blockIDX'];
+                    $default_opacity = isset($blockAttrs['defaultOpacity']) ? $blockAttrs['defaultOpacity'] : 40;
+                    $hover_opacity   = isset($blockAttrs['overlayOpacity']) ? $blockAttrs['overlayOpacity'] : 20;
+
+                    $style_html .= '.' . $block_class . '.advgb-image-block .advgb-image-overlay{';
+                    $style_html .= 'opacity:' . ($default_opacity / 100) . ' !important;';
+                    $style_html .= '}';
+
+                    $style_html .= '.' . $block_class . '.advgb-image-block:hover .advgb-image-overlay{';
+                    $style_html .= 'opacity:' . ($hover_opacity / 100) . ' !important;';
+                    $style_html .= '}';
+                }
+            } elseif ($blockName === 'advgb/testimonial') {
+                if (array_key_exists('pid', $blockAttrs)) {
+                    $block_id   = $blockAttrs['pid'];
+                    $dots_color = isset($blockAttrs['sliderDotsColor']) ? $blockAttrs['sliderDotsColor'] : '#000';
+
+                    $style_html .= '#' . $block_id . ' .slick-dots li button:before{';
+                    $style_html .= 'color:' . $dots_color . ' !important;';
+                    $style_html .= '}';
+                }
+            } elseif ($blockName === 'advgb/adv-tabs') {
+                $block_id    = $blockAttrs['pid'];
+                $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
+                $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
+
+                $style_html .= '#'. $block_id . ' li.advgb-tab.ui-tabs-active{';
+                $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
+                $style_html .= 'color:'.$active_tab_text_color.' !important;';
+                $style_html .= '}';
+
+                $style_html .= '#'. $block_id . ' .advgb-tab-body-header.header-active{';
+                $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
+                $style_html .= 'color:'.$active_tab_text_color.' !important;';
                 $style_html .= '}';
             }
         }

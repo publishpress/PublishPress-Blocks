@@ -13,12 +13,18 @@ class ProfilesCest
 
     public function deactivateProfileBlocks(AcceptanceTester $I)
     {
+        $I->loginAsAdmin('admin', 'password');
+
         $I->wantTo('Check if hidden profile blocks are not available in post edition anymore');
 
         $I->amOnPage('/wp-admin/post-new.php');
 
+        // Hide the Tips popup
+        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+
         // Click on + button
-        $I->click('.editor-inserter button');
+        $I->click('.edit-post-header-toolbar .editor-inserter button');
+
         $I->waitForElement('.editor-inserter__search');
         $I->wait(0.2); // wait for animation done
 

@@ -4,7 +4,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, PanelColorSettings, MediaUpload } = wpBlockEditor;
-    const { RangeControl, PanelBody, ToggleControl, SelectControl, TextControl, IconButton, Button, Toolbar } = wpComponents;
+    const { RangeControl, PanelBody, ToggleControl, SelectControl, TextControl, IconButton, Button, Toolbar, FocalPointPicker } = wpComponents;
 
     class AdvImage extends Component {
         constructor() {
@@ -35,29 +35,27 @@
             }
         }
 
+        componentDidMount() {
+            const { attributes, setAttributes, clientId } = this.props;
+            const { blockIDX } = attributes;
+
+            if (!blockIDX) {
+                setAttributes({blockIDX: `advgb-img-${clientId}`});
+            }
+        }
+
         render() {
             const { currentEdit } = this.state;
             const { attributes, setAttributes, isSelected } = this.props;
             const {
-                openOnClick,
-                openUrl,
-                linkInNewTab,
-                imageUrl,
-                imageID,
-                title,
-                titleColor,
-                subtitle,
-                subtitleColor,
-                overlayColor,
-                fullWidth,
-                width,
-                height,
-                vAlign,
-                hAlign,
+                blockIDX, openOnClick, openUrl, linkInNewTab, imageUrl, imageID,
+                title, titleColor, subtitle, subtitleColor, overlayColor, defaultOpacity,
+                fullWidth, width, height, vAlign, hAlign, overlayOpacity, focalPoint,
             } = attributes;
             const blockClassName = [
                 'advgb-image-block',
                 fullWidth && 'full-width',
+                blockIDX,
             ].filter( Boolean ).join( ' ' );
 
             return (
@@ -139,8 +137,29 @@
                                     min={ 200 }
                                     max={ 1300 }
                                     onChange={ (value) => setAttributes( { width: value } ) }
+                                />}
+                                {imageUrl && (
+                                    <FocalPointPicker
+                                        label={ __( 'Focal Point Picker', 'advanced-gutenberg' ) }
+                                        url={ imageUrl }
+                                        value={ focalPoint }
+                                        onChange={ ( value ) => setAttributes( { focalPoint: value } ) }
+                                    />
+                                ) }
+                                <RangeControl
+                                    label={ __( 'Overlay opacity default', 'advanced-gutenberg' ) }
+                                    value={ defaultOpacity }
+                                    min={ 0 }
+                                    max={ 100 }
+                                    onChange={ (value) => setAttributes( { defaultOpacity: value } ) }
                                 />
-                                }
+                                <RangeControl
+                                    label={ __( 'Overlay opacity hover', 'advanced-gutenberg' ) }
+                                    value={ overlayOpacity }
+                                    min={ 0 }
+                                    max={ 100 }
+                                    onChange={ (value) => setAttributes( { overlayOpacity: value } ) }
+                                />
                             </PanelBody>
                             <PanelColorSettings
                                 title={ __( 'Color Settings', 'advanced-gutenberg' ) }
@@ -159,7 +178,7 @@
                                     {
                                         label: __( 'Overlay Color', 'advanced-gutenberg' ),
                                         value: overlayColor,
-                                        onChange: ( value ) => setAttributes( { overlayColor: value === undefined ? '#2196f3' : value } ),
+                                        onChange: ( value ) => setAttributes( { overlayColor: value === undefined ? '#000' : value } ),
                                     },
                                 ] }
                             />
@@ -189,27 +208,28 @@
                     </InspectorControls>
                     <div className={ blockClassName }
                          style={ {
-                             backgroundImage: `url( ${imageUrl})`,
+                             backgroundImage: `url(${imageUrl || advgbBlocks.image_holder})`,
+                             backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
                              height: height,
                              width: width,
                              justifyContent: vAlign,
                              alignItems: hAlign,
                          } }
                     >
-                    <span className="advgb-image-overlay"
-                          style={ { backgroundColor: overlayColor } }
-                    />
+                        <span className="advgb-image-overlay"
+                              style={ { backgroundColor: overlayColor, opacity: defaultOpacity/100 } }
+                        />
                         {!imageID &&
                         <MediaUpload
                             allowedTypes={ ['image'] }
                             value={ imageID }
-                            onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id } ) }
+                            onSelect={ (image) => setAttributes( { imageUrl: image.url, imageID: image.id, focalPoint: {} } ) }
                             render={ ( { open } ) => (
                                 <Button
-                                    className="button button-large"
+                                    className="button button-large advgb-browse-image-btn"
                                     onClick={ open }
                                 >
-                                    { __( 'Choose image', 'advanced-gutenberg' ) }
+                                    { __( 'Open media library', 'advanced-gutenberg' ) }
                                 </Button>
                             ) }
                         />
@@ -236,6 +256,9 @@
                             unstableOnSplit={ () => null }
                             placeholder={ __( 'Enter subtitle…', 'advanced-gutenberg' ) }
                         />
+                        <style>
+                            {`.${blockIDX}.advgb-image-block:hover .advgb-image-overlay {opacity: ${overlayOpacity/100} !important;}`}
+                        </style>
                     </div>
                 </Fragment>
             );
@@ -250,6 +273,9 @@
     );
 
     const blockAttrs = {
+        blockIDX: {
+            type: 'string',
+        },
         openOnClick: {
             type: 'string',
             default: 'none',
@@ -285,11 +311,11 @@
         },
         overlayColor: {
             type: 'string',
-            default: '#2196f3'
+            default: '#000'
         },
         fullWidth: {
             type: 'boolean',
-            default: false,
+            default: true,
         },
         width: {
             type: 'number',
@@ -307,6 +333,17 @@
             type: 'string',
             default: 'center',
         },
+        overlayOpacity: {
+            type: 'number',
+            default: 20,
+        },
+        defaultOpacity: {
+            type: 'number',
+            default: 40,
+        },
+        focalPoint: {
+            type: 'object',
+        },
         changed: {
             type: 'boolean',
             default: false,
@@ -323,9 +360,13 @@
         category: 'advgb-category',
         keywords: [ __( 'image', 'advanced-gutenberg' ), __( 'photo', 'advanced-gutenberg' ), __( 'box', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
+        supports: {
+            align: true,
+        },
         edit: AdvImage,
         save: ( { attributes } ) => {
             const {
+                blockIDX,
                 openOnClick,
                 openUrl,
                 linkInNewTab,
@@ -340,18 +381,21 @@
                 height,
                 vAlign,
                 hAlign,
+                focalPoint,
             } = attributes;
             const linkURL = ( openOnClick === 'url' && !!openUrl ) ? openUrl : undefined;
             const blockClassName = [
                 'advgb-image-block',
                 fullWidth && 'full-width',
                 openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
+                blockIDX,
             ].filter( Boolean ).join( ' ' );
 
             return (
                 <div className={ blockClassName }
                      style={ {
                          backgroundImage: `url(${imageUrl})`,
+                         backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
                          height: height,
                          width: width,
                          justifyContent: vAlign,
@@ -379,6 +423,77 @@
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    ...blockAttrs,
+                    overlayColor: {
+                        type: 'string',
+                        default: '#2196f3',
+                    },
+                    fullWidth: {
+                        type: 'boolean',
+                        default: false,
+                    },
+                },
+                save: ( { attributes } ) => {
+                    const {
+                        blockIDX,
+                        openOnClick,
+                        openUrl,
+                        linkInNewTab,
+                        imageUrl,
+                        title,
+                        titleColor,
+                        subtitle,
+                        subtitleColor,
+                        overlayColor,
+                        fullWidth,
+                        width,
+                        height,
+                        vAlign,
+                        hAlign,
+                        focalPoint,
+                    } = attributes;
+                    const linkURL = ( openOnClick === 'url' && !!openUrl ) ? openUrl : undefined;
+                    const blockClassName = [
+                        'advgb-image-block',
+                        fullWidth && 'full-width',
+                        openOnClick === 'lightbox' && !!imageUrl && 'advgb-lightbox',
+                        blockIDX,
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClassName }
+                             style={ {
+                                 backgroundImage: `url(${imageUrl})`,
+                                 backgroundPosition: focalPoint ? `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%` : undefined,
+                                 height: height,
+                                 width: width,
+                                 justifyContent: vAlign,
+                                 alignItems: hAlign,
+                             } }
+                             data-image={ imageUrl }
+                        >
+                            <a className="advgb-image-overlay"
+                               style={ { backgroundColor: overlayColor } }
+                               target={ linkInNewTab ? '_blank' : '_self' }
+                               rel="noopener noreferrer"
+                               href={ linkURL }
+                            />
+                            {title && (
+                                <h4 className="advgb-image-title" style={ { color: titleColor } }>
+                                    {title}
+                                </h4>
+                            ) }
+                            {subtitle && (
+                                <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
+                                    {subtitle}
+                                </p>
+                            ) }
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: blockAttrs,
                 save: ( { attributes } ) => {
@@ -408,7 +523,7 @@
                     return (
                         <div className={ blockClassName }
                              style={ {
-                                 backgroundImage: `url( ${imageUrl})`,
+                                 backgroundImage: `url(${imageUrl})`,
                                  height: height,
                                  width: width,
                                  justifyContent: vAlign,
@@ -422,12 +537,16 @@
                                rel="noopener noreferrer"
                                href={ linkURL }
                             />
-                            <h4 className="advgb-image-title" style={ { color: titleColor } }>
-                                {title}
-                            </h4>
-                            <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
-                                {subtitle}
-                            </p>
+                            {title && (
+                                <h4 className="advgb-image-title" style={ { color: titleColor } }>
+                                    {title}
+                                </h4>
+                            ) }
+                            {subtitle && (
+                                <p className="advgb-image-subtitle" style={ { color: subtitleColor } }>
+                                    {subtitle}
+                                </p>
+                            ) }
                         </div>
                     );
                 },

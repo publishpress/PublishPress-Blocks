@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.1.5",
+  "version": "2.2.0",
   "platform": "wordpress",
-  "wp_version": "5.2.3",
+  "wp_version": "5.2.4",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,52 @@
     ]
   },
   "changelog": {
+    "2.2.0": [
+      {
+        "type": "feature",
+        "title": "Tabs block: Rework Tabs block, allow nested block in tabs"
+      },
+      {
+        "type": "feature",
+        "title": "Tabs block: news design and new option for design"
+      },
+      {
+        "type": "feature",
+        "title": "Testimonial block: Improve slider view, new option for slider effects"
+      },
+       {
+        "type": "feature",
+        "title": "Testimonial block: add design options, add avatar position setting"
+      },
+      {
+        "type": "feature",
+        "title": "Columns block: Add max height for each line"
+      },
+      {
+        "type": "feature",
+        "title": "Adv Button block: Add margin settings"
+      },
+      {
+        "type": "feature",
+        "title": "Accordions block: Show settings on all accordion levels"
+      },
+      {
+        "type": "feature",
+        "title": "Maps block: Add settings to show marker tooltip by default"
+      },
+      {
+        "type": "feature",
+        "title": "Adv Image block: Add focal point picker, block alignment, default opacity settings"
+      },
+      {
+        "type": "feature",
+        "title": "Add a defulat svg image for test purpose when none is selected"
+      },
+       {
+        "type": "feature",
+        "title": "Add back profile list"
+      }
+    ],
     "2.1.5": [
       {
         "type": "fix",

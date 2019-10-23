@@ -9,7 +9,8 @@
                 "wp-speed-of-light",
                 "wp-meta-seo",
                 "wp-latest-posts",
-                "advanced-gutenberg"
+                "advanced-gutenberg",
+                "imagerecycle-pdf-image-compression"
             ];
         },
         getElements: function (slug) {
@@ -158,6 +159,7 @@
 
             self.showModal = function (slug) {
                 self.initModal(slug).dialog("open");
+                self.renderTechnicalData(slug);
             };
         },
         blindEvents: function blindEvents() {
@@ -172,6 +174,30 @@
                     self.showModal(slug);
                 }
             });
+        },
+        renderTechnicalData: function renderTechnicalData(slug) {
+            var self = this;
+
+            self.getElements(slug).technicalElement.find('textarea[name="technical"]').val('Loading...');
+            $.ajax({
+                url: ajaxurl,
+                dataType: 'json',
+                method: 'POST',
+                data: {
+                    action: 'ju_feedback_get_technical_data_' + slug,
+                    ajax_nonce: ju_feedback.token
+                },
+                success: function (res) {
+                    if (res.get_status) {
+                        pretty_str = JSON.stringify(res.data, undefined, 4);
+                        self.getElements(slug).technicalElement.find('textarea[name="technical"]').attr('data-info', JSON.stringify(res.data));
+                    } else {
+                        pretty_str = 'We could not find technical information !';
+                    }
+
+                    self.getElements(slug).technicalElement.find('textarea[name="technical"]').val(pretty_str);
+                }
+            })
         },
         init: function () {
             this.modal();

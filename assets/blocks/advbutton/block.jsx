@@ -6,7 +6,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
-    const { BaseControl, RangeControl, PanelBody, TextControl, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
+    const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl, IconButton, Toolbar } = wpComponents;
 
     class AdvButton extends Component {
         constructor() {
@@ -64,6 +64,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             } = this.props;
             const {
                 id, align, url, urlOpenNewTab, title, text, bgColor, textColor, textSize,
+                marginTop, marginRight, marginBottom, marginLeft,
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 borderWidth, borderColor, borderRadius, borderStyle,
                 hoverTextColor, hoverBgColor, hoverShadowColor, hoverShadowH, hoverShadowV, hoverShadowBlur, hoverShadowSpread,
@@ -126,6 +127,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         font-size: ${textSize}px;
                         color: ${textColor} !important;
                         background-color: ${bgColor} !important;
+                        margin: ${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px;
                         padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
                         border-width: ${borderWidth}px;
                         border-color: ${borderColor} !important;
@@ -226,6 +228,36 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 </Fragment>
                             ) }
                         </PanelBody>
+                        <PanelBody title={ __( 'Margin', 'advanced-gutenberg' ) } initialOpen={ false } >
+                            <RangeControl
+                                label={ __( 'Margin top', 'advanced-gutenberg' ) }
+                                value={ marginTop || '' }
+                                onChange={ ( value ) => setAttributes( { marginTop: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                            <RangeControl
+                                label={ __( 'Margin right', 'advanced-gutenberg' ) }
+                                value={ marginRight || '' }
+                                onChange={ ( value ) => setAttributes( { marginRight: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                            <RangeControl
+                                label={ __( 'Margin bottom', 'advanced-gutenberg' ) }
+                                value={ marginBottom || '' }
+                                onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                            <RangeControl
+                                label={ __( 'Margin left', 'advanced-gutenberg' ) }
+                                value={ marginLeft || '' }
+                                onChange={ ( value ) => setAttributes( { marginLeft: value } ) }
+                                min={ 0 }
+                                max={ 100 }
+                            />
+                        </PanelBody>
                         <PanelBody title={ __( 'Padding', 'advanced-gutenberg' ) } initialOpen={ false } >
                             <RangeControl
                                 label={ __( 'Padding top', 'advanced-gutenberg' ) }
@@ -314,9 +346,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     }
 
     const buttonBlockIcon = (
-        <svg height="20" viewBox="2 2 22 22" width="20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M5 14.5h14v-6H5v6zM11 .55V3.5h2V.55h-2zm8.04 2.5l-1.79 1.79 1.41 1.41 1.8-1.79-1.42-1.41zM13 22.45V19.5h-2v2.95h2zm7.45-3.91l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM3.55 4.46l1.79 1.79 1.41-1.41-1.79-1.79-1.41 1.41zm1.41 15.49l1.79-1.8-1.41-1.41-1.79 1.79 1.41 1.42z"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 22 22">
+            <path fill="none" d="M0 0h24v24H0V0z"/>
+            <path d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z"/>
         </svg>
     );
     const blockAttrs = {
@@ -347,6 +379,22 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         textSize: {
             type: 'number',
             default: 18,
+        },
+        marginTop: {
+            type: 'number',
+            default: 0,
+        },
+        marginRight: {
+            type: 'number',
+            default: 0,
+        },
+        marginBottom: {
+            type: 'number',
+            default: 0,
+        },
+        marginLeft: {
+            type: 'number',
+            default: 0,
         },
         paddingTop: {
             type: 'number',
