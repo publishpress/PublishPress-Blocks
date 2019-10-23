@@ -9,11 +9,10 @@ class ColumnsBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-columns-wrapper');
-            $I->clickWithLeftButton('.advgb-columns-wrapper');
-            $I->clickWithLeftButton('.editor-block-navigation');
+            $I->click(".editor-block-navigation");
             $I->waitForText('Block Navigation');
             $I->wait(0.5);
-            $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]');
+            $I->clickWithLeftButton('//button[text()="Columns Manager"]');
         } catch(Exception $e) {
             // do stuff
         }
@@ -149,6 +148,8 @@ class ColumnsBlockCest
         $I->click('//label[text()="Content Max Width"]/div[@class="advgb-unit-wrapper"]/span[text()="%"]');
         $I->fillField('//label[text()="Content Min Height"]/following-sibling::node()/following-sibling::node()', 20);
         $I->click('//label[text()="Content Min Height"]/div[@class="advgb-unit-wrapper"]/span[text()="vh"]');
+        $I->fillField('//label[text()="Content Max Height"]/following-sibling::node()/following-sibling::node()', 20);
+        $I->click('//label[text()="Content Max Height"]/div[@class="advgb-unit-wrapper"]/span[text()="vh"]');
 
         $I->updatePost();
         $I->waitForElement('.wp-block-advgb-columns');
@@ -157,6 +158,7 @@ class ColumnsBlockCest
         $I->seeElement('section.advgb-columns-wrapper');
         $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "max-width:90%")]');
         $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "min-height:20vh")]');
+        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "max-height:20vh")]');
     }
 
     public function changeInnerColumnStyles(AcceptanceTester $I)
@@ -298,4 +300,6 @@ class ColumnsBlockCest
         $I->seeElement($selectorCol2.'[contains(@style, "width:50%")]');
         $I->seeElement($selectorCol3.'[contains(@style, "width:20%")]');
     }
+
+
 }

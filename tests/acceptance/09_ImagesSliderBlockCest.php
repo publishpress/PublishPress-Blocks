@@ -9,10 +9,7 @@ class ImagesSliderBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-images-slider-block');
-            $I->click(".editor-block-navigation");
-            $I->waitForText("Block Navigation");
-            $I->wait(0.5);
-            $I->clickWithLeftButton('//button[text()="Images Slider"]');
+            $I->clickWithLeftButton('.advgb-images-slider-block');
         } catch(Exception $e) {
             // do stuff
         }
@@ -40,6 +37,9 @@ class ImagesSliderBlockCest
 
         $I->waitForText('Add images');
         $I->click('Add images');
+
+        $I->waitForText('Media Library');
+        $I->click('Media Library');
 
         // Add some images
         $I->waitForElement('//body/div[contains(@id, "__wp-uploader-id-") and not(contains(@style, "display: none;"))]//div[@class="attachments-browser"]//ul/li[@aria-label="vineyard"]');
