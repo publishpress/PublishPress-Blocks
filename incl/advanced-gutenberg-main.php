@@ -4309,7 +4309,8 @@ float: left;'
                 $style_html .= '}';
             } elseif ($blockName === 'advgb/columns' || $blockName === 'advgb/column') {
                 $colID      = $blockAttrs['colId'];
-                $marginUnit = $paddingUnit = 'px';
+                $marginUnit = 'px';
+                $paddingUnit = 'px';
                 if ($blockName === 'advgb/column') {
                     $colID = $colID . '>.advgb-column-inner';
                 }
