@@ -288,6 +288,7 @@
                 marginUnit,
                 marginTop, marginRight, marginBottom, marginLeft,
                 marginTopM, marginRightM, marginBottomM, marginLeftM,
+                paddingUnit,
                 paddingTop, paddingRight, paddingBottom, paddingLeft,
                 paddingTopM, paddingRightM, paddingBottomM, paddingLeftM,
                 vAlign,
@@ -508,7 +509,18 @@
                                 <PanelBody title={ tabSelected !== 'desktop' ? AdvColumnsEdit.jsUcfirst(tabSelected) + __(' Padding', 'advanced-gutenberg') : __('Padding', 'advanced-gutenberg') }
                                            initialOpen={false}
                                 >
-                                    <div className="advgb-controls-title">{ __( 'Unit (px)', 'advanced-gutenberg' ) }</div>
+                                    <div className="advgb-controls-title">
+                                        <span>{ __( 'Unit', 'advanced-gutenberg' ) }</span>
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            { ['px', 'em', 'vh', '%'].map( (unit, idx) => (
+                                                <span className={`advgb-unit ${paddingUnit === unit ? 'selected' : ''}`} key={idx}
+                                                      onClick={ () => setAttributes( { paddingUnit: unit } ) }
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) ) }
+                                        </div>
+                                    </div>
                                     {MARGIN_PADDING_CONTROLS.map((pos, idx) => (
                                         <RangeControl
                                             key={ idx }
@@ -647,10 +659,10 @@
                             margin-right: ${marginRight + marginUnit};
                             margin-bottom: ${marginBottom + marginUnit};
                             margin-left: ${marginLeft + marginUnit};
-                            padding-top: ${paddingTop}px;
-                            padding-right: ${paddingRight}px;
-                            padding-bottom: ${paddingBottom}px;
-                            padding-left: ${paddingLeft}px;
+                            padding-top: ${paddingTop + paddingUnit};
+                            padding-right: ${paddingRight + paddingUnit};
+                            padding-bottom: ${paddingBottom + paddingUnit};
+                            padding-left: ${paddingLeft + paddingUnit};
                         }
                         @media screen and (max-width: 767px) {
                             #block-${clientId} .advgb-columns-wrapper .advgb-columns {
@@ -658,10 +670,10 @@
                                 margin-right: ${marginRightM + marginUnit};
                                 margin-bottom: ${marginBottomM + marginUnit};
                                 margin-left: ${marginLeftM + marginUnit};
-                                padding-top: ${paddingTopM}px;
-                                padding-right: ${paddingRightM}px;
-                                padding-bottom: ${paddingBottomM}px;
-                                padding-left: ${paddingLeftM}px;
+                                padding-top: ${paddingTopM + paddingUnit};
+                                padding-right: ${paddingRightM + paddingUnit};
+                                padding-bottom: ${paddingBottomM + paddingUnit};
+                                padding-left: ${paddingLeftM + paddingUnit};
                             }
                         }`}
                     </style>
@@ -759,6 +771,10 @@
         },
         paddingLeftM: {
             type: 'number',
+        },
+        paddingUnit: {
+            type: 'string',
+            default: 'px',
         },
         gutter: {
             type: 'number',
