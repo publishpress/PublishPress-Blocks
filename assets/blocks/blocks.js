@@ -6942,6 +6942,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     marginRightM = attributes.marginRightM,
                     marginBottomM = attributes.marginBottomM,
                     marginLeftM = attributes.marginLeftM,
+                    paddingUnit = attributes.paddingUnit,
                     paddingTop = attributes.paddingTop,
                     paddingRight = attributes.paddingRight,
                     paddingBottom = attributes.paddingBottom,
@@ -7178,7 +7179,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement(
                                         'div',
                                         { className: 'advgb-controls-title' },
-                                        __('Unit (px)', 'advanced-gutenberg')
+                                        React.createElement(
+                                            'span',
+                                            null,
+                                            __('Unit', 'advanced-gutenberg')
+                                        ),
+                                        React.createElement(
+                                            'div',
+                                            { className: 'advgb-unit-wrapper', key: 'unit' },
+                                            ['px', 'em', 'vh', '%'].map(function (unit, idx) {
+                                                return React.createElement(
+                                                    'span',
+                                                    { className: 'advgb-unit ' + (paddingUnit === unit ? 'selected' : ''), key: idx,
+                                                        onClick: function onClick() {
+                                                            return setAttributes({ paddingUnit: unit });
+                                                        }
+                                                    },
+                                                    unit
+                                                );
+                                            })
+                                        )
                                     ),
                                     MARGIN_PADDING_CONTROLS.map(function (pos, idx) {
                                         return React.createElement(RangeControl, {
@@ -7352,7 +7372,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'style',
                         null,
-                        '#block-' + clientId + ' .advgb-columns-wrapper .advgb-columns {\n                            margin-top: ' + (marginTop + marginUnit) + ';\n                            margin-right: ' + (marginRight + marginUnit) + ';\n                            margin-bottom: ' + (marginBottom + marginUnit) + ';\n                            margin-left: ' + (marginLeft + marginUnit) + ';\n                            padding-top: ' + paddingTop + 'px;\n                            padding-right: ' + paddingRight + 'px;\n                            padding-bottom: ' + paddingBottom + 'px;\n                            padding-left: ' + paddingLeft + 'px;\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-' + clientId + ' .advgb-columns-wrapper .advgb-columns {\n                                margin-top: ' + (marginTopM + marginUnit) + ';\n                                margin-right: ' + (marginRightM + marginUnit) + ';\n                                margin-bottom: ' + (marginBottomM + marginUnit) + ';\n                                margin-left: ' + (marginLeftM + marginUnit) + ';\n                                padding-top: ' + paddingTopM + 'px;\n                                padding-right: ' + paddingRightM + 'px;\n                                padding-bottom: ' + paddingBottomM + 'px;\n                                padding-left: ' + paddingLeftM + 'px;\n                            }\n                        }'
+                        '#block-' + clientId + ' .advgb-columns-wrapper .advgb-columns {\n                            margin-top: ' + (marginTop + marginUnit) + ';\n                            margin-right: ' + (marginRight + marginUnit) + ';\n                            margin-bottom: ' + (marginBottom + marginUnit) + ';\n                            margin-left: ' + (marginLeft + marginUnit) + ';\n                            padding-top: ' + (paddingTop + paddingUnit) + ';\n                            padding-right: ' + (paddingRight + paddingUnit) + ';\n                            padding-bottom: ' + (paddingBottom + paddingUnit) + ';\n                            padding-left: ' + (paddingLeft + paddingUnit) + ';\n                        }\n                        @media screen and (max-width: 767px) {\n                            #block-' + clientId + ' .advgb-columns-wrapper .advgb-columns {\n                                margin-top: ' + (marginTopM + marginUnit) + ';\n                                margin-right: ' + (marginRightM + marginUnit) + ';\n                                margin-bottom: ' + (marginBottomM + marginUnit) + ';\n                                margin-left: ' + (marginLeftM + marginUnit) + ';\n                                padding-top: ' + (paddingTopM + paddingUnit) + ';\n                                padding-right: ' + (paddingRightM + paddingUnit) + ';\n                                padding-bottom: ' + (paddingBottomM + paddingUnit) + ';\n                                padding-left: ' + (paddingLeftM + paddingUnit) + ';\n                            }\n                        }'
                     )
                 );
             }
@@ -7603,6 +7623,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         paddingLeftM: {
             type: 'number'
+        },
+        paddingUnit: {
+            type: 'string',
+            default: 'px'
         },
         gutter: {
             type: 'number',
