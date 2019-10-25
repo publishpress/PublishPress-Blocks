@@ -582,6 +582,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 .advgb-column-2 .advgb-count-up-columns-three {
     display: none;
 }
+.advgb-columns-1 > .advgb-column {
+    flex: none;
+    width: 100%;
+}
 
 /*Social links block styles*/
 .advgb-social-links-block {
