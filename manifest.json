@@ -41,7 +41,7 @@
     "2.2.1": [
       {
         "type": "fix",
-        "title": "Testimonial block not working on frontend if inside Columns block with 1 column layout"
+        "title": "Frontend testimonial block not working inside Columns block with 1 column layout"
       },
       {
         "type": "fix",
