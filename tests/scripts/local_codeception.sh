@@ -28,7 +28,7 @@ if [[ -z "$PHP_VERSIONS" ]]; then
 fi
 
 if [[ -z "$WP_VERSIONS" ]]; then
-    WP_VERSIONS=("5.1" "latest")
+    WP_VERSIONS=("5.2" "latest")
 fi
 
 if [[ -z "$GUTENBERG_TYPES" ]]; then

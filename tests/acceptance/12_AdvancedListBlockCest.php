@@ -65,13 +65,30 @@ class AdvancedListBlockCest
         $I->fillField('//label[text()="Text size"]/following-sibling::node()/following-sibling::node()/following-sibling::node()', 22);
 
         $I->click('//button[text()="Icon color"]');
-        $I->waitForElement('.components-color-palette');
-        $I->click('//button[text()="Icon color"]/parent::node()/following-sibling::node()/div[last()]/*[1]');
-        $I->clickAndWait('.components-color-picker__inputs-wrapper input');
-        $I->selectCurrentElementText();
-        $I->pressKeys('#ff0000');
-        $I->pressKeys(WebDriverKeys::ENTER);
-        $I->clickWithLeftButton('//div[contains(@class, "advgb-list-item")]'); // click block to hide picker
+
+        try {
+            $I->waitForElement('.components-color-palette');
+            $I->click('//button[text()="Icon color"]/parent::node()/following-sibling::node()/div[last()]/*[1]');
+            $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+            $I->selectCurrentElementText();
+            $I->pressKeys('#ff0000');
+            $I->pressKeys(WebDriverKeys::ENTER);
+            $I->clickWithLeftButton('//div[contains(@class, "advgb-list-item")]'); // click block to hide picker
+        } catch(Exception $e) {
+
+        }
+
+        try {
+            $I->waitForElement('.components-circular-option-picker');
+            $I->click('//button[text()="Icon color"]/parent::node()/following-sibling::node()/div[last()]/*[1]');
+            $I->clickAndWait('.components-color-picker__inputs-wrapper input');
+            $I->selectCurrentElementText();
+            $I->pressKeys('#ff0000');
+            $I->pressKeys(WebDriverKeys::ENTER);
+            $I->clickWithLeftButton('//div[contains(@class, "advgb-list-item")]'); // click block to hide picker
+        } catch(Exception $e) {
+
+        }
 
         $I->clearField('//label[text()="Icon size"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Icon size"]/following-sibling::node()/following-sibling::node()', 23);

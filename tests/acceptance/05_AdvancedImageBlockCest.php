@@ -35,7 +35,7 @@ class AdvancedImageBlockCest
         // Insert block
         $I->insertBlock('Advanced Image');
 
-        $I->waitForText('Choose image');
+        $I->waitForElement('//button[text()="Open media library"]');
         $I->click('//div[contains(@class, "advgb-image-block")]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
@@ -43,7 +43,7 @@ class AdvancedImageBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('Lorem ipsum');
 
-        $I->click('Choose image');
+        $I->click('//button[text()="Open media library"]');
         $I->waitForText('Media Library');
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');

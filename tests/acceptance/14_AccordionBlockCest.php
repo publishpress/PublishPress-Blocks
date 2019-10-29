@@ -9,10 +9,7 @@ class AccordionBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-accordions-wrapper');
-            $I->click(".editor-block-navigation");
-            $I->waitForText("Block Navigation");
-            $I->wait(0.5);
-            $I->clickWithLeftButton('//button[text()="Advanced Accordion"]');
+            $I->click('//div[contains(@data-type, "advgb/accordion-item")][1]//div[@class="advgb-accordion-header"]');
         } catch(Exception $e) {
             // do stuff
         }

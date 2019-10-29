@@ -42,11 +42,11 @@ class CountUpBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('Visitors');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-one"]/div[2]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-one"]//div[contains(@class, "advgb-counter-number")]');
         $I->selectCurrentElementText();
         $I->pressKeys('2345');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-one"]/div[3]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-one"]//p[contains(@class, "advgb-count-up-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('per day');
         $I->wait(1);
@@ -79,11 +79,11 @@ class CountUpBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('Downloaded');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]/div[2]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]//div[contains(@class, "advgb-counter-number")]');
         $I->selectCurrentElementText();
         $I->pressKeys('199');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]/div[3]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]//p[contains(@class, "advgb-count-up-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('times');
 
@@ -92,11 +92,11 @@ class CountUpBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('Profit');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[2]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]//div[contains(@class, "advgb-counter-number")]');
         $I->selectCurrentElementText();
         $I->pressKeys('50000');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]/div[3]//div');
+        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]//p[contains(@class, "advgb-count-up-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('per month');
 

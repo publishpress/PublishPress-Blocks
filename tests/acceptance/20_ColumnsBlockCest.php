@@ -9,10 +9,11 @@ class ColumnsBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-columns-wrapper');
-            $I->click(".editor-block-navigation");
+            $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
+            /*$I->click(".editor-block-navigation");
             $I->waitForText('Block Navigation');
             $I->wait(0.5);
-            $I->clickWithLeftButton('//button[text()="Columns Manager"]');
+            $I->clickWithLeftButton('//button[text()="Columns Manager"]');*/
         } catch(Exception $e) {
             // do stuff
         }
@@ -166,9 +167,7 @@ class ColumnsBlockCest
         $I->wantTo('Change inner columns styles');
 
         // Change column 1
-        $I->clickWithLeftButton('.editor-block-navigation');
-        $I->waitForText('Block Navigation');
-        $I->wait(0.5);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[1]/div/button');
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Solid'));
@@ -186,9 +185,7 @@ class ColumnsBlockCest
         $I->clickWithLeftButton('.advgb-columns-wrapper'); // click block to hide picker
 
         // Change column 2
-        $I->clickWithLeftButton('.editor-block-navigation');
-        $I->waitForText('Block Navigation');
-        $I->wait(0.5);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[2]/div/button');
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dotted'));
@@ -206,9 +203,7 @@ class ColumnsBlockCest
         $I->clickWithLeftButton('.advgb-columns-wrapper'); // click block to hide picker
 
         // Change column 3
-        $I->clickWithLeftButton('.editor-block-navigation');
-        $I->waitForText('Block Navigation');
-        $I->wait(0.5);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[3]/div/button');
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dashed'));
@@ -263,26 +258,20 @@ class ColumnsBlockCest
         $I->wantTo('Change inner columns width');
 
         // Change column 1
-        $I->clickWithLeftButton('.editor-block-navigation');
-        $I->waitForText('Block Navigation');
-        $I->wait(0.5);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[1]/div/button');
 
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 30);
 
         // Change column 2
-        $I->clickWithLeftButton('.editor-block-navigation');
-        $I->waitForText('Block Navigation');
-        $I->wait(0.5);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[2]/div/button');
 
         $I->see('Available: 70%');
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 50);
 
         // Change column 2
-        $I->clickWithLeftButton('.editor-block-navigation');
-        $I->waitForText('Block Navigation');
-        $I->wait(0.5);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
         $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[3]/div/button');
 
         $I->see('Available: 20%');
