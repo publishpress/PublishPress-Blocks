@@ -168,7 +168,7 @@ class ColumnsBlockCest
 
         // Change column 1
         $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[1]/div/button');
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][1]', 93, -9);
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Solid'));
         $I->waitForText('Border width');
@@ -186,7 +186,7 @@ class ColumnsBlockCest
 
         // Change column 2
         $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[2]/div/button');
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][2]', 93, -9);
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dotted'));
         $I->waitForText('Border width');
@@ -204,7 +204,7 @@ class ColumnsBlockCest
 
         // Change column 3
         $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[3]/div/button');
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][3]', 93, -9);
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dashed'));
         $I->waitForText('Border width');
@@ -258,21 +258,18 @@ class ColumnsBlockCest
         $I->wantTo('Change inner columns width');
 
         // Change column 1
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[1]/div/button');
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][1]', 93, -9);
 
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 30);
 
         // Change column 2
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[2]/div/button');
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][2]', 93, -9);
 
         $I->see('Available: 70%');
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 50);
 
         // Change column 2
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@class, "editor-block-navigation__item")]/button[text()="Columns Manager"]/parent::node()/following-sibling::node()/li[3]/div/button');
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][3]', 93, -9);
 
         $I->see('Available: 20%');
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 20);
