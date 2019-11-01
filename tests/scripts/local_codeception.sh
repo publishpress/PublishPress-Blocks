@@ -28,11 +28,15 @@ if [[ -z "$PHP_VERSIONS" ]]; then
 fi
 
 if [[ -z "$WP_VERSIONS" ]]; then
-    WP_VERSIONS=("latest")
+    WP_VERSIONS=("5.1" "latest")
 fi
 
 if [[ -z "$GUTENBERG_TYPES" ]]; then
     GUTENBERG_TYPES=("core" "plugin")
+fi
+
+if [[ $GUTENBERG_TYPES == "core" ]]; then
+    WP_VERSIONS=("latest")
 fi
 
 # Start docker containers
