@@ -866,6 +866,7 @@
 
             const blockClasses = [
                 'advgb-columns',
+                'advgb-columns-row',
                 'advgb-is-mobile',
                 vAlign && `columns-valign-${vAlign}`,
                 columns && `advgb-columns-${columns}`,
@@ -879,20 +880,73 @@
             ].filter( Boolean ).join( ' ' );
 
             return (
-                <Tag className="advgb-columns-wrapper">
-                    <div className={ blockClasses } id={ colId }
-                         style={ {
-                             maxWidth: !!contentMaxWidth ? `${contentMaxWidth}${contentMaxWidthUnit}` : undefined,
-                             minHeight: !!contentMinHeight ? `${contentMinHeight}${contentMinHeightUnit}` : undefined,
-                             maxHeight: !!contentMaxHeight ? `${contentMaxHeight}${contentMaxHeightUnit}` : undefined,
-                         } }
-                    >
-                        <InnerBlocks.Content />
+                <Tag className="advgb-columns-wrapper" id={ colId }>
+                    <div className="advgb-columns-container">
+                        <div className={ blockClasses }
+                             style={ {
+                                 maxWidth: !!contentMaxWidth ? `${contentMaxWidth}${contentMaxWidthUnit}` : undefined,
+                                 minHeight: !!contentMinHeight ? `${contentMinHeight}${contentMinHeightUnit}` : undefined,
+                                 maxHeight: !!contentMaxHeight ? `${contentMaxHeight}${contentMaxHeightUnit}` : undefined,
+                             } }
+                        >
+                            <InnerBlocks.Content />
+                        </div>
                     </div>
                 </Tag>
             );
         },
         deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        columns,
+                        columnsLayout, columnsLayoutT, columnsLayoutM,
+                        vAlign,
+                        gutter,
+                        collapsedGutter,
+                        collapsedRtl,
+                        columnsWrapped,
+                        contentMaxWidth,
+                        contentMaxWidthUnit,
+                        contentMinHeight,
+                        contentMinHeightUnit,
+                        contentMaxHeight,
+                        contentMaxHeightUnit,
+                        wrapperTag,
+                        colId,
+                    } = attributes;
+                    const Tag = wrapperTag;
+
+                    const blockClasses = [
+                        'advgb-columns',
+                        'advgb-is-mobile',
+                        vAlign && `columns-valign-${vAlign}`,
+                        columns && `advgb-columns-${columns}`,
+                        columnsLayout && `layout-${columnsLayout}`,
+                        columnsLayoutT && `tbl-layout-${columnsLayoutT}`,
+                        columnsLayoutM && `mbl-layout-${columnsLayoutM}`,
+                        !!gutter && `gutter-${gutter}`,
+                        !!collapsedGutter && `vgutter-${collapsedGutter}`,
+                        collapsedRtl && 'order-rtl',
+                        columnsWrapped && 'columns-wrapped',
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <Tag className="advgb-columns-wrapper">
+                            <div className={ blockClasses } id={ colId }
+                                 style={ {
+                                     maxWidth: !!contentMaxWidth ? `${contentMaxWidth}${contentMaxWidthUnit}` : undefined,
+                                     minHeight: !!contentMinHeight ? `${contentMinHeight}${contentMinHeightUnit}` : undefined,
+                                     maxHeight: !!contentMaxHeight ? `${contentMaxHeight}${contentMaxHeightUnit}` : undefined,
+                                 } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </Tag>
+                    );
+                }
+            },
             {
                 attributes: blockAttrs,
                 save: function ( { attributes } ) {

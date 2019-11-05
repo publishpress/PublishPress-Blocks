@@ -7718,21 +7718,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var Tag = wrapperTag;
 
-            var blockClasses = ['advgb-columns', 'advgb-is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+            var blockClasses = ['advgb-columns', 'advgb-columns-row', 'advgb-is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
 
             return React.createElement(
                 Tag,
-                { className: 'advgb-columns-wrapper' },
+                { className: 'advgb-columns-wrapper', id: colId },
                 React.createElement(
                     'div',
-                    { className: blockClasses, id: colId,
-                        style: {
-                            maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
-                            minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined,
-                            maxHeight: !!contentMaxHeight ? '' + contentMaxHeight + contentMaxHeightUnit : undefined
-                        }
-                    },
-                    React.createElement(InnerBlocks.Content, null)
+                    { className: 'advgb-columns-container' },
+                    React.createElement(
+                        'div',
+                        { className: blockClasses,
+                            style: {
+                                maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
+                                minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined,
+                                maxHeight: !!contentMaxHeight ? '' + contentMaxHeight + contentMaxHeightUnit : undefined
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
                 )
             );
         },
@@ -7740,6 +7744,48 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: blockAttrs,
             save: function save(_ref4) {
                 var attributes = _ref4.attributes;
+                var columns = attributes.columns,
+                    columnsLayout = attributes.columnsLayout,
+                    columnsLayoutT = attributes.columnsLayoutT,
+                    columnsLayoutM = attributes.columnsLayoutM,
+                    vAlign = attributes.vAlign,
+                    gutter = attributes.gutter,
+                    collapsedGutter = attributes.collapsedGutter,
+                    collapsedRtl = attributes.collapsedRtl,
+                    columnsWrapped = attributes.columnsWrapped,
+                    contentMaxWidth = attributes.contentMaxWidth,
+                    contentMaxWidthUnit = attributes.contentMaxWidthUnit,
+                    contentMinHeight = attributes.contentMinHeight,
+                    contentMinHeightUnit = attributes.contentMinHeightUnit,
+                    contentMaxHeight = attributes.contentMaxHeight,
+                    contentMaxHeightUnit = attributes.contentMaxHeightUnit,
+                    wrapperTag = attributes.wrapperTag,
+                    colId = attributes.colId;
+
+                var Tag = wrapperTag;
+
+                var blockClasses = ['advgb-columns', 'advgb-is-mobile', vAlign && 'columns-valign-' + vAlign, columns && 'advgb-columns-' + columns, columnsLayout && 'layout-' + columnsLayout, columnsLayoutT && 'tbl-layout-' + columnsLayoutT, columnsLayoutM && 'mbl-layout-' + columnsLayoutM, !!gutter && 'gutter-' + gutter, !!collapsedGutter && 'vgutter-' + collapsedGutter, collapsedRtl && 'order-rtl', columnsWrapped && 'columns-wrapped'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    Tag,
+                    { className: 'advgb-columns-wrapper' },
+                    React.createElement(
+                        'div',
+                        { className: blockClasses, id: colId,
+                            style: {
+                                maxWidth: !!contentMaxWidth ? '' + contentMaxWidth + contentMaxWidthUnit : undefined,
+                                minHeight: !!contentMinHeight ? '' + contentMinHeight + contentMinHeightUnit : undefined,
+                                maxHeight: !!contentMaxHeight ? '' + contentMaxHeight + contentMaxHeightUnit : undefined
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
                 var columns = attributes.columns,
                     columnsLayout = attributes.columnsLayout,
                     columnsLayoutT = attributes.columnsLayoutT,
