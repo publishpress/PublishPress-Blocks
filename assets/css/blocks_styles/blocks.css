@@ -2281,6 +2281,13 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     width: 16.66%;
 }
 
+/*****************************/
+/* COVER BLOCK */
+/*****************************/
+.wp-block-cover, .wp-block-cover-image {
+    overflow: visible;
+}
+
     /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {
