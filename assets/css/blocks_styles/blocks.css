@@ -2394,6 +2394,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 /*------------------------------*/
 /*--- RESPONSIVE STYLES HERE ---*/
 /*------------------------------*/
+
 @media screen and (max-width: 599px) {
     .advgb-count-up {
         flex-direction: column;
@@ -2486,6 +2487,18 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     .advgb-tabs-wrapper.advgb-tab-vert-tablet .advgb-tab-body-wrapper {
         flex-grow: 3;
         max-width: 75%;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
+        margin-left: 14px !important;
+        margin-right: 14px !important;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]:not(:first-child) {
+        margin-left: 46px !important;
     }
 }
 
