@@ -872,6 +872,13 @@ div.advgb-tab-body {
     display: none;
 }
 
+#editor div.advgb-tab-body {
+    padding: 0;
+}
+#editor .advgb-tab-body-wrapper {
+    padding: 20px;
+}
+
 .advgb-tab-body-wrapper {
     border: 1px solid #ccc;
     max-width: 100%;
@@ -911,6 +918,14 @@ div.advgb-tab-body {
 .advgb-tabs-wrapper.advgb-tab-vert-desktop .advgb-tab-body-wrapper {
     flex-grow: 3;
     max-width: 75%;
+}
+#editor [data-type="advgb/tab"] > .editor-block-list__block-edit > .editor-block-mover,
+#editor [data-type="advgb/tab"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar {
+    display: none !important;
+}
+#editor [data-type="advgb/tab"] > .editor-block-list__block-edit::before {
+    box-shadow: none;
+    border: none;
 }
 
     /*Testimonial block styles*/
