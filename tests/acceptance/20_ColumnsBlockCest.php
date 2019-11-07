@@ -143,7 +143,6 @@ class ColumnsBlockCest
 
         // Change
         $I->click('//button[text()="Row Settings"]');
-        $I->click('//label[text()="Columns Wrapped"]/preceding-sibling::node()');
         $I->selectOption('//label[text()="Wrapper Tag"]/following-sibling::node()', array('text' => 'Section'));
         $I->fillField('//label[text()="Content Max Width"]/following-sibling::node()/following-sibling::node()', 90);
         $I->click('//label[text()="Content Max Width"]/div[@class="advgb-unit-wrapper"]/span[text()="%"]');
@@ -157,9 +156,9 @@ class ColumnsBlockCest
 
         // Check
         $I->seeElement('section.advgb-columns-wrapper');
-        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "max-width:90%")]');
-        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "min-height:20vh")]');
-        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")][contains(@style, "max-height:20vh")]');
+        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@style, "max-width:90%")]');
+        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@style, "min-height:20vh")]');
+        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@style, "max-height:20vh")]');
     }
 
     public function changeInnerColumnStyles(AcceptanceTester $I)
@@ -167,8 +166,7 @@ class ColumnsBlockCest
         $I->wantTo('Change inner columns styles');
 
         // Change column 1
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][1]', 93, -9);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][1]/div[contains(@class, "editor-block-list__block-edit")]', 0, 1);
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Solid'));
         $I->waitForText('Border width');
@@ -185,8 +183,7 @@ class ColumnsBlockCest
         $I->clickWithLeftButton('.advgb-columns-wrapper'); // click block to hide picker
 
         // Change column 2
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][2]', 93, -9);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][2]/div[contains(@class, "editor-block-list__block-edit")]', 0, 1);
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dotted'));
         $I->waitForText('Border width');
@@ -203,8 +200,7 @@ class ColumnsBlockCest
         $I->clickWithLeftButton('.advgb-columns-wrapper'); // click block to hide picker
 
         // Change column 3
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][3]', 93, -9);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][3]/div[contains(@class, "editor-block-list__block-edit")]', 0, 1);
 
         $I->selectOption('//label[text()="Border style"]/following-sibling::node()', array('text' => 'Dashed'));
         $I->waitForText('Border width');
@@ -258,18 +254,18 @@ class ColumnsBlockCest
         $I->wantTo('Change inner columns width');
 
         // Change column 1
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][1]', 93, -9);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][1]/div[contains(@class, "editor-block-list__block-edit")]', 0, 1);
 
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 30);
 
         // Change column 2
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][2]', 93, -9);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][2]/div[contains(@class, "editor-block-list__block-edit")]', 0, 1);
 
         $I->see('Available: 70%');
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 50);
 
         // Change column 2
-        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][3]', 93, -9);
+        $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Adv. Column")][3]/div[contains(@class, "editor-block-list__block-edit")]', 0, 1);
 
         $I->see('Available: 20%');
         $I->fillField('//label[text()="Width (%)"]/following-sibling::node()/following-sibling::node()', 20);
@@ -287,5 +283,19 @@ class ColumnsBlockCest
         $I->seeElement($selectorCol3.'[contains(@style, "width:20%")]');
     }
 
+    public function changeColumnsWrap(AcceptanceTester $I)
+    {
+        $I->wantTo('Change columns settings');
 
+        // Change
+        $I->click('//button[text()="Row Settings"]');
+        $I->click('//label[text()="Columns Wrapped"]/preceding-sibling::node()');
+
+        $I->updatePost();
+        $I->waitForElement('.wp-block-advgb-columns');
+
+        // Check
+        $I->seeElement('section.advgb-columns-wrapper');
+        $I->seeElement('//div[contains(@class, "advgb-columns")][contains(@class, "columns-wrapped")]');
+    }
 }
