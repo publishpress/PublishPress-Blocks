@@ -751,7 +751,10 @@ span.advgb-social-icon.selected:before {
     background-color: #eee;
 }
 
-.advgb-tab-body-wrapper .block-list-appender,
+.advgb-tab-body-wrapper > .editor-inner-blocks > .editor-block-list__layout > .block-list-appender {
+    display: none !important;
+}
+
 .advgb-tab-body-wrapper > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__insertion-point {
     display: none !important;
 }
