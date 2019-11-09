@@ -95,6 +95,23 @@ for WP_VERSION in "${WP_VERSIONS[@]}"; do
     for INSTALL_TYPE in "${INSTALL_TYPES[@]}"; do
         # Test the core gutenberg version and plugin version
         for GUTENBERG_TYPE in "${GUTENBERG_TYPES[@]}"; do
+        if ([ $WP_VERSION == "5.1" ]); then
+            if ([ $GUTENBERG_TYPE != "core" ]); then
+                set +e
+
+                # Remove previous codeception fail outputs
+                codecept clean
+
+                start_containers
+
+                set -e
+
+                cd "$PLUGIN_DIR"
+                source "$PLUGIN_DIR/tests/scripts/codeception.sh"
+            else
+                continue
+            fi
+        else
             set +e
 
             # Remove previous codeception fail outputs
@@ -106,6 +123,8 @@ for WP_VERSION in "${WP_VERSIONS[@]}"; do
 
             cd "$PLUGIN_DIR"
             source "$PLUGIN_DIR/tests/scripts/codeception.sh"
+        fi
+
         done
     done
 done

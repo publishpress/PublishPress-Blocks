@@ -31,7 +31,7 @@ class createUpdateTestBlocksCest
 
         // Change post title
         $I->waitForElement('.editor-post-title__input');
-        $I->fillField('.editor-post-title__input', 'Update ');
+        $I->fillField('.editor-post-title__input', 'Update test');
     }
 
     public function createRecentPostsBlock(AcceptanceTester $I)
@@ -76,9 +76,6 @@ class createUpdateTestBlocksCest
         $I->pressKeys('World');
 
         // Change color
-        /*$I->click('//span[text()="Background Color"]/following-sibling::node()//div'); // Todo: remove this line color picket selection as it's buggy in the last version
-        $I->click('//span[text()="Background Color"]/following-sibling::node()//div[last()]');
-        $I->fillField('.components-color-picker__inputs-wrapper input', '#ff006a');*/
         $I->click('//span[text()="Background Color"]/following-sibling::node()//div[2]');
 
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
@@ -97,15 +94,15 @@ class createUpdateTestBlocksCest
         /***** Add Advanced Image *****/
         $I->insertBlock('Advanced Image');
 
-        $I->waitForText('Choose image');
-        $I->click('//div[@class="advgb-image-block"]//h4');
+        $I->waitForElement('//button[text()="Open media library"]');
+        $I->click('//div[contains(@class, "advgb-image-block")]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Hello world');
         $I->click('//div[contains(@class, "advgb-image-block")]//p[contains(@class, "advgb-image-subtitle")]');
         $I->selectCurrentElementText();
         $I->pressKeys('Lorem ipsum');
 
-        $I->click('Choose image');
+        $I->click('//button[text()="Open media library"]');
         $I->waitForText('Media Library');
         $I->click('Media Library');
         $I->waitForElement('//div[@class="attachments-browser"]//ul/li[@aria-label="The Bubble Nebula"]');
@@ -313,13 +310,6 @@ class createUpdateTestBlocksCest
         $I->pressKeys(\WebDriverKeys::DOWN);
     }
 
-    public function createTabsBlock(AcceptanceTester $I)
-    {
-        /***** Add Tabs *****/
-        $I->insertBlock('Tabs');
-        // todo: Modify some content here
-    }
-
     public function createProductsBlock(AcceptanceTester $I)
     {
         /***** Add Woo Products *****/
@@ -334,7 +324,6 @@ class createUpdateTestBlocksCest
 
         $I->waitForElement('//div[@data-type="core/heading"]//h2');
         $I->pressKeys('I am');
-        $I->wait(0.1);
 
         $I->insertBlock('Heading');
 
@@ -507,6 +496,13 @@ class createUpdateTestBlocksCest
         $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
         // Change button position to center
         $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
+    }
+
+    public function createTabsBlock(AcceptanceTester $I)
+    {
+        /***** Add Tabs *****/
+        $I->insertBlock('Tabs');
+        // todo: Modify some content here
     }
 
     public function publishPost(AcceptanceTester $I)

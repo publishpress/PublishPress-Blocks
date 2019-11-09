@@ -9,10 +9,7 @@ class TabsBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-tabs-wrapper');
-            $I->click(".editor-block-navigation");
-            $I->waitForText("Block Navigation");
-            $I->wait(0.5);
-            $I->clickWithLeftButton('//button[text()="Advanced Tabs"]');
+            $I->click('//ul[@class="advgb-tabs-panel"]/li[1]//p');
         } catch(Exception $e) {
             // do stuff
         }

@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "platform": "wordpress",
   "wp_version": "5.2.4",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,28 @@
     ]
   },
   "changelog": {
+    "2.2.2": [
+      {
+        "type": "fix",
+        "title": "Columns manager frontend grid"
+      },
+      {
+        "type": "fix",
+        "title": "Recent Posts block return PHP error if don't have post"
+      },
+      {
+        "type": "fix",
+        "title": "Cover block toolbar is hidden"
+      },
+      {
+        "type": "fix",
+        "title": "Missing Add Block area of nested block inside Tabs block"
+      },
+      {
+        "type": "fix",
+        "title": "Add spacing in backend block columns"
+      }
+    ],
     "2.2.1": [
       {
         "type": "fix",

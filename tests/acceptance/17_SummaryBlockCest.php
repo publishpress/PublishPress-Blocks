@@ -34,24 +34,24 @@ class SummaryBlockCest
 
         // Insert some headings
         $I->insertBlock('Heading');
-        $I->waitForElement('//div[@data-type="core/heading"]//div[contains(@class, "wp-block-heading")]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"]');
         $I->pressKeys('Heading lv1');
         $I->wait(0.1);
 
         $I->insertBlock('Heading');
-        $I->waitForElement('//div[@data-type="core/heading"][2]//div[contains(@class, "wp-block-heading")]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"]');
         $I->pressKeys('Heading lv2');
         $I->wait(0.1);
         $I->click('//p[text()="Level"]/following-sibling::node()//div[3]');
 
         $I->insertBlock('Heading');
-        $I->waitForElement('//div[@data-type="core/heading"][3]//div[contains(@class, "wp-block-heading")]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"]');
         $I->pressKeys('Heading lv3');
         $I->wait(0.1);
         $I->click('//p[text()="Level"]/following-sibling::node()//div[4]');
 
         $I->insertBlock('Heading');
-        $I->waitForElement('//div[@data-type="core/heading"][4]//div[contains(@class, "wp-block-heading")]//h2');
+        $I->waitForElement('//div[@data-type="core/heading"]');
         $I->pressKeys('Heading lv1');
         $I->wait(0.1);
 
