@@ -2295,6 +2295,46 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     overflow: visible;
 }
 
+/* backend styles */
+.advgb-columns .block-editor-block-list__layout>.block-editor-block-list__block>.block-editor-block-list__block-edit {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#editor .advgb-columns {
+    margin-bottom: 28px;
+}
+
+#editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]>.editor-block-list__block-edit>div>.wp-block-advgb-column>.advgb-column-inner>.editor-inner-blocks {
+    margin-top: -12px;
+    margin-bottom: -12px;
+}
+#editor .advgb-columns .editor-block-list__layout {
+    margin-left: 0;
+    margin-right: 0;
+}
+#editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]>.editor-block-list__block-edit:before {
+    left: 0;
+    right: 0;
+}
+.editor-styles-wrapper [data-block] {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+#editor .advgb-columns .block-editor-block-list__block .block-list-appender {
+    margin: 0;
+}
+.wp-block-advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]>.editor-block-list__block-edit>[data-block] {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/columns"].is-selected>.block-editor-block-list__block-edit>[data-block]>div>div>.block-editor-inner-blocks,
+.block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/columns"] > .block-editor-block-list__block-edit > [data-block] > div > div > .block-editor-inner-blocks,
+.block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/column"] > .block-editor-block-list__block-edit > [data-block] > div > div > .block-editor-inner-blocks {
+    padding: 6px;
+}
+
     /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {
@@ -2438,6 +2478,18 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     .advgb-tabs-wrapper.advgb-tab-vert-tablet .advgb-tab-body-wrapper {
         flex-grow: 3;
         max-width: 75%;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
+        margin-left: 14px !important;
+        margin-right: 14px !important;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]:not(:first-child) {
+        margin-left: 46px !important;
     }
 }
 
