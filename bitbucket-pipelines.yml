@@ -178,8 +178,8 @@ pipelines:
     'release/*':
     - parallel:
       - step: *shared_phpcs
-      - step: *shared_codeception_51_core_install
-      - step: *shared_codeception_51_core_update
+#      - step: *shared_codeception_51_core_install
+#      - step: *shared_codeception_51_core_update
       - step: *shared_codeception_51_plugin_install
       - step: *shared_codeception_51_plugin_update
       - step: *shared_codeception_core_install
