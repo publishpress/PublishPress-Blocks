@@ -725,7 +725,7 @@ span.advgb-social-icon.selected:before {
 
 /*Tabs block styles*/
 #editor .advgb-tabs-block .advgb-tab p.mce-content-body,
-#editor .advgb-tabs-block .advgb-tab-body p.mce-content-body
+#editor .advgb-tabs-block .advgb-tab-body p.mce-content-body,
 #editor .advgb-tabs-wrapper .advgb-tab p.mce-content-body,
 #editor .advgb-tabs-wrapper .advgb-tab-body p.mce-content-body {
     color: inherit;
@@ -751,7 +751,10 @@ span.advgb-social-icon.selected:before {
     background-color: #eee;
 }
 
-.advgb-tab-body-wrapper .block-list-appender,
+.advgb-tab-body-wrapper > .editor-inner-blocks > .editor-block-list__layout > .block-list-appender {
+    display: none !important;
+}
+
 .advgb-tab-body-wrapper > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__insertion-point {
     display: none !important;
 }
@@ -872,6 +875,13 @@ div.advgb-tab-body {
     display: none;
 }
 
+#editor div.advgb-tab-body {
+    padding: 0;
+}
+#editor .advgb-tab-body-wrapper {
+    padding: 20px;
+}
+
 .advgb-tab-body-wrapper {
     border: 1px solid #ccc;
     max-width: 100%;
@@ -911,6 +921,14 @@ div.advgb-tab-body {
 .advgb-tabs-wrapper.advgb-tab-vert-desktop .advgb-tab-body-wrapper {
     flex-grow: 3;
     max-width: 75%;
+}
+#editor [data-type="advgb/tab"] > .editor-block-list__block-edit > .editor-block-mover,
+#editor [data-type="advgb/tab"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar {
+    display: none !important;
+}
+#editor [data-type="advgb/tab"] > .editor-block-list__block-edit::before {
+    box-shadow: none;
+    border: none;
 }
 
     /*Testimonial block styles*/
@@ -2122,38 +2140,31 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     margin-bottom: 0 !important;
 }
 
-.advgb-columns.gutter-10 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-10 > .advgb-column {
+.advgb-columns.gutter-10 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 10px;
 }
 
-.advgb-columns.gutter-20 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-20 > .advgb-column {
+.advgb-columns.gutter-20 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 20px;
 }
 
-.advgb-columns.gutter-30 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-30 > .advgb-column {
+.advgb-columns.gutter-30 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 30px;
 }
 
-.advgb-columns.gutter-40 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-40 > .advgb-column {
+.advgb-columns.gutter-40 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 40px;
 }
 
-.advgb-columns.gutter-50 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-50 > .advgb-column {
+.advgb-columns.gutter-50 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 50px;
 }
 
-.advgb-columns.gutter-70 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-70 > .advgb-column {
+.advgb-columns.gutter-70 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 70px;
 }
 
-.advgb-columns.gutter-90 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-90 > .advgb-column {
+.advgb-columns.gutter-90 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 90px;
 }
 
@@ -2288,6 +2299,53 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     width: 16.66%;
 }
 
+/* backend styles */
+.advgb-columns .block-editor-block-list__layout>.block-editor-block-list__block>.block-editor-block-list__block-edit {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#editor .advgb-columns {
+    margin-bottom: 28px;
+}
+
+#editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]>.editor-block-list__block-edit>div>.wp-block-advgb-column>.advgb-column-inner>.editor-inner-blocks {
+    margin-top: -12px;
+    margin-bottom: -12px;
+}
+#editor .advgb-columns .editor-block-list__layout {
+    margin-left: 0;
+    margin-right: 0;
+}
+#editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]>.editor-block-list__block-edit:before {
+    left: 0;
+    right: 0;
+}
+.editor-styles-wrapper [data-block] {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+#editor .advgb-columns .block-editor-block-list__block .block-list-appender {
+    margin: 0;
+}
+.wp-block-advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]>.editor-block-list__block-edit>[data-block] {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/columns"].is-selected>.block-editor-block-list__block-edit>[data-block]>div>div>.block-editor-inner-blocks,
+.block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/columns"] > .block-editor-block-list__block-edit > [data-block] > div > div > .block-editor-inner-blocks,
+.block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/column"] > .block-editor-block-list__block-edit > [data-block] > div > div > .block-editor-inner-blocks {
+    padding: 6px;
+}
+
+/*****************************/
+/* COVER BLOCK */
+/*****************************/
+.wp-block-cover, .wp-block-cover-image {
+    overflow: visible;
+}
+
     /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {
@@ -2339,6 +2397,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 /*------------------------------*/
 /*--- RESPONSIVE STYLES HERE ---*/
 /*------------------------------*/
+
 @media screen and (max-width: 599px) {
     .advgb-count-up {
         flex-direction: column;
@@ -2431,6 +2490,18 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     .advgb-tabs-wrapper.advgb-tab-vert-tablet .advgb-tab-body-wrapper {
         flex-grow: 3;
         max-width: 75%;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
+        margin-left: 14px !important;
+        margin-right: 14px !important;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]:not(:first-child) {
+        margin-left: 46px !important;
     }
 }
 
