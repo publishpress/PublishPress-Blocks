@@ -33,6 +33,8 @@
         ],
     };
 
+    const previewImageData = 'data:image/png;base64,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';
+
     class AdvVideo extends Component {
         constructor() {
             super( ...arguments );
@@ -155,6 +157,7 @@
                 poster,
                 posterID,
                 openInLightbox,
+                isPreview,
             } = attributes;
 
             const blockClassName = [
@@ -195,6 +198,9 @@
             };
 
             return (
+                isPreview ?
+                    <img alt={__('Advanced Video', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
+                    :
                 <Fragment>
                     { ( (!!poster && openInLightbox) || ( !openInLightbox && videoSourceType === 'local' ) ) &&
                     <BlockControls>
@@ -473,6 +479,10 @@
             type: 'boolean',
             default: false,
         },
+        isPreview: {
+            type: 'boolean',
+            default: false,
+        },
     };
 
     registerBlockType( 'advgb/video', {
@@ -485,6 +495,11 @@
         category: 'advgb-category',
         keywords: [ __( 'video', 'advanced-gutenberg' ), __( 'embed', 'advanced-gutenberg' ), __( 'media', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
+        example: {
+            attributes: {
+                isPreview: true
+            },
+        },
         edit: AdvVideo,
         save: function ( { attributes } ) {
             const {
