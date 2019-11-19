@@ -120,16 +120,18 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                     value={ searchedText }
                                                     onChange={ (value) => this.setState( { searchedText: value } ) }
                                                 />
-                                                {/*{searchedText.trim().length > 2 && !!advgbBlocks.iconList[item.iconType] && (
-                                                    <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto'} }>
+                                                {searchedText.trim().length > 2 && !!advgbBlocks.iconList[item.iconType] && (
+                                                    <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto', marginBottom: '24px'} }>
                                                         {Object.keys(advgbBlocks.iconList[item.iconType])
                                                             .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
                                                             .map( (icon, index) => {
-                                                                const iconName = item.icon.replace(/_/g, '-');
+
+                                                                const iconName = icon.replace(/_/g, '-');
                                                                 const iconClass = [
                                                                     item.iconType === 'material' && 'mi mi-',
-                                                                    item.icon.replace(/_/g, '-'),
+                                                                    icon.replace(/_/g, '-'),
                                                                 ].filter( Boolean ).join('');
+                                                                {console.log(iconName, iconClass)}
 
                                                                 return (
                                                                     <div className="advgb-icon-item" key={ index }>
@@ -143,7 +145,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                                 )
                                                             } ) }
                                                     </div>
-                                                ) }*/}
+                                                ) }
                                             </Fragment>
                                             ) }
                                             <SelectControl
@@ -172,30 +174,31 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                 value={ item.bgColor }
                                                 onChange={ (value) => this.updateItems(idx, { bgColor: value } ) }
                                             />
-                                            <PanelBody
-                                                title={ __( `Border`, 'advanced-gutenberg' ) }
-                                                initialOpen={ false }
+                                            {item.style && item.style === 'stacked' && <PanelBody
+                                                title={__( `Border`, 'advanced-gutenberg' )}
+                                                initialOpen={false}
                                             >
                                                 <AdvColorControl
-                                                    label={ __('Border Color', 'advanced-gutenberg') }
-                                                    value={ item.borderColor }
-                                                    onChange={ (value) => this.updateItems(idx, { borderColor: value } ) }
+                                                    label={__( 'Border Color', 'advanced-gutenberg' )}
+                                                    value={item.borderColor}
+                                                    onChange={( value ) => this.updateItems( idx, { borderColor: value } )}
                                                 />
                                                 <RangeControl
-                                                    label={ __( 'Border Size(px)', 'advanced-gutenberg' ) }
-                                                    min={ 0 }
-                                                    max={ 20 }
-                                                    value={ item.borderSize }
-                                                    onChange={ (value) => this.updateItems(idx, { borderSize: value } ) }
+                                                    label={__( 'Border Size(px)', 'advanced-gutenberg' )}
+                                                    min={0}
+                                                    max={20}
+                                                    value={item.borderSize}
+                                                    onChange={( value ) => this.updateItems( idx, { borderSize: value } )}
                                                 />
                                                 <RangeControl
-                                                    label={ __( 'Border Radius(%)', 'advanced-gutenberg' ) }
-                                                    min={ 0 }
-                                                    max={ 50 }
-                                                    value={ item.borderRadius }
-                                                    onChange={ (value) => this.updateItems(idx, { borderRadius: value } ) }
+                                                    label={__( 'Border Radius(%)', 'advanced-gutenberg' )}
+                                                    min={0}
+                                                    max={50}
+                                                    value={item.borderRadius}
+                                                    onChange={( value ) => this.updateItems( idx, { borderRadius: value } )}
                                                 />
                                             </PanelBody>
+                                            }
                                             <PanelBody
                                                 title={ __('Link', 'advanced-gutenberg') }
                                                 initialOpen={false}
@@ -231,52 +234,54 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                     onChange={ ( value ) => this.updateItems(idx, { title: value } ) }
                                                 />
                                             </PanelBody>
-                                            <PanelBody
-                                                title={ __(' Padding', 'advanced-gutenberg') }
+                                            {item.style && item.style === 'stacked' && <PanelBody
+                                                title={__( ' Padding', 'advanced-gutenberg' )}
                                                 initialOpen={false}
                                             >
                                                 <div className="advgb-controls-title">
-                                                    <span>{ __( 'Unit', 'advanced-gutenberg' ) }</span>
+                                                    <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
                                                     <div className="advgb-unit-wrapper" key="unit">
-                                                        { ['px', 'em', 'vh', '%'].map( (unit, uIdx) => (
+                                                        {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
                                                             <span
-                                                                className={`advgb-unit ${item.paddingUnit === unit ? 'selected' : ''}`} key={uIdx}
-                                                                onClick={ () => this.updateItems(idx, { paddingUnit: unit } ) }
+                                                                className={`advgb-unit ${item.paddingUnit === unit ? 'selected' : ''}`}
+                                                                key={uIdx}
+                                                                onClick={() => this.updateItems( idx, { paddingUnit: unit } )}
                                                             >
                                                             {unit}
                                                         </span>
-                                                        ) ) }
+                                                        ) )}
                                                     </div>
                                                 </div>
                                                 <RangeControl
                                                     beforeIcon="arrow-up-alt2"
-                                                    value={ item.paddingTop }
-                                                    min={ 0 }
-                                                    max={ 180 }
-                                                    onChange={ (value) => this.updateItems(idx, { paddingTop: value } ) }
+                                                    value={item.paddingTop}
+                                                    min={0}
+                                                    max={180}
+                                                    onChange={( value ) => this.updateItems( idx, { paddingTop: value } )}
                                                 />
                                                 <RangeControl
                                                     beforeIcon="arrow-down-alt2"
-                                                    value={ item.paddingBottom }
-                                                    min={ 0 }
-                                                    max={ 180 }
-                                                    onChange={ (value) => this.updateItems(idx, { paddingBottom: value } ) }
+                                                    value={item.paddingBottom}
+                                                    min={0}
+                                                    max={180}
+                                                    onChange={( value ) => this.updateItems( idx, { paddingBottom: value } )}
                                                 />
                                                 <RangeControl
                                                     beforeIcon="arrow-left-alt2"
-                                                    value={ item.paddingLeft }
-                                                    min={ 0 }
-                                                    max={ 180 }
-                                                    onChange={ (value) => this.updateItems(idx, { paddingLeft: value } ) }
+                                                    value={item.paddingLeft}
+                                                    min={0}
+                                                    max={180}
+                                                    onChange={( value ) => this.updateItems( idx, { paddingLeft: value } )}
                                                 />
                                                 <RangeControl
                                                     beforeIcon="arrow-right-alt2"
-                                                    value={ item.paddingRight }
-                                                    min={ 0 }
-                                                    max={ 180 }
-                                                    onChange={ (value) => this.updateItems(idx, { paddingRight: value } ) }
+                                                    value={item.paddingRight}
+                                                    min={0}
+                                                    max={180}
+                                                    onChange={( value ) => this.updateItems( idx, { paddingRight: value } )}
                                                 />
                                             </PanelBody>
+                                            }
                                             <PanelBody
                                                 title={ __(' Margin', 'advanced-gutenberg') }
                                                 initialOpen={false}
@@ -334,16 +339,47 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             {items.map( (item, idx) => {
                                 j++;
                                 if (j > numberItem) return false;
-                                const iconClass = [
-                                    'advgb-icon',
+                                const advgbIconClass = [
                                     `advgb-icon-style-${item.style}`,
                                     'advgb-icon-wrap',
                                     `advgb-item-${idx}`,
                                 ].filter( Boolean ).join( ' ' );
+
+                                const iconWrapClass = [
+                                    'advgb-icon',
+                                    `advgb-icon-${item.icon}`
+                                ].filter( Boolean ).join('');
+
+                                const iconClass = [
+                                    item.iconType === 'material' && 'mi mi-',
+                                    item.icon,
+                                ].filter( Boolean ).join('');
+
+                                const iconWrapStyles = {
+                                    height: item.size + 'px',
+                                    marginTop: item.marginTop + item.marginUnit,
+                                    marginBottom: item.marginBottom + item.marginUnit,
+                                    marginLeft: item.marginLeft + item.marginUnit,
+                                    marginRight: item.marginRight + item.marginUnit,
+                                    paddingTop: item.style !== 'default' ? item.paddingTop + item.paddingUnit : 0,
+                                    paddingBottom: item.style !== 'default' ? item.paddingBottom + item.paddingUnit : 0,
+                                    paddingLeft: item.style !== 'default' ? item.paddingLeft + item.paddingUnit : 0,
+                                    paddingRight: item.style !== 'default' ? item.paddingRight + item.paddingUnit : 0,
+                                    borderWidth: item.style !== 'default' ? item.borderSize + 'px' : 0,
+                                    borderStyle: 'solid',
+                                    borderColor: item.borderColor
+                                };
+
+                                const iconStyles = {
+                                    fontSize: item.size + 'px',
+                                    color: item.color
+                                };
                                 return (
                                     <Fragment>
-                                        <div className={iconClass}>
-                                            sfsdf
+                                        <div className={advgbIconClass}>
+                                            <div className={iconWrapClass} style={iconWrapStyles}>
+                                                <i className={iconClass} style={iconStyles}></i>
+                                            </div>
                                         </div>
                                     </Fragment>
                                 );
@@ -363,10 +399,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             type: 'array',
             default: times(10, () => (
                 {
-                    icon: '',
-                    iconType: '',
+                    icon: 'info',
+                    iconType: 'material',
                     size: 50,
-                    lineWidth: 2,
                     color: '#111111',
                     style: 'default',
                     bgColor: '#fff',

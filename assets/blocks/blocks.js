@@ -2533,7 +2533,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             onChange: function onChange(value) {
                                                 return _this2.setState({ searchedText: value });
                                             }
-                                        })
+                                        }),
+                                        searchedText.trim().length > 2 && !!advgbBlocks.iconList[item.iconType] && React.createElement(
+                                            'div',
+                                            { className: 'advgb-icon-items-wrapper button-icons-list', style: { maxHeight: 300, overflow: 'auto', marginBottom: '24px' } },
+                                            Object.keys(advgbBlocks.iconList[item.iconType]).filter(function (icon) {
+                                                return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
+                                            }).map(function (icon, index) {
+
+                                                var iconName = icon.replace(/_/g, '-');
+                                                var iconClass = [item.iconType === 'material' && 'mi mi-', icon.replace(/_/g, '-')].filter(Boolean).join('');
+                                                {
+                                                    console.log(iconName, iconClass);
+                                                }
+
+                                                return React.createElement(
+                                                    'div',
+                                                    { className: 'advgb-icon-item', key: index },
+                                                    React.createElement(
+                                                        'span',
+                                                        { onClick: function onClick() {
+                                                                return _this2.updateItems(idx, { icon: iconName });
+                                                            },
+                                                            className: iconName === item.icon && 'active',
+                                                            title: iconClass.split(' ').pop()
+                                                        },
+                                                        React.createElement('i', { className: iconClass })
+                                                    )
+                                                );
+                                            })
+                                        )
                                     )),
                                     React.createElement(SelectControl, {
                                         label: __('Icon Style', 'advanced-gutenberg'),
@@ -2566,7 +2595,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return _this2.updateItems(idx, { bgColor: value });
                                         }
                                     }),
-                                    React.createElement(
+                                    item.style && item.style === 'stacked' && React.createElement(
                                         PanelBody,
                                         {
                                             title: __('Border', 'advanced-gutenberg'),
@@ -2639,7 +2668,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             }
                                         })
                                     ),
-                                    React.createElement(
+                                    item.style && item.style === 'stacked' && React.createElement(
                                         PanelBody,
                                         {
                                             title: __(' Padding', 'advanced-gutenberg'),
@@ -2660,7 +2689,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     return React.createElement(
                                                         'span',
                                                         {
-                                                            className: 'advgb-unit ' + (item.paddingUnit === unit ? 'selected' : ''), key: uIdx,
+                                                            className: 'advgb-unit ' + (item.paddingUnit === unit ? 'selected' : ''),
+                                                            key: uIdx,
                                                             onClick: function onClick() {
                                                                 return _this2.updateItems(idx, { paddingUnit: unit });
                                                             }
@@ -2788,14 +2818,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             items.map(function (item, idx) {
                                 j++;
                                 if (j > numberItem) return false;
-                                var iconClass = ['advgb-icon', 'advgb-icon-style-' + item.style, 'advgb-icon-wrap', 'advgb-item-' + idx].filter(Boolean).join(' ');
+                                var advgbIconClass = ['advgb-icon-style-' + item.style, 'advgb-icon-wrap', 'advgb-item-' + idx].filter(Boolean).join(' ');
+
+                                var iconWrapClass = ['advgb-icon', 'advgb-icon-' + item.icon].filter(Boolean).join('');
+
+                                var iconClass = [item.iconType === 'material' && 'mi mi-', item.icon].filter(Boolean).join('');
+
+                                var iconWrapStyles = {
+                                    height: item.size + 'px',
+                                    marginTop: item.marginTop + item.marginUnit,
+                                    marginBottom: item.marginBottom + item.marginUnit,
+                                    marginLeft: item.marginLeft + item.marginUnit,
+                                    marginRight: item.marginRight + item.marginUnit,
+                                    paddingTop: item.style !== 'default' ? item.paddingTop + item.paddingUnit : 0,
+                                    paddingBottom: item.style !== 'default' ? item.paddingBottom + item.paddingUnit : 0,
+                                    paddingLeft: item.style !== 'default' ? item.paddingLeft + item.paddingUnit : 0,
+                                    paddingRight: item.style !== 'default' ? item.paddingRight + item.paddingUnit : 0,
+                                    borderWidth: item.style !== 'default' ? item.borderSize + 'px' : 0,
+                                    borderStyle: 'solid',
+                                    borderColor: item.borderColor
+                                };
+
+                                var iconStyles = {
+                                    fontSize: item.size + 'px',
+                                    color: item.color
+                                };
                                 return React.createElement(
                                     Fragment,
                                     null,
                                     React.createElement(
                                         'div',
-                                        { className: iconClass },
-                                        'sfsdf'
+                                        { className: advgbIconClass },
+                                        React.createElement(
+                                            'div',
+                                            { className: iconWrapClass, style: iconWrapStyles },
+                                            React.createElement('i', { className: iconClass, style: iconStyles })
+                                        )
                                     )
                                 );
                             })
@@ -2816,10 +2874,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'array',
             default: times(10, function () {
                 return {
-                    icon: '',
-                    iconType: '',
+                    icon: 'info',
+                    iconType: 'material',
                     size: 50,
-                    lineWidth: 2,
                     color: '#111111',
                     style: 'default',
                     bgColor: '#fff',

@@ -2319,6 +2319,11 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     width: 16.66%;
 }
 
+/* Advanced Icons */
+.advgb-icon-wrap {
+    display: inline-block;
+}
+
 /*****************************/
 /* COVER BLOCK */
 /*****************************/
@@ -2364,6 +2369,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 .block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/columns"] > .block-editor-block-list__block-edit > [data-block] > div > div > .block-editor-inner-blocks,
 .block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/column"] > .block-editor-block-list__block-edit > [data-block] > div > div > .block-editor-inner-blocks {
     padding: 6px;
+}
+
+.advgb-icon-items-wrapper .advgb-icon-item .active {
+    background-color: #ddd;
 }
 
 /*Responsive for Columns*/

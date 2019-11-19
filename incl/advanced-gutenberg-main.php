@@ -353,6 +353,7 @@ float: left;'
         wp_enqueue_script('slick_js');
 
         // Include needed CSS styles
+        wp_enqueue_style('material_icon_font');
         wp_enqueue_style('slick_style');
         wp_enqueue_style('slick_theme_style');
 
@@ -382,6 +383,9 @@ float: left;'
         $recaptcha_config   = $recaptcha_config !== false ? $recaptcha_config : array('recaptcha_enable' => 0);
         $blocks_icon_color  = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
         $rp_default_thumb   = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
+        $icons              = array();
+        $icons['material']  = file_get_contents(plugins_url('assets/css/fonts/codepoints.json', ADVANCED_GUTENBERG_PLUGIN));
+        $icons['material']  = json_decode($icons['material'], true);
 
         wp_localize_script('wp-blocks', 'advgbBlocks', array(
             'color' => $blocks_icon_color,
@@ -396,6 +400,7 @@ float: left;'
             'customStyles' => !$custom_styles_data ? array() : $custom_styles_data,
             'captchaEnabled' => $recaptcha_config['recaptcha_enable'],
             'pluginUrl' => plugins_url('', ADVANCED_GUTENBERG_PLUGIN),
+            'iconList' => $icons,
             'registerEnabled' => get_option('users_can_register'),
         ));
 
@@ -1478,6 +1483,10 @@ float: left;'
         wp_register_style(
             'slick_theme_style',
             plugins_url('assets/css/slick-theme.css', dirname(__FILE__))
+        );
+        wp_register_style(
+            'material_icon_font',
+            plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
         );
         wp_register_style(
             'advgb_bulma_styles',
@@ -4448,6 +4457,9 @@ float: left;'
                 $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
                 $style_html .= 'color:'.$active_tab_text_color.' !important;';
                 $style_html .= '}';
+            } elseif ($blockName === 'advgb/advicon') {
+                wp_enqueue_style('material_icon_font');
+                $block_id = $blockAttrs['blockIDX'];
             }
         }
 
