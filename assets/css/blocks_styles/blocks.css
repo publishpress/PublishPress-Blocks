@@ -519,7 +519,19 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 .advgb-video-input {
     width: fit-content !important;
     margin: 10px auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }
+.advgb-video-input .components-base-control__field {
+    margin: 0 5px;
+}
+.advgb-video-input .components-base-control__field .components-text-control__input {
+    height: 31px;
+    line-height: 31px;
+    width: 100%;
+}
+
 
 #editor .advgb-video-input > *:not(svg) {
     vertical-align: sub;
@@ -528,7 +540,7 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 .advgb-video-input .components-base-control {
     margin-bottom: 0;
     display: inline-block;
-    width: 300px;
+    max-width: 300px;
 }
 
 .advgb-video-input button.components-button:disabled {
@@ -932,7 +944,7 @@ div.advgb-tab-body {
     border: none;
 }
 
-    /*Testimonial block styles*/
+/*Testimonial block styles*/
 .advgb-testimonial-wrapper {
     position: relative;
     padding: 1px 30px;
@@ -2092,7 +2104,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     z-index: unset;
 }
 
-    /*Backend columns*/
+/*Backend columns*/
 .advgb-columns > .editor-inner-blocks > .editor-block-list__layout {
     display: flex;
     flex-wrap: nowrap;
@@ -2184,7 +2196,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     max-width: 100%;
 }
 
-    /*2 Columns*/
+/*2 Columns*/
 .advgb-columns.layout-12-12 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     flex-basis: 50%;
     width: 50%;
@@ -2226,7 +2238,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     width: 20%;
 }
 
-    /*3 Columns*/
+/*3 Columns*/
 .advgb-columns.layout-13-13-13 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     flex-basis: 33.33%;
     width: 33.33%;
@@ -2265,7 +2277,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     width: 66.66%;
 }
 
-    /*4 Columns*/
+/*4 Columns*/
 .advgb-columns.layout-14-14-14-14 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     flex-basis: 25%;
     width: 25%;
@@ -2296,7 +2308,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     width: 20%;
 }
 
-    /*5 and 6 Columns*/
+/*5 and 6 Columns*/
 .advgb-columns.layout-five > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     flex-basis: 20%;
     width: 20%;
@@ -2354,7 +2366,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     padding: 6px;
 }
 
-    /*Responsive for Columns*/
+/*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {
         flex: 1;
