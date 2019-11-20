@@ -18326,7 +18326,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         var headId = lowerHead.replace(/[!@#$%^&*()\/\\,.?":{}|<>]/g, "");
                         headId = headId.replace(/(amp;)+/g, "");
                         headId = headId.replace(/ /g, "-");
-                        headId = _this2.latinise(headId);
+                        headId = _this2.latinise(headId) + '-' + heading.clientId;
 
                         thisHead['clientId'] = heading.clientId;
                         if (heading.attributes.anchor) {

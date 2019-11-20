@@ -1065,7 +1065,7 @@
                     let headId = lowerHead.replace(/[!@#$%^&*()\/\\,.?":{}|<>]/g, "");
                     headId = headId.replace(/(amp;)+/g, "");
                     headId = headId.replace(/ /g, "-");
-                    headId = this.latinise(headId);
+                    headId = this.latinise(headId) + '-' + heading.clientId;
 
                     thisHead[ 'clientId' ] = heading.clientId;
                     if (heading.attributes.anchor) {
