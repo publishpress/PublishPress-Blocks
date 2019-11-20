@@ -460,6 +460,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             default: false,
         }
     };
+
     registerBlockType( 'advgb/icon', {
         title: __( 'Advanced Icon', 'advanced-gutenberg' ),
         description: __( 'Advanced icon block with more options and styles.', 'advanced-gutenberg' ),
