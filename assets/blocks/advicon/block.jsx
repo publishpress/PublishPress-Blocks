@@ -5,9 +5,11 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, RichText, URLInput } = wpBlockEditor;
-    const { BaseControl, Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, TextControl } = wpComponents;
+    const { InspectorControls, BlockControls, AlignmentToolbar, URLInput } = wpBlockEditor;
+    const { BaseControl, PanelBody, RangeControl, SelectControl, TextControl } = wpComponents;
     const { times } = lodash;
+
+    const previewImageData = '';
 
     class AdvIconEdit extends Component {
 
@@ -62,15 +64,20 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         }
 
         render() {
-            const { attributes, setAttributes, isSelected } = this.props;
+            const { attributes, setAttributes } = this.props;
             const {
                 blockIDX,
                 items,
                 numberItem,
+                tAlign,
                 isPreview
             } = attributes;
 
             const { searchedText } = this.state;
+
+            const blockWrapClass = [
+                'icon-wrapper'
+            ].filter( Boolean ).join( ' ' );
 
             const blockClass = [
                 'advgb-icons',
@@ -80,7 +87,16 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             let j = 0;
 
             return (
-                <Fragment>
+                isPreview ?
+                    <img alt={__('Advanced Icon', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
+                    :
+                    <Fragment>
+                    <BlockControls>
+                        <AlignmentToolbar
+                            value={ tAlign }
+                            onChange={ ( value ) => setAttributes( { tAlign: value } ) }
+                        />
+                    </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Icon Count', 'advanced-gutenberg' ) }>
                             <RangeControl
@@ -131,7 +147,6 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                                     item.iconType === 'material' && 'mi mi-',
                                                                     icon.replace(/_/g, '-'),
                                                                 ].filter( Boolean ).join('');
-                                                                {console.log(iconName, iconClass)}
 
                                                                 return (
                                                                     <div className="advgb-icon-item" key={ index }>
@@ -334,8 +349,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             }
                         )}
                     </InspectorControls>
-                    <div className="icon-wrapper" id={blockIDX}>
-                        <div className={ blockClass }>
+
+                    <div className={blockWrapClass} id={blockIDX}>
+                        <div className={ blockClass } style={ {textAlign: tAlign} }>
                             {items.map( (item, idx) => {
                                 j++;
                                 if (j > numberItem) return false;
@@ -348,7 +364,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 const iconWrapClass = [
                                     'advgb-icon',
                                     `advgb-icon-${item.icon}`
-                                ].filter( Boolean ).join('');
+                                ].filter( Boolean ).join(' ');
 
                                 const iconClass = [
                                     item.iconType === 'material' && 'mi mi-',
@@ -356,7 +372,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 ].filter( Boolean ).join('');
 
                                 const iconWrapStyles = {
-                                    height: item.size + 'px',
+                                    display: 'flex',
+                                    alignItems: 'center',
                                     marginTop: item.marginTop + item.marginUnit,
                                     marginBottom: item.marginBottom + item.marginUnit,
                                     marginLeft: item.marginLeft + item.marginUnit,
@@ -367,7 +384,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     paddingRight: item.style !== 'default' ? item.paddingRight + item.paddingUnit : 0,
                                     borderWidth: item.style !== 'default' ? item.borderSize + 'px' : 0,
                                     borderStyle: 'solid',
-                                    borderColor: item.borderColor
+                                    borderColor: item.borderColor,
+                                    background: item.bgColor,
+                                    borderRadius: item.borderRadius + '%'
                                 };
 
                                 const iconStyles = {
@@ -418,7 +437,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     marginRight: 0,
                     paddingUnit: 'px',
                     marginUnit: 'px',
-                    link: '#',
+                    link: '',
                     linkTarget: '_self',
                     title: ''
                 }
@@ -432,6 +451,10 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             type: 'boolean',
             default: false,
         },
+        tAlign: {
+            type: 'string',
+            default: 'center',
+        },
         isPreview: {
             type: 'boolean',
             default: false,
@@ -443,6 +466,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         category: 'advgb-category',
         keywords: [ __( 'icon', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
+        supports: {
+            align: ["left", "center", "right"],
+        },
         example: {
             attributes: {
                 isPreview: true
@@ -450,7 +476,71 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         edit: AdvIconEdit,
         save: ( { attributes } ) => {
-            return '';
+            const {
+                blockIDX,
+                items,
+                numberItem
+            } = attributes;
+
+            const blockWrapClass = [
+                'wp-block-advgb-icon',
+                'icon-wrapper',
+            ].filter( Boolean ).join( ' ' );
+
+            const blockClass = [
+                'advgb-icons',
+            ].filter( Boolean ).join( ' ' );
+
+            let i = 0;
+            return (
+                <Fragment>
+                    <div className={blockWrapClass} id={blockIDX}>
+                        <div className={ blockClass }>
+                            {items.map( (item, idx) => {
+                                i++;
+                                if (i > numberItem) return false;
+                                const advgbIconClass = [
+                                    `advgb-icon-style-${item.style}`,
+                                    'advgb-icon-wrap',
+                                    `advgb-item-${idx}`,
+                                ].filter( Boolean ).join( ' ' );
+
+                                const iconWrapClass = [
+                                    'advgb-icon',
+                                    `advgb-icon-${item.icon}`
+                                ].filter( Boolean ).join(' ');
+
+                                const iconClass = [
+                                    item.iconType === 'material' && 'mi mi-',
+                                    item.icon,
+                                ].filter( Boolean ).join('');
+
+                                const iconStyles = {
+                                    fontSize: item.size + 'px',
+                                    color: item.color
+                                };
+                                return (
+                                    <Fragment>
+                                        <div className={advgbIconClass}>
+                                            {item.link !== '' && <a href={item.link} title={item.title} target={item.linkTarget}>
+                                            <div className={iconWrapClass}>
+                                                <i className={iconClass}></i>
+                                            </div>
+                                            </a>
+                                            }
+                                            {item.link === '' &&
+                                                <div className={iconWrapClass}>
+                                                    <i className={iconClass}></i>
+                                                </div>
+                                            }
+                                        </div>
+                                    </Fragment>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </Fragment>
+            )
         }
     });
 }) ( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

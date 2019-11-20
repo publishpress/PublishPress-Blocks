@@ -2378,17 +2378,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var registerBlockType = wpBlocks.registerBlockType;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
-        RichText = _wpBlockEditor.RichText,
+        BlockControls = _wpBlockEditor.BlockControls,
+        AlignmentToolbar = _wpBlockEditor.AlignmentToolbar,
         URLInput = _wpBlockEditor.URLInput;
     var BaseControl = wpComponents.BaseControl,
-        Dashicon = wpComponents.Dashicon,
-        Tooltip = wpComponents.Tooltip,
         PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl;
     var _lodash = lodash,
         times = _lodash.times;
+
+
+    var previewImageData = '';
 
     var AdvIconEdit = function (_Component) {
         _inherits(AdvIconEdit, _Component);
@@ -2467,23 +2469,35 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var _props4 = this.props,
                     attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes,
-                    isSelected = _props4.isSelected;
+                    setAttributes = _props4.setAttributes;
                 var blockIDX = attributes.blockIDX,
                     items = attributes.items,
                     numberItem = attributes.numberItem,
+                    tAlign = attributes.tAlign,
                     isPreview = attributes.isPreview;
                 var searchedText = this.state.searchedText;
 
+
+                var blockWrapClass = ['icon-wrapper'].filter(Boolean).join(' ');
 
                 var blockClass = ['advgb-icons'].filter(Boolean).join(' ');
 
                 var i = 0;
                 var j = 0;
 
-                return React.createElement(
+                return isPreview ? React.createElement('img', { alt: __('Advanced Icon', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,
                     null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(AlignmentToolbar, {
+                            value: tAlign,
+                            onChange: function onChange(value) {
+                                return setAttributes({ tAlign: value });
+                            }
+                        })
+                    ),
                     React.createElement(
                         InspectorControls,
                         null,
@@ -2543,9 +2557,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                                 var iconName = icon.replace(/_/g, '-');
                                                 var iconClass = [item.iconType === 'material' && 'mi mi-', icon.replace(/_/g, '-')].filter(Boolean).join('');
-                                                {
-                                                    console.log(iconName, iconClass);
-                                                }
 
                                                 return React.createElement(
                                                     'div',
@@ -2811,21 +2822,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     ),
                     React.createElement(
                         'div',
-                        { className: 'icon-wrapper', id: blockIDX },
+                        { className: blockWrapClass, id: blockIDX },
                         React.createElement(
                             'div',
-                            { className: blockClass },
+                            { className: blockClass, style: { textAlign: tAlign } },
                             items.map(function (item, idx) {
                                 j++;
                                 if (j > numberItem) return false;
                                 var advgbIconClass = ['advgb-icon-style-' + item.style, 'advgb-icon-wrap', 'advgb-item-' + idx].filter(Boolean).join(' ');
 
-                                var iconWrapClass = ['advgb-icon', 'advgb-icon-' + item.icon].filter(Boolean).join('');
+                                var iconWrapClass = ['advgb-icon', 'advgb-icon-' + item.icon].filter(Boolean).join(' ');
 
                                 var iconClass = [item.iconType === 'material' && 'mi mi-', item.icon].filter(Boolean).join('');
 
                                 var iconWrapStyles = {
-                                    height: item.size + 'px',
+                                    display: 'flex',
+                                    alignItems: 'center',
                                     marginTop: item.marginTop + item.marginUnit,
                                     marginBottom: item.marginBottom + item.marginUnit,
                                     marginLeft: item.marginLeft + item.marginUnit,
@@ -2836,7 +2848,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     paddingRight: item.style !== 'default' ? item.paddingRight + item.paddingUnit : 0,
                                     borderWidth: item.style !== 'default' ? item.borderSize + 'px' : 0,
                                     borderStyle: 'solid',
-                                    borderColor: item.borderColor
+                                    borderColor: item.borderColor,
+                                    background: item.bgColor,
+                                    borderRadius: item.borderRadius + '%'
                                 };
 
                                 var iconStyles = {
@@ -2893,7 +2907,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     marginRight: 0,
                     paddingUnit: 'px',
                     marginUnit: 'px',
-                    link: '#',
+                    link: '',
                     linkTarget: '_self',
                     title: ''
                 };
@@ -2907,6 +2921,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'boolean',
             default: false
         },
+        tAlign: {
+            type: 'string',
+            default: 'center'
+        },
         isPreview: {
             type: 'boolean',
             default: false
@@ -2918,6 +2936,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'advgb-category',
         keywords: [__('icon', 'advanced-gutenberg')],
         attributes: blockAttrs,
+        supports: {
+            align: ["left", "center", "right"]
+        },
         example: {
             attributes: {
                 isPreview: true
@@ -2926,8 +2947,64 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: AdvIconEdit,
         save: function save(_ref) {
             var attributes = _ref.attributes;
+            var blockIDX = attributes.blockIDX,
+                items = attributes.items,
+                numberItem = attributes.numberItem;
 
-            return '';
+
+            var blockWrapClass = ['wp-block-advgb-icon', 'icon-wrapper'].filter(Boolean).join(' ');
+
+            var blockClass = ['advgb-icons'].filter(Boolean).join(' ');
+
+            var i = 0;
+            return React.createElement(
+                Fragment,
+                null,
+                React.createElement(
+                    'div',
+                    { className: blockWrapClass, id: blockIDX },
+                    React.createElement(
+                        'div',
+                        { className: blockClass },
+                        items.map(function (item, idx) {
+                            i++;
+                            if (i > numberItem) return false;
+                            var advgbIconClass = ['advgb-icon-style-' + item.style, 'advgb-icon-wrap', 'advgb-item-' + idx].filter(Boolean).join(' ');
+
+                            var iconWrapClass = ['advgb-icon', 'advgb-icon-' + item.icon].filter(Boolean).join(' ');
+
+                            var iconClass = [item.iconType === 'material' && 'mi mi-', item.icon].filter(Boolean).join('');
+
+                            var iconStyles = {
+                                fontSize: item.size + 'px',
+                                color: item.color
+                            };
+                            return React.createElement(
+                                Fragment,
+                                null,
+                                React.createElement(
+                                    'div',
+                                    { className: advgbIconClass },
+                                    item.link !== '' && React.createElement(
+                                        'a',
+                                        { href: item.link, title: item.title, target: item.linkTarget },
+                                        React.createElement(
+                                            'div',
+                                            { className: iconWrapClass },
+                                            React.createElement('i', { className: iconClass })
+                                        )
+                                    ),
+                                    item.link === '' && React.createElement(
+                                        'div',
+                                        { className: iconWrapClass },
+                                        React.createElement('i', { className: iconClass })
+                                    )
+                                )
+                            );
+                        })
+                    )
+                )
+            );
         }
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
