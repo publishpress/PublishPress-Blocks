@@ -3907,6 +3907,33 @@ float: left;'
                     ),
                 )
             ),
+            'advgb-icon' => array(
+                array(
+                    'label'    => __('Border Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Border Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'borderColor',
+                        ),
+                        array(
+                            'title' => __('Border Width(px)', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'borderSize',
+                            'min'   => 0,
+                            'max'   => 20,
+                        ),
+                        array(
+                            'title' => __('Border Radius(%)', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'borderRadius',
+                            'min'   => 0,
+                            'max'   => 50,
+                        ),
+                    ),
+                ),
+
+            ),
         );
 
         $advgb_blocks_default_config = get_option('advgb_blocks_default_config');
@@ -4456,7 +4483,7 @@ float: left;'
                         'size' => 50,
                         'color' => '#111111',
                         'style' => 'default',
-                        'bgColor' => '#fff',
+                        'bgColor' => '',
                         'borderColor' => '#111',
                         'borderSize' => 2,
                         'borderRadius' => 0,
@@ -4502,7 +4529,7 @@ float: left;'
                     $style_html .= 'border-color: ' . $item['borderColor'] . ';';
                     $style_html .= 'border-radius: ' . $item['borderRadius'] . 'px;';
 
-                    $style_html .= 'background-color: ' . $item['bgColor'] . ';';
+                    $style_html .= 'background-color: ' . isset($item['bgColor']) ? $item['bgColor'] : 'transparent' . ';';
 
                     $style_html .= '}';
 

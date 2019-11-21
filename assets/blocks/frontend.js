@@ -118,17 +118,13 @@ __webpack_require__(/*! waypoints/lib/noframework.waypoints.js */ "./node_module
                 element: el,
                 handler: function handler() {
                     (0, _counterup2.default)(el, {
-                        duration: 10000,
+                        duration: 1200,
                         delay: 10
                     });
                     this.destroy();
                 },
                 offset: 'bottom-in-view'
             });
-            // counterUp( el, {
-            //     duration: 1000,
-            //     delay: 16,
-            // } )
         });
     }
 });

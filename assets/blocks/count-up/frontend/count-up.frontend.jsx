@@ -10,17 +10,13 @@ $(document).ready(function() {
                 element: el,
                 handler: function() {
                     counterUp( el, {
-                        duration: 10000,
+                        duration: 1200,
                         delay: 10,
-                    } )
+                    } );
                     this.destroy()
                 },
                 offset: 'bottom-in-view',
             } )
-            // counterUp( el, {
-            //     duration: 1000,
-            //     delay: 16,
-            // } )
         })
 
     }

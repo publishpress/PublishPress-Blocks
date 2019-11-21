@@ -61,6 +61,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             } );
 
             setAttributes( { items: newItems } );
+            this.setState( { searchedText: '' } )
         }
 
         render() {
@@ -116,21 +117,10 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                             title={ __( `Icon ${i} Settings`, 'advanced-gutenberg' ) }
                                             initialOpen={ false }
                                         >
-                                            <SelectControl
-                                                label={ __( 'Icon Library', 'advanced-gutenberg' ) }
-                                                value={ item.iconType }
-                                                onChange={ (value) => this.updateItems(idx, { iconType: value } ) }
-                                                options={ [
-                                                    { label: __( 'No Icon', 'advanced-gutenberg' ), value: '' },
-                                                    { label: __( 'Material Icon', 'advanced-gutenberg' ), value: 'material' },
-                                                    { label: __( 'Font Awesome', 'advanced-gutenberg' ), value: 'fawesome' },
-                                                ] }
-                                            />
-                                            {!!item.iconType && (item.iconType === 'fawesome'
-                                                    ?
-                                                    <p>{ __( 'This library will be added soon ;)', 'advanced-gutenberg' ) }</p>
-                                                    :
-                                            <Fragment>
+
+                                            <BaseControl
+                                                label={ __( 'Icon Library (Material Icon)', 'advanced-gutenberg' )}
+                                            >
                                                 <TextControl
                                                     placeholder={ __( 'Search icons (at least 3 characters)', 'advanced-gutenberg' ) }
                                                     value={ searchedText }
@@ -161,8 +151,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                             } ) }
                                                     </div>
                                                 ) }
-                                            </Fragment>
-                                            ) }
+                                            </BaseControl>
+
                                             <SelectControl
                                                 label={ __('Icon Style', 'advanced-gutenberg') }
                                                 value={ item.style }
@@ -423,7 +413,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     size: 50,
                     color: '#111111',
                     style: 'default',
-                    bgColor: '#fff',
+                    bgColor: '',
                     borderColor: '#111',
                     borderSize: 2,
                     borderRadius: 0,

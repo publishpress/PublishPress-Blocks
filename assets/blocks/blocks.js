@@ -2486,6 +2486,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 setAttributes({ items: newItems });
+                this.setState({ searchedText: '' });
             }
         }, {
             key: 'render',
@@ -2551,21 +2552,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         title: __('Icon ' + i + ' Settings', 'advanced-gutenberg'),
                                         initialOpen: false
                                     },
-                                    React.createElement(SelectControl, {
-                                        label: __('Icon Library', 'advanced-gutenberg'),
-                                        value: item.iconType,
-                                        onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { iconType: value });
+                                    React.createElement(
+                                        BaseControl,
+                                        {
+                                            label: __('Icon Library (Material Icon)', 'advanced-gutenberg')
                                         },
-                                        options: [{ label: __('No Icon', 'advanced-gutenberg'), value: '' }, { label: __('Material Icon', 'advanced-gutenberg'), value: 'material' }, { label: __('Font Awesome', 'advanced-gutenberg'), value: 'fawesome' }]
-                                    }),
-                                    !!item.iconType && (item.iconType === 'fawesome' ? React.createElement(
-                                        'p',
-                                        null,
-                                        __('This library will be added soon ;)', 'advanced-gutenberg')
-                                    ) : React.createElement(
-                                        Fragment,
-                                        null,
                                         React.createElement(TextControl, {
                                             placeholder: __('Search icons (at least 3 characters)', 'advanced-gutenberg'),
                                             value: searchedText,
@@ -2599,7 +2590,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 );
                                             })
                                         )
-                                    )),
+                                    ),
                                     React.createElement(SelectControl, {
                                         label: __('Icon Style', 'advanced-gutenberg'),
                                         value: item.style,
@@ -2918,7 +2909,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     size: 50,
                     color: '#111111',
                     style: 'default',
-                    bgColor: '#fff',
+                    bgColor: '',
                     borderColor: '#111',
                     borderSize: 2,
                     borderRadius: 0,
