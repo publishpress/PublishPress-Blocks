@@ -437,6 +437,11 @@ float: left;'
             );
         }
 
+        wp_enqueue_script(
+            'advgb_blocks_frontend_scripts',
+            plugins_url('assets/blocks/frontend.js', dirname(__FILE__))
+        );
+
         if (!function_exists('advgbAddScriptAttributes')) {
             /**
              * Add attributes to script tag
@@ -4005,23 +4010,6 @@ float: left;'
         }
 
         if (strpos($content, 'wp-block-advgb-count-up') !== false) {
-            wp_enqueue_script(
-                'waypoint_js',
-                'https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js',
-                array('jquery')
-            );
-            wp_enqueue_script(
-                'countup_lib_js',
-                plugins_url('assets/blocks/count-up/jquery.counterup.min.js', dirname(__FILE__)),
-                array('jquery'),
-                ADVANCED_GUTENBERG_VERSION
-            );
-            wp_enqueue_script(
-                'countup_js',
-                plugins_url('assets/blocks/count-up/countUp.js', dirname(__FILE__)),
-                array(),
-                ADVANCED_GUTENBERG_VERSION
-            );
 
             $content = preg_replace_callback(
                 '@<div[^>]*?advgb\-count\-up\-columns.*?(</p></div>)@s',
