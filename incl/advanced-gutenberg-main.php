@@ -2086,7 +2086,7 @@ float: left;'
             'count-up','images-slider', 'map', 'newsletter',
             'recent-posts', 'social-links', 'summary', 'adv-tabs',
             'testimonial', 'woo-products', 'columns', 'column',
-            'login-form', 'search-bar',
+            'login-form', 'search-bar', 'icon'
         );
 
         foreach ($advgb_block as $block) {
@@ -3909,26 +3909,14 @@ float: left;'
             ),
             'advgb-icon' => array(
                 array(
-                    'label'    => __('Border Settings', 'advanced-gutenberg'),
+                    'label'    => __('General Settings', 'advanced-gutenberg'),
                     'settings' => array(
                         array(
-                            'title' => __('Border Color', 'advanced-gutenberg'),
-                            'type'  => 'color',
-                            'name'  => 'borderColor',
-                        ),
-                        array(
-                            'title' => __('Border Width(px)', 'advanced-gutenberg'),
+                            'title' => __('Number of icons', 'advanced-gutenberg'),
                             'type'  => 'number',
-                            'name'  => 'borderSize',
-                            'min'   => 0,
-                            'max'   => 20,
-                        ),
-                        array(
-                            'title' => __('Border Radius(%)', 'advanced-gutenberg'),
-                            'type'  => 'number',
-                            'name'  => 'borderRadius',
-                            'min'   => 0,
-                            'max'   => 50,
+                            'name'  => 'numberItem',
+                            'min'   => 1,
+                            'max'   => 10,
                         ),
                     ),
                 ),
