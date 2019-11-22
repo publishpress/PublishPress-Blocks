@@ -1818,7 +1818,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hoverColorSettings.shift();
                 }
 
-                return isPreview ? React.createElement('img', { alt: __('Advanced Button', 'advanced-gutenebrg'), width: '100%', src: previewImageData }) : React.createElement(
+                return isPreview ? React.createElement('img', { alt: __('Advanced Button', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,
                     null,
                     React.createElement(

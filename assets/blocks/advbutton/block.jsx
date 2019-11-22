@@ -98,7 +98,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
 
             return (
                 isPreview ?
-                    <img alt={__('Advanced Button', 'advanced-gutenebrg')} width='100%' src={previewImageData}/>
+                    <img alt={__('Advanced Button', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
                     :
                     <Fragment>
                     <BlockControls>
