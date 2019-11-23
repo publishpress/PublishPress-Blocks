@@ -4463,34 +4463,37 @@ float: left;'
             } elseif ($blockName === 'advgb/icon') {
                 wp_enqueue_style('material_icon_font');
                 $block_id = $blockAttrs['blockIDX'];
-
-                $default_item = array(
-                    array(
-                        'icon' => 'info',
-                        'iconType' => 'material',
-                        'size' => 50,
-                        'color' => '#111111',
-                        'style' => 'default',
-                        'bgColor' => '',
-                        'borderColor' => '#111',
-                        'borderSize' => 2,
-                        'borderRadius' => 0,
-                        'paddingTop' => 20,
-                        'paddingBottom' => 20,
-                        'paddingLeft' => 20,
-                        'paddingRight' => 20,
-                        'marginTop' => 0,
-                        'marginBottom' => 0,
-                        'marginLeft' => 0,
-                        'marginRight' => 0,
-                        'paddingUnit' => 'px',
-                        'marginUnit' => 'px',
-                        'link' => '',
-                        'linkTarget' => '_self',
-                        'title' => ''
-                    )
+                $i = 0;
+                $default_items = array();
+                $item = array(
+                    'icon' => 'info',
+                    'iconType' => 'material',
+                    'size' => 50,
+                    'color' => '#111111',
+                    'style' => 'default',
+                    'bgColor' => '',
+                    'borderColor' => '#111',
+                    'borderSize' => 2,
+                    'borderRadius' => 0,
+                    'paddingTop' => 20,
+                    'paddingBottom' => 20,
+                    'paddingLeft' => 20,
+                    'paddingRight' => 20,
+                    'marginTop' => 0,
+                    'marginBottom' => 0,
+                    'marginLeft' => 0,
+                    'marginRight' => 0,
+                    'paddingUnit' => 'px',
+                    'marginUnit' => 'px',
+                    'link' => '',
+                    'linkTarget' => '_self',
+                    'title' => ''
                 );
-                $items = !isset($blockAttrs['items']) ? $default_item : $blockAttrs['items'];
+                while($i < 10) {
+                    array_push($default_items, $item);
+                    $i++;
+                }
+                $items = !isset($blockAttrs['items']) ? $default_items : $blockAttrs['items'];
                 $text_align = !isset($blockAttrs['tAlign']) ? 'center' : $blockAttrs['tAlign'];
 
                 $style_html .= '#' . $block_id . ' .advgb-icons {';
@@ -4517,7 +4520,7 @@ float: left;'
                     $style_html .= 'border-color: ' . $item['borderColor'] . ';';
                     $style_html .= 'border-radius: ' . $item['borderRadius'] . 'px;';
 
-                    $style_html .= 'background-color: ' . isset($item['bgColor']) ? $item['bgColor'] : 'transparent' . ';';
+                    $style_html .= isset($item['bgColor']) ? 'background-color: ' . $item['bgColor'] . ';' : 'background-color: transparent;';
 
                     $style_html .= '}';
 
