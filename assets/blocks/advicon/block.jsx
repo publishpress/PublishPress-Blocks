@@ -77,7 +77,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             const { searchedText } = this.state;
 
             const blockWrapClass = [
-                'icon-wrapper'
+                'advgb-icon-wrapper'
             ].filter( Boolean ).join( ' ' );
 
             const blockClass = [

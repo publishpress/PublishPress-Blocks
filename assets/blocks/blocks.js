@@ -2504,7 +2504,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var searchedText = this.state.searchedText;
 
 
-                var blockWrapClass = ['icon-wrapper'].filter(Boolean).join(' ');
+                var blockWrapClass = ['advgb-icon-wrapper'].filter(Boolean).join(' ');
 
                 var blockClass = ['advgb-icons'].filter(Boolean).join(' ');
 

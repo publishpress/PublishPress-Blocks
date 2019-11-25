@@ -4518,7 +4518,7 @@ float: left;'
                     $style_html .= $item['style'] == 'default' ? 'border-width: 0;' : 'border-width: ' . $item['borderSize'] . 'px;';
                     $style_html .= 'border-style: solid;';
                     $style_html .= 'border-color: ' . $item['borderColor'] . ';';
-                    $style_html .= 'border-radius: ' . $item['borderRadius'] . 'px;';
+                    $style_html .= 'border-radius: ' . $item['borderRadius'] . '%;';
 
                     $style_html .= isset($item['bgColor']) ? 'background-color: ' . $item['bgColor'] . ';' : 'background-color: transparent;';
 

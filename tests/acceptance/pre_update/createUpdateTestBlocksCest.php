@@ -505,6 +505,13 @@ class createUpdateTestBlocksCest
         // todo: Modify some content here
     }
 
+//    public function createIconBlock(AcceptanceTester $I)
+//    {
+//        /***** Add Tabs *****/
+//        $I->insertBlock('Advanced Icon');
+//        // todo: Modify some content here
+//    }
+
     public function publishPost(AcceptanceTester $I)
     {
         /***** Publish Post *****/
