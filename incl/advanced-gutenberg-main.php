@@ -4023,9 +4023,7 @@ float: left;'
                 array('jquery')
             );
         }
-
         if (strpos($content, 'wp-block-advgb-count-up') !== false) {
-
             $content = preg_replace_callback(
                 '@<div[^>]*?advgb\-count\-up\-columns.*?(</p></div>)@s',
                 array($this, 'decodeHtmlEntity'),
@@ -4489,7 +4487,7 @@ float: left;'
                     'linkTarget' => '_self',
                     'title' => ''
                 );
-                while($i < 10) {
+                while ($i < 10) {
                     array_push($default_items, $item);
                     $i++;
                 }
@@ -4500,7 +4498,7 @@ float: left;'
                 $style_html .= 'text-align: ' . $text_align . ';';
                 $style_html .= '}';
 
-                foreach($items as $k => $item) {
+                foreach ($items as $k => $item) {
                     $style_html .= '#' . $block_id . ' .advgb-item-'.$k.' .advgb-icon {';
                     $style_html .= 'display: flex;';
                     $style_html .= 'align-items:center;';
@@ -4510,12 +4508,12 @@ float: left;'
                     $style_html .= 'margin-left: ' . $item['marginLeft'] . $item['marginUnit'] . ';';
                     $style_html .= 'margin-right: ' . $item['marginRight'] . $item['marginUnit'] . ';';
 
-                    $style_html .= $item['style'] == 'default' ? 'padding-top: 0;' : 'padding-top: ' . $item['paddingTop'] . $item['paddingUnit'] . ';';
-                    $style_html .= $item['style'] == 'default' ? 'padding-bottom: 0;' : 'padding-bottom: ' . $item['paddingBottom'] . $item['paddingUnit'] . ';';
-                    $style_html .= $item['style'] == 'default' ? 'padding-left: 0;' : 'padding-left: ' . $item['paddingLeft'] . $item['paddingUnit'] . ';';
-                    $style_html .= $item['style'] == 'default' ? 'padding-right: 0;' : 'padding-right: ' . $item['paddingRight'] . $item['paddingUnit'] . ';';
+                    $style_html .= $item['style'] === 'default' ? 'padding-top: 0;' : 'padding-top: ' . $item['paddingTop'] . $item['paddingUnit'] . ';';
+                    $style_html .= $item['style'] === 'default' ? 'padding-bottom: 0;' : 'padding-bottom: ' . $item['paddingBottom'] . $item['paddingUnit'] . ';';
+                    $style_html .= $item['style'] === 'default' ? 'padding-left: 0;' : 'padding-left: ' . $item['paddingLeft'] . $item['paddingUnit'] . ';';
+                    $style_html .= $item['style'] === 'default' ? 'padding-right: 0;' : 'padding-right: ' . $item['paddingRight'] . $item['paddingUnit'] . ';';
 
-                    $style_html .= $item['style'] == 'default' ? 'border-width: 0;' : 'border-width: ' . $item['borderSize'] . 'px;';
+                    $style_html .= $item['style'] === 'default' ? 'border-width: 0;' : 'border-width: ' . $item['borderSize'] . 'px;';
                     $style_html .= 'border-style: solid;';
                     $style_html .= 'border-color: ' . $item['borderColor'] . ';';
                     $style_html .= 'border-radius: ' . $item['borderRadius'] . '%;';
@@ -4528,7 +4526,6 @@ float: left;'
                     $style_html .= 'font-size: ' . $item['size'] . 'px;';
                     $style_html .= 'color: ' . $item['color'] . ';';
                     $style_html .= '}';
-
                 }
             }
         }

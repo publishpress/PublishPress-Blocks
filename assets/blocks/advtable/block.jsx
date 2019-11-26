@@ -867,8 +867,8 @@
                                     value={ content }
                                     onChange={ ( value ) => {
                                         if (willSetContent) clearTimeout(willSetContent);
-                                        lastValue = value;
-                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1000);
+                                        lastValue = value + '<span class="dashicons dashicons-no"> </span>';
+                                        willSetContent = setTimeout( () => this.updateCellContent( lastValue, selectedCell ), 1000);
                                     } }
                                     unstableOnFocus={ () => {
                                         if (willSetContent) {
@@ -887,6 +887,23 @@
                     } ) }
                 </tr>
             ) );
+        }
+
+        onClickTestButton( event ) {
+            return () => {
+
+                //the content we want to insert
+                var myContent = '<span class="dashicons dashicons-no"> </span>';
+
+                if ( this.editor ) {
+                    //execCommand is a TinyMCE function
+                    this.editor.execCommand( 'mceInsertContent', false, myContent );
+                }
+            };
+        }
+
+        onEditorSetup( editor ) {
+            this.editor = editor;
         }
 
         render() {
@@ -1176,6 +1193,11 @@
                                 icon="update"
                                 label={ __( 'Refresh table (Use this after using undo or redo)', 'advanced-gutenberg' ) }
                                 onClick={ () => this.calculateRealColIndex() }
+                            />
+                            <IconButton
+                                icon="smiley"
+                                label={ __( 'Add html', 'advanced-gutenberg' ) }
+                                onClick={ () => this.onClickTestButton() }
                             />
                         </Toolbar>
                     </BlockControls>
