@@ -865,9 +865,10 @@
                                 <RichText
                                     className="wp-block-table__cell-content"
                                     value={ content }
+                                    onSetup={ this.setupEditor }
                                     onChange={ ( value ) => {
                                         if (willSetContent) clearTimeout(willSetContent);
-                                        lastValue = value + '<span class="dashicons dashicons-no"> </span>';
+                                        lastValue = value;
                                         willSetContent = setTimeout( () => this.updateCellContent( lastValue, selectedCell ), 1000);
                                     } }
                                     unstableOnFocus={ () => {
@@ -889,20 +890,20 @@
             ) );
         }
 
-        onClickTestButton( event ) {
-            return () => {
+        onClickTestButton( ) {
+                            //the content we want to insert
+                let myContent = '<span class="dashicons dashicons-no"> </span>';
 
-                //the content we want to insert
-                var myContent = '<span class="dashicons dashicons-no"> </span>';
-
+                console.log(this.editor);
                 if ( this.editor ) {
                     //execCommand is a TinyMCE function
-                    this.editor.execCommand( 'mceInsertContent', false, myContent );
+                    return this.editor.execCommand( 'mceInsertContent', false, myContent );
+                } else {
+                    return '';
                 }
-            };
         }
 
-        onEditorSetup( editor ) {
+        setupEditor( editor ) {
             this.editor = editor;
         }
 
