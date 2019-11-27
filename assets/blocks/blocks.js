@@ -5141,12 +5141,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(RichText, {
                                     className: "wp-block-table__cell-content",
                                     value: content,
-                                    onSetup: _this3.setupEditor,
                                     onChange: function onChange(value) {
                                         if (willSetContent) clearTimeout(willSetContent);
                                         lastValue = value;
                                         willSetContent = setTimeout(function () {
-                                            return _this3.updateCellContent(lastValue, selectedCell);
+                                            return _this3.updateCellContent(value, selectedCell);
                                         }, 1000);
                                     },
                                     unstableOnFocus: function unstableOnFocus() {
@@ -5165,25 +5164,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         })
                     );
                 });
-            }
-        }, {
-            key: "onClickTestButton",
-            value: function onClickTestButton() {
-                //the content we want to insert
-                var myContent = '<span class="dashicons dashicons-no"> </span>';
-
-                console.log(this.editor);
-                if (this.editor) {
-                    //execCommand is a TinyMCE function
-                    return this.editor.execCommand('mceInsertContent', false, myContent);
-                } else {
-                    return '';
-                }
-            }
-        }, {
-            key: "setupEditor",
-            value: function setupEditor(editor) {
-                this.editor = editor;
             }
         }, {
             key: "render",
@@ -5512,13 +5492,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Refresh table (Use this after using undo or redo)', 'advanced-gutenberg'),
                                 onClick: function onClick() {
                                     return _this4.calculateRealColIndex();
-                                }
-                            }),
-                            React.createElement(IconButton, {
-                                icon: "smiley",
-                                label: __('Add html', 'advanced-gutenberg'),
-                                onClick: function onClick() {
-                                    return _this4.onClickTestButton();
                                 }
                             })
                         )

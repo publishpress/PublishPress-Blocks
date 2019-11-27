@@ -865,11 +865,10 @@
                                 <RichText
                                     className="wp-block-table__cell-content"
                                     value={ content }
-                                    onSetup={ this.setupEditor }
                                     onChange={ ( value ) => {
                                         if (willSetContent) clearTimeout(willSetContent);
                                         lastValue = value;
-                                        willSetContent = setTimeout( () => this.updateCellContent( lastValue, selectedCell ), 1000);
+                                        willSetContent = setTimeout( () => this.updateCellContent( value, selectedCell ), 1000);
                                     } }
                                     unstableOnFocus={ () => {
                                         if (willSetContent) {
@@ -888,23 +887,6 @@
                     } ) }
                 </tr>
             ) );
-        }
-
-        onClickTestButton( ) {
-                            //the content we want to insert
-                let myContent = '<span class="dashicons dashicons-no"> </span>';
-
-                console.log(this.editor);
-                if ( this.editor ) {
-                    //execCommand is a TinyMCE function
-                    return this.editor.execCommand( 'mceInsertContent', false, myContent );
-                } else {
-                    return '';
-                }
-        }
-
-        setupEditor( editor ) {
-            this.editor = editor;
         }
 
         render() {
@@ -1194,11 +1176,6 @@
                                 icon="update"
                                 label={ __( 'Refresh table (Use this after using undo or redo)', 'advanced-gutenberg' ) }
                                 onClick={ () => this.calculateRealColIndex() }
-                            />
-                            <IconButton
-                                icon="smiley"
-                                label={ __( 'Add html', 'advanced-gutenberg' ) }
-                                onClick={ () => this.onClickTestButton() }
                             />
                         </Toolbar>
                     </BlockControls>
