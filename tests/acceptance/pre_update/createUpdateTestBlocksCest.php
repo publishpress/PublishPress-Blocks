@@ -43,11 +43,6 @@ class createUpdateTestBlocksCest
         $I->waitForElement('//label[text()="Category"]/following-sibling::node()/option[text()="Recent posts"]');
         $I->selectOption('//label[text()="Category"]/following-sibling::node()', array('text' => 'Recent posts'));
 
-        // Change column to 3
-        $I->waitForElement('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()');
-        $I->fillField('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()', 3);
-
-
         $I->waitForElement('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()', 5);
     }
