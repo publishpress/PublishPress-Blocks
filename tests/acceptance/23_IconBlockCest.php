@@ -139,7 +139,7 @@ class IconBlockCest
         $frontendIconBgColorRbg = $I->executeJS('return jQuery(".advgb-item-0 .advgb-icon").css("background-color")');
         $I->assertEquals($iconBgColorRbg, $frontendIconBgColorRbg);
         //icon border
-        $border = '3px solid rgb(255, 153, 0)';
+        $border = '2px solid rgb(255, 153, 0)';
         $frontendBorder = $I->executeJS('return jQuery(".advgb-item-0 .advgb-icon").css("border")');
         $I->assertEquals($border, $frontendBorder);
         //border radius

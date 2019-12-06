@@ -74,12 +74,12 @@ pipelines:
         - mysql
         - wordpress
     codeception_51_install:
-    - step: &shared_codeception_51_plugin_install
-        name: CC WP 5.1 plugin install
+    - step: &shared_codeception_52_plugin_install
+        name: CC WP 5.2 plugin install
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - export WP_VERSION="5.1" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="install"
+        - export WP_VERSION="5.2" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="install"
         - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
@@ -88,12 +88,12 @@ pipelines:
         - mysql
         - wordpress51
     codeception_51_update:
-    - step: &shared_codeception_51_plugin_update
-        name: CC WP 5.1 plugin update
+    - step: &shared_codeception_52_plugin_update
+        name: CC WP 5.2 plugin update
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - export WP_VERSION="5.1" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="update"
+        - export WP_VERSION="5.2" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="update"
         - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
@@ -102,12 +102,12 @@ pipelines:
         - mysql
         - wordpress51
     codeception_51_core_install:
-      - step: &shared_codeception_51_core_install
-          name: CC WP 5.1 core install
+      - step: &shared_codeception_52_core_install
+          name: CC WP 5.2 core install
           image: joomunited/codeception
           script:
             - wait_services.sh
-            - export WP_VERSION="5.1" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="install"
+            - export WP_VERSION="5.2" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="install"
             - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
           artifacts:
             - tests/_output/**
@@ -116,12 +116,12 @@ pipelines:
             - mysql
             - wordpress51
     codeception_51_core_update:
-      - step: &shared_codeception_51_core_update
-          name: CC WP 5.1 core update
+      - step: &shared_codeception_52_core_update
+          name: CC WP 5.2 core update
           image: joomunited/codeception
           script:
             - wait_services.sh
-            - export WP_VERSION="5.1" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="update"
+            - export WP_VERSION="5.2" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="update"
             - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
           artifacts:
             - tests/_output/**
@@ -180,8 +180,12 @@ pipelines:
       - step: *shared_phpcs
 #      - step: *shared_codeception_51_core_install
 #      - step: *shared_codeception_51_core_update
-      - step: *shared_codeception_51_plugin_install
-      - step: *shared_codeception_51_plugin_update
+#      - step: *shared_codeception_51_plugin_install
+#      - step: *shared_codeception_51_plugin_update
+      - step: *shared_codeception_52_core_install
+      - step: *shared_codeception_52_core_update
+      - step: *shared_codeception_52_plugin_install
+      - step: *shared_codeception_52_plugin_update
       - step: *shared_codeception_core_install
       - step: *shared_codeception_core_update
       - step: *shared_codeception_plugin_install
