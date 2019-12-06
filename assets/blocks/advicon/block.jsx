@@ -213,12 +213,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                 initialOpen={false}
                                             >
                                                 <BaseControl
-                                                    label={ [
-                                                        __( 'Link', 'advanced-gutenberg' ),
-                                                        (item.link && <a href={ item.link || '#' } key="link_url" target="_blank" style={ { marginLeft: '5px' } }>
-                                                            { __( 'Preview', 'advanced-gutenberg' ) }
-                                                        </a>)
-                                                    ] }
+                                                    label={ __( 'Link', 'advanced-gutenberg' ) }
                                                 >
                                                     <URLInput
                                                         value={item.link}
@@ -514,23 +509,19 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     item.icon,
                                 ].filter( Boolean ).join('');
 
-                                const iconStyles = {
-                                    fontSize: item.size + 'px',
-                                    color: item.color
-                                };
                                 return (
                                     <Fragment>
                                         <div className={advgbIconClass}>
-                                            {item.link !== '' && <a href={item.link} title={item.title} target={item.linkTarget}>
-                                            <div className={iconWrapClass}>
-                                                <i className={iconClass}></i>
-                                            </div>
-                                            </a>
-                                            }
-                                            {item.link === '' &&
+                                            {item.link !== '' && <a href={item.link} title={item.title}>
                                                 <div className={iconWrapClass}>
                                                     <i className={iconClass}></i>
                                                 </div>
+                                            </a>
+                                            }
+                                            {item.link === '' &&
+                                            <div className={iconWrapClass}>
+                                                <i className={iconClass}></i>
+                                            </div>
                                             }
                                         </div>
                                     </Fragment>

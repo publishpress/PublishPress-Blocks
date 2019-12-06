@@ -139,7 +139,7 @@
 
             let text = [span.textContent || span.innerText].toString().replace(/\s\s+/g,' ');
             text = text.slice(0, length).trim();
-            
+
             if (text.length) text += '…' ;
 
             return text;
@@ -209,11 +209,11 @@
                             onChange={ () => setAttributes( { displayReadMore: !displayReadMore } ) }
                         />
                         {displayReadMore &&
-                            <TextControl
-                                label={ __('Read more text', 'advanced-gutenberg') }
-                                value={ readMoreLbl }
-                                onChange={ (value) => setAttributes( { readMoreLbl: value } ) }
-                            />
+                        <TextControl
+                            label={ __('Read more text', 'advanced-gutenberg') }
+                            value={ readMoreLbl }
+                            onChange={ (value) => setAttributes( { readMoreLbl: value } ) }
+                        />
                         }
                         <ToggleControl
                             label={ __( 'Display Post Excerpt', 'advanced-gutenberg' ) }
@@ -221,21 +221,21 @@
                             onChange={ () => setAttributes( { displayExcerpt: !displayExcerpt } ) }
                         />
                         {displayExcerpt &&
-                            <ToggleControl
-                                label={ __( 'First Post text as Excerpt', 'advanced-gutenberg' ) }
-                                help={ __( 'Display some part of first text found in post as excerpt.', 'advanced-gutenberg' ) }
-                                checked={ postTextAsExcerpt }
-                                onChange={ () => setAttributes( { postTextAsExcerpt: !postTextAsExcerpt } ) }
-                            />
+                        <ToggleControl
+                            label={ __( 'First Post text as Excerpt', 'advanced-gutenberg' ) }
+                            help={ __( 'Display some part of first text found in post as excerpt.', 'advanced-gutenberg' ) }
+                            checked={ postTextAsExcerpt }
+                            onChange={ () => setAttributes( { postTextAsExcerpt: !postTextAsExcerpt } ) }
+                        />
                         }
                         {displayExcerpt && postTextAsExcerpt &&
-                            <RangeControl
-                                label={ __( 'Post Text Excerpt length', 'advanced-gutenberg' ) }
-                                min={ 50 }
-                                max={ 300 }
-                                value={ postTextExcerptLength }
-                                onChange={ ( value ) => setAttributes( { postTextExcerptLength: value } ) }
-                            />
+                        <RangeControl
+                            label={ __( 'Post Text Excerpt length', 'advanced-gutenberg' ) }
+                            min={ 50 }
+                            max={ 300 }
+                            value={ postTextExcerptLength }
+                            onChange={ ( value ) => setAttributes( { postTextExcerptLength: value } ) }
+                        />
                         }
                     </PanelBody>
                 </InspectorControls>
@@ -338,7 +338,7 @@
                                                 </a>
                                             ) }
                                             {displayDate && (
-                                            <span className="advgb-post-date" >
+                                                <span className="advgb-post-date" >
                                                 { dateI18n( dateFormat, post.date_gmt ) }
                                             </span>
                                             ) }
@@ -377,12 +377,6 @@
         keywords: [ __( 'latest posts', 'advanced-gutenberg' ), __( 'posts slide', 'advanced-gutenberg' ), __( 'posts grid', 'advanced-gutenberg' ) ],
         supports: {
             html: false,
-        },
-        attributes: {
-            isPreview: {
-                type: 'boolean',
-                default: false,
-            }
         },
         example: {
             attributes: {

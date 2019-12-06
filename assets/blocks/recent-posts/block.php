@@ -62,7 +62,6 @@ HTML;
  */
 function advgbRenderBlockRecentPosts($attributes)
 {
-    //var_dump($attributes);
     $recent_posts = wp_get_recent_posts(
         array(
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
@@ -74,7 +73,6 @@ function advgbRenderBlockRecentPosts($attributes)
         ),
         OBJECT
     );
-
 
     $saved_settings    = get_option('advgb_settings');
     $default_thumb     = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);

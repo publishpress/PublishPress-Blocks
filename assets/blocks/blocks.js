@@ -2670,11 +2670,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             BaseControl,
                                             {
-                                                label: [__('Link', 'advanced-gutenberg'), item.link && React.createElement(
-                                                    "a",
-                                                    { href: item.link || '#', key: "link_url", target: "_blank", style: { marginLeft: '5px' } },
-                                                    __('Preview', 'advanced-gutenberg')
-                                                )]
+                                                label: __('Link', 'advanced-gutenberg')
                                             },
                                             React.createElement(URLInput, {
                                                 value: item.link,
@@ -3003,10 +2999,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                             var iconClass = [item.iconType === 'material' && 'mi mi-', item.icon].filter(Boolean).join('');
 
-                            var iconStyles = {
-                                fontSize: item.size + 'px',
-                                color: item.color
-                            };
                             return React.createElement(
                                 Fragment,
                                 null,
@@ -3015,7 +3007,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: advgbIconClass },
                                     item.link !== '' && React.createElement(
                                         "a",
-                                        { href: item.link, title: item.title, target: item.linkTarget },
+                                        { href: item.link, title: item.title },
                                         React.createElement(
                                             "div",
                                             { className: iconWrapClass },
@@ -15880,12 +15872,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         keywords: [__('latest posts', 'advanced-gutenberg'), __('posts slide', 'advanced-gutenberg'), __('posts grid', 'advanced-gutenberg')],
         supports: {
             html: false
-        },
-        attributes: {
-            isPreview: {
-                type: 'boolean',
-                default: false
-            }
         },
         example: {
             attributes: {
