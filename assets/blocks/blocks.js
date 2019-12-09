@@ -2909,7 +2909,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return {
                     icon: 'beenhere',
                     iconType: 'material',
-                    size: 50,
+                    size: 120,
                     color: '#111111',
                     style: 'default',
                     bgColor: '',

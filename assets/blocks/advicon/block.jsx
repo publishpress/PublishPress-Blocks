@@ -409,7 +409,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 {
                     icon: 'beenhere',
                     iconType: 'material',
-                    size: 50,
+                    size: 120,
                     color: '#111111',
                     style: 'default',
                     bgColor: '',
