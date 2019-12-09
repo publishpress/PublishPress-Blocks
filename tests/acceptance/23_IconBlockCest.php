@@ -52,12 +52,12 @@ class IconBlockCest
     public function changeNumberOfIcon(AcceptanceTester $I) {
         $I->wantTo('Change number of icon');
 
-        $I->fillField('//label[text()="Number of Icons"]/following-sibling::node()/following-sibling::node()', 2);
+        $I->fillField('//label[text()="Number of Icons"]/following-sibling::node()/following-sibling::node()', 3);
 
         $I->updatePost();
         $I->waitForElement('//div[contains(@class, "wp-block-advgb-icon")]');
 
-        $I->seeNumberOfElements('//div[contains(@class, "wp-block-advgb-icon")]/div[@class="advgb-icons"]//div[contains(@class, "advgb-icon-wrap")]', 2);
+        $I->seeNumberOfElements('//div[contains(@class, "wp-block-advgb-icon")]/div[@class="advgb-icons"]//div[contains(@class, "advgb-icon-wrap")]', 3);
     }
 
     public function changeSettingsIcon1(AcceptanceTester $I) {
@@ -105,11 +105,11 @@ class IconBlockCest
         $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('.advgb-icon-wrapper'); // click block to hide picker
 
-        //change border size
-        $I->fillField('//label[text()="Border Size(px)"]/following-sibling::node()/following-sibling::node()', 3);
-
         //change border radius
-        $I->fillField('//label[text()="Border Radius(%)"]/following-sibling::node()/following-sibling::node()', 20);
+        $I->fillField('//label[text()="Border Radius(%)"]/following-sibling::node()/following-sibling::node()', 30);
+
+        //change border size
+        $I->fillField('//label[text()="Border Size(px)"]/following-sibling::node()/following-sibling::node()', 4);
 
         //change link URL
         $I->click('//button[text()="Link"]');
@@ -139,11 +139,11 @@ class IconBlockCest
         $frontendIconBgColorRbg = $I->executeJS('return jQuery(".advgb-item-0 .advgb-icon").css("background-color")');
         $I->assertEquals($iconBgColorRbg, $frontendIconBgColorRbg);
         //icon border
-        $border = '2px solid rgb(255, 153, 0)';
+        $border = '4px solid rgb(255, 153, 0)';
         $frontendBorder = $I->executeJS('return jQuery(".advgb-item-0 .advgb-icon").css("border")');
         $I->assertEquals($border, $frontendBorder);
         //border radius
-        $borderRadius = '20%';
+        $borderRadius = '30%';
         $frontendBorderRadius = $I->executeJS('return jQuery(".advgb-item-0 .advgb-icon").css("border-radius")');
         $I->assertEquals($borderRadius, $frontendBorderRadius);
 
@@ -152,12 +152,12 @@ class IconBlockCest
         //link href
         $I->seeElement('//div[contains(@class, "wp-block-advgb-icon")]/div[@class="advgb-icons"]//a[@href="#"]');
         //link target
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-icon")]/div[@class="advgb-icons"]//a[@target="_blank"]');
+        //$I->seeElement('//div[contains(@class, "wp-block-advgb-icon")]/div[@class="advgb-icons"]//a[@target="_blank"]');
         //link title
         $I->seeElement('//div[contains(@class, "wp-block-advgb-icon")]/div[@class="advgb-icons"]//a[@title="Icon 1"]');
 
         //margin
-        $margin = '0px';
+        $margin = '0px 40px 0px 0px';
         $frontendMargin = $I->executeJS('return jQuery(".advgb-item-0 .advgb-icon").css("margin")');
         $I->assertEquals($margin, $frontendMargin);
         //padding
