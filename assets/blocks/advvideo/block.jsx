@@ -160,6 +160,7 @@
                     videoID: video.id,
                     videoTitle: video.title,
                     videoSourceType: 'local',
+                    openInLightbox: false,
                 }
             );
             if(document.querySelector('#'+blockId+' video') != null) {
@@ -299,13 +300,13 @@
                                     />
 
                                     <ToggleControl
-                                        label={ __( 'Playsinline', 'advanced-gutenberg' ) }
+                                        label={ __( 'Play inline', 'advanced-gutenberg' ) }
                                         checked={ playsinline }
                                         onChange={ () => setAttributes( { playsinline: !playsinline } ) }
                                     />
 
                                     <SelectControl
-                                        label={ __( 'Preload', 'advanced-gutenberg' ) }
+                                        label={ __( 'Video preloading', 'advanced-gutenberg' ) }
                                         value={ preload }
                                         options={ [
                                             { label: __( 'Auto', 'advanced-gutenberg' ), value: 'auto' },

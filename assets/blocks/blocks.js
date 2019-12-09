@@ -7018,7 +7018,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     videoURL: video.url,
                     videoID: video.id,
                     videoTitle: video.title,
-                    videoSourceType: 'local'
+                    videoSourceType: 'local',
+                    openInLightbox: false
                 });
                 if (document.querySelector('#' + blockId + ' video') != null) {
                     document.querySelector('#' + blockId + ' video').pause();
@@ -7177,14 +7178,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(ToggleControl, {
-                                    label: __('Playsinline', 'advanced-gutenberg'),
+                                    label: __('Play inline', 'advanced-gutenberg'),
                                     checked: playsinline,
                                     onChange: function onChange() {
                                         return setAttributes({ playsinline: !playsinline });
                                     }
                                 }),
                                 React.createElement(SelectControl, {
-                                    label: __('Preload', 'advanced-gutenberg'),
+                                    label: __('Video preloading', 'advanced-gutenberg'),
                                     value: preload,
                                     options: [{ label: __('Auto', 'advanced-gutenberg'), value: 'auto' }, { label: __('Metadata', 'advanced-gutenberg'), value: 'metadata' }, { label: __('None', 'advanced-gutenberg'), value: 'none' }],
                                     onChange: function onChange(value) {
