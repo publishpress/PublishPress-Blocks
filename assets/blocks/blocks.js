@@ -2907,7 +2907,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'array',
             default: times(10, function () {
                 return {
-                    icon: 'info',
+                    icon: 'beenhere',
                     iconType: 'material',
                     size: 50,
                     color: '#111111',
@@ -2923,7 +2923,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     marginTop: 0,
                     marginBottom: 0,
                     marginLeft: 0,
-                    marginRight: 0,
+                    marginRight: 40,
                     paddingUnit: 'px',
                     marginUnit: 'px',
                     link: '',
@@ -2934,7 +2934,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         numberItem: {
             type: 'number',
-            default: 1
+            default: 2
         },
         changed: {
             type: 'boolean',

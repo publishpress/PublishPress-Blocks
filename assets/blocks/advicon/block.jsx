@@ -407,7 +407,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             type: 'array',
             default: times(10, () => (
                 {
-                    icon: 'info',
+                    icon: 'beenhere',
                     iconType: 'material',
                     size: 50,
                     color: '#111111',
@@ -423,7 +423,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     marginTop: 0,
                     marginBottom: 0,
                     marginLeft: 0,
-                    marginRight: 0,
+                    marginRight: 40,
                     paddingUnit: 'px',
                     marginUnit: 'px',
                     link: '',
@@ -434,7 +434,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         },
         numberItem: {
             type: 'number',
-            default: 1,
+            default: 2,
         },
         changed: {
             type: 'boolean',
