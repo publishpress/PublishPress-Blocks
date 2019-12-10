@@ -2388,7 +2388,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     background-color: rgba(0,0,0, 0.5);
     z-index: 160000;
 }
-.popup_inner {
+.popup-inner {
     position: absolute;
     left: 25%;
     right: 25%;

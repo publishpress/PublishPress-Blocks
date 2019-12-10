@@ -2442,22 +2442,65 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(IconListPopup, [{
             key: "render",
             value: function render() {
+                var searchedText = this.state.searchedText;
+
                 var popUpTitle = __('Icon List', 'advanced-gutenberg');
+                var iconType = 'material';
+
                 return React.createElement(
                     "div",
                     { className: "popup" },
                     React.createElement(
                         "div",
-                        { className: "popup_inner" },
+                        { className: "popup-inner" },
                         React.createElement(
-                            "h1",
-                            null,
-                            popUpTitle
-                        ),
-                        React.createElement(
-                            "button",
-                            { onClick: this.props.closePopup },
-                            "close me"
+                            "div",
+                            { className: "popup-content" },
+                            React.createElement(
+                                "div",
+                                { className: "popup-header" },
+                                React.createElement(
+                                    "h3",
+                                    null,
+                                    popUpTitle
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "popup-body" },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflow: 'auto', marginBottom: '24px' } },
+                                    Object.keys(advgbBlocks.iconList[iconType]).filter(function (icon) {
+                                        return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
+                                    }).map(function (icon, index) {
+
+                                        var iconName = icon.replace(/_/g, '-');
+                                        var iconClass = [iconType === 'material' && 'mi mi-', icon.replace(/_/g, '-')].filter(Boolean).join('');
+
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: index },
+                                            React.createElement(
+                                                "span",
+                                                {
+                                                    title: iconClass.split(' ').pop()
+                                                },
+                                                React.createElement("i", { className: iconClass })
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "popup-footer" },
+                                React.createElement(
+                                    "button",
+                                    { onClick: this.props.closePopup },
+                                    "close me"
+                                )
+                            )
                         )
                     )
                 );

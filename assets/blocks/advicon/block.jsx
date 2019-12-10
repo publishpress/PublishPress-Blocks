@@ -26,12 +26,45 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         }
 
         render() {
+            const {searchedText} = this.state;
             const popUpTitle = __('Icon List', 'advanced-gutenberg');
+            const iconType = 'material';
+
             return (
                 <div className='popup'>
-                    <div className='popup_inner'>
-                        <h1>{popUpTitle}</h1>
-                        <button onClick={this.props.closePopup}>close me</button>
+                    <div className='popup-inner'>
+                        <div className="popup-content">
+                            <div className="popup-header">
+                                <h3>{popUpTitle}</h3>
+                            </div>
+                            <div className="popup-body">
+                                <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto', marginBottom: '24px'} }>
+                                        {Object.keys(advgbBlocks.iconList[iconType])
+                                            .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
+                                            .map( (icon, index) => {
+
+                                                const iconName = icon.replace(/_/g, '-');
+                                                const iconClass = [
+                                                    iconType === 'material' && 'mi mi-',
+                                                    icon.replace(/_/g, '-'),
+                                                ].filter( Boolean ).join('');
+
+                                                return (
+                                                    <div className="advgb-icon-item" key={ index }>
+                                                                    <span
+                                                                        title={ iconClass.split(' ').pop() }
+                                                                    >
+                                                                        <i className={ iconClass } />
+                                                                    </span>
+                                                    </div>
+                                                )
+                                            } ) }
+                                    </div>
+                            </div>
+                            <div className="popup-footer">
+                                <button onClick={this.props.closePopup}>close me</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             );
@@ -438,14 +471,14 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             })}
                         </div>
                         {showPopup ?
-                            <IconListPopup
-                                closePopup={ () => {
-                                    if(showPopup) {
-                                        this.togglePopup();
+                                <IconListPopup
+                                    closePopup={ () => {
+                                        if(showPopup) {
+                                            this.togglePopup();
+                                        }
                                     }
-                                }
-                                }
-                            />
+                                    }
+                                />
                             : null
                         }
                     </div>
