@@ -86,12 +86,14 @@ class AdvancedImageBlockCest
         $I->updatePost();
 
         // Check the actual width
-        $width = $I->getElementWidth('//*[contains(@class,"wp-block-advgb-image")]');
-        $I->assertEquals(700, $width);
+        //$width = $I->getElementWidth('//*[contains(@class,"wp-block-advgb-image")]');
+        $frontendWidth = $I->executeJS('return jQuery(".wp-block-advgb-image").css("width")');
+        $I->assertEquals('700px', $frontendWidth);
 
         // Check the actual height
-        $height = $I->getElementHeight('//*[contains(@class,"wp-block-advgb-image")]');
-        $I->assertEquals(650, $height);
+        //$height = $I->getElementHeight('//*[contains(@class,"wp-block-advgb-image")]');
+        $frontendHeight = $I->executeJS('return jQuery(".wp-block-advgb-image").css("height")');
+        $I->assertEquals('650px', $frontendHeight);
     }
 
     public function changeColor(AcceptanceTester $I)

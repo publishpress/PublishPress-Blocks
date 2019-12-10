@@ -9,9 +9,10 @@ class ImagesSliderBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-images-slider-block');
-            //$I->clickWithLeftButton('//div[@class="advgb-images-slider-block"]', -3, -2);
-            $I->clickAndWait('//button[contains(@aria-label, "Block Navigation")]', 0.5);
-            $I->click('//button[text()="Images Slider"]');
+            $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Images Slider")]', -3, 0);
+//            $I->clickAndWait('//button[contains(@aria-label, "Block Navigation")]', 0.5);
+//            $I->click('//button[text()="Images Slider"]');
+            //$I->clickWithLeftButton('//ul[@class="slick-dots"]', 50, 95);
         } catch(Exception $e) {
             // do stuff
         }
