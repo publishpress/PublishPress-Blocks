@@ -2376,7 +2376,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 }
 
 /* Icon List Lightbox */
-.popup {
+.advgb-icon-wrapper .popup {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -2388,14 +2388,40 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     background-color: rgba(0,0,0, 0.5);
     z-index: 160000;
 }
-.popup-inner {
+.advgb-icon-wrapper .popup-inner {
     position: absolute;
     left: 25%;
     right: 25%;
-    top: 25%;
-    bottom: 25%;
+    top: 50%;
     margin: auto;
-    background: white;
+    background: #fff;
+    transform: translateY(-50%);
+}
+.advgb-icon-wrapper .popup-inner .popup-body {
+    padding: 20px;
+}
+.advgb-icon-wrapper .popup-inner .popup-header {
+    padding: 20px 20px 0;
+}
+.advgb-icon-wrapper .popup-inner .popup-header h3 {
+    margin: 0;
+    font-size: 24px;
+}
+.advgb-icon-wrapper .popup-inner .popup-header .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+}
+.advgb-icon-wrapper .popup-inner .popup-footer {
+    padding: 20px;
+}
+.advgb-icon-wrapper .advgb-icon-items-wrapper {
+    padding-top: 10px;
+}
+.advgb-icon-wrapper .advgb-icon-items-wrapper .advgb-icon-item {
+    min-width: 20%;
 }
 
 /*Responsive for Columns*/

@@ -30,16 +30,35 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             const popUpTitle = __('Icon List', 'advanced-gutenberg');
             const iconType = 'material';
 
+            const closeButtonClass = [
+                'close-btn',
+                'components-button',
+                'button button-small',
+                'advgb-browse-image-btn',
+                'is-primary'
+            ].filter( Boolean ).join( ' ' );
+
             return (
                 <div className='popup'>
                     <div className='popup-inner'>
                         <div className="popup-content">
                             <div className="popup-header">
                                 <h3>{popUpTitle}</h3>
+                                <button
+                                    className={closeButtonClass}
+                                    onClick={this.props.closePopup}>
+                                    x
+                                </button>
                             </div>
                             <div className="popup-body">
-                                <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto', marginBottom: '24px'} }>
-                                        {Object.keys(advgbBlocks.iconList[iconType])
+                                <TextControl
+                                    placeholder={ __( 'Search icons', 'advanced-gutenberg' ) }
+                                    value={ searchedText }
+                                    onChange={ (value) => this.setState( { searchedText: value } ) }
+                                />
+                                <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto'} }>
+
+                                    {Object.keys(advgbBlocks.iconList[iconType])
                                             .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
                                             .map( (icon, index) => {
 
@@ -61,9 +80,6 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                             } ) }
                                     </div>
                             </div>
-                            <div className="popup-footer">
-                                <button onClick={this.props.closePopup}>close me</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,6 +94,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             this.state = {
                 searchedText: '',
                 showPopup: false,
+                currentItem: 1,
             };
             this.togglePopup = this.togglePopup.bind(this);
         }
@@ -144,7 +161,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 isPreview
             } = attributes;
 
-            const { searchedText, showPopup } = this.state;
+            const { searchedText, showPopup, currentItem } = this.state;
 
             const blockWrapClass = [
                 'advgb-icon-wrapper'
@@ -196,6 +213,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                     onClick={ () => {
                                                         if(!showPopup) {
                                                             this.togglePopup();
+                                                            this.setState({ currentItem: i});
                                                         }
                                                     }
                                                     }
