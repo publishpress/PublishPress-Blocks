@@ -70,11 +70,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
 
                                                 return (
                                                     <div className="advgb-icon-item" key={ index }>
-                                                                    <span
-                                                                        title={ iconClass.split(' ').pop() }
-                                                                    >
-                                                                        <i className={ iconClass } />
-                                                                    </span>
+                                                        <span
+                                                            onClick={ () => this.props.onSelectIcon( iconName ) }
+                                                            title={ iconClass.split(' ').pop() }
+                                                        >
+                                                            <i className={ iconClass } />
+                                                        </span>
                                                     </div>
                                                 )
                                             } ) }
@@ -95,8 +96,11 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 searchedText: '',
                 showPopup: false,
                 currentItem: 1,
+                iconSelected: '',
+                selectedIcon: false,
             };
             this.togglePopup = this.togglePopup.bind(this);
+            this.handleIcon = this.handleIcon.bind(this);
         }
 
         componentWillMount() {
@@ -127,6 +131,21 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             if (!blockIDX) {
                 setAttributes( { blockIDX: `advgb-icon-${clientId}` } );
             }
+        }
+
+        componentDidUpdate(prevProps, prevState) {
+            const {currentItem, iconSelected, seletedIcon} = this.state;
+            console.log(this.state);
+            if(seletedIcon) {
+                this.updateItems(currentItem, {icon: iconSelected});
+            }
+        }
+
+        handleIcon(iconValue) {
+            this.setState({
+                iconSelected: iconValue,
+                selectedIcon: true,
+            });
         }
 
         updateItems(idx, data) {
@@ -210,10 +229,11 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                             >
                                                 <Button
                                                     className="button button-large advgb-browse-image-btn"
-                                                    onClick={ () => {
+                                                    data-currentItem={i}
+                                                    onClick={ (event) => {
                                                         if(!showPopup) {
                                                             this.togglePopup();
-                                                            this.setState({ currentItem: i});
+                                                            this.setState({ currentItem: event.target.attributes.getNamedItem('data-currentItem').value });
                                                         }
                                                     }
                                                     }
@@ -496,6 +516,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         }
                                     }
                                     }
+                                    onSelectIcon={ this.handleIcon }
                                 />
                             : null
                         }

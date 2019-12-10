@@ -2502,6 +2502,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             React.createElement(
                                                 "span",
                                                 {
+                                                    onClick: function onClick() {
+                                                        return _this2.props.onSelectIcon(iconName);
+                                                    },
                                                     title: iconClass.split(' ').pop()
                                                 },
                                                 React.createElement("i", { className: iconClass })
@@ -2530,9 +2533,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             _this3.state = {
                 searchedText: '',
                 showPopup: false,
-                currentItem: 1
+                currentItem: 1,
+                iconSelected: '',
+                selectedIcon: false
             };
             _this3.togglePopup = _this3.togglePopup.bind(_this3);
+            _this3.handleIcon = _this3.handleIcon.bind(_this3);
             return _this3;
         }
 
@@ -2576,6 +2582,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate(prevProps, prevState) {
+                var _state = this.state,
+                    currentItem = _state.currentItem,
+                    iconSelected = _state.iconSelected,
+                    seletedIcon = _state.seletedIcon;
+
+                console.log(this.state);
+                if (seletedIcon) {
+                    this.updateItems(currentItem, { icon: iconSelected });
+                }
+            }
+        }, {
+            key: "handleIcon",
+            value: function handleIcon(iconValue) {
+                this.setState({
+                    iconSelected: iconValue,
+                    selectedIcon: true
+                });
+            }
+        }, {
             key: "updateItems",
             value: function updateItems(idx, data) {
                 var _props3 = this.props,
@@ -2616,10 +2643,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberItem = attributes.numberItem,
                     tAlign = attributes.tAlign,
                     isPreview = attributes.isPreview;
-                var _state = this.state,
-                    searchedText = _state.searchedText,
-                    showPopup = _state.showPopup,
-                    currentItem = _state.currentItem;
+                var _state2 = this.state,
+                    searchedText = _state2.searchedText,
+                    showPopup = _state2.showPopup,
+                    currentItem = _state2.currentItem;
 
 
                 var blockWrapClass = ['advgb-icon-wrapper'].filter(Boolean).join(' ');
@@ -2679,10 +2706,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             Button,
                                             {
                                                 className: "button button-large advgb-browse-image-btn",
-                                                onClick: function onClick() {
+                                                "data-currentItem": i,
+                                                onClick: function onClick(event) {
                                                     if (!showPopup) {
                                                         _this4.togglePopup();
-                                                        _this4.setState({ currentItem: i });
+                                                        _this4.setState({ currentItem: event.target.attributes.getNamedItem('data-currentItem').value });
                                                     }
                                                 }
                                             },
@@ -3020,7 +3048,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 if (showPopup) {
                                     _this4.togglePopup();
                                 }
-                            }
+                            },
+                            onSelectIcon: this.handleIcon
                         }) : null
                     )
                 );
