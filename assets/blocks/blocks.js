@@ -2410,7 +2410,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
-        TextControl = wpComponents.TextControl;
+        TextControl = wpComponents.TextControl,
+        Button = wpComponents.Button;
     var _lodash = lodash,
         times = _lodash.times;
 
@@ -2424,18 +2425,62 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M19 1H5c-1.1 0-1.99.9-1.99 2L3 15.93c0 .69.35 1.3.88 1.66L12 23l8.11-5.41c.53-.36.88-.97.88-1.66L21 3c0-1.1-.9-2-2-2zm-7 19.6l-7-4.66V3h14v12.93l-7 4.67zm-2.01-7.42l-2.58-2.59L6 12l4 4 8-8-1.42-1.42z" })
     );
 
-    var AdvIconEdit = function (_Component) {
-        _inherits(AdvIconEdit, _Component);
+    var IconListPopup = function (_Component) {
+        _inherits(IconListPopup, _Component);
 
-        function AdvIconEdit() {
-            _classCallCheck(this, AdvIconEdit);
+        function IconListPopup() {
+            _classCallCheck(this, IconListPopup);
 
-            var _this = _possibleConstructorReturn(this, (AdvIconEdit.__proto__ || Object.getPrototypeOf(AdvIconEdit)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (IconListPopup.__proto__ || Object.getPrototypeOf(IconListPopup)).call(this));
 
             _this.state = {
                 searchedText: ''
             };
             return _this;
+        }
+
+        _createClass(IconListPopup, [{
+            key: "render",
+            value: function render() {
+                var popUpTitle = __('Icon List', 'advanced-gutenberg');
+                return React.createElement(
+                    "div",
+                    { className: "popup" },
+                    React.createElement(
+                        "div",
+                        { className: "popup_inner" },
+                        React.createElement(
+                            "h1",
+                            null,
+                            popUpTitle
+                        ),
+                        React.createElement(
+                            "button",
+                            { onClick: this.props.closePopup },
+                            "close me"
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return IconListPopup;
+    }(Component);
+
+    var AdvIconEdit = function (_Component2) {
+        _inherits(AdvIconEdit, _Component2);
+
+        function AdvIconEdit() {
+            _classCallCheck(this, AdvIconEdit);
+
+            var _this2 = _possibleConstructorReturn(this, (AdvIconEdit.__proto__ || Object.getPrototypeOf(AdvIconEdit)).apply(this, arguments));
+
+            _this2.state = {
+                searchedText: '',
+                showPopup: false
+            };
+            _this2.togglePopup = _this2.togglePopup.bind(_this2);
+            return _this2;
         }
 
         _createClass(AdvIconEdit, [{
@@ -2496,9 +2541,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ searchedText: '' });
             }
         }, {
+            key: "togglePopup",
+            value: function togglePopup() {
+                var showPopup = this.state.showPopup;
+
+
+                this.setState({
+                    showPopup: !showPopup
+                });
+            }
+        }, {
             key: "render",
             value: function render() {
-                var _this2 = this;
+                var _this3 = this;
 
                 var _props4 = this.props,
                     attributes = _props4.attributes,
@@ -2508,7 +2563,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberItem = attributes.numberItem,
                     tAlign = attributes.tAlign,
                     isPreview = attributes.isPreview;
-                var searchedText = this.state.searchedText;
+                var _state = this.state,
+                    searchedText = _state.searchedText,
+                    showPopup = _state.showPopup;
 
 
                 var blockWrapClass = ['advgb-icon-wrapper'].filter(Boolean).join(' ');
@@ -2564,11 +2621,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         {
                                             label: __('Icon Library (Material Icon)', 'advanced-gutenberg')
                                         },
+                                        React.createElement(
+                                            Button,
+                                            {
+                                                className: "button button-large advgb-browse-image-btn",
+                                                onClick: function onClick() {
+                                                    if (!showPopup) {
+                                                        _this3.togglePopup();
+                                                    }
+                                                }
+                                            },
+                                            __('Icon Selection', 'advanced-gutenberg')
+                                        ),
                                         React.createElement(TextControl, {
                                             placeholder: __('Search icons (at least 3 characters)', 'advanced-gutenberg'),
                                             value: searchedText,
                                             onChange: function onChange(value) {
-                                                return _this2.setState({ searchedText: value });
+                                                return _this3.setState({ searchedText: value });
                                             }
                                         }),
                                         searchedText.trim().length > 2 && !!advgbBlocks.iconList[item.iconType] && React.createElement(
@@ -2587,7 +2656,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                     React.createElement(
                                                         "span",
                                                         { onClick: function onClick() {
-                                                                return _this2.updateItems(idx, { icon: iconName });
+                                                                return _this3.updateItems(idx, { icon: iconName });
                                                             },
                                                             className: iconName === item.icon && 'active',
                                                             title: iconClass.split(' ').pop()
@@ -2603,7 +2672,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         value: item.style,
                                         options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Stacked', 'advanced-gutenberg'), value: 'stacked' }],
                                         onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { style: value });
+                                            return _this3.updateItems(idx, { style: value });
                                         }
                                     }),
                                     React.createElement(RangeControl, {
@@ -2612,21 +2681,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 250,
                                         value: item.size,
                                         onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { size: value });
+                                            return _this3.updateItems(idx, { size: value });
                                         }
                                     }),
                                     React.createElement(_components.AdvColorControl, {
                                         label: __('Icon Color', 'advanced-gutenberg'),
                                         value: item.color,
                                         onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { color: value });
+                                            return _this3.updateItems(idx, { color: value });
                                         }
                                     }),
                                     React.createElement(_components.AdvColorControl, {
                                         label: __('Icon Background', 'advanced-gutenberg'),
                                         value: item.bgColor,
                                         onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { bgColor: value });
+                                            return _this3.updateItems(idx, { bgColor: value });
                                         }
                                     }),
                                     item.style && item.style === 'stacked' && React.createElement(
@@ -2639,7 +2708,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             label: __('Border Color', 'advanced-gutenberg'),
                                             value: item.borderColor,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { borderColor: value });
+                                                return _this3.updateItems(idx, { borderColor: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2648,7 +2717,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             max: 20,
                                             value: item.borderSize,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { borderSize: value });
+                                                return _this3.updateItems(idx, { borderSize: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2657,7 +2726,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             max: 50,
                                             value: item.borderRadius,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { borderRadius: value });
+                                                return _this3.updateItems(idx, { borderRadius: value });
                                             }
                                         })
                                     ),
@@ -2675,7 +2744,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             React.createElement(URLInput, {
                                                 value: item.link,
                                                 onChange: function onChange(value) {
-                                                    return _this2.updateItems(idx, { link: value });
+                                                    return _this3.updateItems(idx, { link: value });
                                                 },
                                                 autoFocus: false,
                                                 isFullWidth: true,
@@ -2687,14 +2756,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             value: item.linkTarget,
                                             options: [{ label: __('Same Window', 'advanced-gutenberg'), value: '_self' }, { label: __('New Window', 'advanced-gutenberg'), value: '_blank' }],
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { linkTarget: value });
+                                                return _this3.updateItems(idx, { linkTarget: value });
                                             }
                                         }),
                                         React.createElement(TextControl, {
                                             label: __('Title for Accessibility', 'advanced-gutenberg'),
                                             value: item.title,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { title: value });
+                                                return _this3.updateItems(idx, { title: value });
                                             }
                                         })
                                     ),
@@ -2722,7 +2791,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                             className: "advgb-unit " + (item.paddingUnit === unit ? 'selected' : ''),
                                                             key: uIdx,
                                                             onClick: function onClick() {
-                                                                return _this2.updateItems(idx, { paddingUnit: unit });
+                                                                return _this3.updateItems(idx, { paddingUnit: unit });
                                                             }
                                                         },
                                                         unit
@@ -2736,7 +2805,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { paddingTop: value });
+                                                return _this3.updateItems(idx, { paddingTop: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2745,7 +2814,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { paddingBottom: value });
+                                                return _this3.updateItems(idx, { paddingBottom: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2754,7 +2823,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { paddingLeft: value });
+                                                return _this3.updateItems(idx, { paddingLeft: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2763,7 +2832,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { paddingRight: value });
+                                                return _this3.updateItems(idx, { paddingRight: value });
                                             }
                                         })
                                     ),
@@ -2790,7 +2859,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         {
                                                             className: "advgb-unit " + (item.marginUnit === unit ? 'selected' : ''), key: uIdx,
                                                             onClick: function onClick() {
-                                                                return _this2.updateItems(idx, { marginUnit: unit });
+                                                                return _this3.updateItems(idx, { marginUnit: unit });
                                                             }
                                                         },
                                                         unit
@@ -2804,7 +2873,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { marginTop: value });
+                                                return _this3.updateItems(idx, { marginTop: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2813,7 +2882,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { marginBottom: value });
+                                                return _this3.updateItems(idx, { marginBottom: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2822,7 +2891,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { marginLeft: value });
+                                                return _this3.updateItems(idx, { marginLeft: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2831,7 +2900,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { marginRight: value });
+                                                return _this3.updateItems(idx, { marginRight: value });
                                             }
                                         })
                                     )
@@ -2890,7 +2959,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     )
                                 );
                             })
-                        )
+                        ),
+                        showPopup ? React.createElement(IconListPopup, {
+                            closePopup: function closePopup() {
+                                if (showPopup) {
+                                    _this3.togglePopup();
+                                }
+                            }
+                        }) : null
                     )
                 );
             }
