@@ -2434,7 +2434,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this = _possibleConstructorReturn(this, (IconListPopup.__proto__ || Object.getPrototypeOf(IconListPopup)).call(this));
 
             _this.state = {
-                searchedText: ''
+                searchedText: '',
+                selectedIcon: ''
             };
             return _this;
         }
@@ -2444,7 +2445,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var searchedText = this.state.searchedText;
+                var _state = this.state,
+                    searchedText = _state.searchedText,
+                    selectedIcon = _state.selectedIcon;
 
                 var popUpTitle = __('Icon List', 'advanced-gutenberg');
                 var iconType = 'material';
@@ -2503,8 +2506,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 {
                                                     onClick: function onClick() {
-                                                        return _this2.props.onSelectIcon(iconName);
+                                                        _this2.props.onSelectIcon(iconName);
+                                                        _this2.setState({
+                                                            selectedIcon: iconName
+                                                        });
                                                     },
+                                                    className: iconName === selectedIcon && 'active',
                                                     title: iconClass.split(' ').pop()
                                                 },
                                                 React.createElement("i", { className: iconClass })
@@ -2531,9 +2538,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var _this3 = _possibleConstructorReturn(this, (AdvIconEdit.__proto__ || Object.getPrototypeOf(AdvIconEdit)).apply(this, arguments));
 
             _this3.state = {
-                searchedText: '',
                 showPopup: false,
-                currentItem: 1,
+                currentItem: 0,
                 iconSelected: '',
                 selectedIcon: false
             };
@@ -2583,15 +2589,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             key: "componentDidUpdate",
-            value: function componentDidUpdate(prevProps, prevState) {
-                var _state = this.state,
-                    currentItem = _state.currentItem,
-                    iconSelected = _state.iconSelected,
-                    seletedIcon = _state.seletedIcon;
+            value: function componentDidUpdate() {
+                var _state2 = this.state,
+                    currentItem = _state2.currentItem,
+                    iconSelected = _state2.iconSelected,
+                    selectedIcon = _state2.selectedIcon;
 
-                console.log(this.state);
-                if (seletedIcon) {
-                    this.updateItems(currentItem, { icon: iconSelected });
+                if (selectedIcon) {
+                    this.setState({
+                        selectedIcon: false
+                    });
+                    this.updateItems(parseInt(currentItem), { icon: iconSelected });
                 }
             }
         }, {
@@ -2643,10 +2651,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberItem = attributes.numberItem,
                     tAlign = attributes.tAlign,
                     isPreview = attributes.isPreview;
-                var _state2 = this.state,
-                    searchedText = _state2.searchedText,
-                    showPopup = _state2.showPopup,
-                    currentItem = _state2.currentItem;
+                var showPopup = this.state.showPopup;
 
 
                 var blockWrapClass = ['advgb-icon-wrapper'].filter(Boolean).join(' ');
@@ -2706,7 +2711,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             Button,
                                             {
                                                 className: "button button-large advgb-browse-image-btn",
-                                                "data-currentItem": i,
+                                                "data-currentItem": idx,
                                                 onClick: function onClick(event) {
                                                     if (!showPopup) {
                                                         _this4.togglePopup();
@@ -2715,39 +2720,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 }
                                             },
                                             __('Icon Selection', 'advanced-gutenberg')
-                                        ),
-                                        React.createElement(TextControl, {
-                                            placeholder: __('Search icons (at least 3 characters)', 'advanced-gutenberg'),
-                                            value: searchedText,
-                                            onChange: function onChange(value) {
-                                                return _this4.setState({ searchedText: value });
-                                            }
-                                        }),
-                                        searchedText.trim().length > 2 && !!advgbBlocks.iconList[item.iconType] && React.createElement(
-                                            "div",
-                                            { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflow: 'auto', marginBottom: '24px' } },
-                                            Object.keys(advgbBlocks.iconList[item.iconType]).filter(function (icon) {
-                                                return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
-                                            }).map(function (icon, index) {
-
-                                                var iconName = icon.replace(/_/g, '-');
-                                                var iconClass = [item.iconType === 'material' && 'mi mi-', icon.replace(/_/g, '-')].filter(Boolean).join('');
-
-                                                return React.createElement(
-                                                    "div",
-                                                    { className: "advgb-icon-item", key: index },
-                                                    React.createElement(
-                                                        "span",
-                                                        { onClick: function onClick() {
-                                                                return _this4.updateItems(idx, { icon: iconName });
-                                                            },
-                                                            className: iconName === item.icon && 'active',
-                                                            title: iconClass.split(' ').pop()
-                                                        },
-                                                        React.createElement("i", { className: iconClass })
-                                                    )
-                                                );
-                                            })
                                         )
                                     ),
                                     React.createElement(SelectControl, {

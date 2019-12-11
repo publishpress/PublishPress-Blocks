@@ -22,11 +22,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
 
             this.state = {
                 searchedText: '',
+                selectedIcon: '',
             }
         }
 
         render() {
-            const {searchedText} = this.state;
+            const {searchedText, selectedIcon} = this.state;
             const popUpTitle = __('Icon List', 'advanced-gutenberg');
             const iconType = 'material';
 
@@ -71,7 +72,13 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                 return (
                                                     <div className="advgb-icon-item" key={ index }>
                                                         <span
-                                                            onClick={ () => this.props.onSelectIcon( iconName ) }
+                                                            onClick={ () => {
+                                                                this.props.onSelectIcon( iconName );
+                                                                this.setState({
+                                                                    selectedIcon: iconName
+                                                                })
+                                                            } }
+                                                            className={ iconName === selectedIcon && 'active' }
                                                             title={ iconClass.split(' ').pop() }
                                                         >
                                                             <i className={ iconClass } />
@@ -93,9 +100,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         constructor() {
             super( ...arguments );
             this.state = {
-                searchedText: '',
                 showPopup: false,
-                currentItem: 1,
+                currentItem: 0,
                 iconSelected: '',
                 selectedIcon: false,
             };
@@ -133,11 +139,13 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             }
         }
 
-        componentDidUpdate(prevProps, prevState) {
-            const {currentItem, iconSelected, seletedIcon} = this.state;
-            console.log(this.state);
-            if(seletedIcon) {
-                this.updateItems(currentItem, {icon: iconSelected});
+        componentDidUpdate() {
+            const {currentItem, iconSelected, selectedIcon} = this.state;
+            if(selectedIcon) {
+                this.setState({
+                    selectedIcon: false
+                });
+                this.updateItems(parseInt(currentItem), {icon: iconSelected});
             }
         }
 
@@ -180,7 +188,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 isPreview
             } = attributes;
 
-            const { searchedText, showPopup, currentItem } = this.state;
+            const { showPopup } = this.state;
 
             const blockWrapClass = [
                 'advgb-icon-wrapper'
@@ -229,7 +237,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                             >
                                                 <Button
                                                     className="button button-large advgb-browse-image-btn"
-                                                    data-currentItem={i}
+                                                    data-currentItem={idx}
                                                     onClick={ (event) => {
                                                         if(!showPopup) {
                                                             this.togglePopup();
@@ -240,36 +248,6 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                 >
                                                     { __( 'Icon Selection', 'advanced-gutenberg' ) }
                                                 </Button>
-                                                <TextControl
-                                                    placeholder={ __( 'Search icons (at least 3 characters)', 'advanced-gutenberg' ) }
-                                                    value={ searchedText }
-                                                    onChange={ (value) => this.setState( { searchedText: value } ) }
-                                                />
-                                                {searchedText.trim().length > 2 && !!advgbBlocks.iconList[item.iconType] && (
-                                                    <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto', marginBottom: '24px'} }>
-                                                        {Object.keys(advgbBlocks.iconList[item.iconType])
-                                                            .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
-                                                            .map( (icon, index) => {
-
-                                                                const iconName = icon.replace(/_/g, '-');
-                                                                const iconClass = [
-                                                                    item.iconType === 'material' && 'mi mi-',
-                                                                    icon.replace(/_/g, '-'),
-                                                                ].filter( Boolean ).join('');
-
-                                                                return (
-                                                                    <div className="advgb-icon-item" key={ index }>
-                                                                    <span onClick={ () => this.updateItems(idx, { icon: iconName } ) }
-                                                                          className={ iconName === item.icon && 'active' }
-                                                                          title={ iconClass.split(' ').pop() }
-                                                                    >
-                                                                        <i className={ iconClass } />
-                                                                    </span>
-                                                                    </div>
-                                                                )
-                                                            } ) }
-                                                    </div>
-                                                ) }
                                             </BaseControl>
 
                                             <SelectControl
