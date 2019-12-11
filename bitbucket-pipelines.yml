@@ -73,7 +73,7 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress
-    codeception_51_install:
+    codeception_52_install:
     - step: &shared_codeception_52_plugin_install
         name: CC WP 5.2 plugin install
         image: joomunited/codeception
@@ -87,7 +87,7 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress52
-    codeception_51_update:
+    codeception_52_update:
     - step: &shared_codeception_52_plugin_update
         name: CC WP 5.2 plugin update
         image: joomunited/codeception
@@ -101,7 +101,7 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress52
-    codeception_51_core_install:
+    codeception_52_core_install:
       - step: &shared_codeception_52_core_install
           name: CC WP 5.2 core install
           image: joomunited/codeception
@@ -115,7 +115,7 @@ pipelines:
             - chromedriver
             - mysql
             - wordpress52
-    codeception_51_core_update:
+    codeception_52_core_update:
       - step: &shared_codeception_52_core_update
           name: CC WP 5.2 core update
           image: joomunited/codeception
@@ -178,10 +178,6 @@ pipelines:
     'release/*':
     - parallel:
       - step: *shared_phpcs
-#      - step: *shared_codeception_51_core_install
-#      - step: *shared_codeception_51_core_update
-#      - step: *shared_codeception_51_plugin_install
-#      - step: *shared_codeception_51_plugin_update
       - step: *shared_codeception_52_core_install
       - step: *shared_codeception_52_core_update
       - step: *shared_codeception_52_plugin_install
@@ -206,5 +202,3 @@ definitions:
       image: joomunited/wordpress_cgi:latest
     wordpress52:
       image: joomunited/wordpress_cgi:5.2
-    wordpress51:
-      image: joomunited/wordpress_cgi:5.1
