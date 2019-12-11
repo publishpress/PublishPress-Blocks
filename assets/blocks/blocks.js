@@ -2435,19 +2435,41 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             _this.state = {
                 searchedText: '',
-                selectedIcon: ''
+                selectedIcon: '',
+                selectedIconTheme: ''
             };
             return _this;
         }
 
         _createClass(IconListPopup, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _state = this.state,
+                    searchedText = _state.searchedText,
+                    selectedIcon = _state.selectedIcon,
+                    selectedIconTheme = _state.selectedIconTheme;
+
+                if (this.props.selectedIcon !== searchedText) {
+                    this.setState({
+                        searchedText: this.props.selectedIcon,
+                        selectedIcon: this.props.selectedIcon
+                    });
+                }
+                if (this.props.selectedIconTheme !== selectedIconTheme) {
+                    this.setState({
+                        selectedIconTheme: this.props.selectedIconTheme
+                    });
+                }
+            }
+        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
-                var _state = this.state,
-                    searchedText = _state.searchedText,
-                    selectedIcon = _state.selectedIcon;
+                var _state2 = this.state,
+                    searchedText = _state2.searchedText,
+                    selectedIcon = _state2.selectedIcon,
+                    selectedIconTheme = _state2.selectedIconTheme;
 
                 var popUpTitle = __('Icon List', 'advanced-gutenberg');
                 var iconType = 'material';
@@ -2489,6 +2511,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return _this2.setState({ searchedText: value });
                                     }
                                 }),
+                                React.createElement(SelectControl, {
+                                    label: __('Theme', 'advanced-gutenberg'),
+                                    value: selectedIconTheme,
+                                    options: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }],
+                                    onChange: function onChange() {
+                                        _this2.setState({
+                                            selectedIconTheme: 'two-tone'
+                                        });
+                                        //this.props.onSelectIconTheme(selectedIconTheme);
+                                        _this2.props.onSelectIconTheme('two-tone');
+                                    }
+                                }),
                                 React.createElement(
                                     "div",
                                     { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflow: 'auto' } },
@@ -2496,8 +2530,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
                                     }).map(function (icon, index) {
 
-                                        var iconName = icon.replace(/_/g, '-');
-                                        var iconClass = [iconType === 'material' && 'mi mi-', icon.replace(/_/g, '-')].filter(Boolean).join('');
+                                        var iconClass = [iconType === 'material' && 'material-icons', selectedIconTheme !== '' && "-" + selectedIconTheme].filter(Boolean).join('');
 
                                         return React.createElement(
                                             "div",
@@ -2506,15 +2539,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 {
                                                     onClick: function onClick() {
-                                                        _this2.props.onSelectIcon(iconName);
+                                                        _this2.props.onSelectIcon(icon);
                                                         _this2.setState({
-                                                            selectedIcon: iconName
+                                                            selectedIcon: icon
                                                         });
                                                     },
-                                                    className: iconName === selectedIcon && 'active',
+                                                    className: icon === selectedIcon && 'active',
                                                     title: iconClass.split(' ').pop()
                                                 },
-                                                React.createElement("i", { className: iconClass })
+                                                React.createElement(
+                                                    "i",
+                                                    { className: iconClass },
+                                                    icon
+                                                )
                                             )
                                         );
                                     })
@@ -2541,10 +2578,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 showPopup: false,
                 currentItem: 0,
                 iconSelected: '',
-                selectedIcon: false
+                selectedIcon: false,
+                iconThemeSelected: '',
+                selectedIconTheme: false
             };
             _this3.togglePopup = _this3.togglePopup.bind(_this3);
             _this3.handleIcon = _this3.handleIcon.bind(_this3);
+            _this3.handleIconTheme = _this3.handleIconTheme(_this3);
             return _this3;
         }
 
@@ -2590,17 +2630,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate() {
-                var _state2 = this.state,
-                    currentItem = _state2.currentItem,
-                    iconSelected = _state2.iconSelected,
-                    selectedIcon = _state2.selectedIcon;
+                var _state3 = this.state,
+                    currentItem = _state3.currentItem,
+                    iconSelected = _state3.iconSelected,
+                    selectedIcon = _state3.selectedIcon,
+                    iconThemeSelected = _state3.iconThemeSelected,
+                    selectedIconTheme = _state3.selectedIconTheme;
+                var attributes = this.props.attributes;
 
                 if (selectedIcon) {
+
                     this.setState({
                         selectedIcon: false
                     });
-                    this.updateItems(parseInt(currentItem), { icon: iconSelected });
+                    this.updateItems(parseInt(currentItem), { icon: iconSelected, iconTheme: iconThemeSelected });
+                    console.log(currentItem, { icon: iconSelected, iconTheme: iconThemeSelected });
                 }
+
+                if (selectedIconTheme) {
+                    onsole.log(2);
+                    this.setState({
+                        selectedIconTheme: false
+                    });
+                    this.updateItems(parseInt(currentItem), { iconTheme: iconThemeSelected });
+                    console.log(currentItem, { iconTheme: iconThemeSelected });
+                }
+                console.log(attributes);
             }
         }, {
             key: "handleIcon",
@@ -2608,6 +2663,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({
                     iconSelected: iconValue,
                     selectedIcon: true
+                });
+            }
+        }, {
+            key: "handleIconTheme",
+            value: function handleIconTheme(iconThemeValue) {
+                this.setState({
+                    iconThemeSelected: iconThemeValue,
+                    selectedIconTheme: true
                 });
             }
         }, {
@@ -2629,6 +2692,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ searchedText: '' });
             }
         }, {
+            key: "getItemData",
+            value: function getItemData(idx, dataName) {
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
+                var items = attributes.items;
+
+
+                var data = '';
+
+                items.map(function (item, index) {
+                    if (idx === index) {
+                        for (var key in item) {
+                            if (dataName === key && item.hasOwnProperty(key)) {
+                                data = item[key];
+                            }
+                        }
+                    }
+                });
+
+                return data;
+            }
+        }, {
             key: "togglePopup",
             value: function togglePopup() {
                 var showPopup = this.state.showPopup;
@@ -2643,15 +2729,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this4 = this;
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var blockIDX = attributes.blockIDX,
                     items = attributes.items,
                     numberItem = attributes.numberItem,
                     tAlign = attributes.tAlign,
                     isPreview = attributes.isPreview;
-                var showPopup = this.state.showPopup;
+                var _state4 = this.state,
+                    showPopup = _state4.showPopup,
+                    currentItem = _state4.currentItem;
 
 
                 var blockWrapClass = ['advgb-icon-wrapper'].filter(Boolean).join(' ');
@@ -2976,7 +3064,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                 var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
 
-                                var iconClass = [item.iconType === 'material' && 'mi mi-', item.icon].filter(Boolean).join('');
+                                var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
 
                                 var iconWrapStyles = {
                                     display: 'flex',
@@ -3009,7 +3097,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "div",
                                             { className: iconWrapClass, style: iconWrapStyles },
-                                            React.createElement("i", { className: iconClass, style: iconStyles })
+                                            React.createElement(
+                                                "i",
+                                                { className: iconClass, style: iconStyles },
+                                                item.icon
+                                            )
                                         )
                                     )
                                 );
@@ -3021,7 +3113,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     _this4.togglePopup();
                                 }
                             },
-                            onSelectIcon: this.handleIcon
+                            onSelectIcon: this.handleIcon,
+                            onSelectIconTheme: this.handleIconTheme,
+                            selectedIcon: this.getItemData(currentItem, 'icon'),
+                            selectedIconTheme: this.getItemData(currentItem, 'iconTheme')
                         }) : null
                     )
                 );
@@ -3041,6 +3136,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return {
                     icon: 'beenhere',
                     iconType: 'material',
+                    iconTheme: '',
                     size: 120,
                     color: '#111111',
                     style: 'default',

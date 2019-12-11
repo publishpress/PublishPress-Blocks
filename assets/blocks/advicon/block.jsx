@@ -23,11 +23,27 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             this.state = {
                 searchedText: '',
                 selectedIcon: '',
+                selectedIconTheme: '',
+            }
+        }
+
+        componentWillMount() {
+            const {searchedText, selectedIcon, selectedIconTheme} = this.state;
+            if(this.props.selectedIcon !== searchedText) {
+                this.setState({
+                    searchedText: this.props.selectedIcon,
+                    selectedIcon: this.props.selectedIcon,
+                });
+            }
+            if(this.props.selectedIconTheme !== selectedIconTheme) {
+                this.setState({
+                    selectedIconTheme: this.props.selectedIconTheme
+                });
             }
         }
 
         render() {
-            const {searchedText, selectedIcon} = this.state;
+            const {searchedText, selectedIcon, selectedIconTheme} = this.state;
             const popUpTitle = __('Icon List', 'advanced-gutenberg');
             const iconType = 'material';
 
@@ -57,31 +73,48 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     value={ searchedText }
                                     onChange={ (value) => this.setState( { searchedText: value } ) }
                                 />
+                                <SelectControl
+                                    label={ __('Theme', 'advanced-gutenberg') }
+                                    value={ selectedIconTheme }
+                                    options={ [
+                                        { label: __('Filled', 'advanced-gutenberg'), value: '' },
+                                        { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' },
+                                        { label: __('Rounded', 'advanced-gutenberg'), value: 'round' },
+                                        { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' },
+                                        { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' },
+                                    ] }
+                                    onChange={ ( ) => {
+                                        this.setState({
+                                            selectedIconTheme: 'two-tone',
+                                        });
+                                        //this.props.onSelectIconTheme(selectedIconTheme);
+                                        this.props.onSelectIconTheme('two-tone');
+                                    } }
+                                />
                                 <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto'} }>
 
                                     {Object.keys(advgbBlocks.iconList[iconType])
                                             .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)
                                             .map( (icon, index) => {
 
-                                                const iconName = icon.replace(/_/g, '-');
                                                 const iconClass = [
-                                                    iconType === 'material' && 'mi mi-',
-                                                    icon.replace(/_/g, '-'),
+                                                    iconType === 'material' && 'material-icons',
+                                                    selectedIconTheme !== '' && `-${selectedIconTheme}`
                                                 ].filter( Boolean ).join('');
 
                                                 return (
                                                     <div className="advgb-icon-item" key={ index }>
                                                         <span
                                                             onClick={ () => {
-                                                                this.props.onSelectIcon( iconName );
+                                                                this.props.onSelectIcon( icon );
                                                                 this.setState({
-                                                                    selectedIcon: iconName
+                                                                    selectedIcon: icon
                                                                 })
                                                             } }
-                                                            className={ iconName === selectedIcon && 'active' }
+                                                            className={ icon === selectedIcon && 'active' }
                                                             title={ iconClass.split(' ').pop() }
                                                         >
-                                                            <i className={ iconClass } />
+                                                            <i className={ iconClass }>{icon}</i>
                                                         </span>
                                                     </div>
                                                 )
@@ -104,9 +137,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 currentItem: 0,
                 iconSelected: '',
                 selectedIcon: false,
+                iconThemeSelected: '',
+                selectedIconTheme: false,
             };
             this.togglePopup = this.togglePopup.bind(this);
             this.handleIcon = this.handleIcon.bind(this);
+            this.handleIconTheme = this.handleIconTheme(this);
         }
 
         componentWillMount() {
@@ -140,19 +176,39 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         }
 
         componentDidUpdate() {
-            const {currentItem, iconSelected, selectedIcon} = this.state;
+            const {currentItem, iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme} = this.state;
+            const {attributes} = this.props;
             if(selectedIcon) {
+
                 this.setState({
                     selectedIcon: false
                 });
-                this.updateItems(parseInt(currentItem), {icon: iconSelected});
+                this.updateItems(parseInt(currentItem), {icon: iconSelected, iconTheme: iconThemeSelected});
+                console.log(currentItem, {icon: iconSelected, iconTheme: iconThemeSelected});
             }
+
+            if(selectedIconTheme) {
+                onsole.log(2);
+                this.setState({
+                    selectedIconTheme: false
+                });
+                this.updateItems(parseInt(currentItem), {iconTheme: iconThemeSelected});
+                console.log(currentItem, {iconTheme: iconThemeSelected});
+            }
+            console.log(attributes);
         }
 
         handleIcon(iconValue) {
             this.setState({
                 iconSelected: iconValue,
                 selectedIcon: true,
+            });
+        }
+
+        handleIconTheme(iconThemeValue) {
+            this.setState({
+                iconThemeSelected: iconThemeValue,
+                selectedIconTheme: true,
             });
         }
 
@@ -168,6 +224,25 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
 
             setAttributes( { items: newItems } );
             this.setState( { searchedText: '' } )
+        }
+
+        getItemData(idx, dataName) {
+            const { attributes, setAttributes } = this.props;
+            const { items } = attributes;
+
+            let data = '';
+
+            items.map( (item, index) => {
+                if (idx === index) {
+                    for (let key in item){
+                        if( (dataName === key) && item.hasOwnProperty(key) ) {
+                            data = item[key];
+                        }
+                    }
+                }
+            } );
+
+            return data;
         }
 
         togglePopup() {
@@ -188,7 +263,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 isPreview
             } = attributes;
 
-            const { showPopup } = this.state;
+            const { showPopup, currentItem } = this.state;
 
             const blockWrapClass = [
                 'advgb-icon-wrapper'
@@ -424,6 +499,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                     max={ 180 }
                                                     onChange={ (value) => this.updateItems(idx, { marginRight: value } ) }
                                                 />
+
                                             </PanelBody>
                                         </PanelBody>
                                     </Fragment>
@@ -449,8 +525,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 ].filter( Boolean ).join(' ');
 
                                 const iconClass = [
-                                    item.iconType === 'material' && 'mi mi-',
-                                    item.icon,
+                                    item.iconType === 'material' && 'material-icons',
+                                    item.iconTheme !== '' && `-${item.iconTheme}`
                                 ].filter( Boolean ).join('');
 
                                 const iconWrapStyles = {
@@ -479,7 +555,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     <Fragment>
                                         <div className={advgbIconClass}>
                                             <div className={iconWrapClass} style={iconWrapStyles}>
-                                                <i className={iconClass} style={iconStyles}></i>
+                                                <i className={iconClass} style={iconStyles}>{item.icon}</i>
                                             </div>
                                         </div>
                                     </Fragment>
@@ -495,6 +571,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     }
                                     }
                                     onSelectIcon={ this.handleIcon }
+                                    onSelectIconTheme={ this.handleIconTheme }
+                                    selectedIcon={this.getItemData(currentItem, 'icon')}
+                                    selectedIconTheme={this.getItemData(currentItem, 'iconTheme')}
                                 />
                             : null
                         }
@@ -514,6 +593,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 {
                     icon: 'beenhere',
                     iconType: 'material',
+                    iconTheme: '',
                     size: 120,
                     color: '#111111',
                     style: 'default',
