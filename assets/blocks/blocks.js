@@ -2515,12 +2515,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Theme', 'advanced-gutenberg'),
                                     value: selectedIconTheme,
                                     options: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }],
-                                    onChange: function onChange() {
+                                    onChange: function onChange(value) {
                                         _this2.setState({
-                                            selectedIconTheme: 'two-tone'
+                                            selectedIconTheme: value
                                         });
-                                        //this.props.onSelectIconTheme(selectedIconTheme);
-                                        _this2.props.onSelectIconTheme('two-tone');
+                                        _this2.props.onSelectIconTheme(value);
                                     }
                                 }),
                                 React.createElement(
@@ -2584,7 +2583,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             };
             _this3.togglePopup = _this3.togglePopup.bind(_this3);
             _this3.handleIcon = _this3.handleIcon.bind(_this3);
-            _this3.handleIconTheme = _this3.handleIconTheme(_this3);
+            _this3.handleIconTheme = _this3.handleIconTheme.bind(_this3);
             return _this3;
         }
 
@@ -2644,18 +2643,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         selectedIcon: false
                     });
                     this.updateItems(parseInt(currentItem), { icon: iconSelected, iconTheme: iconThemeSelected });
-                    console.log(currentItem, { icon: iconSelected, iconTheme: iconThemeSelected });
                 }
 
                 if (selectedIconTheme) {
-                    onsole.log(2);
                     this.setState({
                         selectedIconTheme: false
                     });
                     this.updateItems(parseInt(currentItem), { iconTheme: iconThemeSelected });
-                    console.log(currentItem, { iconTheme: iconThemeSelected });
                 }
-                console.log(attributes);
             }
         }, {
             key: "handleIcon",
@@ -3225,7 +3220,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                             var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
 
-                            var iconClass = [item.iconType === 'material' && 'mi mi-', item.icon].filter(Boolean).join('');
+                            var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
 
                             return React.createElement(
                                 Fragment,
@@ -3239,13 +3234,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "div",
                                             { className: iconWrapClass },
-                                            React.createElement("i", { className: iconClass })
+                                            React.createElement(
+                                                "i",
+                                                { className: iconClass },
+                                                item.icon
+                                            )
                                         )
                                     ),
                                     item.link === '' && React.createElement(
                                         "div",
                                         { className: iconWrapClass },
-                                        React.createElement("i", { className: iconClass })
+                                        React.createElement(
+                                            "i",
+                                            { className: iconClass },
+                                            item.icon
+                                        )
                                     )
                                 )
                             );
@@ -21084,10 +21087,137 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /***/ }),
 
+/***/ "./assets/js/editor.jsx":
+/*!******************************!*\
+  !*** ./assets/js/editor.jsx ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
+    wp.domReady(function () {
+        var gutenberg_init_function = null;
+        if (typeof window._wpLoadGutenbergEditor !== 'undefined') {
+            // Using WP core Gutenberg
+            gutenberg_init_function = window._wpLoadGutenbergEditor;
+        } else if (typeof window._wpLoadBlockEditor !== 'undefined') {
+            // Using Gutenberg plugin
+            gutenberg_init_function = window._wpLoadBlockEditor;
+        }
+
+        if (gutenberg_init_function !== null) {
+            // Wait for Gutenberg editor to be ready
+            gutenberg_init_function.then(function () {
+                if (advgb_blocks_vars.original_settings.allowedBlockTypes !== true) {
+                    // allowed_block_types filter has been used, in this case we do nothing as we don't know why blocks have been filtered
+                    return;
+                }
+
+                var list_blocks = [];
+                var granted_blocks = [];
+                var missing_block = false;
+                // Retrieve all registered blocks
+                var blocks = wp.blocks.getBlockTypes();
+                var savedBlocks = {
+                    active_blocks: Object.values(advgb_blocks_vars.blocks.active_blocks),
+                    inactive_blocks: Object.values(advgb_blocks_vars.blocks.inactive_blocks)
+                };
+
+                for (var block in blocks) {
+                    var blockItemIcon = '';
+                    var blockItem = {
+                        name: blocks[block].name,
+                        icon: blocks[block].icon.src,
+                        title: blocks[block].title,
+                        category: blocks[block].category,
+                        parent: blocks[block].parent
+                    };
+
+                    var savedIcon = !!blocks[block].icon.src ? blocks[block].icon.src : blocks[block].icon;
+
+                    if (blocks[block].icon.foreground !== undefined) blockItem.iconColor = blocks[block].icon.foreground;
+
+                    if (typeof savedIcon === 'function') {
+                        if (!!savedIcon.prototype.render) {
+                            blockItem.icon = wp.element.renderToString(wp.element.createElement(savedIcon));
+                        } else {
+                            blockItem.icon = wp.element.renderToString(savedIcon());
+                        }
+
+                        blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
+                        blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
+                    } else if ((typeof savedIcon === 'undefined' ? 'undefined' : _typeof(savedIcon)) === 'object') {
+                        blockItem.icon = wp.element.renderToString(savedIcon);
+                        blockItem.icon = blockItem.icon.replace(/stopcolor/g, 'stop-color');
+                        blockItem.icon = blockItem.icon.replace(/stopopacity/g, 'stop-opacity');
+                    } else if (typeof savedIcon === 'string') {
+                        blockItemIcon = wp.element.createElement(wp.components.Dashicon, { icon: savedIcon });
+                        blockItem.icon = wp.element.renderToString(blockItemIcon);
+                    }
+                    list_blocks.push(blockItem);
+
+                    // Compare current block with the list of blocks we have
+                    if (savedBlocks.active_blocks.indexOf(blocks[block].name) >= 0) {
+                        // Block is active
+                        granted_blocks.push(blocks[block].name);
+                    } else if (savedBlocks.inactive_blocks.indexOf(blocks[block].name) >= 0) {
+                        // Block is inactive
+                    } else {
+                        // This block is not in our database yet, but by default we allow the usage
+                        granted_blocks.push(blocks[block].name);
+                        missing_block = true;
+                    }
+                }
+
+                if (missing_block) {
+                    if (console !== undefined && console.error !== undefined) {
+                        console.error('Reloading editor by Advanced Gutenberg plugin');
+                    }
+                    // Replace original allowed block settings by our modified list
+                    var new_settings = advgb_blocks_vars.original_settings;
+                    new_settings.allowedBlockTypes = granted_blocks;
+                    var target = document.getElementById('editor');
+
+                    // Initialize again the editor
+                    wp.editPost.initializeEditor('editor', advgb_blocks_vars.post_type, advgb_blocks_vars.post_id, new_settings, window._wpGutenbergDefaultPost);
+
+                    var list_categories = wp.blocks.getCategories();
+
+                    try {
+                        // Use this ajax query to update the block list in db
+                        $.ajax({
+                            url: advgb_blocks_vars.ajaxurl,
+                            method: 'POST',
+                            data: {
+                                action: 'advgb_update_blocks_list',
+                                blocksList: JSON.stringify(list_blocks),
+                                categoriesList: JSON.stringify(list_categories),
+                                nonce: advgb_blocks_vars.nonce
+                            },
+                            success: function success(data) {
+                                //console.log(data);
+                            }
+                        });
+                    } catch (e) {
+                        // console.log(e);
+                    }
+                }
+            });
+        }
+    });
+}
+
+/***/ }),
+
 /***/ 0:
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./assets/blocks/0-adv-components/components.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advicon/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advtabs/block.jsx ./assets/blocks/advtabs/tab.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/search-bar/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./assets/blocks/0-adv-components/components.jsx ./assets/blocks/accordion/block.jsx ./assets/blocks/advaccordion/accordion.jsx ./assets/blocks/advaccordion/block.jsx ./assets/blocks/advbutton/block.jsx ./assets/blocks/advicon/block.jsx ./assets/blocks/advimage/block.jsx ./assets/blocks/advlist/block.jsx ./assets/blocks/advtable/block.jsx ./assets/blocks/advtabs/block.jsx ./assets/blocks/advtabs/tab.jsx ./assets/blocks/advvideo/block.jsx ./assets/blocks/columns/block.jsx ./assets/blocks/columns/column.jsx ./assets/blocks/contact-form/block.jsx ./assets/blocks/container/block.jsx ./assets/blocks/count-up/block.jsx ./assets/blocks/customstyles/custom-styles.jsx ./assets/blocks/editor-sidebar/sidebar.jsx ./assets/blocks/images-slider/block.jsx ./assets/blocks/login-form/block.jsx ./assets/blocks/map/block.jsx ./assets/blocks/newsletter/block.jsx ./assets/blocks/recent-posts/block.jsx ./assets/blocks/search-bar/block.jsx ./assets/blocks/social-links/block.jsx ./assets/blocks/summary/block.jsx ./assets/blocks/tabs/block.jsx ./assets/blocks/testimonial/block.jsx ./assets/blocks/woo-products/block.jsx ./assets/js/editor.jsx ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21120,7 +21250,8 @@ __webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced G
 __webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/summary/block.jsx */"./assets/blocks/summary/block.jsx");
 __webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/tabs/block.jsx */"./assets/blocks/tabs/block.jsx");
 __webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/testimonial/block.jsx */"./assets/blocks/testimonial/block.jsx");
-module.exports = __webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/woo-products/block.jsx */"./assets/blocks/woo-products/block.jsx");
+__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/woo-products/block.jsx */"./assets/blocks/woo-products/block.jsx");
+module.exports = __webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/js/editor.jsx */"./assets/js/editor.jsx");
 
 
 /***/ })

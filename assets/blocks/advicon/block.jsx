@@ -83,12 +83,11 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' },
                                         { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' },
                                     ] }
-                                    onChange={ ( ) => {
+                                    onChange={ ( value ) => {
                                         this.setState({
-                                            selectedIconTheme: 'two-tone',
+                                            selectedIconTheme: value,
                                         });
-                                        //this.props.onSelectIconTheme(selectedIconTheme);
-                                        this.props.onSelectIconTheme('two-tone');
+                                        this.props.onSelectIconTheme(value);
                                     } }
                                 />
                                 <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto'} }>
@@ -142,7 +141,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             };
             this.togglePopup = this.togglePopup.bind(this);
             this.handleIcon = this.handleIcon.bind(this);
-            this.handleIconTheme = this.handleIconTheme(this);
+            this.handleIconTheme = this.handleIconTheme.bind(this);
         }
 
         componentWillMount() {
@@ -184,18 +183,14 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     selectedIcon: false
                 });
                 this.updateItems(parseInt(currentItem), {icon: iconSelected, iconTheme: iconThemeSelected});
-                console.log(currentItem, {icon: iconSelected, iconTheme: iconThemeSelected});
             }
 
             if(selectedIconTheme) {
-                onsole.log(2);
                 this.setState({
                     selectedIconTheme: false
                 });
                 this.updateItems(parseInt(currentItem), {iconTheme: iconThemeSelected});
-                console.log(currentItem, {iconTheme: iconThemeSelected});
             }
-            console.log(attributes);
         }
 
         handleIcon(iconValue) {
@@ -690,8 +685,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 ].filter( Boolean ).join(' ');
 
                                 const iconClass = [
-                                    item.iconType === 'material' && 'mi mi-',
-                                    item.icon,
+                                    item.iconType === 'material' && 'material-icons',
+                                    item.iconTheme !== '' && `-${item.iconTheme}`
                                 ].filter( Boolean ).join('');
 
                                 return (
@@ -699,13 +694,13 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         <div className={advgbIconClass}>
                                             {item.link !== '' && <a href={item.link} title={item.title}>
                                                 <div className={iconWrapClass}>
-                                                    <i className={iconClass}></i>
+                                                    <i className={iconClass}>{item.icon}</i>
                                                 </div>
                                             </a>
                                             }
                                             {item.link === '' &&
                                             <div className={iconWrapClass}>
-                                                <i className={iconClass}></i>
+                                                <i className={iconClass}>{item.icon}</i>
                                             </div>
                                             }
                                         </div>
