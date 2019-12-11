@@ -382,6 +382,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     fontSize: item.size + 'px',
                                     color: item.color
                                 };
+
                                 return (
                                     <Fragment>
                                         <div className={advgbIconClass}>

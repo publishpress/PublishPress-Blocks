@@ -11,7 +11,6 @@ function gutenberg_test_block_register_block() {
         return;
     }
 
-
     wp_register_script(
         'gutenberg-test-block',
         plugins_url('block.js', __FILE__ ),
