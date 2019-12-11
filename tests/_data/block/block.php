@@ -12,15 +12,11 @@ function gutenberg_test_block_register_block() {
     }
 
 
-    wp_register_script(
+    wp_enqueue_script(
         'gutenberg-test-block',
         plugins_url('block.js', __FILE__ ),
         array('wp-blocks', 'wp-element')
     );
-
-    register_block_type('gutenberg-test-block/test', array(
-        'editor_script' => 'gutenberg-test-block'
-    ));
 }
 
-add_action('init', 'gutenberg_test_block_register_block');
+add_action('admin_enqueue_scripts', 'gutenberg_test_block_register_block');
