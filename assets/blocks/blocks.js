@@ -2546,7 +2546,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         });
                                                     },
                                                     className: icon === selectedIcon && 'active',
-                                                    title: iconClass.split(' ').pop()
+                                                    title: icon
                                                 },
                                                 React.createElement(
                                                     "i",

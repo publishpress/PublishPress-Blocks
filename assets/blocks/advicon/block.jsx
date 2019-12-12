@@ -119,7 +119,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                                 })
                                                             } }
                                                             className={ icon === selectedIcon && 'active' }
-                                                            title={ iconClass.split(' ').pop() }
+                                                            title={ icon }
                                                         >
                                                             <i className={ iconClass }>{icon}</i>
                                                         </span>
