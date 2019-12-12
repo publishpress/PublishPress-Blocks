@@ -2390,12 +2390,13 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 }
 .advgb-icon-wrapper .popup-inner {
     position: absolute;
-    left: 25%;
-    right: 25%;
+    left: 50%;
     top: 50%;
     margin: auto;
     background: #fff;
-    transform: translateY(-50%);
+    transform: translate(-50%,-50%);
+    max-width: 750px;
+    width: 100%;
 }
 .advgb-icon-wrapper .popup-inner .popup-body {
     padding: 20px;
@@ -2415,13 +2416,29 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     height: 30px;
 }
 .advgb-icon-wrapper .popup-inner .popup-footer {
-    padding: 20px;
+    padding: 0 20px 20px;
+    line-height: initial;
+    text-align: right;
 }
 .advgb-icon-wrapper .advgb-icon-items-wrapper {
     padding-top: 10px;
 }
 .advgb-icon-wrapper .advgb-icon-items-wrapper .advgb-icon-item {
     min-width: 20%;
+}
+.advgb-icon-style-select {
+    text-align: center;
+}
+.advgb-icon-style-select .components-base-control__field label{
+    margin: 0 15px;
+}
+.advgb-icon-style-select .components-base-control__field select{
+    max-width: 150px;
+    width: 100%;
+}
+#editor .advgb-icon-items-wrapper {
+    border: 1px solid #7e8993;
+    border-radius: 4px;
 }
 
 /*Responsive for Columns*/

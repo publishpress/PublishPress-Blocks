@@ -51,7 +51,15 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 'close-btn',
                 'components-button',
                 'button button-small',
-                'advgb-browse-image-btn',
+                'advgb-icon-close-btn',
+                'is-primary'
+            ].filter( Boolean ).join( ' ' );
+
+            const applyIconButtonClass = [
+                'apply-btn',
+                'components-button',
+                'button button-large',
+                'advgb-icon-apply-btn',
                 'is-primary'
             ].filter( Boolean ).join( ' ' );
 
@@ -74,8 +82,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     onChange={ (value) => this.setState( { searchedText: value } ) }
                                 />
                                 <SelectControl
-                                    label={ __('Theme', 'advanced-gutenberg') }
+                                    label={ __('Style', 'advanced-gutenberg') }
                                     value={ selectedIconTheme }
+                                    className="advgb-icon-style-select"
                                     options={ [
                                         { label: __('Filled', 'advanced-gutenberg'), value: '' },
                                         { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' },
@@ -119,6 +128,13 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                 )
                                             } ) }
                                     </div>
+                            </div>
+                            <div className="popup-footer">
+                                <button
+                                    className={applyIconButtonClass}
+                                    onClick={this.props.closePopup}>
+                                    { __('Apply', 'advanced-gutenberg') }
+                                </button>
                             </div>
                         </div>
                     </div>

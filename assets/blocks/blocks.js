@@ -2474,7 +2474,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var popUpTitle = __('Icon List', 'advanced-gutenberg');
                 var iconType = 'material';
 
-                var closeButtonClass = ['close-btn', 'components-button', 'button button-small', 'advgb-browse-image-btn', 'is-primary'].filter(Boolean).join(' ');
+                var closeButtonClass = ['close-btn', 'components-button', 'button button-small', 'advgb-icon-close-btn', 'is-primary'].filter(Boolean).join(' ');
+
+                var applyIconButtonClass = ['apply-btn', 'components-button', 'button button-large', 'advgb-icon-apply-btn', 'is-primary'].filter(Boolean).join(' ');
 
                 return React.createElement(
                     "div",
@@ -2512,8 +2514,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     }
                                 }),
                                 React.createElement(SelectControl, {
-                                    label: __('Theme', 'advanced-gutenberg'),
+                                    label: __('Style', 'advanced-gutenberg'),
                                     value: selectedIconTheme,
+                                    className: "advgb-icon-style-select",
                                     options: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }],
                                     onChange: function onChange(value) {
                                         _this2.setState({
@@ -2554,6 +2557,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             )
                                         );
                                     })
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "popup-footer" },
+                                React.createElement(
+                                    "button",
+                                    {
+                                        className: applyIconButtonClass,
+                                        onClick: this.props.closePopup },
+                                    __('Apply', 'advanced-gutenberg')
                                 )
                             )
                         )
