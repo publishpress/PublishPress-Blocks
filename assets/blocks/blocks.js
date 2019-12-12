@@ -2541,7 +2541,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 {
                                                     onClick: function onClick() {
-                                                        _this2.props.onSelectIcon(icon);
                                                         _this2.setState({
                                                             selectedIcon: icon
                                                         });
@@ -2565,8 +2564,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "button",
                                     {
+                                        disabled: selectedIcon === '',
                                         className: applyIconButtonClass,
-                                        onClick: this.props.closePopup },
+                                        onClick: function onClick() {
+                                            _this2.props.onSelectIcon(selectedIcon);
+                                            _this2.props.closePopup();
+                                        } },
                                     __('Apply', 'advanced-gutenberg')
                                 )
                             )

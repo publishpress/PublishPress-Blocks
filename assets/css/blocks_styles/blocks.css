@@ -2395,7 +2395,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     margin: auto;
     background: #fff;
     transform: translate(-50%,-50%);
-    max-width: 750px;
+    max-width: 650px;
     width: 100%;
 }
 .advgb-icon-wrapper .popup-inner .popup-body {

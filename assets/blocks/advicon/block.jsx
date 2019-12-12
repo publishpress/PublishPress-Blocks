@@ -114,7 +114,6 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                                     <div className="advgb-icon-item" key={ index }>
                                                         <span
                                                             onClick={ () => {
-                                                                this.props.onSelectIcon( icon );
                                                                 this.setState({
                                                                     selectedIcon: icon
                                                                 })
@@ -131,8 +130,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             </div>
                             <div className="popup-footer">
                                 <button
+                                    disabled={selectedIcon === ''}
                                     className={applyIconButtonClass}
-                                    onClick={this.props.closePopup}>
+                                    onClick={() => {
+                                        this.props.onSelectIcon( selectedIcon );
+                                        this.props.closePopup();
+                                    }}>
                                     { __('Apply', 'advanced-gutenberg') }
                                 </button>
                             </div>
