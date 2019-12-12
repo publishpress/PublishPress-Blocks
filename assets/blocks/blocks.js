@@ -3131,7 +3131,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return {
                     icon: 'beenhere',
                     iconType: 'material',
-                    iconTheme: '',
+                    iconTheme: 'outlined',
                     size: 120,
                     color: '#111111',
                     style: 'default',

@@ -588,7 +588,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 {
                     icon: 'beenhere',
                     iconType: 'material',
-                    iconTheme: '',
+                    iconTheme: 'outlined',
                     size: 120,
                     color: '#111111',
                     style: 'default',
