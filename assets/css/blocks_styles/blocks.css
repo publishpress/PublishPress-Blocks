@@ -2375,6 +2375,72 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     background-color: #ddd;
 }
 
+/* Icon List Lightbox */
+.advgb-icon-wrapper .popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: rgba(0,0,0, 0.5);
+    z-index: 160000;
+}
+.advgb-icon-wrapper .popup-inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: auto;
+    background: #fff;
+    transform: translate(-50%,-50%);
+    max-width: 650px;
+    width: 100%;
+}
+.advgb-icon-wrapper .popup-inner .popup-body {
+    padding: 20px;
+}
+.advgb-icon-wrapper .popup-inner .popup-header {
+    padding: 20px 20px 0;
+}
+.advgb-icon-wrapper .popup-inner .popup-header h3 {
+    margin: 0;
+    font-size: 24px;
+}
+.advgb-icon-wrapper .popup-inner .popup-header .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+}
+.advgb-icon-wrapper .popup-inner .popup-footer {
+    padding: 0 20px 20px;
+    line-height: initial;
+    text-align: right;
+}
+.advgb-icon-wrapper .advgb-icon-items-wrapper {
+    padding-top: 10px;
+}
+.advgb-icon-wrapper .advgb-icon-items-wrapper .advgb-icon-item {
+    min-width: 20%;
+}
+.advgb-icon-style-select {
+    text-align: center;
+}
+.advgb-icon-style-select .components-base-control__field label{
+    margin: 0 15px;
+}
+.advgb-icon-style-select .components-base-control__field select{
+    max-width: 150px;
+    width: 100%;
+}
+#editor .advgb-icon-items-wrapper {
+    border: 1px solid #7e8993;
+    border-radius: 4px;
+}
+
 /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {

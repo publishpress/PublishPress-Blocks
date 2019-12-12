@@ -2410,7 +2410,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
         SelectControl = wpComponents.SelectControl,
-        TextControl = wpComponents.TextControl;
+        TextControl = wpComponents.TextControl,
+        Button = wpComponents.Button;
     var _lodash = lodash,
         times = _lodash.times;
 
@@ -2424,18 +2425,183 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M19 1H5c-1.1 0-1.99.9-1.99 2L3 15.93c0 .69.35 1.3.88 1.66L12 23l8.11-5.41c.53-.36.88-.97.88-1.66L21 3c0-1.1-.9-2-2-2zm-7 19.6l-7-4.66V3h14v12.93l-7 4.67zm-2.01-7.42l-2.58-2.59L6 12l4 4 8-8-1.42-1.42z" })
     );
 
-    var AdvIconEdit = function (_Component) {
-        _inherits(AdvIconEdit, _Component);
+    var IconListPopup = function (_Component) {
+        _inherits(IconListPopup, _Component);
+
+        function IconListPopup() {
+            _classCallCheck(this, IconListPopup);
+
+            var _this = _possibleConstructorReturn(this, (IconListPopup.__proto__ || Object.getPrototypeOf(IconListPopup)).call(this));
+
+            _this.state = {
+                searchedText: '',
+                selectedIcon: '',
+                selectedIconTheme: ''
+            };
+            return _this;
+        }
+
+        _createClass(IconListPopup, [{
+            key: "componentWillMount",
+            value: function componentWillMount() {
+                var _state = this.state,
+                    searchedText = _state.searchedText,
+                    selectedIcon = _state.selectedIcon,
+                    selectedIconTheme = _state.selectedIconTheme;
+
+                if (this.props.selectedIcon !== searchedText) {
+                    this.setState({
+                        searchedText: this.props.selectedIcon,
+                        selectedIcon: this.props.selectedIcon
+                    });
+                }
+                if (this.props.selectedIconTheme !== selectedIconTheme) {
+                    this.setState({
+                        selectedIconTheme: this.props.selectedIconTheme
+                    });
+                }
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this2 = this;
+
+                var _state2 = this.state,
+                    searchedText = _state2.searchedText,
+                    selectedIcon = _state2.selectedIcon,
+                    selectedIconTheme = _state2.selectedIconTheme;
+
+                var popUpTitle = __('Icon List', 'advanced-gutenberg');
+                var iconType = 'material';
+
+                var closeButtonClass = ['close-btn', 'components-button', 'button button-small', 'advgb-icon-close-btn', 'is-primary'].filter(Boolean).join(' ');
+
+                var applyIconButtonClass = ['apply-btn', 'components-button', 'button button-large', 'advgb-icon-apply-btn', 'is-primary'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: "popup" },
+                    React.createElement(
+                        "div",
+                        { className: "popup-inner" },
+                        React.createElement(
+                            "div",
+                            { className: "popup-content" },
+                            React.createElement(
+                                "div",
+                                { className: "popup-header" },
+                                React.createElement(
+                                    "h3",
+                                    null,
+                                    popUpTitle
+                                ),
+                                React.createElement(
+                                    "button",
+                                    {
+                                        className: closeButtonClass,
+                                        onClick: this.props.closePopup },
+                                    "x"
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "popup-body" },
+                                React.createElement(TextControl, {
+                                    placeholder: __('Search icons', 'advanced-gutenberg'),
+                                    value: searchedText,
+                                    onChange: function onChange(value) {
+                                        return _this2.setState({ searchedText: value });
+                                    }
+                                }),
+                                React.createElement(SelectControl, {
+                                    label: __('Style', 'advanced-gutenberg'),
+                                    value: selectedIconTheme,
+                                    className: "advgb-icon-style-select",
+                                    options: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }],
+                                    onChange: function onChange(value) {
+                                        _this2.setState({
+                                            selectedIconTheme: value
+                                        });
+                                        _this2.props.onSelectIconTheme(value);
+                                    }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflow: 'auto' } },
+                                    Object.keys(advgbBlocks.iconList[iconType]).filter(function (icon) {
+                                        return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
+                                    }).map(function (icon, index) {
+
+                                        var iconClass = [iconType === 'material' && 'material-icons', selectedIconTheme !== '' && "-" + selectedIconTheme].filter(Boolean).join('');
+
+                                        return React.createElement(
+                                            "div",
+                                            { className: "advgb-icon-item", key: index },
+                                            React.createElement(
+                                                "span",
+                                                {
+                                                    onClick: function onClick() {
+                                                        _this2.setState({
+                                                            selectedIcon: icon
+                                                        });
+                                                    },
+                                                    className: icon === selectedIcon && 'active',
+                                                    title: icon
+                                                },
+                                                React.createElement(
+                                                    "i",
+                                                    { className: iconClass },
+                                                    icon
+                                                )
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "popup-footer" },
+                                React.createElement(
+                                    "button",
+                                    {
+                                        disabled: selectedIcon === '',
+                                        className: applyIconButtonClass,
+                                        onClick: function onClick() {
+                                            _this2.props.onSelectIcon(selectedIcon);
+                                            _this2.props.closePopup();
+                                        } },
+                                    __('Apply', 'advanced-gutenberg')
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+        }]);
+
+        return IconListPopup;
+    }(Component);
+
+    var AdvIconEdit = function (_Component2) {
+        _inherits(AdvIconEdit, _Component2);
 
         function AdvIconEdit() {
             _classCallCheck(this, AdvIconEdit);
 
-            var _this = _possibleConstructorReturn(this, (AdvIconEdit.__proto__ || Object.getPrototypeOf(AdvIconEdit)).apply(this, arguments));
+            var _this3 = _possibleConstructorReturn(this, (AdvIconEdit.__proto__ || Object.getPrototypeOf(AdvIconEdit)).apply(this, arguments));
 
-            _this.state = {
-                searchedText: ''
+            _this3.state = {
+                showPopup: false,
+                currentItem: 0,
+                iconSelected: '',
+                selectedIcon: false,
+                iconThemeSelected: '',
+                selectedIconTheme: false
             };
-            return _this;
+            _this3.togglePopup = _this3.togglePopup.bind(_this3);
+            _this3.handleIcon = _this3.handleIcon.bind(_this3);
+            _this3.handleIconTheme = _this3.handleIconTheme.bind(_this3);
+            return _this3;
         }
 
         _createClass(AdvIconEdit, [{
@@ -2478,6 +2644,48 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate() {
+                var _state3 = this.state,
+                    currentItem = _state3.currentItem,
+                    iconSelected = _state3.iconSelected,
+                    selectedIcon = _state3.selectedIcon,
+                    iconThemeSelected = _state3.iconThemeSelected,
+                    selectedIconTheme = _state3.selectedIconTheme;
+                var attributes = this.props.attributes;
+
+                if (selectedIcon) {
+
+                    this.setState({
+                        selectedIcon: false
+                    });
+                    this.updateItems(parseInt(currentItem), { icon: iconSelected, iconTheme: iconThemeSelected });
+                }
+
+                if (selectedIconTheme) {
+                    this.setState({
+                        selectedIconTheme: false
+                    });
+                    this.updateItems(parseInt(currentItem), { iconTheme: iconThemeSelected });
+                }
+            }
+        }, {
+            key: "handleIcon",
+            value: function handleIcon(iconValue) {
+                this.setState({
+                    iconSelected: iconValue,
+                    selectedIcon: true
+                });
+            }
+        }, {
+            key: "handleIconTheme",
+            value: function handleIconTheme(iconThemeValue) {
+                this.setState({
+                    iconThemeSelected: iconThemeValue,
+                    selectedIconTheme: true
+                });
+            }
+        }, {
             key: "updateItems",
             value: function updateItems(idx, data) {
                 var _props3 = this.props,
@@ -2496,19 +2704,54 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ searchedText: '' });
             }
         }, {
-            key: "render",
-            value: function render() {
-                var _this2 = this;
-
+            key: "getItemData",
+            value: function getItemData(idx, dataName) {
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     setAttributes = _props4.setAttributes;
+                var items = attributes.items;
+
+
+                var data = '';
+
+                items.map(function (item, index) {
+                    if (idx === index) {
+                        for (var key in item) {
+                            if (dataName === key && item.hasOwnProperty(key)) {
+                                data = item[key];
+                            }
+                        }
+                    }
+                });
+
+                return data;
+            }
+        }, {
+            key: "togglePopup",
+            value: function togglePopup() {
+                var showPopup = this.state.showPopup;
+
+
+                this.setState({
+                    showPopup: !showPopup
+                });
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this4 = this;
+
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var blockIDX = attributes.blockIDX,
                     items = attributes.items,
                     numberItem = attributes.numberItem,
                     tAlign = attributes.tAlign,
                     isPreview = attributes.isPreview;
-                var searchedText = this.state.searchedText;
+                var _state4 = this.state,
+                    showPopup = _state4.showPopup,
+                    currentItem = _state4.currentItem;
 
 
                 var blockWrapClass = ['advgb-icon-wrapper'].filter(Boolean).join(' ');
@@ -2564,38 +2807,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         {
                                             label: __('Icon Library (Material Icon)', 'advanced-gutenberg')
                                         },
-                                        React.createElement(TextControl, {
-                                            placeholder: __('Search icons (at least 3 characters)', 'advanced-gutenberg'),
-                                            value: searchedText,
-                                            onChange: function onChange(value) {
-                                                return _this2.setState({ searchedText: value });
-                                            }
-                                        }),
-                                        searchedText.trim().length > 2 && !!advgbBlocks.iconList[item.iconType] && React.createElement(
-                                            "div",
-                                            { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflow: 'auto', marginBottom: '24px' } },
-                                            Object.keys(advgbBlocks.iconList[item.iconType]).filter(function (icon) {
-                                                return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
-                                            }).map(function (icon, index) {
-
-                                                var iconName = icon.replace(/_/g, '-');
-                                                var iconClass = [item.iconType === 'material' && 'mi mi-', icon.replace(/_/g, '-')].filter(Boolean).join('');
-
-                                                return React.createElement(
-                                                    "div",
-                                                    { className: "advgb-icon-item", key: index },
-                                                    React.createElement(
-                                                        "span",
-                                                        { onClick: function onClick() {
-                                                                return _this2.updateItems(idx, { icon: iconName });
-                                                            },
-                                                            className: iconName === item.icon && 'active',
-                                                            title: iconClass.split(' ').pop()
-                                                        },
-                                                        React.createElement("i", { className: iconClass })
-                                                    )
-                                                );
-                                            })
+                                        React.createElement(
+                                            Button,
+                                            {
+                                                className: "button button-large advgb-browse-image-btn",
+                                                "data-currentItem": idx,
+                                                onClick: function onClick(event) {
+                                                    if (!showPopup) {
+                                                        _this4.togglePopup();
+                                                        _this4.setState({ currentItem: event.target.attributes.getNamedItem('data-currentItem').value });
+                                                    }
+                                                }
+                                            },
+                                            __('Icon Selection', 'advanced-gutenberg')
                                         )
                                     ),
                                     React.createElement(SelectControl, {
@@ -2603,7 +2827,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         value: item.style,
                                         options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Stacked', 'advanced-gutenberg'), value: 'stacked' }],
                                         onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { style: value });
+                                            return _this4.updateItems(idx, { style: value });
                                         }
                                     }),
                                     React.createElement(RangeControl, {
@@ -2612,21 +2836,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 250,
                                         value: item.size,
                                         onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { size: value });
+                                            return _this4.updateItems(idx, { size: value });
                                         }
                                     }),
                                     React.createElement(_components.AdvColorControl, {
                                         label: __('Icon Color', 'advanced-gutenberg'),
                                         value: item.color,
                                         onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { color: value });
+                                            return _this4.updateItems(idx, { color: value });
                                         }
                                     }),
                                     React.createElement(_components.AdvColorControl, {
                                         label: __('Icon Background', 'advanced-gutenberg'),
                                         value: item.bgColor,
                                         onChange: function onChange(value) {
-                                            return _this2.updateItems(idx, { bgColor: value });
+                                            return _this4.updateItems(idx, { bgColor: value });
                                         }
                                     }),
                                     item.style && item.style === 'stacked' && React.createElement(
@@ -2639,7 +2863,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             label: __('Border Color', 'advanced-gutenberg'),
                                             value: item.borderColor,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { borderColor: value });
+                                                return _this4.updateItems(idx, { borderColor: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2648,7 +2872,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             max: 20,
                                             value: item.borderSize,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { borderSize: value });
+                                                return _this4.updateItems(idx, { borderSize: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2657,7 +2881,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             max: 50,
                                             value: item.borderRadius,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { borderRadius: value });
+                                                return _this4.updateItems(idx, { borderRadius: value });
                                             }
                                         })
                                     ),
@@ -2675,7 +2899,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             React.createElement(URLInput, {
                                                 value: item.link,
                                                 onChange: function onChange(value) {
-                                                    return _this2.updateItems(idx, { link: value });
+                                                    return _this4.updateItems(idx, { link: value });
                                                 },
                                                 autoFocus: false,
                                                 isFullWidth: true,
@@ -2687,14 +2911,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             value: item.linkTarget,
                                             options: [{ label: __('Same Window', 'advanced-gutenberg'), value: '_self' }, { label: __('New Window', 'advanced-gutenberg'), value: '_blank' }],
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { linkTarget: value });
+                                                return _this4.updateItems(idx, { linkTarget: value });
                                             }
                                         }),
                                         React.createElement(TextControl, {
                                             label: __('Title for Accessibility', 'advanced-gutenberg'),
                                             value: item.title,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { title: value });
+                                                return _this4.updateItems(idx, { title: value });
                                             }
                                         })
                                     ),
@@ -2722,7 +2946,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                             className: "advgb-unit " + (item.paddingUnit === unit ? 'selected' : ''),
                                                             key: uIdx,
                                                             onClick: function onClick() {
-                                                                return _this2.updateItems(idx, { paddingUnit: unit });
+                                                                return _this4.updateItems(idx, { paddingUnit: unit });
                                                             }
                                                         },
                                                         unit
@@ -2736,7 +2960,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { paddingTop: value });
+                                                return _this4.updateItems(idx, { paddingTop: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2745,7 +2969,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { paddingBottom: value });
+                                                return _this4.updateItems(idx, { paddingBottom: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2754,7 +2978,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { paddingLeft: value });
+                                                return _this4.updateItems(idx, { paddingLeft: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2763,7 +2987,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { paddingRight: value });
+                                                return _this4.updateItems(idx, { paddingRight: value });
                                             }
                                         })
                                     ),
@@ -2790,7 +3014,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         {
                                                             className: "advgb-unit " + (item.marginUnit === unit ? 'selected' : ''), key: uIdx,
                                                             onClick: function onClick() {
-                                                                return _this2.updateItems(idx, { marginUnit: unit });
+                                                                return _this4.updateItems(idx, { marginUnit: unit });
                                                             }
                                                         },
                                                         unit
@@ -2804,7 +3028,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { marginTop: value });
+                                                return _this4.updateItems(idx, { marginTop: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2813,7 +3037,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { marginBottom: value });
+                                                return _this4.updateItems(idx, { marginBottom: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2822,7 +3046,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { marginLeft: value });
+                                                return _this4.updateItems(idx, { marginLeft: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2831,7 +3055,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this2.updateItems(idx, { marginRight: value });
+                                                return _this4.updateItems(idx, { marginRight: value });
                                             }
                                         })
                                     )
@@ -2852,7 +3076,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                                 var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
 
-                                var iconClass = [item.iconType === 'material' && 'mi mi-', item.icon].filter(Boolean).join('');
+                                var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
 
                                 var iconWrapStyles = {
                                     display: 'flex',
@@ -2886,12 +3110,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "div",
                                             { className: iconWrapClass, style: iconWrapStyles },
-                                            React.createElement("i", { className: iconClass, style: iconStyles })
+                                            React.createElement(
+                                                "i",
+                                                { className: iconClass, style: iconStyles },
+                                                item.icon
+                                            )
                                         )
                                     )
                                 );
                             })
-                        )
+                        ),
+                        showPopup ? React.createElement(IconListPopup, {
+                            closePopup: function closePopup() {
+                                if (showPopup) {
+                                    _this4.togglePopup();
+                                }
+                            },
+                            onSelectIcon: this.handleIcon,
+                            onSelectIconTheme: this.handleIconTheme,
+                            selectedIcon: this.getItemData(currentItem, 'icon'),
+                            selectedIconTheme: this.getItemData(currentItem, 'iconTheme')
+                        }) : null
                     )
                 );
             }
@@ -2910,6 +3149,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return {
                     icon: 'beenhere',
                     iconType: 'material',
+                    iconTheme: 'outlined',
                     size: 120,
                     color: '#111111',
                     style: 'default',
@@ -2998,7 +3238,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                             var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
 
-                            var iconClass = [item.iconType === 'material' && 'mi mi-', item.icon].filter(Boolean).join('');
+                            var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
 
                             return React.createElement(
                                 Fragment,
@@ -3012,13 +3252,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             "div",
                                             { className: iconWrapClass },
-                                            React.createElement("i", { className: iconClass })
+                                            React.createElement(
+                                                "i",
+                                                { className: iconClass },
+                                                item.icon
+                                            )
                                         )
                                     ),
                                     item.link === '' && React.createElement(
                                         "div",
                                         { className: iconWrapClass },
-                                        React.createElement("i", { className: iconClass })
+                                        React.createElement(
+                                            "i",
+                                            { className: iconClass },
+                                            item.icon
+                                        )
                                     )
                                 )
                             );
