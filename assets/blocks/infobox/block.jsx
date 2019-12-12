@@ -1,11 +1,12 @@
 import {AdvColorControl} from "../0-adv-components/components.jsx";
+import IconListPopup from "../0-adv-components/components.jsx";
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
-    const { InspectorControls, BlockControls, AlignmentToolbar, URLInput } = wpBlockEditor;
+    const { InspectorControls, BlockControls, AlignmentToolbar, URLInput, RichText } = wpBlockEditor;
     const { BaseControl, PanelBody, RangeControl, SelectControl, TextControl } = wpComponents;
     const { times } = lodash;
 
@@ -19,6 +20,16 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
 
         constructor() {
             super( ...arguments );
+            this.state = {
+                showPopup: false,
+                iconSelected: '',
+                selectedIcon: false,
+                iconThemeSelected: '',
+                selectedIconTheme: false,
+            };
+            this.togglePopup = this.togglePopup.bind(this);
+            this.handleIcon = this.handleIcon.bind(this);
+            this.handleIconTheme = this.handleIconTheme.bind(this);
         }
 
         componentWillMount() {
@@ -51,14 +62,801 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             }
         }
 
+        componentDidUpdate() {
+            const {iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme} = this.state;
+            const {attributes, setAttributes} = this.props;
+            if(selectedIcon) {
+
+                this.setState({
+                    selectedIcon: false
+                });
+                setAttributes({
+                    icon: iconSelected,
+                    iconTheme: iconThemeSelected
+                });
+            }
+
+            if(selectedIconTheme) {
+                this.setState({
+                    selectedIconTheme: false
+                });
+                setAttributes({
+                    iconTheme: iconThemeSelected
+                });
+            }
+        }
+
+        togglePopup() {
+            const {showPopup} = this.state;
+
+            this.setState( {
+                showPopup: !showPopup
+            } );
+        }
+
+        handleIcon(iconValue) {
+            this.setState({
+                iconSelected: iconValue,
+                selectedIcon: true,
+            });
+        }
+
+        handleIconTheme(iconThemeValue) {
+            this.setState({
+                iconThemeSelected: iconThemeValue,
+                selectedIconTheme: true,
+            });
+        }
+
         render() {
-            return 'Infobox';
+            const {attributes, setAttributes} = this.props;
+            const {
+                blockIDX,
+                isPreview,
+                align,
+                containerBorderWidth,
+                containerBorderRadius,
+                containerPaddingTop,
+                containerPaddingBottom,
+                containerPaddingLeft,
+                containerPaddingRight,
+                containerMarginTop,
+                containerMarginBottom,
+                containerMarginLeft,
+                containerMarginRight,
+                containerBackground,
+                containerBorderBackground,
+                containerPaddingUnit,
+                containerMarginUnit,
+                iconBorderWidth,
+                iconBorderRadius,
+                iconPaddingTop,
+                iconPaddingBottom,
+                iconPaddingLeft,
+                iconPaddingRight,
+                iconMarginTop,
+                iconMarginBottom,
+                iconMarginLeft,
+                iconMarginRight,
+                iconBackground,
+                iconBorderBackground,
+                iconPaddingUnit,
+                iconMarginUnit,
+                icon,
+                iconSize,
+                iconColor,
+                iconTheme,
+                title,
+                titleColor,
+                titleSize,
+                titleSizeUnit,
+                titleLineHeight,
+                titleLineHeightUnit,
+                titlePaddingTop,
+                titlePaddingBottom,
+                titlePaddingLeft,
+                titlePaddingRight,
+                titleMarginTop,
+                titleMarginBottom,
+                titleMarginLeft,
+                titleMarginRight,
+                titlePaddingUnit,
+                titleMarginUnit,
+                text,
+            } = attributes;
+
+            const blockWrapClass = [
+                'advgb-infobox-wrapper',
+                `has-text-align-${align}`
+            ].filter( Boolean ).join( ' ' );
+
+            const blockClass = [
+                'advgb-infobox-wrap',
+            ].filter( Boolean ).join( ' ' );
+
+            const iconClass = [
+                'material-icons',
+                iconTheme !== '' && `-${iconTheme}`
+            ].filter( Boolean ).join('');
+
+            const containerPadding = containerPaddingTop + containerPaddingUnit + ' ' + containerPaddingRight + containerPaddingUnit + ' ' + containerPaddingBottom + containerPaddingUnit + ' ' + containerPaddingLeft + containerPaddingUnit;
+            const containerMargin = containerMarginTop + containerMarginUnit + ' ' + containerMarginRight + containerMarginUnit + ' ' + containerMarginBottom + containerMarginUnit + ' ' + containerMarginLeft + containerMarginUnit;
+            const iconPadding = iconPaddingTop + iconPaddingUnit + ' ' + iconPaddingRight + iconPaddingUnit + ' ' + iconPaddingBottom + iconPaddingUnit + ' ' + iconPaddingLeft + iconPaddingUnit;
+            const iconMargin = iconMarginTop + iconMarginUnit + ' ' + iconMarginRight + iconMarginUnit + ' ' + iconMarginBottom + iconMarginUnit + ' ' + iconMarginLeft + iconMarginUnit;
+            const titlePadding = titlePaddingTop + titlePaddingUnit + ' ' + titlePaddingRight + titlePaddingUnit + ' ' + titlePaddingBottom + titlePaddingUnit + ' ' + titlePaddingLeft + titlePaddingUnit;
+            const titleMargin = titleMarginTop + titleMarginUnit + ' ' + titleMarginRight + titleMarginUnit + ' ' + titleMarginBottom + titleMarginUnit + ' ' + titleMarginLeft + titleMarginUnit;
+
+            return (
+                isPreview ?
+                    <img alt={__('Advanced Icon', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
+                    :
+                    <Fragment>
+                        <BlockControls>
+                            <AlignmentToolbar
+                                value={ align }
+                                onChange={ ( newAlign ) => setAttributes( { align: newAlign } ) }
+                            />
+                        </BlockControls>
+                        <InspectorControls>
+                            <PanelBody
+                                title={ __( 'Container Settings', 'advanced-gutenberg' ) }
+                                initialOpen={false}
+                            >
+                                <AdvColorControl
+                                    label={ __('Background', 'advanced-gutenberg') }
+                                    value={ containerBackground }
+                                    onChange={ (value) => setAttributes( {containerBackground: value} ) }
+                                />
+                                <AdvColorControl
+                                    label={ __('Border Background', 'advanced-gutenberg') }
+                                    value={ containerBorderBackground }
+                                    onChange={ (value) => setAttributes( {containerBorderBackground: value} ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Border Width (px)', 'advanced-gutenberg' ) }
+                                    min={ 0 }
+                                    max={ 40 }
+                                    value={ containerBorderWidth }
+                                    onChange={ (value) => setAttributes( { containerBorderWidth: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Border Radius (px)', 'advanced-gutenberg' ) }
+                                    min={ 0 }
+                                    max={ 200 }
+                                    value={ containerBorderRadius }
+                                    onChange={ (value) => setAttributes( { containerBorderRadius: value } ) }
+                                />
+                                <PanelBody
+                                    title={__( ' Padding', 'advanced-gutenberg' )}
+                                    initialOpen={false}
+                                >
+                                    <div className="advgb-controls-title">
+                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                                <span
+                                                    className={`advgb-unit ${containerPaddingUnit === unit ? 'selected' : ''}`}
+                                                    key={uIdx}
+                                                    onClick={() => setAttributes( { containerPaddingUnit: unit } )}
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) )}
+                                        </div>
+                                    </div>
+                                    <RangeControl
+                                        beforeIcon="arrow-up-alt2"
+                                        value={containerPaddingTop}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { containerPaddingTop: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-down-alt2"
+                                        value={containerPaddingBottom}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { containerPaddingBottom: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-left-alt2"
+                                        value={containerPaddingLeft}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { containerPaddingLeft: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-right-alt2"
+                                        value={containerPaddingRight}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { containerPaddingRight: value } )}
+                                    />
+                                </PanelBody>
+                                <PanelBody
+                                    title={__( ' Margin', 'advanced-gutenberg' )}
+                                    initialOpen={false}
+                                >
+                                    <div className="advgb-controls-title">
+                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                                <span
+                                                    className={`advgb-unit ${containerMarginUnit === unit ? 'selected' : ''}`}
+                                                    key={uIdx}
+                                                    onClick={() => setAttributes( { containerMarginUnit: unit } )}
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) )}
+                                        </div>
+                                    </div>
+                                    <RangeControl
+                                        beforeIcon="arrow-up-alt2"
+                                        value={containerMarginTop}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { containerMarginTop: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-down-alt2"
+                                        value={containerMarginBottom}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { containerMarginBottom: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-left-alt2"
+                                        value={containerMarginLeft}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { containerMarginLeft: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-right-alt2"
+                                        value={containerMarginRight}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { containerMarginRight: value } )}
+                                    />
+                                </PanelBody>
+                            </PanelBody>
+                            <PanelBody
+                                title={ __( 'Icon Settings', 'advanced-gutenberg' ) }
+                                initialOpen={false}
+                            >
+                                <AdvColorControl
+                                    label={ __( 'Icon Color', 'advanced-gutenberg' ) }
+                                    value={ iconColor }
+                                    onChange={ (value) => setAttributes( {iconColor: value} ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Icon Size (px)', 'advanced-gutenberg' ) }
+                                    value={iconSize}
+                                    min={1}
+                                    max={200}
+                                    onChange={( value ) => setAttributes( { iconSize: value } )}
+                                />
+                                <AdvColorControl
+                                    label={ __('Background', 'advanced-gutenberg') }
+                                    value={ iconBackground }
+                                    onChange={ (value) => setAttributes( {iconBackground: value} ) }
+                                />
+                                <AdvColorControl
+                                    label={ __('Border Background', 'advanced-gutenberg') }
+                                    value={ iconBorderBackground }
+                                    onChange={ (value) => setAttributes( {iconBorderBackground: value} ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Border Width (px)', 'advanced-gutenberg' ) }
+                                    min={ 0 }
+                                    max={ 40 }
+                                    value={ iconBorderWidth }
+                                    onChange={ (value) => setAttributes( { iconBorderWidth: value } ) }
+                                />
+                                <RangeControl
+                                    label={ __( 'Border Radius (px)', 'advanced-gutenberg' ) }
+                                    min={ 0 }
+                                    max={ 200 }
+                                    value={ iconBorderRadius }
+                                    onChange={ (value) => setAttributes( { iconBorderRadius: value } ) }
+                                />
+                                <PanelBody
+                                    title={__( ' Padding', 'advanced-gutenberg' )}
+                                    initialOpen={false}
+                                >
+                                    <div className="advgb-controls-title">
+                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                                <span
+                                                    className={`advgb-unit ${iconPaddingUnit === unit ? 'selected' : ''}`}
+                                                    key={uIdx}
+                                                    onClick={() => setAttributes( { iconPaddingUnit: unit } )}
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) )}
+                                        </div>
+                                    </div>
+                                    <RangeControl
+                                        beforeIcon="arrow-up-alt2"
+                                        value={iconPaddingTop}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { iconPaddingTop: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-down-alt2"
+                                        value={iconPaddingBottom}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { iconPaddingBottom: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-left-alt2"
+                                        value={iconPaddingLeft}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { iconPaddingLeft: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-right-alt2"
+                                        value={iconPaddingRight}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { iconPaddingRight: value } )}
+                                    />
+                                </PanelBody>
+                                <PanelBody
+                                    title={__( ' Margin', 'advanced-gutenberg' )}
+                                    initialOpen={false}
+                                >
+                                    <div className="advgb-controls-title">
+                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                                <span
+                                                    className={`advgb-unit ${iconMarginUnit === unit ? 'selected' : ''}`}
+                                                    key={uIdx}
+                                                    onClick={() => setAttributes( { iconMarginUnit: unit } )}
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) )}
+                                        </div>
+                                    </div>
+                                    <RangeControl
+                                        beforeIcon="arrow-up-alt2"
+                                        value={iconMarginTop}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { iconMarginTop: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-down-alt2"
+                                        value={iconMarginBottom}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { iconMarginBottom: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-left-alt2"
+                                        value={iconMarginLeft}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { iconMarginLeft: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-right-alt2"
+                                        value={iconMarginRight}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { iconMarginRight: value } )}
+                                    />
+                                </PanelBody>
+                            </PanelBody>
+                            <PanelBody
+                                title={ __( 'Title Settings', 'advanced-gutenberg' ) }
+                                initialOpen={false}
+                            >
+                                <AdvColorControl
+                                    label={ __( 'Color', 'advanced-gutenberg' ) }
+                                    value={ titleColor }
+                                    onChange={ (value) => setAttributes( {titleColor: value} ) }
+                                />
+                                <div className="advgb-controls-title">
+                                    <div className="advgb-unit-wrapper advgb-unit-2" key="unit">
+                                        {[ 'px', 'em' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${titleSizeUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { titleSizeUnit: unit } )}
+                                            >
+                                                    {unit}
+                                                </span>
+                                        ) )}
+                                    </div>
+                                </div>
+                                <RangeControl
+                                    label={ __( 'Font Size', 'advanced-gutenberg' ) }
+                                    value={titleSize}
+                                    min={1}
+                                    max={200}
+                                    onChange={( value ) => setAttributes( { titleSize: value } )}
+                                />
+                                <div className="advgb-controls-title">
+                                    <div className="advgb-unit-wrapper advgb-unit-2" key="unit">
+                                        {[ 'px', 'em' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${titleLineHeightUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { titleLineHeightUnit: unit } )}
+                                            >
+                                                    {unit}
+                                                </span>
+                                        ) )}
+                                    </div>
+                                </div>
+                                <RangeControl
+                                    label={ __( 'Line Height', 'advanced-gutenberg' ) }
+                                    value={titleLineHeight}
+                                    min={1}
+                                    max={200}
+                                    onChange={( value ) => setAttributes( { titleLineHeight: value } )}
+                                />
+                                <PanelBody
+                                    title={__( ' Padding', 'advanced-gutenberg' )}
+                                    initialOpen={false}
+                                >
+                                    <div className="advgb-controls-title">
+                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                                <span
+                                                    className={`advgb-unit ${titlePaddingUnit === unit ? 'selected' : ''}`}
+                                                    key={uIdx}
+                                                    onClick={() => setAttributes( { titlePaddingUnit: unit } )}
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) )}
+                                        </div>
+                                    </div>
+                                    <RangeControl
+                                        beforeIcon="arrow-up-alt2"
+                                        value={titlePaddingTop}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { titlePaddingTop: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-down-alt2"
+                                        value={titlePaddingBottom}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { titlePaddingBottom: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-left-alt2"
+                                        value={titlePaddingLeft}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { titlePaddingLeft: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-right-alt2"
+                                        value={titlePaddingRight}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { titlePaddingRight: value } )}
+                                    />
+                                </PanelBody>
+                                <PanelBody
+                                    title={__( ' Margin', 'advanced-gutenberg' )}
+                                    initialOpen={false}
+                                >
+                                    <div className="advgb-controls-title">
+                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                        <div className="advgb-unit-wrapper" key="unit">
+                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                                <span
+                                                    className={`advgb-unit ${titleMarginUnit === unit ? 'selected' : ''}`}
+                                                    key={uIdx}
+                                                    onClick={() => setAttributes( { titleMarginUnit: unit } )}
+                                                >
+                                                    {unit}
+                                                </span>
+                                            ) )}
+                                        </div>
+                                    </div>
+                                    <RangeControl
+                                        beforeIcon="arrow-up-alt2"
+                                        value={titleMarginTop}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { titleMarginTop: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-down-alt2"
+                                        value={titleMarginBottom}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { titleMarginBottom: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-left-alt2"
+                                        value={titleMarginLeft}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { titleMarginLeft: value } )}
+                                    />
+                                    <RangeControl
+                                        beforeIcon="arrow-right-alt2"
+                                        value={titleMarginRight}
+                                        min={0}
+                                        max={100}
+                                        onChange={( value ) => setAttributes( { titleMarginRight: value } )}
+                                    />
+                                </PanelBody>
+                            </PanelBody>
+                        </InspectorControls>
+                        <div className={blockWrapClass}
+                             style={ {
+                                 backgroundColor: containerBackground,
+                                 padding: containerPadding,
+                                 margin: containerMargin,
+                                 border: `${containerBorderWidth}px solid ${containerBorderBackground}`,
+                                 borderRadius: `${containerBorderRadius}px`,
+                             } }
+                             id={blockIDX}
+                        >
+                            <div className={ blockClass }>
+                                <div
+                                    className="advgb-infobox-icon-container"
+                                    style={ {
+                                        backgroundColor: iconBackground,
+                                        padding: iconPadding,
+                                        margin: iconMargin,
+                                        border: `${iconBorderWidth}px solid ${iconBorderBackground}`,
+                                        borderRadius: `${iconBorderRadius}px`,
+                                    } }
+                                >
+                                    <div className="advgb-infobox-icon-inner-container">
+                                        <i className={iconClass} style={ {color: iconColor, fontSize: iconSize, display: 'block'} }>{icon}</i>
+                                    </div>
+                                </div>
+                                <div className="advgb-infobox-textcontent">
+                                    <RichText
+                                        tagName="h2"
+                                        className="advgb-infobox-title"
+                                        onChange={ (value) => setAttributes({ title: value}) }
+                                        value={ title }
+                                        style={ {
+                                            color: titleColor,
+                                            fontSize: titleSize+titleSizeUnit,
+                                            lineHeight: titleLineHeight+titleLineHeightUnit,
+                                            padding: titlePadding,
+                                            margin: titleMargin,
+                                            whiteSpace: 'pre-wrap'
+                                        } }
+                                    />
+                                    <RichText
+                                        tagName="p"
+                                        className="advgb-infobox-text"
+                                        onChange={ (value) => setAttributes({ text: value}) }
+                                        value={ text }
+                                        style={ {padding: '0', margin: '0', whiteSpace: 'pre-wrap'} }
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Fragment>
+            );
         }
     }
 
     const blockAttrs = {
         blockIDX: {
             type: 'string',
+        },
+        align: {
+            type: 'string',
+            default: 'center'
+        },
+        containerBorderWidth: {
+            type: 'number',
+            default: 0
+        },
+        containerBorderRadius: {
+            type: 'number',
+            default: 0
+        },
+        containerPaddingTop: {
+            type: 'number',
+            default: 20
+        },
+        containerPaddingBottom: {
+            type: 'number',
+            default: 20
+        },
+        containerPaddingLeft: {
+            type: 'number',
+            default: 0
+        },
+        containerPaddingRight: {
+            type: 'number',
+            default: 0
+        },
+        containerMarginTop: {
+            type: 'number',
+            default: 0
+        },
+        containerMarginBottom: {
+            type: 'number',
+            default: 0
+        },
+        containerMarginLeft: {
+            type: 'number',
+            default: 0
+        },
+        containerMarginRight: {
+            type: 'number',
+            default: 0
+        },
+        containerPaddingUnit: {
+            type: 'string',
+            default: 'px',
+        },
+        containerMarginUnit: {
+            type: 'string',
+            default: 'px',
+        },
+        containerBackground: {
+            type: 'string',
+            default: '#f5f5f5'
+        },
+        containerBorderBackground: {
+            type: 'string',
+            default: '#e8e8e8'
+        },
+        iconBorderWidth: {
+            type: 'number',
+            default: 0
+        },
+        iconBorderRadius: {
+            type: 'number',
+            default: 0
+        },
+        iconPaddingTop: {
+            type: 'number',
+            default: 20
+        },
+        iconPaddingBottom: {
+            type: 'number',
+            default: 20
+        },
+        iconPaddingLeft: {
+            type: 'number',
+            default: 0
+        },
+        iconPaddingRight: {
+            type: 'number',
+            default: 0
+        },
+        iconMarginTop: {
+            type: 'number',
+            default: 0
+        },
+        iconMarginBottom: {
+            type: 'number',
+            default: 0
+        },
+        iconMarginLeft: {
+            type: 'number',
+            default: 0
+        },
+        iconMarginRight: {
+            type: 'number',
+            default: 0
+        },
+        iconPaddingUnit: {
+            type: 'string',
+            default: 'px',
+        },
+        iconMarginUnit: {
+            type: 'string',
+            default: 'px',
+        },
+        iconBackground: {
+            type: 'string',
+            default: '#f5f5f5'
+        },
+        iconBorderBackground: {
+            type: 'string',
+            default: '#e8e8e8'
+        },
+        icon: {
+            type: 'string',
+            default: 'beenhere'
+        },
+        iconSize: {
+            type: 'number',
+            default: 70
+        },
+        iconColor: {
+            type: 'string',
+            default: '#333'
+        },
+        iconTheme: {
+            type: 'string',
+            default: 'outlined'
+        },
+        title: {
+            type: 'string',
+            default: 'Title',
+        },
+        titleColor: {
+            type: 'string',
+            default: '#333'
+        },
+        titleSize: {
+            type: 'number'
+        },
+        titleSizeUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        titleLineHeight: {
+            type: 'number'
+        },
+        titleLineHeightUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        titlePaddingTop: {
+            type: 'number',
+            default: 0
+        },
+        titlePaddingBottom: {
+            type: 'number',
+            default: 0
+        },
+        titlePaddingLeft: {
+            type: 'number',
+            default: 0
+        },
+        titlePaddingRight: {
+            type: 'number',
+            default: 0
+        },
+        titleMarginTop: {
+            type: 'number',
+            default: 5
+        },
+        titleMarginBottom: {
+            type: 'number',
+            default: 10
+        },
+        titleMarginLeft: {
+            type: 'number',
+            default: 0
+        },
+        titleMarginRight: {
+            type: 'number',
+            default: 0
+        },
+        titlePaddingUnit: {
+            type: 'string',
+            default: 'px',
+        },
+        titleMarginUnit: {
+            type: 'string',
+            default: 'px',
+        },
+        text: {
+            type: 'string',
+            default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean diam dolor, accumsan sed rutrum vel, dapibus et leo.',
         },
         changed: {
             type: 'boolean',
@@ -80,9 +878,6 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         category: 'advgb-category',
         keywords: [ __( 'info', 'advanced-gutenberg' ), __( 'icon', 'advanced-gutenberg') , __( 'box', 'advanced-gutenberg' ) ],
         attributes: blockAttrs,
-        supports: {
-            align: ["left", "center", "right"],
-        },
         example: {
             attributes: {
                 isPreview: true

@@ -2062,6 +2062,11 @@ form .advgb-grecaptcha > div {
     padding: 0;
     font-size: 13px;
 }
+.advgb-unit-2 {
+    float: none;
+    text-align: right;
+    margin-bottom: -23px;
+}
 
 .advgb-unit-wrapper .advgb-unit {
     display: inline-block;
@@ -2439,6 +2444,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 #editor .advgb-icon-items-wrapper {
     border: 1px solid #7e8993;
     border-radius: 4px;
+}
+/*Info box */
+.advgb-infobox-icon-container {
+    display: inline-block;
 }
 
 /*Responsive for Columns*/

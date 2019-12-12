@@ -99,7 +99,17 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 exports.AdvColorControl = AdvColorControl;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 function AdvColorControl(props) {
     var _wp$components = wp.components,
         ColorIndicator = _wp$components.ColorIndicator,
@@ -132,6 +142,171 @@ function AdvColorControl(props) {
         })
     );
 }
+
+var __ = wp.i18n.__;
+var Component = wp.element.Component;
+var _wp$components2 = wp.components,
+    SelectControl = _wp$components2.SelectControl,
+    TextControl = _wp$components2.TextControl;
+
+var IconListPopup = function (_Component) {
+    _inherits(IconListPopup, _Component);
+
+    function IconListPopup() {
+        _classCallCheck(this, IconListPopup);
+
+        var _this = _possibleConstructorReturn(this, (IconListPopup.__proto__ || Object.getPrototypeOf(IconListPopup)).call(this));
+
+        _this.state = {
+            searchedText: '',
+            selectedIcon: '',
+            selectedIconTheme: ''
+        };
+        return _this;
+    }
+
+    _createClass(IconListPopup, [{
+        key: "componentWillMount",
+        value: function componentWillMount() {
+            var _state = this.state,
+                searchedText = _state.searchedText,
+                selectedIcon = _state.selectedIcon,
+                selectedIconTheme = _state.selectedIconTheme;
+
+            if (this.props.selectedIcon !== searchedText) {
+                this.setState({
+                    searchedText: this.props.selectedIcon,
+                    selectedIcon: this.props.selectedIcon
+                });
+            }
+            if (this.props.selectedIconTheme !== selectedIconTheme) {
+                this.setState({
+                    selectedIconTheme: this.props.selectedIconTheme
+                });
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            var _state2 = this.state,
+                searchedText = _state2.searchedText,
+                selectedIcon = _state2.selectedIcon,
+                selectedIconTheme = _state2.selectedIconTheme;
+
+            var popUpTitle = __('Icon List', 'advanced-gutenberg');
+            var iconType = 'material';
+
+            var closeButtonClass = ['close-btn', 'components-button', 'button button-small', 'advgb-icon-close-btn', 'is-primary'].filter(Boolean).join(' ');
+
+            var applyIconButtonClass = ['apply-btn', 'components-button', 'button button-large', 'advgb-icon-apply-btn', 'is-primary'].filter(Boolean).join(' ');
+
+            return React.createElement(
+                "div",
+                { className: "popup" },
+                React.createElement(
+                    "div",
+                    { className: "popup-inner" },
+                    React.createElement(
+                        "div",
+                        { className: "popup-content" },
+                        React.createElement(
+                            "div",
+                            { className: "popup-header" },
+                            React.createElement(
+                                "h3",
+                                null,
+                                popUpTitle
+                            ),
+                            React.createElement(
+                                "button",
+                                {
+                                    className: closeButtonClass,
+                                    onClick: this.props.closePopup },
+                                "x"
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "popup-body" },
+                            React.createElement(TextControl, {
+                                placeholder: __('Search icons', 'advanced-gutenberg'),
+                                value: searchedText,
+                                onChange: function onChange(value) {
+                                    return _this2.setState({ searchedText: value });
+                                }
+                            }),
+                            React.createElement(SelectControl, {
+                                label: __('Style', 'advanced-gutenberg'),
+                                value: selectedIconTheme,
+                                className: "advgb-icon-style-select",
+                                options: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }],
+                                onChange: function onChange(value) {
+                                    _this2.setState({
+                                        selectedIconTheme: value
+                                    });
+                                    _this2.props.onSelectIconTheme(value);
+                                }
+                            }),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflow: 'auto' } },
+                                Object.keys(advgbBlocks.iconList[iconType]).filter(function (icon) {
+                                    return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
+                                }).map(function (icon, index) {
+
+                                    var iconClass = [iconType === 'material' && 'material-icons', selectedIconTheme !== '' && "-" + selectedIconTheme].filter(Boolean).join('');
+
+                                    return React.createElement(
+                                        "div",
+                                        { className: "advgb-icon-item", key: index },
+                                        React.createElement(
+                                            "span",
+                                            {
+                                                onClick: function onClick() {
+                                                    _this2.setState({
+                                                        selectedIcon: icon
+                                                    });
+                                                },
+                                                className: icon === selectedIcon && 'active',
+                                                title: icon
+                                            },
+                                            React.createElement(
+                                                "i",
+                                                { className: iconClass },
+                                                icon
+                                            )
+                                        )
+                                    );
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "popup-footer" },
+                            React.createElement(
+                                "button",
+                                {
+                                    disabled: selectedIcon === '',
+                                    className: applyIconButtonClass,
+                                    onClick: function onClick() {
+                                        _this2.props.onSelectIcon(selectedIcon);
+                                        _this2.props.closePopup();
+                                    } },
+                                __('Apply', 'advanced-gutenberg')
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return IconListPopup;
+}(Component);
+
+exports.default = IconListPopup;
 
 /***/ }),
 
@@ -2389,6 +2564,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./assets/blocks/0-adv-components/components.jsx");
 
+var _components2 = _interopRequireDefault(_components);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -2425,172 +2604,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M19 1H5c-1.1 0-1.99.9-1.99 2L3 15.93c0 .69.35 1.3.88 1.66L12 23l8.11-5.41c.53-.36.88-.97.88-1.66L21 3c0-1.1-.9-2-2-2zm-7 19.6l-7-4.66V3h14v12.93l-7 4.67zm-2.01-7.42l-2.58-2.59L6 12l4 4 8-8-1.42-1.42z" })
     );
 
-    var IconListPopup = function (_Component) {
-        _inherits(IconListPopup, _Component);
-
-        function IconListPopup() {
-            _classCallCheck(this, IconListPopup);
-
-            var _this = _possibleConstructorReturn(this, (IconListPopup.__proto__ || Object.getPrototypeOf(IconListPopup)).call(this));
-
-            _this.state = {
-                searchedText: '',
-                selectedIcon: '',
-                selectedIconTheme: ''
-            };
-            return _this;
-        }
-
-        _createClass(IconListPopup, [{
-            key: "componentWillMount",
-            value: function componentWillMount() {
-                var _state = this.state,
-                    searchedText = _state.searchedText,
-                    selectedIcon = _state.selectedIcon,
-                    selectedIconTheme = _state.selectedIconTheme;
-
-                if (this.props.selectedIcon !== searchedText) {
-                    this.setState({
-                        searchedText: this.props.selectedIcon,
-                        selectedIcon: this.props.selectedIcon
-                    });
-                }
-                if (this.props.selectedIconTheme !== selectedIconTheme) {
-                    this.setState({
-                        selectedIconTheme: this.props.selectedIconTheme
-                    });
-                }
-            }
-        }, {
-            key: "render",
-            value: function render() {
-                var _this2 = this;
-
-                var _state2 = this.state,
-                    searchedText = _state2.searchedText,
-                    selectedIcon = _state2.selectedIcon,
-                    selectedIconTheme = _state2.selectedIconTheme;
-
-                var popUpTitle = __('Icon List', 'advanced-gutenberg');
-                var iconType = 'material';
-
-                var closeButtonClass = ['close-btn', 'components-button', 'button button-small', 'advgb-icon-close-btn', 'is-primary'].filter(Boolean).join(' ');
-
-                var applyIconButtonClass = ['apply-btn', 'components-button', 'button button-large', 'advgb-icon-apply-btn', 'is-primary'].filter(Boolean).join(' ');
-
-                return React.createElement(
-                    "div",
-                    { className: "popup" },
-                    React.createElement(
-                        "div",
-                        { className: "popup-inner" },
-                        React.createElement(
-                            "div",
-                            { className: "popup-content" },
-                            React.createElement(
-                                "div",
-                                { className: "popup-header" },
-                                React.createElement(
-                                    "h3",
-                                    null,
-                                    popUpTitle
-                                ),
-                                React.createElement(
-                                    "button",
-                                    {
-                                        className: closeButtonClass,
-                                        onClick: this.props.closePopup },
-                                    "x"
-                                )
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "popup-body" },
-                                React.createElement(TextControl, {
-                                    placeholder: __('Search icons', 'advanced-gutenberg'),
-                                    value: searchedText,
-                                    onChange: function onChange(value) {
-                                        return _this2.setState({ searchedText: value });
-                                    }
-                                }),
-                                React.createElement(SelectControl, {
-                                    label: __('Style', 'advanced-gutenberg'),
-                                    value: selectedIconTheme,
-                                    className: "advgb-icon-style-select",
-                                    options: [{ label: __('Filled', 'advanced-gutenberg'), value: '' }, { label: __('Outlined', 'advanced-gutenberg'), value: 'outlined' }, { label: __('Rounded', 'advanced-gutenberg'), value: 'round' }, { label: __('Two-Tone', 'advanced-gutenberg'), value: 'two-tone' }, { label: __('Sharp', 'advanced-gutenberg'), value: 'sharp' }],
-                                    onChange: function onChange(value) {
-                                        _this2.setState({
-                                            selectedIconTheme: value
-                                        });
-                                        _this2.props.onSelectIconTheme(value);
-                                    }
-                                }),
-                                React.createElement(
-                                    "div",
-                                    { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflow: 'auto' } },
-                                    Object.keys(advgbBlocks.iconList[iconType]).filter(function (icon) {
-                                        return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
-                                    }).map(function (icon, index) {
-
-                                        var iconClass = [iconType === 'material' && 'material-icons', selectedIconTheme !== '' && "-" + selectedIconTheme].filter(Boolean).join('');
-
-                                        return React.createElement(
-                                            "div",
-                                            { className: "advgb-icon-item", key: index },
-                                            React.createElement(
-                                                "span",
-                                                {
-                                                    onClick: function onClick() {
-                                                        _this2.setState({
-                                                            selectedIcon: icon
-                                                        });
-                                                    },
-                                                    className: icon === selectedIcon && 'active',
-                                                    title: icon
-                                                },
-                                                React.createElement(
-                                                    "i",
-                                                    { className: iconClass },
-                                                    icon
-                                                )
-                                            )
-                                        );
-                                    })
-                                )
-                            ),
-                            React.createElement(
-                                "div",
-                                { className: "popup-footer" },
-                                React.createElement(
-                                    "button",
-                                    {
-                                        disabled: selectedIcon === '',
-                                        className: applyIconButtonClass,
-                                        onClick: function onClick() {
-                                            _this2.props.onSelectIcon(selectedIcon);
-                                            _this2.props.closePopup();
-                                        } },
-                                    __('Apply', 'advanced-gutenberg')
-                                )
-                            )
-                        )
-                    )
-                );
-            }
-        }]);
-
-        return IconListPopup;
-    }(Component);
-
-    var AdvIconEdit = function (_Component2) {
-        _inherits(AdvIconEdit, _Component2);
+    var AdvIconEdit = function (_Component) {
+        _inherits(AdvIconEdit, _Component);
 
         function AdvIconEdit() {
             _classCallCheck(this, AdvIconEdit);
 
-            var _this3 = _possibleConstructorReturn(this, (AdvIconEdit.__proto__ || Object.getPrototypeOf(AdvIconEdit)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (AdvIconEdit.__proto__ || Object.getPrototypeOf(AdvIconEdit)).apply(this, arguments));
 
-            _this3.state = {
+            _this.state = {
                 showPopup: false,
                 currentItem: 0,
                 iconSelected: '',
@@ -2598,10 +2620,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 iconThemeSelected: '',
                 selectedIconTheme: false
             };
-            _this3.togglePopup = _this3.togglePopup.bind(_this3);
-            _this3.handleIcon = _this3.handleIcon.bind(_this3);
-            _this3.handleIconTheme = _this3.handleIconTheme.bind(_this3);
-            return _this3;
+            _this.togglePopup = _this.togglePopup.bind(_this);
+            _this.handleIcon = _this.handleIcon.bind(_this);
+            _this.handleIconTheme = _this.handleIconTheme.bind(_this);
+            return _this;
         }
 
         _createClass(AdvIconEdit, [{
@@ -2646,12 +2668,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate() {
-                var _state3 = this.state,
-                    currentItem = _state3.currentItem,
-                    iconSelected = _state3.iconSelected,
-                    selectedIcon = _state3.selectedIcon,
-                    iconThemeSelected = _state3.iconThemeSelected,
-                    selectedIconTheme = _state3.selectedIconTheme;
+                var _state = this.state,
+                    currentItem = _state.currentItem,
+                    iconSelected = _state.iconSelected,
+                    selectedIcon = _state.selectedIcon,
+                    iconThemeSelected = _state.iconThemeSelected,
+                    selectedIconTheme = _state.selectedIconTheme;
                 var attributes = this.props.attributes;
 
                 if (selectedIcon) {
@@ -2739,7 +2761,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "render",
             value: function render() {
-                var _this4 = this;
+                var _this2 = this;
 
                 var _props5 = this.props,
                     attributes = _props5.attributes,
@@ -2749,9 +2771,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     numberItem = attributes.numberItem,
                     tAlign = attributes.tAlign,
                     isPreview = attributes.isPreview;
-                var _state4 = this.state,
-                    showPopup = _state4.showPopup,
-                    currentItem = _state4.currentItem;
+                var _state2 = this.state,
+                    showPopup = _state2.showPopup,
+                    currentItem = _state2.currentItem;
 
 
                 var blockWrapClass = ['advgb-icon-wrapper'].filter(Boolean).join(' ');
@@ -2814,8 +2836,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "data-currentItem": idx,
                                                 onClick: function onClick(event) {
                                                     if (!showPopup) {
-                                                        _this4.togglePopup();
-                                                        _this4.setState({ currentItem: event.target.attributes.getNamedItem('data-currentItem').value });
+                                                        _this2.togglePopup();
+                                                        _this2.setState({ currentItem: event.target.attributes.getNamedItem('data-currentItem').value });
                                                     }
                                                 }
                                             },
@@ -2827,7 +2849,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         value: item.style,
                                         options: [{ label: __('Default', 'advanced-gutenberg'), value: 'default' }, { label: __('Stacked', 'advanced-gutenberg'), value: 'stacked' }],
                                         onChange: function onChange(value) {
-                                            return _this4.updateItems(idx, { style: value });
+                                            return _this2.updateItems(idx, { style: value });
                                         }
                                     }),
                                     React.createElement(RangeControl, {
@@ -2836,21 +2858,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         max: 250,
                                         value: item.size,
                                         onChange: function onChange(value) {
-                                            return _this4.updateItems(idx, { size: value });
+                                            return _this2.updateItems(idx, { size: value });
                                         }
                                     }),
                                     React.createElement(_components.AdvColorControl, {
                                         label: __('Icon Color', 'advanced-gutenberg'),
                                         value: item.color,
                                         onChange: function onChange(value) {
-                                            return _this4.updateItems(idx, { color: value });
+                                            return _this2.updateItems(idx, { color: value });
                                         }
                                     }),
                                     React.createElement(_components.AdvColorControl, {
                                         label: __('Icon Background', 'advanced-gutenberg'),
                                         value: item.bgColor,
                                         onChange: function onChange(value) {
-                                            return _this4.updateItems(idx, { bgColor: value });
+                                            return _this2.updateItems(idx, { bgColor: value });
                                         }
                                     }),
                                     item.style && item.style === 'stacked' && React.createElement(
@@ -2863,7 +2885,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             label: __('Border Color', 'advanced-gutenberg'),
                                             value: item.borderColor,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { borderColor: value });
+                                                return _this2.updateItems(idx, { borderColor: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2872,7 +2894,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             max: 20,
                                             value: item.borderSize,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { borderSize: value });
+                                                return _this2.updateItems(idx, { borderSize: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2881,7 +2903,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             max: 50,
                                             value: item.borderRadius,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { borderRadius: value });
+                                                return _this2.updateItems(idx, { borderRadius: value });
                                             }
                                         })
                                     ),
@@ -2899,7 +2921,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             React.createElement(URLInput, {
                                                 value: item.link,
                                                 onChange: function onChange(value) {
-                                                    return _this4.updateItems(idx, { link: value });
+                                                    return _this2.updateItems(idx, { link: value });
                                                 },
                                                 autoFocus: false,
                                                 isFullWidth: true,
@@ -2911,14 +2933,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             value: item.linkTarget,
                                             options: [{ label: __('Same Window', 'advanced-gutenberg'), value: '_self' }, { label: __('New Window', 'advanced-gutenberg'), value: '_blank' }],
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { linkTarget: value });
+                                                return _this2.updateItems(idx, { linkTarget: value });
                                             }
                                         }),
                                         React.createElement(TextControl, {
                                             label: __('Title for Accessibility', 'advanced-gutenberg'),
                                             value: item.title,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { title: value });
+                                                return _this2.updateItems(idx, { title: value });
                                             }
                                         })
                                     ),
@@ -2946,7 +2968,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                             className: "advgb-unit " + (item.paddingUnit === unit ? 'selected' : ''),
                                                             key: uIdx,
                                                             onClick: function onClick() {
-                                                                return _this4.updateItems(idx, { paddingUnit: unit });
+                                                                return _this2.updateItems(idx, { paddingUnit: unit });
                                                             }
                                                         },
                                                         unit
@@ -2960,7 +2982,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { paddingTop: value });
+                                                return _this2.updateItems(idx, { paddingTop: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2969,7 +2991,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { paddingBottom: value });
+                                                return _this2.updateItems(idx, { paddingBottom: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2978,7 +3000,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { paddingLeft: value });
+                                                return _this2.updateItems(idx, { paddingLeft: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -2987,7 +3009,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { paddingRight: value });
+                                                return _this2.updateItems(idx, { paddingRight: value });
                                             }
                                         })
                                     ),
@@ -3014,7 +3036,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                         {
                                                             className: "advgb-unit " + (item.marginUnit === unit ? 'selected' : ''), key: uIdx,
                                                             onClick: function onClick() {
-                                                                return _this4.updateItems(idx, { marginUnit: unit });
+                                                                return _this2.updateItems(idx, { marginUnit: unit });
                                                             }
                                                         },
                                                         unit
@@ -3028,7 +3050,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { marginTop: value });
+                                                return _this2.updateItems(idx, { marginTop: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -3037,7 +3059,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { marginBottom: value });
+                                                return _this2.updateItems(idx, { marginBottom: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -3046,7 +3068,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { marginLeft: value });
+                                                return _this2.updateItems(idx, { marginLeft: value });
                                             }
                                         }),
                                         React.createElement(RangeControl, {
@@ -3055,7 +3077,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             min: 0,
                                             max: 180,
                                             onChange: function onChange(value) {
-                                                return _this4.updateItems(idx, { marginRight: value });
+                                                return _this2.updateItems(idx, { marginRight: value });
                                             }
                                         })
                                     )
@@ -3120,10 +3142,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 );
                             })
                         ),
-                        showPopup ? React.createElement(IconListPopup, {
+                        showPopup ? React.createElement(_components2.default, {
                             closePopup: function closePopup() {
                                 if (showPopup) {
-                                    _this4.togglePopup();
+                                    _this2.togglePopup();
                                 }
                             },
                             onSelectIcon: this.handleIcon,
@@ -11999,6 +12021,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _components = __webpack_require__(/*! ../0-adv-components/components.jsx */ "./assets/blocks/0-adv-components/components.jsx");
 
+var _components2 = _interopRequireDefault(_components);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -12015,7 +12041,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         InspectorControls = _wpBlockEditor.InspectorControls,
         BlockControls = _wpBlockEditor.BlockControls,
         AlignmentToolbar = _wpBlockEditor.AlignmentToolbar,
-        URLInput = _wpBlockEditor.URLInput;
+        URLInput = _wpBlockEditor.URLInput,
+        RichText = _wpBlockEditor.RichText;
     var BaseControl = wpComponents.BaseControl,
         PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
@@ -12040,7 +12067,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function InfoBoxEdit() {
             _classCallCheck(this, InfoBoxEdit);
 
-            return _possibleConstructorReturn(this, (InfoBoxEdit.__proto__ || Object.getPrototypeOf(InfoBoxEdit)).apply(this, arguments));
+            var _this = _possibleConstructorReturn(this, (InfoBoxEdit.__proto__ || Object.getPrototypeOf(InfoBoxEdit)).apply(this, arguments));
+
+            _this.state = {
+                showPopup: false,
+                iconSelected: '',
+                selectedIcon: false,
+                iconThemeSelected: '',
+                selectedIconTheme: false
+            };
+            _this.togglePopup = _this.togglePopup.bind(_this);
+            _this.handleIcon = _this.handleIcon.bind(_this);
+            _this.handleIconTheme = _this.handleIconTheme.bind(_this);
+            return _this;
         }
 
         _createClass(InfoBoxEdit, [{
@@ -12083,9 +12122,804 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate() {
+                var _state = this.state,
+                    iconSelected = _state.iconSelected,
+                    selectedIcon = _state.selectedIcon,
+                    iconThemeSelected = _state.iconThemeSelected,
+                    selectedIconTheme = _state.selectedIconTheme;
+                var _props3 = this.props,
+                    attributes = _props3.attributes,
+                    setAttributes = _props3.setAttributes;
+
+                if (selectedIcon) {
+
+                    this.setState({
+                        selectedIcon: false
+                    });
+                    setAttributes({
+                        icon: iconSelected,
+                        iconTheme: iconThemeSelected
+                    });
+                }
+
+                if (selectedIconTheme) {
+                    this.setState({
+                        selectedIconTheme: false
+                    });
+                    setAttributes({
+                        iconTheme: iconThemeSelected
+                    });
+                }
+            }
+        }, {
+            key: "togglePopup",
+            value: function togglePopup() {
+                var showPopup = this.state.showPopup;
+
+
+                this.setState({
+                    showPopup: !showPopup
+                });
+            }
+        }, {
+            key: "handleIcon",
+            value: function handleIcon(iconValue) {
+                this.setState({
+                    iconSelected: iconValue,
+                    selectedIcon: true
+                });
+            }
+        }, {
+            key: "handleIconTheme",
+            value: function handleIconTheme(iconThemeValue) {
+                this.setState({
+                    iconThemeSelected: iconThemeValue,
+                    selectedIconTheme: true
+                });
+            }
+        }, {
             key: "render",
             value: function render() {
-                return 'Infobox';
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes;
+                var blockIDX = attributes.blockIDX,
+                    isPreview = attributes.isPreview,
+                    align = attributes.align,
+                    containerBorderWidth = attributes.containerBorderWidth,
+                    containerBorderRadius = attributes.containerBorderRadius,
+                    containerPaddingTop = attributes.containerPaddingTop,
+                    containerPaddingBottom = attributes.containerPaddingBottom,
+                    containerPaddingLeft = attributes.containerPaddingLeft,
+                    containerPaddingRight = attributes.containerPaddingRight,
+                    containerMarginTop = attributes.containerMarginTop,
+                    containerMarginBottom = attributes.containerMarginBottom,
+                    containerMarginLeft = attributes.containerMarginLeft,
+                    containerMarginRight = attributes.containerMarginRight,
+                    containerBackground = attributes.containerBackground,
+                    containerBorderBackground = attributes.containerBorderBackground,
+                    containerPaddingUnit = attributes.containerPaddingUnit,
+                    containerMarginUnit = attributes.containerMarginUnit,
+                    iconBorderWidth = attributes.iconBorderWidth,
+                    iconBorderRadius = attributes.iconBorderRadius,
+                    iconPaddingTop = attributes.iconPaddingTop,
+                    iconPaddingBottom = attributes.iconPaddingBottom,
+                    iconPaddingLeft = attributes.iconPaddingLeft,
+                    iconPaddingRight = attributes.iconPaddingRight,
+                    iconMarginTop = attributes.iconMarginTop,
+                    iconMarginBottom = attributes.iconMarginBottom,
+                    iconMarginLeft = attributes.iconMarginLeft,
+                    iconMarginRight = attributes.iconMarginRight,
+                    iconBackground = attributes.iconBackground,
+                    iconBorderBackground = attributes.iconBorderBackground,
+                    iconPaddingUnit = attributes.iconPaddingUnit,
+                    iconMarginUnit = attributes.iconMarginUnit,
+                    icon = attributes.icon,
+                    iconSize = attributes.iconSize,
+                    iconColor = attributes.iconColor,
+                    iconTheme = attributes.iconTheme,
+                    title = attributes.title,
+                    titleColor = attributes.titleColor,
+                    titleSize = attributes.titleSize,
+                    titleSizeUnit = attributes.titleSizeUnit,
+                    titleLineHeight = attributes.titleLineHeight,
+                    titleLineHeightUnit = attributes.titleLineHeightUnit,
+                    titlePaddingTop = attributes.titlePaddingTop,
+                    titlePaddingBottom = attributes.titlePaddingBottom,
+                    titlePaddingLeft = attributes.titlePaddingLeft,
+                    titlePaddingRight = attributes.titlePaddingRight,
+                    titleMarginTop = attributes.titleMarginTop,
+                    titleMarginBottom = attributes.titleMarginBottom,
+                    titleMarginLeft = attributes.titleMarginLeft,
+                    titleMarginRight = attributes.titleMarginRight,
+                    titlePaddingUnit = attributes.titlePaddingUnit,
+                    titleMarginUnit = attributes.titleMarginUnit,
+                    text = attributes.text;
+
+
+                var blockWrapClass = ['advgb-infobox-wrapper', "has-text-align-" + align].filter(Boolean).join(' ');
+
+                var blockClass = ['advgb-infobox-wrap'].filter(Boolean).join(' ');
+
+                var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
+
+                var containerPadding = containerPaddingTop + containerPaddingUnit + ' ' + containerPaddingRight + containerPaddingUnit + ' ' + containerPaddingBottom + containerPaddingUnit + ' ' + containerPaddingLeft + containerPaddingUnit;
+                var containerMargin = containerMarginTop + containerMarginUnit + ' ' + containerMarginRight + containerMarginUnit + ' ' + containerMarginBottom + containerMarginUnit + ' ' + containerMarginLeft + containerMarginUnit;
+                var iconPadding = iconPaddingTop + iconPaddingUnit + ' ' + iconPaddingRight + iconPaddingUnit + ' ' + iconPaddingBottom + iconPaddingUnit + ' ' + iconPaddingLeft + iconPaddingUnit;
+                var iconMargin = iconMarginTop + iconMarginUnit + ' ' + iconMarginRight + iconMarginUnit + ' ' + iconMarginBottom + iconMarginUnit + ' ' + iconMarginLeft + iconMarginUnit;
+                var titlePadding = titlePaddingTop + titlePaddingUnit + ' ' + titlePaddingRight + titlePaddingUnit + ' ' + titlePaddingBottom + titlePaddingUnit + ' ' + titlePaddingLeft + titlePaddingUnit;
+                var titleMargin = titleMarginTop + titleMarginUnit + ' ' + titleMarginRight + titleMarginUnit + ' ' + titleMarginBottom + titleMarginUnit + ' ' + titleMarginLeft + titleMarginUnit;
+
+                return isPreview ? React.createElement("img", { alt: __('Advanced Icon', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        BlockControls,
+                        null,
+                        React.createElement(AlignmentToolbar, {
+                            value: align,
+                            onChange: function onChange(newAlign) {
+                                return setAttributes({ align: newAlign });
+                            }
+                        })
+                    ),
+                    React.createElement(
+                        InspectorControls,
+                        null,
+                        React.createElement(
+                            PanelBody,
+                            {
+                                title: __('Container Settings', 'advanced-gutenberg'),
+                                initialOpen: false
+                            },
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Background', 'advanced-gutenberg'),
+                                value: containerBackground,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ containerBackground: value });
+                                }
+                            }),
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Border Background', 'advanced-gutenberg'),
+                                value: containerBorderBackground,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ containerBorderBackground: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border Width (px)', 'advanced-gutenberg'),
+                                min: 0,
+                                max: 40,
+                                value: containerBorderWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ containerBorderWidth: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border Radius (px)', 'advanced-gutenberg'),
+                                min: 0,
+                                max: 200,
+                                value: containerBorderRadius,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ containerBorderRadius: value });
+                                }
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                {
+                                    title: __(' Padding', 'advanced-gutenberg'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        __('Unit', 'advanced-gutenberg')
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                            return React.createElement(
+                                                "span",
+                                                {
+                                                    className: "advgb-unit " + (containerPaddingUnit === unit ? 'selected' : ''),
+                                                    key: uIdx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ containerPaddingUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )
+                                ),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-up-alt2",
+                                    value: containerPaddingTop,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ containerPaddingTop: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-down-alt2",
+                                    value: containerPaddingBottom,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ containerPaddingBottom: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-left-alt2",
+                                    value: containerPaddingLeft,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ containerPaddingLeft: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-right-alt2",
+                                    value: containerPaddingRight,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ containerPaddingRight: value });
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                {
+                                    title: __(' Margin', 'advanced-gutenberg'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        __('Unit', 'advanced-gutenberg')
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                            return React.createElement(
+                                                "span",
+                                                {
+                                                    className: "advgb-unit " + (containerMarginUnit === unit ? 'selected' : ''),
+                                                    key: uIdx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ containerMarginUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )
+                                ),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-up-alt2",
+                                    value: containerMarginTop,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ containerMarginTop: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-down-alt2",
+                                    value: containerMarginBottom,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ containerMarginBottom: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-left-alt2",
+                                    value: containerMarginLeft,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ containerMarginLeft: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-right-alt2",
+                                    value: containerMarginRight,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ containerMarginRight: value });
+                                    }
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            {
+                                title: __('Icon Settings', 'advanced-gutenberg'),
+                                initialOpen: false
+                            },
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Icon Color', 'advanced-gutenberg'),
+                                value: iconColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ iconColor: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Icon Size (px)', 'advanced-gutenberg'),
+                                value: iconSize,
+                                min: 1,
+                                max: 200,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ iconSize: value });
+                                }
+                            }),
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Background', 'advanced-gutenberg'),
+                                value: iconBackground,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ iconBackground: value });
+                                }
+                            }),
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Border Background', 'advanced-gutenberg'),
+                                value: iconBorderBackground,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ iconBorderBackground: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border Width (px)', 'advanced-gutenberg'),
+                                min: 0,
+                                max: 40,
+                                value: iconBorderWidth,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ iconBorderWidth: value });
+                                }
+                            }),
+                            React.createElement(RangeControl, {
+                                label: __('Border Radius (px)', 'advanced-gutenberg'),
+                                min: 0,
+                                max: 200,
+                                value: iconBorderRadius,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ iconBorderRadius: value });
+                                }
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                {
+                                    title: __(' Padding', 'advanced-gutenberg'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        __('Unit', 'advanced-gutenberg')
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                            return React.createElement(
+                                                "span",
+                                                {
+                                                    className: "advgb-unit " + (iconPaddingUnit === unit ? 'selected' : ''),
+                                                    key: uIdx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ iconPaddingUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )
+                                ),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-up-alt2",
+                                    value: iconPaddingTop,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ iconPaddingTop: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-down-alt2",
+                                    value: iconPaddingBottom,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ iconPaddingBottom: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-left-alt2",
+                                    value: iconPaddingLeft,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ iconPaddingLeft: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-right-alt2",
+                                    value: iconPaddingRight,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ iconPaddingRight: value });
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                {
+                                    title: __(' Margin', 'advanced-gutenberg'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        __('Unit', 'advanced-gutenberg')
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                            return React.createElement(
+                                                "span",
+                                                {
+                                                    className: "advgb-unit " + (iconMarginUnit === unit ? 'selected' : ''),
+                                                    key: uIdx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ iconMarginUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )
+                                ),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-up-alt2",
+                                    value: iconMarginTop,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ iconMarginTop: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-down-alt2",
+                                    value: iconMarginBottom,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ iconMarginBottom: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-left-alt2",
+                                    value: iconMarginLeft,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ iconMarginLeft: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-right-alt2",
+                                    value: iconMarginRight,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ iconMarginRight: value });
+                                    }
+                                })
+                            )
+                        ),
+                        React.createElement(
+                            PanelBody,
+                            {
+                                title: __('Title Settings', 'advanced-gutenberg'),
+                                initialOpen: false
+                            },
+                            React.createElement(_components.AdvColorControl, {
+                                label: __('Color', 'advanced-gutenberg'),
+                                value: titleColor,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ titleColor: value });
+                                }
+                            }),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-unit-wrapper advgb-unit-2", key: "unit" },
+                                    ['px', 'em'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (titleSizeUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ titleSizeUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(RangeControl, {
+                                label: __('Font Size', 'advanced-gutenberg'),
+                                value: titleSize,
+                                min: 1,
+                                max: 200,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ titleSize: value });
+                                }
+                            }),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-unit-wrapper advgb-unit-2", key: "unit" },
+                                    ['px', 'em'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (titleLineHeightUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ titleLineHeightUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
+                            ),
+                            React.createElement(RangeControl, {
+                                label: __('Line Height', 'advanced-gutenberg'),
+                                value: titleLineHeight,
+                                min: 1,
+                                max: 200,
+                                onChange: function onChange(value) {
+                                    return setAttributes({ titleLineHeight: value });
+                                }
+                            }),
+                            React.createElement(
+                                PanelBody,
+                                {
+                                    title: __(' Padding', 'advanced-gutenberg'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        __('Unit', 'advanced-gutenberg')
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                            return React.createElement(
+                                                "span",
+                                                {
+                                                    className: "advgb-unit " + (titlePaddingUnit === unit ? 'selected' : ''),
+                                                    key: uIdx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ titlePaddingUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )
+                                ),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-up-alt2",
+                                    value: titlePaddingTop,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ titlePaddingTop: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-down-alt2",
+                                    value: titlePaddingBottom,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ titlePaddingBottom: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-left-alt2",
+                                    value: titlePaddingLeft,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ titlePaddingLeft: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-right-alt2",
+                                    value: titlePaddingRight,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ titlePaddingRight: value });
+                                    }
+                                })
+                            ),
+                            React.createElement(
+                                PanelBody,
+                                {
+                                    title: __(' Margin', 'advanced-gutenberg'),
+                                    initialOpen: false
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-controls-title" },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        __('Unit', 'advanced-gutenberg')
+                                    ),
+                                    React.createElement(
+                                        "div",
+                                        { className: "advgb-unit-wrapper", key: "unit" },
+                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                            return React.createElement(
+                                                "span",
+                                                {
+                                                    className: "advgb-unit " + (titleMarginUnit === unit ? 'selected' : ''),
+                                                    key: uIdx,
+                                                    onClick: function onClick() {
+                                                        return setAttributes({ titleMarginUnit: unit });
+                                                    }
+                                                },
+                                                unit
+                                            );
+                                        })
+                                    )
+                                ),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-up-alt2",
+                                    value: titleMarginTop,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ titleMarginTop: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-down-alt2",
+                                    value: titleMarginBottom,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ titleMarginBottom: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-left-alt2",
+                                    value: titleMarginLeft,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ titleMarginLeft: value });
+                                    }
+                                }),
+                                React.createElement(RangeControl, {
+                                    beforeIcon: "arrow-right-alt2",
+                                    value: titleMarginRight,
+                                    min: 0,
+                                    max: 100,
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ titleMarginRight: value });
+                                    }
+                                })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: blockWrapClass,
+                            style: {
+                                backgroundColor: containerBackground,
+                                padding: containerPadding,
+                                margin: containerMargin,
+                                border: containerBorderWidth + "px solid " + containerBorderBackground,
+                                borderRadius: containerBorderRadius + "px"
+                            },
+                            id: blockIDX
+                        },
+                        React.createElement(
+                            "div",
+                            { className: blockClass },
+                            React.createElement(
+                                "div",
+                                {
+                                    className: "advgb-infobox-icon-container",
+                                    style: {
+                                        backgroundColor: iconBackground,
+                                        padding: iconPadding,
+                                        margin: iconMargin,
+                                        border: iconBorderWidth + "px solid " + iconBorderBackground,
+                                        borderRadius: iconBorderRadius + "px"
+                                    }
+                                },
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-infobox-icon-inner-container" },
+                                    React.createElement(
+                                        "i",
+                                        { className: iconClass, style: { color: iconColor, fontSize: iconSize, display: 'block' } },
+                                        icon
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                "div",
+                                { className: "advgb-infobox-textcontent" },
+                                React.createElement(RichText, {
+                                    tagName: "h2",
+                                    className: "advgb-infobox-title",
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ title: value });
+                                    },
+                                    value: title,
+                                    style: {
+                                        color: titleColor,
+                                        fontSize: titleSize + titleSizeUnit,
+                                        lineHeight: titleLineHeight + titleLineHeightUnit,
+                                        padding: titlePadding,
+                                        margin: titleMargin,
+                                        whiteSpace: 'pre-wrap'
+                                    }
+                                }),
+                                React.createElement(RichText, {
+                                    tagName: "p",
+                                    className: "advgb-infobox-text",
+                                    onChange: function onChange(value) {
+                                        return setAttributes({ text: value });
+                                    },
+                                    value: text,
+                                    style: { padding: '0', margin: '0', whiteSpace: 'pre-wrap' }
+                                })
+                            )
+                        )
+                    )
+                );
             }
         }]);
 
@@ -12095,6 +12929,204 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var blockAttrs = {
         blockIDX: {
             type: 'string'
+        },
+        align: {
+            type: 'string',
+            default: 'center'
+        },
+        containerBorderWidth: {
+            type: 'number',
+            default: 0
+        },
+        containerBorderRadius: {
+            type: 'number',
+            default: 0
+        },
+        containerPaddingTop: {
+            type: 'number',
+            default: 20
+        },
+        containerPaddingBottom: {
+            type: 'number',
+            default: 20
+        },
+        containerPaddingLeft: {
+            type: 'number',
+            default: 0
+        },
+        containerPaddingRight: {
+            type: 'number',
+            default: 0
+        },
+        containerMarginTop: {
+            type: 'number',
+            default: 0
+        },
+        containerMarginBottom: {
+            type: 'number',
+            default: 0
+        },
+        containerMarginLeft: {
+            type: 'number',
+            default: 0
+        },
+        containerMarginRight: {
+            type: 'number',
+            default: 0
+        },
+        containerPaddingUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        containerMarginUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        containerBackground: {
+            type: 'string',
+            default: '#f5f5f5'
+        },
+        containerBorderBackground: {
+            type: 'string',
+            default: '#e8e8e8'
+        },
+        iconBorderWidth: {
+            type: 'number',
+            default: 0
+        },
+        iconBorderRadius: {
+            type: 'number',
+            default: 0
+        },
+        iconPaddingTop: {
+            type: 'number',
+            default: 20
+        },
+        iconPaddingBottom: {
+            type: 'number',
+            default: 20
+        },
+        iconPaddingLeft: {
+            type: 'number',
+            default: 0
+        },
+        iconPaddingRight: {
+            type: 'number',
+            default: 0
+        },
+        iconMarginTop: {
+            type: 'number',
+            default: 0
+        },
+        iconMarginBottom: {
+            type: 'number',
+            default: 0
+        },
+        iconMarginLeft: {
+            type: 'number',
+            default: 0
+        },
+        iconMarginRight: {
+            type: 'number',
+            default: 0
+        },
+        iconPaddingUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        iconMarginUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        iconBackground: {
+            type: 'string',
+            default: '#f5f5f5'
+        },
+        iconBorderBackground: {
+            type: 'string',
+            default: '#e8e8e8'
+        },
+        icon: {
+            type: 'string',
+            default: 'beenhere'
+        },
+        iconSize: {
+            type: 'number',
+            default: 70
+        },
+        iconColor: {
+            type: 'string',
+            default: '#333'
+        },
+        iconTheme: {
+            type: 'string',
+            default: 'outlined'
+        },
+        title: {
+            type: 'string',
+            default: 'Title'
+        },
+        titleColor: {
+            type: 'string',
+            default: '#333'
+        },
+        titleSize: {
+            type: 'number'
+        },
+        titleSizeUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        titleLineHeight: {
+            type: 'number'
+        },
+        titleLineHeightUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        titlePaddingTop: {
+            type: 'number',
+            default: 0
+        },
+        titlePaddingBottom: {
+            type: 'number',
+            default: 0
+        },
+        titlePaddingLeft: {
+            type: 'number',
+            default: 0
+        },
+        titlePaddingRight: {
+            type: 'number',
+            default: 0
+        },
+        titleMarginTop: {
+            type: 'number',
+            default: 5
+        },
+        titleMarginBottom: {
+            type: 'number',
+            default: 10
+        },
+        titleMarginLeft: {
+            type: 'number',
+            default: 0
+        },
+        titleMarginRight: {
+            type: 'number',
+            default: 0
+        },
+        titlePaddingUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        titleMarginUnit: {
+            type: 'string',
+            default: 'px'
+        },
+        text: {
+            type: 'string',
+            default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean diam dolor, accumsan sed rutrum vel, dapibus et leo.'
         },
         changed: {
             type: 'boolean',
@@ -12116,9 +13148,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         category: 'advgb-category',
         keywords: [__('info', 'advanced-gutenberg'), __('icon', 'advanced-gutenberg'), __('box', 'advanced-gutenberg')],
         attributes: blockAttrs,
-        supports: {
-            align: ["left", "center", "right"]
-        },
         example: {
             attributes: {
                 isPreview: true
