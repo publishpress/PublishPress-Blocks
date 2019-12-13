@@ -75,7 +75,7 @@ class IconListPopup extends Component {
         ].filter( Boolean ).join( ' ' );
 
         return (
-            <div className='popup'>
+            <div className='advgb-icon-popup'>
                 <div className='popup-inner'>
                     <div className="popup-content">
                         <div className="popup-header">
