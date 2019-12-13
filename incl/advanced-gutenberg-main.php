@@ -4532,16 +4532,74 @@ float: left;'
                 $block_id = $blockAttrs['blockIDX'];
 
                 $container_bg = isset($blockAttrs['containerBackground']) ? $blockAttrs['containerBackground'] : '#f5f5f5';
+
                 $container_padding_unit = isset($blockAttrs['containerPaddingUnit']) ? $blockAttrs['containerPaddingUnit'] : 'px';
                 $container_padding = '';
                 $container_padding .= isset($blockAttrs['containerPaddingTop']) ? $blockAttrs['containerPaddingTop'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
                 $container_padding .= isset($blockAttrs['containerPaddingRight']) ? $blockAttrs['containerPaddingRight'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
                 $container_padding .= isset($blockAttrs['containerPaddingBottom']) ? $blockAttrs['containerPaddingBottom'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
-                $container_padding .= isset($blockAttrs['containerPaddingLeft']) ? $blockAttrs['containerPaddingLeft'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
+                $container_padding .= isset($blockAttrs['containerPaddingLeft']) ? $blockAttrs['containerPaddingLeft'] . $container_padding_unit : '20' . $container_padding_unit;
+
+                $container_border = '';
+                $container_border .= isset($blockAttrs['containerBorderWidth']) ? $blockAttrs['containerBorderWidth'] . 'px ' : '0px ';
+                $container_border .= 'solid ';
+                $container_border .= isset($blockAttrs['containerBorderBackground']) ? $blockAttrs['containerBorderBackground'] : '#e8e8e8 ';
+
+                $container_border_radius = '';
+                $container_border_radius .= isset($blockAttrs['containerBorderRadius']) ? $blockAttrs['containerBorderRadius'] : 0;
 
                 $style_html .= '#' . $block_id . ' {';
                 $style_html .= 'background-color: ' . $container_bg . ';';
                 $style_html .= 'padding: ' . $container_padding . ';';
+                $style_html .= 'border: ' . $container_border . ';';
+                $style_html .= 'border-radius: ' . $container_border_radius . 'px;';
+                $style_html .= '}'; // end container css
+
+                $icon_background_color = isset($blockAttrs['iconBackground']) ? $blockAttrs['iconBackground'] : '#f5f5f5';
+
+                $icon_padding = '';
+                $icon_padding_unit = isset($blockAttrs['iconPaddingUnit']) ? $blockAttrs['iconPaddingUnit'] : 'px';
+                $icon_padding .= isset($blockAttrs['iconPaddingTop']) ? $blockAttrs['iconPaddingTop'] . $icon_padding_unit . ' ' : '0 ';
+                $icon_padding .= isset($blockAttrs['iconPaddingRight']) ? $blockAttrs['iconPaddingRight'] . $icon_padding_unit . ' ' : '0 ';
+                $icon_padding .= isset($blockAttrs['iconPaddingBottom']) ? $blockAttrs['iconPaddingBottom'] . $icon_padding_unit . ' ' : '0 ';
+                $icon_padding .= isset($blockAttrs['iconPaddingLeft']) ? $blockAttrs['iconPaddingLeft'] . $icon_padding_unit : '0';
+                if ($icon_padding === '0 0 0 0') {
+                    $icon_padding = 0;
+                }
+
+                $icon_margin = '';
+                $icon_margin_unit = isset($blockAttrs['iconMarginUnit']) ? $blockAttrs['iconMarginUnit'] : 'px';
+                $icon_margin .= isset($blockAttrs['iconMarginTop']) ? $blockAttrs['iconMarginTop'] . $icon_margin_unit . ' ' : '0 ';
+                $icon_margin .= isset($blockAttrs['iconMarginRight']) ? $blockAttrs['iconMarginRight'] . $icon_margin_unit . ' ' : '0 ';
+                $icon_margin .= isset($blockAttrs['iconMarginBottom']) ? $blockAttrs['iconMarginBottom'] . $icon_margin_unit . ' ' : '0 ';
+                $icon_margin .= isset($blockAttrs['iconMarginLeft']) ? $blockAttrs['iconMarginLeft'] . $icon_margin_unit : '0';
+                if ($icon_margin === '0 0 0 0') {
+                    $icon_margin = 0;
+                }
+
+                $icon_border = '';
+                $icon_border .= isset($blockAttrs['iconBorderWidth']) ? $blockAttrs['iconBorderWidth'] . 'px ' : '0px ';
+                $icon_border .= 'solid ';
+                $icon_border .= isset($blockAttrs['iconBorderBackground']) ? $blockAttrs['iconBorderBackground'] : '#e8e8e8 ';
+
+                $icon_border_radius = '';
+                $icon_border_radius .= isset($blockAttrs['iconBorderRadius']) ? $blockAttrs['iconBorderRadius'] : 0;
+
+                $style_html .= '#' . $block_id . ' .advgb-infobox-icon-container {';
+                $style_html .= 'background-color: ' . $icon_background_color . ';';
+                $style_html .= 'padding: ' . $icon_padding . ';';
+                $style_html .= 'margin: ' . $icon_margin . ';';
+                $style_html .= 'border: ' . $icon_border . ';';
+                $style_html .= 'border-radius: ' . $icon_border_radius . 'px;';
+                $style_html .= '}';
+
+                $icon_color = isset($blockAttrs['iconColor']) ? $blockAttrs['iconColor'] : '#333';
+                $icon_size = isset($blockAttrs['iconSize']) ? $blockAttrs['iconSize'] : '70';
+                $icon_size_unit = isset($blockAttrs['iconSizeUnit']) ? $blockAttrs['iconSizeUnit'] : 'px';
+                $style_html .= '#' . $block_id . ' .advgb-infobox-icon-container i {';
+                $style_html .= 'color: ' . $icon_color . ';';
+                $style_html .= 'font-size: ' . $icon_size . $icon_size_unit . ';';
+                $style_html .= 'display: block;';
                 $style_html .= '}';
             }
         }

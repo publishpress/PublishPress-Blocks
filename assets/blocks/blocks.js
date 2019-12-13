@@ -13041,7 +13041,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             style: {
                                 backgroundColor: containerBackground,
                                 padding: containerPadding,
-                                margin: containerMargin,
                                 border: containerBorderWidth + "px solid " + containerBorderBackground,
                                 borderRadius: containerBorderRadius + "px"
                             },
@@ -13154,11 +13153,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         containerPaddingLeft: {
             type: 'number',
-            default: 0
+            default: 20
         },
         containerPaddingRight: {
             type: 'number',
-            default: 0
+            default: 20
         },
         containerPaddingUnit: {
             type: 'string',
@@ -13182,19 +13181,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         iconPaddingTop: {
             type: 'number',
-            default: 20
+            default: 0
         },
         iconPaddingBottom: {
             type: 'number',
-            default: 20
+            default: 0
         },
         iconPaddingLeft: {
             type: 'number',
-            default: 20
+            default: 0
         },
         iconPaddingRight: {
             type: 'number',
-            default: 20
+            default: 0
         },
         iconMarginTop: {
             type: 'number',
@@ -13405,10 +13404,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 titleHtmlTag = attributes.titleHtmlTag,
                 text = attributes.text,
                 icon = attributes.icon,
-                iconTheme = attributes.iconTheme;
+                iconTheme = attributes.iconTheme,
+                align = attributes.align;
 
 
-            var blockWrapClass = ['wp-block-advgb-infobox', 'advgb-infobox-wrapper'].filter(Boolean).join(' ');
+            var blockWrapClass = ['wp-block-advgb-infobox', 'advgb-infobox-wrapper', "has-text-align-" + align].filter(Boolean).join(' ');
 
             var blockClass = ['advgb-infobox-wrap'].filter(Boolean).join(' ');
 

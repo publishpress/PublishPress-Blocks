@@ -745,7 +745,6 @@ import IconListPopup from "../0-adv-components/components.jsx";
                              style={ {
                                  backgroundColor: containerBackground,
                                  padding: containerPadding,
-                                 margin: containerMargin,
                                  border: `${containerBorderWidth}px solid ${containerBorderBackground}`,
                                  borderRadius: `${containerBorderRadius}px`,
                              } }
@@ -844,11 +843,11 @@ import IconListPopup from "../0-adv-components/components.jsx";
         },
         containerPaddingLeft: {
             type: 'number',
-            default: 0
+            default: 20
         },
         containerPaddingRight: {
             type: 'number',
-            default: 0
+            default: 20
         },
         containerPaddingUnit: {
             type: 'string',
@@ -872,19 +871,19 @@ import IconListPopup from "../0-adv-components/components.jsx";
         },
         iconPaddingTop: {
             type: 'number',
-            default: 20
+            default: 0
         },
         iconPaddingBottom: {
             type: 'number',
-            default: 20
+            default: 0
         },
         iconPaddingLeft: {
             type: 'number',
-            default: 20
+            default: 0
         },
         iconPaddingRight: {
             type: 'number',
-            default: 20
+            default: 0
         },
         iconMarginTop: {
             type: 'number',
@@ -1096,11 +1095,13 @@ import IconListPopup from "../0-adv-components/components.jsx";
                 text,
                 icon,
                 iconTheme,
+                align,
             } = attributes;
 
             const blockWrapClass = [
                 'wp-block-advgb-infobox',
                 'advgb-infobox-wrapper',
+                `has-text-align-${align}`,
             ].filter( Boolean ).join( ' ' );
 
             const blockClass = [
