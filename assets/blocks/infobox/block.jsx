@@ -220,7 +220,7 @@ import IconListPopup from "../0-adv-components/components.jsx";
                                     onChange={ (value) => setAttributes( {containerBackground: value} ) }
                                 />
                                 <AdvColorControl
-                                    label={ __('Border Background', 'advanced-gutenberg') }
+                                    label={ __('Border Color', 'advanced-gutenberg') }
                                     value={ containerBorderBackground }
                                     onChange={ (value) => setAttributes( {containerBorderBackground: value} ) }
                                 />
@@ -322,7 +322,7 @@ import IconListPopup from "../0-adv-components/components.jsx";
                                     onChange={ (value) => setAttributes( {iconBackground: value} ) }
                                 />
                                 <AdvColorControl
-                                    label={ __('Border Background', 'advanced-gutenberg') }
+                                    label={ __('Border Color', 'advanced-gutenberg') }
                                     value={ iconBorderBackground }
                                     onChange={ (value) => setAttributes( {iconBorderBackground: value} ) }
                                 />

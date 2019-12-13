@@ -65,11 +65,10 @@ class IconBlockCest
 
         $I->click('//button[text()="Icon 1 Settings"]');
 
-        $I->fillField('//span[text()="Icon Library (Material Icon)"]/following-sibling::node()//input[@class="components-text-control__input"]', 'plane');
-        $I->waitForElement('//div[contains(@class, "button-icons-list")]');
-
-        //change icon
-        $I->click('//div[contains(@class, "button-icons-list")]/div[@class="advgb-icon-item"][1]/span');
+        $I->click('//button[text()="Icon Selection"]');
+        $I->waitForElement('//div[@class="advgb-icon-popup"]');
+        $I->click('//div[@class="advgb-icon-popup"]//div[contains(@class, "advgb-icon-items-wrapper")]/div[@class="advgb-icon-item"][1]/span');
+        $I->click('//div[@class="advgb-icon-popup"]//button[contains(@class, "apply-btn")]');
 
         //change style
         $I->selectOption('//label[text()="Icon Style"]/following-sibling::node()', array('text' => 'Stacked'));
@@ -126,13 +125,15 @@ class IconBlockCest
         $I->waitForElement('//div[contains(@class, "wp-block-advgb-icon")]');
 
         //see changed icon
-        $I->seeElement('//div[contains(@class, "wp-block-advgb-icon")]/div[@class="advgb-icons"]//i[contains(@class, "mi-airplanemode-active")]');
+        $frontendIcon = $I->executeJS('return jQuery(".advgb-item-0 .material-icons").text()');
+        $I->assertEquals('3d_rotation', $frontendIcon);
+
         $iconSize = '60px';
-        $frontendIconSize = $I->executeJS('return jQuery(".advgb-item-0 i.mi").css("font-size")');
+        $frontendIconSize = $I->executeJS('return jQuery(".advgb-item-0 .material-icons").css("font-size")');
         $I->assertEquals($iconSize, $frontendIconSize);
         //color
         $iconColorRbg = 'rgb(255, 153, 0)';
-        $frontendIconColor = $I->executeJS('return jQuery(".advgb-item-0 i.mi").css("color")');
+        $frontendIconColor = $I->executeJS('return jQuery(".advgb-item-0 .material-icons").css("color")');
         $I->assertEquals($iconColorRbg, $frontendIconColor);
         //icon background color
         $iconBgColorRbg = 'rgb(245, 245, 245)';

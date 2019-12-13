@@ -12293,7 +12293,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(_components.AdvColorControl, {
-                                label: __('Border Background', 'advanced-gutenberg'),
+                                label: __('Border Color', 'advanced-gutenberg'),
                                 value: containerBorderBackground,
                                 onChange: function onChange(value) {
                                     return setAttributes({ containerBorderBackground: value });
@@ -12435,7 +12435,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 }
                             }),
                             React.createElement(_components.AdvColorControl, {
-                                label: __('Border Background', 'advanced-gutenberg'),
+                                label: __('Border Color', 'advanced-gutenberg'),
                                 value: iconBorderBackground,
                                 onChange: function onChange(value) {
                                     return setAttributes({ iconBorderBackground: value });
