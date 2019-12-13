@@ -2062,6 +2062,11 @@ form .advgb-grecaptcha > div {
     padding: 0;
     font-size: 13px;
 }
+.advgb-unit-2 {
+    float: none;
+    text-align: right;
+    margin-bottom: -23px;
+}
 
 .advgb-unit-wrapper .advgb-unit {
     display: inline-block;
@@ -2376,7 +2381,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 }
 
 /* Icon List Lightbox */
-.advgb-icon-wrapper .popup {
+.advgb-icon-popup {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -2388,7 +2393,7 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     background-color: rgba(0,0,0, 0.5);
     z-index: 160000;
 }
-.advgb-icon-wrapper .popup-inner {
+.advgb-icon-popup .popup-inner {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -2398,32 +2403,32 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     max-width: 650px;
     width: 100%;
 }
-.advgb-icon-wrapper .popup-inner .popup-body {
+.advgb-icon-popup .popup-inner .popup-body {
     padding: 20px;
 }
-.advgb-icon-wrapper .popup-inner .popup-header {
+.advgb-icon-popup .popup-inner .popup-header {
     padding: 20px 20px 0;
 }
-.advgb-icon-wrapper .popup-inner .popup-header h3 {
+.advgb-icon-popup .popup-inner .popup-header h3 {
     margin: 0;
     font-size: 24px;
 }
-.advgb-icon-wrapper .popup-inner .popup-header .close-btn {
+.advgb-icon-popup .popup-inner .popup-header .close-btn {
     position: absolute;
     top: 20px;
     right: 20px;
     width: 30px;
     height: 30px;
 }
-.advgb-icon-wrapper .popup-inner .popup-footer {
+.advgb-icon-popup .popup-inner .popup-footer {
     padding: 0 20px 20px;
     line-height: initial;
     text-align: right;
 }
-.advgb-icon-wrapper .advgb-icon-items-wrapper {
+.advgb-icon-popup .advgb-icon-items-wrapper {
     padding-top: 10px;
 }
-.advgb-icon-wrapper .advgb-icon-items-wrapper .advgb-icon-item {
+.advgb-icon-popup .advgb-icon-items-wrapper .advgb-icon-item {
     min-width: 20%;
 }
 .advgb-icon-style-select {
@@ -2439,6 +2444,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 #editor .advgb-icon-items-wrapper {
     border: 1px solid #7e8993;
     border-radius: 4px;
+}
+/*Info box */
+.advgb-infobox-icon-container {
+    display: inline-block;
 }
 
 /*Responsive for Columns*/
