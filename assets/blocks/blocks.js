@@ -12045,6 +12045,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var BaseControl = wpComponents.BaseControl,
         PanelBody = wpComponents.PanelBody,
         RangeControl = wpComponents.RangeControl,
+        SelectControl = wpComponents.SelectControl,
         Button = wpComponents.Button;
 
 
@@ -12224,6 +12225,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     titleSizeUnit = attributes.titleSizeUnit,
                     titleLineHeight = attributes.titleLineHeight,
                     titleLineHeightUnit = attributes.titleLineHeightUnit,
+                    titleHtmlTag = attributes.titleHtmlTag,
                     titlePaddingTop = attributes.titlePaddingTop,
                     titlePaddingBottom = attributes.titlePaddingBottom,
                     titlePaddingLeft = attributes.titlePaddingLeft,
@@ -12287,8 +12289,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             PanelBody,
                             {
-                                title: __('Container Settings', 'advanced-gutenberg'),
-                                initialOpen: false
+                                title: __('Container Settings', 'advanced-gutenberg')
                             },
                             React.createElement(_components.AdvColorControl, {
                                 label: __('Background', 'advanced-gutenberg'),
@@ -12747,6 +12748,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ titleLineHeight: value });
                                 }
                             }),
+                            React.createElement(SelectControl, {
+                                label: __('HTML Tag', 'advanced-gutenberg'),
+                                value: titleHtmlTag,
+                                options: [{ label: __('H1', 'advanced-gutenberg'), value: 'h1' }, { label: __('H2', 'advanced-gutenberg'), value: 'h2' }, { label: __('H3', 'advanced-gutenberg'), value: 'h3' }, { label: __('H4', 'advanced-gutenberg'), value: 'h4' }, { label: __('H5', 'advanced-gutenberg'), value: 'h5' }, { label: __('H6', 'advanced-gutenberg'), value: 'h6' }],
+                                onChange: function onChange(value) {
+                                    return setAttributes({ titleHtmlTag: value });
+                                }
+                            }),
                             React.createElement(
                                 PanelBody,
                                 {
@@ -13142,7 +13151,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 "div",
                                 { className: "advgb-infobox-textcontent" },
                                 React.createElement(RichText, {
-                                    tagName: "h2",
+                                    tagName: titleHtmlTag,
                                     className: "advgb-infobox-title",
                                     onChange: function onChange(value) {
                                         return setAttributes({ title: value });
@@ -13351,6 +13360,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         titleLineHeightUnit: {
             type: 'string',
             default: 'px'
+        },
+        titleHtmlTag: {
+            type: 'string',
+            default: 'h3'
         },
         titlePaddingTop: {
             type: 'number',
