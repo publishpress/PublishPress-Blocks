@@ -165,6 +165,7 @@ pipelines:
         - php $BITBUCKET_CLONE_DIR/deployment/zip_package.php
         - php $BITBUCKET_CLONE_DIR/deployment/joomunited_changelog.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --article_id $CHANGELOG_ARTICLE_ID
         - php $BITBUCKET_CLONE_DIR/deployment/language_uploader.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --language_id $LANGUAGE_ID --language_extension_id $LANGUAGE_EXTENSION_ID
+        - php $BITBUCKET_CLONE_DIR/deployment/developer_documentation.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --article_id $DEVELOPER_ARTICLE_ID
         - bash $BITBUCKET_CLONE_DIR/deployment/svn_updater.sh
         - bash $BITBUCKET_CLONE_DIR/deployment/upload_tagged_version.sh
         - bash $BITBUCKET_CLONE_DIR/deployment/tag.sh
