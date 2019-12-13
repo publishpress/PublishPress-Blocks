@@ -354,6 +354,7 @@ float: left;'
 
         // Include needed CSS styles
         wp_enqueue_style('material_icon_font');
+        wp_enqueue_style('material_icon_font_custom');
         wp_enqueue_style('slick_style');
         wp_enqueue_style('slick_theme_style');
 
@@ -1351,6 +1352,10 @@ float: left;'
                 plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
             );
             wp_register_style(
+                'material_icon_font_custom',
+                plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))
+            );
+            wp_register_style(
                 'slick_style',
                 plugins_url('assets/css/slick.css', dirname(__FILE__))
             );
@@ -1494,6 +1499,10 @@ float: left;'
             plugins_url('assets/css/fonts/material-icons.min.css', dirname(__FILE__))
         );
         wp_register_style(
+            'material_icon_font_custom',
+            plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))
+        );
+        wp_register_style(
             'advgb_bulma_styles',
             plugins_url('assets/css/bulma.min.css', dirname(__FILE__))
         );
@@ -1547,6 +1556,7 @@ float: left;'
     {
         wp_enqueue_style('roboto_font', 'https://fonts.googleapis.com/css?family=Roboto');
         wp_enqueue_style('material_icon_font');
+        wp_enqueue_style('material_icon_font_custom');
         wp_enqueue_style('advgb_quirk');
         wp_enqueue_style('waves_styles');
         if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
@@ -2086,7 +2096,7 @@ float: left;'
             'count-up','images-slider', 'map', 'newsletter',
             'recent-posts', 'social-links', 'summary', 'adv-tabs',
             'testimonial', 'woo-products', 'columns', 'column',
-            'login-form', 'search-bar', 'icon'
+            'login-form', 'search-bar', 'icon', 'infobox'
         );
 
         foreach ($advgb_block as $block) {
@@ -3921,6 +3931,353 @@ float: left;'
                     ),
                 ),
 
+            ),
+            'advgb-infobox' => array(
+                array(
+                    'label'    => __('Container Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'containerBackground',
+                        ),
+                        array(
+                            'title' => __('Border Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'containerBorderBackground',
+                        ),
+                        array(
+                            'title' => __('Border Width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'containerBorderWidth',
+                            'min'   => 0,
+                            'max'   => 40,
+                        ),
+                        array(
+                            'title' => __('Border Radius', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'containerBorderRadius',
+                            'min'   => 0,
+                            'max'   => 200,
+                        ),
+                        array(
+                            'title' => __('Padding Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'containerPaddingTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'containerPaddingBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'containerPaddingLeft',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'containerPaddingRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Icon Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Icon Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'iconColor',
+                        ),
+                        array(
+                            'title' => __('Icon Size', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconSize',
+                            'min'   => 1,
+                            'max'   => 200,
+                        ),
+                        array(
+                            'title' => __('Background Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'iconBackground',
+                        ),
+                        array(
+                            'title' => __('Border Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'iconBorderBackground',
+                        ),
+                        array(
+                            'title' => __('Border Width', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconBorderWidth',
+                            'min'   => 0,
+                            'max'   => 40,
+                        ),
+                        array(
+                            'title' => __('Border Radius', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconBorderRadius',
+                            'min'   => 0,
+                            'max'   => 200,
+                        ),
+                        array(
+                            'title' => __('Padding Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconPaddingTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconPaddingBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconPaddingLeft',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconPaddingRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconMarginTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconMarginBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconMarginLeft',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'iconMarginRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    ),
+                ),
+                array(
+                    'label'    => __('Title Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Title Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'titleColor',
+                        ),
+                        array(
+                            'title' => __('Font Size (px)', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titleSize',
+                            'min'   => 1,
+                            'max'   => 200,
+                        ),
+                        array(
+                            'title' => __('Line Height (px)', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titleLineHeight',
+                            'min'   => 1,
+                            'max'   => 200,
+                        ),
+                        array(
+                            'title'   => __('HTML Tag', 'advanced-gutenberg'),
+                            'type'    => 'select',
+                            'name'    => 'titleHtmlTag',
+                            'options' => array(
+                                array(
+                                    'label' => __('H1', 'advanced-gutenberg'),
+                                    'value' => 'h1',
+                                ),
+                                array(
+                                    'label' => __('H2', 'advanced-gutenberg'),
+                                    'value' => 'h2',
+                                ),
+                                array(
+                                    'label' => __('H3', 'advanced-gutenberg'),
+                                    'value' => 'h3',
+                                ),
+                                array(
+                                    'label' => __('H4', 'advanced-gutenberg'),
+                                    'value' => 'h4',
+                                ),
+                                array(
+                                    'label' => __('H5', 'advanced-gutenberg'),
+                                    'value' => 'h5',
+                                ),
+                                array(
+                                    'label' => __('H6', 'advanced-gutenberg'),
+                                    'value' => 'h6',
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title' => __('Padding Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titlePaddingTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titlePaddingBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titlePaddingLeft',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titlePaddingRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titleMarginTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titleMarginBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titleMarginLeft',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'titleMarginRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    )
+                ),
+                array(
+                    'label'    => __('Text Settings', 'advanced-gutenberg'),
+                    'settings' => array(
+                        array(
+                            'title' => __('Color', 'advanced-gutenberg'),
+                            'type'  => 'color',
+                            'name'  => 'textColor',
+                        ),
+                        array(
+                            'title' => __('Font Size (px)', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textSize',
+                            'min'   => 1,
+                            'max'   => 200,
+                        ),
+                        array(
+                            'title' => __('Line Height (px)', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textLineHeight',
+                            'min'   => 1,
+                            'max'   => 200,
+                        ),
+                        array(
+                            'title' => __('Padding Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textPaddingTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textPaddingBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textPaddingLeft',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Padding Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textPaddingRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Top', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textMarginTop',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Bottom', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textMarginBottom',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Left', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textMarginLeft',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                        array(
+                            'title' => __('Margin Right', 'advanced-gutenberg'),
+                            'type'  => 'number',
+                            'name'  => 'textMarginRight',
+                            'min'   => 0,
+                            'max'   => 100,
+                        ),
+                    )
+                ),
             ),
         );
 
