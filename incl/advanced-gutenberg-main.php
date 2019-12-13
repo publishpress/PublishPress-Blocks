@@ -4527,6 +4527,22 @@ float: left;'
                     $style_html .= 'color: ' . $item['color'] . ';';
                     $style_html .= '}';
                 }
+            } elseif ($blockName === 'advgb/infobox') {
+                wp_enqueue_style('material_icon_font');
+                $block_id = $blockAttrs['blockIDX'];
+
+                $container_bg = isset($blockAttrs['containerBackground']) ? $blockAttrs['containerBackground'] : '#f5f5f5';
+                $container_padding_unit = isset($blockAttrs['containerPaddingUnit']) ? $blockAttrs['containerPaddingUnit'] : 'px';
+                $container_padding = '';
+                $container_padding .= isset($blockAttrs['containerPaddingTop']) ? $blockAttrs['containerPaddingTop'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
+                $container_padding .= isset($blockAttrs['containerPaddingRight']) ? $blockAttrs['containerPaddingRight'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
+                $container_padding .= isset($blockAttrs['containerPaddingBottom']) ? $blockAttrs['containerPaddingBottom'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
+                $container_padding .= isset($blockAttrs['containerPaddingLeft']) ? $blockAttrs['containerPaddingLeft'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
+
+                $style_html .= '#' . $block_id . ' {';
+                $style_html .= 'background-color: ' . $container_bg . ';';
+                $style_html .= 'padding: ' . $container_padding . ';';
+                $style_html .= '}';
             }
         }
 

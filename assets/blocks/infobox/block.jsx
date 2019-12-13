@@ -119,14 +119,9 @@ import IconListPopup from "../0-adv-components/components.jsx";
                 containerPaddingBottom,
                 containerPaddingLeft,
                 containerPaddingRight,
-                containerMarginTop,
-                containerMarginBottom,
-                containerMarginLeft,
-                containerMarginRight,
                 containerBackground,
                 containerBorderBackground,
                 containerPaddingUnit,
-                containerMarginUnit,
                 iconBorderWidth,
                 iconBorderRadius,
                 iconPaddingTop,
@@ -197,7 +192,6 @@ import IconListPopup from "../0-adv-components/components.jsx";
             ].filter( Boolean ).join('');
 
             const containerPadding = containerPaddingTop + containerPaddingUnit + ' ' + containerPaddingRight + containerPaddingUnit + ' ' + containerPaddingBottom + containerPaddingUnit + ' ' + containerPaddingLeft + containerPaddingUnit;
-            const containerMargin = containerMarginTop + containerMarginUnit + ' ' + containerMarginRight + containerMarginUnit + ' ' + containerMarginBottom + containerMarginUnit + ' ' + containerMarginLeft + containerMarginUnit;
             const iconPadding = iconPaddingTop + iconPaddingUnit + ' ' + iconPaddingRight + iconPaddingUnit + ' ' + iconPaddingBottom + iconPaddingUnit + ' ' + iconPaddingLeft + iconPaddingUnit;
             const iconMargin = iconMarginTop + iconMarginUnit + ' ' + iconMarginRight + iconMarginUnit + ' ' + iconMarginBottom + iconMarginUnit + ' ' + iconMarginLeft + iconMarginUnit;
             const titlePadding = titlePaddingTop + titlePaddingUnit + ' ' + titlePaddingRight + titlePaddingUnit + ' ' + titlePaddingBottom + titlePaddingUnit + ' ' + titlePaddingLeft + titlePaddingUnit;
@@ -289,53 +283,6 @@ import IconListPopup from "../0-adv-components/components.jsx";
                                         min={0}
                                         max={100}
                                         onChange={( value ) => setAttributes( { containerPaddingRight: value } )}
-                                    />
-                                </PanelBody>
-                                <PanelBody
-                                    title={__( ' Margin', 'advanced-gutenberg' )}
-                                    initialOpen={false}
-                                >
-                                    <div className="advgb-controls-title">
-                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
-                                        <div className="advgb-unit-wrapper" key="unit">
-                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
-                                                <span
-                                                    className={`advgb-unit ${containerMarginUnit === unit ? 'selected' : ''}`}
-                                                    key={uIdx}
-                                                    onClick={() => setAttributes( { containerMarginUnit: unit } )}
-                                                >
-                                                    {unit}
-                                                </span>
-                                            ) )}
-                                        </div>
-                                    </div>
-                                    <RangeControl
-                                        beforeIcon="arrow-up-alt2"
-                                        value={containerMarginTop}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { containerMarginTop: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-down-alt2"
-                                        value={containerMarginBottom}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { containerMarginBottom: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-left-alt2"
-                                        value={containerMarginLeft}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { containerMarginLeft: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-right-alt2"
-                                        value={containerMarginRight}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { containerMarginRight: value } )}
                                     />
                                 </PanelBody>
                             </PanelBody>
@@ -903,27 +850,7 @@ import IconListPopup from "../0-adv-components/components.jsx";
             type: 'number',
             default: 0
         },
-        containerMarginTop: {
-            type: 'number',
-            default: 0
-        },
-        containerMarginBottom: {
-            type: 'number',
-            default: 0
-        },
-        containerMarginLeft: {
-            type: 'number',
-            default: 0
-        },
-        containerMarginRight: {
-            type: 'number',
-            default: 0
-        },
         containerPaddingUnit: {
-            type: 'string',
-            default: 'px',
-        },
-        containerMarginUnit: {
             type: 'string',
             default: 'px',
         },
@@ -953,11 +880,11 @@ import IconListPopup from "../0-adv-components/components.jsx";
         },
         iconPaddingLeft: {
             type: 'number',
-            default: 0
+            default: 20
         },
         iconPaddingRight: {
             type: 'number',
-            default: 0
+            default: 20
         },
         iconMarginTop: {
             type: 'number',
@@ -1163,7 +1090,12 @@ import IconListPopup from "../0-adv-components/components.jsx";
         edit: InfoBoxEdit,
         save: ( { attributes } ) => {
             const {
-                blockIDX
+                blockIDX,
+                title,
+                titleHtmlTag,
+                text,
+                icon,
+                iconTheme,
             } = attributes;
 
             const blockWrapClass = [
@@ -1175,11 +1107,32 @@ import IconListPopup from "../0-adv-components/components.jsx";
                 'advgb-infobox-wrap',
             ].filter( Boolean ).join( ' ' );
 
+            const iconClass = [
+                'material-icons',
+                iconTheme !== '' && `-${iconTheme}`
+            ].filter( Boolean ).join('');
+
             return (
                 <Fragment>
                     <div className={blockWrapClass} id={blockIDX}>
                         <div className={ blockClass }>
-                            Info Box
+                            <div className="advgb-infobox-icon-container">
+                                <div className="advgb-infobox-icon-inner-container">
+                                    <i className={iconClass}>{icon}</i>
+                                </div>
+                            </div>
+                            <div className="advgb-infobox-textcontent">
+                                <RichText.Content
+                                    tagName={titleHtmlTag}
+                                    className="advgb-infobox-title"
+                                    value={ title }
+                                />
+                                <RichText.Content
+                                    tagName="p"
+                                    className="advgb-infobox-text"
+                                    value={ text }
+                                />
+                            </div>
                         </div>
                     </div>
                 </Fragment>

@@ -12193,14 +12193,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     containerPaddingBottom = attributes.containerPaddingBottom,
                     containerPaddingLeft = attributes.containerPaddingLeft,
                     containerPaddingRight = attributes.containerPaddingRight,
-                    containerMarginTop = attributes.containerMarginTop,
-                    containerMarginBottom = attributes.containerMarginBottom,
-                    containerMarginLeft = attributes.containerMarginLeft,
-                    containerMarginRight = attributes.containerMarginRight,
                     containerBackground = attributes.containerBackground,
                     containerBorderBackground = attributes.containerBorderBackground,
                     containerPaddingUnit = attributes.containerPaddingUnit,
-                    containerMarginUnit = attributes.containerMarginUnit,
                     iconBorderWidth = attributes.iconBorderWidth,
                     iconBorderRadius = attributes.iconBorderRadius,
                     iconPaddingTop = attributes.iconPaddingTop,
@@ -12262,7 +12257,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
 
                 var containerPadding = containerPaddingTop + containerPaddingUnit + ' ' + containerPaddingRight + containerPaddingUnit + ' ' + containerPaddingBottom + containerPaddingUnit + ' ' + containerPaddingLeft + containerPaddingUnit;
-                var containerMargin = containerMarginTop + containerMarginUnit + ' ' + containerMarginRight + containerMarginUnit + ' ' + containerMarginBottom + containerMarginUnit + ' ' + containerMarginLeft + containerMarginUnit;
                 var iconPadding = iconPaddingTop + iconPaddingUnit + ' ' + iconPaddingRight + iconPaddingUnit + ' ' + iconPaddingBottom + iconPaddingUnit + ' ' + iconPaddingLeft + iconPaddingUnit;
                 var iconMargin = iconMarginTop + iconMarginUnit + ' ' + iconMarginRight + iconMarginUnit + ' ' + iconMarginBottom + iconMarginUnit + ' ' + iconMarginLeft + iconMarginUnit;
                 var titlePadding = titlePaddingTop + titlePaddingUnit + ' ' + titlePaddingRight + titlePaddingUnit + ' ' + titlePaddingBottom + titlePaddingUnit + ' ' + titlePaddingLeft + titlePaddingUnit;
@@ -12389,75 +12383,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     max: 100,
                                     onChange: function onChange(value) {
                                         return setAttributes({ containerPaddingRight: value });
-                                    }
-                                })
-                            ),
-                            React.createElement(
-                                PanelBody,
-                                {
-                                    title: __(' Margin', 'advanced-gutenberg'),
-                                    initialOpen: false
-                                },
-                                React.createElement(
-                                    "div",
-                                    { className: "advgb-controls-title" },
-                                    React.createElement(
-                                        "span",
-                                        null,
-                                        __('Unit', 'advanced-gutenberg')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
-                                            return React.createElement(
-                                                "span",
-                                                {
-                                                    className: "advgb-unit " + (containerMarginUnit === unit ? 'selected' : ''),
-                                                    key: uIdx,
-                                                    onClick: function onClick() {
-                                                        return setAttributes({ containerMarginUnit: unit });
-                                                    }
-                                                },
-                                                unit
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-up-alt2",
-                                    value: containerMarginTop,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ containerMarginTop: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-down-alt2",
-                                    value: containerMarginBottom,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ containerMarginBottom: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-left-alt2",
-                                    value: containerMarginLeft,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ containerMarginLeft: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-right-alt2",
-                                    value: containerMarginRight,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ containerMarginRight: value });
                                     }
                                 })
                             )
@@ -13235,27 +13160,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             type: 'number',
             default: 0
         },
-        containerMarginTop: {
-            type: 'number',
-            default: 0
-        },
-        containerMarginBottom: {
-            type: 'number',
-            default: 0
-        },
-        containerMarginLeft: {
-            type: 'number',
-            default: 0
-        },
-        containerMarginRight: {
-            type: 'number',
-            default: 0
-        },
         containerPaddingUnit: {
-            type: 'string',
-            default: 'px'
-        },
-        containerMarginUnit: {
             type: 'string',
             default: 'px'
         },
@@ -13285,11 +13190,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         iconPaddingLeft: {
             type: 'number',
-            default: 0
+            default: 20
         },
         iconPaddingRight: {
             type: 'number',
-            default: 0
+            default: 20
         },
         iconMarginTop: {
             type: 'number',
@@ -13495,12 +13400,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: InfoBoxEdit,
         save: function save(_ref) {
             var attributes = _ref.attributes;
-            var blockIDX = attributes.blockIDX;
+            var blockIDX = attributes.blockIDX,
+                title = attributes.title,
+                titleHtmlTag = attributes.titleHtmlTag,
+                text = attributes.text,
+                icon = attributes.icon,
+                iconTheme = attributes.iconTheme;
 
 
             var blockWrapClass = ['wp-block-advgb-infobox', 'advgb-infobox-wrapper'].filter(Boolean).join(' ');
 
             var blockClass = ['advgb-infobox-wrap'].filter(Boolean).join(' ');
+
+            var iconClass = ['material-icons', iconTheme !== '' && "-" + iconTheme].filter(Boolean).join('');
 
             return React.createElement(
                 Fragment,
@@ -13511,7 +13423,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "div",
                         { className: blockClass },
-                        "Info Box"
+                        React.createElement(
+                            "div",
+                            { className: "advgb-infobox-icon-container" },
+                            React.createElement(
+                                "div",
+                                { className: "advgb-infobox-icon-inner-container" },
+                                React.createElement(
+                                    "i",
+                                    { className: iconClass },
+                                    icon
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "advgb-infobox-textcontent" },
+                            React.createElement(RichText.Content, {
+                                tagName: titleHtmlTag,
+                                className: "advgb-infobox-title",
+                                value: title
+                            }),
+                            React.createElement(RichText.Content, {
+                                tagName: "p",
+                                className: "advgb-infobox-text",
+                                value: text
+                            })
+                        )
                     )
                 )
             );
