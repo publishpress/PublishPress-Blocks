@@ -4553,7 +4553,7 @@ float: left;'
                 $style_html .= 'padding: ' . $container_padding . ';';
                 $style_html .= 'border: ' . $container_border . ';';
                 $style_html .= 'border-radius: ' . $container_border_radius . 'px;';
-                $style_html .= '}'; // end container css
+                $style_html .= '}'; //end container css
 
                 $icon_background_color = isset($blockAttrs['iconBackground']) ? $blockAttrs['iconBackground'] : '#f5f5f5';
 
@@ -4600,7 +4600,81 @@ float: left;'
                 $style_html .= 'color: ' . $icon_color . ';';
                 $style_html .= 'font-size: ' . $icon_size . $icon_size_unit . ';';
                 $style_html .= 'display: block;';
-                $style_html .= '}';
+                $style_html .= '}'; //end icon style
+
+                $title_color = isset($blockAttrs['titleColor']) ? $blockAttrs['titleColor'] : '#333';
+
+                $title_padding = '';
+                $title_padding_unit = isset($blockAttrs['titlePaddingUnit']) ? $blockAttrs['titlePaddingUnit'] : 'px';
+                $title_padding .= isset($blockAttrs['titlePaddingTop']) ? $blockAttrs['titlePaddingTop'] . $title_padding_unit . ' ' : '0 ';
+                $title_padding .= isset($blockAttrs['titlePaddingRight']) ? $blockAttrs['titlePaddingRight'] . $title_padding_unit . ' ' : '0 ';
+                $title_padding .= isset($blockAttrs['titlePaddingBottom']) ? $blockAttrs['titlePaddingBottom'] . $title_padding_unit . ' ' : '0 ';
+                $title_padding .= isset($blockAttrs['titlePaddingLeft']) ? $blockAttrs['titlePaddingLeft'] . $title_padding_unit : '0';
+                if ($title_padding === '0 0 0 0') {
+                    $title_padding = 0;
+                }
+
+                $title_margin = '';
+                $title_margin_unit = isset($blockAttrs['titleMarginUnit']) ? $blockAttrs['titleMarginUnit'] : 'px';
+                $title_margin .= isset($blockAttrs['titleMarginTop']) ? $blockAttrs['titleMarginTop'] . $title_margin_unit . ' ' : '5' . $title_margin_unit . ' ';
+                $title_margin .= isset($blockAttrs['titleMarginRight']) ? $blockAttrs['titleMarginRight'] . $title_margin_unit . ' ' : '0 ';
+                $title_margin .= isset($blockAttrs['titleMarginBottom']) ? $blockAttrs['titleMarginBottom'] . $title_margin_unit . ' ' : '10' . $title_margin_unit . ' ';
+                $title_margin .= isset($blockAttrs['titleMarginLeft']) ? $blockAttrs['titleMarginLeft'] . $title_margin_unit : '0';
+                if ($title_margin === '0 0 0 0') {
+                    $title_margin = 0;
+                }
+
+                $title_size_unit = isset($blockAttrs['titleSizeUnit']) ? $blockAttrs['titleSizeUnit'] : 'px';
+                $title_lh_unit = isset($blockAttrs['titleLineHeightUnit']) ? $blockAttrs['titleLineHeightUnit'] : 'px';
+                $style_html .= '#' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-title {';
+                $style_html .= 'color: ' . $title_color . ';';
+                $style_html .= 'padding: ' . $title_padding . ';';
+                $style_html .= 'margin: ' . $title_margin . ';';
+                if (isset($blockAttrs['titleSize'])) {
+                    $style_html .= 'font-size: ' . $blockAttrs['titleSize'] . $title_size_unit . ';';
+                }
+                if (isset($blockAttrs['titleLineHeight'])) {
+                    $style_html .= 'line-height: ' . $blockAttrs['titleLineHeight'] . $title_lh_unit . ';';
+                }
+                $style_html .= 'white-space: pre-wrap;';
+                $style_html .= '}'; //end title style
+
+                $text_color = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '#333';
+
+                $text_padding = '';
+                $text_padding_unit = isset($blockAttrs['textPaddingUnit']) ? $blockAttrs['textPaddingUnit'] : 'px';
+                $text_padding .= isset($blockAttrs['textPaddingTop']) ? $blockAttrs['textPaddingTop'] . $text_padding_unit . ' ' : '0 ';
+                $text_padding .= isset($blockAttrs['textPaddingRight']) ? $blockAttrs['textPaddingRight'] . $text_padding_unit . ' ' : '0 ';
+                $text_padding .= isset($blockAttrs['textPaddingBottom']) ? $blockAttrs['textPaddingBottom'] . $text_padding_unit . ' ' : '0 ';
+                $text_padding .= isset($blockAttrs['textPaddingLeft']) ? $blockAttrs['textPaddingLeft'] . $text_padding_unit : '0';
+                if ($text_padding === '0 0 0 0') {
+                    $text_padding = 0;
+                }
+
+                $text_margin = '';
+                $text_margin_unit = isset($blockAttrs['textMarginUnit']) ? $blockAttrs['textMarginUnit'] : 'px';
+                $text_margin .= isset($blockAttrs['textMarginTop']) ? $blockAttrs['textMarginTop'] . $text_margin_unit . ' ' : '0 ';
+                $text_margin .= isset($blockAttrs['textMarginRight']) ? $blockAttrs['textMarginRight'] . $text_margin_unit . ' ' : '0 ';
+                $text_margin .= isset($blockAttrs['textMarginBottom']) ? $blockAttrs['textMarginBottom'] . $text_margin_unit . ' ' : '0 ';
+                $text_margin .= isset($blockAttrs['textMarginLeft']) ? $blockAttrs['textMarginLeft'] . $text_margin_unit : '0';
+                if ($text_margin === '0 0 0 0') {
+                    $text_margin = 0;
+                }
+
+                $text_size_unit = isset($blockAttrs['textSizeUnit']) ? $blockAttrs['textSizeUnit'] : 'px';
+                $text_lh_unit = isset($blockAttrs['textLineHeightUnit']) ? $blockAttrs['textLineHeightUnit'] : 'px';
+                $style_html .= '#' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-text {';
+                $style_html .= 'color: ' . $text_color . ';';
+                $style_html .= 'padding: ' . $text_padding . ';';
+                $style_html .= 'margin: ' . $text_margin . ';';
+                if (isset($blockAttrs['textSize'])) {
+                    $style_html .= 'font-size: ' . $blockAttrs['textSize'] . $text_size_unit . ';';
+                }
+                if (isset($blockAttrs['textLineHeight'])) {
+                    $style_html .= 'line-height: ' . $blockAttrs['textLineHeight'] . $text_lh_unit . ';';
+                }
+                $style_html .= 'white-space: pre-wrap;';
+                $style_html .= '}'; //end text style
             }
         }
 
