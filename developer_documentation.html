@@ -3,36 +3,3 @@
 </p>
 
 {{wp_developer_documentation}}
-
-<h2>Composer</h2>
-<p class="devfooter">
-    <img style="float: right; margin: -90px 10px 10px 0" src="https://www.joomunited.com/images/logo-composer-transparent.png" alt="composer logo"/> Here is the solution to use our plugins as a composer dependency.<br/> You have to declare in your composer.json file the joomunited repository, please make sure to replace the YOUR_TOKEN in the url by your own token. You can find it under <a href="https://www.joomunited.com/my-account">https://www.joomunited.com/my-account</a> under the Composer token accordion.<br/>
-    <code>
-        {
-        <br/>
-        &nbsp;&nbsp;&nbsp;"repositories":[<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type":"package",<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"package":{<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":"joomunited/advanced-gutenberg",<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"version":"master",<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type":"wordpress-plugin",<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"dist":{<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type":"zip",<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url":"https://www.joomunited.com/extra/download/advanced-gutenberg/YOUR_TOKEN",<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"reference":"master"<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-        &nbsp;&nbsp;&nbsp;],<br/>
-        &nbsp;&nbsp;&nbsp;"require":{<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"composer/installers":"~1.0",<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"joomunited/advanced-gutenberg":"dev-master"<br/>
-        &nbsp;&nbsp;&nbsp;}<br/>
-        }
-    </code>
-    <br/>
-    Please not that composer update command can't work on private repositories (for more explanation please refer to the <a href="https://getcomposer.org/doc/05-repositories.md#package-2">composer documentation</a>)<br/>
-    Though, you can manually update the plugin to the latest version with this command: <br/>
-    <code>composer remove joomunited/advanced-gutenberg &amp;&amp; composer clearcache &amp;&amp; composer require joomunited/advanced-gutenberg:dev-master</code>
-</p>
