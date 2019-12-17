@@ -157,6 +157,7 @@ var IconListPopup = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (IconListPopup.__proto__ || Object.getPrototypeOf(IconListPopup)).call(this));
 
+        _this.handleClick = _this.handleClick.bind(_this);
         _this.state = {
             searchedText: '',
             selectedIcon: '',
@@ -183,6 +184,21 @@ var IconListPopup = function (_Component) {
                     selectedIconTheme: this.props.selectedIconTheme
                 });
             }
+            document.addEventListener('click', this.handleClick);
+        }
+    }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            // important
+            document.removeEventListener('click', this.handleClick);
+        }
+    }, {
+        key: "handleClick",
+        value: function handleClick(e) {
+            if (this.node.contains(e.target)) {
+                return;
+            }
+            this.props.closePopup();
         }
     }, {
         key: "render",
@@ -197,8 +213,6 @@ var IconListPopup = function (_Component) {
             var popUpTitle = __('Icon List', 'advanced-gutenberg');
             var iconType = 'material';
 
-            var closeButtonClass = ['close-btn', 'components-button', 'button button-small', 'advgb-icon-close-btn', 'is-primary'].filter(Boolean).join(' ');
-
             var applyIconButtonClass = ['apply-btn', 'components-button', 'button button-large', 'advgb-icon-apply-btn', 'is-primary'].filter(Boolean).join(' ');
 
             return React.createElement(
@@ -206,7 +220,12 @@ var IconListPopup = function (_Component) {
                 { className: "advgb-icon-popup" },
                 React.createElement(
                     "div",
-                    { className: "popup-inner" },
+                    {
+                        className: "popup-inner",
+                        ref: function ref(node) {
+                            _this2.node = node;
+                        }
+                    },
                     React.createElement(
                         "div",
                         { className: "popup-content" },

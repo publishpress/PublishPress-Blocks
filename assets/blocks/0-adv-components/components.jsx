@@ -30,7 +30,7 @@ class IconListPopup extends Component {
 
     constructor() {
         super();
-
+        this.handleClick = this.handleClick.bind(this);
         this.state = {
             searchedText: '',
             selectedIcon: '',
@@ -50,20 +50,26 @@ class IconListPopup extends Component {
                 selectedIconTheme: this.props.selectedIconTheme
             });
         }
+        document.addEventListener('click', this.handleClick)
     }
+
+    componentWillUnmount() {
+        // important
+        document.removeEventListener('click', this.handleClick)
+    }
+
+    handleClick(e) {
+        if (this.node.contains(e.target)) {
+            return;
+        }
+        this.props.closePopup();
+    }
+
 
     render() {
         const {searchedText, selectedIcon, selectedIconTheme} = this.state;
         const popUpTitle = __('Icon List', 'advanced-gutenberg');
         const iconType = 'material';
-
-        const closeButtonClass = [
-            'close-btn',
-            'components-button',
-            'button button-small',
-            'advgb-icon-close-btn',
-            'is-primary'
-        ].filter( Boolean ).join( ' ' );
 
         const applyIconButtonClass = [
             'apply-btn',
@@ -75,7 +81,10 @@ class IconListPopup extends Component {
 
         return (
             <div className='advgb-icon-popup'>
-                <div className='popup-inner'>
+                <div
+                    className='popup-inner'
+                    ref={node => {this.node = node}}
+                >
                     <div className="popup-content">
                         <div className="popup-header">
                             <h3>{popUpTitle}</h3>
