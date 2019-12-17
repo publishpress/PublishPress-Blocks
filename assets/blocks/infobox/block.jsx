@@ -15,6 +15,25 @@ import IconListPopup from "../0-adv-components/components.jsx";
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 1H5c-1.1 0-1.99.9-1.99 2L3 15.93c0 .69.35 1.3.88 1.66L12 23l8.11-5.41c.53-.36.88-.97.88-1.66L21 3c0-1.1-.9-2-2-2zm-7 19.6l-7-4.66V3h14v12.93l-7 4.67zm-2.01-7.42l-2.58-2.59L6 12l4 4 8-8-1.42-1.42z"/></svg>
     );
 
+    const MARGIN_PADDING_CONTROLS = [
+        {
+            label:'Top',
+            icon: (<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><rect x="2.714" y="5.492" width="1.048" height="9.017" fill="#555d66"></rect><rect x="16.265" y="5.498" width="1.023" height="9.003" fill="#555d66"></rect><rect x="5.518" y="2.186" width="8.964" height="2.482" fill="#272b2f"></rect><rect x="5.487" y="16.261" width="9.026" height="1.037" fill="#555d66"></rect></svg>)
+        },
+        {
+            label:'Right',
+            icon: (<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><rect x="2.714" y="5.492" width="1.046" height="9.017" fill="#555d66"></rect><rect x="15.244" y="5.498" width="2.518" height="9.003" fill="#272b2f"></rect><rect x="5.518" y="2.719" width="8.964" height="0.954" fill="#555d66"></rect><rect x="5.487" y="16.308" width="9.026" height="0.99" fill="#555d66"></rect></svg>)
+        },
+        {
+            label:'Bottom',
+            icon: (<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><rect x="2.714" y="5.492" width="1" height="9.017" fill="#555d66"></rect><rect x="16.261" y="5.498" width="1.027" height="9.003" fill="#555d66"></rect><rect x="5.518" y="2.719" width="8.964" height="0.968" fill="#555d66"></rect><rect x="5.487" y="15.28" width="9.026" height="2.499" fill="#272b2f"></rect></svg>)
+        },
+        {
+            label:'Left',
+            icon: (<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><rect x="2.202" y="5.492" width="2.503" height="9.017" fill="#272b2f"></rect><rect x="16.276" y="5.498" width="1.012" height="9.003" fill="#555d66"></rect><rect x="5.518" y="2.719" width="8.964" height="0.966" fill="#555d66"></rect><rect x="5.487" y="16.303" width="9.026" height="0.995" fill="#555d66"></rect></svg>)
+        },
+    ];
+
     class InfoBoxEdit extends Component {
 
         constructor() {
@@ -238,53 +257,38 @@ import IconListPopup from "../0-adv-components/components.jsx";
                                     value={ containerBorderRadius }
                                     onChange={ (value) => setAttributes( { containerBorderRadius: value } ) }
                                 />
-                                <PanelBody
-                                    title={__( ' Padding', 'advanced-gutenberg' )}
-                                    initialOpen={false}
-                                >
-                                    <div className="advgb-controls-title">
-                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
-                                        <div className="advgb-unit-wrapper" key="unit">
-                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
-                                                <span
-                                                    className={`advgb-unit ${containerPaddingUnit === unit ? 'selected' : ''}`}
-                                                    key={uIdx}
-                                                    onClick={() => setAttributes( { containerPaddingUnit: unit } )}
-                                                >
+                                <BaseControl
+                                    label={ __( 'Padding', 'advanced-gutenberg' ) }
+                                    className="advgb-control-header"
+                                />
+                                <div className="advgb-controls-title">
+                                    <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                    <div className="advgb-unit-wrapper" key="unit">
+                                        {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${containerPaddingUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { containerPaddingUnit: unit } )}
+                                            >
                                                     {unit}
                                                 </span>
-                                            ) )}
-                                        </div>
+                                        ) )}
                                     </div>
-                                    <RangeControl
-                                        beforeIcon="arrow-up-alt2"
-                                        value={containerPaddingTop}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { containerPaddingTop: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-down-alt2"
-                                        value={containerPaddingBottom}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { containerPaddingBottom: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-left-alt2"
-                                        value={containerPaddingLeft}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { containerPaddingLeft: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-right-alt2"
-                                        value={containerPaddingRight}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { containerPaddingRight: value } )}
-                                    />
-                                </PanelBody>
+                                </div>
+                                {
+                                    MARGIN_PADDING_CONTROLS.map((pos, mpIdx) => (
+                                        <RangeControl
+                                            className="advgb-padding-margin-control"
+                                            key={mpIdx}
+                                            label={pos.icon}
+                                            beforeIcon={pos.icon}
+                                            value={attributes['containerPadding' + pos.label]}
+                                            min={0}
+                                            max={180}
+                                            onChange={( value ) => setAttributes( { ['containerPadding' + pos.label]: value } )}
+                                        />
+                                    ) )
+                                }
                             </PanelBody>
                             <PanelBody
                                 title={ __( 'Icon Settings', 'advanced-gutenberg' ) }
@@ -340,100 +344,70 @@ import IconListPopup from "../0-adv-components/components.jsx";
                                     value={ iconBorderRadius }
                                     onChange={ (value) => setAttributes( { iconBorderRadius: value } ) }
                                 />
-                                <PanelBody
-                                    title={__( ' Padding', 'advanced-gutenberg' )}
-                                    initialOpen={false}
-                                >
-                                    <div className="advgb-controls-title">
-                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
-                                        <div className="advgb-unit-wrapper" key="unit">
-                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
-                                                <span
-                                                    className={`advgb-unit ${iconPaddingUnit === unit ? 'selected' : ''}`}
-                                                    key={uIdx}
-                                                    onClick={() => setAttributes( { iconPaddingUnit: unit } )}
-                                                >
+                                <BaseControl
+                                    label={ __( 'Padding', 'advanced-gutenberg' ) }
+                                    className="advgb-control-header"
+                                />
+                                <div className="advgb-controls-title">
+                                    <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                    <div className="advgb-unit-wrapper" key="unit">
+                                        {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${iconPaddingUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { iconPaddingUnit: unit } )}
+                                            >
                                                     {unit}
                                                 </span>
-                                            ) )}
-                                        </div>
+                                        ) )}
                                     </div>
-                                    <RangeControl
-                                        beforeIcon="arrow-up-alt2"
-                                        value={iconPaddingTop}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { iconPaddingTop: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-down-alt2"
-                                        value={iconPaddingBottom}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { iconPaddingBottom: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-left-alt2"
-                                        value={iconPaddingLeft}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { iconPaddingLeft: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-right-alt2"
-                                        value={iconPaddingRight}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { iconPaddingRight: value } )}
-                                    />
-                                </PanelBody>
-                                <PanelBody
-                                    title={__( ' Margin', 'advanced-gutenberg' )}
-                                    initialOpen={false}
-                                >
-                                    <div className="advgb-controls-title">
-                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
-                                        <div className="advgb-unit-wrapper" key="unit">
-                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
-                                                <span
-                                                    className={`advgb-unit ${iconMarginUnit === unit ? 'selected' : ''}`}
-                                                    key={uIdx}
-                                                    onClick={() => setAttributes( { iconMarginUnit: unit } )}
-                                                >
+                                </div>
+                                {
+                                    MARGIN_PADDING_CONTROLS.map((pos, mpIdx) => (
+                                        <RangeControl
+                                            className="advgb-padding-margin-control"
+                                            key={mpIdx}
+                                            label={pos.icon}
+                                            beforeIcon={pos.icon}
+                                            value={attributes['iconPadding' + pos.label]}
+                                            min={0}
+                                            max={180}
+                                            onChange={( value ) => setAttributes( { ['iconPadding' + pos.label]: value } )}
+                                        />
+                                    ) )
+                                }
+                                <BaseControl
+                                    label={ __( 'Margin', 'advanced-gutenberg' ) }
+                                    className="advgb-control-header"
+                                />
+                                <div className="advgb-controls-title">
+                                    <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                    <div className="advgb-unit-wrapper" key="unit">
+                                        {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${iconMarginUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { iconMarginUnit: unit } )}
+                                            >
                                                     {unit}
                                                 </span>
-                                            ) )}
-                                        </div>
+                                        ) )}
                                     </div>
-                                    <RangeControl
-                                        beforeIcon="arrow-up-alt2"
-                                        value={iconMarginTop}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { iconMarginTop: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-down-alt2"
-                                        value={iconMarginBottom}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { iconMarginBottom: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-left-alt2"
-                                        value={iconMarginLeft}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { iconMarginLeft: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-right-alt2"
-                                        value={iconMarginRight}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { iconMarginRight: value } )}
-                                    />
-                                </PanelBody>
+                                </div>
+                                {
+                                    MARGIN_PADDING_CONTROLS.map((pos, mpIdx) => (
+                                        <RangeControl
+                                            className="advgb-padding-margin-control"
+                                            key={mpIdx}
+                                            label={pos.icon}
+                                            beforeIcon={pos.icon}
+                                            value={attributes['iconMargin' + pos.label]}
+                                            min={0}
+                                            max={180}
+                                            onChange={( value ) => setAttributes( { ['iconMargin' + pos.label]: value } )}
+                                        />
+                                    ) )
+                                }
                             </PanelBody>
                             <PanelBody
                                 title={ __( 'Title Settings', 'advanced-gutenberg' ) }
@@ -499,100 +473,70 @@ import IconListPopup from "../0-adv-components/components.jsx";
                                     ] }
                                     onChange={ ( value ) => setAttributes( { titleHtmlTag: value } ) }
                                 />
-                                <PanelBody
-                                    title={__( ' Padding', 'advanced-gutenberg' )}
-                                    initialOpen={false}
-                                >
-                                    <div className="advgb-controls-title">
-                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
-                                        <div className="advgb-unit-wrapper" key="unit">
-                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
-                                                <span
-                                                    className={`advgb-unit ${titlePaddingUnit === unit ? 'selected' : ''}`}
-                                                    key={uIdx}
-                                                    onClick={() => setAttributes( { titlePaddingUnit: unit } )}
-                                                >
+                                <BaseControl
+                                    label={ __( 'Padding', 'advanced-gutenberg' ) }
+                                    className="advgb-control-header"
+                                />
+                                <div className="advgb-controls-title">
+                                    <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                    <div className="advgb-unit-wrapper" key="unit">
+                                        {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${titlePaddingUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { titlePaddingUnit: unit } )}
+                                            >
                                                     {unit}
                                                 </span>
-                                            ) )}
-                                        </div>
+                                        ) )}
                                     </div>
-                                    <RangeControl
-                                        beforeIcon="arrow-up-alt2"
-                                        value={titlePaddingTop}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { titlePaddingTop: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-down-alt2"
-                                        value={titlePaddingBottom}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { titlePaddingBottom: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-left-alt2"
-                                        value={titlePaddingLeft}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { titlePaddingLeft: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-right-alt2"
-                                        value={titlePaddingRight}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { titlePaddingRight: value } )}
-                                    />
-                                </PanelBody>
-                                <PanelBody
-                                    title={__( ' Margin', 'advanced-gutenberg' )}
-                                    initialOpen={false}
-                                >
-                                    <div className="advgb-controls-title">
-                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
-                                        <div className="advgb-unit-wrapper" key="unit">
-                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
-                                                <span
-                                                    className={`advgb-unit ${titleMarginUnit === unit ? 'selected' : ''}`}
-                                                    key={uIdx}
-                                                    onClick={() => setAttributes( { titleMarginUnit: unit } )}
-                                                >
+                                </div>
+                                {
+                                    MARGIN_PADDING_CONTROLS.map((pos, mpIdx) => (
+                                        <RangeControl
+                                            className="advgb-padding-margin-control"
+                                            key={mpIdx}
+                                            label={pos.icon}
+                                            beforeIcon={pos.icon}
+                                            value={attributes['titlePadding' + pos.label]}
+                                            min={0}
+                                            max={180}
+                                            onChange={( value ) => setAttributes( { ['titlePadding' + pos.label]: value } )}
+                                        />
+                                    ) )
+                                }
+                                <BaseControl
+                                    label={ __( 'Margin', 'advanced-gutenberg' ) }
+                                    className="advgb-control-header"
+                                />
+                                <div className="advgb-controls-title">
+                                    <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                    <div className="advgb-unit-wrapper" key="unit">
+                                        {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${titleMarginUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { titleMarginUnit: unit } )}
+                                            >
                                                     {unit}
                                                 </span>
-                                            ) )}
-                                        </div>
+                                        ) )}
                                     </div>
-                                    <RangeControl
-                                        beforeIcon="arrow-up-alt2"
-                                        value={titleMarginTop}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { titleMarginTop: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-down-alt2"
-                                        value={titleMarginBottom}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { titleMarginBottom: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-left-alt2"
-                                        value={titleMarginLeft}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { titleMarginLeft: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-right-alt2"
-                                        value={titleMarginRight}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { titleMarginRight: value } )}
-                                    />
-                                </PanelBody>
+                                </div>
+                                {
+                                    MARGIN_PADDING_CONTROLS.map((pos, mpIdx) => (
+                                        <RangeControl
+                                            className="advgb-padding-margin-control"
+                                            key={mpIdx}
+                                            label={pos.icon}
+                                            beforeIcon={pos.icon}
+                                            value={attributes['titleMargin' + pos.label]}
+                                            min={0}
+                                            max={180}
+                                            onChange={( value ) => setAttributes( { ['titleMargin' + pos.label]: value } )}
+                                        />
+                                    ) )
+                                }
                             </PanelBody>
                             <PanelBody
                                 title={ __( 'Text Settings', 'advanced-gutenberg' ) }
@@ -645,100 +589,70 @@ import IconListPopup from "../0-adv-components/components.jsx";
                                     step={ textLineHeightUnit === 'px' ? 1 : 0.1 }
                                     onChange={( value ) => setAttributes( { textLineHeight: value } )}
                                 />
-                                <PanelBody
-                                    title={__( ' Padding', 'advanced-gutenberg' )}
-                                    initialOpen={false}
-                                >
-                                    <div className="advgb-controls-title">
-                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
-                                        <div className="advgb-unit-wrapper" key="unit">
-                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
-                                                <span
-                                                    className={`advgb-unit ${textPaddingUnit === unit ? 'selected' : ''}`}
-                                                    key={uIdx}
-                                                    onClick={() => setAttributes( { textPaddingUnit: unit } )}
-                                                >
+                                <BaseControl
+                                    label={ __( 'Padding', 'advanced-gutenberg' ) }
+                                    className="advgb-control-header"
+                                />
+                                <div className="advgb-controls-title">
+                                    <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                    <div className="advgb-unit-wrapper" key="unit">
+                                        {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${textPaddingUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { textPaddingUnit: unit } )}
+                                            >
                                                     {unit}
                                                 </span>
-                                            ) )}
-                                        </div>
+                                        ) )}
                                     </div>
-                                    <RangeControl
-                                        beforeIcon="arrow-up-alt2"
-                                        value={textPaddingTop}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { textPaddingTop: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-down-alt2"
-                                        value={textPaddingBottom}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { textPaddingBottom: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-left-alt2"
-                                        value={textPaddingLeft}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { textPaddingLeft: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-right-alt2"
-                                        value={textPaddingRight}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { textPaddingRight: value } )}
-                                    />
-                                </PanelBody>
-                                <PanelBody
-                                    title={__( ' Margin', 'advanced-gutenberg' )}
-                                    initialOpen={false}
-                                >
-                                    <div className="advgb-controls-title">
-                                        <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
-                                        <div className="advgb-unit-wrapper" key="unit">
-                                            {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
-                                                <span
-                                                    className={`advgb-unit ${textMarginUnit === unit ? 'selected' : ''}`}
-                                                    key={uIdx}
-                                                    onClick={() => setAttributes( { textMarginUnit: unit } )}
-                                                >
+                                </div>
+                                {
+                                    MARGIN_PADDING_CONTROLS.map((pos, mpIdx) => (
+                                        <RangeControl
+                                            className="advgb-padding-margin-control"
+                                            key={mpIdx}
+                                            label={pos.icon}
+                                            beforeIcon={pos.icon}
+                                            value={attributes['textPadding' + pos.label]}
+                                            min={0}
+                                            max={180}
+                                            onChange={( value ) => setAttributes( { ['textPadding' + pos.label]: value } )}
+                                        />
+                                    ) )
+                                }
+                                <BaseControl
+                                    label={ __( 'Margin', 'advanced-gutenberg' ) }
+                                    className="advgb-control-header"
+                                />
+                                <div className="advgb-controls-title">
+                                    <span>{__( 'Unit', 'advanced-gutenberg' )}</span>
+                                    <div className="advgb-unit-wrapper" key="unit">
+                                        {[ 'px', 'em', 'vh', '%' ].map( ( unit, uIdx ) => (
+                                            <span
+                                                className={`advgb-unit ${textMarginUnit === unit ? 'selected' : ''}`}
+                                                key={uIdx}
+                                                onClick={() => setAttributes( { textMarginUnit: unit } )}
+                                            >
                                                     {unit}
                                                 </span>
-                                            ) )}
-                                        </div>
+                                        ) )}
                                     </div>
-                                    <RangeControl
-                                        beforeIcon="arrow-up-alt2"
-                                        value={textMarginTop}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { textMarginTop: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-down-alt2"
-                                        value={textMarginBottom}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { textMarginBottom: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-left-alt2"
-                                        value={textMarginLeft}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { textMarginLeft: value } )}
-                                    />
-                                    <RangeControl
-                                        beforeIcon="arrow-right-alt2"
-                                        value={textMarginRight}
-                                        min={0}
-                                        max={100}
-                                        onChange={( value ) => setAttributes( { textMarginRight: value } )}
-                                    />
-                                </PanelBody>
+                                </div>
+                                {
+                                    MARGIN_PADDING_CONTROLS.map((pos, mpIdx) => (
+                                        <RangeControl
+                                            className="advgb-padding-margin-control"
+                                            key={mpIdx}
+                                            label={pos.icon}
+                                            beforeIcon={pos.icon}
+                                            value={attributes['textMargin' + pos.label]}
+                                            min={0}
+                                            max={180}
+                                            onChange={( value ) => setAttributes( { ['textMargin' + pos.label]: value } )}
+                                        />
+                                    ) )
+                                }
                             </PanelBody>
                         </InspectorControls>
                         <div className={blockWrapClass}

@@ -12031,6 +12031,8 @@ var _components2 = _interopRequireDefault(_components);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -12063,6 +12065,48 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
         React.createElement("path", { d: "M19 1H5c-1.1 0-1.99.9-1.99 2L3 15.93c0 .69.35 1.3.88 1.66L12 23l8.11-5.41c.53-.36.88-.97.88-1.66L21 3c0-1.1-.9-2-2-2zm-7 19.6l-7-4.66V3h14v12.93l-7 4.67zm-2.01-7.42l-2.58-2.59L6 12l4 4 8-8-1.42-1.42z" })
     );
+
+    var MARGIN_PADDING_CONTROLS = [{
+        label: 'Top',
+        icon: React.createElement(
+            "svg",
+            { width: "20px", height: "20px", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "fill-rule": "evenodd", "clip-rule": "evenodd", "stroke-linejoin": "round", "stroke-miterlimit": "1.414" },
+            React.createElement("rect", { x: "2.714", y: "5.492", width: "1.048", height: "9.017", fill: "#555d66" }),
+            React.createElement("rect", { x: "16.265", y: "5.498", width: "1.023", height: "9.003", fill: "#555d66" }),
+            React.createElement("rect", { x: "5.518", y: "2.186", width: "8.964", height: "2.482", fill: "#272b2f" }),
+            React.createElement("rect", { x: "5.487", y: "16.261", width: "9.026", height: "1.037", fill: "#555d66" })
+        )
+    }, {
+        label: 'Right',
+        icon: React.createElement(
+            "svg",
+            { width: "20px", height: "20px", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "fill-rule": "evenodd", "clip-rule": "evenodd", "stroke-linejoin": "round", "stroke-miterlimit": "1.414" },
+            React.createElement("rect", { x: "2.714", y: "5.492", width: "1.046", height: "9.017", fill: "#555d66" }),
+            React.createElement("rect", { x: "15.244", y: "5.498", width: "2.518", height: "9.003", fill: "#272b2f" }),
+            React.createElement("rect", { x: "5.518", y: "2.719", width: "8.964", height: "0.954", fill: "#555d66" }),
+            React.createElement("rect", { x: "5.487", y: "16.308", width: "9.026", height: "0.99", fill: "#555d66" })
+        )
+    }, {
+        label: 'Bottom',
+        icon: React.createElement(
+            "svg",
+            { width: "20px", height: "20px", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "fill-rule": "evenodd", "clip-rule": "evenodd", "stroke-linejoin": "round", "stroke-miterlimit": "1.414" },
+            React.createElement("rect", { x: "2.714", y: "5.492", width: "1", height: "9.017", fill: "#555d66" }),
+            React.createElement("rect", { x: "16.261", y: "5.498", width: "1.027", height: "9.003", fill: "#555d66" }),
+            React.createElement("rect", { x: "5.518", y: "2.719", width: "8.964", height: "0.968", fill: "#555d66" }),
+            React.createElement("rect", { x: "5.487", y: "15.28", width: "9.026", height: "2.499", fill: "#272b2f" })
+        )
+    }, {
+        label: 'Left',
+        icon: React.createElement(
+            "svg",
+            { width: "20px", height: "20px", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "fill-rule": "evenodd", "clip-rule": "evenodd", "stroke-linejoin": "round", "stroke-miterlimit": "1.414" },
+            React.createElement("rect", { x: "2.202", y: "5.492", width: "2.503", height: "9.017", fill: "#272b2f" }),
+            React.createElement("rect", { x: "16.276", y: "5.498", width: "1.012", height: "9.003", fill: "#555d66" }),
+            React.createElement("rect", { x: "5.518", y: "2.719", width: "8.964", height: "0.966", fill: "#555d66" }),
+            React.createElement("rect", { x: "5.487", y: "16.303", width: "9.026", height: "0.995", fill: "#555d66" })
+        )
+    }];
 
     var InfoBoxEdit = function (_Component) {
         _inherits(InfoBoxEdit, _Component);
@@ -12323,75 +12367,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ containerBorderRadius: value });
                                 }
                             }),
+                            React.createElement(BaseControl, {
+                                label: __('Padding', 'advanced-gutenberg'),
+                                className: "advgb-control-header"
+                            }),
                             React.createElement(
-                                PanelBody,
-                                {
-                                    title: __(' Padding', 'advanced-gutenberg'),
-                                    initialOpen: false
-                                },
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "span",
+                                    null,
+                                    __('Unit', 'advanced-gutenberg')
+                                ),
                                 React.createElement(
                                     "div",
-                                    { className: "advgb-controls-title" },
-                                    React.createElement(
-                                        "span",
-                                        null,
-                                        __('Unit', 'advanced-gutenberg')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
-                                            return React.createElement(
-                                                "span",
-                                                {
-                                                    className: "advgb-unit " + (containerPaddingUnit === unit ? 'selected' : ''),
-                                                    key: uIdx,
-                                                    onClick: function onClick() {
-                                                        return setAttributes({ containerPaddingUnit: unit });
-                                                    }
-                                                },
-                                                unit
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-up-alt2",
-                                    value: containerPaddingTop,
+                                    { className: "advgb-unit-wrapper", key: "unit" },
+                                    ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (containerPaddingUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ containerPaddingUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
+                            ),
+                            MARGIN_PADDING_CONTROLS.map(function (pos, mpIdx) {
+                                return React.createElement(RangeControl, {
+                                    className: "advgb-padding-margin-control",
+                                    key: mpIdx,
+                                    label: pos.icon,
+                                    beforeIcon: pos.icon,
+                                    value: attributes['containerPadding' + pos.label],
                                     min: 0,
-                                    max: 100,
+                                    max: 180,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ containerPaddingTop: value });
+                                        return setAttributes(_defineProperty({}, 'containerPadding' + pos.label, value));
                                     }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-down-alt2",
-                                    value: containerPaddingBottom,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ containerPaddingBottom: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-left-alt2",
-                                    value: containerPaddingLeft,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ containerPaddingLeft: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-right-alt2",
-                                    value: containerPaddingRight,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ containerPaddingRight: value });
-                                    }
-                                })
-                            )
+                                });
+                            })
                         ),
                         React.createElement(
                             PanelBody,
@@ -12465,144 +12484,94 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ iconBorderRadius: value });
                                 }
                             }),
+                            React.createElement(BaseControl, {
+                                label: __('Padding', 'advanced-gutenberg'),
+                                className: "advgb-control-header"
+                            }),
                             React.createElement(
-                                PanelBody,
-                                {
-                                    title: __(' Padding', 'advanced-gutenberg'),
-                                    initialOpen: false
-                                },
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "span",
+                                    null,
+                                    __('Unit', 'advanced-gutenberg')
+                                ),
                                 React.createElement(
                                     "div",
-                                    { className: "advgb-controls-title" },
-                                    React.createElement(
-                                        "span",
-                                        null,
-                                        __('Unit', 'advanced-gutenberg')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
-                                            return React.createElement(
-                                                "span",
-                                                {
-                                                    className: "advgb-unit " + (iconPaddingUnit === unit ? 'selected' : ''),
-                                                    key: uIdx,
-                                                    onClick: function onClick() {
-                                                        return setAttributes({ iconPaddingUnit: unit });
-                                                    }
-                                                },
-                                                unit
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-up-alt2",
-                                    value: iconPaddingTop,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ iconPaddingTop: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-down-alt2",
-                                    value: iconPaddingBottom,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ iconPaddingBottom: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-left-alt2",
-                                    value: iconPaddingLeft,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ iconPaddingLeft: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-right-alt2",
-                                    value: iconPaddingRight,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ iconPaddingRight: value });
-                                    }
-                                })
+                                    { className: "advgb-unit-wrapper", key: "unit" },
+                                    ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (iconPaddingUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ iconPaddingUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
                             ),
+                            MARGIN_PADDING_CONTROLS.map(function (pos, mpIdx) {
+                                return React.createElement(RangeControl, {
+                                    className: "advgb-padding-margin-control",
+                                    key: mpIdx,
+                                    label: pos.icon,
+                                    beforeIcon: pos.icon,
+                                    value: attributes['iconPadding' + pos.label],
+                                    min: 0,
+                                    max: 180,
+                                    onChange: function onChange(value) {
+                                        return setAttributes(_defineProperty({}, 'iconPadding' + pos.label, value));
+                                    }
+                                });
+                            }),
+                            React.createElement(BaseControl, {
+                                label: __('Margin', 'advanced-gutenberg'),
+                                className: "advgb-control-header"
+                            }),
                             React.createElement(
-                                PanelBody,
-                                {
-                                    title: __(' Margin', 'advanced-gutenberg'),
-                                    initialOpen: false
-                                },
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "span",
+                                    null,
+                                    __('Unit', 'advanced-gutenberg')
+                                ),
                                 React.createElement(
                                     "div",
-                                    { className: "advgb-controls-title" },
-                                    React.createElement(
-                                        "span",
-                                        null,
-                                        __('Unit', 'advanced-gutenberg')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
-                                            return React.createElement(
-                                                "span",
-                                                {
-                                                    className: "advgb-unit " + (iconMarginUnit === unit ? 'selected' : ''),
-                                                    key: uIdx,
-                                                    onClick: function onClick() {
-                                                        return setAttributes({ iconMarginUnit: unit });
-                                                    }
-                                                },
-                                                unit
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-up-alt2",
-                                    value: iconMarginTop,
+                                    { className: "advgb-unit-wrapper", key: "unit" },
+                                    ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (iconMarginUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ iconMarginUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
+                            ),
+                            MARGIN_PADDING_CONTROLS.map(function (pos, mpIdx) {
+                                return React.createElement(RangeControl, {
+                                    className: "advgb-padding-margin-control",
+                                    key: mpIdx,
+                                    label: pos.icon,
+                                    beforeIcon: pos.icon,
+                                    value: attributes['iconMargin' + pos.label],
                                     min: 0,
-                                    max: 100,
+                                    max: 180,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ iconMarginTop: value });
+                                        return setAttributes(_defineProperty({}, 'iconMargin' + pos.label, value));
                                     }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-down-alt2",
-                                    value: iconMarginBottom,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ iconMarginBottom: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-left-alt2",
-                                    value: iconMarginLeft,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ iconMarginLeft: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-right-alt2",
-                                    value: iconMarginRight,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ iconMarginRight: value });
-                                    }
-                                })
-                            )
+                                });
+                            })
                         ),
                         React.createElement(
                             PanelBody,
@@ -12687,144 +12656,94 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ titleHtmlTag: value });
                                 }
                             }),
+                            React.createElement(BaseControl, {
+                                label: __('Padding', 'advanced-gutenberg'),
+                                className: "advgb-control-header"
+                            }),
                             React.createElement(
-                                PanelBody,
-                                {
-                                    title: __(' Padding', 'advanced-gutenberg'),
-                                    initialOpen: false
-                                },
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "span",
+                                    null,
+                                    __('Unit', 'advanced-gutenberg')
+                                ),
                                 React.createElement(
                                     "div",
-                                    { className: "advgb-controls-title" },
-                                    React.createElement(
-                                        "span",
-                                        null,
-                                        __('Unit', 'advanced-gutenberg')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
-                                            return React.createElement(
-                                                "span",
-                                                {
-                                                    className: "advgb-unit " + (titlePaddingUnit === unit ? 'selected' : ''),
-                                                    key: uIdx,
-                                                    onClick: function onClick() {
-                                                        return setAttributes({ titlePaddingUnit: unit });
-                                                    }
-                                                },
-                                                unit
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-up-alt2",
-                                    value: titlePaddingTop,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ titlePaddingTop: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-down-alt2",
-                                    value: titlePaddingBottom,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ titlePaddingBottom: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-left-alt2",
-                                    value: titlePaddingLeft,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ titlePaddingLeft: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-right-alt2",
-                                    value: titlePaddingRight,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ titlePaddingRight: value });
-                                    }
-                                })
+                                    { className: "advgb-unit-wrapper", key: "unit" },
+                                    ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (titlePaddingUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ titlePaddingUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
                             ),
+                            MARGIN_PADDING_CONTROLS.map(function (pos, mpIdx) {
+                                return React.createElement(RangeControl, {
+                                    className: "advgb-padding-margin-control",
+                                    key: mpIdx,
+                                    label: pos.icon,
+                                    beforeIcon: pos.icon,
+                                    value: attributes['titlePadding' + pos.label],
+                                    min: 0,
+                                    max: 180,
+                                    onChange: function onChange(value) {
+                                        return setAttributes(_defineProperty({}, 'titlePadding' + pos.label, value));
+                                    }
+                                });
+                            }),
+                            React.createElement(BaseControl, {
+                                label: __('Margin', 'advanced-gutenberg'),
+                                className: "advgb-control-header"
+                            }),
                             React.createElement(
-                                PanelBody,
-                                {
-                                    title: __(' Margin', 'advanced-gutenberg'),
-                                    initialOpen: false
-                                },
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "span",
+                                    null,
+                                    __('Unit', 'advanced-gutenberg')
+                                ),
                                 React.createElement(
                                     "div",
-                                    { className: "advgb-controls-title" },
-                                    React.createElement(
-                                        "span",
-                                        null,
-                                        __('Unit', 'advanced-gutenberg')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
-                                            return React.createElement(
-                                                "span",
-                                                {
-                                                    className: "advgb-unit " + (titleMarginUnit === unit ? 'selected' : ''),
-                                                    key: uIdx,
-                                                    onClick: function onClick() {
-                                                        return setAttributes({ titleMarginUnit: unit });
-                                                    }
-                                                },
-                                                unit
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-up-alt2",
-                                    value: titleMarginTop,
+                                    { className: "advgb-unit-wrapper", key: "unit" },
+                                    ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (titleMarginUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ titleMarginUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
+                            ),
+                            MARGIN_PADDING_CONTROLS.map(function (pos, mpIdx) {
+                                return React.createElement(RangeControl, {
+                                    className: "advgb-padding-margin-control",
+                                    key: mpIdx,
+                                    label: pos.icon,
+                                    beforeIcon: pos.icon,
+                                    value: attributes['titleMargin' + pos.label],
                                     min: 0,
-                                    max: 100,
+                                    max: 180,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ titleMarginTop: value });
+                                        return setAttributes(_defineProperty({}, 'titleMargin' + pos.label, value));
                                     }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-down-alt2",
-                                    value: titleMarginBottom,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ titleMarginBottom: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-left-alt2",
-                                    value: titleMarginLeft,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ titleMarginLeft: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-right-alt2",
-                                    value: titleMarginRight,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ titleMarginRight: value });
-                                    }
-                                })
-                            )
+                                });
+                            })
                         ),
                         React.createElement(
                             PanelBody,
@@ -12901,144 +12820,94 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ textLineHeight: value });
                                 }
                             }),
+                            React.createElement(BaseControl, {
+                                label: __('Padding', 'advanced-gutenberg'),
+                                className: "advgb-control-header"
+                            }),
                             React.createElement(
-                                PanelBody,
-                                {
-                                    title: __(' Padding', 'advanced-gutenberg'),
-                                    initialOpen: false
-                                },
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "span",
+                                    null,
+                                    __('Unit', 'advanced-gutenberg')
+                                ),
                                 React.createElement(
                                     "div",
-                                    { className: "advgb-controls-title" },
-                                    React.createElement(
-                                        "span",
-                                        null,
-                                        __('Unit', 'advanced-gutenberg')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
-                                            return React.createElement(
-                                                "span",
-                                                {
-                                                    className: "advgb-unit " + (textPaddingUnit === unit ? 'selected' : ''),
-                                                    key: uIdx,
-                                                    onClick: function onClick() {
-                                                        return setAttributes({ textPaddingUnit: unit });
-                                                    }
-                                                },
-                                                unit
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-up-alt2",
-                                    value: textPaddingTop,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textPaddingTop: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-down-alt2",
-                                    value: textPaddingBottom,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textPaddingBottom: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-left-alt2",
-                                    value: textPaddingLeft,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textPaddingLeft: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-right-alt2",
-                                    value: textPaddingRight,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textPaddingRight: value });
-                                    }
-                                })
+                                    { className: "advgb-unit-wrapper", key: "unit" },
+                                    ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (textPaddingUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ textPaddingUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
                             ),
+                            MARGIN_PADDING_CONTROLS.map(function (pos, mpIdx) {
+                                return React.createElement(RangeControl, {
+                                    className: "advgb-padding-margin-control",
+                                    key: mpIdx,
+                                    label: pos.icon,
+                                    beforeIcon: pos.icon,
+                                    value: attributes['textPadding' + pos.label],
+                                    min: 0,
+                                    max: 180,
+                                    onChange: function onChange(value) {
+                                        return setAttributes(_defineProperty({}, 'textPadding' + pos.label, value));
+                                    }
+                                });
+                            }),
+                            React.createElement(BaseControl, {
+                                label: __('Margin', 'advanced-gutenberg'),
+                                className: "advgb-control-header"
+                            }),
                             React.createElement(
-                                PanelBody,
-                                {
-                                    title: __(' Margin', 'advanced-gutenberg'),
-                                    initialOpen: false
-                                },
+                                "div",
+                                { className: "advgb-controls-title" },
+                                React.createElement(
+                                    "span",
+                                    null,
+                                    __('Unit', 'advanced-gutenberg')
+                                ),
                                 React.createElement(
                                     "div",
-                                    { className: "advgb-controls-title" },
-                                    React.createElement(
-                                        "span",
-                                        null,
-                                        __('Unit', 'advanced-gutenberg')
-                                    ),
-                                    React.createElement(
-                                        "div",
-                                        { className: "advgb-unit-wrapper", key: "unit" },
-                                        ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
-                                            return React.createElement(
-                                                "span",
-                                                {
-                                                    className: "advgb-unit " + (textMarginUnit === unit ? 'selected' : ''),
-                                                    key: uIdx,
-                                                    onClick: function onClick() {
-                                                        return setAttributes({ textMarginUnit: unit });
-                                                    }
-                                                },
-                                                unit
-                                            );
-                                        })
-                                    )
-                                ),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-up-alt2",
-                                    value: textMarginTop,
+                                    { className: "advgb-unit-wrapper", key: "unit" },
+                                    ['px', 'em', 'vh', '%'].map(function (unit, uIdx) {
+                                        return React.createElement(
+                                            "span",
+                                            {
+                                                className: "advgb-unit " + (textMarginUnit === unit ? 'selected' : ''),
+                                                key: uIdx,
+                                                onClick: function onClick() {
+                                                    return setAttributes({ textMarginUnit: unit });
+                                                }
+                                            },
+                                            unit
+                                        );
+                                    })
+                                )
+                            ),
+                            MARGIN_PADDING_CONTROLS.map(function (pos, mpIdx) {
+                                return React.createElement(RangeControl, {
+                                    className: "advgb-padding-margin-control",
+                                    key: mpIdx,
+                                    label: pos.icon,
+                                    beforeIcon: pos.icon,
+                                    value: attributes['textMargin' + pos.label],
                                     min: 0,
-                                    max: 100,
+                                    max: 180,
                                     onChange: function onChange(value) {
-                                        return setAttributes({ textMarginTop: value });
+                                        return setAttributes(_defineProperty({}, 'textMargin' + pos.label, value));
                                     }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-down-alt2",
-                                    value: textMarginBottom,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textMarginBottom: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-left-alt2",
-                                    value: textMarginLeft,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textMarginLeft: value });
-                                    }
-                                }),
-                                React.createElement(RangeControl, {
-                                    beforeIcon: "arrow-right-alt2",
-                                    value: textMarginRight,
-                                    min: 0,
-                                    max: 100,
-                                    onChange: function onChange(value) {
-                                        return setAttributes({ textMarginRight: value });
-                                    }
-                                })
-                            )
+                                });
+                            })
                         )
                     ),
                     React.createElement(
