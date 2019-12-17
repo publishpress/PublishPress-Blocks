@@ -2505,6 +2505,29 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     font-style: unset;
 }
 
+.components-base-control.advgb-control-header {
+    font-weight: bold;
+    margin: 0 0 10px -5px;
+    background-color: #f5f5f5;
+    padding: 6px 10px;
+}
+
+.components-base-control.advgb-control-header * {
+    margin: 0;
+}
+
+.components-range-control.advgb-padding-margin-control .components-base-control__field {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.components-range-control.advgb-padding-margin-control .components-base-control__label {
+    width: 30px;
+    margin: 0;
+}
+
 /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {
