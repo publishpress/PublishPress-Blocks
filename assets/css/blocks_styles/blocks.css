@@ -553,6 +553,14 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
     color: #888;
 }
 
+.advgb-current-video-desc {
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 .advgb-current-video-desc span.spinner {
     float: none;
     margin: 0;
@@ -2445,13 +2453,46 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     border: 1px solid #7e8993;
     border-radius: 4px;
 }
-.edit-post-visual-editor .advgb-icon-apply-btn.button {
+.edit-post-visual-editor .advgb-icon-wrapper .button,
+.edit-post-visual-editor .advgb-infobox-wrapper .button,
+.edit-post-visual-editor .advgb-video-block .button {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    color: #ffffff;
+    color: #0071a1;
+    border-color: #0071a1;
+    background: #f3f5f6;
     font-size: 13px;
     vertical-align: top;
+    border-width: 1px;
+    border-style: solid;
+}
+.edit-post-visual-editor .advgb-icon-wrapper .button:hover,
+.edit-post-visual-editor .advgb-infobox-wrapper .button:hover,
+.edit-post-visual-editor .advgb-video-block .button:hover,
+.edit-post-visual-editor .advgb-icon-wrapper .button:focus,
+.edit-post-visual-editor .advgb-infobox-wrapper .button:focus,
+.edit-post-visual-editor .advgb-video-block .button:focus {
+    background: #f1f1f1;
+    border-color: #016087;
+    color: #016087;
+}
+.edit-post-visual-editor .advgb-icon-wrapper .button.is-primary,
+.edit-post-visual-editor .advgb-infobox-wrapper .button.is-primary,
+.edit-post-visual-editor .advgb-video-block .button.is-primary {
+    background: #007cba;
+    border-color: #007cba;
+    color: #fff;
+}
+.edit-post-visual-editor .advgb-icon-wrapper .button.is-primary:hover,
+.edit-post-visual-editor .advgb-infobox-wrapper .button.is-primary:hover,
+.edit-post-visual-editor .advgb-video-block .button.is-primary:hover,
+.edit-post-visual-editor .advgb-icon-wrapper .button.is-primary:focus,
+.edit-post-visual-editor .advgb-infobox-wrapper .button.is-primary:focus,
+.edit-post-visual-editor .advgb-video-block .button.is-primary:focus {
+    background: #0070a7;
+    border-color: #0070a7;
+    color: #fff;
 }
 /*Info box */
 .advgb-infobox-icon-container {
