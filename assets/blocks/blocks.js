@@ -160,7 +160,7 @@ var IconListPopup = function (_Component) {
         _this.state = {
             searchedText: '',
             selectedIcon: '',
-            selectedIconTheme: ''
+            selectedIconTheme: 'outlined'
         };
         return _this;
     }
@@ -175,7 +175,6 @@ var IconListPopup = function (_Component) {
 
             if (this.props.selectedIcon !== searchedText) {
                 this.setState({
-                    searchedText: this.props.selectedIcon,
                     selectedIcon: this.props.selectedIcon
                 });
             }
@@ -2617,7 +2616,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 currentItem: 0,
                 iconSelected: '',
                 selectedIcon: false,
-                iconThemeSelected: '',
+                iconThemeSelected: 'outlined',
                 selectedIconTheme: false
             };
             _this.togglePopup = _this.togglePopup.bind(_this);
@@ -2674,10 +2673,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     selectedIcon = _state.selectedIcon,
                     iconThemeSelected = _state.iconThemeSelected,
                     selectedIconTheme = _state.selectedIconTheme;
-                var attributes = this.props.attributes;
 
                 if (selectedIcon) {
-
                     this.setState({
                         selectedIcon: false
                     });
@@ -2737,7 +2734,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var data = '';
 
                 items.map(function (item, index) {
-                    if (idx === index) {
+                    if (parseInt(idx) === index) {
                         for (var key in item) {
                             if (dataName === key && item.hasOwnProperty(key)) {
                                 data = item[key];
@@ -12070,7 +12067,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 showPopup: false,
                 iconSelected: '',
                 selectedIcon: false,
-                iconThemeSelected: '',
+                iconThemeSelected: 'outlined',
                 selectedIconTheme: false
             };
             _this.togglePopup = _this.togglePopup.bind(_this);

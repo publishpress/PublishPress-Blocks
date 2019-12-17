@@ -25,7 +25,7 @@ import IconListPopup from "../0-adv-components/components.jsx";
                 currentItem: 0,
                 iconSelected: '',
                 selectedIcon: false,
-                iconThemeSelected: '',
+                iconThemeSelected: 'outlined',
                 selectedIconTheme: false,
             };
             this.togglePopup = this.togglePopup.bind(this);
@@ -65,9 +65,7 @@ import IconListPopup from "../0-adv-components/components.jsx";
 
         componentDidUpdate() {
             const {currentItem, iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme} = this.state;
-            const {attributes} = this.props;
             if(selectedIcon) {
-
                 this.setState({
                     selectedIcon: false
                 });
@@ -117,7 +115,7 @@ import IconListPopup from "../0-adv-components/components.jsx";
             let data = '';
 
             items.map( (item, index) => {
-                if (idx === index) {
+                if (parseInt(idx) === index) {
                     for (let key in item){
                         if( (dataName === key) && item.hasOwnProperty(key) ) {
                             data = item[key];

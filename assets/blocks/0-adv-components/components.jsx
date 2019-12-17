@@ -34,7 +34,7 @@ class IconListPopup extends Component {
         this.state = {
             searchedText: '',
             selectedIcon: '',
-            selectedIconTheme: '',
+            selectedIconTheme: 'outlined',
         }
     }
 
@@ -42,7 +42,6 @@ class IconListPopup extends Component {
         const {searchedText, selectedIcon, selectedIconTheme} = this.state;
         if(this.props.selectedIcon !== searchedText) {
             this.setState({
-                searchedText: this.props.selectedIcon,
                 selectedIcon: this.props.selectedIcon,
             });
         }

@@ -23,7 +23,7 @@ import IconListPopup from "../0-adv-components/components.jsx";
                 showPopup: false,
                 iconSelected: '',
                 selectedIcon: false,
-                iconThemeSelected: '',
+                iconThemeSelected: 'outlined',
                 selectedIconTheme: false,
             };
             this.togglePopup = this.togglePopup.bind(this);
