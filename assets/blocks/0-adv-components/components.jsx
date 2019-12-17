@@ -79,11 +79,6 @@ class IconListPopup extends Component {
                     <div className="popup-content">
                         <div className="popup-header">
                             <h3>{popUpTitle}</h3>
-                            <button
-                                className={closeButtonClass}
-                                onClick={this.props.closePopup}>
-                                x
-                            </button>
                         </div>
                         <div className="popup-body">
                             <TextControl

@@ -217,13 +217,6 @@ var IconListPopup = function (_Component) {
                                 "h3",
                                 null,
                                 popUpTitle
-                            ),
-                            React.createElement(
-                                "button",
-                                {
-                                    className: closeButtonClass,
-                                    onClick: this.props.closePopup },
-                                "x"
                             )
                         ),
                         React.createElement(

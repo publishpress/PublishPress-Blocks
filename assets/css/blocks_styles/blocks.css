@@ -2445,9 +2445,23 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     border: 1px solid #7e8993;
     border-radius: 4px;
 }
+.edit-post-visual-editor .advgb-icon-apply-btn.button {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 13px;
+    vertical-align: top;
+}
 /*Info box */
 .advgb-infobox-icon-container {
     display: inline-block;
+}
+
+.edit-post-visual-editor .advgb-icon-wrapper i,
+.edit-post-visual-editor .advgb-infobox-wrapper i,
+.advgb-icon-popup i {
+    font-style: unset;
 }
 
 /*Responsive for Columns*/
