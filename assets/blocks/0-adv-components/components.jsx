@@ -80,6 +80,10 @@ class IconListPopup extends Component {
             'is-primary'
         ].filter( Boolean ).join( ' ' );
 
+        const closeButtonClass = [
+            'close-btn',
+        ].filter( Boolean ).join( ' ' );
+
         return (
             <div className='advgb-icon-popup'>
                 <div
@@ -89,6 +93,11 @@ class IconListPopup extends Component {
                     <div className="popup-content">
                         <div className="popup-header">
                             <h3>{popUpTitle}</h3>
+                            <button
+                                className={closeButtonClass}
+                                onClick={this.props.closePopup}>
+                                <i className="material-icons">close</i>
+                            </button>
                         </div>
                         <div className="popup-body">
                             <TextControl
