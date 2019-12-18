@@ -152,10 +152,10 @@ var _wp$components2 = wp.components,
 var IconListPopup = function (_Component) {
     _inherits(IconListPopup, _Component);
 
-    function IconListPopup() {
+    function IconListPopup(props) {
         _classCallCheck(this, IconListPopup);
 
-        var _this = _possibleConstructorReturn(this, (IconListPopup.__proto__ || Object.getPrototypeOf(IconListPopup)).call(this));
+        var _this = _possibleConstructorReturn(this, (IconListPopup.__proto__ || Object.getPrototypeOf(IconListPopup)).call(this, props));
 
         _this.handleClick = _this.handleClick.bind(_this);
         _this.state = {
@@ -257,7 +257,6 @@ var IconListPopup = function (_Component) {
                                     _this2.setState({
                                         selectedIconTheme: value
                                     });
-                                    _this2.props.onSelectIconTheme(value);
                                 }
                             }),
                             React.createElement(
@@ -303,6 +302,7 @@ var IconListPopup = function (_Component) {
                                     className: applyIconButtonClass,
                                     onClick: function onClick() {
                                         _this2.props.onSelectIcon(selectedIcon);
+                                        _this2.props.onSelectIconTheme(selectedIconTheme);
                                         _this2.props.closePopup();
                                     } },
                                 __('Apply', 'advanced-gutenberg')

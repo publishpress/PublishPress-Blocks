@@ -26,10 +26,11 @@ export function AdvColorControl(props) {
 const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { SelectControl, TextControl } = wp.components;
+
 class IconListPopup extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.handleClick = this.handleClick.bind(this);
         this.state = {
             searchedText: '',
@@ -110,7 +111,6 @@ class IconListPopup extends Component {
                                     this.setState({
                                         selectedIconTheme: value,
                                     });
-                                    this.props.onSelectIconTheme(value);
                                 } }
                             />
                             <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto'} }>
@@ -148,6 +148,7 @@ class IconListPopup extends Component {
                                 className={applyIconButtonClass}
                                 onClick={() => {
                                     this.props.onSelectIcon( selectedIcon );
+                                    this.props.onSelectIconTheme(selectedIconTheme);
                                     this.props.closePopup();
                                 }}>
                                 { __('Apply', 'advanced-gutenberg') }
