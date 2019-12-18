@@ -569,6 +569,12 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 #colorbox.advgb_lightbox .cboxIframe {
     margin-bottom: 0;
 }
+.advgb-video-block .advgb-current-video-desc svg {
+    width: 100%;
+}
+.advgb-video-block .advgb-current-video-desc .components-spinner {
+    margin: 0;
+}
 
 /*Count Up block styles*/
 #editor .advgb-col-3 {

@@ -7645,12 +7645,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         style: { height: '31px' },
                                         onClick: this.fetchVideoInfo
                                     },
-                                    __('Fetch', 'advanced-gutenberg')
-                                ),
-                                React.createElement(
-                                    "span",
-                                    { style: { margin: 'auto 10px' } },
-                                    __('or use', 'advanced-gutenberg')
+                                    __('Fetch video content', 'advanced-gutenberg')
                                 ),
                                 React.createElement(MediaUpload, {
                                     allowedTypes: ["video"],
@@ -7664,9 +7659,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             Button,
                                             {
                                                 className: "button button-large is-primary",
-                                                onClick: open
+                                                onClick: open,
+                                                style: { marginLeft: '5px' }
                                             },
-                                            __('Local video', 'advanced-gutenberg')
+                                            __('Load local video', 'advanced-gutenberg')
                                         );
                                     }
                                 })
@@ -7688,9 +7684,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         style: {
                                             width: '25px',
                                             height: '25px',
-                                            display: 'inline-block',
-                                            verticalAlign: 'text-bottom',
-                                            margin: 'auto 7px' }
+                                            margin: '-1px 5px 0',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }
                                     },
                                     videoHostIcon[videoSourceType] || this.state.fetching && React.createElement(Spinner, null)
                                 ),

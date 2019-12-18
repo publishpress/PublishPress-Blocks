@@ -458,9 +458,8 @@
                                         style={ { height: '31px' } }
                                         onClick={ this.fetchVideoInfo }
                                     >
-                                        { __( 'Fetch', 'advanced-gutenberg' ) }
+                                        { __( 'Fetch video content', 'advanced-gutenberg' ) }
                                     </Button>
-                                    <span style={ { margin: 'auto 10px' } }>{ __( 'or use', 'advanced-gutenberg' ) }</span>
                                     <MediaUpload
                                         allowedTypes={ ["video"] }
                                         value={ videoID }
@@ -469,8 +468,9 @@
                                             <Button
                                                 className="button button-large is-primary"
                                                 onClick={ open }
+                                                style={ {marginLeft: '5px'} }
                                             >
-                                                { __( 'Local video', 'advanced-gutenberg' ) }
+                                                { __( 'Load local video', 'advanced-gutenberg' ) }
                                             </Button>
                                         ) }
                                     />
@@ -483,9 +483,11 @@
                                           style={ {
                                               width: '25px',
                                               height: '25px',
-                                              display: 'inline-block',
-                                              verticalAlign: 'text-bottom',
-                                              margin: 'auto 7px' } }
+                                              margin: '-1px 5px 0',
+                                              display: 'flex',
+                                              alignItems: 'center',
+                                              justifyContent: 'center'
+                                          } }
                                     >
                                     {videoHostIcon[videoSourceType] || ( this.state.fetching && <Spinner /> ) }
                                 </span>
