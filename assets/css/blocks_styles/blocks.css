@@ -2431,8 +2431,12 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 30px;
-    height: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    width: auto;
+    padding: 0;
+    cursor: pointer;
 }
 .advgb-icon-popup .popup-inner .popup-footer {
     padding: 0 20px 20px;
@@ -2509,6 +2513,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 .edit-post-visual-editor .advgb-infobox-wrapper i,
 .advgb-icon-popup i {
     font-style: unset;
+}
+
+.advgb-icon-popup i {
+    width: 24px;
 }
 
 .components-base-control.advgb-control-header {

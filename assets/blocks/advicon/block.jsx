@@ -1,5 +1,7 @@
 import {AdvColorControl} from "../0-adv-components/components.jsx";
 import IconListPopup from "../0-adv-components/components.jsx";
+import React from "react";
+import ReactDOM from "react-dom";
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -50,6 +52,7 @@ import IconListPopup from "../0-adv-components/components.jsx";
             this.togglePopup = this.togglePopup.bind(this);
             this.handleIcon = this.handleIcon.bind(this);
             this.handleIconTheme = this.handleIconTheme.bind(this);
+            this.renderIconLightBox = this.renderIconLightBox.bind(this);
         }
 
         componentWillMount() {
@@ -152,6 +155,30 @@ import IconListPopup from "../0-adv-components/components.jsx";
                 this.setState( {
                     showPopup: !showPopup
                 } );
+        }
+
+        renderIconLightBox(content) {
+            const {showPopup, currentItem} = this.state;
+
+            if(content && content === 'iconpopup') {
+                ReactDOM.render(
+                    <IconListPopup
+                        closePopup={ () => {
+                            if(showPopup) {
+                                this.togglePopup();
+                            }
+                        } }
+                        onSelectIcon={ this.handleIcon }
+                        onSelectIconTheme={ this.handleIconTheme }
+                        selectedIcon={this.getItemData(currentItem, 'icon')}
+                        selectedIconTheme={this.getItemData(currentItem, 'iconTheme')}
+                    />,
+                    document.getElementById('advgb-popup-icon-wrapper'))
+            } else {
+                ReactDOM.render(
+                    null,
+                    document.getElementById('advgb-popup-icon-wrapper'))
+            }
         }
 
         render() {
@@ -439,19 +466,8 @@ import IconListPopup from "../0-adv-components/components.jsx";
                             })}
                         </div>
                         {showPopup ?
-                                <IconListPopup
-                                    closePopup={ () => {
-                                        if(showPopup) {
-                                            this.togglePopup();
-                                        }
-                                    }
-                                    }
-                                    onSelectIcon={ this.handleIcon }
-                                    onSelectIconTheme={ this.handleIconTheme }
-                                    selectedIcon={this.getItemData(currentItem, 'icon')}
-                                    selectedIconTheme={this.getItemData(currentItem, 'iconTheme')}
-                                />
-                            : null
+                            this.renderIconLightBox('iconpopup')
+                            : this.renderIconLightBox()
                         }
                     </div>
                 </Fragment>
