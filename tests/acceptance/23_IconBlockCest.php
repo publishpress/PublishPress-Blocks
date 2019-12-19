@@ -95,7 +95,6 @@ class IconBlockCest
         $I->clickWithLeftButton('.advgb-icon-wrapper'); // click block to hide picker
 
         //change border color
-        $I->click('//button[text()="Border"]');
         $borderColor = '#ff9900';
         $I->clickAndWait('//span[text()="Border Color"]/following-sibling::node()/div[last()]/*[1]');
         $I->clickAndWait('.components-color-picker__inputs-wrapper input');
@@ -111,7 +110,6 @@ class IconBlockCest
         $I->fillField('//label[text()="Border Size(px)"]/following-sibling::node()/following-sibling::node()', 4);
 
         //change link URL
-        $I->click('//button[text()="Link"]');
         $I->fillField('//span[text()="Link"]/following-sibling::node()//input[@aria-label="URL"]', '#');
 
         //change link target
@@ -125,15 +123,15 @@ class IconBlockCest
         $I->waitForElement('//div[contains(@class, "wp-block-advgb-icon")]');
 
         //see changed icon
-        $frontendIcon = $I->executeJS('return jQuery(".advgb-item-0 .material-icons").text()');
+        $frontendIcon = $I->executeJS('return jQuery(".advgb-item-0 .material-icons-outlined").text()');
         $I->assertEquals('3d_rotation', $frontendIcon);
 
         $iconSize = '60px';
-        $frontendIconSize = $I->executeJS('return jQuery(".advgb-item-0 .material-icons").css("font-size")');
+        $frontendIconSize = $I->executeJS('return jQuery(".advgb-item-0 .material-icons-outlined").css("font-size")');
         $I->assertEquals($iconSize, $frontendIconSize);
         //color
         $iconColorRbg = 'rgb(255, 153, 0)';
-        $frontendIconColor = $I->executeJS('return jQuery(".advgb-item-0 .material-icons").css("color")');
+        $frontendIconColor = $I->executeJS('return jQuery(".advgb-item-0 .material-icons-outlined").css("color")');
         $I->assertEquals($iconColorRbg, $frontendIconColor);
         //icon background color
         $iconBgColorRbg = 'rgb(245, 245, 245)';

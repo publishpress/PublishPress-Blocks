@@ -132,15 +132,15 @@ class InfoBoxBlockCest
         $I->seeElement('//div[contains(@class, "advgb-infobox-wrapper")]');
 
         //see changed icon
-        $frontendIcon = $I->executeJS('return jQuery(".advgb-infobox-wrapper .material-icons").text()');
-        $I->assertEquals('beenhere', $frontendIcon);
+        $frontendIcon = $I->executeJS('return jQuery(".advgb-infobox-wrapper .material-icons-outlined").text()');
+        $I->assertEquals('3d_rotation', $frontendIcon);
 
         $iconColorRgb = 'rgb(205, 38, 83)';
-        $frontendIconColor = $I->executeJS('return jQuery(".advgb-infobox-wrapper .material-icons").css("color")');
+        $frontendIconColor = $I->executeJS('return jQuery(".advgb-infobox-wrapper .material-icons-outlined").css("color")');
         $I->assertEquals($iconColorRgb, $frontendIconColor);
 
         $iconSize = '100px';
-        $frontendIconSize = $I->executeJS('return jQuery(".advgb-infobox-wrapper .material-icons").css("font-size")');
+        $frontendIconSize = $I->executeJS('return jQuery(".advgb-infobox-wrapper .material-icons-outlined").css("font-size")');
         $I->assertEquals($iconSize, $frontendIconSize);
 
         $iconBgColorRgb = 'rgb(245, 245, 245)';
