@@ -122,7 +122,7 @@ class IconListPopup extends Component {
                                     });
                                 } }
                             />
-                            <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflow: 'auto'} }>
+                            <div className="advgb-icon-items-wrapper button-icons-list" style={ {maxHeight: 300, overflowY: 'auto', overflowX: 'hidden'} }>
 
                                 {Object.keys(advgbBlocks.iconList[iconType])
                                     .filter((icon) => icon.indexOf(searchedText.trim().split(' ').join('_')) > -1)

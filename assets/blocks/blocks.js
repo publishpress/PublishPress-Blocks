@@ -274,7 +274,7 @@ var IconListPopup = function (_Component) {
                             }),
                             React.createElement(
                                 "div",
-                                { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflow: 'auto' } },
+                                { className: "advgb-icon-items-wrapper button-icons-list", style: { maxHeight: 300, overflowY: 'auto', overflowX: 'hidden' } },
                                 Object.keys(advgbBlocks.iconList[iconType]).filter(function (icon) {
                                     return icon.indexOf(searchedText.trim().split(' ').join('_')) > -1;
                                 }).map(function (icon, index) {
@@ -12105,9 +12105,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var blockIcon = _react2.default.createElement(
         "svg",
-        { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-        _react2.default.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
-        _react2.default.createElement("path", { d: "M19 1H5c-1.1 0-1.99.9-1.99 2L3 15.93c0 .69.35 1.3.88 1.66L12 23l8.11-5.41c.53-.36.88-.97.88-1.66L21 3c0-1.1-.9-2-2-2zm-7 19.6l-7-4.66V3h14v12.93l-7 4.67zm-2.01-7.42l-2.58-2.59L6 12l4 4 8-8-1.42-1.42z" })
+        { version: "1.1", id: "Layer_1", xmlns: "http://www.w3.org/2000/svg", x: "0px", y: "0px", viewBox: "0 0 250 250" },
+        _react2.default.createElement("path", { d: "M114,110h23v69.1h-23V110z M114,63.9v23h23v-23H114z M225,22v11v177v11h-11H37H26v-11V33V22h11h177H225z M214,33H37v177h177V33z" })
     );
 
     var MARGIN_PADDING_CONTROLS = [{
