@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "platform": "wordpress",
-  "wp_version": "5.2.4",
+  "wp_version": "5.3.2",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,36 @@
     ]
   },
   "changelog": {
+    "2.3.0": [
+      {
+        "type": "feature",
+        "title": "Block preview"
+      },
+      {
+        "type": "feature",
+        "title": "Block enhancement: Adv. Video"
+      },
+      {
+        "type": "feature",
+        "title": "Better slug in Summary block"
+      },
+      {
+        "type": "feature",
+        "title": "New block: Advanced Icon block"
+      },
+      {
+        "type": "feature",
+        "title": "New block: Info Box block"
+      },
+      {
+        "type": "feature",
+        "title": "Upgrade jquery library for Count Up block"
+      },
+      {
+        "type": "fix",
+        "title": "Compatibility with Gutenberg version 7.1.0"
+      }
+    ],
     "2.2.2": [
       {
         "type": "fix",
@@ -183,7 +213,7 @@
         "type": "feature",
         "title": "Allow nested Accordion blocks"
       },
-            {
+      {
         "type": "feature",
         "title": "Allow to change the html tag of the Container block"
       },
@@ -458,7 +488,7 @@
       {
         "type": "fix",
         "title": "Cannot save multi Recent Posts block"
-      },    
+      },
       {
         "type": "fix",
         "title": "Make Testimonial and Count up block more responsive"
@@ -767,7 +797,7 @@
         "type": "feature",
         "title": "New fresh designed backend UI/UX"
       },
-       {
+      {
         "type": "feature",
         "title": "Implement AJAX admin search engine in plugin settings"
       },
@@ -787,7 +817,7 @@
         "type": "feature",
         "title": "Add a search engine to filter blocks in profile block attribution"
       },
-       {
+      {
         "type": "feature",
         "title": "Add a dedicated left menu for all the configuration named Adv. Gutenberg"
       },
@@ -897,11 +927,11 @@
         "type": "feature",
         "title": "New Advanced Button block: create button with more styles (hover, border, padding...)"
       },
-       {
+      {
         "type": "feature",
         "title": "New Advanced List block: create list with list icon, icon color..."
       },
-       {
+      {
         "type": "feature",
         "title": "Summary block: Allow to set anchor links color, block alignment and load summary in minimized"
       },
@@ -923,7 +953,7 @@
         "type": "feature",
         "title": "Create custom CSS styles and apply to paragraph blocks"
       },
-       {
+      {
         "type": "feature",
         "title": "Identify CSS property by: name, class and color"
       },
@@ -951,7 +981,7 @@
         "type": "feature",
         "title": "Make gallery blocks images can be opened in a popup lightbox"
       },
-       {
+      {
         "type": "feature",
         "title": "Option to display alt text as caption when a gallery lightbox is opened"
       }
