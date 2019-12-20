@@ -110,7 +110,3 @@ call_user_func(
     'Advanced Gutenberg',
     'advanced-gutenberg'
 );
-
-add_action('admin_footer', function () {
-    echo '<div id="advgb-popup-icon-wrapper"></div>';
-});

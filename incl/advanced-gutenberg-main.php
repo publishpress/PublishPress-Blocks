@@ -167,6 +167,7 @@ float: left;'
         if (is_admin()) {
             add_action('admin_init', array($this, 'registerAdvgbProfile'));
             add_action('admin_footer', array($this, 'initBlocksList'));
+            add_action('admin_footer', array($this, 'addIconSelectionPopupWrapper'));
             add_action('admin_menu', array($this, 'registerMainMenu'));
             add_action('admin_menu', array($this, 'registerBlockConfigPage'));
             add_action('load-toplevel_page_advgb_main', array($this, 'saveAdvgbData'));
@@ -5202,5 +5203,16 @@ float: left;'
         }
 
         return $valueReturn;
+    }
+
+    /**
+     * Render html for icon selection popup
+     *
+     * @return boolean        Echo html content
+     */
+    public function addIconSelectionPopupWrapper()
+    {
+        echo '<div id="advgb-popup-icon-wrapper"></div>';
+        return true;
     }
 }
