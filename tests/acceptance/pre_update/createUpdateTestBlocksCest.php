@@ -43,11 +43,6 @@ class createUpdateTestBlocksCest
         $I->waitForElement('//label[text()="Category"]/following-sibling::node()/option[text()="Recent posts"]');
         $I->selectOption('//label[text()="Category"]/following-sibling::node()', array('text' => 'Recent posts'));
 
-        // Change column to 3
-        $I->waitForElement('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()');
-        $I->fillField('//label[text()="Columns"]/following-sibling::node()/following-sibling::node()', 3);
-
-
         $I->waitForElement('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()');
         $I->fillField('//label[text()="Number of items"]/following-sibling::node()/following-sibling::node()', 5);
     }
@@ -393,6 +388,53 @@ class createUpdateTestBlocksCest
         $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
     }
 
+    public function createSearchBarBlock(AcceptanceTester $I)
+    {
+        /***** Add Search Bar *****/
+        $I->insertBlock('Search Bar');
+        $I->waitForElement('.advgb-search-bar-wrapper');
+
+        // Change search icon
+        $I->click('//div[text()="Search icon"]/following-sibling::node()/div[3]');
+
+        // Change width to full width
+        $I->click('//label[text()="Full width"]/preceding-sibling::node()');
+
+        // Change input settings
+        $I->click('//button[text()="Search Input Settings"]');
+        // Change search input placeholder
+        $I->fillField('//label[text()="Search placeholder"]/following-sibling::node()', "Search now");
+
+        // Change input background color to black
+        $I->click('//span[text()="Input Color"]');
+        $I->click('//span[text()="Background color"]/following-sibling::node()//div[3]');
+        // Change input text color to white
+        $I->click('//span[text()="Text color"]/following-sibling::node()//div[5]');
+    }
+
+    public function createLoginFormBlock(AcceptanceTester $I)
+    {
+        /***** Add Login Form *****/
+        $I->insertBlock('Login/Register Form');
+        $I->waitForElement('.advgb-lores-form-wrapper');
+
+        // Change submit button text color to white
+        $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
+        // Change submit button background color to black
+        $I->click('//span[text()="Background"]/following-sibling::node()//div[3]');
+        // Change submit button border radius to 4px
+        $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
+        // Change button position to center
+        $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
+    }
+
+    public function createTabsBlock(AcceptanceTester $I)
+    {
+        /***** Add Tabs *****/
+        $I->insertBlock('Tabs');
+        // todo: Modify some content here
+    }
+
     public function createColumnsBlock(AcceptanceTester $I)
     {
         /***** Add Columns block *****/
@@ -456,53 +498,6 @@ class createUpdateTestBlocksCest
         $I->pressKeys("Third column text");
 
         $I->clickWithLeftButton('//button[contains(@data-label, "Document")]');
-    }
-
-    public function createSearchBarBlock(AcceptanceTester $I)
-    {
-        /***** Add Search Bar *****/
-        $I->insertBlock('Search Bar');
-        $I->waitForElement('.advgb-search-bar-wrapper');
-
-        // Change search icon
-        $I->click('//div[text()="Search icon"]/following-sibling::node()/div[3]');
-
-        // Change width to full width
-        $I->click('//label[text()="Full width"]/preceding-sibling::node()');
-
-        // Change input settings
-        $I->click('//button[text()="Search Input Settings"]');
-        // Change search input placeholder
-        $I->fillField('//label[text()="Search placeholder"]/following-sibling::node()', "Search now");
-
-        // Change input background color to black
-        $I->click('//span[text()="Input Color"]');
-        $I->click('//span[text()="Background color"]/following-sibling::node()//div[3]');
-        // Change input text color to white
-        $I->click('//span[text()="Text color"]/following-sibling::node()//div[5]');
-    }
-
-    public function createLoginFormBlock(AcceptanceTester $I)
-    {
-        /***** Add Login Form *****/
-        $I->insertBlock('Login/Register Form');
-        $I->waitForElement('.advgb-lores-form-wrapper');
-
-        // Change submit button text color to white
-        $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
-        // Change submit button background color to black
-        $I->click('//span[text()="Background"]/following-sibling::node()//div[3]');
-        // Change submit button border radius to 4px
-        $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
-        // Change button position to center
-        $I->selectOption('//label[text()="Button position"]/following-sibling::node()', array('text' => 'Center'));
-    }
-
-    public function createTabsBlock(AcceptanceTester $I)
-    {
-        /***** Add Tabs *****/
-        $I->insertBlock('Tabs');
-        // todo: Modify some content here
     }
 
     public function publishPost(AcceptanceTester $I)

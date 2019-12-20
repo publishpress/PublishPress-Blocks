@@ -92,6 +92,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function insertBlock($blockName) {
         $I = $this;
+        $I->clickWithLeftButton('.edit-post-visual-editor', 1,1);
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');
 

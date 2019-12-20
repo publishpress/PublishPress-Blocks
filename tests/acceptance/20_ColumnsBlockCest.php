@@ -10,10 +10,6 @@ class ColumnsBlockCest
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-columns-wrapper');
             $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
-            /*$I->click(".editor-block-navigation");
-            $I->waitForText('Block Navigation');
-            $I->wait(0.5);
-            $I->clickWithLeftButton('//button[text()="Columns Manager"]');*/
         } catch(Exception $e) {
             // do stuff
         }

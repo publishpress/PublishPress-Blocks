@@ -78,20 +78,20 @@ class AdvancedImageBlockCest
 
         // Change block width
         $I->waitForElementVisible('//label[text()="Width"]/following-sibling::node()/following-sibling::node()');
-        $I->fillField('//label[text()="Width"]/following-sibling::node()/following-sibling::node()', 700);
+        $I->fillField('//label[text()="Width"]/following-sibling::node()/following-sibling::node()', 500);
 
         // Change block height
-        $I->fillField('//label[text()="Height"]/following-sibling::node()/following-sibling::node()', 650);
+        $I->fillField('//label[text()="Height"]/following-sibling::node()/following-sibling::node()', 550);
 
         $I->updatePost();
 
         // Check the actual width
-        $width = $I->getElementWidth('//*[contains(@class,"wp-block-advgb-image")]');
-        $I->assertEquals(700, $width);
+        $frontendWidth = $I->executeJS('return jQuery(".wp-block-advgb-image").css("width")');
+        $I->assertEquals('500px', $frontendWidth);
 
         // Check the actual height
-        $height = $I->getElementHeight('//*[contains(@class,"wp-block-advgb-image")]');
-        $I->assertEquals(650, $height);
+        $frontendHeight = $I->executeJS('return jQuery(".wp-block-advgb-image").css("height")');
+        $I->assertEquals('550px', $frontendHeight);
     }
 
     public function changeColor(AcceptanceTester $I)

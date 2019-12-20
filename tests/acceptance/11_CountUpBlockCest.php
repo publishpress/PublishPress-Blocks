@@ -79,10 +79,6 @@ class CountUpBlockCest
         $I->selectCurrentElementText();
         $I->pressKeys('Downloaded');
 
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]//div[contains(@class, "advgb-counter-number")]');
-        $I->selectCurrentElementText();
-        $I->pressKeys('199');
-
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-two"]//p[contains(@class, "advgb-count-up-desc")]');
         $I->selectCurrentElementText();
         $I->pressKeys('times');
@@ -91,10 +87,6 @@ class CountUpBlockCest
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]//h4');
         $I->selectCurrentElementText();
         $I->pressKeys('Profit');
-
-        $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]//div[contains(@class, "advgb-counter-number")]');
-        $I->selectCurrentElementText();
-        $I->pressKeys('50000');
 
         $I->click('//div[contains(@class, "advgb-count-up")]//div[@class="advgb-count-up-columns-three"]//p[contains(@class, "advgb-count-up-desc")]');
         $I->selectCurrentElementText();
@@ -109,12 +101,12 @@ class CountUpBlockCest
 
         // Check text
         $I->seeElement('//div[@class="advgb-count-up-columns-two"]/h4[@class="advgb-count-up-header"][text()="Downloaded"]');
-        $I->seeElement('//div[@class="advgb-count-up-columns-two"]/div/span[@class="advgb-counter-number"][text()="199"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-two"]/div/span[@class="advgb-counter-number"][text()="56789"]');
         $I->seeElement('//div[@class="advgb-count-up-columns-two"]/p[@class="advgb-count-up-desc"][text()="times"]');
 
         // Check text
         $I->seeElement('//div[@class="advgb-count-up-columns-three"]/h4[@class="advgb-count-up-header"][text()="Profit"]');
-        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/div/span[@class="advgb-counter-number"][text()="50000"]');
+        $I->seeElement('//div[@class="advgb-count-up-columns-three"]/div/span[@class="advgb-counter-number"][text()="56789"]');
         $I->seeElement('//div[@class="advgb-count-up-columns-three"]/p[@class="advgb-count-up-desc"][text()="per month"]');
     }
 
