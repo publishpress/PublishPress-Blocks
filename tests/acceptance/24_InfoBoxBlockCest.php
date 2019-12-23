@@ -92,6 +92,10 @@ class InfoBoxBlockCest
         $I->wantTo('Change icon settings');
         $iconSection = '//h2/button[text()="Icon Settings"]/parent::h2[@class="components-panel__body-title"]/parent::div[contains(@class, "components-panel__body")]';
         $I->click('//button[text()="Icon Settings"]');
+
+        //change icon size
+        $I->fillField($iconSection . '//label[text()="Icon Size (px)"]/following-sibling::node()/following-sibling::node()', 100);
+
         //change icon
         $I->click('//button[text()="Icon Selection"]');
         $I->waitForElement('//div[@class="advgb-icon-popup"]');
@@ -105,8 +109,7 @@ class InfoBoxBlockCest
         $I->pressKeys($iconColor);
         $I->pressKeys(WebDriverKeys::ENTER);
         $I->clickWithLeftButton('.advgb-infobox-wrapper'); // click block to hide picker
-        //change icon size
-        $I->fillField($iconSection . '//label[text()="Icon Size (px)"]/following-sibling::node()/following-sibling::node()', 100);
+
         //change background color
         $iconBackground = '#f5f5f5';
         $I->clickAndWait($iconSection . '//span[text()="Background"]/following-sibling::node()/div[last()]/*[1]');
