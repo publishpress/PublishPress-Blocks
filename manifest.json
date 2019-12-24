@@ -38,19 +38,7 @@
     ]
   },
   "changelog": {
-    "2.3.0": [
-      {
-        "type": "feature",
-        "title": "Block preview"
-      },
-      {
-        "type": "feature",
-        "title": "Block enhancement: Adv. Video"
-      },
-      {
-        "type": "feature",
-        "title": "Better slug in Summary block"
-      },
+    "2.3.0": [   
       {
         "type": "feature",
         "title": "New block: Advanced Icon block"
@@ -61,7 +49,19 @@
       },
       {
         "type": "feature",
+        "title": "Advanced Video: add autoplay, loop, preloading"
+      },
+      {
+        "type": "feature",
+        "title": "Better slug in Summary block"
+      },
+      {
+        "type": "feature",
         "title": "Upgrade jquery library for Count Up block"
+      },
+      {
+        "type": "feature",
+        "title": "Update block preview images"
       },
       {
         "type": "fix",
