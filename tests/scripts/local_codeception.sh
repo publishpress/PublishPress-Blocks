@@ -24,11 +24,11 @@ if [[ -z "$INSTALL_TYPES" ]]; then
 fi
 
 if [[ -z "$PHP_VERSIONS" ]]; then
-    PHP_VERSIONS=('5.2' '5.5' '5.6' '7.0' '7.1' '7.2' '7.3')
+    PHP_VERSIONS=('5.6' '7.0' '7.1' '7.2' '7.3')
 fi
 
 if [[ -z "$WP_VERSIONS" ]]; then
-    WP_VERSIONS=("5.1" "latest")
+    WP_VERSIONS=("5.2" "latest")
 fi
 
 if [[ -z "$GUTENBERG_TYPES" ]]; then
@@ -95,23 +95,6 @@ for WP_VERSION in "${WP_VERSIONS[@]}"; do
     for INSTALL_TYPE in "${INSTALL_TYPES[@]}"; do
         # Test the core gutenberg version and plugin version
         for GUTENBERG_TYPE in "${GUTENBERG_TYPES[@]}"; do
-        if ([ $WP_VERSION == "5.1" ]); then
-            if ([ $GUTENBERG_TYPE != "core" ]); then
-                set +e
-
-                # Remove previous codeception fail outputs
-                codecept clean
-
-                start_containers
-
-                set -e
-
-                cd "$PLUGIN_DIR"
-                source "$PLUGIN_DIR/tests/scripts/codeception.sh"
-            else
-                continue
-            fi
-        else
             set +e
 
             # Remove previous codeception fail outputs
@@ -123,7 +106,6 @@ for WP_VERSION in "${WP_VERSIONS[@]}"; do
 
             cd "$PLUGIN_DIR"
             source "$PLUGIN_DIR/tests/scripts/codeception.sh"
-        fi
 
         done
     done

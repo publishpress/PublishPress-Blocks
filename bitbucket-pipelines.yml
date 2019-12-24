@@ -73,62 +73,62 @@ pipelines:
         - chromedriver
         - mysql
         - wordpress
-    codeception_51_install:
-    - step: &shared_codeception_51_plugin_install
-        name: CC WP 5.1 plugin install
+    codeception_52_install:
+    - step: &shared_codeception_52_plugin_install
+        name: CC WP 5.2 plugin install
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - export WP_VERSION="5.1" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="install"
+        - export WP_VERSION="5.2" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="install"
         - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
         services:
         - chromedriver
         - mysql
-        - wordpress51
-    codeception_51_update:
-    - step: &shared_codeception_51_plugin_update
-        name: CC WP 5.1 plugin update
+        - wordpress52
+    codeception_52_update:
+    - step: &shared_codeception_52_plugin_update
+        name: CC WP 5.2 plugin update
         image: joomunited/codeception
         script:
         - wait_services.sh
-        - export WP_VERSION="5.1" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="update"
+        - export WP_VERSION="5.2" && export GUTENBERG_TYPE="plugin" && export INSTALL_TYPE="update"
         - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
         artifacts:
         - tests/_output/**
         services:
         - chromedriver
         - mysql
-        - wordpress51
-    codeception_51_core_install:
-      - step: &shared_codeception_51_core_install
-          name: CC WP 5.1 core install
+        - wordpress52
+    codeception_52_core_install:
+      - step: &shared_codeception_52_core_install
+          name: CC WP 5.2 core install
           image: joomunited/codeception
           script:
             - wait_services.sh
-            - export WP_VERSION="5.1" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="install"
+            - export WP_VERSION="5.2" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="install"
             - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
           artifacts:
             - tests/_output/**
           services:
             - chromedriver
             - mysql
-            - wordpress51
-    codeception_51_core_update:
-      - step: &shared_codeception_51_core_update
-          name: CC WP 5.1 core update
+            - wordpress52
+    codeception_52_core_update:
+      - step: &shared_codeception_52_core_update
+          name: CC WP 5.2 core update
           image: joomunited/codeception
           script:
             - wait_services.sh
-            - export WP_VERSION="5.1" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="update"
+            - export WP_VERSION="5.2" && export GUTENBERG_TYPE="core" && export INSTALL_TYPE="update"
             - bash $BITBUCKET_CLONE_DIR/tests/scripts/bitbucket_codeception.sh
           artifacts:
             - tests/_output/**
           services:
             - chromedriver
             - mysql
-            - wordpress51
+            - wordpress52
     generate_package:
     - step: &shared_generate_package
         name: Create package
@@ -165,6 +165,7 @@ pipelines:
         - php $BITBUCKET_CLONE_DIR/deployment/zip_package.php
         - php $BITBUCKET_CLONE_DIR/deployment/joomunited_changelog.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --article_id $CHANGELOG_ARTICLE_ID
         - php $BITBUCKET_CLONE_DIR/deployment/language_uploader.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --language_id $LANGUAGE_ID --language_extension_id $LANGUAGE_EXTENSION_ID
+        - php $BITBUCKET_CLONE_DIR/deployment/developer_documentation.php --username $ADMIN_USERNAME --password $ADMIN_PASSWORD --article_id $DEVELOPER_ARTICLE_ID
         - bash $BITBUCKET_CLONE_DIR/deployment/svn_updater.sh
         - bash $BITBUCKET_CLONE_DIR/deployment/upload_tagged_version.sh
         - bash $BITBUCKET_CLONE_DIR/deployment/tag.sh
@@ -178,10 +179,10 @@ pipelines:
     'release/*':
     - parallel:
       - step: *shared_phpcs
-#      - step: *shared_codeception_51_core_install
-#      - step: *shared_codeception_51_core_update
-      - step: *shared_codeception_51_plugin_install
-      - step: *shared_codeception_51_plugin_update
+      - step: *shared_codeception_52_core_install
+      - step: *shared_codeception_52_core_update
+      - step: *shared_codeception_52_plugin_install
+      - step: *shared_codeception_52_plugin_update
       - step: *shared_codeception_core_install
       - step: *shared_codeception_core_update
       - step: *shared_codeception_plugin_install
@@ -200,5 +201,5 @@ definitions:
         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     wordpress:
       image: joomunited/wordpress_cgi:latest
-    wordpress51:
-      image: joomunited/wordpress_cgi:5.1
+    wordpress52:
+      image: joomunited/wordpress_cgi:5.2

@@ -10,7 +10,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 
 
-Supercharge WordPress Gutenberg editor plugin with 20+ new blocks. Create custom Gutenberg block profiles by user or user roles
+Supercharge WordPress Gutenberg editor plugin with 27+ new blocks. Create custom Gutenberg block profiles by user or user roles
 
 == Description ==
 
@@ -36,8 +36,9 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Map block: load a Google map position with zoom, icon, tooltip, color...
 - Advanced Table block: create tables with style like color, border
 - Accordion block: display content in a fully configurable accordion
-- Tabs block: display content in a tabbed UX with nested blocks inside
-- Testimonial block: define avatar, title, text, slider or static
+- Tabs block: display content in a fully tabbed UX
+- Testimonial block: define avatar, title, text, colors, slider
+- Icon and Icon block layout blocks
 - Contact Form block: get email and export contact form data
 - Email Opt-In block: get email and export data
 - WordPress login block
