@@ -2698,6 +2698,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]:not(:first-child) {
         margin-left: 46px !important;
     }
+    #editor .edit-post-visual-editor .advgb-columns .block-editor-block-list__block .block-editor-block-list__block-edit {
+        margin-left: -28px;
+        margin-right: -28px;
+    }
 }
 
 /* Mobile */
