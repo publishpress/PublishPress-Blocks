@@ -270,6 +270,7 @@
                                 label={ __( 'Border Style', 'advanced-gutenberg' ) }
                                 value={ borderStyle }
                                 options={ [
+                                    { label: __( 'None', 'advanced-gutenberg' ), value: 'none' },
                                     { label: __( 'Solid', 'advanced-gutenberg' ), value: 'solid' },
                                     { label: __( 'Dashed', 'advanced-gutenberg' ), value: 'dashed' },
                                     { label: __( 'Dotted', 'advanced-gutenberg' ), value: 'dotted' },

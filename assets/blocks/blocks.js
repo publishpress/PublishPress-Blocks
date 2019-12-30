@@ -6650,7 +6650,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(SelectControl, {
                                 label: __('Border Style', 'advanced-gutenberg'),
                                 value: borderStyle,
-                                options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
+                                options: [{ label: __('None', 'advanced-gutenberg'), value: 'none' }, { label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
                                 onChange: function onChange(value) {
                                     return setAttributes({ borderStyle: value });
                                 }
