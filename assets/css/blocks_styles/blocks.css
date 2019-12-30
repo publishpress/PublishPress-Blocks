@@ -2689,7 +2689,11 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 }
 
 @media screen and (min-width: 600px) {
-    #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
+    #editor .edit-post-visual-editor .advgb-columns .block-editor-block-list__layout .block-editor-block-list__block {
+        padding-left: 43px;
+        padding-right: 43px;
+    }
+    #editor .edit-post-visual-editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
         margin-left: 14px !important;
         margin-right: 14px !important;
         padding-left: 0;
