@@ -11941,7 +11941,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement("a", { className: "advgb-image-slider-overlay",
                                     target: "_blank",
                                     rel: "noopener noreferrer",
-                                    href: actionOnClick === 'link' && !!image.link ? image.link : undefined,
+                                    href: actionOnClick === 'link' && !!image.link ? image.link : '#',
                                     style: {
                                         backgroundColor: hoverColor,
                                         opacity: alwaysShowOverlay ? 0.5 : undefined
