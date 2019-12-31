@@ -431,7 +431,7 @@ div.advgb-image-block .advgb-browse-image-btn {
 table.advgb-table-frontend {
     border-collapse: separate;
     border-spacing: 0;
-    margin: 0 0 1em;
+    margin: 0 auto 1em;
     width: 100%;
     max-width: 100%;
 }
