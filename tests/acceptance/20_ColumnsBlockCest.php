@@ -9,7 +9,8 @@ class ColumnsBlockCest
             $I->click('Edit Post');
             $I->waitForElement('#editor');
             $I->waitForElement('.advgb-columns-wrapper');
-            $I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
+            //$I->clickWithLeftButton('//div[contains(@aria-label, "Block: Columns Manager")]', -3, 0);
+            $I->clickWithLeftButton('.advgb-columns-spacing');
         } catch(Exception $e) {
             // do stuff
         }
