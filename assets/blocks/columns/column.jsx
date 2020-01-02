@@ -257,8 +257,7 @@
                             }
                         }
                         ${width ?
-                            `#block-${rootBlockId} .advgb-columns > .editor-inner-blocks > .editor-block-list__layout > .wp-block {flex-shrink: 0;}
-                            #block-${clientId} {flex-basis: ${width}%;}` : ''}`
+                            `#block-${clientId} {flex-basis: ${width}%;}` : ''}`
                         }
                     </style>
                 </Fragment>
