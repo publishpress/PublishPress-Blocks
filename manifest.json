@@ -41,7 +41,7 @@
     "2.3.1": [
       {
         "type": "feature",
-        "title": "Add Tab body border style \"none\" in Tabs block"
+        "title": "Tab body border style change to NONE in (Tabs block)"
       },
       {
         "type": "fix",
