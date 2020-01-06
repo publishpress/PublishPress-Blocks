@@ -431,7 +431,7 @@ div.advgb-image-block .advgb-browse-image-btn {
 table.advgb-table-frontend {
     border-collapse: separate;
     border-spacing: 0;
-    margin: 0 0 1em;
+    margin: 0 auto 1em;
     width: 100%;
     max-width: 100%;
 }
@@ -611,6 +611,15 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 .advgb-columns-1 > .advgb-column {
     flex: none;
     width: 100%;
+}
+
+#editor .advgb-columns-spacing {
+    height: 10px;
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 999;
+    top: -8px;
 }
 
 /*Social links block styles*/
@@ -2689,7 +2698,11 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 }
 
 @media screen and (min-width: 600px) {
-    #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
+    #editor .edit-post-visual-editor .advgb-columns .block-editor-block-list__layout .block-editor-block-list__block {
+        padding-left: 43px;
+        padding-right: 43px;
+    }
+    #editor .edit-post-visual-editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
         margin-left: 14px !important;
         margin-right: 14px !important;
         padding-left: 0;
@@ -2697,6 +2710,10 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     }
     #editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]:not(:first-child) {
         margin-left: 46px !important;
+    }
+    #editor .edit-post-visual-editor .advgb-columns .block-editor-block-list__block .block-editor-block-list__block-edit {
+        margin-left: -28px;
+        margin-right: -28px;
     }
 }
 

@@ -646,6 +646,7 @@
                             </PanelBody>
                         </PanelBody>
                     </InspectorControls>
+                    <span className="advgb-columns-spacing">&nbsp;</span>
                     <div className="advgb-columns-wrapper">
                         <div className={ blockClasses }
                              style={ {

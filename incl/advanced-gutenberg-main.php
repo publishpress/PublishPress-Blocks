@@ -386,7 +386,7 @@ float: left;'
         $blocks_icon_color  = isset($saved_settings['blocks_icon_color']) ? $saved_settings['blocks_icon_color'] : '';
         $rp_default_thumb   = isset($saved_settings['rp_default_thumb']) ? $saved_settings['rp_default_thumb'] : array('url' => $default_thumb, 'id' => 0);
         $icons              = array();
-        $icons['material']  = file_get_contents(plugins_url('assets/css/fonts/codepoints.json', ADVANCED_GUTENBERG_PLUGIN));
+        $icons['material']  = file_get_contents(plugin_dir_path(__DIR__) . 'assets/css/fonts/codepoints.json');
         $icons['material']  = json_decode($icons['material'], true);
 
         wp_localize_script('wp-blocks', 'advgbBlocks', array(
