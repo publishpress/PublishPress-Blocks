@@ -2133,10 +2133,9 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 }
 
 /*Backend columns*/
-.advgb-columns > .editor-inner-blocks > .editor-block-list__layout {
+.advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout {
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .advgb-columns.columns-wrapped > .editor-inner-blocks > .editor-block-list__layout,
@@ -2347,6 +2346,11 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     width: 16.66%;
 }
 
+.advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-type="advgb/column"]>.block-editor-block-list__block-edit>[data-block] {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 /* Advanced Icons */
 .advgb-icon-wrap {
     display: inline-block;
@@ -2388,14 +2392,15 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 #editor .advgb-columns .block-editor-block-list__block .block-list-appender {
     margin: 0;
 }
-.wp-block-advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"]>.editor-block-list__block-edit>[data-block] {
-    margin-top: 0;
-    margin-bottom: 0;
-}
 
 .block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/columns"].is-selected>.block-editor-block-list__block-edit>[data-block]>div>div>.block-editor-inner-blocks,
 .block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/columns"] > .block-editor-block-list__block-edit > [data-block] > div > div > .block-editor-inner-blocks,
 .block-editor-block-list__layout .block-editor-block-list__block[data-type="advgb/column"] > .block-editor-block-list__block-edit > [data-block] > div > div > .block-editor-inner-blocks {
+    padding: 0px;
+}
+.editor-block-list__layout .editor-block-list__block[data-type="advgb/columns"].is-selected > .editor-block-list__block-edit > [data-block] > div > div > .editor-inner-blocks,
+.editor-block-list__layout .editor-block-list__block[data-type="advgb/columns"] > .editor-block-list__block-edit > [data-block] > div > div > .editor-inner-blocks,
+.editor-block-list__layout .editor-block-list__block[data-type="advgb/column"] > .editor-block-list__block-edit > [data-block] > div > div > .editor-inner-blocks {
     padding: 6px;
 }
 
@@ -2699,8 +2704,15 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
 
 @media screen and (min-width: 600px) {
     #editor .edit-post-visual-editor .advgb-columns .block-editor-block-list__layout .block-editor-block-list__block {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    #editor .edit-post-visual-editor .advgb-columns .editor-block-list__layout .editor-block-list__block {
         padding-left: 43px;
         padding-right: 43px;
+    }
+    .advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-type="advgb/column"]:nth-child(2n) {
+        margin-left: 32px;
     }
     #editor .edit-post-visual-editor .advgb-columns>.editor-inner-blocks>.editor-block-list__layout>[data-type="advgb/column"] {
         margin-left: 14px !important;
@@ -2712,8 +2724,27 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
         margin-left: 46px !important;
     }
     #editor .edit-post-visual-editor .advgb-columns .block-editor-block-list__block .block-editor-block-list__block-edit {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    #editor .edit-post-visual-editor .advgb-columns .editor-block-list__block .editor-block-list__block-edit {
         margin-left: -28px;
         margin-right: -28px;
+    }
+    .advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-type="advgb/column"] {
+        flex-basis: calc(50% - 16px);
+        flex-grow: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media screen and (min-width: 782px) {
+    .advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout {
+        flex-wrap: nowrap;
+    }
+    .advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-type="advgb/column"]:not(:first-child) {
+        margin-left: 32px;
     }
 }
 
