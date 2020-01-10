@@ -4713,6 +4713,14 @@ float: left;'
                 $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'padding-right: '.$blockAttrs['gutter'] / 2 .'px;' : '';
                 $style_html .= '}';
 
+                if ($blockName === 'advgb/column') {
+                    $childColID = $blockAttrs['colId'];
+                    $childColWidth = $blockAttrs['width'];
+                    if ($childColWidth !== 0) {
+                        $style_html .= '#' . $childColID . '{width: ' . $childColWidth . '%;}';
+                    }
+                }
+
                 // Styles for tablet
                 $style_html .= '@media screen and (max-width: 1023px) {';
                 $style_html .=  '#'. $colID . '{';

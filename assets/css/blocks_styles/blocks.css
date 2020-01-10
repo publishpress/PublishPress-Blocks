@@ -621,6 +621,10 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
     z-index: 999;
     top: -8px;
 }
+[data-type="advgb/columns"][data-align=full] .advgb-columns {
+    padding-left: 46px;
+    padding-right: 46px;
+}
 
 /*Social links block styles*/
 .advgb-social-links-block {

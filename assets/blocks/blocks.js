@@ -9561,7 +9561,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: blockClasses,
                     id: colId,
                     style: {
-                        width: width ? width + '%' : undefined,
                         flex: width ? 'none' : undefined
                     }
                 },
@@ -9578,6 +9577,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: blockAttrs,
             save: function save(_ref3) {
                 var attributes = _ref3.attributes;
+                var width = attributes.width,
+                    columnClasses = attributes.columnClasses,
+                    colId = attributes.colId,
+                    borderColor = attributes.borderColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderRadius = attributes.borderRadius;
+
+
+                var blockClasses = ['advgb-column', columnClasses].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClasses,
+                        id: colId,
+                        style: {
+                            width: width ? width + '%' : undefined,
+                            flex: width ? 'none' : undefined
+                        }
+                    },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-column-inner",
+                            style: { borderStyle: borderStyle, borderColor: borderColor, borderWidth: borderWidth, borderRadius: borderRadius }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref4) {
+                var attributes = _ref4.attributes;
                 var width = attributes.width,
                     columnClasses = attributes.columnClasses,
                     colId = attributes.colId,
