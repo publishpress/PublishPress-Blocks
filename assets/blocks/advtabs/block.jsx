@@ -1,11 +1,13 @@
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpCompose ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, Button } = wpComponents;
-    const { dispatch, select } = wp.data;
+    const { withDispatch, withSelect, select, dispatch } = wp.data;
+    const { compose } = wpCompose;
+    const { times } = lodash;
 
     const svgPath = (
         <Fragment>
@@ -49,7 +51,6 @@
         componentWillMount() {
             const { attributes, setAttributes } = this.props;
             const currentBlockConfig = advgbDefaultConfig['advgb-adv-tabs'];
-
             // No override attributes of blocks inserted before
             if (attributes.changed !== true) {
                 if (typeof currentBlockConfig === 'object' && currentBlockConfig !== null) {
@@ -69,8 +70,9 @@
 
         componentDidMount() {
             if (!this.props.attributes.pid) {
-                this.props.setAttributes( { pid: `advgb-tabs-${this.props.clientId}` } );
+                this.props.setAttributes( { pid: `advgb-tabs-${this.props.rootBlockID}` } );
             }
+            this.props.resetOrder();
         }
 
         updateTabsAttr( attrs ) {
@@ -81,6 +83,7 @@
 
             setAttributes( attrs );
             childBlocks.forEach( childBlockId => updateBlockAttributes( childBlockId, attrs ) );
+            this.props.resetOrder();
         }
 
         updateTabsHeader(header, index) {
@@ -112,7 +115,8 @@
                     ...attributes.tabHeaders,
                     __('Tab header', 'advanced-gutenberg')
                 ]
-            } )
+            } );
+            this.props.resetOrder();
         }
 
         removeTab(index) {
@@ -125,7 +129,8 @@
             setAttributes( {
                 tabHeaders: attributes.tabHeaders.filter( (vl, idx) => idx !== index )
             } );
-            this.updateTabsAttr({tabActive: 0})
+            this.updateTabsAttr({tabActive: 0});
+            this.props.resetOrder();
         }
 
         render() {
@@ -484,7 +489,47 @@
                 isPreview: true
             },
         },
-        edit: AdvTabsWrapper,
+        edit: compose(
+            withSelect( (select, ownProps) => {
+                const { clientId } = ownProps;
+                const {
+                    getBlock,
+                    getBlockOrder,
+                } = select( 'core/block-editor' );
+                const block = getBlock( clientId );
+                console.log(block.clientId);
+                return {
+                    tabsBlock: block,
+                    realTabsCount: block.innerBlocks.length,
+                    tabsInner: getBlockOrder( clientId ),
+                    rootBlockID: block.clientId,
+                };
+            }),
+            withDispatch( (dispatch, { clientId }, { select }) => {
+                const {
+                    getBlock,
+                } = select( 'core/block-editor' );
+                const {
+                    moveBlockToPosition,
+                    removeBlock,
+                    updateBlockAttributes,
+                    insertBlock,
+                } = dispatch( 'core/block-editor' );
+                const block = getBlock( clientId );
+                console.log(block.clientId);
+                return {
+                    resetOrder() {
+                        times( block.innerBlocks.length, n => {
+                            updateBlockAttributes( block.innerBlocks[ n ].clientId, {
+                                id: n,
+                                rootBlockID: `advgb-tabs-${block.clientId}`
+                            } );
+                        } );
+                    }
+                };
+
+            }),
+        )( AdvTabsWrapper ),
         save: function ( { attributes } ) {
             const {
                 tabHeaders,
@@ -546,4 +591,4 @@
             );
         },
     } );
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose );

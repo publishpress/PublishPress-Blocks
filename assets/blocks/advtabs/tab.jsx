@@ -40,42 +40,47 @@
         }
 
         componentDidMount() {
-            const { setAttributes, clientId } = this.props;
-            const { getBlockRootClientId, getBlockIndex, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
-            const rootBlockId = getBlockRootClientId( clientId );
-            const rootBlockAttrs = getBlockAttributes(rootBlockId);
-            const { pid, tabHeaders } = rootBlockAttrs;
-            const blockIndex = getBlockIndex(clientId, rootBlockId);
+            console.log(this.props);
+            const { attributes, setAttributes, clientId,  } = this.props;
+           /* if(!this.props.attributes.id) {
+                const { getBlockRootClientId, getBlockIndex, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+                const rootBlockId = getBlockRootClientId( clientId );
+                const rootBlockAttrs = getBlockAttributes( rootBlockId );
+                const { pid, tabHeaders } = rootBlockAttrs;
+                const blockIndex = getBlockIndex( clientId, rootBlockId );
+                setAttributes( {
+                    pid: `${pid}-${blockIndex}`,
+                    header: tabHeaders[ blockIndex ],
+                } )
+            } else {*/
+                const { tabHeaders, id, rootBlockID } = attributes;
 
-            setAttributes( {
-                pid: `${pid}-${blockIndex}`,
-                header: tabHeaders[blockIndex],
-            } )
+                setAttributes( {
+                    pid: `${rootBlockID}-${id}`,
+                    header: tabHeaders[ id ]
+                } )
+            /*}*/
         }
 
         render() {
             const { attributes, clientId } = this.props;
-            const {tabActive, pid} = attributes;
+            const {tabActive, pid, id} = attributes;
 
-            const { getBlockRootClientId, getBlockIndex } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
-            const rootBlockId = getBlockRootClientId( clientId );
-            const blockIndex = getBlockIndex(clientId, rootBlockId);
-
-            return (
-                <Fragment>
-                    <div className="advgb-tab-body"
-                         id={pid}
-                         style={ {
-                             display: blockIndex === tabActive ? 'block' : 'none',
-                         } }
-                    >
-                        <InnerBlocks
-                            template={ [[ 'core/paragraph' ]] }
-                            templateLock={false}
-                        />
-                    </div>
-                </Fragment>
-            );
+                return (
+                    <Fragment>
+                        <div className="advgb-tab-body"
+                             id={pid}
+                             style={{
+                                 display: id === tabActive ? 'block' : 'none',
+                             }}
+                        >
+                            <InnerBlocks
+                                template={[ [ 'core/paragraph' ] ]}
+                                templateLock={false}
+                            />
+                        </div>
+                    </Fragment>
+                );
         }
     }
 
@@ -88,6 +93,10 @@
         },
         category: 'advgb-category',
         attributes: {
+            id: {
+                type: 'number',
+                default: 0
+            },
             pid: {
                 type: 'string',
             },
@@ -101,7 +110,16 @@
             changed: {
                 type: 'boolean',
                 default: false,
+            },
+            tabHeaders: {
+                type: 'array',
+            },
+            rootBlockID: {
+                type: 'string',
             }
+        },
+        supports: {
+            reusable: false,
         },
         keywords: [ __( 'tab', 'advanced-gutenberg' ) ],
         edit: TabItemEdit,
@@ -116,8 +134,39 @@
                     </div>
                 </div>
             );
-        }
+        },
+        deprecated: [
+            {
+                attributes: {
+                    pid: {
+                        type: 'string',
+                    },
+                    header: {
+                        type: 'html',
+                    },
+                    tabActive: {
+                        type: 'number',
+                        default: 0,
+                    },
+                    changed: {
+                        type: 'boolean',
+                        default: false,
+                    }
+                },
+                save: function( { attributes } ) {
+                    const {pid, header} = attributes;
 
+                    return (
+                        <div className="advgb-tab-body-container">
+                            <div className="advgb-tab-body-header">{header}</div>
+                            <div className="advgb-tab-body" id={pid}>
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                },
+            }
+        ]
     });
 
 } ) ( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

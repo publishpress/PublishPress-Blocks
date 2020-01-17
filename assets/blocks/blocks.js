@@ -6295,7 +6295,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpCompose) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
@@ -6314,8 +6314,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         Button = wpComponents.Button;
     var _wp$data = wp.data,
-        dispatch = _wp$data.dispatch,
-        select = _wp$data.select;
+        withDispatch = _wp$data.withDispatch,
+        withSelect = _wp$data.withSelect,
+        select = _wp$data.select,
+        dispatch = _wp$data.dispatch;
+    var compose = wpCompose.compose;
+    var _lodash = lodash,
+        times = _lodash.times;
 
 
     var svgPath = React.createElement(
@@ -6368,7 +6373,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes = _props.setAttributes;
 
                 var currentBlockConfig = advgbDefaultConfig['advgb-adv-tabs'];
-
                 // No override attributes of blocks inserted before
                 if (attributes.changed !== true) {
                     if ((typeof currentBlockConfig === "undefined" ? "undefined" : _typeof(currentBlockConfig)) === 'object' && currentBlockConfig !== null) {
@@ -6389,8 +6393,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "componentDidMount",
             value: function componentDidMount() {
                 if (!this.props.attributes.pid) {
-                    this.props.setAttributes({ pid: "advgb-tabs-" + this.props.clientId });
+                    this.props.setAttributes({ pid: "advgb-tabs-" + this.props.rootBlockID });
                 }
+                this.props.resetOrder();
             }
         }, {
             key: "updateTabsAttr",
@@ -6411,6 +6416,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 childBlocks.forEach(function (childBlockId) {
                     return updateBlockAttributes(childBlockId, attrs);
                 });
+                this.props.resetOrder();
             }
         }, {
             key: "updateTabsHeader",
@@ -6456,6 +6462,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 setAttributes({
                     tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), [__('Tab header', 'advanced-gutenberg')])
                 });
+                this.props.resetOrder();
             }
         }, {
             key: "removeTab",
@@ -6480,6 +6487,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     })
                 });
                 this.updateTabsAttr({ tabActive: 0 });
+                this.props.resetOrder();
             }
         }, {
             key: "render",
@@ -6888,9 +6896,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
-        edit: AdvTabsWrapper,
-        save: function save(_ref8) {
-            var attributes = _ref8.attributes;
+        edit: compose(withSelect(function (select, ownProps) {
+            var clientId = ownProps.clientId;
+
+            var _select = select('core/block-editor'),
+                getBlock = _select.getBlock,
+                getBlockOrder = _select.getBlockOrder;
+
+            var block = getBlock(clientId);
+            console.log(block.clientId);
+            return {
+                tabsBlock: block,
+                realTabsCount: block.innerBlocks.length,
+                tabsInner: getBlockOrder(clientId),
+                rootBlockID: block.clientId
+            };
+        }), withDispatch(function (dispatch, _ref8, _ref9) {
+            var clientId = _ref8.clientId;
+            var select = _ref9.select;
+
+            var _select2 = select('core/block-editor'),
+                getBlock = _select2.getBlock;
+
+            var _dispatch = dispatch('core/block-editor'),
+                moveBlockToPosition = _dispatch.moveBlockToPosition,
+                removeBlock = _dispatch.removeBlock,
+                updateBlockAttributes = _dispatch.updateBlockAttributes,
+                insertBlock = _dispatch.insertBlock;
+
+            var block = getBlock(clientId);
+            console.log(block.clientId);
+            return {
+                resetOrder: function resetOrder() {
+                    times(block.innerBlocks.length, function (n) {
+                        updateBlockAttributes(block.innerBlocks[n].clientId, {
+                            id: n,
+                            rootBlockID: "advgb-tabs-" + block.clientId
+                        });
+                    });
+                }
+            };
+        }))(AdvTabsWrapper),
+        save: function save(_ref10) {
+            var attributes = _ref10.attributes;
             var tabHeaders = attributes.tabHeaders,
                 tabActiveFrontend = attributes.tabActiveFrontend,
                 tabsStyleD = attributes.tabsStyleD,
@@ -6957,7 +7005,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             );
         }
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose);
 
 /***/ }),
 
@@ -7037,26 +7085,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidMount",
             value: function componentDidMount() {
+                console.log(this.props);
                 var _props2 = this.props,
+                    attributes = _props2.attributes,
                     setAttributes = _props2.setAttributes,
                     clientId = _props2.clientId;
+                /* if(!this.props.attributes.id) {
+                     const { getBlockRootClientId, getBlockIndex, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
+                     const rootBlockId = getBlockRootClientId( clientId );
+                     const rootBlockAttrs = getBlockAttributes( rootBlockId );
+                     const { pid, tabHeaders } = rootBlockAttrs;
+                     const blockIndex = getBlockIndex( clientId, rootBlockId );
+                     setAttributes( {
+                         pid: `${pid}-${blockIndex}`,
+                         header: tabHeaders[ blockIndex ],
+                     } )
+                 } else {*/
 
-                var _ref2 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockRootClientId = _ref2.getBlockRootClientId,
-                    getBlockIndex = _ref2.getBlockIndex,
-                    getBlockAttributes = _ref2.getBlockAttributes;
+                var tabHeaders = attributes.tabHeaders,
+                    id = attributes.id,
+                    rootBlockID = attributes.rootBlockID;
 
-                var rootBlockId = getBlockRootClientId(clientId);
-                var rootBlockAttrs = getBlockAttributes(rootBlockId);
-                var pid = rootBlockAttrs.pid,
-                    tabHeaders = rootBlockAttrs.tabHeaders;
-
-                var blockIndex = getBlockIndex(clientId, rootBlockId);
 
                 setAttributes({
-                    pid: pid + "-" + blockIndex,
-                    header: tabHeaders[blockIndex]
+                    pid: rootBlockID + "-" + id,
+                    header: tabHeaders[id]
                 });
+                /*}*/
             }
         }, {
             key: "render",
@@ -7065,14 +7120,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes = _props3.attributes,
                     clientId = _props3.clientId;
                 var tabActive = attributes.tabActive,
-                    pid = attributes.pid;
+                    pid = attributes.pid,
+                    id = attributes.id;
 
-                var _ref3 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockRootClientId = _ref3.getBlockRootClientId,
-                    getBlockIndex = _ref3.getBlockIndex;
-
-                var rootBlockId = getBlockRootClientId(clientId);
-                var blockIndex = getBlockIndex(clientId, rootBlockId);
 
                 return React.createElement(
                     Fragment,
@@ -7082,7 +7132,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-tab-body",
                             id: pid,
                             style: {
-                                display: blockIndex === tabActive ? 'block' : 'none'
+                                display: id === tabActive ? 'block' : 'none'
                             }
                         },
                         React.createElement(InnerBlocks, {
@@ -7106,6 +7156,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         category: 'advgb-category',
         attributes: {
+            id: {
+                type: 'number',
+                default: 0
+            },
             pid: {
                 type: 'string'
             },
@@ -7119,12 +7173,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             changed: {
                 type: 'boolean',
                 default: false
+            },
+            tabHeaders: {
+                type: 'array'
+            },
+            rootBlockID: {
+                type: 'string'
             }
+        },
+        supports: {
+            reusable: false
         },
         keywords: [__('tab', 'advanced-gutenberg')],
         edit: TabItemEdit,
-        save: function save(_ref4) {
-            var attributes = _ref4.attributes;
+        save: function save(_ref2) {
+            var attributes = _ref2.attributes;
             var pid = attributes.pid,
                 header = attributes.header;
 
@@ -7143,8 +7206,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: {
+                pid: {
+                    type: 'string'
+                },
+                header: {
+                    type: 'html'
+                },
+                tabActive: {
+                    type: 'number',
+                    default: 0
+                },
+                changed: {
+                    type: 'boolean',
+                    default: false
+                }
+            },
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
+                var pid = attributes.pid,
+                    header = attributes.header;
 
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-tab-body-container" },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-tab-body-header" },
+                        header
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-tab-body", id: pid },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
