@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "platform": "wordpress",
   "wp_version": "5.3.2",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,12 @@
     ]
   },
   "changelog": {
+    "2.3.2": [
+      {
+        "type": "fix",
+        "title": "Translation sharing issue in some browsers"
+      }
+    ],
     "2.3.1": [
       {
         "type": "feature",
