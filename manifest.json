@@ -40,8 +40,8 @@
   "changelog": {
     "2.3.2": [
       {
-        "type": "feature",
-        "title": "Jutranslation share with Joomunited"
+        "type": "fix",
+        "title": "Translation sharing issue in some browsers"
       }
     ],
     "2.3.1": [
