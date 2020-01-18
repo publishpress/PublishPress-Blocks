@@ -497,20 +497,6 @@
             },
         },
         edit: compose(
-            withSelect( (select, ownProps) => {
-                const { clientId } = ownProps;
-                const {
-                    getBlock,
-                    getBlockOrder,
-                } = select( 'core/block-editor' );
-                const block = getBlock( clientId );
-                return {
-                    tabsBlock: block,
-                    realTabsCount: block.innerBlocks.length,
-                    tabsInner: getBlockOrder( clientId ),
-                    rootBlockID: block.clientId,
-                };
-            }),
             withDispatch( (dispatch, { clientId }, { select }) => {
                 const {
                     getBlock,
@@ -546,8 +532,7 @@
                 borderWidth,
                 borderColor,
                 borderRadius,
-                pid,
-                uniqueID
+                pid
             } = attributes;
             const blockClass = [
                 `advgb-tabs-wrapper`,
@@ -592,5 +577,76 @@
                 </div>
             );
         },
+        deprecated: [
+            {
+                attributes: {
+                    ...tabBlockAttrs,
+                    uniqueID: {
+                        type: 'string',
+                        default: ''
+                    }
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        tabHeaders,
+                        tabActiveFrontend,
+                        tabsStyleD,
+                        tabsStyleT,
+                        tabsStyleM,
+                        headerBgColor,
+                        headerTextColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        pid,
+                    } = attributes;
+                    const blockClass = [
+                        `advgb-tabs-wrapper`,
+                        `advgb-tab-${tabsStyleD}-desktop`,
+                        `advgb-tab-${tabsStyleT}-tablet`,
+                        `advgb-tab-${tabsStyleM}-mobile`,
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div id={pid} className={blockClass} data-tab-active={tabActiveFrontend}>
+                            <ul className="advgb-tabs-panel">
+                                {tabHeaders.map( ( header, index ) => (
+                                    <li key={ index } className="advgb-tab"
+                                        style={ {
+                                            backgroundColor: headerBgColor,
+                                            borderStyle: borderStyle,
+                                            borderWidth: borderWidth + 'px',
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px',
+                                        } }
+                                    >
+                                        <a href={`#${pid}-${index}`}
+                                           style={ { color: headerTextColor } }
+                                        >
+                                            <span>{header}</span>
+                                        </a>
+                                    </li>
+                                ) ) }
+                            </ul>
+                            <div className="advgb-tab-body-wrapper"
+                                 style={ {
+                                     backgroundColor: bodyBgColor,
+                                     color: bodyTextColor,
+                                     borderStyle: borderStyle,
+                                     borderWidth: borderWidth + 'px',
+                                     borderColor: borderColor,
+                                     borderRadius: borderRadius + 'px',
+                                 } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                },
+            }
+        ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose );

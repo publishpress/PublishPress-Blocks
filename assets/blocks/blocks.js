@@ -6281,6 +6281,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6903,26 +6905,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
-        edit: compose(withSelect(function (select, ownProps) {
-            var clientId = ownProps.clientId;
-
-            var _select = select('core/block-editor'),
-                getBlock = _select.getBlock,
-                getBlockOrder = _select.getBlockOrder;
-
-            var block = getBlock(clientId);
-            return {
-                tabsBlock: block,
-                realTabsCount: block.innerBlocks.length,
-                tabsInner: getBlockOrder(clientId),
-                rootBlockID: block.clientId
-            };
-        }), withDispatch(function (dispatch, _ref8, _ref9) {
+        edit: compose(withDispatch(function (dispatch, _ref8, _ref9) {
             var clientId = _ref8.clientId;
             var select = _ref9.select;
 
-            var _select2 = select('core/block-editor'),
-                getBlock = _select2.getBlock;
+            var _select = select('core/block-editor'),
+                getBlock = _select.getBlock;
 
             var _dispatch = dispatch('core/block-editor'),
                 updateBlockAttributes = _dispatch.updateBlockAttributes;
@@ -6953,8 +6941,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
-                pid = attributes.pid,
-                uniqueID = attributes.uniqueID;
+                pid = attributes.pid;
 
             var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile"].filter(Boolean).join(' ');
 
@@ -7005,7 +6992,82 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: _extends({}, tabBlockAttrs, {
+                uniqueID: {
+                    type: 'string',
+                    default: ''
+                }
+            }),
+            save: function save(_ref11) {
+                var attributes = _ref11.attributes;
+                var tabHeaders = attributes.tabHeaders,
+                    tabActiveFrontend = attributes.tabActiveFrontend,
+                    tabsStyleD = attributes.tabsStyleD,
+                    tabsStyleT = attributes.tabsStyleT,
+                    tabsStyleM = attributes.tabsStyleM,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    pid = attributes.pid;
+
+                var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile"].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { id: pid, className: blockClass, "data-tab-active": tabActiveFrontend },
+                    React.createElement(
+                        "ul",
+                        { className: "advgb-tabs-panel" },
+                        tabHeaders.map(function (header, index) {
+                            return React.createElement(
+                                "li",
+                                { key: index, className: "advgb-tab",
+                                    style: {
+                                        backgroundColor: headerBgColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth + 'px',
+                                        borderColor: borderColor,
+                                        borderRadius: borderRadius + 'px'
+                                    }
+                                },
+                                React.createElement(
+                                    "a",
+                                    { href: "#" + pid + "-" + index,
+                                        style: { color: headerTextColor }
+                                    },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        header
+                                    )
+                                )
+                            );
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-tab-body-wrapper",
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose);
 
@@ -7047,8 +7109,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
         React.createElement("path", { d: "M21,3H3C1.9,3,1,3.9,1,5v14c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V5C23,3.9,22.1,3,21,3z M21,19H3V5h10v4h8V19z" })
     );
-
-    var advgbTabUniqueIDs = [];
 
     var TabItemEdit = function (_Component) {
         _inherits(TabItemEdit, _Component);
@@ -7196,6 +7256,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 changed: {
                     type: 'boolean',
                     default: false
+                },
+                tabHeaders: {
+                    type: 'array'
+                },
+                uniqueID: {
+                    type: 'string',
+                    default: ''
+                },
+                id: {
+                    type: 'number',
+                    default: 0
                 }
             },
             save: function save(_ref3) {

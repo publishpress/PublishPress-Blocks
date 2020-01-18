@@ -14,8 +14,6 @@
         </svg>
     );
 
-    const advgbTabUniqueIDs = [];
-
     class TabItemEdit extends Component {
         constructor() {
             super( ...arguments );
@@ -131,7 +129,18 @@
                     changed: {
                         type: 'boolean',
                         default: false,
-                    }
+                    },
+                    tabHeaders: {
+                        type: 'array',
+                    },
+                    uniqueID: {
+                        type: 'string',
+                        default: '',
+                    },
+                    id: {
+                        type: 'number',
+                        default: 0
+                    },
                 },
                 save: function( { attributes } ) {
                     const {pid, header} = attributes;
@@ -144,7 +153,7 @@
                             </div>
                         </div>
                     );
-                },
+                }
             }
         ]
     });
