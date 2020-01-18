@@ -6393,7 +6393,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: "componentDidMount",
             value: function componentDidMount() {
                 if (!this.props.attributes.pid) {
-                    this.props.setAttributes({ pid: "advgb-tabs-" + this.props.rootBlockID });
+                    this.props.setAttributes({
+                        pid: "advgb-tabs-" + this.props.clientId,
+                        uniqueID: this.props.clientId
+                    });
                 }
                 this.props.resetOrder();
             }
@@ -6878,6 +6881,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         isPreview: {
             type: 'boolean',
             default: false
+        },
+        uniqueID: {
+            type: 'string',
+            default: ''
         }
     };
 
@@ -6904,7 +6911,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 getBlockOrder = _select.getBlockOrder;
 
             var block = getBlock(clientId);
-            console.log(block.clientId);
             return {
                 tabsBlock: block,
                 realTabsCount: block.innerBlocks.length,
@@ -6919,19 +6925,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 getBlock = _select2.getBlock;
 
             var _dispatch = dispatch('core/block-editor'),
-                moveBlockToPosition = _dispatch.moveBlockToPosition,
-                removeBlock = _dispatch.removeBlock,
-                updateBlockAttributes = _dispatch.updateBlockAttributes,
-                insertBlock = _dispatch.insertBlock;
+                updateBlockAttributes = _dispatch.updateBlockAttributes;
 
             var block = getBlock(clientId);
-            console.log(block.clientId);
             return {
                 resetOrder: function resetOrder() {
                     times(block.innerBlocks.length, function (n) {
                         updateBlockAttributes(block.innerBlocks[n].clientId, {
-                            id: n,
-                            rootBlockID: "advgb-tabs-" + block.clientId
+                            id: n
                         });
                     });
                 }
@@ -6952,7 +6953,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderWidth = attributes.borderWidth,
                 borderColor = attributes.borderColor,
                 borderRadius = attributes.borderRadius,
-                pid = attributes.pid;
+                pid = attributes.pid,
+                uniqueID = attributes.uniqueID;
 
             var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile"].filter(Boolean).join(' ');
 
@@ -7046,6 +7048,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M21,3H3C1.9,3,1,3.9,1,5v14c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V5C23,3.9,22.1,3,21,3z M21,19H3V5h10v4h8V19z" })
     );
 
+    var advgbTabUniqueIDs = [];
+
     var TabItemEdit = function (_Component) {
         _inherits(TabItemEdit, _Component);
 
@@ -7083,45 +7087,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "componentDidMount",
-            value: function componentDidMount() {
-                console.log(this.props);
-                var _props2 = this.props,
-                    attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    clientId = _props2.clientId;
-                /* if(!this.props.attributes.id) {
-                     const { getBlockRootClientId, getBlockIndex, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
-                     const rootBlockId = getBlockRootClientId( clientId );
-                     const rootBlockAttrs = getBlockAttributes( rootBlockId );
-                     const { pid, tabHeaders } = rootBlockAttrs;
-                     const blockIndex = getBlockIndex( clientId, rootBlockId );
-                     setAttributes( {
-                         pid: `${pid}-${blockIndex}`,
-                         header: tabHeaders[ blockIndex ],
-                     } )
-                 } else {*/
-
-                var tabHeaders = attributes.tabHeaders,
-                    id = attributes.id,
-                    rootBlockID = attributes.rootBlockID;
-
-
-                setAttributes({
-                    pid: rootBlockID + "-" + id,
-                    header: tabHeaders[id]
-                });
-                /*}*/
-            }
-        }, {
             key: "render",
             value: function render() {
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    clientId = _props3.clientId;
+                var attributes = this.props.attributes;
                 var tabActive = attributes.tabActive,
                     pid = attributes.pid,
-                    id = attributes.id;
+                    id = attributes.id,
+                    uniqueID = attributes.uniqueID;
 
 
                 return React.createElement(
@@ -7130,7 +7102,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         "div",
                         { className: "advgb-tab-body",
-                            id: pid,
+                            id: "advgb-tabs-" + uniqueID + "-" + id,
                             style: {
                                 display: id === tabActive ? 'block' : 'none'
                             }
@@ -7177,8 +7149,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             tabHeaders: {
                 type: 'array'
             },
-            rootBlockID: {
-                type: 'string'
+            uniqueID: {
+                type: 'string',
+                default: ''
             }
         },
         supports: {
@@ -7188,7 +7161,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         edit: TabItemEdit,
         save: function save(_ref2) {
             var attributes = _ref2.attributes;
-            var pid = attributes.pid,
+            var id = attributes.id,
+                uniqueID = attributes.uniqueID,
                 header = attributes.header;
 
 
@@ -7202,7 +7176,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 ),
                 React.createElement(
                     "div",
-                    { className: "advgb-tab-body", id: pid },
+                    { className: "advgb-tab-body", id: "advgb-tabs-" + uniqueID + "-" + id },
                     React.createElement(InnerBlocks.Content, null)
                 )
             );

@@ -70,7 +70,10 @@
 
         componentDidMount() {
             if (!this.props.attributes.pid) {
-                this.props.setAttributes( { pid: `advgb-tabs-${this.props.rootBlockID}` } );
+                this.props.setAttributes( {
+                    pid: `advgb-tabs-${this.props.clientId}`,
+                    uniqueID: this.props.clientId
+                } );
             }
             this.props.resetOrder();
         }
@@ -472,6 +475,10 @@
             type: 'boolean',
             default: false,
         },
+        uniqueID: {
+            type: 'string',
+            default: ''
+        }
     };
 
     registerBlockType( 'advgb/adv-tabs', {
@@ -497,7 +504,6 @@
                     getBlockOrder,
                 } = select( 'core/block-editor' );
                 const block = getBlock( clientId );
-                console.log(block.clientId);
                 return {
                     tabsBlock: block,
                     realTabsCount: block.innerBlocks.length,
@@ -510,19 +516,14 @@
                     getBlock,
                 } = select( 'core/block-editor' );
                 const {
-                    moveBlockToPosition,
-                    removeBlock,
                     updateBlockAttributes,
-                    insertBlock,
                 } = dispatch( 'core/block-editor' );
                 const block = getBlock( clientId );
-                console.log(block.clientId);
                 return {
                     resetOrder() {
                         times( block.innerBlocks.length, n => {
                             updateBlockAttributes( block.innerBlocks[ n ].clientId, {
                                 id: n,
-                                rootBlockID: `advgb-tabs-${block.clientId}`
                             } );
                         } );
                     }
@@ -546,6 +547,7 @@
                 borderColor,
                 borderRadius,
                 pid,
+                uniqueID
             } = attributes;
             const blockClass = [
                 `advgb-tabs-wrapper`,

@@ -14,6 +14,8 @@
         </svg>
     );
 
+    const advgbTabUniqueIDs = [];
+
     class TabItemEdit extends Component {
         constructor() {
             super( ...arguments );
@@ -39,37 +41,14 @@
             }
         }
 
-        componentDidMount() {
-            console.log(this.props);
-            const { attributes, setAttributes, clientId,  } = this.props;
-           /* if(!this.props.attributes.id) {
-                const { getBlockRootClientId, getBlockIndex, getBlockAttributes } = !wp.blockEditor ? select( 'core/editor' ) : select( 'core/block-editor' );
-                const rootBlockId = getBlockRootClientId( clientId );
-                const rootBlockAttrs = getBlockAttributes( rootBlockId );
-                const { pid, tabHeaders } = rootBlockAttrs;
-                const blockIndex = getBlockIndex( clientId, rootBlockId );
-                setAttributes( {
-                    pid: `${pid}-${blockIndex}`,
-                    header: tabHeaders[ blockIndex ],
-                } )
-            } else {*/
-                const { tabHeaders, id, rootBlockID } = attributes;
-
-                setAttributes( {
-                    pid: `${rootBlockID}-${id}`,
-                    header: tabHeaders[ id ]
-                } )
-            /*}*/
-        }
-
         render() {
-            const { attributes, clientId } = this.props;
-            const {tabActive, pid, id} = attributes;
+            const { attributes } = this.props;
+            const {tabActive, pid, id, uniqueID} = attributes;
 
                 return (
                     <Fragment>
                         <div className="advgb-tab-body"
-                             id={pid}
+                             id={`advgb-tabs-${uniqueID}-${id}`}
                              style={{
                                  display: id === tabActive ? 'block' : 'none',
                              }}
@@ -114,8 +93,9 @@
             tabHeaders: {
                 type: 'array',
             },
-            rootBlockID: {
+            uniqueID: {
                 type: 'string',
+                default: '',
             }
         },
         supports: {
@@ -124,12 +104,12 @@
         keywords: [ __( 'tab', 'advanced-gutenberg' ) ],
         edit: TabItemEdit,
         save: function( { attributes } ) {
-            const {pid, header} = attributes;
+            const {id, uniqueID, header} = attributes;
 
             return (
                 <div className="advgb-tab-body-container">
                     <div className="advgb-tab-body-header">{header}</div>
-                    <div className="advgb-tab-body" id={pid}>
+                    <div className="advgb-tab-body" id={`advgb-tabs-${uniqueID}-${id}`}>
                         <InnerBlocks.Content />
                     </div>
                 </div>
