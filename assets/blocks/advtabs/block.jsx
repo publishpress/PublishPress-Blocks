@@ -5,7 +5,7 @@
     const { registerBlockType, createBlock } = wpBlocks;
     const { InspectorControls, RichText, PanelColorSettings, InnerBlocks } = wpBlockEditor;
     const { Dashicon, Tooltip, PanelBody, RangeControl, SelectControl, Button } = wpComponents;
-    const { withDispatch, withSelect, select, dispatch } = wp.data;
+    const { withDispatch, select, dispatch } = wp.data;
     const { compose } = wpCompose;
     const { times } = lodash;
 
@@ -316,7 +316,7 @@
                         <ul className="advgb-tabs-panel">
                             {tabHeaders.map( ( item, index ) => (
                                 <li key={ index }
-                                    className={`advgb-tab ${tabActive === index && 'ui-tabs-active'}`}
+                                    className={`advgb-tab ${tabActive === index && 'advgb-tab-active'}`}
                                     style={ {
                                         backgroundColor: headerBgColor,
                                         borderStyle: borderStyle,
@@ -326,7 +326,9 @@
                                     } }
                                 >
                                     <a style={ { color: headerTextColor } }
-                                       onClick={ () => this.updateTabsAttr( {tabActive: index} ) }
+                                       onClick={ () => {
+                                           this.props.updateTabActive( index );
+                                       } }
                                     >
                                         <RichText
                                             tagName="p"
@@ -379,10 +381,10 @@
                     </div>
                     {!!pid &&
                     <style>
-                        {activeTabBgColor && `#block-${clientId} li.advgb-tab.ui-tabs-active {
+                        {activeTabBgColor && `#block-${clientId} li.advgb-tab.advgb-tab-active {
                                 background-color: ${activeTabBgColor} !important;
                             }`}
-                        {activeTabTextColor && `#block-${clientId} li.advgb-tab.ui-tabs-active a {
+                        {activeTabTextColor && `#block-${clientId} li.advgb-tab.advgb-tab-active a {
                                 color: ${activeTabTextColor} !important;
                             }`}
                     </style>
@@ -512,6 +514,17 @@
                                 id: n,
                             } );
                         } );
+                    },
+                    updateTabActive(tabActive) {
+                        updateBlockAttributes( block.clientId, {
+                            tabActive: tabActive,
+                        } );
+                        times( block.innerBlocks.length, n => {
+                            updateBlockAttributes( block.innerBlocks[ n ].clientId, {
+                                tabActive: tabActive,
+                            } );
+                        } );
+                        this.resetOrder();
                     }
                 };
 
@@ -554,7 +567,12 @@
                                     borderRadius: borderRadius + 'px',
                                 } }
                             >
-                                <a href={`#${pid}-${index}`}
+                                {/*<a href={`#${pid}-${index}`}
+                                   style={ { color: headerTextColor } }
+                                >
+                                    <span>{header}</span>
+                                </a>*/}
+                                <a href={`#advgb-tabs-tab${index}`}
                                    style={ { color: headerTextColor } }
                                 >
                                     <span>{header}</span>

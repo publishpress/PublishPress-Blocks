@@ -39,25 +39,34 @@
             }
         }
 
+        componentDidMount() {
+            const { attributes, setAttributes } = this.props;
+            const {id, tabHeaders} = attributes;
+
+            setAttributes({
+                header: tabHeaders[id]
+            })
+        }
+
         render() {
             const { attributes } = this.props;
-            const {tabActive, pid, id, uniqueID} = attributes;
+            const {tabActive, id, uniqueID} = attributes;
 
-                return (
-                    <Fragment>
-                        <div className="advgb-tab-body"
-                             id={`advgb-tabs-${uniqueID}-${id}`}
-                             style={{
-                                 display: id === tabActive ? 'block' : 'none',
-                             }}
-                        >
-                            <InnerBlocks
-                                template={[ [ 'core/paragraph' ] ]}
-                                templateLock={false}
-                            />
-                        </div>
-                    </Fragment>
-                );
+            return (
+                <Fragment>
+                    <div className="advgb-tab-body"
+                         id={`advgb-tabs-${uniqueID}-${id}`}
+                         style={{
+                             display: id === tabActive ? 'block' : 'none',
+                         }}
+                    >
+                        <InnerBlocks
+                            template={[ [ 'core/paragraph' ] ]}
+                            templateLock={false}
+                        />
+                    </div>
+                </Fragment>
+            );
         }
     }
 
@@ -107,7 +116,7 @@
             return (
                 <div className="advgb-tab-body-container">
                     <div className="advgb-tab-body-header">{header}</div>
-                    <div className="advgb-tab-body" id={`advgb-tabs-${uniqueID}-${id}`}>
+                    <div className="advgb-tab-body" id={`advgb-tabs-${uniqueID}-${id}`} aria-labelledby={`advgb-tabs-tab${id}`}>
                         <InnerBlocks.Content />
                     </div>
                 </div>

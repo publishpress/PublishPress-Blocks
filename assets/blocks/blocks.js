@@ -6317,7 +6317,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Button = wpComponents.Button;
     var _wp$data = wp.data,
         withDispatch = _wp$data.withDispatch,
-        withSelect = _wp$data.withSelect,
         select = _wp$data.select,
         dispatch = _wp$data.dispatch;
     var compose = wpCompose.compose;
@@ -6709,7 +6708,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "li",
                                     { key: index,
-                                        className: "advgb-tab " + (tabActive === index && 'ui-tabs-active'),
+                                        className: "advgb-tab " + (tabActive === index && 'advgb-tab-active'),
                                         style: {
                                             backgroundColor: headerBgColor,
                                             borderStyle: borderStyle,
@@ -6722,7 +6721,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         "a",
                                         { style: { color: headerTextColor },
                                             onClick: function onClick() {
-                                                return _this2.updateTabsAttr({ tabActive: index });
+                                                _this2.props.updateTabActive(index);
                                             }
                                         },
                                         React.createElement(RichText, {
@@ -6795,8 +6794,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     !!pid && React.createElement(
                         "style",
                         null,
-                        activeTabBgColor && "#block-" + clientId + " li.advgb-tab.ui-tabs-active {\n                                background-color: " + activeTabBgColor + " !important;\n                            }",
-                        activeTabTextColor && "#block-" + clientId + " li.advgb-tab.ui-tabs-active a {\n                                color: " + activeTabTextColor + " !important;\n                            }"
+                        activeTabBgColor && "#block-" + clientId + " li.advgb-tab.advgb-tab-active {\n                                background-color: " + activeTabBgColor + " !important;\n                            }",
+                        activeTabTextColor && "#block-" + clientId + " li.advgb-tab.advgb-tab-active a {\n                                color: " + activeTabTextColor + " !important;\n                            }"
                     )
                 );
             }
@@ -6923,6 +6922,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             id: n
                         });
                     });
+                },
+                updateTabActive: function updateTabActive(tabActive) {
+                    updateBlockAttributes(block.clientId, {
+                        tabActive: tabActive
+                    });
+                    times(block.innerBlocks.length, function (n) {
+                        updateBlockAttributes(block.innerBlocks[n].clientId, {
+                            tabActive: tabActive
+                        });
+                    });
+                    this.resetOrder();
                 }
             };
         }))(AdvTabsWrapper),
@@ -6965,7 +6975,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             },
                             React.createElement(
                                 "a",
-                                { href: "#" + pid + "-" + index,
+                                { href: "#advgb-tabs-tab" + index,
                                     style: { color: headerTextColor }
                                 },
                                 React.createElement(
@@ -7147,11 +7157,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var id = attributes.id,
+                    tabHeaders = attributes.tabHeaders;
+
+
+                setAttributes({
+                    header: tabHeaders[id]
+                });
+            }
+        }, {
             key: "render",
             value: function render() {
                 var attributes = this.props.attributes;
                 var tabActive = attributes.tabActive,
-                    pid = attributes.pid,
                     id = attributes.id,
                     uniqueID = attributes.uniqueID;
 
@@ -7236,7 +7259,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 ),
                 React.createElement(
                     "div",
-                    { className: "advgb-tab-body", id: "advgb-tabs-" + uniqueID + "-" + id },
+                    { className: "advgb-tab-body", id: "advgb-tabs-" + uniqueID + "-" + id, "aria-labelledby": "advgb-tabs-tab" + id },
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
