@@ -6352,6 +6352,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
     var previewImageData = 'data:image/png;base64,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';
 
+    /**
+     * This allows for checking to see if the block needs to generate a new ID.
+     */
+    var advgbTabsUniqueIDs = [];
+
     var AdvTabsWrapper = function (_Component) {
         _inherits(AdvTabsWrapper, _Component);
 
@@ -6393,12 +6398,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "componentDidMount",
             value: function componentDidMount() {
+                if (!this.props.attributes.uniqueID) {
+                    this.props.setAttributes({
+                        uniqueID: '_' + this.props.clientId.substr(2, 9)
+                    });
+                    advgbTabsUniqueIDs.push('_' + this.props.clientId.substr(2, 9));
+                } else if (advgbTabsUniqueIDs.includes(this.props.attributes.uniqueID)) {
+                    this.props.setAttributes({
+                        uniqueID: '_' + this.props.clientId.substr(2, 9)
+                    });
+                    advgbTabsUniqueIDs.push('_' + this.props.clientId.substr(2, 9));
+                } else {
+                    advgbTabsUniqueIDs.push(this.props.attributes.uniqueID);
+                }
                 if (!this.props.attributes.pid) {
                     this.props.setAttributes({
-                        pid: "advgb-tabs-" + this.props.clientId,
-                        uniqueID: this.props.clientId
+                        pid: "advgb-tabs-" + this.props.clientId
                     });
                 }
+                this.updateTabHeaders();
                 this.props.resetOrder();
             }
         }, {
@@ -6448,17 +6466,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 setAttributes({ tabHeaders: newHeaders });
                 updateBlockAttributes(childBlocks[index], { header: header });
+                this.updateTabHeaders();
+            }
+        }, {
+            key: "updateTabHeaders",
+            value: function updateTabHeaders() {
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    clientId = _props4.clientId;
+                var tabHeaders = attributes.tabHeaders;
+
+                var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    updateBlockAttributes = _ref5.updateBlockAttributes;
+
+                var _ref6 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref6.getBlockOrder;
+
+                var childBlocks = getBlockOrder(clientId);
+
+                childBlocks.forEach(function (childBlockId) {
+                    return updateBlockAttributes(childBlockId, { tabHeaders: tabHeaders });
+                });
             }
         }, {
             key: "addTab",
             value: function addTab() {
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes,
-                    clientId = _props4.clientId;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes,
+                    clientId = _props5.clientId;
 
-                var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    insertBlock = _ref5.insertBlock;
+                var _ref7 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    insertBlock = _ref7.insertBlock;
 
                 var tabItemBlock = createBlock('advgb/tab');
 
@@ -6471,16 +6510,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "removeTab",
             value: function removeTab(index) {
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes,
-                    clientId = _props5.clientId;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes,
+                    clientId = _props6.clientId;
 
-                var _ref6 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    removeBlock = _ref6.removeBlock;
+                var _ref8 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
+                    removeBlock = _ref8.removeBlock;
 
-                var _ref7 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref7.getBlockOrder;
+                var _ref9 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
+                    getBlockOrder = _ref9.getBlockOrder;
 
                 var childBlocks = getBlockOrder(clientId);
 
@@ -6498,10 +6537,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes,
-                    clientId = _props6.clientId;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes,
+                    clientId = _props7.clientId;
                 var viewport = this.state.viewport;
                 var tabHeaders = attributes.tabHeaders,
                     tabActive = attributes.tabActive,
@@ -6904,9 +6943,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
-        edit: compose(withDispatch(function (dispatch, _ref8, _ref9) {
-            var clientId = _ref8.clientId;
-            var select = _ref9.select;
+        edit: compose(withDispatch(function (dispatch, _ref10, _ref11) {
+            var clientId = _ref10.clientId;
+            var select = _ref11.select;
 
             var _select = select('core/block-editor'),
                 getBlock = _select.getBlock;
@@ -6936,8 +6975,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             };
         }))(AdvTabsWrapper),
-        save: function save(_ref10) {
-            var attributes = _ref10.attributes;
+        save: function save(_ref12) {
+            var attributes = _ref12.attributes;
             var tabHeaders = attributes.tabHeaders,
                 tabActiveFrontend = attributes.tabActiveFrontend,
                 tabsStyleD = attributes.tabsStyleD,
@@ -6953,11 +6992,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 borderRadius = attributes.borderRadius,
                 pid = attributes.pid;
 
-            var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile"].filter(Boolean).join(' ');
+            var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile", pid].filter(Boolean).join(' ');
 
             return React.createElement(
                 "div",
-                { id: pid, className: blockClass, "data-tab-active": tabActiveFrontend },
+                { className: blockClass, "data-tab-active": tabActiveFrontend },
                 React.createElement(
                     "ul",
                     { className: "advgb-tabs-panel" },
@@ -7010,8 +7049,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: ''
                 }
             }),
-            save: function save(_ref11) {
-                var attributes = _ref11.attributes;
+            save: function save(_ref13) {
+                var attributes = _ref13.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -7120,6 +7159,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         React.createElement("path", { d: "M21,3H3C1.9,3,1,3.9,1,5v14c0,1.1,0.9,2,2,2h18c1.1,0,2-0.9,2-2V5C23,3.9,22.1,3,21,3z M21,19H3V5h10v4h8V19z" })
     );
 
+    /**
+     * This allows for checking to see if the block needs to generate a new ID.
+     */
+    var advgbTabsUniqueIDs = [];
+
     var TabItemEdit = function (_Component) {
         _inherits(TabItemEdit, _Component);
 
@@ -7166,6 +7210,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     tabHeaders = attributes.tabHeaders;
 
 
+                if (!this.props.attributes.uniqueID) {
+                    this.props.setAttributes({
+                        uniqueID: '_' + this.props.clientId.substr(2, 9)
+                    });
+                    advgbTabsUniqueIDs.push('_' + this.props.clientId.substr(2, 9));
+                } else if (advgbTabsUniqueIDs.includes(this.props.attributes.uniqueID)) {
+                    this.props.setAttributes({
+                        uniqueID: '_' + this.props.clientId.substr(2, 9)
+                    });
+                    advgbTabsUniqueIDs.push('_' + this.props.clientId.substr(2, 9));
+                } else {
+                    advgbTabsUniqueIDs.push(this.props.attributes.uniqueID);
+                }
+
                 setAttributes({
                     header: tabHeaders[id]
                 });
@@ -7179,13 +7237,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     uniqueID = attributes.uniqueID;
 
 
+                var tabClassName = ["advgb-tab-" + uniqueID, 'advgb-tab-body'].filter(Boolean).join(' ');
                 return React.createElement(
                     Fragment,
                     null,
                     React.createElement(
                         "div",
-                        { className: "advgb-tab-body",
-                            id: "advgb-tabs-" + uniqueID + "-" + id,
+                        { className: tabClassName,
                             style: {
                                 display: id === tabActive ? 'block' : 'none'
                             }
@@ -7230,7 +7288,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: false
             },
             tabHeaders: {
-                type: 'array'
+                type: 'array',
+                default: [__('Tab 1', 'advanced-gutenberg'), __('Tab 2', 'advanced-gutenberg'), __('Tab 3', 'advanced-gutenberg')]
             },
             uniqueID: {
                 type: 'string',
@@ -7249,6 +7308,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 header = attributes.header;
 
 
+            var tabClassName = ["advgb-tab-" + uniqueID, 'advgb-tab-body'].filter(Boolean).join(' ');
+
             return React.createElement(
                 "div",
                 { className: "advgb-tab-body-container" },
@@ -7259,7 +7320,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 ),
                 React.createElement(
                     "div",
-                    { className: "advgb-tab-body", id: "advgb-tabs-" + uniqueID + "-" + id, "aria-labelledby": "advgb-tabs-tab" + id },
+                    { className: tabClassName, "aria-labelledby": "advgb-tabs-tab" + id },
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
@@ -7281,15 +7342,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     default: false
                 },
                 tabHeaders: {
-                    type: 'array'
+                    type: 'array',
+                    default: [__('Tab 1', 'advanced-gutenberg'), __('Tab 2', 'advanced-gutenberg'), __('Tab 3', 'advanced-gutenberg')]
                 },
                 uniqueID: {
                     type: 'string',
                     default: ''
-                },
-                id: {
-                    type: 'number',
-                    default: 0
                 }
             },
             save: function save(_ref3) {

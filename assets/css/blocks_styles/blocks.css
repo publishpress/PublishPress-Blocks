@@ -919,7 +919,9 @@ div.advgb-tab-body {
 #editor .advgb-tab-body-wrapper {
     padding: 20px;
 }
-
+.edit-post-visual-editor .advgb-tabs-wrapper .block-editor-button-block-appender {
+    display: none;
+}
 
 .advgb-tab-body-wrapper {
     border: 1px solid #ccc;

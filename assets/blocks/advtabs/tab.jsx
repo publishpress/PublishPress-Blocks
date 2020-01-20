@@ -14,6 +14,11 @@
         </svg>
     );
 
+    /**
+     * This allows for checking to see if the block needs to generate a new ID.
+     */
+    const advgbTabsUniqueIDs = [];
+
     class TabItemEdit extends Component {
         constructor() {
             super( ...arguments );
@@ -43,6 +48,20 @@
             const { attributes, setAttributes } = this.props;
             const {id, tabHeaders} = attributes;
 
+            if ( ! this.props.attributes.uniqueID ) {
+                this.props.setAttributes( {
+                    uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
+                } );
+                advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
+            } else if ( advgbTabsUniqueIDs.includes( this.props.attributes.uniqueID ) ) {
+                this.props.setAttributes( {
+                    uniqueID: '_' + this.props.clientId.substr( 2, 9 ),
+                } );
+                advgbTabsUniqueIDs.push( '_' + this.props.clientId.substr( 2, 9 ) );
+            } else {
+                advgbTabsUniqueIDs.push( this.props.attributes.uniqueID );
+            }
+
             setAttributes({
                 header: tabHeaders[id]
             })
@@ -52,10 +71,13 @@
             const { attributes } = this.props;
             const {tabActive, id, uniqueID} = attributes;
 
+            const tabClassName = [
+                `advgb-tab-${uniqueID}`,
+                'advgb-tab-body'
+            ].filter(Boolean).join(' ');
             return (
                 <Fragment>
-                    <div className="advgb-tab-body"
-                         id={`advgb-tabs-${uniqueID}-${id}`}
+                    <div className={tabClassName}
                          style={{
                              display: id === tabActive ? 'block' : 'none',
                          }}
@@ -99,6 +121,11 @@
             },
             tabHeaders: {
                 type: 'array',
+                default: [
+                    __( 'Tab 1', 'advanced-gutenberg' ),
+                    __( 'Tab 2', 'advanced-gutenberg' ),
+                    __( 'Tab 3', 'advanced-gutenberg' ),
+                ]
             },
             uniqueID: {
                 type: 'string',
@@ -113,10 +140,15 @@
         save: function( { attributes } ) {
             const {id, uniqueID, header} = attributes;
 
+            const tabClassName = [
+                `advgb-tab-${uniqueID}`,
+                'advgb-tab-body'
+            ].filter(Boolean).join(' ');
+
             return (
                 <div className="advgb-tab-body-container">
                     <div className="advgb-tab-body-header">{header}</div>
-                    <div className="advgb-tab-body" id={`advgb-tabs-${uniqueID}-${id}`} aria-labelledby={`advgb-tabs-tab${id}`}>
+                    <div className={tabClassName} aria-labelledby={`advgb-tabs-tab${id}`}>
                         <InnerBlocks.Content />
                     </div>
                 </div>
@@ -141,15 +173,16 @@
                     },
                     tabHeaders: {
                         type: 'array',
+                        default: [
+                            __( 'Tab 1', 'advanced-gutenberg' ),
+                            __( 'Tab 2', 'advanced-gutenberg' ),
+                            __( 'Tab 3', 'advanced-gutenberg' ),
+                        ]
                     },
                     uniqueID: {
                         type: 'string',
                         default: '',
-                    },
-                    id: {
-                        type: 'number',
-                        default: 0
-                    },
+                    }
                 },
                 save: function( { attributes } ) {
                     const {pid, header} = attributes;
