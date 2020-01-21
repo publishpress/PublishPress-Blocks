@@ -869,7 +869,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpCompose) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Fragment = wpElement.Fragment,
@@ -886,8 +886,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         ToggleControl = wpComponents.ToggleControl;
     var _wp$data = wp.data,
-        select = _wp$data.select,
-        dispatch = _wp$data.dispatch;
+        withDispatch = _wp$data.withDispatch,
+        select = _wp$data.select;
+    var compose = wpCompose.compose;
+    var _lodash = lodash,
+        times = _lodash.times;
 
 
     var HEADER_ICONS = {
@@ -942,10 +945,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function AccordionItemEdit() {
             _classCallCheck(this, AccordionItemEdit);
 
-            var _this = _possibleConstructorReturn(this, (AccordionItemEdit.__proto__ || Object.getPrototypeOf(AccordionItemEdit)).apply(this, arguments));
-
-            _this.updateAccordionAttrs = _this.updateAccordionAttrs.bind(_this);
-            return _this;
+            return _possibleConstructorReturn(this, (AccordionItemEdit.__proto__ || Object.getPrototypeOf(AccordionItemEdit)).apply(this, arguments));
         }
 
         _createClass(AccordionItemEdit, [{
@@ -977,34 +977,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
-            key: "updateAccordionAttrs",
-            value: function updateAccordionAttrs(attrs) {
-                var clientId = this.props.clientId;
-
-                var _ref2 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    updateBlockAttributes = _ref2.updateBlockAttributes;
-
-                var _ref3 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockOrder = _ref3.getBlockOrder,
-                    getBlockRootClientId = _ref3.getBlockRootClientId;
-
-                var rootBlockId = getBlockRootClientId(clientId);
-                var childBlocks = getBlockOrder(rootBlockId);
-
-                updateBlockAttributes(rootBlockId, attrs);
-                childBlocks.forEach(function (childBlockId) {
-                    return updateBlockAttributes(childBlockId, attrs);
-                });
-            }
-        }, {
             key: "render",
             value: function render() {
                 var _this2 = this;
 
                 var _props2 = this.props,
                     attributes = _props2.attributes,
-                    setAttributes = _props2.setAttributes,
-                    clientId = _props2.clientId;
+                    setAttributes = _props2.setAttributes;
                 var header = attributes.header,
                     headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
@@ -1017,20 +996,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     borderColor = attributes.borderColor,
                     borderRadius = attributes.borderRadius,
                     marginBottom = attributes.marginBottom,
-                    blockCollapsed = attributes.collapsedAll;
+                    collapsedAll = attributes.collapsedAll;
 
-                var _ref4 = !wp.blockEditor ? select('core/editor') : select('core/block-editor'),
-                    getBlockRootClientId = _ref4.getBlockRootClientId,
-                    getBlockAttributes = _ref4.getBlockAttributes;
-
-                var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
-                    updateBlockAttributes = _ref5.updateBlockAttributes;
-
-                var rootBlockId = getBlockRootClientId(clientId);
-                var rootBlockAttrs = getBlockAttributes(rootBlockId);
-                var collapsedAll = rootBlockAttrs.collapsedAll;
-
-                if (blockCollapsed !== collapsedAll) setAttributes({ collapsedAll: collapsedAll });
 
                 return React.createElement(
                     Fragment,
@@ -1048,7 +1015,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 min: 0,
                                 max: 50,
                                 onChange: function onChange(value) {
-                                    return _this2.updateAccordionAttrs({ marginBottom: value });
+                                    return _this2.props.updateRootBlockAttrs({ marginBottom: value });
                                 }
                             }),
                             React.createElement(ToggleControl, {
@@ -1056,8 +1023,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 help: __('Make all accordions collapsed by default.', 'advanced-gutenberg'),
                                 checked: collapsedAll,
                                 onChange: function onChange() {
-                                    updateBlockAttributes(rootBlockId, { collapsedAll: !collapsedAll });
-                                    setAttributes({ collapsedAll: !collapsedAll });
+                                    return _this2.props.updateRootBlockAttrs({ collapsedAll: !collapsedAll });
                                 }
                             })
                         ),
@@ -1078,7 +1044,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 "span",
                                                 { className: key === headerIcon ? 'active' : '',
                                                     onClick: function onClick() {
-                                                        return _this2.updateAccordionAttrs({ headerIcon: key });
+                                                        return _this2.props.updateRootBlockAttrs({ headerIcon: key });
                                                     } },
                                                 React.createElement(
                                                     "svg",
@@ -1097,19 +1063,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Background Color', 'advanced-gutenberg'),
                                     value: headerBgColor,
                                     onChange: function onChange(value) {
-                                        return _this2.updateAccordionAttrs({ headerBgColor: value === undefined ? '#000' : value });
+                                        return _this2.props.updateRootBlockAttrs({ headerBgColor: value === undefined ? '#000' : value });
                                     }
                                 }, {
                                     label: __('Text Color', 'advanced-gutenberg'),
                                     value: headerTextColor,
                                     onChange: function onChange(value) {
-                                        return _this2.updateAccordionAttrs({ headerTextColor: value === undefined ? '#eee' : value });
+                                        return _this2.props.updateRootBlockAttrs({ headerTextColor: value === undefined ? '#eee' : value });
                                     }
                                 }, {
                                     label: __('Icon Color', 'advanced-gutenberg'),
                                     value: headerIconColor,
                                     onChange: function onChange(value) {
-                                        return _this2.updateAccordionAttrs({ headerIconColor: value === undefined ? '#fff' : value });
+                                        return _this2.props.updateRootBlockAttrs({ headerIconColor: value === undefined ? '#fff' : value });
                                     }
                                 }]
                             })
@@ -1121,13 +1087,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 label: __('Background Color', 'advanced-gutenberg'),
                                 value: bodyBgColor,
                                 onChange: function onChange(value) {
-                                    return _this2.updateAccordionAttrs({ bodyBgColor: value });
+                                    return _this2.props.updateRootBlockAttrs({ bodyBgColor: value });
                                 }
                             }, {
                                 label: __('Text Color', 'advanced-gutenberg'),
                                 value: bodyTextColor,
                                 onChange: function onChange(value) {
-                                    return _this2.updateAccordionAttrs({ bodyTextColor: value });
+                                    return _this2.props.updateRootBlockAttrs({ bodyTextColor: value });
                                 }
                             }]
                         }),
@@ -1139,7 +1105,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 value: borderStyle,
                                 options: [{ label: __('Solid', 'advanced-gutenberg'), value: 'solid' }, { label: __('Dashed', 'advanced-gutenberg'), value: 'dashed' }, { label: __('Dotted', 'advanced-gutenberg'), value: 'dotted' }],
                                 onChange: function onChange(value) {
-                                    return _this2.updateAccordionAttrs({ borderStyle: value });
+                                    return _this2.props.updateRootBlockAttrs({ borderStyle: value });
                                 }
                             }),
                             React.createElement(PanelColorSettings, {
@@ -1149,7 +1115,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     label: __('Border Color', 'advanced-gutenberg'),
                                     value: borderColor,
                                     onChange: function onChange(value) {
-                                        return _this2.updateAccordionAttrs({ borderColor: value });
+                                        return _this2.props.updateRootBlockAttrs({ borderColor: value });
                                     }
                                 }]
                             }),
@@ -1159,7 +1125,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 min: 0,
                                 max: 10,
                                 onChange: function onChange(value) {
-                                    return _this2.updateAccordionAttrs({ borderWidth: value });
+                                    return _this2.props.updateRootBlockAttrs({ borderWidth: value });
                                 }
                             }),
                             React.createElement(RangeControl, {
@@ -1168,7 +1134,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 min: 0,
                                 max: 100,
                                 onChange: function onChange(value) {
-                                    return _this2.updateAccordionAttrs({ borderRadius: value });
+                                    return _this2.props.updateRootBlockAttrs({ borderRadius: value });
                                 }
                             })
                         )
@@ -1305,11 +1271,36 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             changed: {
                 type: 'boolean',
                 default: false
+            },
+            rootBlockId: {
+                type: 'string',
+                default: ''
             }
         },
-        edit: AccordionItemEdit,
-        save: function save(_ref6) {
-            var attributes = _ref6.attributes;
+        edit: compose([withDispatch(function (dispatch, _ref2, _ref3) {
+            var clientId = _ref2.clientId;
+            var select = _ref3.select;
+
+            var _select = select('core/block-editor'),
+                getBlockRootClientId = _select.getBlockRootClientId,
+                getBlocksByClientId = _select.getBlocksByClientId;
+
+            var _dispatch = dispatch('core/block-editor'),
+                updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+            var rootID = getBlockRootClientId(clientId);
+            var accordionBlock = getBlocksByClientId(rootID);
+            return {
+                updateRootBlockAttrs: function updateRootBlockAttrs(attrs) {
+                    updateBlockAttributes(rootID, attrs);
+                    times(accordionBlock[0].innerBlocks.length, function (n) {
+                        updateBlockAttributes(accordionBlock[0].innerBlocks[n].clientId, attrs);
+                    });
+                }
+            };
+        })])(AccordionItemEdit),
+        save: function save(_ref4) {
+            var attributes = _ref4.attributes;
             var header = attributes.header,
                 headerBgColor = attributes.headerBgColor,
                 headerTextColor = attributes.headerTextColor,
@@ -1369,9 +1360,132 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(InnerBlocks.Content, null)
                 )
             );
-        }
+        },
+        deprecated: [{
+            attributes: {
+                header: {
+                    type: 'string',
+                    default: __('Header text', 'advanced-gutenberg')
+                },
+                headerBgColor: {
+                    type: 'string',
+                    default: '#000'
+                },
+                headerTextColor: {
+                    type: 'string',
+                    default: '#eee'
+                },
+                headerIcon: {
+                    type: 'string',
+                    default: 'unfold'
+                },
+                headerIconColor: {
+                    type: 'string',
+                    default: '#fff'
+                },
+                bodyBgColor: {
+                    type: 'string'
+                },
+                bodyTextColor: {
+                    type: 'string'
+                },
+                borderStyle: {
+                    type: 'string',
+                    default: 'solid'
+                },
+                borderWidth: {
+                    type: 'number',
+                    default: 0
+                },
+                borderColor: {
+                    type: 'string'
+                },
+                borderRadius: {
+                    type: 'number',
+                    default: 2
+                },
+                marginBottom: {
+                    type: 'number',
+                    default: 15
+                },
+                collapsedAll: {
+                    type: 'boolean',
+                    default: false
+                },
+                changed: {
+                    type: 'boolean',
+                    default: false
+                },
+                rootBlockId: {
+                    type: 'string',
+                    default: ''
+                }
+            },
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
+                var header = attributes.header,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    headerIcon = attributes.headerIcon,
+                    headerIconColor = attributes.headerIconColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    marginBottom = attributes.marginBottom;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-accordion-item", style: { marginBottom: marginBottom } },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-header",
+                            style: {
+                                backgroundColor: headerBgColor,
+                                color: headerTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
+                                borderColor: borderColor,
+                                borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
+                            }
+                        },
+                        React.createElement(
+                            "span",
+                            { className: "advgb-accordion-header-icon" },
+                            React.createElement(
+                                "svg",
+                                { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                HEADER_ICONS[headerIcon]
+                            )
+                        ),
+                        React.createElement(
+                            "h4",
+                            { className: "advgb-accordion-header-title", style: { color: 'inherit' } },
+                            header
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-body",
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
+                                borderColor: borderColor,
+                                borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose);
 
 /***/ }),
 
@@ -1385,6 +1499,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1395,7 +1511,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpCompose) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     var __ = wpI18n.__;
     var Component = wpElement.Component,
@@ -1414,8 +1530,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         Toolbar = wpComponents.Toolbar,
         IconButton = wpComponents.IconButton;
     var _wp$data = wp.data,
+        withDispatch = _wp$data.withDispatch,
         select = _wp$data.select,
         dispatch = _wp$data.dispatch;
+    var compose = wpCompose.compose;
+    var _lodash = lodash,
+        times = _lodash.times;
 
 
     var HEADER_ICONS = {
@@ -1504,6 +1624,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _props2 = this.props,
+                    setAttributes = _props2.setAttributes,
+                    clientId = _props2.clientId;
+
+                setAttributes({
+                    rootBlockId: clientId
+                });
+                this.props.updateAccordionAttributes({ rootBlockId: clientId });
+            }
+        }, {
             key: "componentDidUpdate",
             value: function componentDidUpdate() {
                 var clientId = this.props.clientId;
@@ -1524,9 +1656,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateAccordionAttrs",
             value: function updateAccordionAttrs(attrs) {
-                var _props2 = this.props,
-                    setAttributes = _props2.setAttributes,
-                    clientId = _props2.clientId;
+                var _props3 = this.props,
+                    setAttributes = _props3.setAttributes,
+                    clientId = _props3.clientId;
 
                 var _ref3 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
                     updateBlockAttributes = _ref3.updateBlockAttributes;
@@ -1544,9 +1676,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "resyncAccordions",
             value: function resyncAccordions() {
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    clientId = _props3.clientId;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    clientId = _props4.clientId;
 
                 var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
                     updateBlockAttributes = _ref5.updateBlockAttributes;
@@ -1565,9 +1697,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    setAttributes = _props4.setAttributes;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    setAttributes = _props5.setAttributes;
                 var headerBgColor = attributes.headerBgColor,
                     headerTextColor = attributes.headerTextColor,
                     headerIcon = attributes.headerIcon,
@@ -1621,7 +1753,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 help: __('Make all accordions collapsed by default.', 'advanced-gutenberg'),
                                 checked: collapsedAll,
                                 onChange: function onChange() {
-                                    return setAttributes({ collapsedAll: !collapsedAll });
+                                    setAttributes({ collapsedAll: !collapsedAll });
+                                    _this2.props.updateAccordionAttributes({ collapsedAll: !collapsedAll });
                                 }
                             })
                         ),
@@ -1817,6 +1950,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         isPreview: {
             type: 'boolean',
             default: false
+        },
+        rootBlockId: {
+            type: 'string',
+            default: ''
         }
     };
 
@@ -1835,9 +1972,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
-        edit: AccordionsEdit,
-        save: function save(_ref7) {
-            var attributes = _ref7.attributes;
+        edit: compose(withDispatch(function (dispatch, _ref7, _ref8) {
+            var clientId = _ref7.clientId;
+            var select = _ref8.select;
+
+            var _select = select('core/block-editor'),
+                getBlock = _select.getBlock;
+
+            var _dispatch = dispatch('core/block-editor'),
+                updateBlockAttributes = _dispatch.updateBlockAttributes;
+
+            var block = getBlock(clientId);
+            return {
+                updateAccordionAttributes: function updateAccordionAttributes(attrs) {
+                    times(block.innerBlocks.length, function (n) {
+                        updateBlockAttributes(block.innerBlocks[n].clientId, attrs);
+                    });
+                }
+            };
+        }))(AccordionsEdit),
+        save: function save(_ref9) {
+            var attributes = _ref9.attributes;
             var collapsedAll = attributes.collapsedAll;
 
 
@@ -1846,9 +2001,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: "advgb-accordion-wrapper", "data-collapsed": collapsedAll ? collapsedAll : undefined },
                 React.createElement(InnerBlocks.Content, null)
             );
-        }
+        },
+        deprecated: [{
+            attributes: _extends({}, blockAttrs, {
+                rootBlockId: {
+                    type: 'string',
+                    default: ''
+                }
+            }),
+            save: function save(_ref10) {
+                var attributes = _ref10.attributes;
+                var collapsedAll = attributes.collapsedAll;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-accordion-wrapper", "data-collapsed": collapsedAll ? collapsedAll : undefined },
+                    React.createElement(InnerBlocks.Content, null)
+                );
+            }
+        }]
     });
-})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose);
 
 /***/ }),
 
