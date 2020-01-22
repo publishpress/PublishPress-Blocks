@@ -109,7 +109,8 @@
     padding: 15px 0;
 }
 
-.advgb-accordion-header {
+.advgb-accordion-header,
+.advgb-accordion-header.ui-accordion-header.ui-state-default {
     padding: 5px 40px 5px 10px;
     border: 1px solid #ccc;
     margin-top: 10px;
@@ -147,11 +148,12 @@
 .advgb-accordion-header[aria-expanded="true"] .advgb-accordion-header-icon {
     display: none;
 }
-
-.advgb-accordion-body {
+.advgb-accordion-body,
+.advgb-accordion-wrapper .advgb-accordion-body.ui-widget-content {
     padding: 10px 10px 10px 15px;
-    border: 1px solid #ccc;
-    border-top: none !important;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ccc;
     margin-bottom: 10px;
     width: 100%;
     background: none;

@@ -392,10 +392,11 @@
                          style={ {
                              backgroundColor: bodyBgColor,
                              color: bodyTextColor,
-                             borderStyle: borderStyle,
-                             borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
-                             borderColor: borderColor,
-                             borderRadius: !!borderRadius ? borderRadius + 'px' : undefined,
+                             borderStyle: borderStyle + ' !important',
+                             borderWidth: !!borderWidth ? borderWidth + 'px !important' : undefined,
+                             borderColor: borderColor + ' !important',
+                             borderTop: 'none !important',
+                             borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined,
                          } }
                     >
                         <InnerBlocks.Content />
