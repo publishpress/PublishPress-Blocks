@@ -1,7 +1,5 @@
 import {AdvColorControl} from "../0-adv-components/components.jsx";
-import IconListPopup from "../0-adv-components/components.jsx";
-import React from "react";
-import ReactDOM from "react-dom";
+import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -52,7 +50,6 @@ import ReactDOM from "react-dom";
             this.togglePopup = this.togglePopup.bind(this);
             this.handleIcon = this.handleIcon.bind(this);
             this.handleIconTheme = this.handleIconTheme.bind(this);
-            this.renderIconLightBox = this.renderIconLightBox.bind(this);
         }
 
         componentWillMount() {
@@ -86,19 +83,13 @@ import ReactDOM from "react-dom";
         }
 
         componentDidUpdate() {
-            const {currentItem, iconSelected, selectedIcon, iconThemeSelected, selectedIconTheme} = this.state;
+            const {currentItem, iconSelected, selectedIcon, iconThemeSelected} = this.state;
             if(selectedIcon) {
                 this.setState({
-                    selectedIcon: false
-                });
-                this.updateItems(parseInt(currentItem), {icon: iconSelected, iconTheme: iconThemeSelected});
-            }
-
-            if(selectedIconTheme) {
-                this.setState({
+                    selectedIcon: false,
                     selectedIconTheme: false
                 });
-                this.updateItems(parseInt(currentItem), {iconTheme: iconThemeSelected});
+                this.updateItems(parseInt(currentItem), {icon: iconSelected, iconTheme: iconThemeSelected});
             }
         }
 
@@ -121,8 +112,9 @@ import ReactDOM from "react-dom";
             const { items } = attributes;
 
             const newItems = items.map( (item, index) => {
-                if (idx === index) item = { ...item, ...data };
-
+                if (idx === index) {
+                    item = { ...item, ...data };
+                }
                 return item;
             } );
 
@@ -131,7 +123,7 @@ import ReactDOM from "react-dom";
         }
 
         getItemData(idx, dataName) {
-            const { attributes, setAttributes } = this.props;
+            const { attributes } = this.props;
             const { items } = attributes;
 
             let data = '';
@@ -155,30 +147,6 @@ import ReactDOM from "react-dom";
                 this.setState( {
                     showPopup: !showPopup
                 } );
-        }
-
-        renderIconLightBox(content) {
-            const {showPopup, currentItem} = this.state;
-
-            if(content && content === 'iconpopup') {
-                ReactDOM.render(
-                    <IconListPopup
-                        closePopup={ () => {
-                            if(showPopup) {
-                                this.togglePopup();
-                            }
-                        } }
-                        onSelectIcon={ this.handleIcon }
-                        onSelectIconTheme={ this.handleIconTheme }
-                        selectedIcon={this.getItemData(currentItem, 'icon')}
-                        selectedIconTheme={this.getItemData(currentItem, 'iconTheme')}
-                    />,
-                    document.getElementById('advgb-popup-icon-wrapper'))
-            } else {
-                ReactDOM.render(
-                    null,
-                    document.getElementById('advgb-popup-icon-wrapper'))
-            }
         }
 
         render() {
@@ -409,7 +377,6 @@ import ReactDOM from "react-dom";
                             }
                         )}
                     </InspectorControls>
-
                     <div className={blockWrapClass} id={blockIDX}>
                         <div className={ blockClass } style={ {textAlign: tAlign} }>
                             {items.map( (item, idx) => {
@@ -465,9 +432,22 @@ import ReactDOM from "react-dom";
                                 );
                             })}
                         </div>
-                        {showPopup ?
-                            this.renderIconLightBox('iconpopup')
-                            : this.renderIconLightBox()
+                        {
+                            showPopup ?
+                                <IconListPopupHook
+                                    content='iconpopup'
+                                    closePopup={ () => {
+                                        if(showPopup) {
+                                            this.togglePopup();
+                                        }
+                                    } }
+                                    onSelectIcon={ this.handleIcon }
+                                    onSelectIconTheme={ this.handleIconTheme }
+                                    selectedIcon={this.getItemData(currentItem, 'icon')}
+                                    selectedIconTheme={this.getItemData(currentItem, 'iconTheme')}
+                                />
+                                :
+                                null
                         }
                     </div>
                 </Fragment>
@@ -556,6 +536,7 @@ import ReactDOM from "react-dom";
             const blockWrapClass = [
                 'wp-block-advgb-icon',
                 'icon-wrapper',
+                blockIDX
             ].filter( Boolean ).join( ' ' );
 
             const blockClass = [
@@ -565,7 +546,7 @@ import ReactDOM from "react-dom";
             let i = 0;
             return (
                 <Fragment>
-                    <div className={blockWrapClass} id={blockIDX}>
+                    <div className={blockWrapClass}>
                         <div className={ blockClass }>
                             {items.map( (item, idx) => {
                                 i++;
@@ -608,6 +589,74 @@ import ReactDOM from "react-dom";
                     </div>
                 </Fragment>
             )
-        }
+        },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: ( { attributes } ) => {
+                    const {
+                        blockIDX,
+                        items,
+                        numberItem
+                    } = attributes;
+
+                    const blockWrapClass = [
+                        'wp-block-advgb-icon',
+                        'icon-wrapper',
+                    ].filter( Boolean ).join( ' ' );
+
+                    const blockClass = [
+                        'advgb-icons',
+                    ].filter( Boolean ).join( ' ' );
+
+                    let i = 0;
+                    return (
+                        <Fragment>
+                            <div className={blockWrapClass} id={blockIDX}>
+                                <div className={ blockClass }>
+                                    {items.map( (item, idx) => {
+                                        i++;
+                                        if (i > numberItem) return false;
+                                        const advgbIconClass = [
+                                            `advgb-icon-style-${item.style}`,
+                                            'advgb-icon-wrap',
+                                            `advgb-item-${idx}`,
+                                        ].filter( Boolean ).join( ' ' );
+
+                                        const iconWrapClass = [
+                                            'advgb-icon',
+                                            `advgb-icon-${item.icon}`
+                                        ].filter( Boolean ).join(' ');
+
+                                        const iconClass = [
+                                            item.iconType === 'material' && 'material-icons',
+                                            item.iconTheme !== '' && `-${item.iconTheme}`
+                                        ].filter( Boolean ).join('');
+
+                                        return (
+                                            <Fragment>
+                                                <div className={advgbIconClass}>
+                                                    {item.link !== '' && <a href={item.link} title={item.title}>
+                                                        <div className={iconWrapClass}>
+                                                            <i className={iconClass}>{item.icon}</i>
+                                                        </div>
+                                                    </a>
+                                                    }
+                                                    {item.link === '' &&
+                                                    <div className={iconWrapClass}>
+                                                        <i className={iconClass}>{item.icon}</i>
+                                                    </div>
+                                                    }
+                                                </div>
+                                            </Fragment>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </Fragment>
+                    )
+                }
+            }
+        ]
     });
 }) ( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

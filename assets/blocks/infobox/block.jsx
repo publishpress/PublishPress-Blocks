@@ -1,7 +1,5 @@
 import {AdvColorControl} from "../0-adv-components/components.jsx";
-import IconListPopup from "../0-adv-components/components.jsx";
-import React from "react";
-import ReactDOM from "react-dom";
+import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
 
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
@@ -50,7 +48,6 @@ import ReactDOM from "react-dom";
             this.togglePopup = this.togglePopup.bind(this);
             this.handleIcon = this.handleIcon.bind(this);
             this.handleIconTheme = this.handleIconTheme.bind(this);
-            this.renderIconLightBox = this.renderIconLightBox.bind(this);
         }
 
         componentWillMount() {
@@ -127,33 +124,6 @@ import ReactDOM from "react-dom";
                 iconThemeSelected: iconThemeValue,
                 selectedIconTheme: true,
             });
-        }
-
-        renderIconLightBox(content) {
-            const {showPopup} = this.state;
-            const {attributes} = this.props;
-            const {icon, iconTheme} = attributes;
-
-            if(content && content === 'iconpopup') {
-                ReactDOM.render(
-                    <IconListPopup
-                        closePopup={ () => {
-                            if(showPopup) {
-                                this.togglePopup();
-                            }
-                        }
-                        }
-                        onSelectIcon={ this.handleIcon }
-                        onSelectIconTheme={ this.handleIconTheme }
-                        selectedIcon={icon}
-                        selectedIconTheme={iconTheme}
-                    />,
-                    document.getElementById('advgb-popup-icon-wrapper'))
-            } else {
-                ReactDOM.render(
-                    null,
-                    document.getElementById('advgb-popup-icon-wrapper'))
-            }
         }
 
         render() {
@@ -740,9 +710,23 @@ import ReactDOM from "react-dom";
                                     />
                                 </div>
                             </div>
-                            {showPopup ?
-                                this.renderIconLightBox('iconpopup')
-                                : this.renderIconLightBox()
+                            {
+                                showPopup ?
+                                    <IconListPopupHook
+                                        content='iconpopup'
+                                        closePopup={ () => {
+                                            if(showPopup) {
+                                                this.togglePopup();
+                                            }
+                                        }
+                                        }
+                                        onSelectIcon={ this.handleIcon }
+                                        onSelectIconTheme={ this.handleIconTheme }
+                                        selectedIcon={icon}
+                                        selectedIconTheme={iconTheme}
+                                    />
+                                    :
+                                    null
                             }
                         </div>
                     </Fragment>
@@ -1035,6 +1019,7 @@ import ReactDOM from "react-dom";
                 'wp-block-advgb-infobox',
                 'advgb-infobox-wrapper',
                 `has-text-align-${align}`,
+                blockIDX
             ].filter( Boolean ).join( ' ' );
 
             const blockClass = [
@@ -1048,7 +1033,7 @@ import ReactDOM from "react-dom";
 
             return (
                 <Fragment>
-                    <div className={blockWrapClass} id={blockIDX}>
+                    <div className={blockWrapClass}>
                         <div className={ blockClass }>
                             <div className="advgb-infobox-icon-container">
                                 <div className="advgb-infobox-icon-inner-container">
@@ -1071,6 +1056,63 @@ import ReactDOM from "react-dom";
                     </div>
                 </Fragment>
             )
-        }
+        },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: ( { attributes } ) => {
+                    const {
+                        blockIDX,
+                        title,
+                        titleHtmlTag,
+                        text,
+                        icon,
+                        iconTheme,
+                        align,
+                    } = attributes;
+
+                    const blockWrapClass = [
+                        'wp-block-advgb-infobox',
+                        'advgb-infobox-wrapper',
+                        `has-text-align-${align}`,
+                    ].filter( Boolean ).join( ' ' );
+
+                    const blockClass = [
+                        'advgb-infobox-wrap',
+                    ].filter( Boolean ).join( ' ' );
+
+                    const iconClass = [
+                        'material-icons',
+                        iconTheme !== '' && `-${iconTheme}`
+                    ].filter( Boolean ).join('');
+
+                    return (
+                        <Fragment>
+                            <div className={blockWrapClass} id={blockIDX}>
+                                <div className={ blockClass }>
+                                    <div className="advgb-infobox-icon-container">
+                                        <div className="advgb-infobox-icon-inner-container">
+                                            <i className={iconClass}>{icon}</i>
+                                        </div>
+                                    </div>
+                                    <div className="advgb-infobox-textcontent">
+                                        <RichText.Content
+                                            tagName={titleHtmlTag}
+                                            className="advgb-infobox-title"
+                                            value={ title }
+                                        />
+                                        <RichText.Content
+                                            tagName="p"
+                                            className="advgb-infobox-text"
+                                            value={ text }
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </Fragment>
+                    )
+                }
+            }
+        ]
     });
 }) ( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
