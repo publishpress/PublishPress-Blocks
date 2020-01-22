@@ -119,7 +119,9 @@
     margin-bottom: 0;
 }
 
-.ui-accordion-header-icon {
+
+.ui-accordion-header-icon,
+.advgb-accordion-header.ui-accordion-header.ui-state-default .ui-accordion-header-icon{
     display: none;
 }
 

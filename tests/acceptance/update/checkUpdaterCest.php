@@ -23,7 +23,7 @@ class checkUpdaterCest
 
         $I->click('Update test');
 
-        $I->waitForElement('.edit-post-welcome-guide');
+        $I->waitForElementVisible('.edit-post-welcome-guide');
         $I->clickWithLeftButton('//button[@aria-label="Close"]');
 
         $I->dontSee('This block has encountered an error and cannot be previewed.');
