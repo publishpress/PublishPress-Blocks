@@ -382,7 +382,6 @@
                 <div className={ blockClasses }
                      id={ colId }
                      style={ {
-                         width: width ? width + '%' : undefined,
                          flex: width ? 'none' : undefined,
                      } }
                 >
@@ -395,6 +394,37 @@
             );
         },
         deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        width,
+                        columnClasses, colId,
+                        borderColor, borderStyle, borderWidth, borderRadius,
+                    } = attributes;
+
+                    const blockClasses = [
+                        'advgb-column',
+                        columnClasses,
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClasses }
+                             id={ colId }
+                             style={ {
+                                 width: width ? width + '%' : undefined,
+                                 flex: width ? 'none' : undefined,
+                             } }
+                        >
+                            <div className="advgb-column-inner"
+                                 style={ { borderStyle, borderColor, borderWidth, borderRadius, } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: blockAttrs,
                 save: function ( { attributes } ) {
