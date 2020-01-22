@@ -27,7 +27,8 @@ class createUpdateTestBlocksCest
         // Create new post
         $I->amOnPage('/wp-admin/post-new.php');
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+        $I->waitForElementVisible('.edit-post-welcome-guide');
+        $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
 
         // Change post title
         $I->waitForElement('.editor-post-title__input');
@@ -447,10 +448,10 @@ class createUpdateTestBlocksCest
         // Insert content to column 1
         try {
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:first-child .block-list-appender');
-            $I->waitForElement('.editor-inserter__search');
+            $I->waitForElement('.block-editor-inserter__popover .components-popover__content');
             $I->wait(0.2); // wait for animation done
             // Insert paragraph block
-            $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
+            $I->fillField(['xpath'=>'//input[contains(@id, \'block-editor-inserter__search-\')]'], 'Paragraph');
             $I->waitForText('Paragraph');
             $I->click('Paragraph');
         } catch (Exception $e) {
@@ -465,10 +466,10 @@ class createUpdateTestBlocksCest
         try {
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:nth-child(2)');
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:nth-child(2) .block-list-appender');
-            $I->waitForElement('.editor-inserter__search');
+            $I->waitForElement('.block-editor-inserter__popover .components-popover__content');
             $I->wait(0.2); // wait for animation done
             // Insert paragraph block
-            $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
+            $I->fillField(['xpath'=>'//input[contains(@id, \'block-editor-inserter__search-\')]'], 'Paragraph');
             $I->waitForText('Paragraph');
             $I->click('Paragraph');
         } catch (Exception $e) {
@@ -483,10 +484,10 @@ class createUpdateTestBlocksCest
         try {
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child');
             $I->click('.advgb-columns-wrapper .advgb-columns .editor-block-list__layout > div.wp-block:last-child .block-list-appender');
-            $I->waitForElement('.editor-inserter__search');
+            $I->waitForElement('.block-editor-inserter__popover .components-popover__content');
             $I->wait(0.2); // wait for animation done
             // Insert paragraph block
-            $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Paragraph');
+            $I->fillField(['xpath'=>'//input[contains(@id, \'block-editor-inserter__search-\')]'], 'Paragraph');
             $I->waitForText('Paragraph');
             $I->click('Paragraph');
         } catch (Exception $e) {

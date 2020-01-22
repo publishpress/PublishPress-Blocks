@@ -1,11 +1,13 @@
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpCompose ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, PanelColorSettings, InnerBlocks } = wpBlockEditor;
     const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl, Toolbar, IconButton } = wpComponents;
-    const { select, dispatch } = wp.data;
+    const { withDispatch, select, dispatch } = wp.data;
+    const { compose } = wpCompose;
+    const { times } = lodash;
 
     const HEADER_ICONS = {
         plus: (
@@ -81,6 +83,14 @@
                 // Finally set changed attribute to true, so we don't modify anything again
                 setAttributes( { changed: true } );
             }
+        }
+
+        componentDidMount() {
+            const { setAttributes, clientId } = this.props;
+            setAttributes({
+                rootBlockId: clientId
+            });
+            this.props.updateAccordionAttributes( {rootBlockId: clientId} );
         }
 
         componentDidUpdate() {
@@ -159,7 +169,10 @@
                                 label={ __( 'Initial Collapsed', 'advanced-gutenberg' ) }
                                 help={ __( 'Make all accordions collapsed by default.', 'advanced-gutenberg' ) }
                                 checked={ collapsedAll }
-                                onChange={ () => setAttributes( { collapsedAll: !collapsedAll } ) }
+                                onChange={ () => {
+                                    setAttributes( { collapsedAll: !collapsedAll } );
+                                    this.props.updateAccordionAttributes( {collapsedAll: !collapsedAll} );
+                                } }
                             />
                         </PanelBody>
                         <PanelBody title={ __( 'Header Settings', 'advanced-gutenberg' ) }>
@@ -329,6 +342,10 @@
         isPreview: {
             type: 'boolean',
             default: false,
+        },
+        rootBlockId: {
+            type: 'string',
+            default: ''
         }
     };
 
@@ -347,7 +364,24 @@
                 isPreview: true
             },
         },
-        edit: AccordionsEdit,
+        edit: compose(
+            withDispatch( (dispatch, { clientId }, { select }) => {
+                const {
+                    getBlock,
+                } = select( 'core/block-editor' );
+                const {
+                    updateBlockAttributes,
+                } = dispatch( 'core/block-editor' );
+                const block = getBlock( clientId );
+                return {
+                    updateAccordionAttributes( attrs ) {
+                        times( block.innerBlocks.length, n => {
+                            updateBlockAttributes( block.innerBlocks[ n ].clientId, attrs );
+                        } );
+                    },
+                };
+            })
+        )(AccordionsEdit),
         save: function ( { attributes } ) {
             const { collapsedAll } = attributes;
 
@@ -356,6 +390,26 @@
                     <InnerBlocks.Content />
                 </div>
             );
-        }
+        },
+        deprecated: [
+            {
+                attributes: {
+                    ...blockAttrs,
+                    rootBlockId: {
+                        type: 'string',
+                        default: ''
+                    }
+                },
+                save: function ( { attributes } ) {
+                    const { collapsedAll } = attributes;
+
+                    return (
+                        <div className="advgb-accordion-wrapper" data-collapsed={ collapsedAll ? collapsedAll : undefined }>
+                            <InnerBlocks.Content />
+                        </div>
+                    );
+                }
+            }
+        ]
     } )
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.compose );

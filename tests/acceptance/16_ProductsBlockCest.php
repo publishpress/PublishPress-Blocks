@@ -30,7 +30,8 @@ class ProductsBlockCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+        $I->waitForElementVisible('.edit-post-welcome-guide');
+        $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
 
         $I->fillField('.editor-post-title__input', 'Woo Products Block');
 
