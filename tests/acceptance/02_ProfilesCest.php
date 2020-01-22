@@ -21,7 +21,7 @@ class ProfilesCest
 
         // Hide the Tips popup
         $I->waitForElementVisible('.edit-post-welcome-guide');
-        $I->clickWithLeftButton('//button[@aria-label="Close"]');
+        $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
 
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');

@@ -30,7 +30,7 @@ class IconBlockCest
 
         // Hide the Tips popup
         $I->waitForElementVisible('.edit-post-welcome-guide');
-        $I->clickWithLeftButton('//button[@aria-label="Close"]');
+        $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
 
         $I->fillField('.editor-post-title__input', 'Advanced Icon');
 

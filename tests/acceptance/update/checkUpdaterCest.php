@@ -24,7 +24,7 @@ class checkUpdaterCest
         $I->click('Update test');
 
         $I->waitForElementVisible('.edit-post-welcome-guide');
-        $I->clickWithLeftButton('//button[@aria-label="Close"]');
+        $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
 
         $I->dontSee('This block has encountered an error and cannot be previewed.');
         $I->dontSee('This block contains unexpected or invalid content.');
