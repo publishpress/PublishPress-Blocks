@@ -22,7 +22,8 @@ class DetectNewBlocksCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+        $I->waitForElement('.edit-post-welcome-guide');
+        $I->clickWithLeftButton('//button[@aria-label="Close"]');
 
         // Click on + button
         $I->click('.edit-post-header-toolbar .editor-inserter button');

@@ -28,7 +28,8 @@ class MapBlockCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Hide the Tips popup
-        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+        $I->waitForElement('.edit-post-welcome-guide');
+        $I->clickWithLeftButton('//button[@aria-label="Close"]');
 
         $I->fillField('.editor-post-title__input', 'Advanced Map Block');
 
@@ -63,7 +64,7 @@ class MapBlockCest
         $I->waitForElement('.wp-block-advgb-map');
 
         // Check location
-        $I->seeElement('//div[@class="advgb-map-content"][@data-lat="21.0277644"][@data-lng="105.83415979999995"]/div');
+        $I->seeElement('//div[@class="advgb-map-content"][@data-lat="21.0277644"][@data-lng="105.8341598"]/div');
     }
 
     public function changeMapLocationUsingLatLng(AcceptanceTester $I)

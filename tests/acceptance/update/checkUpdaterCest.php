@@ -23,7 +23,8 @@ class checkUpdaterCest
 
         $I->click('Update test');
 
-        $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+        $I->waitForElement('.edit-post-welcome-guide');
+        $I->clickWithLeftButton('//button[@aria-label="Close"]');
 
         $I->dontSee('This block has encountered an error and cannot be previewed.');
         $I->dontSee('This block contains unexpected or invalid content.');
