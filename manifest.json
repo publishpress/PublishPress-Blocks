@@ -46,6 +46,14 @@
       {
         "type": "fix",
         "title": "Reusable Advanced Accordion block"
+      },
+      {
+        "type": "fix",
+        "title": "Gutenberg 7.2 compatibility"
+      },
+      {
+        "type": "fix",
+        "title": "Migration from old version of Tab block"
       }
     ],
     "2.3.2": [
