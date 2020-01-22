@@ -536,6 +536,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             const blockWrapClass = [
                 'wp-block-advgb-icon',
                 'icon-wrapper',
+                blockIDX
             ].filter( Boolean ).join( ' ' );
 
             const blockClass = [
@@ -545,7 +546,7 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
             let i = 0;
             return (
                 <Fragment>
-                    <div className={blockWrapClass} id={blockIDX}>
+                    <div className={blockWrapClass}>
                         <div className={ blockClass }>
                             {items.map( (item, idx) => {
                                 i++;
@@ -588,6 +589,74 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                     </div>
                 </Fragment>
             )
-        }
+        },
+        deprecated: [
+            {
+                attributes: blockAttrs,
+                save: ( { attributes } ) => {
+                    const {
+                        blockIDX,
+                        items,
+                        numberItem
+                    } = attributes;
+
+                    const blockWrapClass = [
+                        'wp-block-advgb-icon',
+                        'icon-wrapper',
+                    ].filter( Boolean ).join( ' ' );
+
+                    const blockClass = [
+                        'advgb-icons',
+                    ].filter( Boolean ).join( ' ' );
+
+                    let i = 0;
+                    return (
+                        <Fragment>
+                            <div className={blockWrapClass} id={blockIDX}>
+                                <div className={ blockClass }>
+                                    {items.map( (item, idx) => {
+                                        i++;
+                                        if (i > numberItem) return false;
+                                        const advgbIconClass = [
+                                            `advgb-icon-style-${item.style}`,
+                                            'advgb-icon-wrap',
+                                            `advgb-item-${idx}`,
+                                        ].filter( Boolean ).join( ' ' );
+
+                                        const iconWrapClass = [
+                                            'advgb-icon',
+                                            `advgb-icon-${item.icon}`
+                                        ].filter( Boolean ).join(' ');
+
+                                        const iconClass = [
+                                            item.iconType === 'material' && 'material-icons',
+                                            item.iconTheme !== '' && `-${item.iconTheme}`
+                                        ].filter( Boolean ).join('');
+
+                                        return (
+                                            <Fragment>
+                                                <div className={advgbIconClass}>
+                                                    {item.link !== '' && <a href={item.link} title={item.title}>
+                                                        <div className={iconWrapClass}>
+                                                            <i className={iconClass}>{item.icon}</i>
+                                                        </div>
+                                                    </a>
+                                                    }
+                                                    {item.link === '' &&
+                                                    <div className={iconWrapClass}>
+                                                        <i className={iconClass}>{item.icon}</i>
+                                                    </div>
+                                                    }
+                                                </div>
+                                            </Fragment>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </Fragment>
+                    )
+                }
+            }
+        ]
     });
 }) ( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );

@@ -4823,7 +4823,7 @@ float: left;'
                 $item = array(
                     'icon' => 'info',
                     'iconType' => 'material',
-                    'size' => 50,
+                    'size' => 120,
                     'color' => '#111111',
                     'style' => 'default',
                     'bgColor' => '',
@@ -4851,12 +4851,12 @@ float: left;'
                 $items = !isset($blockAttrs['items']) ? $default_items : $blockAttrs['items'];
                 $text_align = !isset($blockAttrs['tAlign']) ? 'center' : $blockAttrs['tAlign'];
 
-                $style_html .= '#' . $block_id . ' .advgb-icons {';
+                $style_html .= '#' . $block_id . ' .advgb-icons, .' . $block_id . ' .advgb-icons {';
                 $style_html .= 'text-align: ' . $text_align . ';';
                 $style_html .= '}';
 
                 foreach ($items as $k => $item) {
-                    $style_html .= '#' . $block_id . ' .advgb-item-'.$k.' .advgb-icon {';
+                    $style_html .= '#' . $block_id . ' .advgb-item-'.$k.' .advgb-icon, .' . $block_id . ' .advgb-item-'.$k.' .advgb-icon {';
                     $style_html .= 'display: flex;';
                     $style_html .= 'align-items:center;';
 
@@ -4879,7 +4879,7 @@ float: left;'
 
                     $style_html .= '}';
 
-                    $style_html .= '#' . $block_id . ' .advgb-item-'.$k.' .advgb-icon > i{';
+                    $style_html .= '#' . $block_id . ' .advgb-item-'.$k.' .advgb-icon > i, .' . $block_id . ' .advgb-item-'.$k.' .advgb-icon > i{';
                     $style_html .= 'font-size: ' . $item['size'] . 'px;';
                     $style_html .= 'color: ' . $item['color'] . ';';
                     $style_html .= '}';
@@ -4905,7 +4905,7 @@ float: left;'
                 $container_border_radius = '';
                 $container_border_radius .= isset($blockAttrs['containerBorderRadius']) ? $blockAttrs['containerBorderRadius'] : 0;
 
-                $style_html .= '#' . $block_id . ' {';
+                $style_html .= '#' . $block_id . ', .' . $block_id . ' {';
                 $style_html .= 'background-color: ' . $container_bg . ';';
                 $style_html .= 'padding: ' . $container_padding . ';';
                 $style_html .= 'border: ' . $container_border . ';';
@@ -4942,7 +4942,7 @@ float: left;'
                 $icon_border_radius = '';
                 $icon_border_radius .= isset($blockAttrs['iconBorderRadius']) ? $blockAttrs['iconBorderRadius'] : 0;
 
-                $style_html .= '#' . $block_id . ' .advgb-infobox-icon-container {';
+                $style_html .= '#' . $block_id . ' .advgb-infobox-icon-container, .' . $block_id . ' .advgb-infobox-icon-container {';
                 $style_html .= 'background-color: ' . $icon_background_color . ';';
                 $style_html .= 'padding: ' . $icon_padding . ';';
                 $style_html .= 'margin: ' . $icon_margin . ';';
@@ -4953,7 +4953,7 @@ float: left;'
                 $icon_color = isset($blockAttrs['iconColor']) ? $blockAttrs['iconColor'] : '#333';
                 $icon_size = isset($blockAttrs['iconSize']) ? $blockAttrs['iconSize'] : '70';
                 $icon_size_unit = isset($blockAttrs['iconSizeUnit']) ? $blockAttrs['iconSizeUnit'] : 'px';
-                $style_html .= '#' . $block_id . ' .advgb-infobox-icon-container i {';
+                $style_html .= '#' . $block_id . ' .advgb-infobox-icon-container i, .' . $block_id . ' .advgb-infobox-icon-container i {';
                 $style_html .= 'color: ' . $icon_color . ';';
                 $style_html .= 'font-size: ' . $icon_size . $icon_size_unit . ';';
                 $style_html .= 'display: block;';
@@ -4983,7 +4983,7 @@ float: left;'
 
                 $title_size_unit = isset($blockAttrs['titleSizeUnit']) ? $blockAttrs['titleSizeUnit'] : 'px';
                 $title_lh_unit = isset($blockAttrs['titleLineHeightUnit']) ? $blockAttrs['titleLineHeightUnit'] : 'px';
-                $style_html .= '#' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-title {';
+                $style_html .= '#' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-title, .' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-title {';
                 $style_html .= 'color: ' . $title_color . ';';
                 $style_html .= 'padding: ' . $title_padding . ';';
                 $style_html .= 'margin: ' . $title_margin . ';';
@@ -5020,7 +5020,7 @@ float: left;'
 
                 $text_size_unit = isset($blockAttrs['textSizeUnit']) ? $blockAttrs['textSizeUnit'] : 'px';
                 $text_lh_unit = isset($blockAttrs['textLineHeightUnit']) ? $blockAttrs['textLineHeightUnit'] : 'px';
-                $style_html .= '#' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-text {';
+                $style_html .= '#' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-text, .' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-text {';
                 $style_html .= 'color: ' . $text_color . ';';
                 $style_html .= 'padding: ' . $text_padding . ';';
                 $style_html .= 'margin: ' . $text_margin . ';';
