@@ -94,12 +94,12 @@ class AcceptanceTester extends \Codeception\Actor
         $I = $this;
         $I->clickWithLeftButton('.edit-post-visual-editor', 1,1);
         // Click on + button
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->click('.edit-post-header-toolbar .block-editor-inserter button');
 
         // Search for block
-        $I->waitForElement('.editor-inserter__search');
+        $I->waitForElement('.block-editor-inserter__popover .components-popover__content');
         $I->wait(0.2); // wait the animation done
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], $blockName);
+        $I->fillField(['xpath'=>'//input[contains(@id, \'block-editor-inserter__search-\')]'], $blockName);
 
         // Insert block
         $I->waitForText($blockName);

@@ -26,12 +26,12 @@ class DetectNewBlocksCest
         $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
 
         // Click on + button
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->click('.edit-post-header-toolbar .block-editor-inserter button');
 
         // Search for Test
-        $I->waitForElement('.editor-inserter__search');
+        $I->waitForElement('.block-editor-inserter__popover .components-popover__content');
         $I->wait(0.2); // wait the animation done
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Test');
+        $I->fillField(['xpath'=>'//input[contains(@id, \'block-editor-inserter__search-\')]'], 'Test');
 
         $I->dontSee("Test block");
 
@@ -39,10 +39,10 @@ class DetectNewBlocksCest
 
         // Go to new post page
         $I->amOnPage('/wp-admin/post-new.php');
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
-        $I->waitForElement('.editor-inserter__search');
+        $I->click('.edit-post-header-toolbar .block-editor-inserter button');
+        $I->waitForElement('.block-editor-inserter__popover .components-popover__content');
         $I->wait(0.2); // wait the animation done
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Test');
+        $I->fillField(['xpath'=>'//input[contains(@id, \'block-editor-inserter__search-\')]'], 'Test');
 
         $I->see("Test block");
 

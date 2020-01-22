@@ -24,13 +24,13 @@ class ProfilesCest
         $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
 
         // Click on + button
-        $I->click('.edit-post-header-toolbar .editor-inserter button');
+        $I->click('.edit-post-header-toolbar .block-editor-inserter button');
 
-        $I->waitForElement('.editor-inserter__search');
+        $I->waitForElement('.block-editor-inserter__popover .components-popover__content');
         $I->wait(0.2); // wait for animation done
 
         // Search for Count Up block
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Count');
+        $I->fillField(['xpath'=>'//input[contains(@id, \'block-editor-inserter__search-\')]'], 'Count');
 
         // Search count up block
         $I->see("Count Up");
@@ -64,11 +64,11 @@ class ProfilesCest
 
         // Click on + button
         $I->click('.editor-inserter button');
-        $I->waitForElement('.editor-inserter__search');
+        $I->waitForElement('.block-editor-inserter__popover .components-popover__content');
         $I->wait(0.2); // wait for animation done
 
         // Search for Count up block
-        $I->fillField(['xpath'=>'//input[contains(@id, \'editor-inserter__search-\')]'], 'Count');
+        $I->fillField(['xpath'=>'//input[contains(@id, \'block-editor-inserter__search-\')]'], 'Count');
 
         // I should not see count up anymore
         $I->dontSee("Count Up");
