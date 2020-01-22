@@ -1,7 +1,12 @@
 jQuery(document).ready(function ($) {
     $('.advgb-tabs-wrapper').each(function () {
         var activeTab = $(this).data('tab-active');
+        var tabPanel = $(this).find('.advgb-tab-panel');
+
         var tab = $(this).find('li.advgb-tab:not(".advgb-tab-active")');
+        if($(this).prop('id') !== '') {
+            tab = $(this).find('li.advgb-tab:not(".ui-state-active")');
+        }
         var tabs = $(this).find('.advgb-tab');
         var bodyHeaders = $(this).find('.advgb-tab-body-header');
         var bodyContainers = $(this).find('.advgb-tab-body-container');
@@ -12,20 +17,34 @@ jQuery(document).ready(function ($) {
         var borderRadius = tab.css('border-radius');
         var textColor = tab.find('a').css('color');
 
-        $(this).find(".advgb-tab a:not(.advgb-tabs-anchor)").unbind("click");
+        if($(this).prop('id') !== '') {
+            $( this ).find( ".advgb-tab a:not(.ui-tabs-anchor)" ).unbind( "click" );
+            // Render tabs UI
+            $( this ).tabs( {
+                active: parseInt( activeTab ),
+                activate: function ( e, ui ) {
+                    var newIdx = ui.newTab.index();
+                    bodyHeaders.removeClass( 'header-active' );
+                    bodyHeaders.eq( newIdx ).addClass( 'header-active' );
+                }
+            } );
+        } else {
 
-        tabs.on('click', function (event) {
-            event.preventDefault();
-            var currentTabActive = $(event.target).closest('.advgb-tab');
-            var href = currentTabActive.find('a').attr('href');
+            $( this ).find( ".advgb-tab a:not(.advgb-tabs-anchor)" ).unbind( "click" );
 
-            tabs.removeClass('advgb-tab-active');
-            currentTabActive.addClass('advgb-tab-active');
-            bodyContainers.find('.advgb-tab-body').hide();
-            bodyContainers.find('.advgb-tab-body[aria-labelledby="'+href.replace(/^#/, "")+'"]').show();
-        });
+            tabs.on( 'click', function ( event ) {
+                event.preventDefault();
+                var currentTabActive = $( event.target ).closest( '.advgb-tab' );
+                var href = currentTabActive.find( 'a' ).attr( 'href' );
 
-        tabs.eq(activeTab).trigger('click'); // Default
+                tabs.removeClass( 'advgb-tab-active' );
+                currentTabActive.addClass( 'advgb-tab-active' );
+                bodyContainers.find( '.advgb-tab-body' ).hide();
+                bodyContainers.find( '.advgb-tab-body[aria-labelledby="' + href.replace( /^#/, "" ) + '"]' ).show();
+            } );
+
+            tabs.eq( activeTab ).trigger( 'click' ); // Default
+        }
 
         bodyHeaders.eq(activeTab).addClass('header-active');
         bodyHeaders.css({

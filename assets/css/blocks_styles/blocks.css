@@ -843,12 +843,14 @@ ul.advgb-tabs-panel li.advgb-tab a p {
     margin: 0;
 }
 
+ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active,
 ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {
     background-color: #5954d6 !important;
     border-color: transparent !important;
     color: #fff !important;
 }
 
+ul.advgb-tabs-panel li.advgb-tab.ui-tabs-active a,
 ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active a {
     color: inherit !important;
 }

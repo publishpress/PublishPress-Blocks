@@ -410,10 +410,10 @@
                     </div>
                     {!!pid &&
                     <style>
-                        {activeTabBgColor && `#block-${clientId} li.advgb-tab.advgb-tab-active {
+                        {activeTabBgColor && `#block-${clientId} li.advgb-tab.advgb-tab-active, #block-${clientId} li.advgb-tab.ui-tabs-active {
                                 background-color: ${activeTabBgColor} !important;
                             }`}
-                        {activeTabTextColor && `#block-${clientId} li.advgb-tab.advgb-tab-active a {
+                        {activeTabTextColor && `#block-${clientId} li.advgb-tab.advgb-tab-active a, #block-${clientId} li.advgb-tab.ui-tabs-active a {
                                 color: ${activeTabTextColor} !important;
                             }`}
                     </style>

@@ -7077,8 +7077,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     !!pid && React.createElement(
                         "style",
                         null,
-                        activeTabBgColor && "#block-" + clientId + " li.advgb-tab.advgb-tab-active {\n                                background-color: " + activeTabBgColor + " !important;\n                            }",
-                        activeTabTextColor && "#block-" + clientId + " li.advgb-tab.advgb-tab-active a {\n                                color: " + activeTabTextColor + " !important;\n                            }"
+                        activeTabBgColor && "#block-" + clientId + " li.advgb-tab.advgb-tab-active, #block-" + clientId + " li.advgb-tab.ui-tabs-active {\n                                background-color: " + activeTabBgColor + " !important;\n                            }",
+                        activeTabTextColor && "#block-" + clientId + " li.advgb-tab.advgb-tab-active a, #block-" + clientId + " li.advgb-tab.ui-tabs-active a {\n                                color: " + activeTabTextColor + " !important;\n                            }"
                     )
                 );
             }
