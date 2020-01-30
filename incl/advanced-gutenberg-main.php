@@ -4814,7 +4814,7 @@ float: left;'
                 $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
                 $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
 
-                $style_html .= '.'. $block_class . ' li.advgb-tab.advgb-tab-active {';
+                $style_html .= '.'. $block_class . ' ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {';
                 $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
                 $style_html .= 'color:'.$active_tab_text_color.' !important;';
                 $style_html .= '}';
