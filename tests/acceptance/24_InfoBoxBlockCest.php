@@ -28,8 +28,15 @@ class InfoBoxBlockCest
         $I->amOnPage('/wp-admin/post-new.php');
 
         // Hide the Tips popup
-        $I->waitForElementVisible('.edit-post-welcome-guide');
-        $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
+        try {
+            $I->waitForElementVisible('.edit-post-welcome-guide');
+            $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
+        } catch (Exception $e) {
+            //not latest Gutenberg
+        }
+        try {
+            $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+        } catch (Exception $e) {}
 
         $I->fillField('.editor-post-title__input', 'Info Box');
 
