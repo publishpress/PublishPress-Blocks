@@ -40,8 +40,16 @@
   "changelog": {
     "2.3.4": [
       {
+        "type": "feature",
+        "title": "Load Advanced Gutenberg resources (JS/CSS) only when a block is called"
+      },
+      {
+        "type": "feature",
+        "title": "Gutenberg plugin 7.3 compatibility"
+      },
+      {
         "type": "fix",
-        "title": "Active tab color"
+        "title": "Active tab color does not apply"
       },
       {
         "type": "fix",
