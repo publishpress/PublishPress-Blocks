@@ -23,6 +23,7 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Default block configuration (Advanced Gutenberg blocks)
 - Custom CSS styles: apply on Gutenbergparagraph blocks
 - Define Gutenberg editor size and column materialization
+- Performance: only loaded when a block from the plugin is called
 
 
 ## ADVANCED GUTENBERG BLOCKS
