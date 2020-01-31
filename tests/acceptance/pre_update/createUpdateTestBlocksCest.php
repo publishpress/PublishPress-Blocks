@@ -27,8 +27,16 @@ class createUpdateTestBlocksCest
         // Create new post
         $I->amOnPage('/wp-admin/post-new.php');
         // Hide the Tips popup
-        $I->waitForElementVisible('.edit-post-welcome-guide');
-        $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
+        try {
+            $I->waitForElementVisible('.edit-post-welcome-guide');
+            $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
+        } catch (Exception $e) {
+            //not latest Gutenberg
+        }
+
+        try {
+            $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+        } catch (Exception $e) {}
 
         // Change post title
         $I->waitForElement('.editor-post-title__input');
@@ -65,21 +73,39 @@ class createUpdateTestBlocksCest
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[1]/td[2]');
         $I->pressKeys('Hello'.WebDriverKeys::ENTER);
         // Change color to blue
-        $I->click('//span[text()="Text Color"]/following-sibling::node()//div[2]');
+        try {
+            $I->click('//span[text()="Text Color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[2]');
+        } catch (Exception $e) {}
 
+        try {
+            $I->click('//span[text()="Text Color"]/following-sibling::node()//div[2]');
+        } catch (Exception $e) {}
 
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[4]/td[4]');
         $I->pressKeys('World');
 
         // Change color
-        $I->click('//span[text()="Background Color"]/following-sibling::node()//div[2]');
+        try {
+            $I->click('//span[text()="Background Color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[2]');
+        } catch (Exception $e) {}
+
+        try {
+            $I->click('/span[text()="Background Color"]/following-sibling::node()//div[2]');
+        } catch (Exception $e) {}
 
         $I->clickWithLeftButton('//*[@class="wp-block-advgb-table"]//tr[2]/td[2]');
         // Change border to 3px
         $I->click('//button[text()="Border"]');
         $I->fillField('//label[text()="Border width"]/following-sibling::node()/following-sibling::node()', 3);
         // Change border color to blue
-        $I->click('//span[text()="Border Color"]/following-sibling::node()//div[3]');
+        try {
+            $I->click('//span[text()="Border Color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[3]');
+        } catch (Exception $e) {}
+
+        try {
+            $I->click('//span[text()="Border Color"]/following-sibling::node()//div[3]');
+        } catch (Exception $e) {}
+
         // Set only right border
         $I->click('//div[@class="advgb-border-item-wrapper"]/div[last()]');
         $I->click('//div[@class="advgb-border-item-wrapper"]/div[2]');
@@ -337,24 +363,54 @@ class createUpdateTestBlocksCest
         $I->insertBlock('Newsletter');
 
         // Change color to blue
-        $I->click('//span[text()="Text color"]/following-sibling::node()//div[2]');
+        try {
+            $I->click('//span[text()="Border Color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[2]');
+        } catch (Exception $e) {}
+
+        try {
+            $I->click('//span[text()="Border Color"]/following-sibling::node()//div[2]');
+        } catch (Exception $e) {}
 
         // Change background color to white
-        $I->click('//span[text()="Background color"]/following-sibling::node()//div[5]');
+        try {
+            $I->click('//span[text()="Background Color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[5]');
+        } catch (Exception $e) {}
+
+        try {
+            $I->click('//span[text()="Background Color"]/following-sibling::node()//div[5]');
+        } catch (Exception $e) {}
 
         // Change border settings
         $I->click('//button[text()="Border Settings"]');
         // Change border color to blue
         $I->click('//span[text()="Border Color"]');
-        $I->click('//span[text()="Border color"]/following-sibling::node()/div[1]');
+        try {
+            $I->click('//span[text()="Border Color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[1]');
+        } catch (Exception $e) {}
+
+        try {
+            $I->click('//span[text()="Border Color"]/following-sibling::node()//div[1]');
+        } catch (Exception $e) {}
         // Change border radius to 4px
         $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 4);
 
         // Change submit button color to white
         $I->click('//span[text()="Color Settings"]');
-        $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
+        try {
+            $I->click('//span[text()="Border and Text"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[5]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
+        } catch (Exception $e) {}
+
         // Change submit button background color to blue
-        $I->click('//span[text()="Background"]/following-sibling::node()//div[1]');
+        try {
+            $I->click('//span[text()="Background"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[1]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Background"]/following-sibling::node()//div[1]');
+        } catch (Exception $e) {}
+
         // Change submit button border radius to 4px
         $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
     }
@@ -365,24 +421,49 @@ class createUpdateTestBlocksCest
         $I->insertBlock('Contact Form');
 
         // Change color to blue
-        $I->click('//span[text()="Text color"]/following-sibling::node()//div[2]');
+        try {
+            $I->click('//span[text()="Text color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[2]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Text color"]/following-sibling::node()//div[2]');
+        } catch (Exception $e) {}
 
         // Change background color to white
-        $I->click('//span[text()="Background color"]/following-sibling::node()//div[5]');
+        try {
+            $I->click('//span[text()="Background color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[5]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Background color"]/following-sibling::node()//div[5]');
+        } catch (Exception $e) {}
 
         // Change border settings
         $I->click('//button[text()="Border Settings"]');
         // Change border color to blue
         $I->click('//span[text()="Border Color"]');
-        $I->click('//span[text()="Border color"]/following-sibling::node()//div[1]');
+        try {
+            $I->click('//span[text()="Border color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[1]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Border color"]/following-sibling::node()//div[1]');
+        } catch (Exception $e) {}
         // Change border radius to 4px
         $I->fillField('//label[text()="Border radius (px)"]/following-sibling::node()/following-sibling::node()', 4);
 
         // Change submit button color to white
         $I->click('//span[text()="Color Settings"]');
-        $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
+        try {
+            $I->click('//span[text()="Border and Text"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[5]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Border and Text"]/following-sibling::node()//div[5]');
+        } catch (Exception $e) {}
         // Change submit button background color to blue
-        $I->click('//span[text()="Background"]/following-sibling::node()//div[1]');
+        try {
+            $I->click('//span[text()="Background"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[1]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Background"]/following-sibling::node()//div[1]');
+        } catch (Exception $e) {}
         // Change submit button border radius to 4px
         $I->fillField('//label[text()="Button border radius"]/following-sibling::node()/following-sibling::node()', 4);
         // Change button position to center
@@ -396,7 +477,12 @@ class createUpdateTestBlocksCest
         $I->waitForElement('.advgb-search-bar-wrapper');
 
         // Change search icon
-        $I->click('//div[text()="Search icon"]/following-sibling::node()/div[3]');
+        try {
+            $I->click('//span[text()="Search icon"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[3]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Search icon"]/following-sibling::node()//div[3]');
+        } catch (Exception $e) {}
 
         // Change width to full width
         $I->click('//label[text()="Full width"]/preceding-sibling::node()');
@@ -408,9 +494,21 @@ class createUpdateTestBlocksCest
 
         // Change input background color to black
         $I->click('//span[text()="Input Color"]');
-        $I->click('//span[text()="Background color"]/following-sibling::node()//div[3]');
+
+        try {
+            $I->click('//span[text()="Background color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[3]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Background color"]/following-sibling::node()//div[3]');
+        } catch (Exception $e) {}
+
         // Change input text color to white
-        $I->click('//span[text()="Text color"]/following-sibling::node()//div[5]');
+        try {
+            $I->click('//span[text()="Text color"]/parent::legend[1]/parent::fieldset[1]/div[1]/div[5]');
+        } catch (Exception $e) {}
+        try {
+            $I->click('//span[text()="Text color"]/following-sibling::node()//div[5]');
+        } catch (Exception $e) {}
     }
 
     public function createLoginFormBlock(AcceptanceTester $I)

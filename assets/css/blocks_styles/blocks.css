@@ -1535,6 +1535,7 @@ hr.wp-block-separator {
     position: relative;
 }
 
+/*
 #editor div[data-block]:before,
 #editor div[data-block]:after,
 .advgb-block-container .advgb-block-top-divider,
@@ -1549,6 +1550,7 @@ hr.wp-block-separator {
     height: 50px;
     background-repeat: no-repeat;
 }
+*/
 
 .advgb-block-container .advgb-block-top-divider,
 .advgb-block-container .advgb-block-bottom-divider {
@@ -1556,10 +1558,10 @@ hr.wp-block-separator {
     left: 0;
 }
 
-#editor div[data-block]:before,
+/*#editor div[data-block]:before,
 .advgb-block-container .advgb-block-top-divider {
     top: 0;
-}
+}*/
 
 #editor div[data-block]:after,
 .advgb-block-container .advgb-block-bottom-divider {

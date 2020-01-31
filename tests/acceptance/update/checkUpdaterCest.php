@@ -23,8 +23,16 @@ class checkUpdaterCest
 
         $I->click('Update test');
 
-        $I->waitForElementVisible('.edit-post-welcome-guide');
-        $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
+        try {
+            $I->waitForElementVisible('.edit-post-welcome-guide');
+            $I->clickWithLeftButton('//button[@aria-label="Close dialog"]');
+        } catch (Exception $e) {
+            //not latest Gutenberg
+        }
+
+        try {
+            $I->executeJS('wp.data.dispatch( "core/nux" ).disableTips()');
+        } catch (Exception $e) {}
 
         $I->dontSee('This block has encountered an error and cannot be previewed.');
         $I->dontSee('This block contains unexpected or invalid content.');
