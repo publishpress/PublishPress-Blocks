@@ -4457,12 +4457,13 @@ float: left;'
             );
         }
 
-        /*if (strpos($content, 'advgb-tabs-block') !== false) {
+        if (strpos($content, 'advgb-tabs-block') !== false) {
+            wp_enqueue_script('jquery-ui-tabs');
             wp_add_inline_script('jquery-ui-tabs', 'jQuery(document).ready(function($){
                  $(".advgb-tab a:not(.ui-tabs-anchor)").unbind("click");
                  $(".advgb-tabs-block").tabs();
              });');
-        }*/
+        }
 
         if (strpos($content, 'advgb-tabs-wrapper') !== false) {
             wp_enqueue_script('jquery-ui-tabs');
@@ -4630,7 +4631,8 @@ float: left;'
             'advgb/recent-posts',
             'advgb/search-bar',
             'advgb/social-links',
-            'advgb/woo-products'
+            'advgb/woo-products',
+            'advgb/tabs'
         );
         if ($blockName) {
             if (in_array($blockName, $availableBlocks)) {
@@ -4850,7 +4852,7 @@ float: left;'
                     $style_html .= '}';
                 }
             } elseif ($blockName === 'advgb/adv-tabs') {
-                $block_class    = $blockAttrs['pid'];
+                $block_class    = isset($blockAttrs['pid']) ? $blockAttrs['pid'] : 'wp-block-advgb-adv-tabs';
                 $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
                 $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
 
