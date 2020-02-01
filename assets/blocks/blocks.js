@@ -6610,9 +6610,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var _this = _possibleConstructorReturn(this, (AdvTabsWrapper.__proto__ || Object.getPrototypeOf(AdvTabsWrapper)).apply(this, arguments));
 
+            _this._nodes = new Map();
             _this.state = {
                 viewport: 'desktop'
             };
+            _this.clickFirstTabAfterTransform = _this.clickFirstTabAfterTransform.bind(_this);
             return _this;
         }
 
@@ -6662,7 +6664,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     });
                 }
                 this.updateTabHeaders();
+                this.clickFirstTabAfterTransform(1);
                 this.props.resetOrder();
+            }
+        }, {
+            key: "clickFirstTabAfterTransform",
+            value: function clickFirstTabAfterTransform(i) {
+                var node = this._nodes.get(i);
+                node.focus();
             }
         }, {
             key: "updateTabsAttr",
@@ -7004,6 +7013,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement(
                                         "a",
                                         { style: { color: headerTextColor },
+                                            ref: function ref(c) {
+                                                return _this2._nodes.set(index, c);
+                                            },
                                             onClick: function onClick() {
                                                 _this2.props.updateTabActive(index);
                                             }
@@ -20525,7 +20537,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     });
 
                     attributes.tabItems = undefined;
-                    return createBlock('advgb/adv-tabs', _extends({}, attributes, { tabHeaders: tabHeaders, changed: false }), innerTabs);
+                    return createBlock('advgb/adv-tabs', _extends({}, attributes, {
+                        tabHeaders: tabHeaders,
+                        pid: attributes.blockID,
+                        changed: false
+                    }), innerTabs);
                 }
             }]
         }

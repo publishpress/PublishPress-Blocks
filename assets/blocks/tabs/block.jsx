@@ -460,7 +460,11 @@
                         attributes.tabItems =  undefined;
                         return createBlock(
                             'advgb/adv-tabs',
-                            { ...attributes, tabHeaders: tabHeaders, changed: false },
+                            { ...attributes,
+                                tabHeaders: tabHeaders,
+                                pid: attributes.blockID,
+                                changed: false
+                            },
                             innerTabs,
                         )
                     }

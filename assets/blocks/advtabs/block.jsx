@@ -48,9 +48,11 @@
     class AdvTabsWrapper extends Component {
         constructor() {
             super( ...arguments );
+            this._nodes = new Map();
             this.state = {
                 viewport: 'desktop',
-            }
+            };
+            this.clickFirstTabAfterTransform = this.clickFirstTabAfterTransform.bind(this);
         }
 
         componentWillMount() {
@@ -93,7 +95,13 @@
                 } );
             }
             this.updateTabHeaders();
+            this.clickFirstTabAfterTransform(1);
             this.props.resetOrder();
+        }
+
+        clickFirstTabAfterTransform(i) {
+            const node = this._nodes.get(i);
+            node.focus();
         }
 
         updateTabsAttr( attrs ) {
@@ -355,6 +363,7 @@
                                     } }
                                 >
                                     <a style={ { color: headerTextColor } }
+                                       ref={c => this._nodes.set(index, c)}
                                        onClick={ () => {
                                            this.props.updateTabActive( index );
                                        } }
