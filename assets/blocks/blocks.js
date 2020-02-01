@@ -6992,7 +6992,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "li",
                                     { key: index,
-                                        className: "advgb-tab " + (tabActive === index && 'advgb-tab-active'),
+                                        className: "advgb-tab " + (tabActive === index ? 'advgb-tab-active' : ''),
                                         style: {
                                             backgroundColor: headerBgColor,
                                             borderStyle: borderStyle,

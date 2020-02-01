@@ -345,7 +345,7 @@
                         <ul className="advgb-tabs-panel">
                             {tabHeaders.map( ( item, index ) => (
                                 <li key={ index }
-                                    className={`advgb-tab ${tabActive === index && 'advgb-tab-active'}`}
+                                    className={`advgb-tab ${tabActive === index ? 'advgb-tab-active' : ''}`}
                                     style={ {
                                         backgroundColor: headerBgColor,
                                         borderStyle: borderStyle,
