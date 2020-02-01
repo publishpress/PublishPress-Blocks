@@ -4852,7 +4852,6 @@ float: left;'
                     $style_html .= '}';
                 }
             } elseif ($blockName === 'advgb/adv-tabs') {
-                var_dump($blockAttrs['pid']);
                 $block_class    = isset($blockAttrs['pid']) ? $blockAttrs['pid'] : 'wp-block-advgb-adv-tabs';
                 $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
                 $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
