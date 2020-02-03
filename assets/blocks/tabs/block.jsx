@@ -463,7 +463,8 @@
                             { ...attributes,
                                 tabHeaders: tabHeaders,
                                 pid: `advgb-tabs-${attributes.blockID}`,
-                                changed: false
+                                changed: false,
+                                isTransform: true,
                             },
                             innerTabs,
                         )
