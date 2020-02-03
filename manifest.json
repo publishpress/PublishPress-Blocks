@@ -38,6 +38,16 @@
     ]
   },
   "changelog": {
+    "2.3.5": [
+      {
+        "type": "fix",
+        "title": "Tabs block error in version 2.3.3"
+      },
+      {
+        "type": "fix",
+        "title": "Tabs block transform to Advanced Tabs block"
+      }
+    ],
     "2.3.4": [
       {
         "type": "fix",
