@@ -20539,7 +20539,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     attributes.tabItems = undefined;
                     return createBlock('advgb/adv-tabs', _extends({}, attributes, {
                         tabHeaders: tabHeaders,
-                        pid: attributes.blockID,
+                        pid: 'advgb-tabs-' + attributes.blockID,
                         changed: false
                     }), innerTabs);
                 }

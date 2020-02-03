@@ -462,7 +462,7 @@
                             'advgb/adv-tabs',
                             { ...attributes,
                                 tabHeaders: tabHeaders,
-                                pid: attributes.blockID,
+                                pid: `advgb-tabs-${attributes.blockID}`,
                                 changed: false
                             },
                             innerTabs,
