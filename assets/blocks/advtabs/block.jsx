@@ -50,7 +50,7 @@
             super( ...arguments );
             this.state = {
                 viewport: 'desktop',
-            }
+            };
         }
 
         componentWillMount() {
@@ -70,6 +70,18 @@
 
                 // Finally set changed attribute to true, so we don't modify anything again
                 setAttributes( { changed: true } );
+            }
+        }
+
+        componentDidUpdate() {
+            const { attributes, setAttributes } = this.props;
+            const { isTransform } = attributes;
+
+            if(isTransform) {
+                setAttributes( {
+                    isTransform: false
+                } );
+                this.props.updateTabActive( 0 );
             }
         }
 
@@ -345,7 +357,7 @@
                         <ul className="advgb-tabs-panel">
                             {tabHeaders.map( ( item, index ) => (
                                 <li key={ index }
-                                    className={`advgb-tab ${tabActive === index && 'advgb-tab-active'}`}
+                                    className={`advgb-tab ${tabActive === index ? 'advgb-tab-active' : ''}`}
                                     style={ {
                                         backgroundColor: headerBgColor,
                                         borderStyle: borderStyle,
@@ -509,6 +521,10 @@
         uniqueID: {
             type: 'string',
             default: ''
+        },
+        isTransform: {
+            type: 'boolean',
+            default: false
         }
     };
 
@@ -554,7 +570,7 @@
                             } );
                         } );
                         this.resetOrder();
-                    }
+                    },
                 };
 
             }),
@@ -621,6 +637,76 @@
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    ...tabBlockAttrs,
+                    isTransform: {
+                        type: 'boolean',
+                        default: false
+                    }
+                },
+                save: function ( { attributes } ) {
+                    const {
+                        tabHeaders,
+                        tabActiveFrontend,
+                        tabsStyleD,
+                        tabsStyleT,
+                        tabsStyleM,
+                        headerBgColor,
+                        headerTextColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                        borderRadius,
+                        pid
+                    } = attributes;
+                    const blockClass = [
+                        `advgb-tabs-wrapper`,
+                        `advgb-tab-${tabsStyleD}-desktop`,
+                        `advgb-tab-${tabsStyleT}-tablet`,
+                        `advgb-tab-${tabsStyleM}-mobile`,
+                        pid
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={blockClass} data-tab-active={tabActiveFrontend}>
+                            <ul className="advgb-tabs-panel">
+                                {tabHeaders.map( ( header, index ) => (
+                                    <li key={ index } className="advgb-tab"
+                                        style={ {
+                                            backgroundColor: headerBgColor,
+                                            borderStyle: borderStyle,
+                                            borderWidth: borderWidth + 'px',
+                                            borderColor: borderColor,
+                                            borderRadius: borderRadius + 'px',
+                                        } }
+                                    >
+                                        <a href={`#advgb-tabs-tab${index}`}
+                                           style={ { color: headerTextColor } }
+                                        >
+                                            <span>{header}</span>
+                                        </a>
+                                    </li>
+                                ) ) }
+                            </ul>
+                            <div className="advgb-tab-body-wrapper"
+                                 style={ {
+                                     backgroundColor: bodyBgColor,
+                                     color: bodyTextColor,
+                                     borderStyle: borderStyle,
+                                     borderWidth: borderWidth + 'px',
+                                     borderColor: borderColor,
+                                     borderRadius: borderRadius + 'px',
+                                 } }
+                            >
+                                <InnerBlocks.Content />
+                            </div>
+                        </div>
+                    );
+                }
+            },
             {
                 attributes: {
                     ...tabBlockAttrs,

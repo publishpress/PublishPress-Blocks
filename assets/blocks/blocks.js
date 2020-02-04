@@ -6641,6 +6641,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "componentDidUpdate",
+            value: function componentDidUpdate() {
+                var _props2 = this.props,
+                    attributes = _props2.attributes,
+                    setAttributes = _props2.setAttributes;
+                var isTransform = attributes.isTransform;
+
+
+                if (isTransform) {
+                    setAttributes({
+                        isTransform: false
+                    });
+                    this.props.updateTabActive(0);
+                }
+            }
+        }, {
             key: "componentDidMount",
             value: function componentDidMount() {
                 if (!this.props.attributes.uniqueID) {
@@ -6667,9 +6683,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateTabsAttr",
             value: function updateTabsAttr(attrs) {
-                var _props2 = this.props,
-                    setAttributes = _props2.setAttributes,
-                    clientId = _props2.clientId;
+                var _props3 = this.props,
+                    setAttributes = _props3.setAttributes,
+                    clientId = _props3.clientId;
 
                 var _ref = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
                     updateBlockAttributes = _ref.updateBlockAttributes;
@@ -6688,10 +6704,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateTabsHeader",
             value: function updateTabsHeader(header, index) {
-                var _props3 = this.props,
-                    attributes = _props3.attributes,
-                    setAttributes = _props3.setAttributes,
-                    clientId = _props3.clientId;
+                var _props4 = this.props,
+                    attributes = _props4.attributes,
+                    setAttributes = _props4.setAttributes,
+                    clientId = _props4.clientId;
                 var tabHeaders = attributes.tabHeaders;
 
                 var _ref3 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
@@ -6716,9 +6732,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "updateTabHeaders",
             value: function updateTabHeaders() {
-                var _props4 = this.props,
-                    attributes = _props4.attributes,
-                    clientId = _props4.clientId;
+                var _props5 = this.props,
+                    attributes = _props5.attributes,
+                    clientId = _props5.clientId;
                 var tabHeaders = attributes.tabHeaders;
 
                 var _ref5 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
@@ -6736,10 +6752,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "addTab",
             value: function addTab() {
-                var _props5 = this.props,
-                    attributes = _props5.attributes,
-                    setAttributes = _props5.setAttributes,
-                    clientId = _props5.clientId;
+                var _props6 = this.props,
+                    attributes = _props6.attributes,
+                    setAttributes = _props6.setAttributes,
+                    clientId = _props6.clientId;
 
                 var _ref7 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
                     insertBlock = _ref7.insertBlock;
@@ -6755,10 +6771,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: "removeTab",
             value: function removeTab(index) {
-                var _props6 = this.props,
-                    attributes = _props6.attributes,
-                    setAttributes = _props6.setAttributes,
-                    clientId = _props6.clientId;
+                var _props7 = this.props,
+                    attributes = _props7.attributes,
+                    setAttributes = _props7.setAttributes,
+                    clientId = _props7.clientId;
 
                 var _ref8 = !wp.blockEditor ? dispatch('core/editor') : dispatch('core/block-editor'),
                     removeBlock = _ref8.removeBlock;
@@ -6782,10 +6798,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this2 = this;
 
-                var _props7 = this.props,
-                    attributes = _props7.attributes,
-                    setAttributes = _props7.setAttributes,
-                    clientId = _props7.clientId;
+                var _props8 = this.props,
+                    attributes = _props8.attributes,
+                    setAttributes = _props8.setAttributes,
+                    clientId = _props8.clientId;
                 var viewport = this.state.viewport;
                 var tabHeaders = attributes.tabHeaders,
                     tabActive = attributes.tabActive,
@@ -6992,7 +7008,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return React.createElement(
                                     "li",
                                     { key: index,
-                                        className: "advgb-tab " + (tabActive === index && 'advgb-tab-active'),
+                                        className: "advgb-tab " + (tabActive === index ? 'advgb-tab-active' : ''),
                                         style: {
                                             backgroundColor: headerBgColor,
                                             borderStyle: borderStyle,
@@ -7170,6 +7186,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         uniqueID: {
             type: 'string',
             default: ''
+        },
+        isTransform: {
+            type: 'boolean',
+            default: false
         }
     };
 
@@ -7289,13 +7309,87 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         deprecated: [{
             attributes: _extends({}, tabBlockAttrs, {
+                isTransform: {
+                    type: 'boolean',
+                    default: false
+                }
+            }),
+            save: function save(_ref13) {
+                var attributes = _ref13.attributes;
+                var tabHeaders = attributes.tabHeaders,
+                    tabActiveFrontend = attributes.tabActiveFrontend,
+                    tabsStyleD = attributes.tabsStyleD,
+                    tabsStyleT = attributes.tabsStyleT,
+                    tabsStyleM = attributes.tabsStyleM,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    pid = attributes.pid;
+
+                var blockClass = ["advgb-tabs-wrapper", "advgb-tab-" + tabsStyleD + "-desktop", "advgb-tab-" + tabsStyleT + "-tablet", "advgb-tab-" + tabsStyleM + "-mobile", pid].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClass, "data-tab-active": tabActiveFrontend },
+                    React.createElement(
+                        "ul",
+                        { className: "advgb-tabs-panel" },
+                        tabHeaders.map(function (header, index) {
+                            return React.createElement(
+                                "li",
+                                { key: index, className: "advgb-tab",
+                                    style: {
+                                        backgroundColor: headerBgColor,
+                                        borderStyle: borderStyle,
+                                        borderWidth: borderWidth + 'px',
+                                        borderColor: borderColor,
+                                        borderRadius: borderRadius + 'px'
+                                    }
+                                },
+                                React.createElement(
+                                    "a",
+                                    { href: "#advgb-tabs-tab" + index,
+                                        style: { color: headerTextColor }
+                                    },
+                                    React.createElement(
+                                        "span",
+                                        null,
+                                        header
+                                    )
+                                )
+                            );
+                        })
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-tab-body-wrapper",
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }, {
+            attributes: _extends({}, tabBlockAttrs, {
                 uniqueID: {
                     type: 'string',
                     default: ''
                 }
             }),
-            save: function save(_ref13) {
-                var attributes = _ref13.attributes;
+            save: function save(_ref14) {
+                var attributes = _ref14.attributes;
                 var tabHeaders = attributes.tabHeaders,
                     tabActiveFrontend = attributes.tabActiveFrontend,
                     tabsStyleD = attributes.tabsStyleD,
@@ -20525,7 +20619,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     });
 
                     attributes.tabItems = undefined;
-                    return createBlock('advgb/adv-tabs', _extends({}, attributes, { tabHeaders: tabHeaders, changed: false }), innerTabs);
+                    return createBlock('advgb/adv-tabs', _extends({}, attributes, {
+                        tabHeaders: tabHeaders,
+                        pid: 'advgb-tabs-' + attributes.blockID,
+                        changed: false,
+                        isTransform: true
+                    }), innerTabs);
                 }
             }]
         }
