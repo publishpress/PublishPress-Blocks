@@ -3477,6 +3477,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         items.map(function (item, idx) {
                             i++;
                             if (i > numberItem) return false;
+
+                            var itemLink = item.link;
+                            if (!item.link.match(/^[a-zA-Z]+:\/\//)) {
+                                itemLink = 'http://' + item.link;
+                            }
                             var advgbIconClass = ["advgb-icon-style-" + item.style, 'advgb-icon-wrap', "advgb-item-" + idx].filter(Boolean).join(' ');
 
                             var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
@@ -3491,7 +3496,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: advgbIconClass },
                                     item.link !== '' && React.createElement(
                                         "a",
-                                        { href: item.link, title: item.title },
+                                        { href: itemLink, target: item.linkTarget, title: item.title },
                                         React.createElement(
                                             "div",
                                             { className: iconWrapClass },
@@ -3522,6 +3527,73 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: blockAttrs,
             save: function save(_ref2) {
                 var attributes = _ref2.attributes;
+                var blockIDX = attributes.blockIDX,
+                    items = attributes.items,
+                    numberItem = attributes.numberItem;
+
+
+                var blockWrapClass = ['wp-block-advgb-icon', 'icon-wrapper', blockIDX].filter(Boolean).join(' ');
+
+                var blockClass = ['advgb-icons'].filter(Boolean).join(' ');
+
+                var i = 0;
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: blockWrapClass },
+                        React.createElement(
+                            "div",
+                            { className: blockClass },
+                            items.map(function (item, idx) {
+                                i++;
+                                if (i > numberItem) return false;
+                                var advgbIconClass = ["advgb-icon-style-" + item.style, 'advgb-icon-wrap', "advgb-item-" + idx].filter(Boolean).join(' ');
+
+                                var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
+
+                                var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
+
+                                return React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        "div",
+                                        { className: advgbIconClass },
+                                        item.link !== '' && React.createElement(
+                                            "a",
+                                            { href: item.link, title: item.title },
+                                            React.createElement(
+                                                "div",
+                                                { className: iconWrapClass },
+                                                React.createElement(
+                                                    "i",
+                                                    { className: iconClass },
+                                                    item.icon
+                                                )
+                                            )
+                                        ),
+                                        item.link === '' && React.createElement(
+                                            "div",
+                                            { className: iconWrapClass },
+                                            React.createElement(
+                                                "i",
+                                                { className: iconClass },
+                                                item.icon
+                                            )
+                                        )
+                                    )
+                                );
+                            })
+                        )
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
                 var blockIDX = attributes.blockIDX,
                     items = attributes.items,
                     numberItem = attributes.numberItem;
