@@ -576,16 +576,16 @@ import {IconListPopupHook} from "../0-adv-components/icon-class.jsx";
                                 return (
                                     <Fragment>
                                         <div className={advgbIconClass}>
-                                            {item.link !== '' && <a href={itemLink} target={item.linkTarget} title={item.title}>
-                                                <div className={iconWrapClass}>
+                                            {item.link !== '' && <a href={itemLink} target={item.linkTarget} title={item.title} rel="noopener noreferrer">
+                                                <span className={iconWrapClass}>
                                                     <i className={iconClass}>{item.icon}</i>
-                                                </div>
+                                                </span>
                                             </a>
                                             }
                                             {item.link === '' &&
-                                            <div className={iconWrapClass}>
+                                            <span className={iconWrapClass}>
                                                 <i className={iconClass}>{item.icon}</i>
-                                            </div>
+                                            </span>
                                             }
                                         </div>
                                     </Fragment>
