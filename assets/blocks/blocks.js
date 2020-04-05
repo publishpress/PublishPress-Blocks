@@ -3477,6 +3477,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         items.map(function (item, idx) {
                             i++;
                             if (i > numberItem) return false;
+
+                            var itemLink = item.link;
+                            if (!item.link.match(/^[a-zA-Z]+:\/\//)) {
+                                itemLink = 'http://' + item.link;
+                            }
                             var advgbIconClass = ["advgb-icon-style-" + item.style, 'advgb-icon-wrap', "advgb-item-" + idx].filter(Boolean).join(' ');
 
                             var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
@@ -3491,9 +3496,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: advgbIconClass },
                                     item.link !== '' && React.createElement(
                                         "a",
-                                        { href: item.link, title: item.title },
+                                        { href: itemLink, target: item.linkTarget, title: item.title, rel: "noopener noreferrer" },
                                         React.createElement(
-                                            "div",
+                                            "span",
                                             { className: iconWrapClass },
                                             React.createElement(
                                                 "i",
@@ -3503,7 +3508,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         )
                                     ),
                                     item.link === '' && React.createElement(
-                                        "div",
+                                        "span",
                                         { className: iconWrapClass },
                                         React.createElement(
                                             "i",
@@ -3522,6 +3527,73 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: blockAttrs,
             save: function save(_ref2) {
                 var attributes = _ref2.attributes;
+                var blockIDX = attributes.blockIDX,
+                    items = attributes.items,
+                    numberItem = attributes.numberItem;
+
+
+                var blockWrapClass = ['wp-block-advgb-icon', 'icon-wrapper', blockIDX].filter(Boolean).join(' ');
+
+                var blockClass = ['advgb-icons'].filter(Boolean).join(' ');
+
+                var i = 0;
+                return React.createElement(
+                    Fragment,
+                    null,
+                    React.createElement(
+                        "div",
+                        { className: blockWrapClass },
+                        React.createElement(
+                            "div",
+                            { className: blockClass },
+                            items.map(function (item, idx) {
+                                i++;
+                                if (i > numberItem) return false;
+                                var advgbIconClass = ["advgb-icon-style-" + item.style, 'advgb-icon-wrap', "advgb-item-" + idx].filter(Boolean).join(' ');
+
+                                var iconWrapClass = ['advgb-icon', "advgb-icon-" + item.icon].filter(Boolean).join(' ');
+
+                                var iconClass = [item.iconType === 'material' && 'material-icons', item.iconTheme !== '' && "-" + item.iconTheme].filter(Boolean).join('');
+
+                                return React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        "div",
+                                        { className: advgbIconClass },
+                                        item.link !== '' && React.createElement(
+                                            "a",
+                                            { href: item.link, title: item.title },
+                                            React.createElement(
+                                                "div",
+                                                { className: iconWrapClass },
+                                                React.createElement(
+                                                    "i",
+                                                    { className: iconClass },
+                                                    item.icon
+                                                )
+                                            )
+                                        ),
+                                        item.link === '' && React.createElement(
+                                            "div",
+                                            { className: iconWrapClass },
+                                            React.createElement(
+                                                "i",
+                                                { className: iconClass },
+                                                item.icon
+                                            )
+                                        )
+                                    )
+                                );
+                            })
+                        )
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
                 var blockIDX = attributes.blockIDX,
                     items = attributes.items,
                     numberItem = attributes.numberItem;
@@ -23329,39 +23401,39 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/0-adv-components/components.jsx */"./assets/blocks/0-adv-components/components.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/0-adv-components/icon-class.jsx */"./assets/blocks/0-adv-components/icon-class.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/accordion/block.jsx */"./assets/blocks/accordion/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advaccordion/accordion.jsx */"./assets/blocks/advaccordion/accordion.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advaccordion/block.jsx */"./assets/blocks/advaccordion/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advbutton/block.jsx */"./assets/blocks/advbutton/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advicon/block.jsx */"./assets/blocks/advicon/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advimage/block.jsx */"./assets/blocks/advimage/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advlist/block.jsx */"./assets/blocks/advlist/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advtable/block.jsx */"./assets/blocks/advtable/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advtabs/block.jsx */"./assets/blocks/advtabs/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advtabs/tab.jsx */"./assets/blocks/advtabs/tab.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advvideo/block.jsx */"./assets/blocks/advvideo/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/columns/block.jsx */"./assets/blocks/columns/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/columns/column.jsx */"./assets/blocks/columns/column.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/contact-form/block.jsx */"./assets/blocks/contact-form/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/container/block.jsx */"./assets/blocks/container/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/count-up/block.jsx */"./assets/blocks/count-up/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/editor-sidebar/sidebar.jsx */"./assets/blocks/editor-sidebar/sidebar.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/images-slider/block.jsx */"./assets/blocks/images-slider/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/infobox/block.jsx */"./assets/blocks/infobox/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/login-form/block.jsx */"./assets/blocks/login-form/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/newsletter/block.jsx */"./assets/blocks/newsletter/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/recent-posts/block.jsx */"./assets/blocks/recent-posts/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/search-bar/block.jsx */"./assets/blocks/search-bar/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/summary/block.jsx */"./assets/blocks/summary/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/tabs/block.jsx */"./assets/blocks/tabs/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/testimonial/block.jsx */"./assets/blocks/testimonial/block.jsx");
-__webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/woo-products/block.jsx */"./assets/blocks/woo-products/block.jsx");
-module.exports = __webpack_require__(/*! /home/linhlv/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/js/editor.jsx */"./assets/js/editor.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/0-adv-components/components.jsx */"./assets/blocks/0-adv-components/components.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/0-adv-components/icon-class.jsx */"./assets/blocks/0-adv-components/icon-class.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/accordion/block.jsx */"./assets/blocks/accordion/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advaccordion/accordion.jsx */"./assets/blocks/advaccordion/accordion.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advaccordion/block.jsx */"./assets/blocks/advaccordion/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advbutton/block.jsx */"./assets/blocks/advbutton/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advicon/block.jsx */"./assets/blocks/advicon/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advimage/block.jsx */"./assets/blocks/advimage/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advlist/block.jsx */"./assets/blocks/advlist/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advtable/block.jsx */"./assets/blocks/advtable/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advtabs/block.jsx */"./assets/blocks/advtabs/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advtabs/tab.jsx */"./assets/blocks/advtabs/tab.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/advvideo/block.jsx */"./assets/blocks/advvideo/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/columns/block.jsx */"./assets/blocks/columns/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/columns/column.jsx */"./assets/blocks/columns/column.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/contact-form/block.jsx */"./assets/blocks/contact-form/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/container/block.jsx */"./assets/blocks/container/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/count-up/block.jsx */"./assets/blocks/count-up/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/customstyles/custom-styles.jsx */"./assets/blocks/customstyles/custom-styles.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/editor-sidebar/sidebar.jsx */"./assets/blocks/editor-sidebar/sidebar.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/images-slider/block.jsx */"./assets/blocks/images-slider/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/infobox/block.jsx */"./assets/blocks/infobox/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/login-form/block.jsx */"./assets/blocks/login-form/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/map/block.jsx */"./assets/blocks/map/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/newsletter/block.jsx */"./assets/blocks/newsletter/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/recent-posts/block.jsx */"./assets/blocks/recent-posts/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/search-bar/block.jsx */"./assets/blocks/search-bar/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/social-links/block.jsx */"./assets/blocks/social-links/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/summary/block.jsx */"./assets/blocks/summary/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/tabs/block.jsx */"./assets/blocks/tabs/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/testimonial/block.jsx */"./assets/blocks/testimonial/block.jsx");
+__webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/blocks/woo-products/block.jsx */"./assets/blocks/woo-products/block.jsx");
+module.exports = __webpack_require__(/*! /home/workstation10/Development/Wordpress Extensions/Advanced Gutenberg/advanced-gutenberg/assets/js/editor.jsx */"./assets/js/editor.jsx");
 
 
 /***/ })

@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "platform": "wordpress",
-  "wp_version": "5.3.2",
+  "wp_version": "5.4.0",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,16 @@
     ]
   },
   "changelog": {
+    "2.3.6": [
+      {
+        "type": "fix",
+        "title": "Icon block error invalid content"
+      },
+      {
+        "type": "fix",
+        "title": "Editor width option not working"
+      }
+    ],
     "2.3.5": [
       {
         "type": "fix",
