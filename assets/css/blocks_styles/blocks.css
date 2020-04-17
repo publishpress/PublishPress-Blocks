@@ -2766,6 +2766,12 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
         margin-left: 0;
         margin-right: 0;
     }
+    .advgb-columns.advgb-columns-1>.block-editor-inner-blocks>.block-editor-block-list__layout>[data-type="advgb/column"] {
+        flex-basis: 100%;
+        flex-grow: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 @media screen and (min-width: 782px) {
