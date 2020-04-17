@@ -152,6 +152,7 @@
                 width,
                 height,
                 alwaysShowOverlay,
+                rtl,
                 hoverColor,
                 titleColor,
                 textColor,
@@ -251,6 +252,11 @@
                                 label={ __( 'Always show overlay', 'advanced-gutenberg' ) }
                                 checked=    { alwaysShowOverlay }
                                 onChange={ () => setAttributes( { alwaysShowOverlay: !alwaysShowOverlay } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Enable RTL', 'advanced-gutenberg' ) }
+                                checked=    { rtl }
+                                onChange={ () => setAttributes( { rtl: !rtl } ) }
                             />
                         </PanelBody>
                         <PanelColorSettings
@@ -478,6 +484,10 @@
             type: 'boolean',
             default: false,
         },
+        rtl: {
+            type: 'boolean',
+            default: false,
+        },
         hoverColor: {
             type: 'string',
         },
@@ -530,6 +540,7 @@
                 width,
                 height,
                 alwaysShowOverlay,
+                rtl,
                 hoverColor,
                 titleColor,
                 textColor,
@@ -543,7 +554,7 @@
 
             return (
                 <div className={ blockClassName }>
-                    <div className="advgb-images-slider">
+                    <div className="advgb-images-slider" data-slick={`{"rtl": ${rtl}}`}>
                         {images.map( (image, index) => (
                             <div className="advgb-image-slider-item" key={index}>
                                 <img src={ image.url }
@@ -591,6 +602,78 @@
             );
         },
         deprecated: [
+            {
+                attributes: blockAttrs,
+                save: function ( { attributes } ) {
+                    const {
+                        images,
+                        actionOnClick,
+                        fullWidth,
+                        autoHeight,
+                        width,
+                        height,
+                        alwaysShowOverlay,
+                        hoverColor,
+                        titleColor,
+                        textColor,
+                        hAlign,
+                        vAlign,
+                    } = attributes;
+                    const blockClassName = [
+                        'advgb-images-slider-block',
+                        actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox',
+                    ].filter( Boolean ).join( ' ' );
+
+                    return (
+                        <div className={ blockClassName }>
+                            <div className="advgb-images-slider">
+                                {images.map( (image, index) => (
+                                    <div className="advgb-image-slider-item" key={index}>
+                                        <img src={ image.url }
+                                             className="advgb-image-slider-img"
+                                             alt={ __( 'Slider image', 'advanced-gutenberg' ) }
+                                             style={ {
+                                                 width: fullWidth ? '100%' : width,
+                                                 height: autoHeight ? 'auto' : height,
+                                             } }
+                                        />
+                                        <div className="advgb-image-slider-item-info"
+                                             style={ {
+                                                 justifyContent: vAlign,
+                                                 alignItems: hAlign,
+                                             } }
+                                        >
+                                            <a className="advgb-image-slider-overlay"
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               href={ ( actionOnClick === 'link' && !!image.link ) ? image.link : '#' }
+                                               style={ {
+                                                   backgroundColor: hoverColor,
+                                                   opacity: alwaysShowOverlay ? 0.5 : undefined,
+                                               } }
+                                            />
+                                            {image.title && (
+                                                <h4 className="advgb-image-slider-title"
+                                                    style={ { color: titleColor } }
+                                                >
+                                                    { image.title }
+                                                </h4>
+                                            ) }
+                                            {image.text && (
+                                                <p className="advgb-image-slider-text"
+                                                   style={ { color: textColor } }
+                                                >
+                                                    { image.text }
+                                                </p>
+                                            ) }
+                                        </div>
+                                    </div>
+                                ) ) }
+                            </div>
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: blockAttrs,
                 save: function ( { attributes } ) {
