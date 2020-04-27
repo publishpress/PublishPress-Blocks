@@ -2,7 +2,7 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.3.6",
+  "version": "2.3.8",
   "platform": "wordpress",
   "wp_version": "5.4.0",
   "text_domain": "advanced-gutenberg",
@@ -38,6 +38,26 @@
     ]
   },
   "changelog": {
+    "2.3.8": [
+      {
+        "type": "fix",
+        "title": "Missing list content when convert the list block to advanced list block"
+      },
+      {
+        "type": "fix",
+        "title": "Display the overlay and action on click in Image Slider block"
+      }
+    ],
+    "2.3.7": [
+      {
+        "type": "fix",
+        "title": "Image Slider on rtl language"
+      },
+      {
+        "type": "fix",
+        "title": "Columns block not display full width with 1 column layout"
+      }
+    ],
     "2.3.6": [
       {
         "type": "fix",
