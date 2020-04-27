@@ -38,6 +38,14 @@
 
         componentDidMount() {
             const {attributes, setAttributes, clientId} = this.props;
+
+            if (typeof attributes.values[0] !== 'undefined') {
+                if (typeof attributes.values[0] === 'string' && attributes.values[0] !== '') {
+                    setAttributes({
+                        values: parse(attributes.values[0])
+                    })
+                }
+            }
             if (!attributes.id) {
                 setAttributes({
                     id: 'advgblist-' + clientId
