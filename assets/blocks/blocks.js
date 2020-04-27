@@ -4524,7 +4524,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     PanelBody,
                                     {
-                                        title: [__('Icon color', 'advanced-gutenberg'), React.createElement('span', { key: 'advgb-list-icon-color', className: 'dashicons dashicons-' + icon, style: { color: iconColor, marginLeft: '10px' } })],
+                                        title: [__('Icon color', 'advanced-gutenberg'), React.createElement('span', { key: 'advgb-list-icon-color',
+                                            className: 'dashicons dashicons-' + icon,
+                                            style: { color: iconColor, marginLeft: '10px' } })],
                                         initialOpen: false
                                     },
                                     React.createElement(ColorPalette, {
@@ -4722,7 +4724,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 transform: function transform(_ref2) {
                     var values = _ref2.values;
 
-                    console.log(values);
                     return createBlock('core/list', {
                         nodeName: 'UL',
                         values: values

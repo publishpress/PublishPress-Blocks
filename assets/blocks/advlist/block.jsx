@@ -1,10 +1,10 @@
-(function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents ) {
+(function (wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents) {
     wpBlockEditor = wp.blockEditor || wp.editor;
-    const { __ } = wpI18n;
-    const { Component, Fragment } = wpElement;
-    const { registerBlockType, createBlock } = wpBlocks;
-    const { InspectorControls, RichText, ColorPalette, BlockControls } = wpBlockEditor;
-    const { BaseControl, RangeControl, PanelBody, IconButton, Dashicon, Toolbar } = wpComponents;
+    const {__} = wpI18n;
+    const {Component, Fragment} = wpElement;
+    const {registerBlockType, createBlock} = wpBlocks;
+    const {InspectorControls, RichText, ColorPalette, BlockControls} = wpBlockEditor;
+    const {BaseControl, RangeControl, PanelBody, IconButton, Dashicon, Toolbar} = wpComponents;
 
     var parse = require('html-react-parser');
 
@@ -12,11 +12,11 @@
 
     class AdvList extends Component {
         constructor() {
-            super( ...arguments );
+            super(...arguments);
         }
 
         componentWillMount() {
-            const { attributes, setAttributes } = this.props;
+            const {attributes, setAttributes} = this.props;
             const currentBlockConfig = advgbDefaultConfig['advgb-list'];
 
             // No override attributes of blocks inserted before
@@ -32,36 +32,36 @@
                 }
 
                 // Finally set changed attribute to true, so we don't modify anything again
-                setAttributes( { changed: true } );
+                setAttributes({changed: true});
             }
         }
 
         componentDidMount() {
-            const { attributes, setAttributes, clientId } = this.props;
-            if ( !attributes.id ) {
-                setAttributes( {
+            const {attributes, setAttributes, clientId} = this.props;
+            if (!attributes.id) {
+                setAttributes({
                     id: 'advgblist-' + clientId
-                } )
+                })
             }
         }
 
         render() {
             const listIcons = [
-                { label: __( 'None', 'advanced-gutenberg' ), value: '' },
-                { label: __( 'Pushpin', 'advanced-gutenberg' ), value: 'admin-post' },
-                { label: __( 'Configuration', 'advanced-gutenberg' ), value: 'admin-generic' },
-                { label: __( 'Flag', 'advanced-gutenberg' ), value: 'flag' },
-                { label: __( 'Star', 'advanced-gutenberg' ), value: 'star-filled' },
-                { label: __( 'Checkmark', 'advanced-gutenberg' ), value: 'yes' },
-                { label: __( 'Minus', 'advanced-gutenberg' ), value: 'minus' },
-                { label: __( 'Plus', 'advanced-gutenberg' ), value: 'plus' },
-                { label: __( 'Play', 'advanced-gutenberg' ), value: 'controls-play' },
-                { label: __( 'Arrow right', 'advanced-gutenberg' ), value: 'arrow-right-alt' },
-                { label: __( 'X Cross', 'advanced-gutenberg' ), value: 'dismiss' },
-                { label: __( 'Warning', 'advanced-gutenberg' ), value: 'warning' },
-                { label: __( 'Help', 'advanced-gutenberg' ), value: 'editor-help' },
-                { label: __( 'Info', 'advanced-gutenberg' ), value: 'info' },
-                { label: __( 'Circle', 'advanced-gutenberg' ), value: 'marker' },
+                {label: __('None', 'advanced-gutenberg'), value: ''},
+                {label: __('Pushpin', 'advanced-gutenberg'), value: 'admin-post'},
+                {label: __('Configuration', 'advanced-gutenberg'), value: 'admin-generic'},
+                {label: __('Flag', 'advanced-gutenberg'), value: 'flag'},
+                {label: __('Star', 'advanced-gutenberg'), value: 'star-filled'},
+                {label: __('Checkmark', 'advanced-gutenberg'), value: 'yes'},
+                {label: __('Minus', 'advanced-gutenberg'), value: 'minus'},
+                {label: __('Plus', 'advanced-gutenberg'), value: 'plus'},
+                {label: __('Play', 'advanced-gutenberg'), value: 'controls-play'},
+                {label: __('Arrow right', 'advanced-gutenberg'), value: 'arrow-right-alt'},
+                {label: __('X Cross', 'advanced-gutenberg'), value: 'dismiss'},
+                {label: __('Warning', 'advanced-gutenberg'), value: 'warning'},
+                {label: __('Help', 'advanced-gutenberg'), value: 'editor-help'},
+                {label: __('Info', 'advanced-gutenberg'), value: 'info'},
+                {label: __('Circle', 'advanced-gutenberg'), value: 'marker'},
             ];
             const {
                 attributes,
@@ -90,143 +90,145 @@
                 id,
                 icon && 'advgb-list',
                 icon && `advgb-list-${icon}`
-            ].filter( Boolean ).join( ' ' );
+            ].filter(Boolean).join(' ');
             const size = typeof iconSize != 'undefined' ? parseInt(iconSize) : 16;
             const marg = typeof margin != 'undefined' ? parseInt(margin) : 2;
-            const padd = typeof padding != 'undefined' ? parseInt(padding)*2 : 4;
+            const padd = typeof padding != 'undefined' ? parseInt(padding) * 2 : 4;
             return (
                 isPreview ?
                     <img alt={__('Advanced List', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
                     :
-                <Fragment>
-                    <BlockControls>
-                        <Toolbar>
-                            <IconButton
-                                label={ __( 'Refresh this list when it conflict with other lists styles', 'advanced-gutenberg' ) }
-                                icon="update"
-                                className="components-toolbar__control"
-                                onClick={ () => setAttributes( { id: 'advgblist-' + blockID } ) }
-                            />
-                        </Toolbar>
-                    </BlockControls>
-                    <InspectorControls>
-                        <PanelBody title={ __( 'Text Settings', 'advanced-gutenberg' ) } initialOpen={false}>
-                            <RangeControl
-                                label={ __( 'Text size', 'advanced-gutenberg' ) }
-                                value={ fontSize || '' }
-                                onChange={ ( size ) => setAttributes( { fontSize: size } ) }
-                                min={ 10 }
-                                max={ 100 }
-                                beforeIcon="editor-textcolor"
-                                allowReset
-                            />
-                        </PanelBody>
-                        <PanelBody title={ __( 'Icon Settings', 'advanced-gutenberg' ) }>
-                            <BaseControl label={ __( 'List icon', 'advanced-gutenberg' ) }>
-                                <div className="advgb-icon-items-wrapper">
-                                    { listIcons.map( (item, index) => (
-                                        <div className="advgb-icon-item h20" key={ index }>
-                                            <span onClick={ () => setAttributes( { icon: item.value } ) }
-                                                  className={ [
+                    <Fragment>
+                        <BlockControls>
+                            <Toolbar>
+                                <IconButton
+                                    label={__('Refresh this list when it conflict with other lists styles', 'advanced-gutenberg')}
+                                    icon="update"
+                                    className="components-toolbar__control"
+                                    onClick={() => setAttributes({id: 'advgblist-' + blockID})}
+                                />
+                            </Toolbar>
+                        </BlockControls>
+                        <InspectorControls>
+                            <PanelBody title={__('Text Settings', 'advanced-gutenberg')} initialOpen={false}>
+                                <RangeControl
+                                    label={__('Text size', 'advanced-gutenberg')}
+                                    value={fontSize || ''}
+                                    onChange={(size) => setAttributes({fontSize: size})}
+                                    min={10}
+                                    max={100}
+                                    beforeIcon="editor-textcolor"
+                                    allowReset
+                                />
+                            </PanelBody>
+                            <PanelBody title={__('Icon Settings', 'advanced-gutenberg')}>
+                                <BaseControl label={__('List icon', 'advanced-gutenberg')}>
+                                    <div className="advgb-icon-items-wrapper">
+                                        {listIcons.map((item, index) => (
+                                            <div className="advgb-icon-item h20" key={index}>
+                                            <span onClick={() => setAttributes({icon: item.value})}
+                                                  className={[
                                                       item.value === icon && 'active',
                                                       item.value === '' && 'remove-icon',
-                                                  ].filter( Boolean ).join( ' ' ) }
+                                                  ].filter(Boolean).join(' ')}
                                             >
                                                 <Dashicon icon={item.value}/>
                                             </span>
-                                        </div>
-                                    ) ) }
-                                </div>
-                            </BaseControl>
-                            {icon && (
-                                <Fragment>
-                                    <PanelBody
-                                        title={ [
-                                            __( 'Icon color', 'advanced-gutenberg' ),
-                                            <span key="advgb-list-icon-color" className={ `dashicons dashicons-${icon}` } style={ { color: iconColor, marginLeft: '10px' } } />
-                                        ] }
-                                        initialOpen={ false }
-                                    >
-                                        <ColorPalette
-                                            value={ iconColor }
-                                            onChange={ ( value ) => setAttributes( { iconColor: value === undefined ? '#000' : value } ) }
+                                            </div>
+                                        ))}
+                                    </div>
+                                </BaseControl>
+                                {icon && (
+                                    <Fragment>
+                                        <PanelBody
+                                            title={[
+                                                __('Icon color', 'advanced-gutenberg'),
+                                                <span key="advgb-list-icon-color"
+                                                      className={`dashicons dashicons-${icon}`}
+                                                      style={{color: iconColor, marginLeft: '10px'}}/>
+                                            ]}
+                                            initialOpen={false}
+                                        >
+                                            <ColorPalette
+                                                value={iconColor}
+                                                onChange={(value) => setAttributes({iconColor: value === undefined ? '#000' : value})}
+                                            />
+                                        </PanelBody>
+                                        <RangeControl
+                                            label={__('Icon size', 'advanced-gutenberg')}
+                                            value={iconSize || ''}
+                                            onChange={(size) => setAttributes({iconSize: size})}
+                                            min={10}
+                                            max={100}
+                                            allowReset
                                         />
-                                    </PanelBody>
-                                    <RangeControl
-                                        label={ __( 'Icon size', 'advanced-gutenberg' ) }
-                                        value={ iconSize || '' }
-                                        onChange={ ( size ) => setAttributes( { iconSize: size } ) }
-                                        min={ 10 }
-                                        max={ 100 }
-                                        allowReset
-                                    />
-                                    <RangeControl
-                                        label={ __( 'Line height', 'advanced-gutenberg' ) }
-                                        value={ lineHeight || '' }
-                                        onChange={ ( size ) => setAttributes( { lineHeight: size } ) }
-                                        min={ 0 }
-                                        max={ 100 }
-                                        allowReset
-                                    />
-                                    <RangeControl
-                                        label={ __( 'Margin', 'advanced-gutenberg' ) }
-                                        value={ margin || '' }
-                                        onChange={ ( size ) => setAttributes( { margin: size } ) }
-                                        min={ 0 }
-                                        max={ 100 }
-                                        allowReset
-                                    />
-                                    <RangeControl
-                                        label={ __( 'Padding', 'advanced-gutenberg' ) }
-                                        value={ padding || '' }
-                                        onChange={ ( size ) => setAttributes( { padding: size } ) }
-                                        min={ 0 }
-                                        max={ 100 }
-                                        allowReset
-                                    />
-                                </Fragment>
-                            ) }
-                        </PanelBody>
-                    </InspectorControls>
-                    <RichText
-                        multiline="li"
-                        tagName="ul"
-                        onChange={ (value) => setAttributes( { values: value } ) }
-                        value={ values }
-                        wrapperClassName="advgb-list-item"
-                        className={ listClassName }
-                        placeholder={__('Write advanced list…', 'advanced-gutenberg')}
-                        onMerge={ mergeBlocks }
-                        unstableOnSplit={
-                            insertBlocksAfter ?
-                                ( before, after, ...blocks ) => {
-                                    if ( ! blocks.length ) {
-                                        blocks.push( createBlock( 'core/paragraph' ) );
-                                    }
+                                        <RangeControl
+                                            label={__('Line height', 'advanced-gutenberg')}
+                                            value={lineHeight || ''}
+                                            onChange={(size) => setAttributes({lineHeight: size})}
+                                            min={0}
+                                            max={100}
+                                            allowReset
+                                        />
+                                        <RangeControl
+                                            label={__('Margin', 'advanced-gutenberg')}
+                                            value={margin || ''}
+                                            onChange={(size) => setAttributes({margin: size})}
+                                            min={0}
+                                            max={100}
+                                            allowReset
+                                        />
+                                        <RangeControl
+                                            label={__('Padding', 'advanced-gutenberg')}
+                                            value={padding || ''}
+                                            onChange={(size) => setAttributes({padding: size})}
+                                            min={0}
+                                            max={100}
+                                            allowReset
+                                        />
+                                    </Fragment>
+                                )}
+                            </PanelBody>
+                        </InspectorControls>
+                        <RichText
+                            multiline="li"
+                            tagName="ul"
+                            onChange={(value) => setAttributes({values: value})}
+                            value={values}
+                            wrapperClassName="advgb-list-item"
+                            className={listClassName}
+                            placeholder={__('Write advanced list…', 'advanced-gutenberg')}
+                            onMerge={mergeBlocks}
+                            unstableOnSplit={
+                                insertBlocksAfter ?
+                                    (before, after, ...blocks) => {
+                                        if (!blocks.length) {
+                                            blocks.push(createBlock('core/paragraph'));
+                                        }
 
-                                    if ( after.length ) {
-                                        blocks.push( createBlock( 'advgb/list', {
-                                            ...attributes,
-                                            values: after,
-                                            id: undefined,
-                                        } ) );
-                                    }
+                                        if (after.length) {
+                                            blocks.push(createBlock('advgb/list', {
+                                                ...attributes,
+                                                values: after,
+                                                id: undefined,
+                                            }));
+                                        }
 
-                                    setAttributes( { values: before } );
-                                    insertBlocksAfter( blocks );
-                                } :
-                                undefined
-                        }
-                        onRemove={ () => onReplace( [] ) }
-                        isSelected={ isSelected }
-                    />
-                    <div>
-                        <style>
-                            {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
-                        </style>
-                        {icon &&
-                        <style>
-                            {`.${id} li:before {
+                                        setAttributes({values: before});
+                                        insertBlocksAfter(blocks);
+                                    } :
+                                    undefined
+                            }
+                            onRemove={() => onReplace([])}
+                            isSelected={isSelected}
+                        />
+                        <div>
+                            <style>
+                                {`.${id} li { font-size: ${fontSize}px; margin-left: ${size + padd}px }`}
+                            </style>
+                            {icon &&
+                            <style>
+                                {`.${id} li:before {
                                 font-size: ${iconSize}px;
                                 color: ${iconColor};
                                 line-height: ${lineHeight}px;
@@ -234,10 +236,10 @@
                                 padding: ${padding}px;
                                 margin-left: -${size + padd + marg}px
                             }`}
-                        </style>
-                        }
-                    </div>
-                </Fragment>
+                            </style>
+                            }
+                        </div>
+                    </Fragment>
             )
         }
     }
@@ -296,15 +298,15 @@
         },
     };
 
-    registerBlockType( 'advgb/list', {
-        title: __( 'Advanced List', 'advanced-gutenberg' ),
-        description: __( 'List block with custom icons and styles.', 'advanced-gutenberg' ),
+    registerBlockType('advgb/list', {
+        title: __('Advanced List', 'advanced-gutenberg'),
+        description: __('List block with custom icons and styles.', 'advanced-gutenberg'),
         icon: {
             src: listBlockIcon,
             foreground: typeof advgbBlocks !== 'undefined' ? advgbBlocks.color : undefined,
         },
         category: 'advgb-category',
-        keywords: [ __( 'list', 'advanced-gutenberg' ), __( 'icon', 'advanced-gutenberg' ) ],
+        keywords: [__('list', 'advanced-gutenberg'), __('icon', 'advanced-gutenberg')],
         attributes: listBlockAttrs,
         example: {
             attributes: {
@@ -315,36 +317,35 @@
             from: [
                 {
                     type: 'block',
-                    blocks: [ 'core/list' ],
-                    transform: ( { values } ) => {
-                        return createBlock( 'advgb/list', {
+                    blocks: ['core/list'],
+                    transform: ({values}) => {
+                        return createBlock('advgb/list', {
                             values: parse(values),
                             icon: 'controls-play',
                             iconColor: '#ff0000',
-                        } )
+                        })
                     }
                 }
             ],
             to: [
                 {
                     type: 'block',
-                    blocks: [ 'core/list' ],
-                    transform: ( { values } ) => {
-                        console.log(values);
-                        return createBlock( 'core/list', {
+                    blocks: ['core/list'],
+                    transform: ({values}) => {
+                        return createBlock('core/list', {
                             nodeName: 'UL',
                             values: values,
-                        } )
+                        })
                     }
                 }
             ]
         },
-        merge( attributes, attributesToMerge ) {
+        merge(attributes, attributesToMerge) {
             const valuesToMerge = attributesToMerge.values || [];
 
             // Standard text-like block attribute.
-            if ( attributesToMerge.content ) {
-                valuesToMerge.push( attributesToMerge.content );
+            if (attributesToMerge.content) {
+                valuesToMerge.push(attributesToMerge.content);
             }
 
             return {
@@ -356,7 +357,7 @@
             };
         },
         edit: AdvList,
-        save: function ( { attributes } ) {
+        save: function ({attributes}) {
             const {
                 id,
                 values,
@@ -366,7 +367,7 @@
                 id,
                 icon && 'advgb-list',
                 icon && `advgb-list-${icon}`
-            ].filter( Boolean ).join( ' ' );
+            ].filter(Boolean).join(' ');
 
             return <div>
                 <ul className={listClassName}>
@@ -374,5 +375,5 @@
                 </ul>
             </div>
         },
-    } );
-})( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components );
+    });
+})(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
