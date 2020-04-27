@@ -11985,7 +11985,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         "svg",
         { xmlns: "http://www.w3.org/2000/svg", width: "20", height: "20", viewBox: "2 2 22 22", className: "dashicon" },
         React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
-        React.createElement("path", { d: "M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM9.88 4h4.24l1.83 2H20v12H4V6h4.05" }),
+        React.createElement("path", {
+            d: "M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM9.88 4h4.24l1.83 2H20v12H4V6h4.05" }),
         React.createElement("path", { d: "M15 11H9V8.5L5.5 12 9 15.5V13h6v2.5l3.5-3.5L15 8.5z" })
     );
 
@@ -12169,7 +12170,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     hAlign = attributes.hAlign,
                     vAlign = attributes.vAlign,
                     isPreview = attributes.isPreview;
-
 
                 if (images.length === 0) {
                     return isPreview ? React.createElement("img", { alt: __('Images Slider', 'advanced-gutenberg'), width: "100%", src: previewImageData }) : React.createElement(
@@ -12356,7 +12356,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 alignItems: hAlign
                                             }
                                         },
-                                        React.createElement("span", { className: "advgb-image-slider-overlay",
+                                        (actionOnClick !== '' || alwaysShowOverlay) && React.createElement("span", { className: "advgb-image-slider-overlay",
                                             style: {
                                                 backgroundColor: hoverColor,
                                                 opacity: alwaysShowOverlay ? 0.5 : undefined
@@ -12435,9 +12435,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 },
                                                 React.createElement(
                                                     "svg",
-                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24",
+                                                        viewBox: "0 0 24 24" },
                                                     React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
-                                                    React.createElement("path", { d: "M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" })
+                                                    React.createElement("path", {
+                                                        d: "M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" })
                                                 )
                                             )
                                         ),
@@ -12461,9 +12463,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 },
                                                 React.createElement(
                                                     "svg",
-                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                                    { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24",
+                                                        viewBox: "0 0 24 24" },
                                                     React.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }),
-                                                    React.createElement("path", { d: "M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" })
+                                                    React.createElement("path", {
+                                                        d: "M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" })
                                                 )
                                             )
                                         ),
@@ -12523,7 +12527,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             default: [] // [ { id: int, url, title, text, link: string } ]
         },
         actionOnClick: {
-            type: 'string'
+            type: 'string',
+            default: ''
         },
         fullWidth: {
             type: 'boolean',
@@ -12636,8 +12641,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         alignItems: hAlign
                                     }
                                 },
-                                React.createElement("a", { className: "advgb-image-slider-overlay",
-                                    target: "_blank",
+                                (actionOnClick !== '' || alwaysShowOverlay) && React.createElement("a", { className: "advgb-image-slider-overlay",
+                                    target: actionOnClick !== '' ? '_blank' : false,
                                     rel: "noopener noreferrer",
                                     href: actionOnClick === 'link' && !!image.link ? image.link : '#',
                                     style: {
@@ -12669,6 +12674,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: blockAttrs,
             save: function save(_ref4) {
                 var attributes = _ref4.attributes;
+                var images = attributes.images,
+                    actionOnClick = attributes.actionOnClick,
+                    fullWidth = attributes.fullWidth,
+                    autoHeight = attributes.autoHeight,
+                    width = attributes.width,
+                    height = attributes.height,
+                    alwaysShowOverlay = attributes.alwaysShowOverlay,
+                    rtl = attributes.rtl,
+                    hoverColor = attributes.hoverColor,
+                    titleColor = attributes.titleColor,
+                    textColor = attributes.textColor,
+                    hAlign = attributes.hAlign,
+                    vAlign = attributes.vAlign;
+
+                var blockClassName = ['advgb-images-slider-block', actionOnClick === 'lightbox' && 'advgb-images-slider-lightbox'].filter(Boolean).join(' ');
+
+                return React.createElement(
+                    "div",
+                    { className: blockClassName },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-images-slider", "data-slick": "{\"rtl\": " + rtl + "}" },
+                        images.map(function (image, index) {
+                            return React.createElement(
+                                "div",
+                                { className: "advgb-image-slider-item", key: index },
+                                React.createElement("img", { src: image.url,
+                                    className: "advgb-image-slider-img",
+                                    alt: __('Slider image', 'advanced-gutenberg'),
+                                    style: {
+                                        width: fullWidth ? '100%' : width,
+                                        height: autoHeight ? 'auto' : height
+                                    }
+                                }),
+                                React.createElement(
+                                    "div",
+                                    { className: "advgb-image-slider-item-info",
+                                        style: {
+                                            justifyContent: vAlign,
+                                            alignItems: hAlign
+                                        }
+                                    },
+                                    React.createElement("a", { className: "advgb-image-slider-overlay",
+                                        target: "_blank",
+                                        rel: "noopener noreferrer",
+                                        href: actionOnClick === 'link' && !!image.link ? image.link : '#',
+                                        style: {
+                                            backgroundColor: hoverColor,
+                                            opacity: alwaysShowOverlay ? 0.5 : undefined
+                                        }
+                                    }),
+                                    image.title && React.createElement(
+                                        "h4",
+                                        { className: "advgb-image-slider-title",
+                                            style: { color: titleColor }
+                                        },
+                                        image.title
+                                    ),
+                                    image.text && React.createElement(
+                                        "p",
+                                        { className: "advgb-image-slider-text",
+                                            style: { color: textColor }
+                                        },
+                                        image.text
+                                    )
+                                )
+                            );
+                        })
+                    )
+                );
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref5) {
+                var attributes = _ref5.attributes;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
@@ -12741,8 +12821,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         }, {
             attributes: blockAttrs,
-            save: function save(_ref5) {
-                var attributes = _ref5.attributes;
+            save: function save(_ref6) {
+                var attributes = _ref6.attributes;
                 var images = attributes.images,
                     actionOnClick = attributes.actionOnClick,
                     fullWidth = attributes.fullWidth,
