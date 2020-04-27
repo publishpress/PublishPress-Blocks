@@ -42,6 +42,10 @@
       {
         "type": "fix",
         "title": "Missing list content when convert the list block to advanced list block"
+      },
+      {
+        "type": "fix",
+        "title": "Display the overlay and action on click in Image Slider block"
       }
     ],
     "2.3.7": [
