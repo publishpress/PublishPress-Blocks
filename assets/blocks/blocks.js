@@ -5853,7 +5853,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             }),
                             React.createElement(
                                 Button,
-                                { isPrimary: true, onClick: function onClick() {
+                                { isPrimary: true,
+                                    onClick: function onClick() {
                                         return _this4.createTable();
                                     } },
                                 __('Create', 'advanced-gutenberg')
@@ -5931,7 +5932,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { width: "20", height: "20", className: "dashicon", viewBox: "2 2 22 22" },
                         React.createElement("path", { fill: "none", d: "M0,0h24v24H0V0z" }),
                         React.createElement("polygon", { points: "21,18 2,18 2,20 21,20 21,18" }),
-                        React.createElement("path", { d: "M19,10v4H4v-4H19 M20,8H3C2.45,8,2,8.45,2,9v6c0,0.55,0.45,1,1,1h17c0.55,0,1-0.45,1-1V9C21,8.45,20.55,8,20,8L20,8z" }),
+                        React.createElement("path", {
+                            d: "M19,10v4H4v-4H19 M20,8H3C2.45,8,2,8.45,2,9v6c0,0.55,0.45,1,1,1h17c0.55,0,1-0.45,1-1V9C21,8.45,20.55,8,20,8L20,8z" }),
                         React.createElement("polygon", { points: "21,4 2,4 2,6 21,6 21,4" })
                     ),
                     title: __('Merge Cells', 'advanced-gutenberg'),
@@ -5946,7 +5948,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M7 21h2v-2H7v2zm0-8h2v-2H7v2zm4 0h2v-2h-2v2zm0 8h2v-2h-2v2zm-8-4h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2v-2H3v2zm0-4h2V7H3v2zm8 8h2v-2h-2v2zm8-8h2V7h-2v2zm0 4h2v-2h-2v2zM3 3v2h18V3H3zm16 14h2v-2h-2v2zm-4 4h2v-2h-2v2zM11 9h2V7h-2v2zm8 12h2v-2h-2v2zm-4-8h2v-2h-2v2z" }),
+                        React.createElement("path", {
+                            d: "M7 21h2v-2H7v2zm0-8h2v-2H7v2zm4 0h2v-2h-2v2zm0 8h2v-2h-2v2zm-8-4h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2v-2H3v2zm0-4h2V7H3v2zm8 8h2v-2h-2v2zm8-8h2V7h-2v2zm0 4h2v-2h-2v2zM3 3v2h18V3H3zm16 14h2v-2h-2v2zm-4 4h2v-2h-2v2zM11 9h2V7h-2v2zm8 12h2v-2h-2v2zm-4-8h2v-2h-2v2z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
@@ -5957,7 +5960,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M7 21h2v-2H7v2zM3 5h2V3H3v2zm4 0h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2v-2H3v2zm8 0h2v-2h-2v2zm-8-8h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm8 8h2v-2h-2v2zm4-4h2v-2h-2v2zm4-10v18h2V3h-2zm-4 18h2v-2h-2v2zm0-16h2V3h-2v2zm-4 8h2v-2h-2v2zm0-8h2V3h-2v2zm0 4h2V7h-2v2z" }),
+                        React.createElement("path", {
+                            d: "M7 21h2v-2H7v2zM3 5h2V3H3v2zm4 0h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2v-2H3v2zm8 0h2v-2h-2v2zm-8-8h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm8 8h2v-2h-2v2zm4-4h2v-2h-2v2zm4-10v18h2V3h-2zm-4 18h2v-2h-2v2zm0-16h2V3h-2v2zm-4 8h2v-2h-2v2zm0-8h2V3h-2v2zm0 4h2V7h-2v2z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
@@ -5968,7 +5972,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M9 11H7v2h2v-2zm4 4h-2v2h2v-2zM9 3H7v2h2V3zm4 8h-2v2h2v-2zM5 3H3v2h2V3zm8 4h-2v2h2V7zm4 4h-2v2h2v-2zm-4-8h-2v2h2V3zm4 0h-2v2h2V3zm2 10h2v-2h-2v2zm0 4h2v-2h-2v2zM5 7H3v2h2V7zm14-4v2h2V3h-2zm0 6h2V7h-2v2zM5 11H3v2h2v-2zM3 21h18v-2H3v2zm2-6H3v2h2v-2z" }),
+                        React.createElement("path", {
+                            d: "M9 11H7v2h2v-2zm4 4h-2v2h2v-2zM9 3H7v2h2V3zm4 8h-2v2h2v-2zM5 3H3v2h2V3zm8 4h-2v2h2V7zm4 4h-2v2h2v-2zm-4-8h-2v2h2V3zm4 0h-2v2h2V3zm2 10h2v-2h-2v2zm0 4h2v-2h-2v2zM5 7H3v2h2V7zm14-4v2h2V3h-2zm0 6h2V7h-2v2zM5 11H3v2h2v-2zM3 21h18v-2H3v2zm2-6H3v2h2v-2z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
@@ -5979,7 +5984,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M11 21h2v-2h-2v2zm0-4h2v-2h-2v2zm0-12h2V3h-2v2zm0 4h2V7h-2v2zm0 4h2v-2h-2v2zm-4 8h2v-2H7v2zM7 5h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2V3H3v18zM19 9h2V7h-2v2zm-4 12h2v-2h-2v2zm4-4h2v-2h-2v2zm0-14v2h2V3h-2zm0 10h2v-2h-2v2zm0 8h2v-2h-2v2zm-4-8h2v-2h-2v2zm0-8h2V3h-2v2z" }),
+                        React.createElement("path", {
+                            d: "M11 21h2v-2h-2v2zm0-4h2v-2h-2v2zm0-12h2V3h-2v2zm0 4h2V7h-2v2zm0 4h2v-2h-2v2zm-4 8h2v-2H7v2zM7 5h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2V3H3v18zM19 9h2V7h-2v2zm-4 12h2v-2h-2v2zm4-4h2v-2h-2v2zm0-14v2h2V3h-2zm0 10h2v-2h-2v2zm0 8h2v-2h-2v2zm-4-8h2v-2h-2v2zm0-8h2V3h-2v2z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
@@ -6001,7 +6007,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     icon: React.createElement(
                         "svg",
                         { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                        React.createElement("path", { d: "M7 5h2V3H7v2zm0 8h2v-2H7v2zm0 8h2v-2H7v2zm4-4h2v-2h-2v2zm0 4h2v-2h-2v2zm-8 0h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2V7H3v2zm0-4h2V3H3v2zm8 8h2v-2h-2v2zm8 4h2v-2h-2v2zm0-4h2v-2h-2v2zm0 8h2v-2h-2v2zm0-12h2V7h-2v2zm-8 0h2V7h-2v2zm8-6v2h2V3h-2zm-8 2h2V3h-2v2zm4 16h2v-2h-2v2zm0-8h2v-2h-2v2zm0-8h2V3h-2v2z" }),
+                        React.createElement("path", {
+                            d: "M7 5h2V3H7v2zm0 8h2v-2H7v2zm0 8h2v-2H7v2zm4-4h2v-2h-2v2zm0 4h2v-2h-2v2zm-8 0h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2V7H3v2zm0-4h2V3H3v2zm8 8h2v-2h-2v2zm8 4h2v-2h-2v2zm0-4h2v-2h-2v2zm0 8h2v-2h-2v2zm0-12h2V7h-2v2zm-8 0h2V7h-2v2zm8-6v2h2V3h-2zm-8 2h2V3h-2v2zm4 16h2v-2h-2v2zm0-8h2v-2h-2v2zm0-8h2V3h-2v2z" }),
                         React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                     ),
                     onClick: function onClick() {
@@ -6015,7 +6022,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                            React.createElement("path", { d: "M3 9h2V7H3v2zm0-4h2V3H3v2zm4 16h2v-2H7v2zm0-8h2v-2H7v2zm-4 0h2v-2H3v2zm0 8h2v-2H3v2zm0-4h2v-2H3v2zM7 5h2V3H7v2zm12 12h2v-2h-2v2zm-8 4h2V3h-2v18zm8 0h2v-2h-2v2zm0-8h2v-2h-2v2zm0-10v2h2V3h-2zm0 6h2V7h-2v2zm-4-4h2V3h-2v2zm0 16h2v-2h-2v2zm0-8h2v-2h-2v2z" }),
+                            React.createElement("path", {
+                                d: "M3 9h2V7H3v2zm0-4h2V3H3v2zm4 16h2v-2H7v2zm0-8h2v-2H7v2zm-4 0h2v-2H3v2zm0 8h2v-2H3v2zm0-4h2v-2H3v2zM7 5h2V3H7v2zm12 12h2v-2h-2v2zm-8 4h2V3h-2v18zm8 0h2v-2h-2v2zm0-8h2v-2h-2v2zm0-10v2h2V3h-2zm0 6h2V7h-2v2zm-4-4h2V3h-2v2zm0 16h2v-2h-2v2zm0-8h2v-2h-2v2z" }),
                             React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                         ),
                         onClick: function onClick() {
@@ -6026,7 +6034,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                            React.createElement("path", { d: "M3 21h2v-2H3v2zM5 7H3v2h2V7zM3 17h2v-2H3v2zm4 4h2v-2H7v2zM5 3H3v2h2V3zm4 0H7v2h2V3zm8 0h-2v2h2V3zm-4 4h-2v2h2V7zm0-4h-2v2h2V3zm6 14h2v-2h-2v2zm-8 4h2v-2h-2v2zm-8-8h18v-2H3v2zM19 3v2h2V3h-2zm0 6h2V7h-2v2zm-8 8h2v-2h-2v2zm4 4h2v-2h-2v2zm4 0h2v-2h-2v2z" }),
+                            React.createElement("path", {
+                                d: "M3 21h2v-2H3v2zM5 7H3v2h2V7zM3 17h2v-2H3v2zm4 4h2v-2H7v2zM5 3H3v2h2V3zm4 0H7v2h2V3zm8 0h-2v2h2V3zm-4 4h-2v2h2V7zm0-4h-2v2h2V3zm6 14h2v-2h-2v2zm-8 4h2v-2h-2v2zm-8-8h18v-2H3v2zM19 3v2h2V3h-2zm0 6h2V7h-2v2zm-8 8h2v-2h-2v2zm4 4h2v-2h-2v2zm4 0h2v-2h-2v2z" }),
                             React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                         ),
                         onClick: function onClick() {
@@ -6037,7 +6046,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                            React.createElement("path", { d: "M3 21h2v-2H3v2zm4 0h2v-2H7v2zM5 7H3v2h2V7zM3 17h2v-2H3v2zM9 3H7v2h2V3zM5 3H3v2h2V3zm12 0h-2v2h2V3zm2 6h2V7h-2v2zm0-6v2h2V3h-2zm-4 18h2v-2h-2v2zM13 3h-2v8H3v2h8v8h2v-8h8v-2h-8V3zm6 18h2v-2h-2v2zm0-4h2v-2h-2v2z" }),
+                            React.createElement("path", {
+                                d: "M3 21h2v-2H3v2zm4 0h2v-2H7v2zM5 7H3v2h2V7zM3 17h2v-2H3v2zM9 3H7v2h2V3zM5 3H3v2h2V3zm12 0h-2v2h2V3zm2 6h2V7h-2v2zm0-6v2h2V3h-2zm-4 18h2v-2h-2v2zM13 3h-2v8H3v2h8v8h2v-8h8v-2h-8V3zm6 18h2v-2h-2v2zm0-4h2v-2h-2v2z" }),
                             React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                         ),
                         onClick: function onClick() {
@@ -6048,7 +6058,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         icon: React.createElement(
                             "svg",
                             { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
-                            React.createElement("path", { d: "M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z" }),
+                            React.createElement("path", {
+                                d: "M13 7h-2v2h2V7zm0 4h-2v2h2v-2zm4 0h-2v2h2v-2zM3 3v18h18V3H3zm16 16H5V5h14v14zm-6-4h-2v2h2v-2zm-4-4H7v2h2v-2z" }),
                             React.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
                         ),
                         onClick: function onClick() {
@@ -6531,6 +6542,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var maxWidthVal = !!maxWidth ? maxWidth : undefined;
 
             function renderSection(section) {
+                var sectionTagName = section === 'head' ? 'th' : 'td';
                 return attributes[section].map(function (_ref4, rowIndex) {
                     var cells = _ref4.cells;
                     return React.createElement(
@@ -6543,7 +6555,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 rowSpan = _ref5.rowSpan,
                                 borderColorSaved = _ref5.borderColorSaved;
                             return React.createElement(RichText.Content, {
-                                tagName: "td",
+                                tagName: sectionTagName,
                                 value: content,
                                 key: colIndex,
                                 style: styles,
@@ -6592,7 +6604,201 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     });
                 }
             }]
-        }
+        },
+        deprecated: [{
+            attributes: {
+                head: {
+                    type: 'array',
+                    default: [],
+                    source: 'query',
+                    selector: 'thead tr',
+                    query: {
+                        cells: {
+                            type: 'array',
+                            default: [],
+                            source: 'query',
+                            selector: 'td, th',
+                            query: {
+                                content: {
+                                    source: 'html'
+                                },
+                                styles: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'style'
+                                },
+                                colSpan: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'colspan'
+                                },
+                                borderColorSaved: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'data-border-color'
+                                }
+                            }
+                        }
+                    }
+                },
+                body: {
+                    type: 'array',
+                    default: [],
+                    source: 'query',
+                    selector: 'tbody tr',
+                    query: {
+                        cells: {
+                            type: 'array',
+                            default: [],
+                            source: 'query',
+                            selector: 'td',
+                            query: {
+                                content: {
+                                    source: 'html'
+                                },
+                                styles: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'style'
+                                },
+                                colSpan: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'colspan'
+                                },
+                                rowSpan: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'rowspan'
+                                },
+                                borderColorSaved: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'data-border-color'
+                                }
+                            }
+                        }
+                    }
+                },
+                foot: {
+                    type: 'array',
+                    default: [],
+                    source: 'query',
+                    selector: 'tfoot tr',
+                    query: {
+                        cells: {
+                            type: 'array',
+                            default: [],
+                            source: 'query',
+                            selector: 'td, th',
+                            query: {
+                                content: {
+                                    source: 'html'
+                                },
+                                styles: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'style'
+                                },
+                                colSpan: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'colspan'
+                                },
+                                borderColorSaved: {
+                                    type: 'string',
+                                    source: 'attribute',
+                                    attribute: 'data-border-color'
+                                }
+                            }
+                        }
+                    }
+                },
+                maxWidth: {
+                    type: 'number',
+                    default: 0
+                },
+                hasFixedLayout: {
+                    type: 'boolean',
+                    default: false
+                },
+                tableCollapsed: {
+                    type: 'boolean',
+                    default: false
+                },
+                changed: {
+                    type: 'boolean',
+                    default: false
+                },
+                isPreview: {
+                    type: 'boolean',
+                    default: false
+                }
+            },
+            save: function save(_ref6) {
+                var attributes = _ref6.attributes;
+                var head = attributes.head,
+                    body = attributes.body,
+                    foot = attributes.foot,
+                    maxWidth = attributes.maxWidth,
+                    tableCollapsed = attributes.tableCollapsed,
+                    hasFixedLayout = attributes.hasFixedLayout;
+
+                var maxWidthVal = !!maxWidth ? maxWidth : undefined;
+
+                function renderSection(section) {
+                    return attributes[section].map(function (_ref7, rowIndex) {
+                        var cells = _ref7.cells;
+                        return React.createElement(
+                            "tr",
+                            { key: rowIndex },
+                            cells.map(function (_ref8, colIndex) {
+                                var content = _ref8.content,
+                                    styles = _ref8.styles,
+                                    colSpan = _ref8.colSpan,
+                                    rowSpan = _ref8.rowSpan,
+                                    borderColorSaved = _ref8.borderColorSaved;
+                                return React.createElement(RichText.Content, {
+                                    tagName: "td",
+                                    value: content,
+                                    key: colIndex,
+                                    style: styles,
+                                    colSpan: colSpan,
+                                    rowSpan: rowSpan,
+                                    "data-border-color": borderColorSaved
+                                });
+                            })
+                        );
+                    });
+                }
+
+                return React.createElement(
+                    "table",
+                    { className: "advgb-table-frontend",
+                        style: {
+                            maxWidth: maxWidthVal,
+                            borderCollapse: tableCollapsed ? 'collapse' : undefined,
+                            tableLayout: hasFixedLayout ? 'fixed' : undefined
+                        }
+                    },
+                    !!head.length && React.createElement(
+                        "thead",
+                        null,
+                        renderSection('head')
+                    ),
+                    React.createElement(
+                        "tbody",
+                        null,
+                        renderSection('body')
+                    ),
+                    !!foot.length && React.createElement(
+                        "tfoot",
+                        null,
+                        renderSection('foot')
+                    )
+                );
+            }
+        }]
     });
 })(wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components);
 
