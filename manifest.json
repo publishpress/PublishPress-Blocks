@@ -2,9 +2,9 @@
   "slug": "advanced-gutenberg",
   "name": "Advanced Gutenberg",
   "uri": "https://www.joomunited.com/wordpress-products/advanced-gutenberg",
-  "version": "2.3.8",
+  "version": "2.3.9",
   "platform": "wordpress",
-  "wp_version": "5.4.0",
+  "wp_version": "5.4.1",
   "text_domain": "advanced-gutenberg",
   "language_file": "/languages/advanced-gutenberg-en_US.mo",
   "wp_repository": "https://plugins.svn.wordpress.org/advanced-gutenberg/",
@@ -38,6 +38,12 @@
     ]
   },
   "changelog": {
+    "2.3.9": [
+      {
+        "type": "fix",
+        "title": "Wrong cell tag name in table head of Advanced Table block"
+      }
+    ],
     "2.3.8": [
       {
         "type": "fix",
