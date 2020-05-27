@@ -234,11 +234,11 @@ class createUpdateTestBlocksCest
         $I->insertBlock('Social Links');
 
         $I->waitForElement('//div[@class="advgb-social-link"]//input');
-        $I->fillField('//div[@class="advgb-social-link"]//input', 'http://twitter.com/joomunited');
+        $I->fillField('//div[@class="advgb-social-link"]//input', 'http://twitter.com/advgutenberg');
         $I->click('//div[@class="advgb-icon-items-wrapper"]//div[@class="advgb-icon-item"][4]/span');
 
         $I->click('//div[@class="advgb-social-icons"]//span[2]');
-        $I->fillField('//div[@class="advgb-social-link"]//input', 'https://www.joomunited.com');
+        $I->fillField('//div[@class="advgb-social-link"]//input', 'https://advancedgutenberg.com');
 
         $I->fillField('//button[text()="Preset Icons"]/ancestor::node()[1]/following-sibling::node()//input', 'Twitter');
         $I->waitForElement('//div[@class="advgb-icon-items-wrapper"]//div[@class="advgb-icon-item"]/span');
