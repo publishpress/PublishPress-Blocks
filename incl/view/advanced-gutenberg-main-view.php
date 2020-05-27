@@ -43,7 +43,7 @@ $tabs_data = array(
     <div class="ju-left-panel">
         <div class="ju-logo">
             <a href="https://advancedgutenberg.com/" target="_blank">
-                <img src="<?php echo esc_url(plugins_url('assets/images/logo-joomUnited-white.png', dirname(dirname(__FILE__)))) ?>"
+                <img src="<?php echo esc_url(plugins_url('assets/images/logo-white.png', dirname(dirname(__FILE__)))) ?>"
                      alt="<?php esc_html_e('JoomUnited logo', 'advanced-gutenberg') ?>">
             </a>
         </div>
