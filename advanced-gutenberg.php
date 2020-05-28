@@ -5,7 +5,7 @@
  * Description: Enhanced tools for Gutenberg editor
  * Version: {{version}}
  * Tested up to: {{wp_version}}
- * Author: JoomUnited
+ * Author: Advanced Gutenberg
  * Author URI: https://advancedgutenberg.com
  * License: GPL2
  * Text Domain: advanced-gutenberg
