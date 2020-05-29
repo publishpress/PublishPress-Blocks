@@ -125,9 +125,9 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Google Maps Gutenberg Block
 1. Latest posts and WooCommerce products blocks
 
-== Changelog ==
+== Changelogs ==
 
-{{wp_changelog}}
+Changelogs are available [in this page](https://advancedgutenberg.com/knowledge-base/57959/)
 
 
 == Upgrade Notice ==
