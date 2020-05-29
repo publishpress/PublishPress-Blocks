@@ -1,8 +1,0 @@
-{
-  "require-dev": {
-    "squizlabs/php_codesniffer": "*",
-    "phpcompatibility/php-compatibility": "*",
-    "wp-coding-standards/wpcs": "*"
-  },
-  "prefer-stable": true
-}
