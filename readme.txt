@@ -127,6 +127,10 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 == Changelogs ==
 
+= 2.3.10 =
+ * Fix: Blocks spacing
+ * Fix: Default background position for new Advanced image block
+
 = 2.3.9 =
  * Fix : Wrong cell tag name in table head of Advanced Table block
 
