@@ -1,5 +1,5 @@
 === Advanced Gutenberg ===
-Contributors: JoomUnited, Advanced Gutenberg
+Contributors: Advanced Gutenberg
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.4.1
