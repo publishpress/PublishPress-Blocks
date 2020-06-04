@@ -3,7 +3,7 @@
  * Plugin Name: Advanced Gutenberg
  * Plugin URI: https://advancedgutenberg.com
  * Description: Enhanced tools for Gutenberg editor
- * Version: 2.3.9
+ * Version: 2.3.10
  * Tested up to: 5.4.1
  * Author: Advanced Gutenberg
  * Author URI: https://advancedgutenberg.com
@@ -75,7 +75,7 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
 }
 
 if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-    define('ADVANCED_GUTENBERG_VERSION', '2.3.9');
+    define('ADVANCED_GUTENBERG_VERSION', '2.3.10');
 }
 
 if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
