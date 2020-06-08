@@ -65,7 +65,7 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 = Support =
 
 Before leaving a review >> Feel free to ask questions here in the support section, we reply to every question!
-We also have a forum on www.advancedgutenberg.com for feature requests.
+We also have a forum on [advancedgutenberg.com](https://advancedgutenberg.com/) for feature requests.
 
 == Installation ==
 
@@ -91,7 +91,7 @@ We also have a forum on www.advancedgutenberg.com for feature requests.
 4. You can define a custom color for the new blocks, by default it's a kind of purple color
 
 = Can I get support for the editor use? =
-We reply to every question about the editor on the forum here, just ask :) We also have an online documentation here: https://advancedgutenberg.com/knowledge-base/
+We reply to every question about the editor on the forum here, just ask :) We also have an online documentation here: [https://advancedgutenberg.com/knowledge-base/](https://advancedgutenberg.com/knowledge-base/)
 
 = Does Advanced Gutenberg slowing down my website? =
 The plugin has almost NO impact on page load for your visitors, it's only loaded during the edition process.
