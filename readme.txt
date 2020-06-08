@@ -1,4 +1,4 @@
-=== Advanced Gutenberg ===
+=== Advanced Gutenberg - Blocks, Permissions, Layouts, Forms and CSS Styles ===
 Contributors: JoomUnited, advancedgutenberg
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
@@ -65,6 +65,7 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 = Support =
 
 Before leaving a review >> Feel free to ask questions here in the support section, we reply to every question!
+We also have a forum on www.advancedgutenberg.com for feature requests.
 
 == Installation ==
 
