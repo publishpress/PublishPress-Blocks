@@ -4183,7 +4183,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 { className: blockClassName,
                     style: {
                         backgroundImage: 'url(' + imageUrl + ')',
-                        backgroundPosition: focalPoint ? focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%' : undefined,
+                        backgroundPosition: focalPoint.x || focalPoint.y ? focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%' : '50% 50%',
                         height: height,
                         width: width,
                         justifyContent: vAlign,
