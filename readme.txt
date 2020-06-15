@@ -126,7 +126,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Google Maps Gutenberg Block
 1. Latest posts and WooCommerce products blocks
 
-== Changelogs ==
+== Changelog ==
 
 = 2.3.11 =
  * Fix: Introduced bug to set default background position for new Advanced image block from previous version
