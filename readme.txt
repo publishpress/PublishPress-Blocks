@@ -3,7 +3,7 @@ Contributors: JoomUnited, advancedgutenberg
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.4.2
-Stable tag: 2.3.11
+Stable tag: 2.3.11b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -128,7 +128,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 == Changelog ==
 
-= 2.3.11 =
+= 2.3.11b1 =
  * Fix: Introduced bug to set default background position for new Advanced image block from previous version
 
 = 2.3.10 =
