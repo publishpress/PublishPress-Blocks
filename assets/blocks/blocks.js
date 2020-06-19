@@ -3987,7 +3987,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             allowedTypes: ['image'],
                             value: imageID,
                             onSelect: function onSelect(image) {
-                                return setAttributes({ imageUrl: image.url, imageID: image.id, focalPoint: {} });
+                                return setAttributes({ imageUrl: image.url, imageID: image.id, focalPoint: { "x": "0.50", "y": "0.50" } });
                             },
                             render: function render(_ref2) {
                                 var open = _ref2.open;
