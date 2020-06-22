@@ -129,7 +129,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 == Changelog ==
 
 = 2.3.11 =
- * Fix: Introduced bug to set default background position for new Advanced image block from previous version
+ * Fix: Improve default background position for new Advanced image block
 
 = 2.3.10 =
  * Fix: Blocks spacing
