@@ -90,17 +90,6 @@ require_once(plugin_dir_path(__FILE__) . '/install.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/advanced-gutenberg-main.php');
 new AdvancedGutenbergMain();
 
-// Load jutranslation helper
-include_once('jutranslation' . DIRECTORY_SEPARATOR . 'jutranslation.php');
-call_user_func(
-    '\Joomunited\ADVGB\Jutranslation\Jutranslation::init',
-    __FILE__,
-    'advanced-gutenberg',
-    'Advanced Gutenberg',
-    'advanced-gutenberg',
-    'languages' . DIRECTORY_SEPARATOR . 'advanced-gutenberg-en_US.mo'
-);
-
 // Include jufeedback helpers
 require_once('jufeedback'. DIRECTORY_SEPARATOR . 'jufeedback.php');
 call_user_func(
