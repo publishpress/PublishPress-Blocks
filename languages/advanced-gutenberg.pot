@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Advanced Gutenberg\n"
-"POT-Creation-Date: 2020-06-23 16:36-0500\n"
+"POT-Creation-Date: 2020-06-24 14:30-0500\n"
 "PO-Revision-Date: 2020-06-23 16:35-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: advanced-gutenberg.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1433,31 +1433,36 @@ msgstr ""
 msgid "Custom Styles"
 msgstr ""
 
-#: incl/view/advanced-gutenberg-main-view.php:42
+#: incl/view/advanced-gutenberg-main-view.php:33
+#: incl/view/advanced-gutenberg-translations.php:6
+msgid "Translations"
+msgstr ""
+
+#: incl/view/advanced-gutenberg-main-view.php:47
 msgid "Advanced Gutenberg logo"
 msgstr ""
 
-#: incl/view/advanced-gutenberg-main-view.php:48
+#: incl/view/advanced-gutenberg-main-view.php:53
 msgid "Search settings"
 msgstr ""
 
-#: incl/view/advanced-gutenberg-main-view.php:56
+#: incl/view/advanced-gutenberg-main-view.php:61
 msgid "Back to profiles list"
 msgstr ""
 
-#: incl/view/advanced-gutenberg-main-view.php:86
+#: incl/view/advanced-gutenberg-main-view.php:91
 msgid "Our plugin works great with Gutenberg version"
 msgstr ""
 
-#: incl/view/advanced-gutenberg-main-view.php:88
+#: incl/view/advanced-gutenberg-main-view.php:93
 msgid "and above"
 msgstr ""
 
-#: incl/view/advanced-gutenberg-main-view.php:89
+#: incl/view/advanced-gutenberg-main-view.php:94
 msgid "Your current version is"
 msgstr ""
 
-#: incl/view/advanced-gutenberg-main-view.php:91
+#: incl/view/advanced-gutenberg-main-view.php:96
 msgid "Update now"
 msgstr ""
 
@@ -1655,6 +1660,17 @@ msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:390
 msgid "We are updating blocks list..."
+msgstr ""
+
+#: incl/view/advanced-gutenberg-translations.php:10
+msgid ""
+"Support for JUTranslation system has been removed, however we'll provide you "
+"a better approach to continue translating Advanced Gutenberg into your "
+"language."
+msgstr ""
+
+#: incl/view/advanced-gutenberg-translations.php:11
+msgid "[Information about the new translation approach goes here]"
 msgstr ""
 
 #: install.php:20
