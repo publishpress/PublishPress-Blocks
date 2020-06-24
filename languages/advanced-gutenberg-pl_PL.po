@@ -1,0 +1,111 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid " block"
+msgstr "blok"
+
+msgid " here"
+msgstr "tutaj"
+
+msgid "(untitled)"
+msgstr "(bez tytułu)"
+
+msgid "10px"
+msgstr "10px"
+
+msgid "20px"
+msgstr "20px"
+
+msgid "30px"
+msgstr "30px"
+
+msgid "40px"
+msgstr "40px"
+
+msgid "50px"
+msgstr "50px"
+
+msgid "70px"
+msgstr "70px"
+
+msgid "90px"
+msgstr "90px"
+
+msgid "Add New Profile"
+msgstr "Dodaj nowy profil"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Avatar Settings"
+msgstr "Ustawienia awatara"
+
+msgid "Avatar Size"
+msgstr "Wielkość awatara"
+
+msgid "Background Color"
+msgstr "Kolor tła"
+
+msgid "Block Config"
+msgstr "Konfiguracja bloku"
+
+msgid "Blocks List"
+msgstr "Lista bloków"
+
+msgid "Blocks Settings"
+msgstr "Ustawienia bloków"
+
+msgid "Border Style"
+msgstr "Styl ramki"
+
+msgid "Border Width"
+msgstr "Szerokość ramki"
+
+msgid "Bottom"
+msgstr "Dół"
+
+msgid "Button Color"
+msgstr "Kolor przycisku"
+
+msgid "Button Icon"
+msgstr "Ikona przycisku"
+
+msgid "Button Size"
+msgstr "Wielkość przycisku"
+
+msgid "Circle"
+msgstr "Koło"
+
+msgid "Clear"
+msgstr "Wyczyść"
+
+msgid "Color"
+msgstr "Kolor"
+
+msgid "Dotted"
+msgstr "Kropkowane"
+
+msgid "Edit"
+msgstr "Edytuj"
+
+msgid "Edit Profile"
+msgstr "Edytuj profil"
+
+msgid "Full width"
+msgstr "Pełna szerokość"
+
+msgid "General Settings"
+msgstr "Ustawienia ogólne"
+
+msgid "Header Color"
+msgstr "Kolor nagłówka"
+
+msgid "Header Icon"
+msgstr "Ikona nagłówka"
+
+msgid "Height"
+msgstr "Wysokość"
+
+msgid "Icon"
+msgstr "Ikona"

@@ -1,0 +1,867 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid " block"
+msgstr "块"
+
+msgid " here"
+msgstr "这里"
+
+msgid "(untitled)"
+msgstr "未命名"
+
+msgid "A Google API key is required to use the Map block without any warning."
+msgstr "需要 Google API 密钥"
+
+msgid "Action on click"
+msgstr "点击行为（Action on click）"
+
+msgid "Active Tab Settings"
+msgstr "活动标签页设置"
+
+msgid "Active this profile for this group(s)"
+msgstr "为用户群应用这个配置文件"
+
+msgid "Active this profile for this user(s)"
+msgstr "为用户应用这个配置文件"
+
+msgid "Add New Profile"
+msgstr "添加新的配置文件"
+
+msgid "Add new class"
+msgstr "添加新的类"
+
+msgid "Adv. Gutenberg"
+msgstr "古腾堡编辑器增强工具"
+
+msgid "Advanced Gutenberg"
+msgstr "古腾堡编辑器增强工具"
+
+msgid "Advanced Gutenberg Profiles"
+msgstr "古腾堡编辑器增强工具配置文件"
+
+msgid "All modifications were saved!"
+msgstr "所有的修改已经保存！"
+
+msgid "Anchor color"
+msgstr "锚（Anchor）颜色"
+
+msgid "Apply a minimal vertical block spacing automatically. Default is None. Values in pixels"
+msgstr "自动添加一个最小的横向块空间，默认是None，单位为像素"
+
+msgid "Arrow Down"
+msgstr "下侧"
+
+msgid "Arrow Right"
+msgstr "右侧"
+
+msgid "Aubergine"
+msgstr "深紫色（Aubergine）"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Auto detect"
+msgstr "自动检测"
+
+msgid "Avatar Settings"
+msgstr "头像设定"
+
+msgid "Avatar Size"
+msgstr "头像大小"
+
+msgid "Background Color"
+msgstr "背景颜色"
+
+msgid "Bad Request!"
+msgstr "错误的请求"
+
+msgid "Block Config"
+msgstr "块设置"
+
+msgid "Blocks List"
+msgstr "块列表"
+
+msgid "Blocks Settings"
+msgstr "块设置"
+
+msgid "Blocks icon color"
+msgstr "块图标颜色"
+
+msgid "Blocks list updated."
+msgstr "块列表已经更新。"
+
+msgid "Blocks spacing"
+msgstr "块空间"
+
+msgid "Blogger"
+msgstr "博客"
+
+msgid "Body Settings"
+msgstr "正文设置"
+
+msgid "Border Color"
+msgstr "边框颜色"
+
+msgid "Border Radius"
+msgstr "边框半径"
+
+msgid "Border Radius (%)"
+msgstr "边框半径（%）"
+
+msgid "Border Settings"
+msgstr "边框设置"
+
+msgid "Border Style"
+msgstr "边框风格"
+
+msgid "Border Width"
+msgstr "边框宽度"
+
+msgid "Bottom"
+msgstr "下方"
+
+msgid "Button Color"
+msgstr "按钮颜色"
+
+msgid "Button Icon"
+msgstr "按钮图标"
+
+msgid "Button Size"
+msgstr "按钮大小"
+
+msgid "CSV"
+msgstr "CVS"
+
+msgid "Cannot validate captcha"
+msgstr "无法验证captcha"
+
+msgid "Captcha validation error"
+msgstr "captcha验证错误"
+
+msgid "Center"
+msgstr "居中"
+
+msgid "Checkmark"
+msgstr "复选标记"
+
+msgid "Circle"
+msgstr "圆形"
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Click action"
+msgstr "点击行为"
+
+msgid "Color"
+msgstr "颜色"
+
+msgid "Color Settings"
+msgstr "颜色设置"
+
+msgid "Columns"
+msgstr "列"
+
+msgid "Config for this block is currently unsupported."
+msgstr "对于这个块的设置现在还不支持。"
+
+msgid "Configuration"
+msgstr "配置"
+
+msgid "Contact Form: Receiver Information"
+msgstr "联系表格：收件人信息"
+
+msgid "Contact Form: Sender Information"
+msgstr "联系表格：发件人信息"
+
+msgid "Copy"
+msgstr "复制"
+
+msgid "Count Up Color"
+msgstr "颜色总计"
+
+msgid "Count Up Number Size"
+msgstr "总计数字"
+
+msgid "Count Up Settings"
+msgstr "总计设置"
+
+msgid "Custom"
+msgstr "自定义"
+
+msgid "Custom CSS"
+msgstr "自定义CSS"
+
+msgid "Custom Styles"
+msgstr "自定义风格"
+
+msgid "Custom styles"
+msgstr "自定义风格"
+
+msgid "Dark"
+msgstr "黑色"
+
+msgid "Dashed"
+msgstr "虚线"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Default"
+msgstr "默认"
+
+msgid "Default blocks config"
+msgstr "默认块设置"
+
+msgid "Default thumbnail"
+msgstr "默认缩略图"
+
+msgid "Define the admin Gutenberg editor width size"
+msgstr "定义管理者（Admin）古腾堡编辑器宽度"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Delete selected"
+msgstr "删除选择"
+
+msgid "Description Color"
+msgstr "颜色详情"
+
+msgid "Display caption text on images loaded as lightbox in galleries"
+msgstr "使照片注释文字以Lightbox形式加载至相册图片"
+
+msgid "Dotted"
+msgstr "打点的"
+
+msgid "Download Contacts Form data"
+msgstr "从数据中下载联系人"
+
+msgid "Download Newsletter Form data"
+msgstr "从数据中下载邮件列表表单（Newsletter Form）"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Edit Profile"
+msgstr "编辑配置文件"
+
+msgid "Editor width"
+msgstr "编辑器宽度"
+
+msgid "Email"
+msgstr "电子邮件"
+
+msgid "Email & Form"
+msgstr "电子邮件及表单"
+
+msgid "Email and Form settings"
+msgstr "电子邮件及表单设置"
+
+msgid "Email receiver"
+msgstr "邮件接收人"
+
+msgid "Email settings"
+msgstr "邮件设定"
+
+msgid "Email title"
+msgstr "邮件标题"
+
+msgid "Enable block spacing settings"
+msgstr "打开块间隙设置"
+
+msgid "Enable blocks spacing"
+msgstr "打开块间隙"
+
+msgid "Enable reCAPTCHA"
+msgstr "启用  reCAPTCHA"
+
+msgid "Enter title here"
+msgstr "在这里输入名称"
+
+msgid "Error while sending form. Try again!"
+msgstr "发送表单时出错，请重试！"
+
+msgid "Example of text"
+msgstr "示例文字"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Fail to verify nonce!"
+msgstr "临时验证失败！"
+
+msgid "Filled Circle"
+msgstr "填充圆形"
+
+msgid "Filled Square"
+msgstr "填充方形"
+
+msgid "First page"
+msgstr "第一页"
+
+msgid "Flag"
+msgstr "标记"
+
+msgid "Flickr"
+msgstr "Flickr"
+
+msgid "Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph"
+msgstr "跟随段落跟随段落跟随段落跟随段落跟随段落跟随段落跟随段落跟随段落"
+
+msgid "Forms data"
+msgstr "表单数据"
+
+msgid "Forms reCaptcha"
+msgstr "表单验证（reCaptcha）"
+
+msgid "Full width"
+msgstr "全宽"
+
+msgid "General Settings"
+msgstr "通用设置"
+
+msgid "Google API Key"
+msgstr "Google API 密钥"
+
+msgid "Google Plus"
+msgstr "Google+"
+
+msgid "Gutenberg is not detected! Activate it or"
+msgstr "没有侦测到古腾堡编辑器！激活它或者"
+
+msgid "Header Color"
+msgstr "头部（Header）颜色"
+
+msgid "Header Icon"
+msgstr "头部（Header）图标"
+
+msgid "Header Icon Color"
+msgstr "头部（Header）图标颜色"
+
+msgid "Header Settings"
+msgstr "头部（Header）设置"
+
+msgid "Height"
+msgstr "宽"
+
+msgid "Help"
+msgstr "帮助"
+
+msgid "Horizontal Dots"
+msgstr "水平点"
+
+msgid "Hover Settings"
+msgstr "悬浮设置"
+
+msgid "How to create a Google API Key"
+msgstr "如何创建一个Google API密钥"
+
+msgid "Icon"
+msgstr "图标"
+
+msgid "Icon 1 Settings"
+msgstr "图标 1 设置"
+
+msgid "Icon 2 Settings"
+msgstr "图标 2 设置"
+
+msgid "Icon 3 Settings"
+msgstr "图标 3 设置"
+
+msgid "Icon Alignment"
+msgstr "图标对齐"
+
+msgid "Icon Color"
+msgstr "图标颜色"
+
+msgid "Icon Link"
+msgstr "图标链接"
+
+msgid "Icon Settings"
+msgstr "图标设置"
+
+msgid "Icon Size"
+msgstr "图标大小"
+
+msgid "Icon Space"
+msgstr "图标间隙"
+
+msgid "Icon color"
+msgstr "图标颜色"
+
+msgid "Icon style"
+msgstr "图标风格"
+
+msgid "Identification color"
+msgstr "鉴定颜色"
+
+msgid "Image Size"
+msgstr "图像大小"
+
+msgid "Image caption"
+msgstr "图片标题"
+
+msgid "Info"
+msgstr "关于"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Install Gutenberg Now!"
+msgstr "现在安装古腾堡编辑器！"
+
+msgid "Invalid nonce token!"
+msgstr "无效的token！"
+
+msgid "JSON"
+msgstr "JSON"
+
+msgid "JoomUnited logo"
+msgstr "JoomUnited logo"
+
+msgid "Last page"
+msgstr "最后页"
+
+msgid "Latitude"
+msgstr "纬度"
+
+msgid "Left"
+msgstr "左"
+
+msgid "Line Height"
+msgstr "线高度"
+
+msgid "LinkedIn"
+msgstr "领英"
+
+msgid "List"
+msgstr "列表"
+
+msgid "Load minimized"
+msgstr "载入最小的"
+
+msgid "Location Settings"
+msgstr "定位设置"
+
+msgid "Longitude"
+msgstr "经度"
+
+msgid "Map Settings"
+msgstr "地图设置"
+
+msgid "Map style"
+msgstr "地图样式"
+
+msgid "Margin"
+msgstr "边缘"
+
+msgid "Marker Description"
+msgstr "标记详情"
+
+msgid "Marker Settings"
+msgstr "标记设置"
+
+msgid "Marker Title"
+msgstr "标记名"
+
+msgid "Max width"
+msgstr "最大宽度"
+
+msgid "Message"
+msgstr "信息"
+
+msgid "Minus"
+msgstr "减去"
+
+msgid "Name"
+msgstr "名字"
+
+msgid "Name Color"
+msgstr "名字颜色"
+
+msgid "New Profile"
+msgstr "新配置文件"
+
+msgid "New class"
+msgstr "新类"
+
+msgid "Night"
+msgstr "夜晚"
+
+msgid "No permission!"
+msgstr "没有权限！"
+
+msgid "No profiles found"
+msgstr "找不到配置文件"
+
+msgid "No profiles found in trash"
+msgstr "在回收站里找不到配置文件"
+
+msgid "No profiles found."
+msgstr "找不到配置文件。"
+
+msgid "No users found."
+msgstr "找不到用户"
+
+msgid "None"
+msgstr "None"
+
+msgid "Normal"
+msgstr "普通"
+
+msgid "Number of columns"
+msgstr "列数"
+
+msgid "Open custom URL"
+msgstr "打开自定义链接"
+
+msgid "Open galleries in lightbox"
+msgstr "在Lightbox中打开相册"
+
+msgid "Open gallery images as a lightbox style popup"
+msgstr "以弹出Lightbox的形式打开相册图片"
+
+msgid "Open image in a lightbox"
+msgstr "在Lightbox中打开图片"
+
+msgid "Open link in a new tab"
+msgstr "在新标签页中打开链接"
+
+msgid "Open video in lightbox"
+msgstr "在Lightbox中打开视频"
+
+msgid "Our plugin works great with Gutenberg version"
+msgstr "我们的插件适用于古腾堡编辑器版本"
+
+msgid "Outline Circle"
+msgstr "圈式大纲"
+
+msgid "Overlay Color"
+msgstr "叠加颜色"
+
+msgid "Overlay color"
+msgstr "叠加颜色"
+
+msgid "Padding"
+msgstr "衬底（Padding）"
+
+msgid "Padding Bottom"
+msgstr "衬底（Padding）下方"
+
+msgid "Padding Left"
+msgstr "衬底（Padding）左方"
+
+msgid "Padding Right"
+msgstr "衬底（Padding）右方"
+
+msgid "Padding Settings"
+msgstr "衬底（Padding）设置"
+
+msgid "Padding Top"
+msgstr "衬底上方"
+
+msgid "Picasa"
+msgstr "Picasa"
+
+msgid "Pinterest"
+msgstr "Pinterest"
+
+msgid "Play"
+msgstr "播放"
+
+msgid "Play Button Settings"
+msgstr "播放键设置"
+
+msgid "Please update Gutenberg then comeback later!"
+msgstr "请先升级古腾堡编辑器！"
+
+msgid "Plus"
+msgstr "加"
+
+msgid "Plus Circle"
+msgstr "Plus Circle"
+
+msgid "Plus Circle Outline"
+msgstr "Plus Circle 外圈"
+
+msgid "Plus Square Outline"
+msgstr "Plus Square 外圈"
+
+msgid "Position Color"
+msgstr "位置颜色"
+
+msgid "Preview"
+msgstr "预览"
+
+msgid "Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph"
+msgstr "上一段落上一段落上一段落上一段落上一段落上一段落上一段落上一段落上一段落"
+
+msgid "Profile Attribution"
+msgstr "配置文件属性"
+
+msgid "Profile saved successfully!"
+msgstr "配置文件保存成功！"
+
+msgid "Profile title"
+msgstr "配置文件标题"
+
+msgid "Profiles"
+msgstr "配置文件"
+
+msgid "Pushpin"
+msgstr "图钉"
+
+msgid "Read More"
+msgstr "了解更多"
+
+msgid "Reddit"
+msgstr "Reddit"
+
+msgid "Reset to default"
+msgstr "重置至默认"
+
+msgid "Retro"
+msgstr "复古（Retro）"
+
+msgid "Return to profiles list"
+msgstr "回到配置文件列表"
+
+msgid "Right"
+msgstr "右"
+
+msgid "Role"
+msgstr "行"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Save styles"
+msgstr "保存风格"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Search Profiles"
+msgstr "搜索配置文件"
+
+msgid "Search blocks"
+msgstr "搜索块"
+
+msgid "Search profiles by title or author"
+msgstr "基于标题或作者搜索"
+
+msgid "Search settings"
+msgstr "搜索设置"
+
+msgid "Search users"
+msgstr "搜索用户"
+
+msgid "Sender email"
+msgstr "发件人邮箱"
+
+msgid "Sender name"
+msgstr "发件人姓名"
+
+msgid "Server error. Try again later!"
+msgstr "服务器错误。请重试！"
+
+msgid "Set color for blocks icons on admin, only apply to Advanced Gutenberg blocks"
+msgstr "设置管理者的块颜色，仅对古腾堡编辑器增强工具的块生效。"
+
+msgid "Set the default post thumbnail to use in Recent Posts blocks."
+msgstr "将默认的文章预览设置为近期文章块。"
+
+msgid "Settings saved successfully"
+msgstr "设置保存成功"
+
+msgid "Shadow Blur"
+msgstr "阴影模糊"
+
+msgid "Shadow Color"
+msgstr "阴影颜色"
+
+msgid "Shadow H Offset"
+msgstr "阴影横向偏移"
+
+msgid "Shadow Spread"
+msgstr "阴影分离"
+
+msgid "Shadow V Offset"
+msgstr "阴影横向偏移"
+
+msgid "Silver"
+msgstr "银色"
+
+msgid "Skype"
+msgstr "Skype"
+
+msgid "Solid"
+msgstr "固态层"
+
+msgid "Sound Cloud"
+msgstr "声音云"
+
+msgid "Star"
+msgstr "星星"
+
+msgid "Star Sticker"
+msgstr "星标"
+
+msgid "Style class"
+msgstr "风格类"
+
+msgid "Subtitle Color"
+msgstr "字幕颜色"
+
+msgid "Summary Alignment"
+msgstr "摘要对齐"
+
+msgid "Summary header title"
+msgstr "摘要头部标题"
+
+msgid "Tab Settings"
+msgstr "选项卡设置"
+
+msgid "Table Settings"
+msgstr "桌面设置"
+
+msgid "Text Alignment"
+msgstr "文字对齐"
+
+msgid "Text Color"
+msgstr "文字颜色"
+
+msgid "Text Settings"
+msgstr "文字设置"
+
+msgid "Text Size"
+msgstr "文字大小"
+
+msgid "Text and Color"
+msgstr "文字和颜色"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Title Color"
+msgstr "标题颜色"
+
+msgid "Top"
+msgstr "上方"
+
+msgid "Transition Speed"
+msgstr "转场速度"
+
+msgid "Translation"
+msgstr "翻译"
+
+msgid "Tumblr"
+msgstr "Tumblr"
+
+msgid "Twitter"
+msgstr "Twitter"
+
+msgid "Type field not defined"
+msgstr "输入的字段位定义"
+
+msgid "Unfold Arrow"
+msgstr "展开行"
+
+msgid "Update now"
+msgstr "现在更新"
+
+msgid "Use role filter"
+msgstr "适用角色过滤"
+
+msgid "Use the Google reCaptcha to avoid spam in Contact and Newsletter forms. Get credentials for your domain by registering"
+msgstr "使用 Google reCaptcha 以过滤的邮件列表（Newsletter）或联系表单的垃圾形象。请从您的域名注册商中取得许可。"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Vertical Alignment"
+msgstr "纵向对齐"
+
+msgid "Video Camera"
+msgstr "视频摄像机"
+
+msgid "Video Height"
+msgstr "视频高度"
+
+msgid "Video Settings"
+msgstr "视频设置"
+
+msgid "Video Width"
+msgstr "视频宽度"
+
+msgid "View Profile"
+msgstr "查看配置文件"
+
+msgid "Vimeo"
+msgstr "Vimeo"
+
+msgid "Warning"
+msgstr "警告"
+
+msgid "We are updating blocks list..."
+msgstr "我们正在升级块列表..."
+
+msgid "We require at least Gutenberg version "
+msgstr "我们需要最新版本的古腾堡编辑器"
+
+msgid "We strongly recommend not using Invisible reCAPTCHA if you have more than 1 Newsletter or Contact forms block in a page."
+msgstr "我们强力建议您不要使用隐形的 reCAPTCHA 如果您在一个页面中设置了超过一个的邮件列表（Newsletter）或联系表单。"
+
+msgid "Website Contact"
+msgstr "网站联系方式"
+
+msgid "Width"
+msgstr "宽度"
+
+msgid "X Cross"
+msgstr "X Cross"
+
+msgid "You have received a contact from your website."
+msgstr "你从你的网站上收到了一个联系表单"
+
+msgid "You need to activate Gutenberg to use our plugin!"
+msgstr "你需要激活古腾堡编辑器以使用我们的插件！"
+
+msgid "Your current version is"
+msgstr "你当前的版本为"
+
+msgid "Your styles have been saved"
+msgstr "你的风格已经保存"
+
+msgid "Youtube"
+msgstr "Youtube"
+
+msgid "Zoom Level"
+msgstr "变焦级别"
+
+msgid "and above"
+msgstr "和上文"
+
+msgid "new-class"
+msgstr "新类"
+
+msgid "reCAPTCHA Language"
+msgstr "reCAPTCHA 语言"
+
+msgid "reCAPTCHA Secret Key"
+msgstr "reCAPTCHA 密钥"
+
+msgid "reCAPTCHA Site Key"
+msgstr "reCAPTCHA 网站钥匙"
+
+msgid "reCAPTCHA Theme"
+msgstr "reCAPTCHA 主题"
+
+msgid "required"
+msgstr "要求"
+
+msgid "separate by comma"
+msgstr "用“,”隔开"

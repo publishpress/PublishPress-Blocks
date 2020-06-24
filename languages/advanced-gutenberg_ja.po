@@ -1,0 +1,657 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid " block"
+msgstr "ブロック"
+
+msgid "(untitled)"
+msgstr "名称未設定"
+
+msgid "Active Tab Settings"
+msgstr "タブ（アクティブ）の設定"
+
+msgid "Active this profile for this group(s)"
+msgstr "このグループに対してこのプロファイルをアクティブにする"
+
+msgid "Active this profile for this user(s)"
+msgstr "このユーザーのためにこのプロファイルをアクティブにします"
+
+msgid "Add New Profile"
+msgstr "新しいプロファイルを追加"
+
+msgid "Add new class"
+msgstr "新しいClassを追加"
+
+msgid "Adv. Gutenberg"
+msgstr "Gutenberg拡張"
+
+msgid "Advanced Gutenberg Profiles"
+msgstr "Advanced Gutenberg プロファイル"
+
+msgid "All modifications were saved!"
+msgstr "全ての変更は保存されました！"
+
+msgid "Anchor color"
+msgstr "アンカーの色"
+
+msgid "Apply a minimal vertical block spacing automatically. Default is None. Values in pixels"
+msgstr "垂直ブロック間隔を自動的に適用します。デフォルトはなしです。ピクセル単位の値"
+
+msgid "Arrow Down"
+msgstr "下矢印"
+
+msgid "Arrow Right"
+msgstr "右矢印"
+
+msgid "Author"
+msgstr "投稿者"
+
+msgid "Avatar Settings"
+msgstr "アバター設定"
+
+msgid "Avatar Size"
+msgstr "アバターサイズ"
+
+msgid "Background Color"
+msgstr "背景色"
+
+msgid "Block Config"
+msgstr "ブロック設定"
+
+msgid "Blocks List"
+msgstr "ブロックリスト"
+
+msgid "Blocks Settings"
+msgstr "ブロック設定"
+
+msgid "Blocks icon color"
+msgstr "ブロックアイコンの色"
+
+msgid "Blocks list updated."
+msgstr "ブロックリストが更新されました。"
+
+msgid "Blocks spacing"
+msgstr "ブロック間隔"
+
+msgid "Body Settings"
+msgstr "本文設定"
+
+msgid "Border Color"
+msgstr "線の色"
+
+msgid "Border Radius"
+msgstr "線の丸み"
+
+msgid "Border Radius (%)"
+msgstr "線の丸み(%)"
+
+msgid "Border Settings"
+msgstr "線の設定"
+
+msgid "Border Style"
+msgstr "線種"
+
+msgid "Border Width"
+msgstr "線幅"
+
+msgid "Bottom"
+msgstr "下"
+
+msgid "Button Color"
+msgstr "ボタンの色"
+
+msgid "Button Icon"
+msgstr "ボタンアイコン"
+
+msgid "Button Size"
+msgstr "ボタンサイズ"
+
+msgid "Center"
+msgstr "中央"
+
+msgid "Checkmark"
+msgstr "チェックマーク"
+
+msgid "Circle"
+msgstr "円"
+
+msgid "Clear"
+msgstr "クリア"
+
+msgid "Color"
+msgstr "色"
+
+msgid "Color Settings"
+msgstr "色設定"
+
+msgid "Columns"
+msgstr "列"
+
+msgid "Configuration"
+msgstr "設定"
+
+msgid "Copy"
+msgstr "コピー"
+
+msgid "Count Up Color"
+msgstr "カウントアップの色"
+
+msgid "Count Up Number Size"
+msgstr "カウントアップサイズ"
+
+msgid "Count Up Settings"
+msgstr "カウントアップ設定"
+
+msgid "Custom CSS"
+msgstr "カスタムCSS"
+
+msgid "Custom Styles"
+msgstr "カスタムスタイル"
+
+msgid "Custom styles"
+msgstr "カスタムスタイル"
+
+msgid "Dashed"
+msgstr "破線"
+
+msgid "Date"
+msgstr "日付"
+
+msgid "Default"
+msgstr "デフォルト"
+
+msgid "Default blocks config"
+msgstr "デフォルトのブロック設定"
+
+msgid "Delete"
+msgstr "削除"
+
+msgid "Delete selected"
+msgstr "選択を削除"
+
+msgid "Description Color"
+msgstr "説明の色"
+
+msgid "Dotted"
+msgstr "点線"
+
+msgid "Edit"
+msgstr "編集"
+
+msgid "Edit Profile"
+msgstr "プロファイル編集"
+
+msgid "Email"
+msgstr "Eメール"
+
+msgid "Enable block spacing settings"
+msgstr "ブロック間隔設定を有効にする"
+
+msgid "Enable blocks spacing"
+msgstr "ブロック間隔を有効にする"
+
+msgid "Enter title here"
+msgstr "ここにタイトルを入力してください"
+
+msgid "Example of text"
+msgstr "テキストの例"
+
+msgid "Fail to verify nonce!"
+msgstr "nonceの検証に失敗しました！"
+
+msgid "Filled Circle"
+msgstr "黒丸"
+
+msgid "Filled Square"
+msgstr "黒四角"
+
+msgid "First page"
+msgstr "１ページ目"
+
+msgid "Flag"
+msgstr "旗"
+
+msgid "Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph"
+msgstr "段落に続く段落に続く段落に続く段落に続く段落に続く段落に続く段落"
+
+msgid "Full width"
+msgstr "全幅"
+
+msgid "General Settings"
+msgstr "一般設定"
+
+msgid "Google API Key"
+msgstr "Google API キー"
+
+msgid "Gutenberg is not detected! Activate it or"
+msgstr "Gutenberg が検出されませんでした！有効にしてください"
+
+msgid "Header Color"
+msgstr "ヘッダーの色"
+
+msgid "Header Icon"
+msgstr "ヘッダーアイコン"
+
+msgid "Header Icon Color"
+msgstr "ヘッダーアイコンの色"
+
+msgid "Header Settings"
+msgstr "ヘッダー設定"
+
+msgid "Height"
+msgstr "高さ"
+
+msgid "Help"
+msgstr "ヘルプ"
+
+msgid "Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection."
+msgstr "ヒントです。"
+
+msgid "Horizontal Dots"
+msgstr "三点リーダー"
+
+msgid "Hover Settings"
+msgstr "ロールオーバー設定"
+
+msgid "How to create a Google API Key"
+msgstr "Google API キーの作り方"
+
+msgid "Icon"
+msgstr "アイコン"
+
+msgid "Icon 1 Settings"
+msgstr "アイコン1設定"
+
+msgid "Icon 2 Settings"
+msgstr "アイコン2設定"
+
+msgid "Icon 3 Settings"
+msgstr "アイコン3設定"
+
+msgid "Icon Alignment"
+msgstr "アイコンの位置"
+
+msgid "Icon Color"
+msgstr "アイコンの色"
+
+msgid "Icon Link"
+msgstr "アイコンリンク"
+
+msgid "Icon Settings"
+msgstr "アイコン設定"
+
+msgid "Icon Size"
+msgstr "アイコンサイズ"
+
+msgid "Icon Space"
+msgstr "アイコンスペース"
+
+msgid "Icon color"
+msgstr "アイコンの色"
+
+msgid "Icon style"
+msgstr "アイコンスタイル"
+
+msgid "Identification color"
+msgstr "識別カラー"
+
+msgid "Image Size"
+msgstr "画像サイズ"
+
+msgid "Image caption"
+msgstr "画像の説明"
+
+msgid "Info"
+msgstr "情報"
+
+msgid "Install Gutenberg Now!"
+msgstr "今すぐ Gutenberg をインストール"
+
+msgid "Invalid nonce token!"
+msgstr "nonce トークンが無効です。"
+
+msgid "JoomUnited logo"
+msgstr "JoomUnited ロゴ"
+
+msgid "Last page"
+msgstr "最後のページ"
+
+msgid "Latitude"
+msgstr "緯度"
+
+msgid "Left"
+msgstr "左"
+
+msgid "Line Height"
+msgstr "行の高さ"
+
+msgid "Load minimized"
+msgstr "最小負荷"
+
+msgid "Location Settings"
+msgstr "場所の設定"
+
+msgid "Longitude"
+msgstr "経度"
+
+msgid "Map Settings"
+msgstr "マップ設定"
+
+msgid "Margin"
+msgstr "外余白"
+
+msgid "Marker Description"
+msgstr "マーカーの説明"
+
+msgid "Marker Settings"
+msgstr "マーカー設定"
+
+msgid "Marker Title"
+msgstr "マーカーのタイトル"
+
+msgid "Max width"
+msgstr "最大幅"
+
+msgid "Minus"
+msgstr "マイナス"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Name Color"
+msgstr "名前の色"
+
+msgid "New Profile"
+msgstr "新しいプロファイル"
+
+msgid "New class"
+msgstr "新しいclass"
+
+msgid "No permission!"
+msgstr "権限がありません！"
+
+msgid "No profiles found"
+msgstr "プロファイルが見つかりません！"
+
+msgid "No profiles found in trash"
+msgstr "ゴミ箱にプロファイルが見つかりませんでした。"
+
+msgid "No profiles found."
+msgstr "プロファイルが見つかりません。"
+
+msgid "No users found."
+msgstr "ユーザーが見つかりませんでした。"
+
+msgid "None"
+msgstr "なし"
+
+msgid "Normal"
+msgstr "普通"
+
+msgid "Number of columns"
+msgstr "列の数"
+
+msgid "Open galleries in lightbox"
+msgstr "Lightboxでギャラリーを開く"
+
+msgid "Open gallery images as a lightbox style popup"
+msgstr "Lightboxのスタイルのポップアップとしてギャラリーの画像を開く"
+
+msgid "Open video in lightbox"
+msgstr "Lightboxでビデオを開く"
+
+msgid "Our plugin works great with Gutenberg version"
+msgstr "私達のプラグインは素晴らしい作品"
+
+msgid "Outline Circle"
+msgstr "アウトラインの丸"
+
+msgid "Overlay Color"
+msgstr "オーバーレイカラー"
+
+msgid "Overlay color"
+msgstr "オーバーレイカラー"
+
+msgid "Padding"
+msgstr "内余白"
+
+msgid "Padding Bottom"
+msgstr "下詰め"
+
+msgid "Padding Left"
+msgstr "左詰め"
+
+msgid "Padding Right"
+msgstr "右詰め"
+
+msgid "Padding Settings"
+msgstr "内余白設定"
+
+msgid "Padding Top"
+msgstr "上詰め"
+
+msgid "Pickup a columns layout"
+msgstr "コラムを選択してください。"
+
+msgid "Play"
+msgstr "再生"
+
+msgid "Play Button Settings"
+msgstr "再生ボタンの設定"
+
+msgid "Please update Gutenberg then comeback later!"
+msgstr "ブロックエディタを更新してから戻ってきてください"
+
+msgid "Plus"
+msgstr "プラス"
+
+msgid "Plus Circle"
+msgstr "丸を追加"
+
+msgid "Plus Circle Outline"
+msgstr "丸を追加の概要"
+
+msgid "Plus Square Outline"
+msgstr "四角を追加の概要"
+
+msgid "Position Color"
+msgstr "ポジションの色"
+
+msgid "Preview"
+msgstr "プレビュー"
+
+msgid "Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph"
+msgstr "前の段落前の段落前の段落前の段落前の段落前の段落前の段落前の段落前の段落前の段落"
+
+msgid "Profile Attribution"
+msgstr "プロファイルの属性"
+
+msgid "Profile saved successfully!"
+msgstr "プロファイルを保存しました"
+
+msgid "Profile title"
+msgstr "プロファイルのタイトル"
+
+msgid "Profiles"
+msgstr "プロファイル"
+
+msgid "Pushpin"
+msgstr "プッシュピン"
+
+msgid "Read More"
+msgstr "続きを読む"
+
+msgid "Return to profiles list"
+msgstr "プロファイルリストに戻る"
+
+msgid "Right"
+msgstr "右"
+
+msgid "Role"
+msgstr "役割"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Save styles"
+msgstr "スタイルを保存"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "Search Profiles"
+msgstr "プロファイルを検索"
+
+msgid "Search blocks"
+msgstr "検索ブロック"
+
+msgid "Search profiles by title or author"
+msgstr "タイトルまたは投稿者でプロファイルを検索する"
+
+msgid "Search settings"
+msgstr "検索設定"
+
+msgid "Search users"
+msgstr "ユーザーを検索"
+
+msgid "Settings saved successfully"
+msgstr "設定は正常に保存されました"
+
+msgid "Shadow Blur"
+msgstr "影のぼかし"
+
+msgid "Shadow Color"
+msgstr "影の色"
+
+msgid "Shadow H Offset"
+msgstr "幅の影オフセット"
+
+msgid "Shadow Spread"
+msgstr "影の広がり"
+
+msgid "Shadow V Offset"
+msgstr "高さの影オフセット"
+
+msgid "Solid"
+msgstr "線"
+
+msgid "Sound Cloud"
+msgstr "サウンドクラウド"
+
+msgid "Star"
+msgstr "スター"
+
+msgid "Star Sticker"
+msgstr "スターステッカー"
+
+msgid "Style class"
+msgstr "スタイル用クラス"
+
+msgid "Subtitle Color"
+msgstr "サブタイトルの色"
+
+msgid "Summary Alignment"
+msgstr "要約の位置"
+
+msgid "Summary header title"
+msgstr "要約ヘッダのタイトル"
+
+msgid "Tab Settings"
+msgstr "タブ設定"
+
+msgid "Table Settings"
+msgstr "表組設定"
+
+msgid "Text Alignment"
+msgstr "文字の配置"
+
+msgid "Text Color"
+msgstr "文字色"
+
+msgid "Text Settings"
+msgstr "文字の設定"
+
+msgid "Text Size"
+msgstr "文字サイズ"
+
+msgid "Text and Color"
+msgstr "文字と色"
+
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Title Color"
+msgstr "タイトルの色"
+
+msgid "Top"
+msgstr "上"
+
+msgid "Transition Speed"
+msgstr "翻訳スピード"
+
+msgid "Translation"
+msgstr "翻訳"
+
+msgid "Type field not defined"
+msgstr "タイプ属性が定義されていません"
+
+msgid "Unfold Arrow"
+msgstr "矢印を展開する"
+
+msgid "Update now"
+msgstr "今すぐアップデート"
+
+msgid "Use role filter"
+msgstr "ユーザー権限で絞り込む"
+
+msgid "Username"
+msgstr "ユーザー名"
+
+msgid "Vertical Alignment"
+msgstr "縦位置"
+
+msgid "Video Camera"
+msgstr "ビデオカメラ"
+
+msgid "Video Height"
+msgstr "ビデオの高さ"
+
+msgid "Video Settings"
+msgstr "ビデオ設定"
+
+msgid "Video Width"
+msgstr "ビデオの幅"
+
+msgid "View Profile"
+msgstr "プロファイルを見る"
+
+msgid "Warning"
+msgstr "警告"
+
+msgid "We are updating blocks list..."
+msgstr "ブロックリストを更新中…"
+
+msgid "We require at least Gutenberg version "
+msgstr "少なくともGutenberg版が必要です"
+
+msgid "Width"
+msgstr "幅"
+
+msgid "You need to activate Gutenberg to use our plugin!"
+msgstr "あなたは私達のプラグインを使用するためにブロックエディタを有効にする必要があります！"
+
+msgid "Your current version is"
+msgstr "あなたの現在のバージョンは"
+
+msgid "Your styles have been saved"
+msgstr "あなたのスタイルは保存されました"
+
+msgid "Zoom Level"
+msgstr "ズームレベル"
+
+msgid "and above"
+msgstr "以上"
+
+msgid "new-class"
+msgstr "新クラス"
