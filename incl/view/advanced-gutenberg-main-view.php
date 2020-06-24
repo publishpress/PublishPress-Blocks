@@ -28,6 +28,11 @@ $tabs_data = array(
         'title' => __('Custom Styles', 'advanced-gutenberg'),
         'icon' => 'code',
     ),
+    array(
+        'id' => 'translation',
+        'title' => __('Translation', 'advanced-gutenberg'),
+        'icon' => 'text-format',
+    ),
 );
 ?>
 
@@ -100,5 +105,11 @@ $tabs_data = array(
             </div>
         <?php endforeach; ?>
 
+        <div class="ju-content-wrapper" id="translation" style="display: none">
+            <div class="advgb-header" style="padding-top: 40px">
+                <h1 class="header-title"><?php esc_html_e('Translation', 'advanced-gutenberg') ?></h1>
+            </div>
+            <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
+        </div>
     </div>
 </div>
