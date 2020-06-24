@@ -86,6 +86,12 @@ if (!defined('GUTENBERG_VERSION_REQUIRED')) {
     define('GUTENBERG_VERSION_REQUIRED', '5.7.0');
 }
 
+// Load language files
+function advgb_load_plugin_textdomain() {
+    load_plugin_textdomain( 'advanced-gutenberg', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action('plugins_loaded', 'advgb_load_plugin_textdomain');
+
 require_once(plugin_dir_path(__FILE__) . '/install.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/advanced-gutenberg-main.php');
 new AdvancedGutenbergMain();
