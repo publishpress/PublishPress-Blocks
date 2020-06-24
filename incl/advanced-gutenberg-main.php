@@ -1464,7 +1464,7 @@ float: left;'
             ) {
                 wp_add_inline_style(
                     'dashicons',
-                    '.advgb-columns>.editor-inner-blocks>.editor-block-list__layout>.wp-block:not(.is-selected)>.editor-block-list__block-edit:before{border:1px dashed #ddd;}'
+                    '.advgb-editor-col-guide-enable .advgb-columns>.block-editor-inner-blocks>.block-editor-block-list__layout>.wp-block:not(.is-selected)>.advgb-column{border:1px dashed #ddd;}'
                 );
             }
         }
