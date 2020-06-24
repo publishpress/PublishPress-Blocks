@@ -29,8 +29,8 @@ $tabs_data = array(
         'icon' => 'code',
     ),
     array(
-        'id' => 'translation',
-        'title' => __('Translation', 'advanced-gutenberg'),
+        'id' => 'translations',
+        'title' => __('Translations', 'advanced-gutenberg'),
         'icon' => 'text-format',
     ),
 );
@@ -99,17 +99,9 @@ $tabs_data = array(
         } ?>
 
         <?php foreach ($tabs_data as $thisTab) : ?>
-            <?php if ($thisTab['id'] === 'translation') continue; // phpcs:ignore Generic.ControlStructures.InlineControlStructure.NotAllowed -- inline is ok ?>
             <div class="ju-content-wrapper" id="<?php echo esc_attr($thisTab['id']) ?>" style="display: none">
                 <?php $this->loadView($thisTab['id']) ?>
             </div>
         <?php endforeach; ?>
-
-        <div class="ju-content-wrapper" id="translation" style="display: none">
-            <div class="advgb-header" style="padding-top: 40px">
-                <h1 class="header-title"><?php esc_html_e('Translation', 'advanced-gutenberg') ?></h1>
-            </div>
-            <?php echo \Joomunited\advgb\Jutranslation\Jutranslation::getInput(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped ?>
-        </div>
     </div>
 </div>

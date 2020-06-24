@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid " block"
+msgstr "bloque"
+
+msgid " here"
+msgstr "aquí"
+
+msgid "(untitled)"
+msgstr "(sin título)"
+
+msgid "A Google API key is required to use the Map block without any warning."
+msgstr "Se requiere una clave de API de Google para usar el bloque de mapas sin ninguna advertencia."
+
+msgid "Action on click"
+msgstr "Acción al hacer clic"
+
+msgid "Active Tab Settings"
+msgstr "Configuración de la pestaña activa"
+
+msgid "Active this profile for this group(s)"
+msgstr "Activa este perfil para este/estos grupo(s)"
+
+msgid "Active this profile for this user(s)"
+msgstr "Activa este perfil para este/estos usuario(s)"
+
+msgid "Add New Profile"
+msgstr "Añadir nuevo perfil"
+
+msgid "Add new class"
+msgstr "Añadir nueva clase"
+
+msgid "Adv. Gutenberg"
+msgstr "Adv. Gutenberg"
+
+msgid "Advanced Gutenberg"
+msgstr "Advanced Gutenberg"
+
+msgid "Advanced Gutenberg Profiles"
+msgstr "Perfiles de Advanced Gutenberg"
+
+msgid "All modifications were saved!"
+msgstr "¡Se guardaron todas las modificacciones!"
+
+msgid "Anchor color"
+msgstr "Color de anclaje"
+
+msgid "Apply a minimal vertical block spacing automatically. Default is None. Values in pixels"
+msgstr "Aplica un espacio mínimo de bloque vertical de forma automática. El valor predeterminado es Ninguno. Valores en píxeles"
+
+msgid "Arrow Down"
+msgstr "Flecha abajo"
+
+msgid "Arrow Right"
+msgstr "Flecha derecha"
+
+msgid "Aubergine"
+msgstr "Berenjena"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Auto detect"
+msgstr "detección automática"

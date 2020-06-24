@@ -1,0 +1,114 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Active this profile for this group(s)"
+msgstr "Activer le profil pour ce(s) groupe(s)"
+
+msgid "Active this profile for this user(s)"
+msgstr "Activer le profil pour ce(s) utilisateur(s)"
+
+msgid "Add New Profile"
+msgstr "Ajouter un nouveau profil"
+
+msgid "Advanced Gutenberg Profile"
+msgstr "Advanced Gutenberg Profil"
+
+msgid "Advanced Gutenberg Profiles"
+msgstr "Advanced Gutenberg Profils"
+
+msgid "Advanced Gutenberg Settings"
+msgstr "Advanced Gutenberg Paramètres"
+
+msgid "Advanced Gutenberg profile created."
+msgstr "Advanced Gutenberg profil créé."
+
+msgid "Advanced Gutenberg profile updated."
+msgstr "Advanced Gutenberg profil mis à jour."
+
+msgid "Blocks List"
+msgstr "Liste de blocks"
+
+msgid "Blocks list updated."
+msgstr "Liste de blocks mise à jour"
+
+msgid "Clear"
+msgstr "Effacer"
+
+msgid "Edit Profile"
+msgstr "Editer le profil"
+
+msgid "First page"
+msgstr "Première page"
+
+msgid "Image caption"
+msgstr "Légende"
+
+msgid "Last page"
+msgstr "Dernière page"
+
+msgid "Load images (alt) attribute as caption for lightbox images."
+msgstr "Charger l’attribut alt come légende pour les images de lightbox."
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "New Profile"
+msgstr "Nouveau profil"
+
+msgid "No profiles found"
+msgstr "Aucun profil"
+
+msgid "No profiles found in trash"
+msgstr "Aucun profil dans la corbeille"
+
+msgid "No users found."
+msgstr "Aucun utilisateur."
+
+msgid "Open galleries in lightbox"
+msgstr "Ouvrir les galeries dans une lightbox"
+
+msgid "Open gallery images as a lightbox style popup"
+msgstr "Ouvrir les images de galerie dans une lightbox"
+
+msgid "Profile Attribution"
+msgstr "Attribution du profil"
+
+msgid "Profiles"
+msgstr "Profils"
+
+msgid "Role"
+msgstr "Rôle"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Search Profiles"
+msgstr "Recherche de profils"
+
+msgid "Search users"
+msgstr "Recherche d'utilisateur"
+
+msgid "Settings saved successfully"
+msgstr "Les paramètres ont bien été enregistrés"
+
+msgid "Still updating... Please wait a bit..."
+msgstr "En cours d'actualisation ... Veuillez patienter"
+
+msgid "Translation tools"
+msgstr "Outil de traduction"
+
+msgid "Update list"
+msgstr "Actualisation de la liste"
+
+msgid "Update the blocks list"
+msgstr "Actualisation de la liste des blocs"
+
+msgid "Use role filter"
+msgstr "Utiliser le filtre de rôles"
+
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgid "View Profile"
+msgstr "Voir le profil"

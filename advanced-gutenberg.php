@@ -3,7 +3,7 @@
  * Plugin Name: Advanced Gutenberg
  * Plugin URI: https://advancedgutenberg.com
  * Description: Enhanced tools for Gutenberg editor
- * Version: 2.3.11
+ * Version: 2.4.0b1
  * Tested up to: 5.4.2
  * Author: Advanced Gutenberg
  * Author URI: https://advancedgutenberg.com
@@ -75,7 +75,7 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
 }
 
 if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-    define('ADVANCED_GUTENBERG_VERSION', '2.3.11');
+    define('ADVANCED_GUTENBERG_VERSION', '2.4.0b1');
 }
 
 if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
@@ -86,20 +86,15 @@ if (!defined('GUTENBERG_VERSION_REQUIRED')) {
     define('GUTENBERG_VERSION_REQUIRED', '5.7.0');
 }
 
+// Load language files
+function advgb_load_plugin_textdomain() {
+    load_plugin_textdomain( 'advanced-gutenberg', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action('plugins_loaded', 'advgb_load_plugin_textdomain');
+
 require_once(plugin_dir_path(__FILE__) . '/install.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/advanced-gutenberg-main.php');
 new AdvancedGutenbergMain();
-
-// Load jutranslation helper
-include_once('jutranslation' . DIRECTORY_SEPARATOR . 'jutranslation.php');
-call_user_func(
-    '\Joomunited\ADVGB\Jutranslation\Jutranslation::init',
-    __FILE__,
-    'advanced-gutenberg',
-    'Advanced Gutenberg',
-    'advanced-gutenberg',
-    'languages' . DIRECTORY_SEPARATOR . 'advanced-gutenberg-en_US.mo'
-);
 
 // Include jufeedback helpers
 require_once('jufeedback'. DIRECTORY_SEPARATOR . 'jufeedback.php');

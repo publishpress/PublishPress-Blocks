@@ -1,0 +1,2679 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid " Margin"
+msgstr "Margine (esterno)"
+
+msgid " Padding"
+msgstr "Margine (interno)"
+
+msgid " block"
+msgstr "blocco"
+
+msgid " here"
+msgstr "qui"
+
+msgid " text alignment"
+msgstr "allineamento testo"
+
+msgid "(untitled)"
+msgstr "(senza titolo)"
+
+msgid "10px"
+msgstr "10px"
+
+msgid "20px"
+msgstr "20px"
+
+msgid "30px"
+msgstr "30px"
+
+msgid "40px"
+msgstr "40px"
+
+msgid "50px"
+msgstr "50px"
+
+msgid "70px"
+msgstr "70px"
+
+msgid "90px"
+msgstr "90px"
+
+msgid "A Google API key is required to use the Map block without any warning."
+msgstr "è richiesta una Google API Key per poter utilizzare il blocco Map senza avvertimenti"
+
+msgid "A little description about this person will show up here."
+msgstr "Qui verrà mostrata una breve descrizione di questa persona"
+
+msgid "ADVGB Recent Posts Block"
+msgstr "Blocco messaggi recenti ADVGB"
+
+msgid "ADVGB Woo Products Block"
+msgstr "Blocco prodotti Woo ADVGB"
+
+msgid "Accordion"
+msgstr "Pannello a soffietto"
+
+msgid "Accordion Item"
+msgstr "Elemento del Pannello a Soffietto"
+
+msgid "Accordion Settings"
+msgstr "Impostazioni Pannello a Soffietto"
+
+msgid "Accordions State"
+msgstr "Stato Pannello a Soffietto"
+
+msgid "Action on click"
+msgstr "Azione al click"
+
+msgid "Active Tab Background Color"
+msgstr "Colore di sfondo della Scheda attiva"
+
+msgid "Active Tab Settings"
+msgstr "Impostazioni Scheda attiva"
+
+msgid "Active Tab Text Color"
+msgstr "Colore del testo della Scheda attiva"
+
+msgid "Active this profile for this group(s)"
+msgstr "Attiva questo profilo per questo gruppo (questi gruppi)"
+
+msgid "Active this profile for this user(s)"
+msgstr "Attiva questo profilo per questo utente (questi utenti)"
+
+msgid "Add Column After"
+msgstr "Aggiungi una Colonna Dopo"
+
+msgid "Add Column Before"
+msgstr "Aggiungi una Colonna Prima"
+
+msgid "Add Google API Key"
+msgstr "Aggiungi una Google API Key"
+
+msgid "Add New Profile"
+msgstr "Aggiungi un Nuovo Profilo"
+
+msgid "Add Row After"
+msgstr "Aggiungi una Riga Dopo"
+
+msgid "Add Row Before"
+msgstr "Aggiungi una Riga Prima"
+
+msgid "Add image"
+msgstr "Aggiungi un'Immagine"
+
+msgid "Add images"
+msgstr "Aggiungi immagini"
+
+msgid "Add item"
+msgstr "Aggiungi un oggetto"
+
+msgid "Add new class"
+msgstr "Aggiungi una nuova classe"
+
+msgid "Add tab"
+msgstr "Aggiungi una tab"
+
+msgid "Add text…"
+msgstr "Aggiungi testo ..."
+
+msgid "Add to cart"
+msgstr "Aggiungi al carrello"
+
+msgid "Address"
+msgstr "Indirizzo"
+
+msgid "Adv. Column"
+msgstr "Colonna Av."
+
+msgid "Adv. Gutenberg"
+msgstr "Gutenberg Av."
+
+msgid "Adv. Gutenberg Settings"
+msgstr "impostazioni Gutenberg Av."
+
+msgid "Advanced Accordion"
+msgstr "Pannello a Soffietto Avanzato"
+
+msgid "Advanced Button"
+msgstr "Bottone Avanzato"
+
+msgid "Advanced Gutenberg"
+msgstr "Gutenberg Avanzato"
+
+msgid "Advanced Gutenberg Profiles"
+msgstr "Profili Gutenberg Avanzato"
+
+msgid "Advanced Image"
+msgstr "Immagine Avanzata"
+
+msgid "Advanced List"
+msgstr "Lista Avanzata"
+
+msgid "Advanced Table"
+msgstr "Tabella Avanzata"
+
+msgid "Advanced Tabs"
+msgstr "Tabs Avanzate"
+
+msgid "Advanced Video"
+msgstr "Video Avanzato"
+
+msgid "Advanced Video Settings"
+msgstr "Impostazioni Video Avanzato"
+
+msgid "Advanced image/photo block with more options and styles."
+msgstr "Blocco immagine/foto avanzata con più opzioni e stili"
+
+msgid "Advanced table block with more styles and functions."
+msgstr "Blocco Tabella Avanzata con più stili e funzioni"
+
+msgid "Affect both input and button."
+msgstr "Influenza sia il campo di input sia il bottone"
+
+msgid "After"
+msgstr "Dopo"
+
+msgid "After manually changing the anchor, remember to refresh summary block to make the links work!"
+msgstr "Dopo aver modificato manualmente l'ancora, ricordati di aggiornare il blocco di riepilogo per far funzionare i collegamenti!"
+
+msgid "Align bottom"
+msgstr "Allineamento in basso"
+
+msgid "Align center"
+msgstr "Allineamento a centro"
+
+msgid "Align justify"
+msgstr "Allineamento giustificato"
+
+msgid "Align left"
+msgstr "Allineamento a sinistra"
+
+msgid "Align middle"
+msgstr "Allineamento in mezzo"
+
+msgid "Align right"
+msgstr "Allineamento a destra"
+
+msgid "Align top"
+msgstr "Allineamento in alto"
+
+msgid "All"
+msgstr "Tutti"
+
+msgid "All modifications were saved!"
+msgstr "Tutte le modifiche sono state salvate!"
+
+msgid "Alternative"
+msgstr "Alternativo"
+
+msgid "Always show overlay"
+msgstr "Mostra sempre la copertura"
+
+msgid "An email will be sent to the admin email (by default) whenever a contact form is submitted. You can change it in "
+msgstr "Verrà inviato un messaggio all'indirizzo email dell'amministratore (per impostazione predefinita) ogni volta che verrà inviato un form di contatto. Puoi modificare questo comportamento in"
+
+msgid "Anchor Color"
+msgstr "Colore Ancora"
+
+msgid "Anchor color"
+msgstr "Colore ancora"
+
+msgid "Apply a minimal vertical block spacing automatically. Default is None. Values in pixels"
+msgstr "Applica automaticamente una spaziatura verticale minimale del blocco. L'impostazione predefinita è Nessuna spaziatura. Valore in pixel"
+
+msgid "Arrow Down"
+msgstr "Freccia giù"
+
+msgid "Arrow Right"
+msgstr "Freccia Destra"
+
+msgid "Arrow and Border Color"
+msgstr "Colore della Freccia e del Bordo"
+
+msgid "Arrow border radius (%)"
+msgstr "Raggio del bordo della freccia (%)"
+
+msgid "Arrow border size"
+msgstr "Dimensione bordo della freccia"
+
+msgid "Arrow right"
+msgstr "Freccia Destra"
+
+msgid "Arrow size"
+msgstr "Dimensione Freccia"
+
+msgid "Article"
+msgstr "Articolo"
+
+msgid "Aside"
+msgstr "A parte"
+
+msgid "At least 1 row of current section must present."
+msgstr "Deve essere presente almeno una riga di questa sezione"
+
+msgid "Aubergine"
+msgstr "Melanzana"
+
+msgid "Author"
+msgstr "Autore"
+
+msgid "Auto Height"
+msgstr "Altezza Automatica"
+
+msgid "Auto detect"
+msgstr "Individua automaticamente"
+
+msgid "Auto height"
+msgstr "Altezza automatica"
+
+msgid "Auto play"
+msgstr "Riproduzione automatica"
+
+msgid "Autoplay speed (ms)"
+msgstr "Velocità riproduzione automatica (ms)"
+
+msgid "Available: "
+msgstr "Disponibile:"
+
+msgid "Avatar"
+msgstr "Avatar"
+
+msgid "Avatar Colors"
+msgstr "Colori Avatar"
+
+msgid "Avatar Position"
+msgstr "Posizione Avatar"
+
+msgid "Avatar Settings"
+msgstr "Impostazioni Avatar"
+
+msgid "Avatar Size"
+msgstr "Dimensione Avatar"
+
+msgid "Back to profiles list"
+msgstr "Torna alla lista dei profili"
+
+msgid "Background"
+msgstr "Sfondo"
+
+msgid "Background Color"
+msgstr "Colore Sfondo"
+
+msgid "Background color"
+msgstr "Colore di sfondo"
+
+msgid "Back…"
+msgstr "Indietro..."
+
+msgid "Bad Request!"
+msgstr "Richiesta Errata!"
+
+msgid "Before"
+msgstr "Prima"
+
+msgid "Block Config"
+msgstr "Configurazione Blocco"
+
+msgid "Block Settings"
+msgstr "Impostazioni Blocco"
+
+msgid "Block for containing other blocks."
+msgstr "Blocco che contiene altri blocchi."
+
+msgid "Block for creating personal or team/group information."
+msgstr "Blocco per creare informazioni personali o di gruppo/team."
+
+msgid "Block for inserting location map."
+msgstr "Blocco per inserire una mappa di una località."
+
+msgid "Blocks List"
+msgstr "Lista Blocchi"
+
+msgid "Blocks Settings"
+msgstr "Impostazioni Blocchi"
+
+msgid "Blocks icon color"
+msgstr "Colore icona Blocchi"
+
+msgid "Blocks list updated."
+msgstr "Lista Blocchi aggiornata."
+
+msgid "Blocks spacing"
+msgstr "Spaziatura Blocchi"
+
+msgid "Blogger"
+msgstr "Blogger"
+
+msgid "Body Color Settings"
+msgstr "Impostazioni Colore Corpo"
+
+msgid "Body Colors"
+msgstr "Colori Corpo"
+
+msgid "Body Settings"
+msgstr "Impostazioni Corpo"
+
+msgid "Border"
+msgstr "Bordo"
+
+msgid "Border All"
+msgstr "Tutti i Bordi"
+
+msgid "Border Bottom"
+msgstr "Bordo Inferiore"
+
+msgid "Border Color"
+msgstr "Colore Bordo"
+
+msgid "Border Horizontal"
+msgstr "Bordo Orizzontale"
+
+msgid "Border Inner"
+msgstr "Bordo Interno"
+
+msgid "Border Left"
+msgstr "Bordo Sinistro"
+
+msgid "Border None"
+msgstr "Nessun Bordo"
+
+msgid "Border Outer"
+msgstr "Bordo Esterno"
+
+msgid "Border Radius"
+msgstr "Raggio Bordo"
+
+msgid "Border Radius (%)"
+msgstr "Raggio Bordo (%)"
+
+msgid "Border Right"
+msgstr "Bordo Destro"
+
+msgid "Border Settings"
+msgstr "Impostazioni Bordo"
+
+msgid "Border Style"
+msgstr "Stile Bordo"
+
+msgid "Border Top"
+msgstr "Bordo Superiore"
+
+msgid "Border Vertical"
+msgstr "Bordo Verticale"
+
+msgid "Border Width"
+msgstr "Larghezza Bordo"
+
+msgid "Border and Text"
+msgstr "Bordo e Testo"
+
+msgid "Border and Text Color"
+msgstr "Color Bordo e Testo"
+
+msgid "Border collapsed"
+msgstr "Bordo collassato"
+
+msgid "Border color"
+msgstr "Colore bordo"
+
+msgid "Border radius"
+msgstr "Raggio bordo"
+
+msgid "Border radius (px)"
+msgstr "Raggio bordo (px)"
+
+msgid "Border style"
+msgstr "Stile bordo"
+
+msgid "Border to materialize Adv. Gutenberg Column block"
+msgstr "Bordi per visualizzare il blocco Colonna di Adv. Gutenberg"
+
+msgid "Border width"
+msgstr "Larghezza Bordo"
+
+msgid "Bottom"
+msgstr "Inferiore"
+
+msgid "Bottom spacing"
+msgstr "Spaziatura In basso"
+
+msgid "Button Color"
+msgstr "Colore Pulsante"
+
+msgid "Button Icon"
+msgstr "Icona Pulsante"
+
+msgid "Button Position"
+msgstr "Posizione Pulsante"
+
+msgid "Button Size"
+msgstr "Dimensione Pulsante"
+
+msgid "Button border radius"
+msgstr "Raggio bordo del pulsante"
+
+msgid "Button link"
+msgstr "Collegamento del pulsante"
+
+msgid "Button position"
+msgstr "Posizione del Pulsante"
+
+msgid "CSV"
+msgstr "CSV"
+
+msgid "Cannot select multi cells from difference section!"
+msgstr "Non si possono selezionare celle multiple da sezioni differenti!"
+
+msgid "Cannot validate captcha"
+msgstr "Il captcha non può essere validato"
+
+msgid "Captcha is empty"
+msgstr "Il captcha è vuoto"
+
+msgid "Captcha must be checked!"
+msgstr "Il captcha deve essere selezionato!"
+
+msgid "Captcha validated"
+msgstr "Captcha validato"
+
+msgid "Captcha validation error"
+msgstr "Errore di validazione del captcha"
+
+msgid "Category"
+msgstr "Categoria"
+
+msgid "Cell Settings"
+msgstr "Impostazioni Cella"
+
+msgid "Center"
+msgstr "Centro"
+
+msgid "Center mode"
+msgstr "Modo Centro"
+
+msgid "Change image"
+msgstr "Cambia immagine"
+
+msgid "Change image preview"
+msgstr "Cambia anteprima immagine"
+
+msgid "Change your editor width"
+msgstr "Cambia il tuo editor con"
+
+msgid "Checkmark"
+msgstr "Segno di spunta"
+
+msgid "Choose icon"
+msgstr "Scegli l'icona"
+
+msgid "Circle"
+msgstr "Cerchio"
+
+msgid "Classic"
+msgstr "Classico"
+
+msgid "Clear"
+msgstr "Pulisci"
+
+msgid "Click action"
+msgstr "Azione Click"
+
+msgid "Click to change avatar"
+msgstr "Clicca per cambiare avatar"
+
+msgid "Click to change logo"
+msgstr "Clicca per cambiare il logo"
+
+msgid "Collapsed Order RTL"
+msgstr "Ordine Collassati RTL"
+
+msgid "Collapsed order RTL"
+msgstr "Ordine collassati RTL"
+
+msgid "Color"
+msgstr "Colore"
+
+msgid "Color Settings"
+msgstr "Impostazioni Colore"
+
+msgid "Column Count"
+msgstr "Numero Colonna"
+
+msgid "Column Settings"
+msgstr "Impostazioni Colonna"
+
+msgid "Column in row."
+msgstr "Colonne per riga."
+
+msgid "Columns"
+msgstr "Colonne"
+
+msgid "Columns Manager"
+msgstr "Gestore Colonne"
+
+msgid "Columns Settings"
+msgstr "Impostazioni Colonne"
+
+msgid "Columns Visual Guide"
+msgstr "Guida visuale colonne"
+
+msgid "Columns Wrapped"
+msgstr "Colonne Nascoste"
+
+msgid "Config for this block is currently unsupported. It will coming in the future release."
+msgstr "Attualmente non è supportata la configurazione di questo blocco. Lo sarà nella prossima versione."
+
+msgid "Configuration"
+msgstr "Configurazione"
+
+msgid "Contact Form"
+msgstr "Modulo di COntatto"
+
+msgid "Contact Form: Receiver Information"
+msgstr "Modulo di Contatto: Informazioni Destinatario"
+
+msgid "Contact Form: Sender Information"
+msgstr "Modulo di Contatto: Informazioni Mittente"
+
+msgid "Container"
+msgstr "Contenitore"
+
+msgid "Container Settings"
+msgstr "Impostazioni Contenitore"
+
+msgid "Content Max Height"
+msgstr "Altezza Massima del Contenuto"
+
+msgid "Content Max Width"
+msgstr "Larghezza Massima del Contenuto"
+
+msgid "Content Min Height"
+msgstr "Altezza Minima del Contenuto"
+
+msgid "Copy"
+msgstr "Copia"
+
+msgid "Count Up"
+msgstr "Contatore"
+
+msgid "Count Up Color"
+msgstr "Colore Contatore"
+
+msgid "Count Up Number Size"
+msgstr "Dimensione Numero Contatore"
+
+msgid "Count Up Settings"
+msgstr "impostazioni Contatore"
+
+msgid "Counter Number Size"
+msgstr "Dimensione Numero Contatore"
+
+msgid "Counter Up Symbol"
+msgstr "Simbolo Contatore"
+
+msgid "Create"
+msgstr "Crea"
+
+msgid "Create a login form for your post/page."
+msgstr "Crea un modulo di login per il tuo post o la tua pagina"
+
+msgid "Create your own tabs never easy like this."
+msgstr "Creare le tue tab non è mai stato così facile."
+
+msgid "Current"
+msgstr "Attuale"
+
+msgid "Current Video"
+msgstr "Video attuale"
+
+msgid "Custom"
+msgstr "Personalizzato"
+
+msgid "Custom CSS"
+msgstr "CSS Personalizzato"
+
+msgid "Custom Styles"
+msgstr "Stili Personalizzati"
+
+msgid "Custom code"
+msgstr "Codice personalizzato"
+
+msgid "Custom icon"
+msgstr "Icona personalizzata"
+
+msgid "Custom map style is recommended for experienced users only."
+msgstr "Lo stile personalizzato della matta è raccomandato solo ad utenti esperti."
+
+msgid "Custom redirect link"
+msgstr "Link di reindirizzamento personalizzato"
+
+msgid "Custom styles"
+msgstr "Stili personalizzati"
+
+msgid "Dark"
+msgstr "Scuro"
+
+msgid "Dashboard"
+msgstr "Cruscotto"
+
+msgid "Dashed"
+msgstr "Tratteggiato"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Default"
+msgstr "Predefinito"
+
+msgid "Default blocks config"
+msgstr "Configurazione blocchi predefiniti"
+
+msgid "Default thumbnail"
+msgstr "Miniatura predefinita"
+
+msgid "Define space between each accordion (Frontend view only)"
+msgstr "Definisce lo spazio tra ogni elemento del pannello a soffietto (visualizzato solo nel front-end)"
+
+msgid "Define space to next block. This will override Block spacing option (Frontend view only)"
+msgstr "Definisce lo spazio per il prossimo blocco. Questa opzione prevale sull'opzione di spaziatura del blocco (visualizzato solo nel front-end!)"
+
+msgid "Define the admin Gutenberg editor width size"
+msgstr "Definisce la larghezza dell'editor Gutenberg dell'amministratore"
+
+msgid "Delete"
+msgstr "Cancella"
+
+msgid "Delete Column"
+msgstr "Cancella Colonna"
+
+msgid "Delete Row"
+msgstr "Cancella Riga"
+
+msgid "Delete selected"
+msgstr "Cancella selezioni"
+
+msgid "Description Color"
+msgstr "Colore Descrizione"
+
+msgid "Disable"
+msgstr "Disabilita"
+
+msgid "Display Featured Image"
+msgstr "Mostra immagine di presentazione"
+
+msgid "Display Post Author"
+msgstr "Mostra l'Autore del post"
+
+msgid "Display Post Date"
+msgstr "Mostra la Data del post"
+
+msgid "Display Post Excerpt"
+msgstr "Mostra un Estratto del post"
+
+msgid "Display Read More Link"
+msgstr "Mostra il link \"leggi altro\""
+
+msgid "Display caption text on images loaded as lightbox in galleries"
+msgstr "Mostra il testo della didascalia sulle immagini caricate come in una scatola luminosa nelle gallerie."
+
+msgid "Display some part of first text found in post as excerpt."
+msgstr "Mostra un pezzo del primo testo trovato nel post come estratto."
+
+msgid "Display your images in a slider."
+msgstr "Mostra le immagini in un cursore-"
+
+msgid "Display your recent posts in slider or grid view with beautiful styles."
+msgstr "Mostra i tuoi post recenti in un cursore o in una visuale a griglia con stili meravigliosi."
+
+msgid "Div"
+msgstr "Div"
+
+msgid "Don't have an account?"
+msgstr "Non hai un account?"
+
+msgid "Dots Color"
+msgstr "Colore Punti"
+
+msgid "Dotted"
+msgstr "Punteggiato"
+
+msgid "Double"
+msgstr "Doppio"
+
+msgid "Download Contacts Form data"
+msgstr "Scarica i dati del Modulo Contatti"
+
+msgid "Download Newsletter Form data"
+msgstr "Scarica i dati del Modulo Newsletter"
+
+msgid "Easy to create a search bar for your site."
+msgstr "E' facile creare una barra di ricerca per il tuo sito."
+
+msgid "Easy to create an accordion for your post/page."
+msgstr "E' facile creare un pannello a soffietto per la tua pagina o il tuo post."
+
+msgid "Edit"
+msgstr "Modifica"
+
+msgid "Edit Profile"
+msgstr "Modifica Profilo"
+
+msgid "Edit Table"
+msgstr "Modifica Tabella"
+
+msgid "Editor width"
+msgstr "Larghezza dell'editor"
+
+msgid "Eiffel Tower"
+msgstr "Torre Eiffel"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Email & Form"
+msgstr "Email e Modulo"
+
+msgid "Email address"
+msgstr "Indirizzo email"
+
+msgid "Email and Form settings"
+msgstr "Impostazioni Email e Modulo"
+
+msgid "Email input placeholder"
+msgstr "Segnaposto input email"
+
+msgid "Email label…"
+msgstr "Etichetta email..."
+
+msgid "Email placeholder"
+msgstr "Segnaposto email"
+
+msgid "Email receiver"
+msgstr "Email dei destinatarii"
+
+msgid "Email sender"
+msgstr "Email del mittente"
+
+msgid "Email settings"
+msgstr "Impostazioni email"
+
+msgid "Email title"
+msgstr "Titolo email"
+
+msgid "Empty field warning text"
+msgstr "Testo avviso campo vuoto"
+
+msgid "Enable"
+msgstr "Abilita"
+
+msgid "Enable block spacing settings"
+msgstr "Abilita le impostazioni sulla spaziatura del blocco"
+
+msgid "Enable blocks spacing"
+msgstr "Abilita la spaziatura del blocco"
+
+msgid "Enable border to materialize Adv. Gutenberg Column block"
+msgstr "Abilita i bordo per visualizzare il blocco Colonna Adv Gutenberg"
+
+msgid "Enable columns visual guide"
+msgstr "Abilita la guida visuale delle colonne"
+
+msgid "Enable reCAPTCHA"
+msgstr "Abilita reCAPTCHA"
+
+msgid "Enter URL…"
+msgstr "Inserisci la URL..."
+
+msgid "Enter address…"
+msgstr "Inserisci l'indirizzo..."
+
+msgid "Enter custom description…"
+msgstr "Inserisci una descrizione personalizzata..."
+
+msgid "Enter custom title…"
+msgstr "Inserisci un titolo personalizzato..."
+
+msgid "Enter header…"
+msgstr "Inserisci il titolo..."
+
+msgid "Enter latitude…"
+msgstr "Inserisci la latitudine..."
+
+msgid "Enter longitude…"
+msgstr "Inserisci la longitudine"
+
+msgid "Enter social link…"
+msgstr "Inserisci il collegamento social..."
+
+msgid "Enter subtitle…"
+msgstr "Inserisci il sottotitolo..."
+
+msgid "Enter text…"
+msgstr "Inserisci il testo..."
+
+msgid "Enter title here"
+msgstr "Inserisci qui il titolo"
+
+msgid "Enter title…"
+msgstr "Inserisci il titolo..."
+
+msgid "Enter your content."
+msgstr "Inserisci il tuo contenuto"
+
+msgid "Enter your json code here…"
+msgstr "Inserisci qui il tuo codice json..."
+
+msgid "Error text"
+msgstr "Testo Errore"
+
+msgid "Error while sending form. Try again!"
+msgstr "Errore nell'invio del modulo. Riprova!"
+
+msgid "Example of text"
+msgstr "Esempio di testo"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Fail to verify nonce!"
+msgstr "Non sono riuscito a verificare il nonce!"
+
+msgid "Fastest way to create a contact form for your page."
+msgstr "Il modo più veloce per creare un modulo di contatto per la tua pagina."
+
+msgid "Fastest way to create a newsletter form for your page."
+msgstr "Il modo più veloce per creare una newsletter per la tua pagina."
+
+msgid "Featured"
+msgstr "In primo piano"
+
+msgid "Fetch Location"
+msgstr "Luogo Prelievo"
+
+msgid "Filled Circle"
+msgstr "Cerchio Pieno"
+
+msgid "Filled Square"
+msgstr "Quadrato Pieno"
+
+msgid "Filler text (also placeholder text or dummy text) is text that shares some characteristics of a real written text, but is random or otherwise generated."
+msgstr "Il testo di riempimento (detto anche testo segnaposto o testo fittizio) è un testo che condivide alcune caratteristiche di un testo reale scritto, ma è generato in maniera casuale o simile."
+
+msgid "First Name"
+msgstr "Nome"
+
+msgid "First Name input placeholder"
+msgstr "Segna posto per input del nome"
+
+msgid "First Name placeholder"
+msgstr "Segnaposto Nome "
+
+msgid "First Post text as Excerpt"
+msgstr "Testo del primo post come Estratto"
+
+msgid "First page"
+msgstr "Prima pagina"
+
+msgid "Five"
+msgstr "Cinque"
+
+msgid "Fixed width table cells"
+msgstr "Celle di larghezza fissa"
+
+msgid "Flag"
+msgstr "Bandiera"
+
+msgid "Flickr"
+msgstr "Flickr"
+
+msgid "Focal Point Picker"
+msgstr "Selezionatore Punto focale"
+
+msgid "Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph"
+msgstr "Paragrafo Successivo Paragrafo Successivo Paragrafo Successivo Paragrafo Successivo Paragrafo Successivo Paragrafo Successivo Paragrafo Successivo Paragrafo Successivo"
+
+msgid "Footer"
+msgstr "Piè di pagina"
+
+msgid "Form Settings"
+msgstr "Impostazioni Modulo"
+
+msgid "Form State"
+msgstr "Stato Modulo"
+
+msgid "Form Width (px)"
+msgstr "Larghezza Modulo (px)"
+
+msgid "Form style"
+msgstr "Stile Modulo"
+
+msgid "Form that show on load."
+msgstr "Modulo che viene mostrato al caricamento."
+
+msgid "Form width"
+msgstr "Larghezza del modulo"
+
+msgid "Form width (px)"
+msgstr "Larghezza del modulo (px)"
+
+msgid "Forms data"
+msgstr "Dati dei Moduli"
+
+msgid "Forms reCaptcha"
+msgstr "reCaptcha Moduli"
+
+msgid "Four: 1/4 - 1/4 - 1/4 - 1/4"
+msgstr "Quattro: 1/4 - 1/4 - 1/4 - 1/4"
+
+msgid "Four: 1/5 - 1/5 - 1/5 - 2/5"
+msgstr "Quattro: 1/5 - 1/5 - 1/5 - 2/5"
+
+msgid "Four: 1/6 - 1/6 - 1/6 - 3/6"
+msgstr "Quattro: 1/6 - 1/6 - 1/6 - 3/6"
+
+msgid "Four: 2/5 - 1/5 - 1/5 - 1/5"
+msgstr "Quattro: 2/5 - 1/5 - 1/5 - 1/5"
+
+msgid "Four: 3/6 - 1/6 - 1/6 - 1/6"
+msgstr "Quattro: 3/6 - 1/6 - 1/6 - 1/6"
+
+msgid "Four: Two Columns"
+msgstr "Quattro: Due Colonne"
+
+msgid "Full Height"
+msgstr "Altezza Piena"
+
+msgid "Full width"
+msgstr "Larghezza Piena"
+
+msgid "General Settings"
+msgstr "Impostazioni Generali"
+
+msgid "Google API Key"
+msgstr "Google API Key"
+
+msgid "Google Plus"
+msgstr "Google Plus"
+
+msgid "Grid View"
+msgstr "Vista Griglia"
+
+msgid "Groove"
+msgstr "Groove"
+
+msgid "Gutenberg is not detected! Activate it or"
+msgstr "Gutenberg non rilevato! Attivalo oppure"
+
+msgid "Header"
+msgstr "Titolo"
+
+msgid "Header Color"
+msgstr "Colore Titolo"
+
+msgid "Header Icon"
+msgstr "Icona Titolo"
+
+msgid "Header Icon Color"
+msgstr "Colore Icona Titolo"
+
+msgid "Header Icon Style"
+msgstr "Stile Icona Titolo"
+
+msgid "Header Settings"
+msgstr "Impostazioni Titolo"
+
+msgid "Header color"
+msgstr "Colore del titolo"
+
+msgid "Header text"
+msgstr "Testo del titolo"
+
+msgid "Height"
+msgstr "Altezza"
+
+msgid "Help"
+msgstr "Aiuto"
+
+msgid "Highest Rating first"
+msgstr "Prima il Punteggio più alto"
+
+msgid "Hint: Hold CTRL key for multi cells selection. Hold SHIFT key for range cells selection."
+msgstr "Suggerimento: Tieni premuto il tasto CTRL per la selezione multipla delle celle. Tieni premuto il tasto SHIFT per la selezione di un intervallo di celle"
+
+msgid "Hint: Use %22Ctrl + Space%22 for auto completion"
+msgstr "Suggerimento: Utilizza \"Ctrl + Space\" per il completamento automatico"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Horizontal"
+msgstr "Orizzontale"
+
+msgid "Horizontal Align"
+msgstr "Allineamento Orizzontale"
+
+msgid "Horizontal Alignment"
+msgstr "Allineamento Orizzontale"
+
+msgid "Horizontal Dots"
+msgstr "Punti Orizzontali"
+
+msgid "Hover"
+msgstr "Passaggio mouse"
+
+msgid "Hover Color"
+msgstr "Colore Passaggio mouse"
+
+msgid "Hover Colors"
+msgstr "Colori Passaggio mouse"
+
+msgid "Hover Settings"
+msgstr "Impostazioni Passaggio mouse"
+
+msgid "Hover Shadow"
+msgstr "Ombreggiatura Passaggio mouse"
+
+msgid "How to create a Google API Key"
+msgstr "Come creare una Google API Key"
+
+msgid "Icon"
+msgstr "Icona"
+
+msgid "Icon 1 Settings"
+msgstr "Impostazioni Icona 1"
+
+msgid "Icon 2 Settings"
+msgstr "Impostazioni Icona 2"
+
+msgid "Icon 3 Settings"
+msgstr "Impostazioni Icona 3"
+
+msgid "Icon Alignment"
+msgstr "Allineamento Icona"
+
+msgid "Icon Color"
+msgstr "Colore Icona"
+
+msgid "Icon Link"
+msgstr "Collegamento Icona"
+
+msgid "Icon Settings"
+msgstr "Impostazioni Icona"
+
+msgid "Icon Size"
+msgstr "Dimensione Icona"
+
+msgid "Icon Space"
+msgstr "Spazio Icona"
+
+msgid "Icon Style"
+msgstr "Stile Icona"
+
+msgid "Icon color"
+msgstr "Colore Icona"
+
+msgid "Icon size"
+msgstr "Dimensione Icona"
+
+msgid "Icon space"
+msgstr "Spazio Icona"
+
+msgid "Icon style"
+msgstr "Stile Icona"
+
+msgid "Icons settings"
+msgstr "Impostazioni Icona"
+
+msgid "Identification color"
+msgstr "Colore di identificazione"
+
+msgid "If your columns is overflown, it will be separated to a new line (eg: Use this with Columns Spacing)."
+msgstr "Se le tue colonne sono sovraccaricate, verrà separato su una nuova riga (ad esempio: usa questa opzione con la spaziatura delle colonne)."
+
+msgid "Image"
+msgstr "Immagine"
+
+msgid "Image Settings"
+msgstr "Impostazioni Immagine"
+
+msgid "Image Size"
+msgstr "Dimensione Immagine"
+
+msgid "Image Slider Block"
+msgstr "Blocco Cursore Immagine"
+
+msgid "Image caption"
+msgstr "Didascalia Immagine"
+
+msgid "Image title"
+msgstr "Titolo Immagine"
+
+msgid "Images Settings"
+msgstr "Impostazioni Immagini"
+
+msgid "Images Slider"
+msgstr "Cursore Immagini"
+
+msgid "Infinite Loop"
+msgstr "Ciclo Infinito"
+
+msgid "Info"
+msgstr "Informazioni"
+
+msgid "Inherit from global settings"
+msgstr "Eredita dalle impostazioni generali"
+
+msgid "Initial Collapsed"
+msgstr "Iniziale Collassata"
+
+msgid "Initial Form"
+msgstr "Modulo Iniziale"
+
+msgid "Initial Open Tab"
+msgstr "Tab Aperta Iniziale"
+
+msgid "Inner Columns Full Height"
+msgstr "Colonne Interne Altezza Piena"
+
+msgid "Input Color"
+msgstr "Colore di Input"
+
+msgid "Input background color"
+msgstr "Colore dello sfondo di Input"
+
+msgid "Input color"
+msgstr "Colore di input"
+
+msgid "Input placeholder"
+msgstr "Segnaposto Input"
+
+msgid "Insert Summary"
+msgstr "Inserisci "
+
+msgid "Insert your social link with icon."
+msgstr "Inserisci il tuo link social con l'icona"
+
+msgid "Inset"
+msgstr "Inserisci"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Install Gutenberg Now!"
+msgstr "Installa Gutenberg Adesso!"
+
+msgid "Invalid JSON"
+msgstr "JSON non valido"
+
+msgid "Invalid nonce token!"
+msgstr "Nonce non valido!"
+
+msgid "Items to scroll"
+msgstr "Oggetti da scorrere"
+
+msgid "Items to show"
+msgstr "Oggetti da mostrare"
+
+msgid "JSON"
+msgstr "JSON"
+
+msgid "Job Position"
+msgstr "Lavoro"
+
+msgid "JoomUnited logo"
+msgstr "Logo JoomUnited"
+
+msgid "LOGIN"
+msgstr "ACCEDI"
+
+msgid "Large"
+msgstr "Largo"
+
+msgid "Last Name"
+msgstr "Cognome"
+
+msgid "Last Name input placeholder"
+msgstr "Segnaposto input Ultimo nome"
+
+msgid "Last Name placeholder"
+msgstr "Segnaposto Ultimo nome"
+
+msgid "Last page"
+msgstr "Ultima pagina"
+
+msgid "Latitude"
+msgstr "Latitudine"
+
+msgid "Layout Settings"
+msgstr "impostazioni Impaginazione"
+
+msgid "Left"
+msgstr "Sinistra"
+
+msgid "Lightbox offers additional display options."
+msgstr "La Scatola luminosa offre opzioni di visualizzazione aggiuntive."
+
+msgid "Line Height"
+msgstr "Altezza Linea"
+
+msgid "Line height"
+msgstr "Altezza della linea"
+
+msgid "Link"
+msgstr "Collegamento"
+
+msgid "Link URL"
+msgstr "URL del Collegamento"
+
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "List View"
+msgstr "Vedi Lista"
+
+msgid "List block with custom icons and styles."
+msgstr "Blocco lista con icone e stili personalizzati."
+
+msgid "List icon"
+msgstr "Icona Lista"
+
+msgid "Listing your products in a easy way."
+msgstr "Mostra i tuoi prodotti in maniera semplice."
+
+msgid "Load minimized"
+msgstr "Caricamento minimizzato"
+
+msgid "Loading"
+msgstr "Sto caricando"
+
+msgid "Location"
+msgstr "Luogo"
+
+msgid "Location Settings"
+msgstr "Impostazioni Luogo"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Login input placeholder"
+msgstr "Segnaposto per l'input del login"
+
+msgid "Login/Register Form"
+msgstr "Modulo Accedi/Registrati"
+
+msgid "Login…"
+msgstr "Accedi..."
+
+msgid "Logo Width (px)"
+msgstr "Dimensione Logo (px)"
+
+msgid "Longitude"
+msgstr "Longitudine"
+
+msgid "Lost password…"
+msgstr "Password dimenticata..."
+
+msgid "Lost your password?"
+msgstr "Hai dimenticato la password?"
+
+msgid "Main"
+msgstr "Principale"
+
+msgid "Make a block with animate counting numbers."
+msgstr "Realizza un blocco con dei contatori numerici animati."
+
+msgid "Make all accordions collapsed by default, enable this setting to apply to all accordions."
+msgstr "Rendi tutte gli elementi del pannello a soffietto chiusi come opzione preimpostata, abilita questa impostazione per applicarla a tutte le fisarmoniche."
+
+msgid "Make all accordions collapsed by default."
+msgstr "Rendi tutte gli elementi del pannello a soffietto chiusi per opzione preimpostata."
+
+msgid "Map"
+msgstr "Mappa"
+
+msgid "Map Settings"
+msgstr "Impostazioni Mappa"
+
+msgid "Map settings"
+msgstr "Impostazioni della mappa"
+
+msgid "Map style"
+msgstr "Stile della mappa"
+
+msgid "Map styles"
+msgstr "Stili della mappa"
+
+msgid "Margin"
+msgstr "Margine"
+
+msgid "Margin Bottom"
+msgstr "Margine Inferiore"
+
+msgid "Margin Left"
+msgstr "Margine Sinistro"
+
+msgid "Margin Right"
+msgstr "Margine Destro"
+
+msgid "Margin Settings"
+msgstr "Impostazioni Margine"
+
+msgid "Margin Top"
+msgstr "Margine Superiore"
+
+msgid "Margin bottom"
+msgstr "Il margine inferiore"
+
+msgid "Margin left"
+msgstr "Il margine sinistro"
+
+msgid "Margin right"
+msgstr "Il margine destro"
+
+msgid "Margin top"
+msgstr "Il margine superiore"
+
+msgid "Marker Description"
+msgstr "Descrizione Marcatore"
+
+msgid "Marker Icon (27x43 px)"
+msgstr "Icona Marcatore (27x43 px)"
+
+msgid "Marker Settings"
+msgstr "Impostazioni  Marcatore"
+
+msgid "Marker Title"
+msgstr "Titolo Marcatore"
+
+msgid "Marker description"
+msgstr "Descrizione Marcatore"
+
+msgid "Marker icon"
+msgstr "Icona Marcatore"
+
+msgid "Max width"
+msgstr "Larghezza massima"
+
+msgid "Max width (px)"
+msgstr "Larghezza massima (px)"
+
+msgid "Merge Cells"
+msgstr "Celle unite"
+
+msgid "Message"
+msgstr "Messaggio"
+
+msgid "Message input placeholder"
+msgstr "Segnaposto input messaggio"
+
+msgid "Message placeholder"
+msgstr "Segnaposto messaggio"
+
+msgid "Middle"
+msgstr "Medio"
+
+msgid "Minus"
+msgstr "Meno"
+
+msgid "Most sale first"
+msgstr "Il più venduto prima"
+
+msgid "Move Left"
+msgstr "Sposta a Sinistra"
+
+msgid "Move Right"
+msgstr "Sposta a Destra"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Name Color"
+msgstr "Colore Nome"
+
+msgid "Name input placeholder"
+msgstr "Segnaposto input Nome"
+
+msgid "Name placeholder"
+msgstr "Segnaposto Nome"
+
+msgid "New Profile"
+msgstr "Nuovo Profilo"
+
+msgid "New Tab"
+msgstr "Nuova Scheda"
+
+msgid "New button with more styles."
+msgstr "Nuovo pulsante con più stili."
+
+msgid "New class"
+msgstr "Nuova classe"
+
+msgid "Newest to oldest"
+msgstr "Dal più nuovo al più vecchio"
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid "Newsletter Settings"
+msgstr "Impostazioni Newsletter"
+
+msgid "Night"
+msgstr "Notte"
+
+msgid "No API Key Provided!"
+msgstr "Non è stata fornita alcuna API Key!"
+
+msgid "No images selected. Adding images to start using this block."
+msgstr "Nessuna immagine selezionata. Aggiungi delle immagini per cominciare ad utilizzare questo blocco"
+
+msgid "No matching address found!"
+msgstr "Non ho trovato nessun indirizzo corrispondente!"
+
+msgid "No permission!"
+msgstr "Nessun permesso!"
+
+msgid "No posts found! Try to change category or publish posts."
+msgstr "Nessun post trovato. Prova a cambiare categoria o a pubblicare i post."
+
+msgid "No products found."
+msgstr "Nessun prodotto trovato."
+
+msgid "No profiles found"
+msgstr "Nessun profilo trovato."
+
+msgid "No profiles found in trash"
+msgstr "Nessun profilo trovato nel cestino."
+
+msgid "No profiles found."
+msgstr "Nessun profilo trovato."
+
+msgid "No users found."
+msgstr "Nessun utente trovato."
+
+msgid "None"
+msgstr "Nessuno"
+
+msgid "Normal"
+msgstr "Normale"
+
+msgid "Normal View"
+msgstr "Vista normale"
+
+msgid "Not selected yet."
+msgstr "Non ancora selezionato."
+
+msgid "Notice"
+msgstr "Avviso"
+
+msgid "Number of Products"
+msgstr "Numero di Prodotti"
+
+msgid "Number of columns"
+msgstr "Numero di colonne"
+
+msgid "Number of items"
+msgstr "Numero di oggetti"
+
+msgid "On Sale"
+msgstr "In vendita"
+
+msgid "One"
+msgstr "Uno"
+
+msgid "Opacity (%)"
+msgstr "Opacità (%)"
+
+msgid "Open custom URL"
+msgstr "Apri una URL personalizzata"
+
+msgid "Open custom link"
+msgstr "Apri un collegamento personalizzato"
+
+msgid "Open galleries in lightbox"
+msgstr "Apri le gallerie in scatole luminose"
+
+msgid "Open gallery images as a lightbox style popup"
+msgstr "Apri le immagini della galleria in una scatola luminosa con uno stile popup"
+
+msgid "Open image in a lightbox"
+msgstr "Apri l'immagine in una scatola luminosa"
+
+msgid "Open image in lightbox"
+msgstr "Apri l'immagine in una scatola luminosa"
+
+msgid "Open in new tab"
+msgstr "Apri in una nuova scheda"
+
+msgid "Open link in a new tab"
+msgstr "Apri il collegamento in una nuova scheda"
+
+msgid "Open link in new tab"
+msgstr "Apri il collegamento in una nuova scheda"
+
+msgid "Open marker tooltip"
+msgstr "Suggerimento all'apertura del marcatore"
+
+msgid "Open media library"
+msgstr "Apri la libreria dei media"
+
+msgid "Open video in light box"
+msgstr "Apri il video in una scatola luminosa"
+
+msgid "Open video in lightbox"
+msgstr "Apre il video in una scatola luminosa"
+
+msgid "Order"
+msgstr "Ordine"
+
+msgid "Original"
+msgstr "Originale"
+
+msgid "Our plugin works great with Gutenberg version"
+msgstr "Il nostro plugin funziona bene con la versione Gutenberg"
+
+msgid "Outline Circle"
+msgstr "Circolo sottolineato"
+
+msgid "Outlined"
+msgstr "Sottolineato"
+
+msgid "Outset"
+msgstr "Inizio"
+
+msgid "Overlay Color"
+msgstr "Colore Sovrimpressione"
+
+msgid "Overlay color"
+msgstr "Colore della sovrimpressione"
+
+msgid "Overlay opacity default"
+msgstr "Opacità predefinita sovrimpressione"
+
+msgid "Overlay opacity hover"
+msgstr "Opacità sovrimpressione al pasaggio del mouse"
+
+msgid "PUSH THE BUTTON"
+msgstr "PREMI IL PULSANTE"
+
+msgid "Padding"
+msgstr "Margine (interno)"
+
+msgid "Padding Bottom"
+msgstr "Margine (interno) Inferiore"
+
+msgid "Padding Left"
+msgstr "Margine (interno) Sinistro"
+
+msgid "Padding Right"
+msgstr "Margine (interno) Destro"
+
+msgid "Padding Settings"
+msgstr "Impostazione Margine (interno)"
+
+msgid "Padding Top"
+msgstr "Margine (interno) Superiore"
+
+msgid "Padding bottom"
+msgstr "Margine (interno) interiore"
+
+msgid "Padding left"
+msgstr "Margine (interno) sinistro"
+
+msgid "Padding right"
+msgstr "Margine (interno) destro"
+
+msgid "Padding top"
+msgstr "Margine (interno) superiore"
+
+msgid "Paragraph"
+msgstr "Paragrafo"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Password label…"
+msgstr "Etichetta Password..."
+
+msgid "Paste your custom map styles in json format into the text field. You can create your own map styles by follow one of these links: "
+msgstr "Incolla i tuoi stili personalizzati per la mappa in formato json nel campo di testo. Puoi creare i tuoi stili personalizzati seguendo uno di questi collegamenti:"
+
+msgid "Pause on hover"
+msgstr "Pausa al passaggio del mouse"
+
+msgid "Person Name"
+msgstr "Nome di persona"
+
+msgid "Picasa"
+msgstr "Picasa"
+
+msgid "Pickup a columns layout"
+msgstr "Scegli un'impaginazione per le colonne"
+
+msgid "Pinterest"
+msgstr "Pinterest"
+
+msgid "Play"
+msgstr "Riproduci"
+
+msgid "Play Button"
+msgstr "Tasto Riproduci"
+
+msgid "Play Button Color"
+msgstr "Colore Tasto Riproduci"
+
+msgid "Play Button Settings"
+msgstr "impostazioni Tasto Riproduci"
+
+msgid "Play Button Size"
+msgstr "Dimensione Tasto Riproduci"
+
+msgid "Please update Gutenberg then comeback later!"
+msgstr "Per piacere, aggiorna Gutenber e ritorna."
+
+msgid "Plus"
+msgstr "Più"
+
+msgid "Plus Circle"
+msgstr "Cerchio Più"
+
+msgid "Plus Circle Outline"
+msgstr "Contorno Cerchio Più"
+
+msgid "Plus Square Outline"
+msgstr "Contorno Quadato Più"
+
+msgid "Position Color"
+msgstr "Colore Posizione"
+
+msgid "Post Image"
+msgstr "Immagine Post"
+
+msgid "Post Text Excerpt length"
+msgstr "Lunghezza estratto post"
+
+msgid "Powerful block for insert and embed video."
+msgstr "Un blocco potente per inserire ed includere video."
+
+msgid "Preset Icon Color"
+msgstr "Colore icona preset"
+
+msgid "Preset Icons"
+msgstr "Icone Preset"
+
+msgid "Preview"
+msgstr "Anteprima"
+
+msgid "Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph"
+msgstr "Paragrafo Precedente Paragrafo Precedente Paragrafo Precedente Paragrafo Precedente Paragrafo Precedente Paragrafo Precedente Paragrafo Precedente Paragrafo Precedente "
+
+msgid "Price: high to low"
+msgstr "Prezzo: dal più alto al più basso"
+
+msgid "Price: low to high"
+msgstr "Prezzo: dal più basso al più alto"
+
+msgid "Product Status"
+msgstr "Status Prodotto"
+
+msgid "Products Settings"
+msgstr "Impostazioni Prodotto"
+
+msgid "Profile Attribution"
+msgstr "Attribuzione Profilo"
+
+msgid "Profile saved successfully!"
+msgstr "Profilo salvato correttamente!"
+
+msgid "Profile title"
+msgstr "Titolo del profilo"
+
+msgid "Profiles"
+msgstr "Profili"
+
+msgid "Pushpin"
+msgstr "Puntina da disegno"
+
+msgid "REGISTER"
+msgstr "REGISTRATI"
+
+msgid "Range in Normal view is 1-3, and in Slider view is 4-10."
+msgstr "L'intervallo nella visione Normale è 1-3, e nella visione Cursore è 4-10."
+
+msgid "Read More"
+msgstr "Leggi di più"
+
+msgid "Read more text"
+msgstr "Leggi più testo"
+
+msgid "Recent Posts"
+msgstr "Post recenti"
+
+msgid "Reddit"
+msgstr "Reddit"
+
+msgid "Redirect After Login"
+msgstr "Reindirizza dopo l'accesso"
+
+msgid "Refresh"
+msgstr "Aggiorna"
+
+msgid "Refresh table (Use this after using undo or redo)"
+msgstr "Aggiorna la tabella (Da utilizzare dopo annulla e ripristina)"
+
+msgid "Refresh this button when it conflict with other buttons styles"
+msgstr "Aggiorna questo pulsante quanto va in conflitto con gli stili degli altri pulsanti"
+
+msgid "Refresh this list when it conflict with other lists styles"
+msgstr "Aggiorna questa lista quanto va in conflitto con gli stili delle altre liste"
+
+msgid "Register"
+msgstr "Registrati"
+
+msgid "Register new account"
+msgstr "Registra un nuovo account"
+
+msgid "Register now"
+msgstr "Registrati ora"
+
+msgid "Register…"
+msgstr "Registrati ..."
+
+msgid "Registration Form"
+msgstr "Modulo di registrazione"
+
+msgid "Registration for your website is currently disabled, enable it in WordPress General settings to use registration form"
+msgstr "La registrazione per il tuo sito web è attualmente disabilitata, abilitala nelle impostazioni generali di WordPress per utilizzare il modulo di registrazione"
+
+msgid "Remember me"
+msgstr "Ricordami"
+
+msgid "Remember me…"
+msgstr "Ricordami..."
+
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgid "Remove Autop"
+msgstr "Rimuovi Autop"
+
+msgid "Remove avatar"
+msgstr "Rimuovi avatar"
+
+msgid "Remove image"
+msgstr "Rimuovi immagine"
+
+msgid "Remove image preview"
+msgstr "Rimuovi anteprima immagine"
+
+msgid "Remove selected item"
+msgstr "Rimuovi l'oggetto selezionato"
+
+msgid "Remove tab"
+msgstr "Rimuovi scheda"
+
+msgid "Remove the WordPress function autop, used to prevent unwanted paragraph to be added in some blocks"
+msgstr "Rimuovi la funzione autop di wordPress, utilizzata per evitare che paragrafi non desiderati vengano aggiunti in alcuni blocchi."
+
+msgid "Reset to default"
+msgstr "Ripristina impostazioni predefinite"
+
+msgid "Responsive Settings"
+msgstr "Impostazioni di Risposta"
+
+msgid "Retro"
+msgstr "Indietro"
+
+msgid "Return to profiles list"
+msgstr "Torna alla lista dei profili"
+
+msgid "Ridge"
+msgstr "Ridge"
+
+msgid "Right"
+msgstr "Destra"
+
+msgid "Role"
+msgstr "Ruolo"
+
+msgid "Row Count"
+msgstr "Numero Colonna"
+
+msgid "Row Settings"
+msgstr "Impostazioni Colonna"
+
+msgid "Row layout with columns you decided."
+msgstr "Un'impaginazione di riga con le colonne che decidi."
+
+msgid "SEARCH"
+msgstr "CERCA"
+
+msgid "Save"
+msgstr "Salva"
+
+msgid "Save styles"
+msgstr "Salva stili"
+
+msgid "Search"
+msgstr "Cerca"
+
+msgid "Search Bar"
+msgstr "Barra ricerca"
+
+msgid "Search Bar State"
+msgstr "Stato Barra ricerca"
+
+msgid "Search Button Settings"
+msgstr "Impostazioni Pulsante Ricerca"
+
+msgid "Search Icon Settings"
+msgstr "Impostazioni Icona Ricerca"
+
+msgid "Search Input Settings"
+msgstr "Impostazioni Input Ricerca"
+
+msgid "Search Profiles"
+msgstr "Cerca Profili"
+
+msgid "Search blocks"
+msgstr "Cerca blocchi"
+
+msgid "Search button on the left"
+msgstr "Pulsante ricerca a sinistra"
+
+msgid "Search icon"
+msgstr "Icona Ricerca"
+
+msgid "Search icon on the right"
+msgstr "Icona Ricerca a destra"
+
+msgid "Search placeholder"
+msgstr "Segnaposto Ricerca"
+
+msgid "Search profiles by title or author"
+msgstr "Cerca tra i profili per titolo o autore"
+
+msgid "Search settings"
+msgstr "Impostazioni ricerca"
+
+msgid "Search users"
+msgstr "Cerca utenti"
+
+msgid "Section"
+msgstr "Sezione"
+
+msgid "Select image preview"
+msgstr "Seleziona anteprima immagine"
+
+msgid "Selected"
+msgstr "Selezionato"
+
+msgid "Sender email"
+msgstr "Mittente email"
+
+msgid "Sender name"
+msgstr "Nome del mittente"
+
+msgid "Server error. Try again later!"
+msgstr "Errore del server. Riprova più tardi!"
+
+msgid "Set color for blocks icons on admin, only apply to Advanced Gutenberg blocks"
+msgstr "imposta il colore per le icone dei blocchi nell'interfaccia di amministrazione, si applica solo ai blocchi Advanced Gutenberg."
+
+msgid "Set the default post thumbnail to use in Recent Posts blocks."
+msgstr "Imposta la miniatura preimpostata da utilizzare nel blocco Post Recenti"
+
+msgid "Set this to 0 to make max-width is 100%"
+msgstr "Imposta questo a 0 per rendere la larghezza massima il 100%"
+
+msgid "Set to 0 = auto. This will override predefine layout styles. Recommend for experience users!"
+msgstr "Impostazione a 0 = auto. Questo prevale sugli stili di impaginazione predefiniti. Raccomandato per utenti esperti!"
+
+msgid "Settings saved successfully"
+msgstr "Impostazioni salvate correttamente"
+
+msgid "Shadow"
+msgstr "Ombreggiatura"
+
+msgid "Shadow Blur"
+msgstr "Sfocatura Ombreggiatura"
+
+msgid "Shadow Color"
+msgstr "Colore Ombreggiatura "
+
+msgid "Shadow H Offset"
+msgstr "Offset Orizz. Ombra"
+
+msgid "Shadow H offset"
+msgstr "Compensazione Orizzontale Ombreggiatura"
+
+msgid "Shadow Spread"
+msgstr "Estensione Ombreggiatura"
+
+msgid "Shadow V Offset"
+msgstr "Offset Vert. Ombra"
+
+msgid "Shadow V offset"
+msgstr "Compensazione Verticale Ombreggiatura"
+
+msgid "Shadow blur"
+msgstr "Sfocatura dell'ombreggiatura"
+
+msgid "Shadow color"
+msgstr "Colore dell'ombreggiatura"
+
+msgid "Shadow spread"
+msgstr "Estensione dell'ombreggiatura"
+
+msgid "Show Logo"
+msgstr "Mostra il Logo"
+
+msgid "Show arrows"
+msgstr "Mostra frecce"
+
+msgid "Show dots"
+msgstr "Mostra punti"
+
+msgid "Show input field icon"
+msgstr "Mostra l'icona del campo input"
+
+msgid "Show lost password link"
+msgstr "Mostra il link password dimenticata"
+
+msgid "Show register/header link"
+msgstr "Mostra il link registrati/titolo"
+
+msgid "Show submit button"
+msgstr "Mostra pulsante invio"
+
+msgid "Show the table of content of current post/page."
+msgstr "Mostra il sommario del post o della pagina attuali."
+
+msgid "Silver"
+msgstr "Argento"
+
+msgid "Site logo"
+msgstr "Logo Sito"
+
+msgid "Six"
+msgstr "Sei"
+
+msgid "Six: Three Columns"
+msgstr "Sei: Tre Colonne"
+
+msgid "Six: Two Columns"
+msgstr "Sei: Due Colonne"
+
+msgid "Skype"
+msgstr "Skype"
+
+msgid "Slider Colors"
+msgstr "Colori Cursore"
+
+msgid "Slider Settings"
+msgstr "Impostazioni Cursore"
+
+msgid "Slider View"
+msgstr "Vista Cursore"
+
+msgid "Slider image"
+msgstr "Immagine Cursore"
+
+msgid "Slider view"
+msgstr "Vista Cursore"
+
+msgid "Social Links"
+msgstr "Collegamenti Social"
+
+msgid "Social link icon"
+msgstr "Icona collegamento social"
+
+msgid "Social link:"
+msgstr "Collegamento social"
+
+msgid "Solid"
+msgstr "Solido"
+
+msgid "Sound Cloud"
+msgstr "Sound Cloud"
+
+msgid "Space between column"
+msgstr "Spazio tra colonna"
+
+msgid "Space between columns"
+msgstr "Spazio tra colonne"
+
+msgid "Split Merged Cells"
+msgstr "Dividi Celle Unite"
+
+msgid "Squared"
+msgstr "Quadrato"
+
+msgid "Squared Outline"
+msgstr "Contorno Quadrato"
+
+msgid "Stacked"
+msgstr "Impilato"
+
+msgid "Standard"
+msgstr "Standard"
+
+msgid "Star"
+msgstr "Stella"
+
+msgid "Star Sticker"
+msgstr "Adesivo Stella"
+
+msgid "Stripes"
+msgstr "Strisce"
+
+msgid "Style class"
+msgstr "Classe Stile"
+
+msgid "Submit"
+msgstr "Invia"
+
+msgid "Submit Button Hover"
+msgstr "Pulsante Invio al Passaggio del Mouse"
+
+msgid "Submit Button Settings"
+msgstr "Impostazioni Pulsante Invio"
+
+msgid "Submit label"
+msgstr "Etichetta Invio"
+
+msgid "Submit success text"
+msgstr "Testo Invio riuscito"
+
+msgid "Submit text"
+msgstr "Testo Invio"
+
+msgid "Subtitle Color"
+msgstr "Colore Sottotitolo"
+
+msgid "Success text"
+msgstr "Testo operazione riuscita"
+
+msgid "Summary"
+msgstr "Riepilogo"
+
+msgid "Summary Alignment"
+msgstr "Allineamento Riepilogo"
+
+msgid "Summary header title"
+msgstr "Titolo Intestazione riepilogo"
+
+msgid "Summary settings"
+msgstr "Impostazioni del riepilogo"
+
+msgid "Switch View"
+msgstr "Scambia Vista"
+
+msgid "Tab 1"
+msgstr "Scheda 1"
+
+msgid "Tab 2"
+msgstr "Scheda 2"
+
+msgid "Tab 3"
+msgstr "Scheda 3"
+
+msgid "Tab Colors"
+msgstr "Colori Scheda"
+
+msgid "Tab Item"
+msgstr "Oggetto Scheda"
+
+msgid "Tab Settings"
+msgstr "Impostazioni Scheda"
+
+msgid "Tab header"
+msgstr "Titolo Scheda"
+
+msgid "Table Settings"
+msgstr "Impostazioni Tabella"
+
+msgid "Table footer"
+msgstr "Piè di pagina Tabella"
+
+msgid "Table header"
+msgstr "Intestazione Tabella"
+
+msgid "Tabs"
+msgstr "Schede"
+
+msgid "Tabs Settings"
+msgstr "Impostazioni Schede"
+
+msgid "Tabs Style"
+msgstr "Stile Schede"
+
+msgid "Testimonial"
+msgstr "Testimonial"
+
+msgid "Testimonial Settings"
+msgstr "Impostazioni Testimonial"
+
+msgid "Text"
+msgstr "Testo"
+
+msgid "Text Alignment"
+msgstr "Allineamento Testo"
+
+msgid "Text Color"
+msgstr "Colore Testo"
+
+msgid "Text Colors"
+msgstr "Colori Testo"
+
+msgid "Text Label"
+msgstr "Etichetta Testo"
+
+msgid "Text Settings"
+msgstr "Impostazioni Testo"
+
+msgid "Text Size"
+msgstr "Dimensione Testo"
+
+msgid "Text alignment"
+msgstr "Allineamento testo"
+
+msgid "Text and Color"
+msgstr "Testo e Colore"
+
+msgid "Text color"
+msgstr "Colore del testo"
+
+msgid "Text size"
+msgstr "Dimensione del testo"
+
+msgid "Text/Color"
+msgstr "Testo/Colore"
+
+msgid "Text/Input Color"
+msgstr "Colore Testo/Input"
+
+msgid "Text…"
+msgstr "Testo..."
+
+msgid "These settings will override the Adv. Gutenberg global settings."
+msgstr "Queste impostazioni prevalgono sule impostazioni generali di Adv. Gutenberg."
+
+msgid "This option let you add custom style for current paragraph. (Front-end only!)"
+msgstr "Questa opzione ti consente di personalizzare lo stile del paragrafo attuale (Solo nel front-end!)"
+
+msgid "Three: 1/2 - 1/2 - 100"
+msgstr "Tre: 1/2 - 1/2 - 100"
+
+msgid "Three: 1/2 - 1/4 - 1/4"
+msgstr "Tre: 1/2 - 1/4 - 1/4"
+
+msgid "Three: 1/3 - 1/3 - 1/3"
+msgstr "Tre: 1/3 - 1/3 - 1/3"
+
+msgid "Three: 1/4 - 1/2 - 1/4"
+msgstr "Tre: 1/4 - 1/2 - 1/4"
+
+msgid "Three: 1/4 - 1/4 - 1/2"
+msgstr "Tre: 1/4 - 1/4 - 1/2"
+
+msgid "Three: 1/5 - 1/5 - 3/5"
+msgstr "Tre: 1/5 - 1/5 - 3/5"
+
+msgid "Three: 1/5 - 3/5 - 1/5"
+msgstr "Tre: 1/5 - 3/5 - 1/5"
+
+msgid "Three: 1/6 - 4/6 - 1/6"
+msgstr "Tre: 1/6 - 4/6 - 1/6"
+
+msgid "Three: 100 - 1/2 - 1/2"
+msgstr "Tre: 100 - 1/2 - 1/2"
+
+msgid "Three: 3/5 - 1/5 - 1/5"
+msgstr "Tre: 3/5 - 1/5 - 1/5"
+
+msgid "Title"
+msgstr "Titolo"
+
+msgid "Title Color"
+msgstr "Titolo: Colore"
+
+msgid "Title: Alphabetical"
+msgstr "Titolo: Alfabetico"
+
+msgid "Title: Alphabetical reversed"
+msgstr "Titolo: Alfabetico Inverso"
+
+msgid "Title…"
+msgstr "Titolo..."
+
+msgid "Top"
+msgstr "In alto"
+
+msgid "Transition Speed"
+msgstr "Velocità Transizione"
+
+msgid "Transition speed (ms)"
+msgstr "Velocità transizione (mx)"
+
+msgid "Translation"
+msgstr "Traduzione"
+
+msgid "Try again"
+msgstr "Prova di nuovo"
+
+msgid "Tumblr"
+msgstr "Tumblr"
+
+msgid "Twitter"
+msgstr "Twitter"
+
+msgid "Two: 1/2 - 1/2"
+msgstr "Due: 1/2 - 1/2"
+
+msgid "Two: 1/3 - 2/3"
+msgstr "Due: 1/3 - 2/3"
+
+msgid "Two: 1/4 - 3/4"
+msgstr "Due: 1/4 - 3/4"
+
+msgid "Two: 1/5 - 4/5"
+msgstr "Due: 1/5 - 4/5"
+
+msgid "Two: 2/3 - 1/3"
+msgstr "Due: 2/3 - 1/3"
+
+msgid "Two: 3/4 - 1/4"
+msgstr "Due: 3/4 - 1/4"
+
+msgid "Two: 4/5 - 1/5"
+msgstr "Due: 4/5 - 1/5"
+
+msgid "Type field not defined"
+msgstr "Tipo di campo non definito"
+
+msgid "Type here to search…"
+msgstr "Digita qui per effettuare la ricerca ..."
+
+msgid "Type to search…"
+msgstr "Digita per cercare..."
+
+msgid "Unfold Arrow"
+msgstr "Apri la Freccia"
+
+msgid "Unit"
+msgstr "Unità"
+
+msgid "Unit (px)"
+msgstr "Unità (px)"
+
+msgid "Update"
+msgstr "Aggionra"
+
+msgid "Update Summary"
+msgstr "Aggiorna il Riepilogo"
+
+msgid "Update now"
+msgstr "Aggiorna ora"
+
+msgid "Upload/Choose"
+msgstr "Carica/Scegli"
+
+msgid "Use Address"
+msgstr "Utilizza Indirizzo"
+
+msgid "Use Lat/Lng"
+msgstr "Utilizza Lat/Lon"
+
+msgid "Use in register form"
+msgstr "Utilizza nel modulo di registrazione"
+
+msgid "Use role filter"
+msgstr "Utilizza il filtro per ruolo"
+
+msgid "Use the Google reCaptcha to avoid spam in Adv. Gutenberg forms. Get credentials for your domain by registering"
+msgstr "Utilizza Google reCaptcha per evitare lo spam nei moduli Adv. Gutenberg. Ottiene le credenziali per il tuo dominio registrandoti"
+
+msgid "Use toggle buttons above to define symbol placement before/after the number (toggle on is after)."
+msgstr "Utilizzare i pulsanti di attivazione / disattivazione sopra per definire la posizione del simbolo prima / dopo il numero (attivo significa  dopo)."
+
+msgid "User registration is currently not allowed."
+msgstr "Attualmente non è consentita la registrazione di utenti"
+
+msgid "Username"
+msgstr "Nome Utente"
+
+msgid "Username input placeholder"
+msgstr "Segnaposto input nome utente"
+
+msgid "Username label…"
+msgstr "Etichetta Nome Utente"
+
+msgid "Username or Email"
+msgstr "Nome Utente o email"
+
+msgid "Username or password is incorrect!"
+msgstr "Nome utente o password errati!"
+
+msgid "Vertical"
+msgstr "Verticale"
+
+msgid "Vertical Align"
+msgstr "Allineamento Verticale"
+
+msgid "Vertical Align Bottom"
+msgstr "Allineamento Verticale in Basso"
+
+msgid "Vertical Align Middle"
+msgstr "Allineamento Verticale a Centro"
+
+msgid "Vertical Align Top"
+msgstr "Allineamento Verticale in Alto"
+
+msgid "Vertical Alignment"
+msgstr "Allineamento Verticale"
+
+msgid "Vertical space when collapsed"
+msgstr "Spazio verticale quando collassato"
+
+msgid "Video Camera"
+msgstr "Video Camera"
+
+msgid "Video Height"
+msgstr "Altezza Video"
+
+msgid "Video Settings"
+msgstr "Impostazioni Video"
+
+msgid "Video Width"
+msgstr "Larghezza Video"
+
+msgid "Video height"
+msgstr "Altezza Video"
+
+msgid "Video width"
+msgstr "Larghezza del video"
+
+msgid "View Profile"
+msgstr "Vedi Profilo"
+
+msgid "Vimeo"
+msgstr "Vimeo"
+
+msgid "Warning"
+msgstr "Attenzione"
+
+msgid "We are updating blocks list..."
+msgstr "Stiamo aggiornando la lista dei blocchi"
+
+msgid "We require at least Gutenberg version "
+msgstr "La versione minima di Gutenberg richiesta è"
+
+msgid "We strongly recommend not using Invisible reCAPTCHA if you have more than 1 Newsletter or Contact forms block in a page."
+msgstr "Raccomandiamo vivamente di non utilizzare il reCaptcha invisibile se hai più di 1 Modulo Newsletter o di 1 Modulo Contatto nella pagina."
+
+msgid "We strongly recommend to enable Google reCaptcha to avoid spam bot. You can enable it in Form Recaptcha in"
+msgstr "Raccomandiamo vivamente di abilitare il reCaptcha Google per evitare gli spam bot. Puoi abilitarlo in Recaptcha Modulo in"
+
+msgid "Website Contact"
+msgstr "Contatto Sito Web"
+
+msgid "Welcome back"
+msgstr "Bentornato"
+
+msgid "Welcome text…"
+msgstr "Testo di benvenuto..."
+
+msgid "Width"
+msgstr "Larghezza"
+
+msgid "Width (%)"
+msgstr "Larghezza (%)"
+
+msgid "Woo Products"
+msgstr "Prodotti Woo"
+
+msgid "WooCommerce has not been detected, make sure WooCommerce is installed and activated."
+msgstr "WooCommerce non è stato individuato, assicurati che WooCOmmerce sia installato e attivato."
+
+msgid "Wrapper Tag"
+msgstr "Wrapper Tag"
+
+msgid "Write advanced list…"
+msgstr "Scrivi la lista avanzata..."
+
+msgid "Wrong video URL/ID. Please try another."
+msgstr "Video URL/ID erratp. Per piacere, provane un altro."
+
+msgid "X Cross"
+msgstr "Simbolo X"
+
+msgid "You have received a contact from your website."
+msgstr "Hai ricevuto un contatto dal tuo sito web."
+
+msgid "You need to activate Gutenberg to use our plugin!"
+msgstr "Devi attivare Gutenberg per utilizzare il nostro plugin!"
+
+msgid "Your browser does not support HTML5 video."
+msgstr "Il tuo browser non supporta video in formato HTML5"
+
+msgid "Your current post/page has no headings. Try add some headings and update this block later"
+msgstr "La tua pagina o il tuo post attuale non hanno titoli. Prova ad aggiungere dei titoli e quindi aggiorna questo blocco."
+
+msgid "Your current version is"
+msgstr "La tua versione attuale è"
+
+msgid "Your styles have been saved"
+msgstr "I tuoi stili sono stati salvati"
+
+msgid "Your subtitle here"
+msgstr "Qui il tuo sottotitolo"
+
+msgid "Youtube"
+msgstr "Youtube"
+
+msgid "Youtube/Vimeo video URL/ID…"
+msgstr "Youtube/Vimeo video URL/ID…"
+
+msgid "Zoom Level"
+msgstr "Livello Zoom"
+
+msgid "Zoom level"
+msgstr "Livello zoom"
+
+msgid "about"
+msgstr "a proposito"
+
+msgid "accordion"
+msgstr "pannello a soffietto"
+
+msgid "address"
+msgstr "indirizzo"
+
+msgid "and above"
+msgstr "e in più"
+
+msgid "and description"
+msgstr "e la descrizione"
+
+msgid "box"
+msgstr "riquadro"
+
+msgid "button"
+msgstr "bottone"
+
+msgid "cards"
+msgstr "carte"
+
+msgid "cell"
+msgstr "cella"
+
+msgid "columns"
+msgstr "colonne"
+
+msgid "contact"
+msgstr "contatto"
+
+msgid "container"
+msgstr "contenitore"
+
+msgid "count"
+msgstr "conto"
+
+msgid "data"
+msgstr "dati"
+
+msgid "email"
+msgstr "email"
+
+msgid "embed"
+msgstr "incorpora"
+
+msgid "faq"
+msgstr "faq"
+
+msgid "form"
+msgstr "modulo"
+
+msgid "gallery"
+msgstr "galleria"
+
+msgid "google map"
+msgstr "google map"
+
+msgid "icon"
+msgstr "icona"
+
+msgid "icon link"
+msgstr "icona collegamento"
+
+msgid "image"
+msgstr "immagine"
+
+msgid "increase"
+msgstr "aumenta"
+
+msgid "latest posts"
+msgstr "ultimi post"
+
+msgid "layout"
+msgstr "impaginazione"
+
+msgid "link"
+msgstr "collegamento"
+
+msgid "list"
+msgstr "lista"
+
+msgid "location"
+msgstr "luogo"
+
+msgid "media"
+msgstr "media"
+
+msgid "new-class"
+msgstr "nuova-calsse"
+
+msgid "newsletter"
+msgstr "newsletter"
+
+msgid "numbers"
+msgstr "numeri"
+
+msgid "personal"
+msgstr "personale"
+
+msgid "photo"
+msgstr "foto"
+
+msgid "photos"
+msgstr "foto"
+
+msgid "posts grid"
+msgstr "griglia dei post"
+
+msgid "posts slide"
+msgstr "diapositiva del post"
+
+msgid "price list"
+msgstr "lista prezzi"
+
+msgid "products list"
+msgstr "lista prodotti"
+
+msgid "reCAPTCHA Language"
+msgstr "Linguaggio reCAPTCHA"
+
+msgid "reCAPTCHA Secret Key"
+msgstr "Chiave Segreta reCAPTCHA"
+
+msgid "reCAPTCHA Site Key"
+msgstr "Chiave Sito reCAPTCHA"
+
+msgid "reCAPTCHA Theme"
+msgstr "Tema reCAPTCHA"
+
+msgid "required"
+msgstr "richiesto"
+
+msgid "right"
+msgstr "destra"
+
+msgid "row"
+msgstr "riga"
+
+msgid "separate by comma"
+msgstr "separate dalla virgola"
+
+msgid "settings"
+msgstr "impostazioni"
+
+msgid "shares"
+msgstr "condivisioni"
+
+msgid "slide"
+msgstr "diapositiva"
+
+msgid "social icons"
+msgstr "icone social"
+
+msgid "summary"
+msgstr "riepilogo"
+
+msgid "tab"
+msgstr "scheda"
+
+msgid "table"
+msgstr "tabella"
+
+msgid "table of content"
+msgstr "sommario"
+
+msgid "tabs"
+msgstr "schede"
+
+msgid "testimonial"
+msgstr "testimonial"
+
+msgid "user@email.com"
+msgstr "utente@email.com"
+
+msgid "username"
+msgstr "nome utente"
+
+msgid "video"
+msgstr "video"
+
+msgid "woo commerce"
+msgstr "woo commerce"
+
+msgid "Config for this block is currently unsupported."
+msgstr "La configurazione per questo blocco non è supportata al momento"
+
+msgid "Use the Google reCaptcha to avoid spam in Contact and Newsletter forms. Get credentials for your domain by registering"
+msgstr "Usa Google reCaptcha per evitare spam nelle forms Newsletter e Contatti.  Puoi ottenere le credenziali per il tuo dominio registrandoti"
