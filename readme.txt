@@ -131,6 +131,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 = 2.4.0 =
  * Remove: JU Translation system
  * Add: Native language files support
+ * Fix: Forward slash in tooltip in Map block
 
 = 2.3.11 =
  * Fix: Improve default background position for new Advanced image block
