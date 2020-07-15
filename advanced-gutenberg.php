@@ -86,6 +86,15 @@ if (!defined('GUTENBERG_VERSION_REQUIRED')) {
     define('GUTENBERG_VERSION_REQUIRED', '5.7.0');
 }
 
+// Load override language file if available from version 2.3.11 and older
+function advgb_load_textdomain_mofile($mofile, $domain){
+    if ( 'advanced-gutenberg' === $domain ) {
+        $mofile = WP_LANG_DIR . '/plugins/' . $domain . '-' . get_locale() . '.override.mo';
+    }
+    return $mofile;
+}
+add_filter('load_textdomain_mofile', 'advgb_load_textdomain_mofile', 10, 2 );
+
 // Load language files
 function advgb_load_plugin_textdomain() {
     load_plugin_textdomain( 'advanced-gutenberg', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
