@@ -88,8 +88,9 @@ if (!defined('GUTENBERG_VERSION_REQUIRED')) {
 
 // Load override language file if available from version 2.3.11 and older
 function advgb_load_textdomain_mofile($mofile, $domain){
-    if ( 'advanced-gutenberg' === $domain ) {
-        $mofile = WP_LANG_DIR . '/plugins/' . $domain . '-' . get_locale() . '.override.mo';
+    $advg_mofile = WP_LANG_DIR . '/plugins/' . $domain . '-' . get_locale() . '.override.mo';
+    if ( 'advanced-gutenberg' === $domain && file_exists($advg_mofile)) {
+        $mofile = $advg_mofile;
     }
     return $mofile;
 }
