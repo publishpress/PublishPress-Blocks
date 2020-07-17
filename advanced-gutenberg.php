@@ -86,14 +86,24 @@ if (!defined('GUTENBERG_VERSION_REQUIRED')) {
     define('GUTENBERG_VERSION_REQUIRED', '5.7.0');
 }
 
-function advg_language_domain_init()
-{
-    // Load override language file if available from version 2.3.11 and older
-    if(file_exists(WP_LANG_DIR . '/plugins/' . 'advanced-gutenberg' . '-' . get_locale() . '.override.mo')) {
-        apply_filters('load_textdomain_mofile', WP_LANG_DIR . '/plugins/' . 'advanced-gutenberg' . '-' . get_locale() . '.override.mo', 'advanced-gutenberg' );
-    }
+if (! function_exists('advg_language_domain_init')) {
+    /**
+     * Load language translations
+     *
+     * @return void
+     */
+    function advg_language_domain_init()
+    {
+        // Load override language file if available from version 2.3.11 and older
+        if (file_exists(WP_LANG_DIR . '/plugins/' . 'advanced-gutenberg' . '-' . get_locale() . '.override.mo')) {
+            apply_filters('load_textdomain_mofile',
+                WP_LANG_DIR . '/plugins/' . 'advanced-gutenberg' . '-' . get_locale() . '.override.mo',
+                'advanced-gutenberg'
+            );
+        }
 
-    load_plugin_textdomain('advanced-gutenberg', null, dirname(plugin_basename(__FILE__)) . '/languages/');
+        load_plugin_textdomain('advanced-gutenberg', null, dirname(plugin_basename(__FILE__)) . '/languages/');
+    }
 }
 add_action( 'init', 'advg_language_domain_init' );
 
