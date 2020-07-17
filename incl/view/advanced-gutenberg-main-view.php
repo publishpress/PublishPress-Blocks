@@ -30,7 +30,7 @@ $tabs_data = array(
     ),
     array(
         'id' => 'translations',
-        'title' => __('Translations', 'advanced-gutenberg'),
+        'title' => __('Translation', 'advanced-gutenberg'),
         'icon' => 'text-format',
     ),
 );
