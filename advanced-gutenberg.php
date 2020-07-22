@@ -106,6 +106,15 @@ if (! function_exists('advg_language_domain_init')) {
             );
         }
 
+        /*/ Load a specific mo file
+        if( file_exists(plugin_dir_path(__FILE__) . 'languages/' . 'advanced-gutenberg' . '-' . get_locale() . '.mo') ) {
+            apply_filters(
+                'load_textdomain_mofile',
+                plugin_dir_path(__FILE__) . 'languages/' . 'advanced-gutenberg' . '-' . get_locale() . '.mo',
+                'advanced-gutenberg'
+            );
+        }*/
+
         // Call the core translations from plugins languages/ folder
         load_plugin_textdomain('advanced-gutenberg', null, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
