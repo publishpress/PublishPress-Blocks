@@ -460,6 +460,11 @@ float: left;'
             }
         }
         add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
+
+        if (is_admin()) {
+            $this->loadGoogleMapApi();
+            $this->loadRecaptchaFrontend();
+        }
     }
 
     /**
