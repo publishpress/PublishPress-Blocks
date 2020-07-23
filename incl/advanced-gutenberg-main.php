@@ -4527,6 +4527,7 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_localize_script('advgbNewsletter_js', 'advgbNewsletter', array('ajax_url' => admin_url('admin-ajax.php')));
+            $this->loadRecaptchaApi();
         }
 
         if (strpos($content, 'advgb-testimonial slider-view') !== false) {
