@@ -4473,6 +4473,12 @@ float: left;'
                 array(),
                 ADVANCED_GUTENBERG_VERSION
             );
+            // Fix broken tags: &lt;strong> and &lt;em>
+            $content = preg_replace_callback(
+                '@<ul class="advgb-tabs-panel">(.*?)&lt;(?:strong|em)>(.*?)&lt;/(?:strong|em)>(.*?)</ul>@s',
+                array($this, 'decodeHtmlEntity'),
+                $content
+            );
         }
 
         if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
