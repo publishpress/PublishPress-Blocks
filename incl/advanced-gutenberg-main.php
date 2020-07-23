@@ -460,14 +460,6 @@ float: left;'
             }
         }
         add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
-
-        $saved_settings = get_option('advgb_settings');
-        if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
-            wp_enqueue_script(
-                'advgb_map_api',
-                'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
-            );
-        }
     }
 
     /**
@@ -4401,6 +4393,14 @@ float: left;'
                 array(),
                 ADVANCED_GUTENBERG_VERSION
             );
+            
+            $saved_settings = get_option('advgb_settings');
+            if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
+                wp_enqueue_script(
+                    'advgb_map_api',
+                    'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
+                );
+            }
         }
 
         if (strpos($content, 'advgb-accordion-block') !== false) {
