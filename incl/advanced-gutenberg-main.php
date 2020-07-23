@@ -4393,14 +4393,7 @@ float: left;'
                 array(),
                 ADVANCED_GUTENBERG_VERSION
             );
-            
-            $saved_settings = get_option('advgb_settings');
-            if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
-                wp_enqueue_script(
-                    'advgb_map_api',
-                    'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
-                );
-            }
+            $this->loadGoogleMapApi();
         }
 
         if (strpos($content, 'advgb-accordion-block') !== false) {
@@ -5249,6 +5242,21 @@ float: left;'
                     'theme' => $recaptcha_config['recaptcha_theme'],
                 ));
             }
+        }
+    }
+
+    /**
+     * Load Google Maps script
+     *
+     * @return void
+     */
+    public function loadGoogleMapApi() {
+        $saved_settings = get_option('advgb_settings');
+        if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
+            wp_enqueue_script(
+                'advgb_map_api',
+                'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
+            );
         }
     }
 
