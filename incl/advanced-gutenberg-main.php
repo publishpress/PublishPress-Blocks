@@ -468,27 +468,6 @@ float: left;'
                 'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
             );
         }
-
-        $recaptcha_config = get_option('advgb_recaptcha_config');
-        if (!is_admin() && isset($recaptcha_config['recaptcha_enable']) && $recaptcha_config['recaptcha_enable']) {
-            $lang = $recaptcha_config['recaptcha_language'] ? '&hl='.$recaptcha_config['recaptcha_language'] : '';
-            wp_enqueue_script(
-                'advgb_recaptcha_js',
-                'https://www.google.com/recaptcha/api.js?onload=advgbRecaptchaInit&render=explicit' . $lang
-            );
-
-            if (isset($recaptcha_config['recaptcha_site_key']) && $recaptcha_config['recaptcha_site_key']) {
-                wp_enqueue_script(
-                    'advgb_recaptcha_init_js',
-                    plugins_url('assets/js/recaptcha.js', dirname(__FILE__))
-                );
-
-                wp_localize_script('advgb_recaptcha_init_js', 'advgbGRC', array(
-                    'site_key' => $recaptcha_config['recaptcha_site_key'],
-                    'theme' => $recaptcha_config['recaptcha_theme'],
-                ));
-            }
-        }
     }
 
     /**
@@ -4539,6 +4518,27 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_localize_script('advgbContactForm_js', 'advgbContactForm', array('ajax_url' => admin_url('admin-ajax.php')));
+
+            $recaptcha_config = get_option('advgb_recaptcha_config');
+            if (!is_admin() && isset($recaptcha_config['recaptcha_enable']) && $recaptcha_config['recaptcha_enable']) {
+                $lang = $recaptcha_config['recaptcha_language'] ? '&hl='.$recaptcha_config['recaptcha_language'] : '';
+                wp_enqueue_script(
+                    'advgb_recaptcha_js',
+                    'https://www.google.com/recaptcha/api.js?onload=advgbRecaptchaInit&render=explicit' . $lang
+                );
+
+                if (isset($recaptcha_config['recaptcha_site_key']) && $recaptcha_config['recaptcha_site_key']) {
+                    wp_enqueue_script(
+                        'advgb_recaptcha_init_js',
+                        plugins_url('assets/js/recaptcha.js', dirname(__FILE__))
+                    );
+
+                    wp_localize_script('advgb_recaptcha_init_js', 'advgbGRC', array(
+                        'site_key' => $recaptcha_config['recaptcha_site_key'],
+                        'theme' => $recaptcha_config['recaptcha_theme'],
+                    ));
+                }
+            }
         }
 
         if (strpos($content, 'advgb-newsletter') !== false) {
