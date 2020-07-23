@@ -463,7 +463,7 @@ float: left;'
 
         if (is_admin()) {
             $this->loadGoogleMapApi();
-            $this->loadRecaptchaFrontend();
+            $this->loadRecaptchaApi();
         }
     }
 
@@ -4516,7 +4516,7 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_localize_script('advgbContactForm_js', 'advgbContactForm', array('ajax_url' => admin_url('admin-ajax.php')));
-            $this->loadRecaptchaFrontend();
+            $this->loadRecaptchaApi();
         }
 
         if (strpos($content, 'advgb-newsletter') !== false) {
@@ -4573,7 +4573,7 @@ float: left;'
                 'captcha_empty_warning' => __('Captcha must be checked!', 'advanced-gutenberg'),
                 'login_failed_notice' => __('Username or password is incorrect!', 'advanced-gutenberg'),
             ));
-            $this->loadRecaptchaFrontend();
+            $this->loadRecaptchaApi();
         }
 
         $content = $this->groupStylesTag($content);
@@ -5227,7 +5227,7 @@ float: left;'
      *
      * @return void
      */
-    public function loadRecaptchaFrontend() {
+    public function loadRecaptchaApi() {
         $recaptcha_config = get_option('advgb_recaptcha_config');
         if (!is_admin() && isset($recaptcha_config['recaptcha_enable']) && $recaptcha_config['recaptcha_enable']) {
             $lang = $recaptcha_config['recaptcha_language'] ? '&hl='.$recaptcha_config['recaptcha_language'] : '';
