@@ -461,33 +461,9 @@ float: left;'
         }
         add_filter('script_loader_tag', 'advgbAddScriptAttributes', 10, 2);
 
-        $saved_settings = get_option('advgb_settings');
-        if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
-            wp_enqueue_script(
-                'advgb_map_api',
-                'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
-            );
-        }
-
-        $recaptcha_config = get_option('advgb_recaptcha_config');
-        if (!is_admin() && isset($recaptcha_config['recaptcha_enable']) && $recaptcha_config['recaptcha_enable']) {
-            $lang = $recaptcha_config['recaptcha_language'] ? '&hl='.$recaptcha_config['recaptcha_language'] : '';
-            wp_enqueue_script(
-                'advgb_recaptcha_js',
-                'https://www.google.com/recaptcha/api.js?onload=advgbRecaptchaInit&render=explicit' . $lang
-            );
-
-            if (isset($recaptcha_config['recaptcha_site_key']) && $recaptcha_config['recaptcha_site_key']) {
-                wp_enqueue_script(
-                    'advgb_recaptcha_init_js',
-                    plugins_url('assets/js/recaptcha.js', dirname(__FILE__))
-                );
-
-                wp_localize_script('advgb_recaptcha_init_js', 'advgbGRC', array(
-                    'site_key' => $recaptcha_config['recaptcha_site_key'],
-                    'theme' => $recaptcha_config['recaptcha_theme'],
-                ));
-            }
+        if (is_admin()) {
+            $this->loadGoogleMapApi();
+            $this->loadRecaptchaApi();
         }
     }
 
@@ -4422,6 +4398,7 @@ float: left;'
                 array(),
                 ADVANCED_GUTENBERG_VERSION
             );
+            $this->loadGoogleMapApi();
         }
 
         if (strpos($content, 'advgb-accordion-block') !== false) {
@@ -4539,6 +4516,7 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_localize_script('advgbContactForm_js', 'advgbContactForm', array('ajax_url' => admin_url('admin-ajax.php')));
+            $this->loadRecaptchaApi();
         }
 
         if (strpos($content, 'advgb-newsletter') !== false) {
@@ -4549,6 +4527,7 @@ float: left;'
                 ADVANCED_GUTENBERG_VERSION
             );
             wp_localize_script('advgbNewsletter_js', 'advgbNewsletter', array('ajax_url' => admin_url('admin-ajax.php')));
+            $this->loadRecaptchaApi();
         }
 
         if (strpos($content, 'advgb-testimonial slider-view') !== false) {
@@ -4595,6 +4574,7 @@ float: left;'
                 'captcha_empty_warning' => __('Captcha must be checked!', 'advanced-gutenberg'),
                 'login_failed_notice' => __('Username or password is incorrect!', 'advanced-gutenberg'),
             ));
+            $this->loadRecaptchaApi();
         }
 
         $content = $this->groupStylesTag($content);
@@ -5241,6 +5221,49 @@ float: left;'
 
         echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped
         return true;
+    }
+
+    /**
+     * Load reCaptcha v2 scripts
+     *
+     * @return void
+     */
+    public function loadRecaptchaApi() {
+        $recaptcha_config = get_option('advgb_recaptcha_config');
+        if (!is_admin() && isset($recaptcha_config['recaptcha_enable']) && $recaptcha_config['recaptcha_enable']) {
+            $lang = $recaptcha_config['recaptcha_language'] ? '&hl='.$recaptcha_config['recaptcha_language'] : '';
+            wp_enqueue_script(
+                'advgb_recaptcha_js',
+                'https://www.google.com/recaptcha/api.js?onload=advgbRecaptchaInit&render=explicit' . $lang
+            );
+
+            if (isset($recaptcha_config['recaptcha_site_key']) && $recaptcha_config['recaptcha_site_key']) {
+                wp_enqueue_script(
+                    'advgb_recaptcha_init_js',
+                    plugins_url('assets/js/recaptcha.js', dirname(__FILE__))
+                );
+
+                wp_localize_script('advgb_recaptcha_init_js', 'advgbGRC', array(
+                    'site_key' => $recaptcha_config['recaptcha_site_key'],
+                    'theme' => $recaptcha_config['recaptcha_theme'],
+                ));
+            }
+        }
+    }
+
+    /**
+     * Load Google Maps script
+     *
+     * @return void
+     */
+    public function loadGoogleMapApi() {
+        $saved_settings = get_option('advgb_settings');
+        if (isset($saved_settings['google_api_key']) && !empty($saved_settings['google_api_key'])) {
+            wp_enqueue_script(
+                'advgb_map_api',
+                'https://maps.googleapis.com/maps/api/js?key='. $saved_settings['google_api_key']
+            );
+        }
     }
 
     /**
