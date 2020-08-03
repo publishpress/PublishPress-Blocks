@@ -6,7 +6,7 @@ defined('ABSPATH') || die;
     <h1 class="header-title"><?php esc_html_e('Translation', 'advanced-gutenberg') ?></h1>
 </div>
 
-<div>
-    <p><?php _e('Support for JUTranslation system has been removed, however we\'ll provide you a better approach to continue translating Advanced Gutenberg into your language.', 'advanced-gutenberg'); ?></p>
-    <p><?php _e('[Information about the new translation approach goes here]', 'advanced-gutenberg'); ?></p>
+<div class="notice notice-info">
+    <p><?php _e('The JU Translation system has been removed, however we continue translating Advanced Gutenberg into your language by using native .mo and .po files located at Advanced Gutenberg plugin\'s languages/ folder.', 'advanced-gutenberg'); ?></p>
+    <p><?php _e('Please note if you created language overrides while using version 2.3.11 and older, these are still working.', 'advanced-gutenberg'); ?></p>
 </div>
