@@ -4460,7 +4460,7 @@ float: left;'
                 $content
             );
             // @TODO remove in later versions if there are no introduced issues
-            wp_add_inline_script('advgb_tabs_js', 'console.log(\'advgb-tracking-issue-3\');');
+            wp_add_inline_script('advgb_tabs_js', 'console.log(\'advgb-tracking-issue-3-and-98\');');
         }
 
         if (strpos($content, 'advgb-recent-posts-block slider-view') !== false) {
