@@ -8,5 +8,5 @@ defined('ABSPATH') || die;
 
 <div class="notice notice-info">
     <p><?php _e('The JU Translation system has been removed, however we continue translating Advanced Gutenberg into your language by using native .mo and .po files located at Advanced Gutenberg plugin\'s languages/ folder.', 'advanced-gutenberg'); ?></p>
-    <p><?php _e('Please note if you created language overrides while using version 2.3.11 and older, these are still working.', 'advanced-gutenberg'); ?></p>
+    <p><?php _e('Please note if you created translation overrides while using version 2.3.11 and older, these are still working.', 'advanced-gutenberg'); ?></p>
 </div>
