@@ -4452,7 +4452,10 @@ float: left;'
             );
             // Fix broken tags: &lt;strong> and &lt;em>
             $content = preg_replace_callback(
-                '@<ul class="advgb-tabs-panel">(.*?)&lt;(?:strong|em)>(.*?)&lt;/(?:strong|em)>(.*?)</ul>@s',
+                array(
+                    '@<ul class="advgb-tabs-panel">(.*?)&lt;(?:strong|em)>(.*?)&lt;/(?:strong|em)>(.*?)</ul>@s',
+                    '@<div class="advgb-tab-body-header">(.*?)&lt;(?:strong|em)>(.*?)&lt;/(?:strong|em)>(.*?)</div>@s'
+                ),
                 array($this, 'decodeHtmlEntity'),
                 $content
             );
