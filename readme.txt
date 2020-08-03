@@ -132,6 +132,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
  * Remove: JU Translation system
  * Add: Native language files support
  * Add: Support for language overrides from versions 2.3.11 and older
+ * Fix: "Enable" option for columns visual guide setting while editing
  * Fix: Forward slash in tooltip in Map block
  * Fix: Broken strong and em HTML tags in Tabs block headers
  * Fix: Load reCaptcha in Login/register, Contact form and Newsletter blocks only when required in frontend
