@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build_react_dev": "webpack --mode development --watch"
+    "build_react_dev": "webpack --mode development --watch",
+    "compile_blocks_styles": "concurrently --kill-others \"node-sass --output-style compressed assets/css/blocks_styles/blocks.scss > assets/css/blocks_styles/blocks.min.css\" \"node-sass --output-style nested assets/css/blocks_styles/blocks.scss > assets/css/blocks_styles/blocks.css\""
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -16,6 +17,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "compile-sass": "^1.1.1",
+    "concurrently": "^5.2.0",
     "counterup2": "^1.0.4",
     "html-react-parser": "^0.10.5",
     "jquery": "^3.5.1",
