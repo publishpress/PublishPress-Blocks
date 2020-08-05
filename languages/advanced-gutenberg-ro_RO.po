@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid " block"
+msgstr "bloc"
+
+msgid "(untitled)"
+msgstr "(fara titlu)"
+
+msgid "Adv. Gutenberg"
+msgstr "Adv. Gutenberg"
+
+msgid "Center"
+msgstr "Centru"
+
+msgid "Circle"
+msgstr "Cerc"
+
+msgid "Color"
+msgstr "Culoare"
+
+msgid "Columns"
+msgstr "Coloane"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Default"
+msgstr "Implicit"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Height"
+msgstr "Inaltime"
+
+msgid "Help"
+msgstr "Ajutor"

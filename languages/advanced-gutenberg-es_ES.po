@@ -1,0 +1,303 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid " block"
+msgstr "bloque"
+
+msgid " here"
+msgstr "aquí"
+
+msgid "(untitled)"
+msgstr "(sin título)"
+
+msgid "A Google API key is required to use the Map block without any warning."
+msgstr "Se requiere una clave de API de Google para usar el bloque de mapas sin ninguna advertencia."
+
+msgid "Action on click"
+msgstr "Acción al hacer clic"
+
+msgid "Active Tab Settings"
+msgstr "Configuración de la pestaña activa"
+
+msgid "Active this profile for this group(s)"
+msgstr "Activa este perfil para este/estos grupo(s)"
+
+msgid "Active this profile for this user(s)"
+msgstr "Activa este perfil para este/estos usuario(s)"
+
+msgid "Add New Profile"
+msgstr "Añadir nuevo perfil"
+
+msgid "Add new class"
+msgstr "Añadir nueva clase"
+
+msgid "Adv. Gutenberg"
+msgstr "Adv. Gutenberg"
+
+msgid "Advanced Gutenberg"
+msgstr "Advanced Gutenberg"
+
+msgid "Advanced Gutenberg Profiles"
+msgstr "Perfiles de Advanced Gutenberg"
+
+msgid "All modifications were saved!"
+msgstr "¡Se guardaron todas las modificacciones!"
+
+msgid "Anchor color"
+msgstr "Color de anclaje"
+
+msgid "Apply a minimal vertical block spacing automatically. Default is None. Values in pixels"
+msgstr "Aplica un espacio mínimo de bloque vertical de forma automática. El valor predeterminado es Ninguno. Valores en píxeles"
+
+msgid "Arrow Down"
+msgstr "Flecha abajo"
+
+msgid "Arrow Right"
+msgstr "Flecha derecha"
+
+msgid "Aubergine"
+msgstr "Berenjena"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Auto detect"
+msgstr "detección automática"
+
+msgid "Avatar Settings"
+msgstr "Configuración del Avatar"
+
+msgid "Avatar Size"
+msgstr "Tamaño del Avatar"
+
+msgid "Background Color"
+msgstr "Color de Fondo"
+
+msgid "Bad Request!"
+msgstr "Solicitud incorrecta"
+
+msgid "Block Config"
+msgstr "Configuración de Bloque"
+
+msgid "Blocks List"
+msgstr "Lista de Bloques"
+
+msgid "Blocks Settings"
+msgstr "Configuración de Bloques"
+
+msgid "Blocks icon color"
+msgstr "Color de icono de Bloques"
+
+msgid "Blocks list updated."
+msgstr "Lista de Bloques actualizada"
+
+msgid "Blocks spacing"
+msgstr "Espaciado de Bloques"
+
+msgid "Blogger"
+msgstr "Blogger"
+
+msgid "Body Settings"
+msgstr "Configuración del Cuerpo"
+
+msgid "Border Color"
+msgstr "Color del Borde"
+
+msgid "Border Radius"
+msgstr "Radio del Borde"
+
+msgid "Border Radius (%)"
+msgstr "Radio del Borde (%)"
+
+msgid "Border Settings"
+msgstr "Configuración del Borde"
+
+msgid "Border Style"
+msgstr "Estilo del Borde"
+
+msgid "Border Width"
+msgstr "Ancho del Borde"
+
+msgid "Bottom"
+msgstr "Final"
+
+msgid "Button Color"
+msgstr "Color del Botón"
+
+msgid "Button Icon"
+msgstr "Icono del Botón"
+
+msgid "Button Size"
+msgstr "Tamaño del Botón"
+
+msgid "CSV"
+msgstr "CSV"
+
+msgid "Cannot validate captcha"
+msgstr "No se puede validar el captcha"
+
+msgid "Captcha validation error"
+msgstr "Error de validación del captcha"
+
+msgid "Center"
+msgstr "Centro"
+
+msgid "Checkmark"
+msgstr "Marca de Visto"
+
+msgid "Circle"
+msgstr "Círculo"
+
+msgid "Clear"
+msgstr "Limpiar"
+
+msgid "Click action"
+msgstr "Pulsar acción"
+
+msgid "Color"
+msgstr "Color"
+
+msgid "Color Settings"
+msgstr "Configuración del Color"
+
+msgid "Columns"
+msgstr "Columnas"
+
+msgid "Configuration"
+msgstr "Configuración"
+
+msgid "Contact Form: Receiver Information"
+msgstr "Formulario de Contacto: Información del Remitente"
+
+msgid "Contact Form: Sender Information"
+msgstr "Formulario de Contacto: Información del Emisor"
+
+msgid "Copy"
+msgstr "Copiar"
+
+msgid "Custom"
+msgstr "Personalizado"
+
+msgid "Custom CSS"
+msgstr "CSS Personalizado"
+
+msgid "Custom Styles"
+msgstr "Estilos Personalizados"
+
+msgid "Custom styles"
+msgstr "Estilos Personalizados"
+
+msgid "Dark"
+msgstr "Oscuro"
+
+msgid "Dashed"
+msgstr "Rayado"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Default"
+msgstr "Defecto"
+
+msgid "Default blocks config"
+msgstr "Configuración de Bloques por defecto"
+
+msgid "Default thumbnail"
+msgstr "Miniatura por defecto"
+
+msgid "Define the admin Gutenberg editor width size"
+msgstr "Definir tamaño y ancho del editor Gutenberg"
+
+msgid "Delete"
+msgstr "Borrar"
+
+msgid "Delete selected"
+msgstr "Borrar seleccionado"
+
+msgid "Description Color"
+msgstr "Descripción del Color"
+
+msgid "Display caption text on images loaded as lightbox in galleries"
+msgstr "Mostrar texto en imágenes cargadas como lightbox en galerías"
+
+msgid "Dotted"
+msgstr "Punteado"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Edit Profile"
+msgstr "Editar Perfil"
+
+msgid "Editor width"
+msgstr "Ancho del Editor"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Email & Form"
+msgstr "Email y Formulario"
+
+msgid "Email and Form settings"
+msgstr "Configuración del Email y Formulario"
+
+msgid "Email receiver"
+msgstr "Email del Remitente"
+
+msgid "Email settings"
+msgstr "Configuración del Email"
+
+msgid "Email title"
+msgstr "Título del Email"
+
+msgid "Enable block spacing settings"
+msgstr "Activar configuración del espacio entre bloques"
+
+msgid "Enable blocks spacing"
+msgstr "Activar espacio de bloques"
+
+msgid "Enable reCAPTCHA"
+msgstr "Activar reCAPTCHA"
+
+msgid "Enter title here"
+msgstr "Escribe el título"
+
+msgid "Error while sending form. Try again!"
+msgstr "Hubo un error mientras se enviaba el formulario."
+
+msgid "Example of text"
+msgstr "Texto de Ejemplo"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Filled Circle"
+msgstr "Círculo relleno"
+
+msgid "Filled Square"
+msgstr "Cuadrado relleno"
+
+msgid "First page"
+msgstr "Primera página"
+
+msgid "Flag"
+msgstr "Bandera"
+
+msgid "Flickr"
+msgstr "Flickr"
+
+msgid "Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph"
+msgstr "Continuar párrafo"
+
+msgid "Forms data"
+msgstr "Datos de Formularios"
+
+msgid "Forms reCaptcha"
+msgstr "Formularios reCaptcha"
+
+msgid "Full width"
+msgstr "Ancho completo"
+
+msgid "General Settings"
+msgstr "Configuración General"

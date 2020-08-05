@@ -3,7 +3,7 @@
  * Plugin Name: Advanced Gutenberg
  * Plugin URI: https://advancedgutenberg.com
  * Description: Enhanced tools for Gutenberg editor
- * Version: 2.3.11
+ * Version: 2.4.0
  * Tested up to: 5.4.2
  * Author: Advanced Gutenberg
  * Author URI: https://advancedgutenberg.com
@@ -75,7 +75,7 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
 }
 
 if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-    define('ADVANCED_GUTENBERG_VERSION', '2.3.11');
+    define('ADVANCED_GUTENBERG_VERSION', '2.4.0');
 }
 
 if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
@@ -90,16 +90,35 @@ require_once(plugin_dir_path(__FILE__) . '/install.php');
 require_once(plugin_dir_path(__FILE__) . '/incl/advanced-gutenberg-main.php');
 new AdvancedGutenbergMain();
 
-// Load jutranslation helper
-include_once('jutranslation' . DIRECTORY_SEPARATOR . 'jutranslation.php');
-call_user_func(
-    '\Joomunited\ADVGB\Jutranslation\Jutranslation::init',
-    __FILE__,
-    'advanced-gutenberg',
-    'Advanced Gutenberg',
-    'advanced-gutenberg',
-    'languages' . DIRECTORY_SEPARATOR . 'advanced-gutenberg-en_US.mo'
-);
+if (! function_exists('advg_language_domain_init')) {
+    /**
+     * Load language translations
+     *
+     * @return void
+     */
+    function advg_language_domain_init()
+    {
+        // First, unload textdomain - Based on https://core.trac.wordpress.org/ticket/34213#comment:26
+        unload_textdomain('advanced-gutenberg');
+
+        // Load override language file first if available from version 2.3.11 and older
+        if (file_exists(WP_LANG_DIR . '/plugins/' . 'advanced-gutenberg' . '-' . get_locale() . '.override.mo')) {
+            load_textdomain(
+                'advanced-gutenberg',
+                WP_LANG_DIR . '/plugins/' . 'advanced-gutenberg' . '-' . get_locale() . '.override.mo'
+            );
+        }
+
+        // Call the core translations from plugins languages/ folder
+        if (file_exists(plugin_dir_path(__FILE__) . 'languages/' . 'advanced-gutenberg' . '-' . get_locale() . '.mo')) {
+            load_textdomain(
+                'advanced-gutenberg',
+                plugin_dir_path(__FILE__) . 'languages/' . 'advanced-gutenberg' . '-' . get_locale() . '.mo'
+            );
+        }
+    }
+}
+add_action( 'init', 'advg_language_domain_init' );
 
 // Include jufeedback helpers
 require_once('jufeedback'. DIRECTORY_SEPARATOR . 'jufeedback.php');

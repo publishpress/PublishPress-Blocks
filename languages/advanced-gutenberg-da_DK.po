@@ -1,0 +1,714 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid " block"
+msgstr "Klods"
+
+msgid "(untitled)"
+msgstr "(unavngivet)"
+
+msgid "Active Tab Settings"
+msgstr "Indstillinger for aktive faner"
+
+msgid "Active this profile for this group(s)"
+msgstr "Aktivér denne profil for disse grupper"
+
+msgid "Active this profile for this user(s)"
+msgstr "Aktivér denne profil for disse brugere"
+
+msgid "Add New Profile"
+msgstr "Tilføj ny profil"
+
+msgid "Add new class"
+msgstr "Tilføj ny klassificering"
+
+msgid "Adv. Gutenberg"
+msgstr "Av. Gutenberg"
+
+msgid "Advanced Gutenberg"
+msgstr "Avanceret Gutenberg"
+
+msgid "Advanced Gutenberg Profiles"
+msgstr "Avanceret Gutenberg profiler"
+
+msgid "All modifications were saved!"
+msgstr "Alle ændringer blev gemt!"
+
+msgid "Anchor color"
+msgstr "Anker farve"
+
+msgid "Apply a minimal vertical block spacing automatically. Default is None. Values in pixels"
+msgstr "Anvend minimal lodret mellemrum mellem klodser automatisk. "
+
+msgid "Arrow Down"
+msgstr "Pil ned"
+
+msgid "Arrow Right"
+msgstr "Højre pil"
+
+msgid "Author"
+msgstr "Ophavsmand/kvinde"
+
+msgid "Avatar Settings"
+msgstr "Avatar indstillinger"
+
+msgid "Avatar Size"
+msgstr "Avatar størrelse"
+
+msgid "Background Color"
+msgstr "Baggrundsfarve"
+
+msgid "Block Config"
+msgstr "Klods konfiguration"
+
+msgid "Blocks List"
+msgstr "Klods liste"
+
+msgid "Blocks Settings"
+msgstr "Klods indstillinger"
+
+msgid "Blocks icon color"
+msgstr "Klods ikon farve"
+
+msgid "Blocks list updated."
+msgstr "Klods liste opdateret."
+
+msgid "Blocks spacing"
+msgstr "Klods mellemrum"
+
+msgid "Blogger"
+msgstr "Blogger"
+
+msgid "Body Settings"
+msgstr "Korpus-indstillinger"
+
+msgid "Border Color"
+msgstr "Kontur-farve"
+
+msgid "Border Radius"
+msgstr "Kontur-radius"
+
+msgid "Border Radius (%)"
+msgstr "Kontur-radius (%i procent%)"
+
+msgid "Border Settings"
+msgstr "Kontur-indstillinger"
+
+msgid "Border Style"
+msgstr "Kontur-stil"
+
+msgid "Border Width"
+msgstr "Kontur-bredde"
+
+msgid "Bottom"
+msgstr "Bund"
+
+msgid "Button Color"
+msgstr "Knap-farve"
+
+msgid "Button Icon"
+msgstr "Knap-ikon"
+
+msgid "Button Size"
+msgstr "Knap-størrelse"
+
+msgid "Center"
+msgstr "Centrér"
+
+msgid "Checkmark"
+msgstr "Afkrydsning"
+
+msgid "Circle"
+msgstr "Cirkel"
+
+msgid "Clear"
+msgstr "Slet/fjern"
+
+msgid "Color"
+msgstr "Farve"
+
+msgid "Color Settings"
+msgstr "Farve-indstillinger"
+
+msgid "Columns"
+msgstr "Spalter/kolonner"
+
+msgid "Config for this block is currently unsupported."
+msgstr "Konfiguration af denne klods er ikke understøttet på nuværende tidspunkt."
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Copy"
+msgstr "Kopiér"
+
+msgid "Count Up Color"
+msgstr "Optællings-farve"
+
+msgid "Count Up Number Size"
+msgstr "Optællings-nummer størrelse"
+
+msgid "Count Up Settings"
+msgstr "Optællings-indstillinger"
+
+msgid "Custom CSS"
+msgstr "Tilpasset CSS-stil"
+
+msgid "Custom Styles"
+msgstr "Tilpasset udtryk"
+
+msgid "Custom styles"
+msgstr "Tilpassede udtryk"
+
+msgid "Dashed"
+msgstr "Stiplet"
+
+msgid "Date"
+msgstr "Dato"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Default blocks config"
+msgstr "Standard klods konfiguration"
+
+msgid "Delete"
+msgstr "Slet"
+
+msgid "Delete selected"
+msgstr "Slet valgte"
+
+msgid "Description Color"
+msgstr "Farve på beskrivelsen"
+
+msgid "Dotted"
+msgstr "Prikket"
+
+msgid "Edit"
+msgstr "Redigér"
+
+msgid "Edit Profile"
+msgstr "Redigér profil"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Enable block spacing settings"
+msgstr "Slå klods-indstillinger til"
+
+msgid "Enable blocks spacing"
+msgstr "Slå klods-mellemrum til"
+
+msgid "Enter title here"
+msgstr "Indtast titel her"
+
+msgid "Example of text"
+msgstr "Eksempel på tekst"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Fail to verify nonce!"
+msgstr "Undlad at bekræfte én gang"
+
+msgid "Filled Circle"
+msgstr "Udfyldt cirkel"
+
+msgid "Filled Square"
+msgstr "Udfyldt firkant"
+
+msgid "First page"
+msgstr "Første side"
+
+msgid "Flag"
+msgstr "Flag"
+
+msgid "Flickr"
+msgstr "Flickr"
+
+msgid "Following Paragraph Following Paragraph  Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph Following Paragraph"
+msgstr "Følgende afsnit Følgende afsnit Følgende afsnit Følgende afsnit Følgende afsnit Følgende afsnit Følgende afsnit Følgende afsnit "
+
+msgid "Full width"
+msgstr "Fuld bredde"
+
+msgid "General Settings"
+msgstr "Generelle indstillinger"
+
+msgid "Google API Key"
+msgstr "Google API nøgle"
+
+msgid "Google Plus"
+msgstr "Google+"
+
+msgid "Gutenberg is not detected! Activate it or"
+msgstr "Gutenberg er ikke fundet! Aktivér den, eller"
+
+msgid "Header Color"
+msgstr "Header farve"
+
+msgid "Header Icon"
+msgstr "Header ikon"
+
+msgid "Header Icon Color"
+msgstr "Farve på header-ikon"
+
+msgid "Header Settings"
+msgstr "Header indstillinger"
+
+msgid "Height"
+msgstr "Højde"
+
+msgid "Help"
+msgstr "Hjælp"
+
+msgid "Hint: Use %22Ctrl + Space%22 for auto completion"
+msgstr "Tip: Brug \"Ctrl+mellemrum\" for auto-fuldførelse"
+
+msgid "Horizontal Dots"
+msgstr "Vandrette prikker"
+
+msgid "Hover Settings"
+msgstr "Indstillinger for \"hover\""
+
+msgid "How to create a Google API Key"
+msgstr "Hvordamn man laver en Google API nøgle"
+
+msgid "Icon"
+msgstr "Ikon"
+
+msgid "Icon 1 Settings"
+msgstr "Ikon 1 indstillinger"
+
+msgid "Icon 2 Settings"
+msgstr "Ikon 2 indstillinger"
+
+msgid "Icon 3 Settings"
+msgstr "Ikon 3 indstillinger"
+
+msgid "Icon Alignment"
+msgstr "Opstilning af ikoner på linje"
+
+msgid "Icon Color"
+msgstr "Ikon-farve"
+
+msgid "Icon Link"
+msgstr "Ikon-link"
+
+msgid "Icon Settings"
+msgstr "Ikon-indstillinger"
+
+msgid "Icon Size"
+msgstr "Ikon-størrelse"
+
+msgid "Icon Space"
+msgstr "Ikon-mellemrum"
+
+msgid "Icon color"
+msgstr "Ikon-farve"
+
+msgid "Icon style"
+msgstr "Ikon-stil"
+
+msgid "Identification color"
+msgstr "Identifikations-farve"
+
+msgid "Image Size"
+msgstr "Billedstørrelse"
+
+msgid "Image caption"
+msgstr "Billed-tekst"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Install Gutenberg Now!"
+msgstr "Installér Gutenberg nu!"
+
+msgid "Invalid nonce token!"
+msgstr "Ugyldigt identifikationsnummer!"
+
+msgid "JoomUnited logo"
+msgstr "JoomUnited logo"
+
+msgid "Last page"
+msgstr "Sidste side"
+
+msgid "Latitude"
+msgstr "Breddegrad"
+
+msgid "Left"
+msgstr "Venstre"
+
+msgid "Line Height"
+msgstr "Linje-højde"
+
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+msgid "Load minimized"
+msgstr "Indlæs minimeret"
+
+msgid "Location Settings"
+msgstr "Beliggenheds-indstillinger"
+
+msgid "Longitude"
+msgstr "Længdegrad"
+
+msgid "Map Settings"
+msgstr "(Land)Kort-indstillinger"
+
+msgid "Margin"
+msgstr "Margen"
+
+msgid "Marker Description"
+msgstr "Markør-beskrivelse"
+
+msgid "Marker Settings"
+msgstr "Markør-indstillinger"
+
+msgid "Marker Title"
+msgstr "Markør-titel"
+
+msgid "Max width"
+msgstr "Maksimal bredde"
+
+msgid "Minus"
+msgstr "Minus"
+
+msgid "Name"
+msgstr "Navn"
+
+msgid "Name Color"
+msgstr "Farve på navn"
+
+msgid "New Profile"
+msgstr "Ny profil"
+
+msgid "New class"
+msgstr "Ny klassificering"
+
+msgid "No permission!"
+msgstr "Ingen tilladelse!"
+
+msgid "No profiles found"
+msgstr "Ingen profiler fundet"
+
+msgid "No profiles found in trash"
+msgstr "Ingen profiler fundet i skraldebøtten"
+
+msgid "No profiles found."
+msgstr "Ingen profiler fundet"
+
+msgid "No users found."
+msgstr "Ingen brugere fundet"
+
+msgid "None"
+msgstr "Ingen"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Number of columns"
+msgstr "Antal afsnit/kolonner"
+
+msgid "Open galleries in lightbox"
+msgstr "Åben gallerier i lightbox"
+
+msgid "Open gallery images as a lightbox style popup"
+msgstr "Åben galleri-billeder i lightbox pop-up stil"
+
+msgid "Open video in lightbox"
+msgstr "Åben video i lightbox"
+
+msgid "Our plugin works great with Gutenberg version"
+msgstr "Vores plugin fungerer godt sammen med Gutenberg version"
+
+msgid "Outline Circle"
+msgstr "Kontur cirkel"
+
+msgid "Overlay Color"
+msgstr "Overlægnings-farve"
+
+msgid "Overlay color"
+msgstr "Overlægnings-farve"
+
+msgid "Padding"
+msgstr "Polstring"
+
+msgid "Padding Bottom"
+msgstr "Polstring forneden"
+
+msgid "Padding Left"
+msgstr "Polstring venstre"
+
+msgid "Padding Right"
+msgstr "Polstring højre"
+
+msgid "Padding Settings"
+msgstr "Polstrings-indstillinger"
+
+msgid "Padding Top"
+msgstr "Polstring foroven"
+
+msgid "Picasa"
+msgstr "Picasa"
+
+msgid "Pinterest"
+msgstr "Pinterest"
+
+msgid "Play"
+msgstr "Afspil"
+
+msgid "Play Button Settings"
+msgstr "Indstillinger for afspilnings-knap"
+
+msgid "Please update Gutenberg then comeback later!"
+msgstr "Opdatér venligst Gutenberg og prøv igen!"
+
+msgid "Plus"
+msgstr "Plus"
+
+msgid "Plus Circle"
+msgstr "Plus cirkel"
+
+msgid "Plus Circle Outline"
+msgstr "Plus cirkel kontur"
+
+msgid "Plus Square Outline"
+msgstr "Plus firkant kontur"
+
+msgid "Position Color"
+msgstr "Placerings-farve"
+
+msgid "Preview"
+msgstr "Forhåndsvis"
+
+msgid "Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph Previous Paragraph"
+msgstr "Forrige afsnit Forrige afsnit Forrige afsnit Forrige afsnit Forrige afsnit Forrige afsnit Forrige afsnit Forrige afsnit Forrige afsnit "
+
+msgid "Profile Attribution"
+msgstr "Profil tilskrivning"
+
+msgid "Profile saved successfully!"
+msgstr "Profilen blev gemt!"
+
+msgid "Profile title"
+msgstr "Titel på profil"
+
+msgid "Profiles"
+msgstr "Profiler"
+
+msgid "Pushpin"
+msgstr "Opslagsnålen"
+
+msgid "Read More"
+msgstr "Læs mere"
+
+msgid "Reddit"
+msgstr "Reddit"
+
+msgid "Return to profiles list"
+msgstr "Tilbage til profil-oversigten"
+
+msgid "Right"
+msgstr "Højre"
+
+msgid "Role"
+msgstr "Rolle"
+
+msgid "Save"
+msgstr "Gem"
+
+msgid "Save styles"
+msgstr "Gem form og udtryk"
+
+msgid "Search"
+msgstr "Søg"
+
+msgid "Search Profiles"
+msgstr "Søg i profiler"
+
+msgid "Search blocks"
+msgstr "Søg i klodser"
+
+msgid "Search profiles by title or author"
+msgstr "Søg i profiler efter titel eller forfatter"
+
+msgid "Search settings"
+msgstr "Søge-indstillinger"
+
+msgid "Search users"
+msgstr "Søg i brugere"
+
+msgid "Set color for blocks that added by Advanced Gutenberg"
+msgstr "Indstil farve til klodser lavet af Advanced Gutenberg"
+
+msgid "Settings saved successfully"
+msgstr "Indstillingerne er gemt"
+
+msgid "Shadow Blur"
+msgstr "Skygge udtværing"
+
+msgid "Shadow Color"
+msgstr "Skygge farve"
+
+msgid "Shadow H Offset"
+msgstr "Vandret skygge offset"
+
+msgid "Shadow Spread"
+msgstr "Skygge udbredning"
+
+msgid "Shadow V Offset"
+msgstr "Lodret Skygge offset"
+
+msgid "Show images caption in lightbox."
+msgstr "Vis billed-tekst i lightbox."
+
+msgid "Skype"
+msgstr "Skype"
+
+msgid "Solid"
+msgstr "Udfyldt"
+
+msgid "Sound Cloud"
+msgstr "SoundCloud"
+
+msgid "Star"
+msgstr "Stjerne"
+
+msgid "Star Sticker"
+msgstr "Stjerne-mærkat"
+
+msgid "Style class"
+msgstr "Form og udtryks-klassificering"
+
+msgid "Subtitle Color"
+msgstr "Farve på undertekst"
+
+msgid "Summary Alignment"
+msgstr "Sæt resumé på linje"
+
+msgid "Summary header title"
+msgstr "Header titel på resumé"
+
+msgid "Tab Settings"
+msgstr "Fane-indstillinger"
+
+msgid "Table Settings"
+msgstr "Tabel indstillinger"
+
+msgid "Text Alignment"
+msgstr "Tekst-på-linje"
+
+msgid "Text Color"
+msgstr "Farve på tekst"
+
+msgid "Text Settings"
+msgstr "Tekst-indstillinger"
+
+msgid "Text Size"
+msgstr "Tekst-farve"
+
+msgid "Text and Color"
+msgstr "Tekst og farve"
+
+msgid "This API key is required to using Map Block."
+msgstr "Denne API nøgle er nødvendig for at kunne bruge (land)kort-klodsen."
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Title Color"
+msgstr "Titel farve"
+
+msgid "Top"
+msgstr "Øverst"
+
+msgid "Transition Speed"
+msgstr "Overgangs-hastighed"
+
+msgid "Translation"
+msgstr "Oversættelse"
+
+msgid "Tumblr"
+msgstr "Tumblr"
+
+msgid "Twitter"
+msgstr "Twitter"
+
+msgid "Type field not defined"
+msgstr "Type-felt ikke defineret"
+
+msgid "Unfold Arrow"
+msgstr "Udfold pil"
+
+msgid "Update now"
+msgstr "Opdatér nu"
+
+msgid "Use role filter"
+msgstr "Brug rolle-filter"
+
+msgid "Username"
+msgstr "Brugernavn"
+
+msgid "Vertical Alignment"
+msgstr "Lodret på-linje"
+
+msgid "Video Camera"
+msgstr "Videokamera"
+
+msgid "Video Height"
+msgstr "Video højde"
+
+msgid "Video Settings"
+msgstr "Video indstillinger"
+
+msgid "Video Width"
+msgstr "Video bredde"
+
+msgid "View Profile"
+msgstr "Se profil"
+
+msgid "Vimeo"
+msgstr "Vimeo"
+
+msgid "Warning"
+msgstr "Advarsel"
+
+msgid "We are updating blocks list..."
+msgstr "Vi opdaterer klods-oversigten..."
+
+msgid "We require at least Gutenberg version "
+msgstr "Vi har som minimum brug for Gutenberg version"
+
+msgid "Width"
+msgstr "Bredde"
+
+msgid "X Cross"
+msgstr "X-kryds"
+
+msgid "You need to activate Gutenberg to use our plugin!"
+msgstr "Du er nødt til at aktivere Gutenberg for at bruge vores plugin!"
+
+msgid "Your current version is"
+msgstr "Din nuværende version er"
+
+msgid "Your styles have been saved"
+msgstr "Dine form og udtryks indstillinger er gemt"
+
+msgid "Youtube"
+msgstr "Youtube"
+
+msgid "Zoom Level"
+msgstr "Zoom-niveau"
+
+msgid "and above"
+msgstr "og foroven"
+
+msgid "new-class"
+msgstr "ny-klassificering"
