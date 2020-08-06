@@ -44,5 +44,3 @@ module.exports = [
         }
     }
 ];
-
-console.log(path.join(__dirname, "src", "assets", "blocks"));
