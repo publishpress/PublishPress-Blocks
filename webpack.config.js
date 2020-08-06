@@ -4,12 +4,12 @@ var path = require("path");
 module.exports = [
     {
         entry: glob.sync(
-            path.join(__dirname, "assets/**/*.jsx"),
-            {ignore: [path.join(__dirname, "assets/blocks/**/*.frontend.jsx")]}
+            path.join(__dirname, "src/assets/**/*.jsx"),
+            {ignore: [path.join(__dirname, "src/assets/blocks/**/*.frontend.jsx")]}
             ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "blocks"),
+            path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "blocks.js"
         },
 
@@ -26,10 +26,10 @@ module.exports = [
         }
     },
     {
-        entry: glob.sync("./assets/**/*.frontend.jsx"),
+        entry: glob.sync("./src/assets/**/*.frontend.jsx"),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "blocks"),
+            path: path.join(__dirname, "src", "assets", "blocks"),
             filename: "frontend.js"
         },
 
