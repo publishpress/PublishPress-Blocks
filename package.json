@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build_react_dev": "webpack --mode development",
+    "build_react_dev": "webpack --mode development --watch",
     "compile_css": "concurrently --kill-others \"node-sass --output-style compressed src/assets/css/blocks_styles/blocks.scss > src/assets/css/blocks_styles/blocks.min.css\" \"node-sass --output-style expanded src/assets/css/blocks_styles/blocks.scss > src/assets/css/blocks_styles/blocks.css\""
   },
   "devDependencies": {
