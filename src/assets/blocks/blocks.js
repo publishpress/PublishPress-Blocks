@@ -27795,39 +27795,39 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/0-adv-components/components.jsx */"./src/assets/blocks/0-adv-components/components.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/0-adv-components/icon-class.jsx */"./src/assets/blocks/0-adv-components/icon-class.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/accordion/block.jsx */"./src/assets/blocks/accordion/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advaccordion/accordion.jsx */"./src/assets/blocks/advaccordion/accordion.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advaccordion/block.jsx */"./src/assets/blocks/advaccordion/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advbutton/block.jsx */"./src/assets/blocks/advbutton/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advicon/block.jsx */"./src/assets/blocks/advicon/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advimage/block.jsx */"./src/assets/blocks/advimage/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advlist/block.jsx */"./src/assets/blocks/advlist/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advtable/block.jsx */"./src/assets/blocks/advtable/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advtabs/block.jsx */"./src/assets/blocks/advtabs/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advtabs/tab.jsx */"./src/assets/blocks/advtabs/tab.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/advvideo/block.jsx */"./src/assets/blocks/advvideo/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/columns/block.jsx */"./src/assets/blocks/columns/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/columns/column.jsx */"./src/assets/blocks/columns/column.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/contact-form/block.jsx */"./src/assets/blocks/contact-form/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/container/block.jsx */"./src/assets/blocks/container/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/count-up/block.jsx */"./src/assets/blocks/count-up/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/customstyles/custom-styles.jsx */"./src/assets/blocks/customstyles/custom-styles.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/editor-sidebar/sidebar.jsx */"./src/assets/blocks/editor-sidebar/sidebar.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/images-slider/block.jsx */"./src/assets/blocks/images-slider/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/infobox/block.jsx */"./src/assets/blocks/infobox/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/login-form/block.jsx */"./src/assets/blocks/login-form/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/map/block.jsx */"./src/assets/blocks/map/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/newsletter/block.jsx */"./src/assets/blocks/newsletter/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/recent-posts/block.jsx */"./src/assets/blocks/recent-posts/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/search-bar/block.jsx */"./src/assets/blocks/search-bar/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/social-links/block.jsx */"./src/assets/blocks/social-links/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/summary/block.jsx */"./src/assets/blocks/summary/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/tabs/block.jsx */"./src/assets/blocks/tabs/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/testimonial/block.jsx */"./src/assets/blocks/testimonial/block.jsx");
-__webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/blocks/woo-products/block.jsx */"./src/assets/blocks/woo-products/block.jsx");
-module.exports = __webpack_require__(/*! /Users/valentingarcia/Github/advg/src/assets/js/editor.jsx */"./src/assets/js/editor.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/0-adv-components/components.jsx */"./src/assets/blocks/0-adv-components/components.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/0-adv-components/icon-class.jsx */"./src/assets/blocks/0-adv-components/icon-class.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/accordion/block.jsx */"./src/assets/blocks/accordion/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advaccordion/accordion.jsx */"./src/assets/blocks/advaccordion/accordion.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advaccordion/block.jsx */"./src/assets/blocks/advaccordion/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advbutton/block.jsx */"./src/assets/blocks/advbutton/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advicon/block.jsx */"./src/assets/blocks/advicon/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advimage/block.jsx */"./src/assets/blocks/advimage/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advlist/block.jsx */"./src/assets/blocks/advlist/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advtable/block.jsx */"./src/assets/blocks/advtable/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advtabs/block.jsx */"./src/assets/blocks/advtabs/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advtabs/tab.jsx */"./src/assets/blocks/advtabs/tab.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/advvideo/block.jsx */"./src/assets/blocks/advvideo/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/columns/block.jsx */"./src/assets/blocks/columns/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/columns/column.jsx */"./src/assets/blocks/columns/column.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/contact-form/block.jsx */"./src/assets/blocks/contact-form/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/container/block.jsx */"./src/assets/blocks/container/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/count-up/block.jsx */"./src/assets/blocks/count-up/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/customstyles/custom-styles.jsx */"./src/assets/blocks/customstyles/custom-styles.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/editor-sidebar/sidebar.jsx */"./src/assets/blocks/editor-sidebar/sidebar.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/images-slider/block.jsx */"./src/assets/blocks/images-slider/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/infobox/block.jsx */"./src/assets/blocks/infobox/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/login-form/block.jsx */"./src/assets/blocks/login-form/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/map/block.jsx */"./src/assets/blocks/map/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/newsletter/block.jsx */"./src/assets/blocks/newsletter/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/recent-posts/block.jsx */"./src/assets/blocks/recent-posts/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/search-bar/block.jsx */"./src/assets/blocks/search-bar/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/social-links/block.jsx */"./src/assets/blocks/social-links/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/summary/block.jsx */"./src/assets/blocks/summary/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/tabs/block.jsx */"./src/assets/blocks/tabs/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/testimonial/block.jsx */"./src/assets/blocks/testimonial/block.jsx");
+__webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/blocks/woo-products/block.jsx */"./src/assets/blocks/woo-products/block.jsx");
+module.exports = __webpack_require__(/*! /Users/valentingarcia/Github/Advanced-Gutenberg-Plugin/src/assets/js/editor.jsx */"./src/assets/js/editor.jsx");
 
 
 /***/ })
