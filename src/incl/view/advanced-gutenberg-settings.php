@@ -7,6 +7,8 @@ wp_enqueue_style('codemirror_css');
 wp_enqueue_style('codemirror_hint_style');
 wp_enqueue_style('advgb_settings_style');
 
+add_thickbox();
+
 wp_enqueue_media();
 wp_enqueue_script('qtip_js');
 wp_enqueue_script('less_js');
