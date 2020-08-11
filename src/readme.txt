@@ -3,7 +3,7 @@ Contributors: JoomUnited, advancedgutenberg
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.4.2
-Stable tag: 2.4.0
+Stable tag: 2.4.1b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -127,6 +127,9 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Latest posts and WooCommerce products blocks
 
 == Changelog ==
+
+= 2.4.1 =
+ * Fix: Missing Thickbox CSS loading
 
 = 2.4.0 =
  * Remove: JU Translation system
