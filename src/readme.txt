@@ -129,6 +129,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 == Changelog ==
 
 = 2.4.1 =
+ * Fix: Border width for Advanced Button Block
  * Fix: Missing Thickbox CSS loading
 
 = 2.4.0 =
