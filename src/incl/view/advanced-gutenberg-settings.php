@@ -15,8 +15,10 @@ wp_enqueue_script('advgb_codemirror_js');
 wp_enqueue_script('codemirror_hint');
 wp_enqueue_script('codemirror_mode_css');
 wp_enqueue_script('codemirror_hint_css');
-wp_enqueue_script('thickbox');
 wp_enqueue_script('advgb_settings_js');
+
+// ThickBox JS and CSS
+add_thickbox();
 
 $saved_settings    = get_option('advgb_settings');
 $blocks_list_saved = get_option('advgb_blocks_list');
