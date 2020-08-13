@@ -5094,6 +5094,14 @@ float: left;'
                             foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
                                 echo '----' . $inner_block['blockName'] . '<br>';
                                 $style_html .= $this->advgbLoadCssForBlocks($inner_block['blockName'], $inner_block['attrs']);
+
+                                // Fourth level
+                                if(isset($inner_block['innerBlocks'])){
+                                    foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
+                                        echo '----' . $inner_block['blockName'] . '<br>';
+                                        $style_html .= $this->advgbLoadCssForBlocks($inner_block['blockName'], $inner_block['attrs']);
+                                    }
+                                }
                             }
                         }
                     }
