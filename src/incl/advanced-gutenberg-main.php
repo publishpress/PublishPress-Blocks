@@ -5087,19 +5087,19 @@ float: left;'
                 if(isset($block['innerBlocks'])){
                     foreach ($block['innerBlocks'] as $j => $inner_block) {
                         echo '--' . $inner_block['blockName'] . '<br>';
-                        $style_html .= $this->advgbLoadCssForBlocks($inner_block['attrs'], $inner_block['blockName']);
+                        $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
                         // Third level
                         if(isset($inner_block['innerBlocks'])){
                             foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
                                 echo '----' . $inner_block['blockName'] . '<br>';
-                                $style_html .= $this->advgbLoadCssForBlocks($inner_block['attrs'], $inner_block['blockName']);
+                                $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
                                 // Fourth level
                                 if(isset($inner_block['innerBlocks'])){
                                     foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
                                         echo '------' . $inner_block['blockName'] . '<br>';
-                                        $style_html .= $this->advgbLoadCssForBlocks($inner_block['attrs'], $inner_block['blockName']);
+                                        $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
                                     }
                                 }
                             }
@@ -5329,53 +5329,53 @@ float: left;'
      * @param   $blockAttrs
      * @return  string
      */
-    public function advgbLoadCssForBlocks($blockAttrs, $blockName)
+    public function advgb_SetStylesForBlocks($blockAttrs, $blockName)
     {
         switch($blockName) {
 
             case 'advgb/list':
-                $html_style = $this->advgbAdvancedListCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedListStyles($blockAttrs);
                 break;
 
             case 'advgb/button':
-                $html_style = $this->advgbAdvancedButtonCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedButtonStyles($blockAttrs);
                 break;
 
             case 'advgb/column':
             case 'advgb/columns':
-                $html_style = $this->advgbAdvancedColumnsCss($blockAttrs, $blockName);
+                $html_style = $this->advgb_AdvancedColumnsStyles($blockAttrs, $blockName);
                 break;
 
             case 'advgb/login-form':
-                $html_style = $this->advgbAdvancedLoginRegisterCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedLoginRegisterStyles($blockAttrs);
                 break;
 
             case 'advgb/search-bar':
-                $html_style = $this->advgbAdvancedSearchBarCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedSearchBarStyles($blockAttrs);
                 break;
 
             case 'advgb/image':
-                $html_style = $this->advgbAdvancedImageCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedImageStyles($blockAttrs);
                 break;
 
             case 'advgb/testimonial':
-                $html_style = $this->advgbAdvancedTestimonialCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedTestimonialStyles($blockAttrs);
                 break;
 
             case 'advgb/adv-tabs':
-                $html_style = $this->advgbAdvancedTabsCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedTabsStyles($blockAttrs);
                 break;
 
             case 'advgb/icon':
-                $html_style = $this->advgbAdvancedIconCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedIconStyles($blockAttrs);
                 break;
 
             case 'advgb/infobox':
-                $html_style = $this->advgbAdvancedInfoBoxCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedInfoBoxStyles($blockAttrs);
                 break;
 
             case 'advgb/count-up':
-                $html_style = $this->advgbAdvancedCountUpCss($blockAttrs);
+                $html_style = $this->advgb_AdvancedCountUpStyles($blockAttrs);
                 break;
 
             default:
@@ -5387,13 +5387,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Adv. Lists Block
+     * Styles for Adv. Lists Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedListCss($blockAttrs)
+    public function advgb_AdvancedListStyles($blockAttrs)
     {
         $block_class    = $blockAttrs['id'];
         $font_size      = isset($blockAttrs['fontSize']) ? intval($blockAttrs['fontSize']) : 16;
@@ -5421,13 +5421,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Adv. Button Block
+     * Styles for Adv. Button Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedButtonCss($blockAttrs)
+    public function advgb_AdvancedButtonStyles($blockAttrs)
     {
         $block_class    = $blockAttrs['id'];
         $font_size      = isset($blockAttrs['textSize']) ? intval($blockAttrs['textSize']) : 18;
@@ -5479,14 +5479,14 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Adv. Columns Block
+     * Styles for Adv. Columns Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @param   $blockName  The block name
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedColumnsCss($blockAttrs, $blockName)
+    public function advgb_AdvancedColumnsStyles($blockAttrs, $blockName)
     {
         $colID      = $blockAttrs['colId'];
         $marginUnit = 'px';
@@ -5566,13 +5566,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Login / Register Block
+     * Styles for Login / Register Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedLoginRegisterCss($blockAttrs)
+    public function advgb_AdvancedLoginRegisterStyles($blockAttrs)
     {
         $block_class    = $blockAttrs['submitButtonId'];
         $hover_t_color  = isset($blockAttrs['submitHoverColor']) ? $blockAttrs['submitHoverColor'] : '';
@@ -5597,13 +5597,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Search Bar Block
+     * Styles for Search Bar Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedSearchBarCss($blockAttrs)
+    public function advgb_AdvancedSearchBarStyles($blockAttrs)
     {
         $block_class    = $blockAttrs['searchBtnId'];
         $hover_t_color  = isset($blockAttrs['searchBtnHoverColor']) ? $blockAttrs['searchBtnHoverColor'] : '';
@@ -5628,13 +5628,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Adv. Image Block
+     * Styles for Adv. Image Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedImageCss($blockAttrs)
+    public function advgb_AdvancedImageStyles($blockAttrs)
     {
         if (array_key_exists('blockIDX', $blockAttrs)) {
             $block_class     = $blockAttrs['blockIDX'];
@@ -5654,13 +5654,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Adv. Testimonial Block
+     * Styles for Adv. Testimonial Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedTestimonialCss($blockAttrs)
+    public function advgb_AdvancedTestimonialStyles($blockAttrs)
     {
         if (array_key_exists('pid', $blockAttrs)) {
             $block_id   = $blockAttrs['pid'];
@@ -5675,13 +5675,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Adv. Tabs Block
+     * Styles for Adv. Tabs Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedTabsCss($blockAttrs)
+    public function advgb_AdvancedTabsStyles($blockAttrs)
     {
         $block_class    = isset($blockAttrs['pid']) ? $blockAttrs['pid'] : 'wp-block-advgb-adv-tabs';
         $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
@@ -5701,13 +5701,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Adv. Icon Block
+     * Styles for Adv. Icon Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedIconCss($blockAttrs)
+    public function advgb_AdvancedIconStyles($blockAttrs)
     {
         wp_enqueue_style('material_icon_font');
         $block_id = $blockAttrs['blockIDX'];
@@ -5782,13 +5782,13 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Info Box Block
+     * Styles for Info Box Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedInfoBoxCss($blockAttrs)
+    public function advgb_AdvancedInfoBoxStyles($blockAttrs)
     {
         wp_enqueue_style('material_icon_font');
         $block_id = $blockAttrs['blockIDX'];
@@ -5942,12 +5942,12 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Count Up Block
+     * Styles for Count Up Block
      *
      * @since    2.4.2
      * @return  string      empty
      */
-    public function advgbAdvancedCountUpCss()
+    public function advgb_AdvancedCountUpStyles()
     {
         wp_enqueue_script('advgb_blocks_frontend_scripts');
         $style_html = '';
