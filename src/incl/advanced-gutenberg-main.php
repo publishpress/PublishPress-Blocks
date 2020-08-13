@@ -5087,19 +5087,19 @@ float: left;'
                 if(isset($block['innerBlocks'])){
                     foreach ($block['innerBlocks'] as $j => $inner_block) {
                         echo '--' . $inner_block['blockName'] . '<br>';
-                        $style_html .= $this->advgbLoadCssForBlocks($inner_block['blockName'], $inner_block['attrs']);
+                        $style_html .= $this->advgbLoadCssForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
                         // Third level
                         if(isset($inner_block['innerBlocks'])){
                             foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
                                 echo '----' . $inner_block['blockName'] . '<br>';
-                                $style_html .= $this->advgbLoadCssForBlocks($inner_block['blockName'], $inner_block['attrs']);
+                                $style_html .= $this->advgbLoadCssForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
                                 // Fourth level
                                 if(isset($inner_block['innerBlocks'])){
                                     foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                        echo '----' . $inner_block['blockName'] . '<br>';
-                                        $style_html .= $this->advgbLoadCssForBlocks($inner_block['blockName'], $inner_block['attrs']);
+                                        echo '------' . $inner_block['blockName'] . '<br>';
+                                        $style_html .= $this->advgbLoadCssForBlocks($inner_block['attrs'], $inner_block['blockName']);
                                     }
                                 }
                             }
@@ -5322,48 +5322,60 @@ float: left;'
     }
 
     /**
-     * Dynamically load the blocks's inline CSS and media files
+     * Dynamically load the blocks's CSS and media files
      *
      * @since   2.4.2
      * @param   $blockName
      * @param   $blockAttrs
      * @return  string
      */
-    public function advgbLoadCssForBlocks($blockName, $blockAttrs)
+    public function advgbLoadCssForBlocks($blockAttrs, $blockName)
     {
-
-        /*'advgb/columns',
-            'advgb/column',
-            'advgb/image',
-            'advgb/icon',
-            'advgb/accordions',
-            'advgb/accordion-item',
-            'advgb/table',
-            'advgb/infobox',
-            'advgb/button',
-            'advgb/login-form',
-            'advgb/count-up',
-            'advgb/summary',
-            'advgb/contact-form',
-            'advgb/images-slider',
-            'advgb/map',
-            'advgb/newsletter',
-            'advgb/testimonial',
-            'advgb/list',
-            'advgb/video',
-            'advgb/recent-posts',
-            'advgb/search-bar',
-            'advgb/social-links',
-            'advgb/woo-products'*/
-
         switch($blockName) {
+
+            case 'advgb/list':
+                $html_style = $this->advgbAdvancedListCss($blockAttrs);
+                break;
+
+            case 'advgb/button':
+                $html_style = $this->advgbAdvancedButtonCss($blockAttrs);
+                break;
+
+            case 'advgb/column':
+            case 'advgb/columns':
+                $html_style = $this->advgbAdvancedColumnsCss($blockAttrs, $blockName);
+                break;
+
+            case 'advgb/login-form':
+                $html_style = $this->advgbAdvancedLoginRegisterCss($blockAttrs);
+                break;
+
+            case 'advgb/search-bar':
+                $html_style = $this->advgbAdvancedSearchBarCss($blockAttrs);
+                break;
+
+            case 'advgb/image':
+                $html_style = $this->advgbAdvancedImageCss($blockAttrs);
+                break;
+
+            case 'advgb/testimonial':
+                $html_style = $this->advgbAdvancedTestimonialCss($blockAttrs);
+                break;
+
+            case 'advgb/adv-tabs':
+                $html_style = $this->advgbAdvancedTabsCss($blockAttrs);
+                break;
 
             case 'advgb/icon':
                 $html_style = $this->advgbAdvancedIconCss($blockAttrs);
                 break;
 
-            case 'advgb/adv-tabs':
-                $html_style = $this->advgbAdvancedTabsCss($blockAttrs);
+            case 'advgb/infobox':
+                $html_style = $this->advgbAdvancedInfoBoxCss($blockAttrs);
+                break;
+
+            case 'advgb/count-up':
+                $html_style = $this->advgbAdvancedCountUpCss($blockAttrs);
                 break;
 
             default:
@@ -5372,6 +5384,320 @@ float: left;'
         }
 
         return $html_style;
+    }
+
+    /**
+     * Media files and inline CSS for Adv. Lists Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedListCss($blockAttrs)
+    {
+        $block_class    = $blockAttrs['id'];
+        $font_size      = isset($blockAttrs['fontSize']) ? intval($blockAttrs['fontSize']) : 16;
+        $icon_size      = isset($blockAttrs['iconSize']) ? intval($blockAttrs['iconSize']) : 16;
+        $icon_color     = isset($blockAttrs['iconColor']) ? $blockAttrs['iconColor'] : '#000';
+        $margin         = isset($blockAttrs['margin']) ? intval($blockAttrs['margin']) : 2;
+        $padding        = isset($blockAttrs['padding']) ? intval($blockAttrs['padding']) : 2;
+        $line_height    = isset($blockAttrs['lineHeight']) ? intval($blockAttrs['lineHeight']) : 18;
+
+        $style_html  = '.'. $block_class . ' li{';
+        $style_html .= 'font-size:'.$font_size.'px;margin-left:'.($icon_size + $padding).'px';
+        $style_html .= '}';
+        if (!isset($blockAttrs['icon']) || (isset($blockAttrs['icon']) && !!$blockAttrs['icon'])) {
+            $style_html .= '.'. $block_class . ' li:before{';
+            $style_html .= 'font-size:'.$icon_size.'px;';
+            $style_html .= 'color:'.$icon_color.';';
+            $style_html .= 'line-height:'.$line_height.'px;';
+            $style_html .= 'margin:'.$margin.'px;';
+            $style_html .= 'padding:'.$padding.'px;';
+            $style_html .= 'margin-left:-'.($icon_size + $padding + $margin).'px';
+            $style_html .= '}';
+        }
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Adv. Button Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedButtonCss($blockAttrs)
+    {
+        $block_class    = $blockAttrs['id'];
+        $font_size      = isset($blockAttrs['textSize']) ? intval($blockAttrs['textSize']) : 18;
+        $color          = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '';
+        $bg_color       = isset($blockAttrs['bgColor']) ? $blockAttrs['bgColor'] : '';
+        $mg_top         = isset($blockAttrs['marginTop']) ? intval($blockAttrs['marginTop']) : 0;
+        $mg_right       = isset($blockAttrs['marginRight']) ? intval($blockAttrs['marginRight']) : 0;
+        $mg_bottom      = isset($blockAttrs['marginBottom']) ? intval($blockAttrs['marginBottom']) : 0;
+        $mg_left        = isset($blockAttrs['marginLeft']) ? intval($blockAttrs['marginLeft']) : 0;
+        $pd_top         = isset($blockAttrs['paddingTop']) ? intval($blockAttrs['paddingTop']) : 10;
+        $pd_right       = isset($blockAttrs['paddingRight']) ? intval($blockAttrs['paddingRight']) : 30;
+        $pd_bottom      = isset($blockAttrs['paddingBottom']) ? intval($blockAttrs['paddingBottom']) : 10;
+        $pd_left        = isset($blockAttrs['paddingLeft']) ? intval($blockAttrs['paddingLeft']) : 30;
+        $border_width   = isset($blockAttrs['borderWidth']) ? intval($blockAttrs['borderWidth']) : 1;
+        $border_color   = isset($blockAttrs['borderColor']) ? $blockAttrs['borderColor'] : '';
+        $border_style   = isset($blockAttrs['borderStyle']) ? $blockAttrs['borderStyle'] : 'none';
+        $border_radius  = isset($blockAttrs['borderRadius']) ? intval($blockAttrs['borderRadius']) : 50;
+        $hover_t_color  = isset($blockAttrs['hoverTextColor']) ? $blockAttrs['hoverTextColor'] : '';
+        $hover_bg_color = isset($blockAttrs['hoverBgColor']) ? $blockAttrs['hoverBgColor'] : '';
+        $hover_sh_color = isset($blockAttrs['hoverShadowColor']) ? $blockAttrs['hoverShadowColor'] : '#ccc';
+        $hover_sh_h     = isset($blockAttrs['hoverShadowH']) ? intval($blockAttrs['hoverShadowH']) : 1;
+        $hover_sh_v     = isset($blockAttrs['hoverShadowV']) ? intval($blockAttrs['hoverShadowV']) : 1;
+        $hover_sh_blur  = isset($blockAttrs['hoverShadowBlur']) ? intval($blockAttrs['hoverShadowBlur']) : 12;
+        $hover_sh_sprd  = isset($blockAttrs['hoverShadowSpread']) ? intval($blockAttrs['hoverShadowSpread']) : 0;
+        $hover_opacity  = isset($blockAttrs['hoverOpacity']) ? intval($blockAttrs['hoverOpacity'])/100 : 1;
+        $transition_spd = isset($blockAttrs['transitionSpeed']) ? floatval($blockAttrs['transitionSpeed'])/1000 : 0.2;
+
+        $style_html  = '.'. $block_class . '{';
+        $style_html .= 'font-size:'.$font_size.'px;';
+        $style_html .= 'color:'.$color.' !important;';
+        $style_html .= 'background-color:'.$bg_color.' !important;';
+        $style_html .= 'margin:'.$mg_top.'px '.$mg_right.'px '.$mg_bottom.'px '.$mg_left.'px !important;';
+        $style_html .= 'padding:'.$pd_top.'px '.$pd_right.'px '.$pd_bottom.'px '.$pd_left.'px;';
+        $style_html .= 'border-width:'.$border_width.'px !important;';
+        $style_html .= 'border-color:'.$border_color.' !important;';
+        $style_html .= 'border-style:'.$border_style. ($border_style === 'none' ? '' : ' !important') .';';
+        $style_html .= 'border-radius:'.$border_radius.'px !important;';
+        $style_html .= '}';
+
+        $style_html .= '.'. $block_class . ':hover{';
+        $style_html .= 'color:'.$hover_t_color.' !important;';
+        $style_html .= 'background-color:'.$hover_bg_color.' !important;';
+        $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.';';
+        $style_html .= 'opacity:'.$hover_opacity.';';
+        $style_html .= 'transition:all '.$transition_spd.'s ease;';
+        $style_html .= '}';
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Adv. Columns Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @param   $blockName  The block name
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedColumnsCss($blockAttrs, $blockName)
+    {
+        $colID      = $blockAttrs['colId'];
+        $marginUnit = 'px';
+        $paddingUnit = 'px';
+        if ($blockName === 'advgb/column') {
+            $colID = $colID . '>.advgb-column-inner';
+        }
+
+        if (isset($blockAttrs['marginUnit'])) {
+            $marginUnit = $blockAttrs['marginUnit'];
+        }
+
+        if (isset($blockAttrs['paddingUnit'])) {
+            $paddingUnit = $blockAttrs['paddingUnit'];
+        }
+
+        $style_html  = '#'. $colID . '{';
+        $style_html .= isset($blockAttrs['textAlign']) ? 'text-align:'.$blockAttrs['textAlign'].';' : '';
+        $style_html .= isset($blockAttrs['marginTop']) ? 'margin-top:'.$blockAttrs['marginTop'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginRight']) ? 'margin-right:'.$blockAttrs['marginRight'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginBottom']) ? 'margin-bottom:'.$blockAttrs['marginBottom'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginLeft']) ? 'margin-left:'.$blockAttrs['marginLeft'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingTop']) ? 'padding-top:'.$blockAttrs['paddingTop'].$paddingUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingRight']) ? 'padding-right:'.$blockAttrs['paddingRight'].$paddingUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingBottom']) ? 'padding-bottom:'.$blockAttrs['paddingBottom'].$paddingUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingLeft']) ? 'padding-left:'.$blockAttrs['paddingLeft'].$paddingUnit.';' : '';
+        $style_html .= '}';
+
+        $style_html .= '#'. $colID . ' > .advgb-columns-container > .advgb-columns-row {';
+        $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'margin-left: -'.$blockAttrs['gutter'] / 2 .'px;' : '';
+        $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'margin-right: -'.$blockAttrs['gutter'] / 2 .'px;' : '';
+        $style_html .= '}';
+
+        $style_html .= '#'. $colID . ' > .advgb-columns-container > .advgb-columns-row > .advgb-column {';
+        $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'padding-left: '.$blockAttrs['gutter'] / 2 .'px;' : '';
+        $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'padding-right: '.$blockAttrs['gutter'] / 2 .'px;' : '';
+        $style_html .= '}';
+
+        if ($blockName === 'advgb/column') {
+            $childColID = $blockAttrs['colId'];
+            $childColWidth = $blockAttrs['width'];
+            if ($childColWidth !== 0) {
+                $style_html .= '#' . $childColID . '{width: ' . $childColWidth . '%;}';
+            }
+        }
+
+        // Styles for tablet
+        $style_html .= '@media screen and (max-width: 1023px) {';
+        $style_html .=  '#'. $colID . '{';
+        $style_html .= isset($blockAttrs['marginTopT']) ? 'margin-top:'.$blockAttrs['marginTopT'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginRightT']) ? 'margin-right:'.$blockAttrs['marginRightT'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginBottomT']) ? 'margin-bottom:'.$blockAttrs['marginBottomT'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginLeftT']) ? 'margin-left:'.$blockAttrs['marginLeftT'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingTopT']) ? 'padding-top:'.$blockAttrs['paddingTopT'].$paddingUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingRightT']) ? 'padding-right:'.$blockAttrs['paddingRightT'].$paddingUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingBottomT']) ? 'padding-bottom:'.$blockAttrs['paddingBottomT'].$paddingUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingLeftT']) ? 'padding-left:'.$blockAttrs['paddingLeftT'].$paddingUnit.';' : '';
+        $style_html .=  '}';
+        $style_html .= '}';
+
+        // Styles for mobile
+        $style_html .= '@media screen and (max-width: 767px) {';
+        $style_html .=  '#'. $colID . '{';
+        $style_html .= isset($blockAttrs['textAlignM']) ? 'text-align:'.$blockAttrs['textAlignM'].';' : '';
+        $style_html .= isset($blockAttrs['marginTopM']) ? 'margin-top:'.$blockAttrs['marginTopM'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginRightM']) ? 'margin-right:'.$blockAttrs['marginRightM'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginBottomM']) ? 'margin-bottom:'.$blockAttrs['marginBottomM'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['marginLeftM']) ? 'margin-left:'.$blockAttrs['marginLeftM'].$marginUnit.';' : '';
+        $style_html .= isset($blockAttrs['paddingTopM']) ? 'padding-top:'.$blockAttrs['paddingTopM'].'px;' : '';
+        $style_html .= isset($blockAttrs['paddingRightM']) ? 'padding-right:'.$blockAttrs['paddingRightM'].'px;' : '';
+        $style_html .= isset($blockAttrs['paddingBottomM']) ? 'padding-bottom:'.$blockAttrs['paddingBottomM'].'px;' : '';
+        $style_html .= isset($blockAttrs['paddingLeftM']) ? 'padding-left:'.$blockAttrs['paddingLeftM'].'px;' : '';
+        $style_html .=  '}';
+        $style_html .= '}';
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Login / Register Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedLoginRegisterCss($blockAttrs)
+    {
+        $block_class    = $blockAttrs['submitButtonId'];
+        $hover_t_color  = isset($blockAttrs['submitHoverColor']) ? $blockAttrs['submitHoverColor'] : '';
+        $hover_bg_color = isset($blockAttrs['submitHoverBgColor']) ? $blockAttrs['submitHoverBgColor'] : '';
+        $hover_sh_color = isset($blockAttrs['submitHoverShadow']) ? $blockAttrs['submitHoverShadow'] : '#ccc';
+        $hover_sh_h     = isset($blockAttrs['submitHoverShadowH']) ? intval($blockAttrs['submitHoverShadowH']) : 1;
+        $hover_sh_v     = isset($blockAttrs['submitHoverShadowV']) ? intval($blockAttrs['submitHoverShadowV']) : 1;
+        $hover_sh_blur  = isset($blockAttrs['submitHoverShadowBlur']) ? intval($blockAttrs['submitHoverShadowBlur']) : 12;
+        $hover_sh_sprd  = isset($blockAttrs['submitHoverShadowSpread']) ? intval($blockAttrs['submitHoverShadowSpread']) : 0;
+        $hover_opacity  = isset($blockAttrs['submitHoverOpacity']) ? intval($blockAttrs['submitHoverOpacity'])/100 : 1;
+        $transition_spd = isset($blockAttrs['submitHoverTranSpeed']) ? floatval($blockAttrs['submitHoverTranSpeed'])/1000 : 0.2;
+
+        $style_html  = '.'. $block_class . ':hover{';
+        $style_html .= 'color:'.$hover_t_color.' !important;';
+        $style_html .= 'background-color:'.$hover_bg_color.' !important;';
+        $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.' !important;';
+        $style_html .= 'opacity:'.$hover_opacity.';';
+        $style_html .= 'transition:all '.$transition_spd.'s ease;';
+        $style_html .= '}';
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Search Bar Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedSearchBarCss($blockAttrs)
+    {
+        $block_class    = $blockAttrs['searchBtnId'];
+        $hover_t_color  = isset($blockAttrs['searchBtnHoverColor']) ? $blockAttrs['searchBtnHoverColor'] : '';
+        $hover_bg_color = isset($blockAttrs['searchBtnHoverBgColor']) ? $blockAttrs['searchBtnHoverBgColor'] : '';
+        $hover_sh_color = isset($blockAttrs['searchBtnHoverShadow']) ? $blockAttrs['searchBtnHoverShadow'] : '#ccc';
+        $hover_sh_h     = isset($blockAttrs['searchBtnHoverShadowH']) ? intval($blockAttrs['searchBtnHoverShadowH']) : 1;
+        $hover_sh_v     = isset($blockAttrs['searchBtnHoverShadowV']) ? intval($blockAttrs['searchBtnHoverShadowV']) : 1;
+        $hover_sh_blur  = isset($blockAttrs['searchBtnHoverShadowBlur']) ? intval($blockAttrs['searchBtnHoverShadowBlur']) : 12;
+        $hover_sh_sprd  = isset($blockAttrs['searchBtnHoverShadowSpread']) ? intval($blockAttrs['searchBtnHoverShadowSpread']) : 0;
+        $hover_opacity  = isset($blockAttrs['searchBtnHoverOpacity']) ? intval($blockAttrs['searchBtnHoverOpacity'])/100 : 1;
+        $transition_spd = isset($blockAttrs['searchBtnHoverTranSpeed']) ? floatval($blockAttrs['searchBtnHoverTranSpeed'])/1000 : 0.2;
+
+        $style_html  = '.'. $block_class . ':hover{';
+        $style_html .= 'color:'.$hover_t_color.' !important;';
+        $style_html .= 'background-color:'.$hover_bg_color.' !important;';
+        $style_html .= 'box-shadow:'.$hover_sh_h.'px '.$hover_sh_v.'px '.$hover_sh_blur.'px '.$hover_sh_sprd.'px '.$hover_sh_color.' !important;';
+        $style_html .= 'opacity:'.$hover_opacity.';';
+        $style_html .= 'transition:all '.$transition_spd.'s ease;';
+        $style_html .= '}';
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Adv. Image Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedImageCss($blockAttrs)
+    {
+        if (array_key_exists('blockIDX', $blockAttrs)) {
+            $block_class     = $blockAttrs['blockIDX'];
+            $default_opacity = isset($blockAttrs['defaultOpacity']) ? $blockAttrs['defaultOpacity'] : 40;
+            $hover_opacity   = isset($blockAttrs['overlayOpacity']) ? $blockAttrs['overlayOpacity'] : 20;
+
+            $style_html  = '.' . $block_class . '.advgb-image-block .advgb-image-overlay{';
+            $style_html .= 'opacity:' . ($default_opacity / 100) . ' !important;';
+            $style_html .= '}';
+
+            $style_html .= '.' . $block_class . '.advgb-image-block:hover .advgb-image-overlay{';
+            $style_html .= 'opacity:' . ($hover_opacity / 100) . ' !important;';
+            $style_html .= '}';
+        }
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Adv. Testimonial Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedTestimonialCss($blockAttrs)
+    {
+        if (array_key_exists('pid', $blockAttrs)) {
+            $block_id   = $blockAttrs['pid'];
+            $dots_color = isset($blockAttrs['sliderDotsColor']) ? $blockAttrs['sliderDotsColor'] : '#000';
+
+            $style_html  = '#' . $block_id . ' .slick-dots li button:before{';
+            $style_html .= 'color:' . $dots_color . ' !important;';
+            $style_html .= '}';
+        }
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Adv. Tabs Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedTabsCss($blockAttrs)
+    {
+        $block_class    = isset($blockAttrs['pid']) ? $blockAttrs['pid'] : 'wp-block-advgb-adv-tabs';
+        $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
+        $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
+
+        $style_html  = '.'. $block_class . ' ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {';
+        $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
+        $style_html .= 'color:'.$active_tab_text_color.' !important;';
+        $style_html .= '}';
+
+        $style_html .= '#'. $block_class . ' .advgb-tab-body-header.header-active, .'. $block_class . ' .advgb-tab-body-header.header-active{';
+        $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
+        $style_html .= 'color:'.$active_tab_text_color.' !important;';
+        $style_html .= '}';
+
+        return $style_html;
     }
 
     /**
@@ -5456,27 +5782,175 @@ float: left;'
     }
 
     /**
-     * Media files and inline CSS for Adv. Tabs Block
+     * Media files and inline CSS for Info Box Block
      *
      * @since    2.4.2
      * @param   $blockAttrs The block attributes
      * @return  string      Inline CSS
      */
-    public function advgbAdvancedTabsCss($blockAttrs)
+    public function advgbAdvancedInfoBoxCss($blockAttrs)
     {
-        $block_class    = isset($blockAttrs['pid']) ? $blockAttrs['pid'] : 'wp-block-advgb-adv-tabs';
-        $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
-        $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
+        wp_enqueue_style('material_icon_font');
+        $block_id = $blockAttrs['blockIDX'];
 
-        $style_html  = '.'. $block_class . ' ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {';
-        $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
-        $style_html .= 'color:'.$active_tab_text_color.' !important;';
+        $container_bg = isset($blockAttrs['containerBackground']) ? $blockAttrs['containerBackground'] : '#f5f5f5';
+
+        $container_padding_unit = isset($blockAttrs['containerPaddingUnit']) ? $blockAttrs['containerPaddingUnit'] : 'px';
+        $container_padding = '';
+        $container_padding .= isset($blockAttrs['containerPaddingTop']) ? $blockAttrs['containerPaddingTop'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
+        $container_padding .= isset($blockAttrs['containerPaddingRight']) ? $blockAttrs['containerPaddingRight'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
+        $container_padding .= isset($blockAttrs['containerPaddingBottom']) ? $blockAttrs['containerPaddingBottom'] . $container_padding_unit . ' ' : '20' . $container_padding_unit . ' ';
+        $container_padding .= isset($blockAttrs['containerPaddingLeft']) ? $blockAttrs['containerPaddingLeft'] . $container_padding_unit : '20' . $container_padding_unit;
+
+        $container_border = '';
+        $container_border .= isset($blockAttrs['containerBorderWidth']) ? $blockAttrs['containerBorderWidth'] . 'px ' : '0px ';
+        $container_border .= 'solid ';
+        $container_border .= isset($blockAttrs['containerBorderBackground']) ? $blockAttrs['containerBorderBackground'] : '#e8e8e8 ';
+
+        $container_border_radius = '';
+        $container_border_radius .= isset($blockAttrs['containerBorderRadius']) ? $blockAttrs['containerBorderRadius'] : 0;
+
+        $style_html  = '#' . $block_id . ', .' . $block_id . ' {';
+        $style_html .= 'background-color: ' . $container_bg . ';';
+        $style_html .= 'padding: ' . $container_padding . ';';
+        $style_html .= 'border: ' . $container_border . ';';
+        $style_html .= 'border-radius: ' . $container_border_radius . 'px;';
+        $style_html .= '}'; //end container css
+
+        $icon_background_color = isset($blockAttrs['iconBackground']) ? $blockAttrs['iconBackground'] : '#f5f5f5';
+
+        $icon_padding = '';
+        $icon_padding_unit = isset($blockAttrs['iconPaddingUnit']) ? $blockAttrs['iconPaddingUnit'] : 'px';
+        $icon_padding .= isset($blockAttrs['iconPaddingTop']) ? $blockAttrs['iconPaddingTop'] . $icon_padding_unit . ' ' : '0 ';
+        $icon_padding .= isset($blockAttrs['iconPaddingRight']) ? $blockAttrs['iconPaddingRight'] . $icon_padding_unit . ' ' : '0 ';
+        $icon_padding .= isset($blockAttrs['iconPaddingBottom']) ? $blockAttrs['iconPaddingBottom'] . $icon_padding_unit . ' ' : '0 ';
+        $icon_padding .= isset($blockAttrs['iconPaddingLeft']) ? $blockAttrs['iconPaddingLeft'] . $icon_padding_unit : '0';
+        if ($icon_padding === '0 0 0 0') {
+            $icon_padding = 0;
+        }
+
+        $icon_margin = '';
+        $icon_margin_unit = isset($blockAttrs['iconMarginUnit']) ? $blockAttrs['iconMarginUnit'] : 'px';
+        $icon_margin .= isset($blockAttrs['iconMarginTop']) ? $blockAttrs['iconMarginTop'] . $icon_margin_unit . ' ' : '0 ';
+        $icon_margin .= isset($blockAttrs['iconMarginRight']) ? $blockAttrs['iconMarginRight'] . $icon_margin_unit . ' ' : '0 ';
+        $icon_margin .= isset($blockAttrs['iconMarginBottom']) ? $blockAttrs['iconMarginBottom'] . $icon_margin_unit . ' ' : '0 ';
+        $icon_margin .= isset($blockAttrs['iconMarginLeft']) ? $blockAttrs['iconMarginLeft'] . $icon_margin_unit : '0';
+        if ($icon_margin === '0 0 0 0') {
+            $icon_margin = 0;
+        }
+
+        $icon_border = '';
+        $icon_border .= isset($blockAttrs['iconBorderWidth']) ? $blockAttrs['iconBorderWidth'] . 'px ' : '0px ';
+        $icon_border .= 'solid ';
+        $icon_border .= isset($blockAttrs['iconBorderBackground']) ? $blockAttrs['iconBorderBackground'] : '#e8e8e8 ';
+
+        $icon_border_radius = '';
+        $icon_border_radius .= isset($blockAttrs['iconBorderRadius']) ? $blockAttrs['iconBorderRadius'] : 0;
+
+        $style_html .= '#' . $block_id . ' .advgb-infobox-icon-container, .' . $block_id . ' .advgb-infobox-icon-container {';
+        $style_html .= 'background-color: ' . $icon_background_color . ';';
+        $style_html .= 'padding: ' . $icon_padding . ';';
+        $style_html .= 'margin: ' . $icon_margin . ';';
+        $style_html .= 'border: ' . $icon_border . ';';
+        $style_html .= 'border-radius: ' . $icon_border_radius . 'px;';
         $style_html .= '}';
 
-        $style_html .= '#'. $block_class . ' .advgb-tab-body-header.header-active, .'. $block_class . ' .advgb-tab-body-header.header-active{';
-        $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
-        $style_html .= 'color:'.$active_tab_text_color.' !important;';
-        $style_html .= '}';
+        $icon_color = isset($blockAttrs['iconColor']) ? $blockAttrs['iconColor'] : '#333';
+        $icon_size = isset($blockAttrs['iconSize']) ? $blockAttrs['iconSize'] : '70';
+        $icon_size_unit = isset($blockAttrs['iconSizeUnit']) ? $blockAttrs['iconSizeUnit'] : 'px';
+        $style_html .= '#' . $block_id . ' .advgb-infobox-icon-container i, .' . $block_id . ' .advgb-infobox-icon-container i {';
+        $style_html .= 'color: ' . $icon_color . ';';
+        $style_html .= 'font-size: ' . $icon_size . $icon_size_unit . ';';
+        $style_html .= 'display: block;';
+        $style_html .= '}'; //end icon style
+
+        $title_color = isset($blockAttrs['titleColor']) ? $blockAttrs['titleColor'] : '#333';
+
+        $title_padding = '';
+        $title_padding_unit = isset($blockAttrs['titlePaddingUnit']) ? $blockAttrs['titlePaddingUnit'] : 'px';
+        $title_padding .= isset($blockAttrs['titlePaddingTop']) ? $blockAttrs['titlePaddingTop'] . $title_padding_unit . ' ' : '0 ';
+        $title_padding .= isset($blockAttrs['titlePaddingRight']) ? $blockAttrs['titlePaddingRight'] . $title_padding_unit . ' ' : '0 ';
+        $title_padding .= isset($blockAttrs['titlePaddingBottom']) ? $blockAttrs['titlePaddingBottom'] . $title_padding_unit . ' ' : '0 ';
+        $title_padding .= isset($blockAttrs['titlePaddingLeft']) ? $blockAttrs['titlePaddingLeft'] . $title_padding_unit : '0';
+        if ($title_padding === '0 0 0 0') {
+            $title_padding = 0;
+        }
+
+        $title_margin = '';
+        $title_margin_unit = isset($blockAttrs['titleMarginUnit']) ? $blockAttrs['titleMarginUnit'] : 'px';
+        $title_margin .= isset($blockAttrs['titleMarginTop']) ? $blockAttrs['titleMarginTop'] . $title_margin_unit . ' ' : '5' . $title_margin_unit . ' ';
+        $title_margin .= isset($blockAttrs['titleMarginRight']) ? $blockAttrs['titleMarginRight'] . $title_margin_unit . ' ' : '0 ';
+        $title_margin .= isset($blockAttrs['titleMarginBottom']) ? $blockAttrs['titleMarginBottom'] . $title_margin_unit . ' ' : '10' . $title_margin_unit . ' ';
+        $title_margin .= isset($blockAttrs['titleMarginLeft']) ? $blockAttrs['titleMarginLeft'] . $title_margin_unit : '0';
+        if ($title_margin === '0 0 0 0') {
+            $title_margin = 0;
+        }
+
+        $title_size_unit = isset($blockAttrs['titleSizeUnit']) ? $blockAttrs['titleSizeUnit'] : 'px';
+        $title_lh_unit = isset($blockAttrs['titleLineHeightUnit']) ? $blockAttrs['titleLineHeightUnit'] : 'px';
+        $style_html .= '#' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-title, .' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-title {';
+        $style_html .= 'color: ' . $title_color . ';';
+        $style_html .= 'padding: ' . $title_padding . ';';
+        $style_html .= 'margin: ' . $title_margin . ';';
+        if (isset($blockAttrs['titleSize'])) {
+            $style_html .= 'font-size: ' . $blockAttrs['titleSize'] . $title_size_unit . ';';
+        }
+        if (isset($blockAttrs['titleLineHeight'])) {
+            $style_html .= 'line-height: ' . $blockAttrs['titleLineHeight'] . $title_lh_unit . ';';
+        }
+        $style_html .= 'white-space: pre-wrap;';
+        $style_html .= '}'; //end title style
+
+        $text_color = isset($blockAttrs['textColor']) ? $blockAttrs['textColor'] : '#333';
+
+        $text_padding = '';
+        $text_padding_unit = isset($blockAttrs['textPaddingUnit']) ? $blockAttrs['textPaddingUnit'] : 'px';
+        $text_padding .= isset($blockAttrs['textPaddingTop']) ? $blockAttrs['textPaddingTop'] . $text_padding_unit . ' ' : '0 ';
+        $text_padding .= isset($blockAttrs['textPaddingRight']) ? $blockAttrs['textPaddingRight'] . $text_padding_unit . ' ' : '0 ';
+        $text_padding .= isset($blockAttrs['textPaddingBottom']) ? $blockAttrs['textPaddingBottom'] . $text_padding_unit . ' ' : '0 ';
+        $text_padding .= isset($blockAttrs['textPaddingLeft']) ? $blockAttrs['textPaddingLeft'] . $text_padding_unit : '0';
+        if ($text_padding === '0 0 0 0') {
+            $text_padding = 0;
+        }
+
+        $text_margin = '';
+        $text_margin_unit = isset($blockAttrs['textMarginUnit']) ? $blockAttrs['textMarginUnit'] : 'px';
+        $text_margin .= isset($blockAttrs['textMarginTop']) ? $blockAttrs['textMarginTop'] . $text_margin_unit . ' ' : '0 ';
+        $text_margin .= isset($blockAttrs['textMarginRight']) ? $blockAttrs['textMarginRight'] . $text_margin_unit . ' ' : '0 ';
+        $text_margin .= isset($blockAttrs['textMarginBottom']) ? $blockAttrs['textMarginBottom'] . $text_margin_unit . ' ' : '0 ';
+        $text_margin .= isset($blockAttrs['textMarginLeft']) ? $blockAttrs['textMarginLeft'] . $text_margin_unit : '0';
+        if ($text_margin === '0 0 0 0') {
+            $text_margin = 0;
+        }
+
+        $text_size_unit = isset($blockAttrs['textSizeUnit']) ? $blockAttrs['textSizeUnit'] : 'px';
+        $text_lh_unit = isset($blockAttrs['textLineHeightUnit']) ? $blockAttrs['textLineHeightUnit'] : 'px';
+        $style_html .= '#' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-text, .' . $block_id . ' .advgb-infobox-textcontent .advgb-infobox-text {';
+        $style_html .= 'color: ' . $text_color . ';';
+        $style_html .= 'padding: ' . $text_padding . ';';
+        $style_html .= 'margin: ' . $text_margin . ';';
+        if (isset($blockAttrs['textSize'])) {
+            $style_html .= 'font-size: ' . $blockAttrs['textSize'] . $text_size_unit . ';';
+        }
+        if (isset($blockAttrs['textLineHeight'])) {
+            $style_html .= 'line-height: ' . $blockAttrs['textLineHeight'] . $text_lh_unit . ';';
+        }
+        $style_html .= 'white-space: pre-wrap;';
+        $style_html .= '}'; //end text style
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Count Up Block
+     *
+     * @since    2.4.2
+     * @return  string      empty
+     */
+    public function advgbAdvancedCountUpCss()
+    {
+        wp_enqueue_script('advgb_blocks_frontend_scripts');
+        $style_html = '';
 
         return $style_html;
     }
