@@ -5086,19 +5086,19 @@ float: left;'
                 // Second level
                 if(isset($block['innerBlocks'])){
                     foreach ($block['innerBlocks'] as $j => $inner_block) {
-                        echo '--' . $inner_block['blockName'] . '<br>';
+                        echo '--' . $inner_block['blockName'] . '(2nd level)<br>';
                         $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
                         // Third level
                         if(isset($inner_block['innerBlocks'])){
                             foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                echo '----' . $inner_block['blockName'] . '<br>';
+                                echo '----' . $inner_block['blockName'] . '(3rd level)<br>';
                                 $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
                                 // Fourth level
                                 if(isset($inner_block['innerBlocks'])){
                                     foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                        echo '------' . $inner_block['blockName'] . '<br>';
+                                        echo '------' . $inner_block['blockName'] . '(4th level)<br>';
                                         $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
                                     }
                                 }
