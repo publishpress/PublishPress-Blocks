@@ -1,7 +1,6 @@
 <?php
 defined('ABSPATH') || die;
 
-require_once('advanced-gutenberg-helper.php');
 
 /**
  * Main class of Gutenberg Advanced
@@ -5088,19 +5087,13 @@ float: left;'
                 if(isset($block['innerBlocks'])){
                     foreach ($block['innerBlocks'] as $j => $inner_block) {
                         echo '--' . $inner_block['blockName'] . '<br>';
+                        $style_html .= $this->advgbLoadCssForBlocks($inner_block['blockName'], $inner_block['attrs']);
 
                         // Third level
                         if(isset($inner_block['innerBlocks'])){
                             foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
                                 echo '----' . $inner_block['blockName'] . '<br>';
-
-                                $blockAttrs = $inner_block['attrs'];
-
-                                // START ICON BLOCK TEST
-                                if ($inner_block['blockName'] === 'advgb/icon') {
-                                    $style_html .= AdvancedGutenbergHelper::advgbIconCss($blockAttrs);
-                                }
-                                // END ICON BLOCK TEST
+                                $style_html .= $this->advgbLoadCssForBlocks($inner_block['blockName'], $inner_block['attrs']);
                             }
                         }
                     }
@@ -5318,5 +5311,165 @@ float: left;'
         }
 
         return $valueReturn;
+    }
+
+    /**
+     * Dynamically load the blocks's inline CSS and media files
+     *
+     * @since   2.4.2
+     * @param   $blockName
+     * @param   $blockAttrs
+     * @return  string
+     */
+    public function advgbLoadCssForBlocks($blockName, $blockAttrs)
+    {
+
+        /*'advgb/columns',
+            'advgb/column',
+            'advgb/image',
+            'advgb/icon',
+            'advgb/accordions',
+            'advgb/accordion-item',
+            'advgb/table',
+            'advgb/infobox',
+            'advgb/button',
+            'advgb/login-form',
+            'advgb/count-up',
+            'advgb/summary',
+            'advgb/contact-form',
+            'advgb/images-slider',
+            'advgb/map',
+            'advgb/newsletter',
+            'advgb/testimonial',
+            'advgb/list',
+            'advgb/video',
+            'advgb/recent-posts',
+            'advgb/search-bar',
+            'advgb/social-links',
+            'advgb/woo-products'*/
+
+        switch($blockName) {
+
+            case 'advgb/icon':
+                $html_style = $this->advgbAdvancedIconCss($blockAttrs);
+                break;
+
+            case 'advgb/adv-tabs':
+                $html_style = $this->advgbAdvancedTabsCss($blockAttrs);
+                break;
+
+            default:
+                // Nothing to do here
+                break;
+        }
+
+        return $html_style;
+    }
+
+    /**
+     * Media files and inline CSS for Adv. Icon Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedIconCss($blockAttrs)
+    {
+        wp_enqueue_style('material_icon_font');
+        $block_id = $blockAttrs['blockIDX'];
+        $i = 0;
+        $default_items = array();
+        $item = array(
+            'icon' => 'info',
+            'iconType' => 'material',
+            'size' => 120,
+            'color' => '#111111',
+            'style' => 'default',
+            'bgColor' => '',
+            'borderColor' => '#111',
+            'borderSize' => 2,
+            'borderRadius' => 0,
+            'paddingTop' => 20,
+            'paddingBottom' => 20,
+            'paddingLeft' => 20,
+            'paddingRight' => 20,
+            'marginTop' => 0,
+            'marginBottom' => 0,
+            'marginLeft' => 0,
+            'marginRight' => 0,
+            'paddingUnit' => 'px',
+            'marginUnit' => 'px',
+            'link' => '',
+            'linkTarget' => '_self',
+            'title' => ''
+        );
+        while ($i < 10) {
+            array_push($default_items, $item);
+            $i++;
+        }
+        $items = !isset($blockAttrs['items']) ? $default_items : $blockAttrs['items'];
+        $text_align = !isset($blockAttrs['tAlign']) ? 'center' : $blockAttrs['tAlign'];
+
+        $style_html = '#' . $block_id . ' .advgb-icons, .' . $block_id . ' .advgb-icons {';
+        $style_html .= 'text-align: ' . $text_align . ';';
+        $style_html .= '}';
+
+        foreach ($items as $k => $item) {
+            $style_html .= '#' . $block_id . ' .advgb-item-' . $k . ' .advgb-icon, .' . $block_id . ' .advgb-item-' . $k . ' .advgb-icon {';
+            $style_html .= 'display: flex;';
+            $style_html .= 'align-items:center;';
+
+            $style_html .= 'margin-top: ' . $item['marginTop'] . $item['marginUnit'] . ';';
+            $style_html .= 'margin-bottom: ' . $item['marginBottom'] . $item['marginUnit'] . ';';
+            $style_html .= 'margin-left: ' . $item['marginLeft'] . $item['marginUnit'] . ';';
+            $style_html .= 'margin-right: ' . $item['marginRight'] . $item['marginUnit'] . ';';
+
+            $style_html .= $item['style'] === 'default' ? 'padding-top: 0;' : 'padding-top: ' . $item['paddingTop'] . $item['paddingUnit'] . ';';
+            $style_html .= $item['style'] === 'default' ? 'padding-bottom: 0;' : 'padding-bottom: ' . $item['paddingBottom'] . $item['paddingUnit'] . ';';
+            $style_html .= $item['style'] === 'default' ? 'padding-left: 0;' : 'padding-left: ' . $item['paddingLeft'] . $item['paddingUnit'] . ';';
+            $style_html .= $item['style'] === 'default' ? 'padding-right: 0;' : 'padding-right: ' . $item['paddingRight'] . $item['paddingUnit'] . ';';
+
+            $style_html .= $item['style'] === 'default' ? 'border-width: 0;' : 'border-width: ' . $item['borderSize'] . 'px;';
+            $style_html .= 'border-style: solid;';
+            $style_html .= 'border-color: ' . $item['borderColor'] . ';';
+            $style_html .= 'border-radius: ' . $item['borderRadius'] . '%;';
+
+            $style_html .= isset($item['bgColor']) ? 'background-color: ' . $item['bgColor'] . ';' : 'background-color: transparent;';
+
+            $style_html .= '}';
+
+            $style_html .= '#' . $block_id . ' .advgb-item-' . $k . ' .advgb-icon > i, .' . $block_id . ' .advgb-item-' . $k . ' .advgb-icon > i{';
+            $style_html .= 'font-size: ' . $item['size'] . 'px;';
+            $style_html .= 'color: ' . $item['color'] . ';';
+            $style_html .= '}';
+        }
+
+        return $style_html;
+    }
+
+    /**
+     * Media files and inline CSS for Adv. Tabs Block
+     *
+     * @since    2.4.2
+     * @param   $blockAttrs The block attributes
+     * @return  string      Inline CSS
+     */
+    public function advgbAdvancedTabsCss($blockAttrs)
+    {
+        $block_class    = isset($blockAttrs['pid']) ? $blockAttrs['pid'] : 'wp-block-advgb-adv-tabs';
+        $active_tab_bg_color  = isset($blockAttrs['activeTabBgColor']) ? $blockAttrs['activeTabBgColor'] : '#5954d6';
+        $active_tab_text_color  = isset($blockAttrs['activeTabTextColor']) ? $blockAttrs['activeTabTextColor'] : '#fff';
+
+        $style_html  = '.'. $block_class . ' ul.advgb-tabs-panel li.advgb-tab.advgb-tab-active {';
+        $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
+        $style_html .= 'color:'.$active_tab_text_color.' !important;';
+        $style_html .= '}';
+
+        $style_html .= '#'. $block_class . ' .advgb-tab-body-header.header-active, .'. $block_class . ' .advgb-tab-body-header.header-active{';
+        $style_html .= 'background-color:'.$active_tab_bg_color.' !important;';
+        $style_html .= 'color:'.$active_tab_text_color.' !important;';
+        $style_html .= '}';
+
+        return $style_html;
     }
 }
