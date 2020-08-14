@@ -5078,27 +5078,27 @@ float: left;'
                 wp_enqueue_script('advgb_blocks_frontend_scripts');
             }
 
-            // Parse nested blocks in WP 5.5+
+            // Parse styles for nested blocks in WP 5.5+
             global $wp_version;
             if($wp_version >= 5.5){
-                echo $blockName .  '<br>';
+                //echo $blockName .  '<br>';
 
                 // Second level
                 if(isset($block['innerBlocks'])){
                     foreach ($block['innerBlocks'] as $j => $inner_block) {
-                        echo '--' . $inner_block['blockName'] . '(2nd level)<br>';
+                        //echo '--' . $inner_block['blockName'] . '(2nd level)<br>';
                         $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
                         // Third level
                         if(isset($inner_block['innerBlocks'])){
                             foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                echo '----' . $inner_block['blockName'] . '(3rd level)<br>';
+                                //echo '----' . $inner_block['blockName'] . '(3rd level)<br>';
                                 $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
 
                                 // Fourth level
                                 if(isset($inner_block['innerBlocks'])){
                                     foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                        echo '------' . $inner_block['blockName'] . '(4th level)<br>';
+                                        //echo '------' . $inner_block['blockName'] . '(4th level)<br>';
                                         $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
                                     }
                                 }
@@ -5331,6 +5331,8 @@ float: left;'
      */
     public function advgb_SetStylesForBlocks($blockAttrs, $blockName)
     {
+        $html_style = '';
+
         switch($blockName) {
 
             case 'advgb/list':
