@@ -129,7 +129,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 == Changelog ==
 
 = 2.4.2 =
- * Fix: Styles loading in frontend for nested blocks in WordPress 5.5
+ * Fix: Styles not loading in frontend for nested blocks in WordPress 5.5
 
 = 2.4.1 =
  * Fix: Border width for Advanced Button Block
