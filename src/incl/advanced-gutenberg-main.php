@@ -5327,10 +5327,23 @@ float: left;'
      * @since   2.4.2
      * @param   $blockName
      * @param   $blockAttrs
-     * @return  string
+     * @return  string      CSS Styles
      */
     public function advgb_SetStylesForBlocks($blockAttrs, $blockName)
     {
+        // Load common CSS
+        if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
+            wp_enqueue_style(
+                'advgb_blocks_styles',
+                plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
+            );
+        } else {
+            wp_enqueue_style(
+                'advgb_blocks_styles_min',
+                plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
+            );
+        }
+
         $html_style = '';
 
         switch($blockName) {
