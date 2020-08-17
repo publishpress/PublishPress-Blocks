@@ -5327,7 +5327,7 @@ float: left;'
      * @since   2.4.2
      * @param   $blockName
      * @param   $blockAttrs
-     * @return  string
+     * @return  string      CSS Styles
      */
     public function advgb_SetStylesForBlocks($blockAttrs, $blockName)
     {
