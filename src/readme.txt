@@ -3,7 +3,7 @@ Contributors: JoomUnited, advancedgutenberg
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.5
-Stable tag: 2.4.3b2
+Stable tag: 2.4.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -128,7 +128,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 == Changelog ==
 
-= 2.4.3b2 =
+= 2.4.3 =
  * Fix: Load common CSS for nested blocks
 
 = 2.4.2 =
