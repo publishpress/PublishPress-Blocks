@@ -5083,7 +5083,10 @@ float: left;'
             if($wp_version >= 5.5){
                 //echo $blockName .  '<br>';
 
-                // Second level
+                $style_html .= $this->advgb_getNestedBlocksStyles($block); // This output is NOT correct!
+                //echo '<code>' . $style_html . '</code>';
+
+                /*/ Second level
                 if(isset($block['innerBlocks'])){
                     foreach ($block['innerBlocks'] as $j => $inner_block) {
                         //echo '--' . $inner_block['blockName'] . '(2nd level)<br>';
@@ -5105,7 +5108,7 @@ float: left;'
                             }
                         }
                     }
-                }
+                }*/
             }
         }
 
@@ -5319,6 +5322,39 @@ float: left;'
         }
 
         return $valueReturn;
+    }
+
+    /**
+     * Recursive loop to find nested blocks and load their blocks's CSS and media files
+     *
+     * @since   2.4.4
+     * @param   object  $block      Nested block
+     * @param   string  $style_html CSS Styles
+     * @param   integer $level      Nested block level
+     * @return  string              CSS Styles
+     */
+    public function advgb_getNestedBlocksStyles($block, $level = 2, $style_html = array()){
+
+        if(isset($block['innerBlocks'])){
+            foreach($block['innerBlocks'] as $key => $inner_block){
+
+                // Get styles
+                $new_style_html = $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
+
+                // Add the styles to the array
+                array_push($style_html, $new_style_html);
+                //echo str_repeat("--", $level) . $inner_block['blockName'] . ' [ ' . $level . ' ]<br>';
+
+                self::advgb_getNestedBlocksStyles($inner_block, $level + 1);
+            }
+        }
+
+        // Convert array to string
+        $style_html = implode('', $style_html);
+
+        //echo '<code>' . gettype($style_html) . '</code>'; // This output is correct!
+
+        return $style_html;
     }
 
     /**
