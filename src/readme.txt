@@ -48,7 +48,6 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Advanced Image block: hover text, overlay, colors, link and more
 - Advanced Image block: load and display local and remote video
 - Advanced Video block: load and display local and remote video
-- Supercharge the separator tool with size, color, spaces
 - Social links block: custom icon and links to any social networks
 - Activate lightbox effect in Gutenberg image galleries
 - Display image information as lightbox caption in galleries
