@@ -129,6 +129,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 = 2.4.4b1 =
  * Fix: Recent Posts block, broken Category setting
+ * Add: AdvQueryControls component
 
 = 2.4.3 =
  * Fix: Load common CSS for nested blocks
