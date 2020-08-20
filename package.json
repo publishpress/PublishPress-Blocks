@@ -17,7 +17,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "compile-sass": "^1.1.1",
-    "concurrently": "^5.2.0",
+    "concurrently": "^5.3.0",
     "counterup2": "^1.0.4",
     "html-react-parser": "^0.10.5",
     "jquery": "^3.5.1",
