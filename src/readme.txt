@@ -3,7 +3,7 @@ Contributors: JoomUnited, advancedgutenberg
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.5
-Stable tag: 2.4.3
+Stable tag: 2.4.4
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -48,7 +48,6 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 - Advanced Image block: hover text, overlay, colors, link and more
 - Advanced Image block: load and display local and remote video
 - Advanced Video block: load and display local and remote video
-- Supercharge the separator tool with size, color, spaces
 - Social links block: custom icon and links to any social networks
 - Activate lightbox effect in Gutenberg image galleries
 - Display image information as lightbox caption in galleries
@@ -127,6 +126,10 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Latest posts and WooCommerce products blocks
 
 == Changelog ==
+
+= 2.4.4 =
+ * Fix: Recent Posts block, broken Category setting
+ * Add: AdvQueryControls component
 
 = 2.4.3 =
  * Fix: Load common CSS for nested blocks
