@@ -91,6 +91,16 @@ register_activation_hook(ADVANCED_GUTENBERG_PLUGIN, function () {
 
     $wp_roles->add_cap('contributor', 'read_advgb_profile');
     $wp_roles->add_cap('contributor', 'read_private_advgb_profiles');
+
+    // Delete custom_styles.css if exists
+    WP_Filesystem();
+    global $wp_filesystem;
+    $custom_styles_dir  = wp_upload_dir();
+    $custom_styles_file = $custom_styles_dir['basedir'] . '/advgb/custom_styles.css';
+
+    if ($wp_filesystem->exists($custom_styles_file)) {
+        $wp_filesystem->delete($custom_styles_file);
+    }
 });
 
 // Run the updates from here
