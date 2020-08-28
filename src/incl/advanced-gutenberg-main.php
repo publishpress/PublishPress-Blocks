@@ -1721,6 +1721,8 @@ float: left;'
         return true;
     }
 
+    // @TODO - Create a method to delete custom_styles.css file
+
     /**
      * Load Custom Styles in head
      *
