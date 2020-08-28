@@ -1711,11 +1711,6 @@ float: left;'
             if (!wp_verify_nonce($_POST['advgb_cstyles_nonce_field'], 'advgb_cstyles_nonce')) {
                 return false;
             }
-            // Save Custom Styles to a css file
-            $get_custom_styles = get_option('advgb_custom_styles');
-            if ($get_custom_styles !== false) {
-                $this->writeCustomStyles($get_custom_styles);
-            }
 
             if (isset($_REQUEST['_wp_http_referer'])) {
                 wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_styles=success'));
@@ -1723,38 +1718,6 @@ float: left;'
             }
         }
 
-        return true;
-    }
-
-    /**
-     * Write custom styles to a CSS file
-     *
-     * @param array $styles_array Array of styles
-     *
-     * @return boolean True on success, False on failure
-     */
-    public function writeCustomStyles(array $styles_array)
-    {
-        WP_Filesystem();
-        global $wp_filesystem;
-
-        $custom_styles_dir = wp_upload_dir();
-        $custom_styles_dir = $custom_styles_dir['basedir'] . '/advgb/';
-        $css_file = $custom_styles_dir . 'custom_styles.css';
-
-        if (!$wp_filesystem->exists($custom_styles_dir)) {
-            $wp_filesystem->mkdir($custom_styles_dir);
-        }
-
-        $content = '';
-        foreach ($styles_array as $styles) {
-            $content .= '.gutenberg #editor .' .$styles['name'] . ', .' . $styles['name'] . " {\n";
-            $content .= $styles['css'] . "\n} \n";
-        }
-
-        if (!$wp_filesystem->put_contents($css_file, $content)) {
-            return false;
-        }
         return true;
     }
 
