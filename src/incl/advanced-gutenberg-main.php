@@ -187,7 +187,6 @@ float: left;'
             // Front-end
             add_filter('render_block_data', array($this, 'contentPreRender'));
             add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
-            add_action('wp_head', array($this, 'loadCustomStyles'));
         }
     }
 
@@ -420,6 +419,10 @@ float: left;'
      */
     public function addEditorAndFrontendStyles()
     {
+        // Load custom styles in the <head>. Replaces custom_styles.css load
+        add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
+        add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
+
         wp_enqueue_style('dashicons');
 
         if (is_admin()) {
@@ -1718,21 +1721,39 @@ float: left;'
     // @TODO - Create a method to delete custom_styles.css file
 
     /**
-     * Load Custom Styles in head
+     * Load Custom Styles in <head> in frontend
      *
      * @return void
      */
-    public function loadCustomStyles() {
+    public function loadCustomStylesFrontend() {
 
         $styles_array = get_option('advgb_custom_styles');
 
         $content = '';
         foreach ($styles_array as $styles) {
-            $content .= '.gutenberg #editor .' .$styles['name'] . ', .' . $styles['name'] . " {\n";
+            $content .= '.' . $styles['name'] . " {\n";
             $content .= $styles['css'] . "\n} \n";
         }
 
-        echo '<style type="text/css" id="advgb_custom_styles-css">' . $content . '</style>';
+        echo '<style type="text/css">' . $content . '</style>';
+    }
+
+    /**
+     * Load Custom Styles in <head> in admin
+     *
+     * @return void
+     */
+    public function loadCustomStylesAdmin() {
+
+        $styles_array = get_option('advgb_custom_styles');
+
+        $content = '';
+        foreach ($styles_array as $styles) {
+            $content .= '#editor .' .$styles['name'] . " {\n";
+            $content .= $styles['css'] . "\n} \n";
+        }
+
+        echo '<style type="text/css">' . $content . '</style>';
     }
 
     /**
