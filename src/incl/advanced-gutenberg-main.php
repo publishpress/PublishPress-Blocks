@@ -187,6 +187,7 @@ float: left;'
             // Front-end
             add_filter('render_block_data', array($this, 'contentPreRender'));
             add_filter('the_content', array($this, 'addFrontendContentAssets'), 9);
+            add_action('wp_head', array($this, 'loadCustomStyles'));
         }
     }
 
@@ -1755,6 +1756,24 @@ float: left;'
             return false;
         }
         return true;
+    }
+
+    /**
+     * Load Custom Styles in head
+     *
+     * @return void
+     */
+    public function loadCustomStyles() {
+
+        $styles_array = get_option('advgb_custom_styles');
+
+        $content = '';
+        foreach ($styles_array as $styles) {
+            $content .= '.gutenberg #editor .' .$styles['name'] . ', .' . $styles['name'] . " {\n";
+            $content .= $styles['css'] . "\n} \n";
+        }
+
+        echo '<style type="text/css" id="advgb_custom_styles-css">' . $content . '</style>';
     }
 
     /**
