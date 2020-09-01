@@ -1725,9 +1725,7 @@ float: left;'
      */
     public function loadCustomStylesFrontend() {
 
-        $styles_array = $this->convertCustomStylesToArray(
-            get_option('advgb_custom_styles')
-        );
+        $styles_array = get_option('advgb_custom_styles');
 
         $content = '';
         foreach ($styles_array as $styles) {
@@ -1745,9 +1743,7 @@ float: left;'
      */
     public function loadCustomStylesAdmin() {
 
-        $styles_array = $this->convertCustomStylesToArray(
-            get_option('advgb_custom_styles')
-        );
+        $styles_array = get_option('advgb_custom_styles');
 
         $content = '';
         foreach ($styles_array as $styles) {
@@ -1756,17 +1752,6 @@ float: left;'
         }
 
         echo '<style type="text/css">' . $content . '</style>';
-    }
-
-    /**
-     * Convert custom styles to an array
-     *
-     * @param   array $styles_array
-     *
-     * @return  array
-     */
-    public function convertCustomStylesToArray(array $styles_array) {
-        return $styles_array;
     }
 
     /**
