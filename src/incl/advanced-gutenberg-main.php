@@ -1725,10 +1725,10 @@ float: left;'
      */
     public function loadCustomStylesFrontend() {
 
-        $styles_array = get_option('advgb_custom_styles');
+        $custom_styles = get_option('advgb_custom_styles');
 
         $content = '';
-        foreach ($styles_array as $styles) {
+        foreach ($custom_styles as $styles) {
             $content .= '.' . $styles['name'] . " {\n";
             $content .= $styles['css'] . "\n} \n";
         }
@@ -1743,10 +1743,10 @@ float: left;'
      */
     public function loadCustomStylesAdmin() {
 
-        $styles_array = get_option('advgb_custom_styles');
+        $custom_styles = get_option('advgb_custom_styles');
 
         $content = '';
-        foreach ($styles_array as $styles) {
+        foreach ($custom_styles as $styles) {
             $content .= '#editor .' .$styles['name'] . " {\n";
             $content .= $styles['css'] . "\n} \n";
         }
