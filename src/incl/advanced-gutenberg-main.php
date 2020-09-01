@@ -1727,13 +1727,17 @@ float: left;'
 
         $custom_styles = get_option('advgb_custom_styles');
 
-        $content = '';
-        foreach ($custom_styles as $styles) {
-            $content .= '.' . $styles['name'] . " {\n";
-            $content .= $styles['css'] . "\n} \n";
-        }
+        if(is_array($custom_styles)) {
 
-        echo '<style type="text/css">' . $content . '</style>';
+            $content = '';
+            foreach ($custom_styles as $styles) {
+                $content .= '.' . $styles['name'] . " {\n";
+                $content .= $styles['css'] . "\n} \n";
+            }
+
+            echo '<style type="text/css">' . $content . '</style>';
+
+        }
     }
 
     /**
@@ -1745,13 +1749,17 @@ float: left;'
 
         $custom_styles = get_option('advgb_custom_styles');
 
-        $content = '';
-        foreach ($custom_styles as $styles) {
-            $content .= '#editor .' .$styles['name'] . " {\n";
-            $content .= $styles['css'] . "\n} \n";
-        }
+        if(is_array($custom_styles)) {
 
-        echo '<style type="text/css">' . $content . '</style>';
+            $content = '';
+            foreach ($custom_styles as $styles) {
+                $content .= '#editor .' .$styles['name'] . " {\n";
+                $content .= $styles['css'] . "\n} \n";
+            }
+
+            echo '<style type="text/css">' . $content . '</style>';
+
+        }
     }
 
     /**
