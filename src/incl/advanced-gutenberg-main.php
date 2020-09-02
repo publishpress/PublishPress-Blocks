@@ -1737,6 +1737,9 @@ float: left;'
 
             echo '<style type="text/css">' . $content . '</style>';
 
+        } else {
+            // @TODO remove in later versions
+            wp_add_inline_script('advgb_tabs_js', 'console.log(\'advgb-tracking-issue-141\');');
         }
     }
 
@@ -1759,6 +1762,9 @@ float: left;'
 
             echo '<style type="text/css">' . $content . '</style>';
 
+        } else {
+            // @TODO remove in later versions
+            wp_add_inline_script('advgb_tabs_js', 'console.log(\'advgb-tracking-issue-141\');');
         }
     }
 
