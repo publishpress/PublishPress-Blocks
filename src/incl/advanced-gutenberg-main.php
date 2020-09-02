@@ -419,12 +419,10 @@ float: left;'
      */
     public function addEditorAndFrontendStyles()
     {
-        $custom_styles_url = wp_get_upload_dir();
-        $custom_styles_url = $custom_styles_url['baseurl'] . '/advgb/';
-        wp_enqueue_style(
-            'advgb_custom_styles',
-            $custom_styles_url . 'custom_styles.css'
-        );
+        // Load custom styles in the <head>. Replaces custom_styles.css load
+        add_action('wp_head', array($this, 'loadCustomStylesFrontend'));
+        add_action('admin_head', array($this, 'loadCustomStylesAdmin'));
+
         wp_enqueue_style('dashicons');
 
         if (is_admin()) {
@@ -1710,11 +1708,6 @@ float: left;'
             if (!wp_verify_nonce($_POST['advgb_cstyles_nonce_field'], 'advgb_cstyles_nonce')) {
                 return false;
             }
-            // Save Custom Styles to a css file
-            $get_custom_styles = get_option('advgb_custom_styles');
-            if ($get_custom_styles !== false) {
-                $this->writeCustomStyles($get_custom_styles);
-            }
 
             if (isset($_REQUEST['_wp_http_referer'])) {
                 wp_safe_redirect(admin_url('admin.php?page=advgb_main&save_styles=success'));
@@ -1726,35 +1719,53 @@ float: left;'
     }
 
     /**
-     * Write custom styles to a CSS file
+     * Load Custom Styles in <head> in frontend
      *
-     * @param array $styles_array Array of styles
-     *
-     * @return boolean True on success, False on failure
+     * @return void
      */
-    public function writeCustomStyles(array $styles_array)
-    {
-        WP_Filesystem();
-        global $wp_filesystem;
+    public function loadCustomStylesFrontend() {
 
-        $custom_styles_dir = wp_upload_dir();
-        $custom_styles_dir = $custom_styles_dir['basedir'] . '/advgb/';
-        $css_file = $custom_styles_dir . 'custom_styles.css';
+        $custom_styles = get_option('advgb_custom_styles');
 
-        if (!$wp_filesystem->exists($custom_styles_dir)) {
-            $wp_filesystem->mkdir($custom_styles_dir);
+        if(is_array($custom_styles)) {
+
+            $content = '';
+            foreach ($custom_styles as $styles) {
+                $content .= '.' . $styles['name'] . " {\n";
+                $content .= $styles['css'] . "\n} \n";
+            }
+
+            echo '<style type="text/css">' . $content . '</style>';
+
+        } else {
+            // @TODO remove in later versions
+            echo '<script>console.log(\'advgb-tracking-issue-141\');</script>';
         }
+    }
 
-        $content = '';
-        foreach ($styles_array as $styles) {
-            $content .= '.gutenberg #editor .' .$styles['name'] . ', .' . $styles['name'] . " {\n";
-            $content .= $styles['css'] . "\n} \n";
-        }
+    /**
+     * Load Custom Styles in <head> in admin
+     *
+     * @return void
+     */
+    public function loadCustomStylesAdmin() {
 
-        if (!$wp_filesystem->put_contents($css_file, $content)) {
-            return false;
+        $custom_styles = get_option('advgb_custom_styles');
+
+        if(is_array($custom_styles)) {
+
+            $content = '';
+            foreach ($custom_styles as $styles) {
+                $content .= '#editor .' .$styles['name'] . " {\n";
+                $content .= $styles['css'] . "\n} \n";
+            }
+
+            echo '<style type="text/css">' . $content . '</style>';
+
+        } else {
+            // @TODO remove in later versions
+            echo '<script>console.log(\'advgb-tracking-issue-141\');</script>';
         }
-        return true;
     }
 
     /**
