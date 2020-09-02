@@ -1738,6 +1738,7 @@ float: left;'
             echo '<style type="text/css">' . $content . '</style>';
 
         } else {
+            // @TODO remove in later versions
             echo '<script>console.log(\'advgb-tracking-issue-141\');</script>';
         }
     }
@@ -1762,6 +1763,7 @@ float: left;'
             echo '<style type="text/css">' . $content . '</style>';
 
         } else {
+            // @TODO remove in later versions
             echo '<script>console.log(\'advgb-tracking-issue-141\');</script>';
         }
     }
