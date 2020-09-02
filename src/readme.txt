@@ -129,6 +129,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 = 2.4.5 =
  * Fix: Load Custom Styles in multisites
+ * Add: Optimize nested blocks style loading
 
 = 2.4.4 =
  * Fix: Recent Posts block, broken Category setting
