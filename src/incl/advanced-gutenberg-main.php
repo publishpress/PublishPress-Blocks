@@ -4598,49 +4598,8 @@ float: left;'
         $style_html = '';
         $blockName = $block['blockName'];
         $blockAttrs = $block['attrs'];
-        $availableBlocks = array(
-            'advgb/adv-tabs',
-            'advgb/adv-tab',
-            'advgb/columns',
-            'advgb/column',
-            'advgb/image',
-            'advgb/icon',
-            'advgb/accordions',
-            'advgb/accordion-item',
-            'advgb/table',
-            'advgb/infobox',
-            'advgb/button',
-            'advgb/login-form',
-            'advgb/count-up',
-            'advgb/summary',
-            'advgb/contact-form',
-            'advgb/images-slider',
-            'advgb/map',
-            'advgb/newsletter',
-            'advgb/testimonial',
-            'advgb/list',
-            'advgb/video',
-            'advgb/recent-posts',
-            'advgb/search-bar',
-            'advgb/social-links',
-            'advgb/woo-products',
-            'advgb/tabs'
-        );
-        if ($blockName) {
-            if (in_array($blockName, $availableBlocks)) {
-                if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
-                    wp_enqueue_style(
-                        'advgb_blocks_styles',
-                        plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
-                    );
-                } else {
-                    wp_enqueue_style(
-                        'advgb_blocks_styles_min',
-                        plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
-                    );
-                }
-            }
 
+        if ($blockName) {
             // Get styles for parent blocks
             $style_html .= $this->advgb_SetStylesForBlocks($blockAttrs, $blockName);
 
@@ -4897,17 +4856,48 @@ float: left;'
      */
     public function advgb_SetStylesForBlocks($blockAttrs, $blockName)
     {
+        $availableBlocks = array(
+            'advgb/adv-tabs',
+            'advgb/adv-tab',
+            'advgb/columns',
+            'advgb/column',
+            'advgb/image',
+            'advgb/icon',
+            'advgb/accordions',
+            'advgb/accordion-item',
+            'advgb/table',
+            'advgb/infobox',
+            'advgb/button',
+            'advgb/login-form',
+            'advgb/count-up',
+            'advgb/summary',
+            'advgb/contact-form',
+            'advgb/images-slider',
+            'advgb/map',
+            'advgb/newsletter',
+            'advgb/testimonial',
+            'advgb/list',
+            'advgb/video',
+            'advgb/recent-posts',
+            'advgb/search-bar',
+            'advgb/social-links',
+            'advgb/woo-products',
+            'advgb/tabs'
+        );
+
         // Load common CSS
-        if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
-            wp_enqueue_style(
-                'advgb_blocks_styles',
-                plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
-            );
-        } else {
-            wp_enqueue_style(
-                'advgb_blocks_styles_min',
-                plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
-            );
+        if (in_array($blockName, $availableBlocks)) {
+            if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
+                wp_enqueue_style(
+                    'advgb_blocks_styles',
+                    plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
+                );
+            } else {
+                wp_enqueue_style(
+                    'advgb_blocks_styles_min',
+                    plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
+                );
+            }
         }
 
         $html_style = '';
