@@ -4641,7 +4641,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                                             // Fifth level
                                             if(isset($inner_block['innerBlocks'])){
                                                 foreach ($inner_block['innerBlocks'] as $j => $inner_block) {
-                                                    //echo '------' . $inner_block['blockName'] . '(5th level)<br>';
+                                                    //echo '--------' . $inner_block['blockName'] . '(5th level)<br>';
                                                     $style_html .= $this->advgb_SetStylesForBlocks($inner_block['attrs'], $inner_block['blockName']);
                                                 }
                                             }
