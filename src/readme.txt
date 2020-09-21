@@ -1,5 +1,5 @@
 === Advanced Gutenberg - Blocks, Permissions, Layouts, Forms and CSS Styles ===
-Contributors: publishpress, JoomUnited
+Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.5.1
