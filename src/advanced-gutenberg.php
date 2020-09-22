@@ -5,8 +5,8 @@
  * Description: Enhanced tools for Gutenberg editor
  * Version: 2.4.6
  * Tested up to: 5.5.1
- * Author: Advanced Gutenberg
- * Author URI: https://advancedgutenberg.com
+ * Author: PublishPress
+ * Author URI: https://publishpress.com/
  * License: GPL2
  * Text Domain: advanced-gutenberg
  * Domain Path: /languages
