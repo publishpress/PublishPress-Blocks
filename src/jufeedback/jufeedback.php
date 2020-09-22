@@ -59,7 +59,7 @@ class Jufeedback
      *
      * @var string $mailto
      */
-    public static $mailto = 'help@advancedgutenberg.com';
+    public static $mailto = 'help@publishpress.com';
 
     /**
      * @todo check if Jutranslation is actually being called here

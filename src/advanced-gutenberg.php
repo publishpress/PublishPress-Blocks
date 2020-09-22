@@ -17,6 +17,7 @@
  *
  * @copyright 2014-2020  Joomunited
  * @copyright 2020       Advanced Gutenberg. help@advancedgutenberg.com
+ * @copyright 2020       PublishPress. help@publishpress.com
  *
  *  Original development of this plugin was kindly funded by Joomunited
  *
