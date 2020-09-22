@@ -58,13 +58,13 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 
 [vimeo https://vimeo.com/264060718]
 
-<a href="https://advancedgutenberg.com/" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
+<a href="https://publishpress.com/advanced-gutenberg/" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
 
 
 = Support =
 
 Before leaving a review >> Feel free to ask questions here in the support section, we reply to every question!
-We also have a forum on [advancedgutenberg.com](https://advancedgutenberg.com/) for feature requests.
+We also have [a support page](https://publishpress.com/publishpress-support/) for feature requests.
 
 == Installation ==
 
@@ -90,7 +90,7 @@ We also have a forum on [advancedgutenberg.com](https://advancedgutenberg.com/) 
 4. You can define a custom color for the new blocks, by default it's a kind of purple color
 
 = Can I get support for the editor use? =
-We reply to every question about the editor on the forum here, just ask :) We also have an online documentation here: [https://advancedgutenberg.com/knowledge-base/](https://advancedgutenberg.com/knowledge-base/)
+We reply to every question about the editor on the forum here, just ask :) We also have [an online documentation here](https://publishpress.com/knowledge-base/installation/).
 
 = Does Advanced Gutenberg slowing down my website? =
 The plugin has almost NO impact on page load for your visitors, it's only loaded during the edition process.

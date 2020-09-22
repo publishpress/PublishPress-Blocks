@@ -1795,7 +1795,7 @@ msgstr ""
 
 #. Plugin URI of the plugin/theme
 #. Author URI of the plugin/theme
-msgid "https://advancedgutenberg.com"
+msgid "https://publishpress.com/"
 msgstr ""
 
 #. Description of the plugin/theme

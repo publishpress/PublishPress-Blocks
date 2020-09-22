@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Advanced Gutenberg
- * Plugin URI: https://advancedgutenberg.com
+ * Plugin URI: https://publishpress.com/advanced-gutenberg/
  * Description: Enhanced tools for Gutenberg editor
  * Version: 2.4.6
  * Tested up to: 5.5.1
