@@ -29,7 +29,7 @@ We aim to follow good practices on development, and we are using Composer as dep
 
 ### How to install?
 
-You can download a built package from [releases page](/releases/) and install it on your WordPress sites by uploading the zip file, or upload the folder "src" renamed as "advanced-gutenberg". This last option is for developers who want to contribute and test.
+You can download a built package from [releases page](https://github.com/publishpress/Advanced-Gutenberg/releases) and install it on your WordPress sites by uploading the zip file, or upload the folder "src" renamed as "advanced-gutenberg". This last option is for developers who want to contribute and test.
 
 ## How to contribute with code
 
@@ -49,7 +49,7 @@ The sources files are named with the extension JSX. Which is optional on React, 
 
 Please check the requirements at [our documentation page](https://publishpress.github.io/docs/development/react-jsx). 
 
-**Important:** use the npm modules from [package.json](/blob/master/package.json), and these two files as is that already comes within the repository: webpack.config.js and .babelrc. 
+**Important:** use the npm modules from [package.json](https://github.com/publishpress/Advanced-Gutenberg/blob/master/package.json), and these two files as is that already comes within the repository: webpack.config.js and .babelrc. 
 
 #### Compiling JSX files to JS
 
