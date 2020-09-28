@@ -49,7 +49,7 @@ The sources files are named with the extension JSX. Which is optional on React, 
 
 Please check the requirements at [our documentation page](https://publishpress.github.io/docs/development/react-jsx). 
 
-**Important:** use the [composer](https://www.npmjs.com/package/composer) modules from [package.json](/blob/master/package.json), and these two files as is that already comes within the repository: webpack.config.js and .babelrc. 
+**Important:** use the npm modules from [package.json](/blob/master/package.json), and these two files as is that already comes within the repository: webpack.config.js and .babelrc. 
 
 #### Compiling JSX files to JS
 
