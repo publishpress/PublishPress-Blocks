@@ -29,7 +29,7 @@ We aim to follow good practices on development, and we are using Composer as dep
 
 ### How to install?
 
-You can download a built package from [releases page](https://github.com/publishpress/Advanced-Gutenberg/releases) and install it on your WordPress sites by uploading the zip file, or upload the folder "src" renamed as "advanced-gutenberg". This last option is for developers who want to contribute and test.
+You can download a built package from [releases page](https://github.com/publishpress/Advanced-Gutenberg/releases) and install it on your WordPress sites by uploading the zip file, or upload the folder "src" renamed as "advanced-gutenberg" to plugins folder. This last option is for developers who want to contribute and/or test.
 
 ## How to contribute with code
 
@@ -45,7 +45,7 @@ We will review and contact you as soon as possible.
 ### React JS and JSX Files
 
 We use [React](https://facebook.github.io/react/) to build part of the user interface.
-The sources files are named with the extension JSX. Which is optional on React, but provides a way to write modern code and compile to be compatible with legacy browsers. We use [babeljs.io](babeljs.io) with the presets: react and es2015 to compile to JS files.
+The sources files are named with the extension JSX. Which is optional on React, but provides a way to write modern code and compile to be compatible with legacy browsers. We use [babeljs.io](https://babeljs.io/) with the presets: react and es2015 to compile to JS files.
 
 Please check the requirements at [our documentation page](https://publishpress.github.io/docs/development/react-jsx). 
 
