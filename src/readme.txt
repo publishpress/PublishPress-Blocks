@@ -127,6 +127,9 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 
 == Changelog ==
 
+= 2.4.7 =
+ * Fix: Global columns visual guide
+
 = 2.4.6 =
  * Fix: Support for nested blocks in 5th level
 
