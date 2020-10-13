@@ -76,7 +76,7 @@
                             {EDITOR_WIDTH_SETTINGS.map((setting, index) => (
                                 <Button className="advgb-button"
                                         key={ index }
-                                        isDefault
+                                        isSecondary={ setting.value !== editorWidth }
                                         isPrimary={ setting.value === editorWidth }
                                         onClick={ () => this.onUpdateMeta( { advgb_blocks_editor_width: setting.value } ) }
                                 >
@@ -93,7 +93,7 @@
                             {VISUAL_GUIDE_SETTINGS.map((setting, index) => (
                                 <Button className="advgb-button"
                                         key={ index }
-                                        isDefault
+                                        isSecondary={ setting.value !== columnsVisualGuide }
                                         isPrimary={ setting.value === columnsVisualGuide }
                                         onClick={ () => this.onUpdateMeta( { advgb_blocks_columns_visual_guide: setting.value } ) }
                                 >

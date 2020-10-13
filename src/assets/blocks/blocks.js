@@ -16985,7 +16985,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Button,
                                     { className: 'advgb-button',
                                         key: index,
-                                        isDefault: true,
+                                        isSecondary: setting.value !== editorWidth,
                                         isPrimary: setting.value === editorWidth,
                                         onClick: function onClick() {
                                             return _this2.onUpdateMeta({ advgb_blocks_editor_width: setting.value });
@@ -17012,7 +17012,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     Button,
                                     { className: 'advgb-button',
                                         key: index,
-                                        isDefault: true,
+                                        isSecondary: setting.value !== columnsVisualGuide,
                                         isPrimary: setting.value === columnsVisualGuide,
                                         onClick: function onClick() {
                                             return _this2.onUpdateMeta({ advgb_blocks_columns_visual_guide: setting.value });
