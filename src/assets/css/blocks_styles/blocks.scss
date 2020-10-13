@@ -82,35 +82,19 @@
     margin: 10px;
 }
 
-.advgb-editor-sidebar-content .components-button-group.advgb-button-group {
-    display: block;
-}
+.advgb-editor-sidebar-content .components-button.advgb-button {
 
-.advgb-editor-sidebar-content .components-button.advgb-button.is-button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 5px;
-    height: auto;
-    box-shadow: none;
-    outline: none;
-}
+  &:focus {
 
-.advgb-editor-sidebar-content .components-button.advgb-button.is-button:focus {
-    outline: none;
-    box-shadow: none;
-}
+  }
 
-.advgb-editor-sidebar-content .components-button.advgb-button.is-button.is-default {
-    background-color: #fff;
-    color: #000;
-}
+  &.is-secondary {
 
-.advgb-editor-sidebar-content .components-button.advgb-button.is-button.is-primary {
-    background-color: #2196f3;
-    border: 1px solid #2196f3;
-    text-shadow: none;
-    color: #fff;
+  }
+
+  &.is-primary {
+
+  }
 }
 
 /*Accordion block styles*/
