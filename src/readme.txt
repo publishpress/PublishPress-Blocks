@@ -3,7 +3,7 @@ Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.5.1
-Stable tag: 2.4.6
+Stable tag: 2.4.7b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -126,6 +126,9 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Latest posts and WooCommerce products blocks
 
 == Changelog ==
+
+= 2.4.7 =
+ * Fix: Global columns visual guide
 
 = 2.4.6 =
  * Fix: Support for nested blocks in 5th level

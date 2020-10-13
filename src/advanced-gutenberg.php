@@ -3,7 +3,7 @@
  * Plugin Name: Advanced Gutenberg
  * Plugin URI: https://publishpress.com/advanced-gutenberg/
  * Description: Enhanced tools for Gutenberg editor
- * Version: 2.4.6
+ * Version: 2.4.7b1
  * Tested up to: 5.5.1
  * Author: PublishPress
  * Author URI: https://publishpress.com/
@@ -76,7 +76,7 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
 }
 
 if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-    define('ADVANCED_GUTENBERG_VERSION', '2.4.6');
+    define('ADVANCED_GUTENBERG_VERSION', '2.4.7b1');
 }
 
 if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
