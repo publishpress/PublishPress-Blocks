@@ -8395,11 +8395,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         save: function save(_ref) {
             var attributes = _ref.attributes;
             var blockIDX = attributes.blockIDX,
+                className = attributes.className,
                 items = attributes.items,
                 numberItem = attributes.numberItem;
 
 
-            var blockWrapClass = ['wp-block-advgb-icon', 'icon-wrapper', blockIDX].filter(Boolean).join(' ');
+            var blockWrapClass = ['wp-block-advgb-icon', 'icon-wrapper', className, blockIDX].filter(Boolean).join(' ');
 
             var blockClass = ['advgb-icons'].filter(Boolean).join(' ');
 
@@ -19306,6 +19307,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         save: function save(_ref) {
             var attributes = _ref.attributes;
             var blockIDX = attributes.blockIDX,
+                className = attributes.className,
                 title = attributes.title,
                 titleHtmlTag = attributes.titleHtmlTag,
                 text = attributes.text,
@@ -19314,7 +19316,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 align = attributes.align;
 
 
-            var blockWrapClass = ['wp-block-advgb-infobox', 'advgb-infobox-wrapper', "has-text-align-" + align, blockIDX].filter(Boolean).join(' ');
+            var blockWrapClass = ['wp-block-advgb-infobox', 'advgb-infobox-wrapper', "has-text-align-" + align, className, blockIDX].filter(Boolean).join(' ');
 
             var blockClass = ['advgb-infobox-wrap'].filter(Boolean).join(' ');
 
