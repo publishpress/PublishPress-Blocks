@@ -131,6 +131,7 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
  * Fix: Global columns visual guide
  * Fix: Deprecated isDefault replaced with isSecondary
  * Fix: Hidden text in selected button groups on content Gutenberg sidebar
+ * Fix: Custom class support for Advanced Icon and Info Box blocks
 
 = 2.4.6 =
  * Fix: Support for nested blocks in 5th level
