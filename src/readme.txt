@@ -1,9 +1,9 @@
 === Advanced Gutenberg - Blocks, Permissions, Layouts, Forms and CSS Styles ===
-Contributors: JoomUnited, advancedgutenberg
+Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.5.1
-Stable tag: 2.4.6
+Stable tag: 2.4.7
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -58,13 +58,13 @@ Advanced Gutenberg adds the missing blocks and configuration you need to build p
 
 [vimeo https://vimeo.com/264060718]
 
-<a href="https://advancedgutenberg.com/" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
+<a href="https://publishpress.com/advanced-gutenberg/" title="WordPress Advanced Gutenberg" rel="friend">Read the plugin presentation on our website</a>
 
 
 = Support =
 
 Before leaving a review >> Feel free to ask questions here in the support section, we reply to every question!
-We also have a forum on [advancedgutenberg.com](https://advancedgutenberg.com/) for feature requests.
+We also have [a support page](https://publishpress.com/publishpress-support/) for feature requests.
 
 == Installation ==
 
@@ -90,7 +90,7 @@ We also have a forum on [advancedgutenberg.com](https://advancedgutenberg.com/) 
 4. You can define a custom color for the new blocks, by default it's a kind of purple color
 
 = Can I get support for the editor use? =
-We reply to every question about the editor on the forum here, just ask :) We also have an online documentation here: [https://advancedgutenberg.com/knowledge-base/](https://advancedgutenberg.com/knowledge-base/)
+We reply to every question about the editor on the forum here, just ask :) We also have [an online documentation here](https://publishpress.com/knowledge-base/installation/).
 
 = Does Advanced Gutenberg slowing down my website? =
 The plugin has almost NO impact on page load for your visitors, it's only loaded during the edition process.
@@ -126,6 +126,13 @@ The Advanced Gutenberg Custom CSS can be created from the plugin configuration a
 1. Latest posts and WooCommerce products blocks
 
 == Changelog ==
+
+= 2.4.7 =
+ * Fix: Global columns visual guide
+ * Fix: Deprecated isDefault replaced with isSecondary
+ * Fix: Hidden text in selected button groups on content Gutenberg sidebar
+ * Fix: Custom class support for Advanced Icon and Info Box blocks
+ * Fix: Tooltips in configuration pages
 
 = 2.4.6 =
  * Fix: Support for nested blocks in 5th level
