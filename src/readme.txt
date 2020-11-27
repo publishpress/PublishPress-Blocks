@@ -69,7 +69,6 @@ We also have [a support page](https://publishpress.com/publishpress-support/) fo
 == Installation ==
 
 = To install the plugin automatically: =
-* Require Gutenberg plugin to be installed first
 * Through WordPress admin, use the menu: Plugin > Add new
 * Search for Advanced Gutenberg
 * Click on install then click activate link
