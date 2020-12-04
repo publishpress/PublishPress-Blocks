@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-27 11:57-0600\n"
+"POT-Creation-Date: 2020-12-04 13:07-0600\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -3089,6 +3089,7 @@ msgstr ""
 
 #. Plugin Name of the plugin/theme
 #: incl/advanced-gutenberg-main.php:231 incl/advanced-gutenberg-main.php:1520
+#: incl/advanced-gutenberg-main.php:1521
 msgid "PublishPress Blocks"
 msgstr "PublishPress Blocks"
 
@@ -3179,10 +3180,6 @@ msgstr "Captcha validado"
 #: incl/advanced-gutenberg-main.php:1250
 msgid "Captcha is empty"
 msgstr ""
-
-#: incl/advanced-gutenberg-main.php:1521
-msgid "PublishPress Blocks"
-msgstr "PublishPress Blocks"
 
 #: incl/advanced-gutenberg-main.php:1592 incl/advanced-gutenberg-main.php:1593
 #: incl/view/advanced-gutenberg-profiles.php:33
@@ -4151,8 +4148,7 @@ msgid "Blocks spacing"
 msgstr "Espaciado de Bloques"
 
 #: incl/view/advanced-gutenberg-settings.php:262
-msgid ""
-"Set color for blocks icons on admin, only apply to PublishPress Blocks"
+msgid "Set color for blocks icons on admin, only apply to PublishPress Blocks"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-settings.php:266
