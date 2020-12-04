@@ -54,7 +54,7 @@ PublishPress Blocks adds the missing blocks and configuration you need to build 
 - Gutenberg post summary based on content headers
 
 
-## ADVANCED GUTENBERG DEMO
+## PUBLISHPRESS BLOCKS DEMO
 
 [vimeo https://vimeo.com/264060718]
 
