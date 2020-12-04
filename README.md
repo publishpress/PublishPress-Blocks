@@ -1,10 +1,10 @@
-# Advanced Gutenberg
+# PublishPress Blocks
 
 ## Description
 
-Advanced Gutenberg is the plugin that gives you more control over the WordPress block editor.
+PublishPress Blocks is the plugin that gives you more control over the WordPress block editor.
 
-Advanced Gutenberg has everything you need to build professional websites with WordPress. The blocks include 24 layout options, sliders, buttons, icons, image galleries, maps, tabs, testimonials, accordions, and much more.
+PublishPress Blocks has everything you need to build professional websites with WordPress. The blocks include 24 layout options, sliders, buttons, icons, image galleries, maps, tabs, testimonials, accordions, and much more.
 
 ## Documentation
 

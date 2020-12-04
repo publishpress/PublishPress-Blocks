@@ -259,7 +259,7 @@ if (!isset($saved_settings['enable_columns_visual_guide'])) {
                         <label for="blocks_icon_color"
                                class="ju-setting-label advgb_qtip"
                                data-qtip="<?php esc_attr_e(
-                                   'Set color for blocks icons on admin, only apply to Advanced Gutenberg blocks',
+                                   'Set color for blocks icons on admin, only apply to PublishPress Blocks',
                                    'advanced-gutenberg'
                                ) ?>"
                         >

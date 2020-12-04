@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Advanced Gutenberg
- * Plugin URI: https://publishpress.com/advanced-gutenberg/
+ * Plugin Name: PublishPress Blocks
+ * Plugin URI: https://publishpress.com/blocks/
  * Description: Enhanced tools for Gutenberg editor
  * Version: 2.4.7
  * Tested up to: 5.5.1
@@ -63,7 +63,7 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
          */
         function advgb_show_error()
         {
-            echo '<div class="error"><p><strong>Advanced Gutenberg</strong> needs at least PHP 5.6.20 version, please update php before installing the plugin.</p></div>';
+            echo '<div class="error"><p><strong>PublishPress Blocks</strong> needs at least PHP 5.6.20 version, please update php before installing the plugin.</p></div>';
         }
     }
 
