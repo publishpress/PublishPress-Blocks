@@ -117,6 +117,12 @@ if (! function_exists('advg_language_domain_init')) {
                 plugin_dir_path(__FILE__) . 'languages/' . 'advanced-gutenberg' . '-' . get_locale() . '.mo'
             );
         }
+        
+        wp_set_script_translations(
+            'editor', 
+            'advanced-gutenberg', 
+            plugin_dir_path( __FILE__ ) . 'languages'
+        );
     }
 }
 add_action( 'init', 'advg_language_domain_init' );
