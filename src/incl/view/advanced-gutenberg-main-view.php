@@ -42,7 +42,7 @@ $tabs_data = array(
     </div>
     <div class="ju-left-panel">
         <div class="ju-logo">
-            <a href="https://publishpress.com/advanced-gutenberg/" target="_blank">
+            <a href="https://publishpress.com/blocks/" target="_blank">
                 <img src="<?php echo esc_url(plugins_url('assets/images/logo-white.png', dirname(dirname(__FILE__)))) ?>"
                      alt="<?php esc_html_e('PublishPress Blocks logo', 'advanced-gutenberg') ?>">
             </a>
