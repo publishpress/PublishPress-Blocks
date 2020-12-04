@@ -134,6 +134,6 @@ call_user_func(
     __FILE__,
     'advgb',
     'advanced-gutenberg',
-    'Advanced Gutenberg',
+    'PublishPress Blocks',
     'advanced-gutenberg'
 );
