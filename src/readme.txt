@@ -84,7 +84,7 @@ We also have [a support page](https://publishpress.com/publishpress-support/) fo
 
 = I don't see the new buttons or new tools in PublishPress Blocks =
 1. Make sure the plugin is activated :)
-2. All right, that could be because the new blocks are not activated to your account, please reach the menu Adv. Gutenberg > Profiles > Setup the blocks to activate
+2. All right, that could be because the new blocks are not activated to your account, please reach the menu PublishPress Blocks > Profiles > Setup the blocks to activate
 3. PublishPress Blocks is pretty well integrated with native Gutenberg, some blocks are new some other are original Gutenberg blocks but supercharged by new features
 4. You can define a custom color for the new blocks, by default it's a kind of purple color
 
@@ -101,7 +101,7 @@ The latest one, always! We're testing it with previous versions but the latest v
 Yes, totally free of charge.
 
 = Where can I see PublishPress Blocks in my WordPress admin panel? =
-In different places: in Gutenberg itself by adding some options to existing blocks, by adding new blocks, as new menu named Adv. Gutenberg
+In different places: in Gutenberg itself by adding some options to existing blocks, by adding new blocks, as new menu named PublishPress Blocks
 
 = Can I setup an edition profile per user? =
 Yes, this is possible, from the Gutenberg profile management, select some blocks, then you can give the profile to a single user or a user role
@@ -487,7 +487,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add : New option to define Advanced Gutenberg blocks icon color
  * Add : New custom CSS style edition interface
  * Add : Add a search engine to filter blocks in profile block attribution
- * Add : Add a dedicated left menu for all the configuration named Adv. Gutenberg
+ * Add : Add a dedicated left menu for all the configuration named PublishPress Blocks
  * Fix : Compatibility with Gutenberg version 3.6.2
  * Fix : Compile all blocks styles to a single file for faster load
 

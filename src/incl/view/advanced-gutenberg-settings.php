@@ -325,7 +325,7 @@ if (!isset($saved_settings['enable_columns_visual_guide'])) {
                         <label for="enable_columns_visual_guide"
                                class="advgb_qtip ju-setting-label"
                                data-qtip="<?php esc_attr_e(
-                                   'Enable border to materialize Adv. Gutenberg Column block',
+                                   'Enable border to materialize PublishPress Blocks Column block',
                                    'advanced-gutenberg'
                                ) ?>"
                         >

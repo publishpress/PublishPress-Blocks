@@ -1824,7 +1824,7 @@ msgid ""
 msgstr ""
 
 #: assets/blocks/blocks.js:16908
-msgid "Adv. Gutenberg Settings"
+msgid "PublishPress Blocks Settings"
 msgstr ""
 
 #: assets/blocks/blocks.js:16910 assets/blocks/blocks.js:16911
@@ -1848,7 +1848,7 @@ msgid "Large"
 msgstr ""
 
 #: assets/blocks/blocks.js:16971
-msgid "These settings will override the Adv. Gutenberg global settings."
+msgid "These settings will override the PublishPress Blocks global settings."
 msgstr ""
 
 #: assets/blocks/blocks.js:16975 incl/view/advanced-gutenberg-settings.php:286
@@ -1864,7 +1864,7 @@ msgid "Columns Visual Guide"
 msgstr ""
 
 #: assets/blocks/blocks.js:17006
-msgid "Border to materialize Adv. Gutenberg Column block"
+msgid "Border to materialize PublishPress Blocks Column block"
 msgstr ""
 
 #: assets/blocks/blocks.js:17321 assets/blocks/blocks.js:17358
@@ -3088,8 +3088,8 @@ msgstr ""
 
 #. Plugin Name of the plugin/theme
 #: incl/advanced-gutenberg-main.php:231 incl/advanced-gutenberg-main.php:1520
-msgid "Advanced Gutenberg"
-msgstr "Advanced Gutenberg"
+msgid "PublishPress Blocks"
+msgstr "PublishPress Blocks"
 
 #: incl/advanced-gutenberg-main.php:703 incl/advanced-gutenberg-main.php:870
 #: incl/advanced-gutenberg-main.php:1008 incl/advanced-gutenberg-main.php:1039
@@ -3180,13 +3180,13 @@ msgid "Captcha is empty"
 msgstr "Captcha ist leer"
 
 #: incl/advanced-gutenberg-main.php:1521
-msgid "Adv. Gutenberg"
-msgstr "Adv. Gutenberg"
+msgid "PublishPress Blocks"
+msgstr "PublishPress Blocks"
 
 #: incl/advanced-gutenberg-main.php:1592 incl/advanced-gutenberg-main.php:1593
 #: incl/view/advanced-gutenberg-profiles.php:33
-msgid "Advanced Gutenberg Profiles"
-msgstr "Advanced Gutenberg Profile"
+msgid "PublishPress Blocks Profiles"
+msgstr "PublishPress Blocks Profile"
 
 #: incl/advanced-gutenberg-main.php:1594
 #: incl/view/advanced-gutenberg-profile.php:96
@@ -3909,7 +3909,7 @@ msgstr "reCAPTCHA aktivieren"
 
 #: incl/view/advanced-gutenberg-email-form.php:177
 msgid ""
-"Use the Google reCaptcha to avoid spam in Adv. Gutenberg forms. Get "
+"Use the Google reCaptcha to avoid spam in PublishPress Blocks forms. Get "
 "credentials for your domain by registering"
 msgstr ""
 "Verwenden Sie das Google reCaptcha, um Spam in Adv zu vermeiden. Gutenberg-"
@@ -3994,7 +3994,7 @@ msgid "Translation"
 msgstr "Übersetzung"
 
 #: incl/view/advanced-gutenberg-main-view.php:47
-msgid "Advanced Gutenberg logo"
+msgid "PublishPress Blocks logo"
 msgstr ""
 
 #: incl/view/advanced-gutenberg-main-view.php:53
@@ -4168,9 +4168,9 @@ msgstr "Blockabstand"
 
 #: incl/view/advanced-gutenberg-settings.php:262
 msgid ""
-"Set color for blocks icons on admin, only apply to Advanced Gutenberg blocks"
+"Set color for blocks icons on admin, only apply to PublishPress Blocks"
 msgstr ""
-"Setzt die Farbe für Blocksymbole im Admin, gilt nur für Advanced Gutenberg "
+"Setzt die Farbe für Blocksymbole im Admin, gilt nur für PublishPress Blocks "
 "Blöcke"
 
 #: incl/view/advanced-gutenberg-settings.php:266
@@ -4196,7 +4196,7 @@ msgid "Reset to default"
 msgstr "Zurücksetzen"
 
 #: incl/view/advanced-gutenberg-settings.php:328
-msgid "Enable border to materialize Adv. Gutenberg Column block"
+msgid "Enable border to materialize PublishPress Blocks Column block"
 msgstr ""
 "Aktiviere die Grenze, um Adv zu materialisieren. Gutenberg-Säulenblock\t"
 
@@ -4211,7 +4211,7 @@ msgstr "Die Blockliste wurde aktualisiert"
 #: incl/view/advanced-gutenberg-translations.php:10
 msgid ""
 "The previous translation system has been removed. However, you can now "
-"translate Advanced Gutenberg into your language using the normal WordPress "
+"translate PublishPress Blocks into your language using the normal WordPress "
 "translation system. You can use the .mo and .po files located in the /wp-"
 "content/advanced-gutenberg/plugins/languages/ folder."
 msgstr ""
@@ -4344,7 +4344,7 @@ msgid "No hide notification"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "https://publishpress.com/advanced-gutenberg/"
+msgid "https://publishpress.com/blocks/"
 msgstr ""
 
 #. Description of the plugin/theme

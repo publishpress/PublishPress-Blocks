@@ -1,5 +1,5 @@
-# Translation of Plugins - Advanced Gutenberg &#8211; Blocks, Permissions, Layouts, Forms and CSS Styles - Stable (latest release) in Italian
-# This file is distributed under the same license as the Plugins - Advanced Gutenberg &#8211; Blocks, Permissions, Layouts, Forms and CSS Styles - Stable (latest release) package.
+# Translation of Plugins - PublishPress Blocks &#8211; Blocks, Permissions, Layouts, Forms and CSS Styles - Stable (latest release) in Italian
+# This file is distributed under the same license as the Plugins - PublishPress Blocks &#8211; Blocks, Permissions, Layouts, Forms and CSS Styles - Stable (latest release) package.
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2020-11-29 12:36:52+0000\n"
@@ -9,11 +9,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/3.0.0-alpha.2\n"
 "Language: it\n"
-"Project-Id-Version: Plugins - Advanced Gutenberg &#8211; Blocks, Permissions, Layouts, Forms and CSS Styles - Stable (latest release)\n"
+"Project-Id-Version: Plugins - PublishPress Blocks &#8211; Blocks, Permissions, Layouts, Forms and CSS Styles - Stable (latest release)\n"
 
 #. Plugin URI of the plugin
-msgid "https://publishpress.com/advanced-gutenberg/"
-msgstr "https://publishpress.com/advanced-gutenberg/"
+msgid "https://publishpress.com/blocks/"
+msgstr "https://publishpress.com/blocks/"
 
 #. Author URI of the plugin
 msgid "https://publishpress.com/"
@@ -50,12 +50,12 @@ msgid "If you have any questions, please send us a message through %1$sour conta
 msgstr "Se hai qualche domanda, inviaci un messaggio tramite la %1$snostra pagina di contatto%2$s."
 
 #: incl/view/advanced-gutenberg-translations.php:10
-msgid "The previous translation system has been removed. However, you can now translate Advanced Gutenberg into your language using the normal WordPress translation system. You can use the .mo and .po files located in the /wp-content/advanced-gutenberg/plugins/languages/ folder."
-msgstr "Il sistema di traduzione precedente è stato rimosso. Tuttavia, ora puoi tradurre Advanced Gutenberg nella tua lingua utilizzando il normale sistema di traduzione di WordPress. Puoi utilizzare i file .mo e .po che si trovano nella cartella /wp-content/advanced-gutenberg/plugins/languages/."
+msgid "The previous translation system has been removed. However, you can now translate PublishPress Blocks into your language using the normal WordPress translation system. You can use the .mo and .po files located in the /wp-content/advanced-gutenberg/plugins/languages/ folder."
+msgstr "Il sistema di traduzione precedente è stato rimosso. Tuttavia, ora puoi tradurre PublishPress Blocks nella tua lingua utilizzando il normale sistema di traduzione di WordPress. Puoi utilizzare i file .mo e .po che si trovano nella cartella /wp-content/advanced-gutenberg/plugins/languages/."
 
 #: incl/view/advanced-gutenberg-main-view.php:47
-msgid "Advanced Gutenberg logo"
-msgstr "Logo Advanced Gutenberg"
+msgid "PublishPress Blocks logo"
+msgstr "Logo PublishPress Blocks"
 
 #: assets/blocks/blocks.js:17415
 msgid "Enable RTL"
@@ -896,7 +896,7 @@ msgid "Image"
 msgstr "Immagine"
 
 #: assets/blocks/blocks.js:17006
-msgid "Border to materialize Adv. Gutenberg Column block"
+msgid "Border to materialize PublishPress Blocks Column block"
 msgstr "Bordo per materializzare il Blocco di colonne di Gutenberg avanzato"
 
 #: assets/blocks/blocks.js:17002
@@ -908,7 +908,7 @@ msgid "Change your editor width"
 msgstr "Cambia la larghezza del tuo editor"
 
 #: assets/blocks/blocks.js:16971
-msgid "These settings will override the Adv. Gutenberg global settings."
+msgid "These settings will override the PublishPress Blocks global settings."
 msgstr "Queste impostazioni avranno la precedenza sulle Impostazioni globali di Gutenberg avanzato."
 
 #: assets/blocks/blocks.js:16911
@@ -1315,7 +1315,7 @@ msgid "Enable columns visual guide"
 msgstr "Attiva la guida visiva delle colonne"
 
 #: incl/view/advanced-gutenberg-settings.php:327
-msgid "Enable border to materialize Adv. Gutenberg Column block"
+msgid "Enable border to materialize PublishPress Blocks Column block"
 msgstr "Abilita bordo per materializzare il blocco delle colonne Gutenberg avanzato"
 
 #: assets/blocks/blocks.js:17602
@@ -1583,7 +1583,7 @@ msgid "Server error. Try again later!"
 msgstr "Errore del server. Riprova più tardi!"
 
 #: incl/view/advanced-gutenberg-settings.php:261
-msgid "Set color for blocks icons on admin, only apply to Advanced Gutenberg blocks"
+msgid "Set color for blocks icons on admin, only apply to PublishPress Blocks"
 msgstr "Imposta il colore per le icone dei blocchi nell'amministrazione, si applica solo ai blocchi Gutenberg avanzati"
 
 #: incl/view/advanced-gutenberg-settings.php:180
@@ -1636,7 +1636,7 @@ msgid " here"
 msgstr " qui"
 
 #: incl/view/advanced-gutenberg-email-form.php:177
-msgid "Use the Google reCaptcha to avoid spam in Adv. Gutenberg forms. Get credentials for your domain by registering"
+msgid "Use the Google reCaptcha to avoid spam in PublishPress Blocks forms. Get credentials for your domain by registering"
 msgstr "Utilizza Google reCaptcha per evitare lo spam in Adv. Forme di Gutenberg. Ottieni le credenziali per il tuo dominio registrandoti"
 
 #: incl/view/advanced-gutenberg-email-form.php:160
@@ -3997,8 +3997,8 @@ msgid "Block Config"
 msgstr "Configurazione Blocco"
 
 #: incl/advanced-gutenberg-main.php:1521
-msgid "Adv. Gutenberg"
-msgstr "Adv. Gutenberg"
+msgid "PublishPress Blocks"
+msgstr "PublishPress Blocks"
 
 #: incl/advanced-gutenberg-main.php:1013
 msgid "Fail to verify nonce!"
@@ -4195,12 +4195,12 @@ msgstr "Elenco Blocchi"
 
 #. Plugin Name of the plugin
 #: incl/advanced-gutenberg-main.php:231 incl/advanced-gutenberg-main.php:1520
-msgid "Advanced Gutenberg"
-msgstr "Advanced Gutenberg"
+msgid "PublishPress Blocks"
+msgstr "PublishPress Blocks"
 
 #: assets/blocks/blocks.js:16908
-msgid "Adv. Gutenberg Settings"
-msgstr "Impostazioni Adv. Gutenberg"
+msgid "PublishPress Blocks Settings"
+msgstr "Impostazioni PublishPress Blocks"
 
 #: incl/advanced-gutenberg-main.php:1601
 msgid "No profiles found in trash"
@@ -4240,7 +4240,7 @@ msgstr "Nuovo profilo"
 
 #: incl/view/advanced-gutenberg-profiles.php:33
 #: incl/advanced-gutenberg-main.php:1592 incl/advanced-gutenberg-main.php:1593
-msgid "Advanced Gutenberg Profiles"
+msgid "PublishPress Blocks Profiles"
 msgstr "Profili Gutenberg Avanzato"
 
 #: incl/view/advanced-gutenberg-profile.php:290
