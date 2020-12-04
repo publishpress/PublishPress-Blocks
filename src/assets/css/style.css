@@ -35,6 +35,21 @@
   visibility: hidden;
 }
 
+.toplevel_page_advgb_main ul#adminmenu a.wp-has-current-submenu:after,
+.toplevel_page_advgb_main ul#adminmenu > li.current > a.current:after {
+  border-right-color: #483f6b;
+}
+
+.toplevel_page_advgb_main #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head,
+.toplevel_page_advgb_main #adminmenu .wp-menu-arrow,
+.toplevel_page_advgb_main #adminmenu .wp-menu-arrow div,
+.toplevel_page_advgb_main #adminmenu li.current a.menu-top,
+.toplevel_page_advgb_main #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu,
+.toplevel_page_advgb_main .folded #adminmenu li.current.menu-top,
+.toplevel_page_advgb_main .folded #adminmenu li.wp-has-current-submenu {
+  background: #655997;
+}
+
 .tabs {
   display: flex;
   position: relative;
@@ -406,7 +421,7 @@ input.ju-radiobox:focus {
   width: 300px;
   height: 100%;
   padding: 20px 0;
-  background-image: linear-gradient(to bottom, #6465e2, #60c3ef);
+  background-image: linear-gradient(to bottom, #655997, #483f6b);
   position: fixed;
   overflow: auto;
   z-index: 15;
@@ -426,7 +441,7 @@ input.ju-radiobox:focus {
   margin: 20px 10px;
   padding: 10px 5px;
   border: none;
-  border-bottom: 1px solid #6294e9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .ju-main-wrapper .ju-left-panel .ju-menu-search .ju-menu-search-icon {
@@ -496,7 +511,7 @@ input.ju-radiobox:focus {
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active {
   opacity: 1;
-  background-color: #4c79ca;
+  background-color: #483f6b;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active.with-submenus.expanded:after {
@@ -514,7 +529,7 @@ input.ju-radiobox:focus {
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs {
   display: block;
   max-height: 0;
-  background-color: #4c79ca;
+  background-color: #483f6b;
   -webkit-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
   -moz-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
   -ms-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;

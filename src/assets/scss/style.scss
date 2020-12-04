@@ -1,3 +1,5 @@
+@import "variables";
+
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab:hover:before, .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active:not(.expanded):before, .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs div.link-tab:hover:before, .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs div.link-tab.active:before {
     content: '';
     display: block;
@@ -33,6 +35,24 @@
 
 .hidden-item {
     visibility: hidden;
+}
+
+.toplevel_page_advgb_main {
+    
+    ul#adminmenu a.wp-has-current-submenu:after, 
+    ul#adminmenu > li.current > a.current:after {
+        border-right-color: $purple-hover;
+    }
+    
+    #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, 
+    #adminmenu .wp-menu-arrow, 
+    #adminmenu .wp-menu-arrow div, 
+    #adminmenu li.current a.menu-top, 
+    #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu, 
+    .folded #adminmenu li.current.menu-top, 
+    .folded #adminmenu li.wp-has-current-submenu {
+        background: $purple;
+    }
 }
 
 .tabs {
@@ -406,7 +426,7 @@ input.ju-radiobox:focus {
     width: 300px;
     height: 100%;
     padding: 20px 0;
-    background-image: linear-gradient(to bottom, #6465e2, #60c3ef);
+    background-image: linear-gradient(to bottom, $purple, $purple-hover);
     position: fixed;
     overflow: auto;
     z-index: 15;
@@ -426,7 +446,7 @@ input.ju-radiobox:focus {
     margin: 20px 10px;
     padding: 10px 5px;
     border: none;
-    border-bottom: 1px solid #6294e9;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
 }
 
 .ju-main-wrapper .ju-left-panel .ju-menu-search .ju-menu-search-icon {
@@ -496,7 +516,7 @@ input.ju-radiobox:focus {
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active {
     opacity: 1;
-    background-color: #4c79ca;
+    background-color: $purple-hover;
 }
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active.with-submenus.expanded:after {
@@ -514,7 +534,7 @@ input.ju-radiobox:focus {
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs {
     display: block;
     max-height: 0;
-    background-color: #4c79ca;
+    background-color: $purple-hover;
     -webkit-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
     -moz-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
     -ms-transition: max-height cubic-bezier(0.3, 1.1, 0.3, 1.1) 1s;
