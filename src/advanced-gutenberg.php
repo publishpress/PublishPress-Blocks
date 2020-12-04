@@ -119,7 +119,7 @@ if (! function_exists('advg_language_domain_init')) {
         }
         
         wp_set_script_translations(
-            'advgb_blocks', 
+            'editor', 
             'advanced-gutenberg', 
             plugin_dir_path( __FILE__ ) . 'languages'
         );
