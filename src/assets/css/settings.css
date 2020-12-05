@@ -1,3 +1,7 @@
+.advgb-export-actions .advgb-export-download {
+  margin-top: 10px;
+}
+
 .advgb-settings-header {
   margin: 40px auto;
 }
@@ -139,7 +143,7 @@ img.thumb-selected {
 .advgb-customstyles-items a.copy:hover,
 .advgb-customstyles-items a.trash:hover,
 .advgb-customstyles-items a.edit:hover {
-  color: #F98436 !important;
+  color: #483f6b !important;
 }
 
 .advgb-customstyles-items:hover a.trash,
@@ -152,9 +156,8 @@ img.thumb-selected {
   font-weight: bold;
 }
 
-.advgb-customstyles-new i {
-  vertical-align: text-bottom;
-  margin-right: 5px;
+.ju-right-panel .button .dashicons {
+  margin-top: 5px;
 }
 
 #savedInfo {
@@ -260,7 +263,7 @@ li.block-config-item .block-config-button {
   font-weight: bold;
 }
 
-#advgb-settings-container a:not(.button),
+.ju-right-panel a:not(.button),
 span.advgb-field-required {
   color: #655997;
 }

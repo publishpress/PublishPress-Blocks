@@ -151,6 +151,12 @@
     border-color: #fff;
 }
 
+// Button style
+#wpbody .ju-main-wrapper {
+ 
+    @include buttonAdmin();
+}
+
 .ju-rect-button {
     background-color: #fff;
     border: 1px solid $purple;

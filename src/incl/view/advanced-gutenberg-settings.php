@@ -347,7 +347,7 @@ if (!isset($saved_settings['enable_columns_visual_guide'])) {
 
             <div class="save-settings-block">
                 <button type="submit"
-                        class="ju-button orange-button waves-effect waves-light"
+                        class="button button-primary pp-primary-button"
                         id="save-settings"
                         name="save_settings"
                 >
