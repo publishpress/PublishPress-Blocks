@@ -194,7 +194,7 @@ if (!isset($saved_settings['enable_columns_visual_guide'])) {
                             >
                             <a target="_blank"
                                href="https://developers.google.com/maps/documentation/javascript/get-api-key"
-                               style="display: inline-block; margin: 15px; margin-left: 10px; color: #ff8726; line-height: 1;">
+                               style="display: inline-block; margin: 15px; margin-left: 10px; color: #655997; line-height: 1;">
                                 <?php esc_html_e('How to create a Google API Key', 'advanced-gutenberg') ?>
                             </a>
                         </span>

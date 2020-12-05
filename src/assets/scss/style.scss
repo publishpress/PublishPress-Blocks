@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab:hover:before, .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab a.link-tab.active:not(.expanded):before, .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs div.link-tab:hover:before, .ju-main-wrapper .ju-left-panel .tabs.ju-menu-tabs li.tab .ju-submenu-tabs div.link-tab.active:before {
     content: '';
@@ -106,7 +107,7 @@
     bottom: 0;
     height: 3px;
     will-change: left, right;
-    background-color: #ff8726;
+    background-color: $purple;
 }
 
 .ju-button {
@@ -139,21 +140,21 @@
 }
 
 .ju-button.orange-button {
-    background-color: #ff8726;
+    background-color: $purple;
     color: #fff;
-    border-color: #ff8726;
+    border-color: $purple;
 }
 
 .ju-button.orange-outline-button {
     background-color: #fff;
-    color: #ff8726;
+    color: $purple;
     border-color: #fff;
 }
 
 .ju-rect-button {
     background-color: #fff;
-    border: 1px solid #ff8726;
-    color: #ff8726;
+    border: 1px solid $purple;
+    color: $purple;
     cursor: pointer;
     padding: 10px 15px;
     -webkit-border-radius: 4px;
@@ -168,7 +169,7 @@
     text-transform: uppercase;
     cursor: pointer;
     font-size: 14px;
-    background-color: #2196f3;
+    background-color: $purple;
     color: #fff;
 }
 
@@ -189,7 +190,7 @@ input.ju-input {
 }
 
 input.ju-input:focus {
-    border-color: #ff8726;
+    border-color: $purple;
     box-shadow: none;
     outline: none;
 }
@@ -234,7 +235,7 @@ select.ju-select {
 }
 
 select.ju-select:focus {
-    border: 1px solid #ff8726;
+    border: 1px solid $purple;
     box-shadow: none;
     outline: none;
 }
@@ -437,9 +438,9 @@ input.ju-radiobox:focus {
 
 .ju-main-wrapper .ju-left-panel .ju-logo a {
     display: block;
-    width: 230px;
-    height: 50px;
-    margin: auto;
+    width: 250px;
+    height: 30px;
+    margin: 0 auto 25px;
 }
 
 .ju-main-wrapper .ju-left-panel .ju-menu-search {
@@ -606,7 +607,7 @@ input.ju-radiobox:focus {
 }
 
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab {
-    color: #ff8726;
+    color: $purple;
     background-color: #fff;
     font-weight: bold;
     padding: 20px;
@@ -626,7 +627,7 @@ input.ju-radiobox:focus {
 }
 
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs .indicator {
-    background-color: #ff8726;
+    background-color: $purple;
     z-index: 10;
 }
 
@@ -653,11 +654,11 @@ input.ju-radiobox:focus {
 }
 
 .ju-main-wrapper .ju-left-panel-toggle .ju-left-panel-toggle-icon {
-    color: #ff8726;
+    color: $purple;
 }
 
 .search-result {
-    outline: 1px solid #ff8726;
+    outline: 1px solid $purple;
     -webkit-box-shadow: 1px 1px 12px #ccc;
     -moz-box-shadow: 1px 1px 12px #ccc;
     box-shadow: 1px 1px 12px #ccc;
@@ -713,7 +714,7 @@ input.ju-radiobox:focus {
     }
 
     .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab.active {
-        background-color: #ff8726;
+        background-color: $purple;
         color: #fff;
     }
 

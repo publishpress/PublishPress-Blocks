@@ -101,7 +101,7 @@
   bottom: 0;
   height: 3px;
   will-change: left, right;
-  background-color: #ff8726;
+  background-color: #655997;
 }
 
 .ju-button {
@@ -134,21 +134,21 @@
 }
 
 .ju-button.orange-button {
-  background-color: #ff8726;
+  background-color: #655997;
   color: #fff;
-  border-color: #ff8726;
+  border-color: #655997;
 }
 
 .ju-button.orange-outline-button {
   background-color: #fff;
-  color: #ff8726;
+  color: #655997;
   border-color: #fff;
 }
 
 .ju-rect-button {
   background-color: #fff;
-  border: 1px solid #ff8726;
-  color: #ff8726;
+  border: 1px solid #655997;
+  color: #655997;
   cursor: pointer;
   padding: 10px 15px;
   -webkit-border-radius: 4px;
@@ -163,7 +163,7 @@
   text-transform: uppercase;
   cursor: pointer;
   font-size: 14px;
-  background-color: #2196f3;
+  background-color: #655997;
   color: #fff;
 }
 
@@ -184,7 +184,7 @@ input.ju-input {
 }
 
 input.ju-input:focus {
-  border-color: #ff8726;
+  border-color: #655997;
   box-shadow: none;
   outline: none;
 }
@@ -229,7 +229,7 @@ select.ju-select {
 }
 
 select.ju-select:focus {
-  border: 1px solid #ff8726;
+  border: 1px solid #655997;
   box-shadow: none;
   outline: none;
 }
@@ -432,9 +432,9 @@ input.ju-radiobox:focus {
 
 .ju-main-wrapper .ju-left-panel .ju-logo a {
   display: block;
-  width: 230px;
-  height: 50px;
-  margin: auto;
+  width: 250px;
+  height: 30px;
+  margin: 0 auto 25px;
 }
 
 .ju-main-wrapper .ju-left-panel .ju-menu-search {
@@ -601,7 +601,7 @@ input.ju-radiobox:focus {
 }
 
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab {
-  color: #ff8726;
+  color: #655997;
   background-color: #fff;
   font-weight: bold;
   padding: 20px;
@@ -621,7 +621,7 @@ input.ju-radiobox:focus {
 }
 
 .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs .indicator {
-  background-color: #ff8726;
+  background-color: #655997;
   z-index: 10;
 }
 
@@ -648,11 +648,11 @@ input.ju-radiobox:focus {
 }
 
 .ju-main-wrapper .ju-left-panel-toggle .ju-left-panel-toggle-icon {
-  color: #ff8726;
+  color: #655997;
 }
 
 .search-result {
-  outline: 1px solid #ff8726;
+  outline: 1px solid #655997;
   -webkit-box-shadow: 1px 1px 12px #ccc;
   -moz-box-shadow: 1px 1px 12px #ccc;
   box-shadow: 1px 1px 12px #ccc;
@@ -704,7 +704,7 @@ input.ju-radiobox:focus {
     flex: 0 0 100%;
   }
   .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab.active {
-    background-color: #ff8726;
+    background-color: #655997;
     color: #fff;
   }
   .ju-main-wrapper .ju-right-panel .tabs.ju-top-tabs li.tab a.link-tab.active:before {
