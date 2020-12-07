@@ -26984,9 +26984,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return {
                     avatarUrl: advgbBlocks.avatarHolder,
                     avatarID: undefined,
-                    name: __('Person Name', 'advanced-gutenberg'),
-                    position: __('Job Position', 'advanced-gutenberg'),
-                    desc: __('A little description about this person will show up here.', 'advanced-gutenberg')
+                    name: 'Person Name',
+                    position: 'Job Position',
+                    desc: 'A little description about this person will show up here.'
                 };
             })
         },
