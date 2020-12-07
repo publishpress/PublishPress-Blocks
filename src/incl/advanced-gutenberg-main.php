@@ -228,7 +228,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 array(
                     array(
                         'slug' => 'advgb-category',
-                        'title' => __('Advanced Gutenberg', 'advanced-gutenberg'),
+                        'title' => __('PublishPress Blocks', 'advanced-gutenberg'),
                     ),
                 )
             );
@@ -1517,8 +1517,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function registerMainMenu()
         {
             add_menu_page(
-                __('Advanced Gutenberg', 'advanced-gutenberg'),
-                __('Adv. Gutenberg', 'advanced-gutenberg'),
+                __('PublishPress Blocks', 'advanced-gutenberg'),
+                __('PublishPress Blocks', 'advanced-gutenberg'),
                 'manage_options',
                 'advgb_main',
                 array($this, 'advgbMainView'),
@@ -1589,8 +1589,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function registerAdvgbProfile()
         {
             $labels = array(
-                'name'               => __('Advanced Gutenberg Profiles', 'advanced-gutenberg'),  // Profile title
-                'singular_name'      => __('Advanced Gutenberg Profiles', 'advanced-gutenberg'),
+                'name'               => __('PublishPress Blocks Profiles', 'advanced-gutenberg'),  // Profile title
+                'singular_name'      => __('PublishPress Blocks Profiles', 'advanced-gutenberg'),
                 'add_new'            => __('New Profile', 'advanced-gutenberg'),                  // New profile menu title
                 'add_new_item'       => __('Add New Profile', 'advanced-gutenberg'),              // New profile title
                 'edit_item'          => __('Edit Profile', 'advanced-gutenberg'),                 // Edit profile title
@@ -2009,7 +2009,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Retrieve the active and inactive blocks for users regard to Advanced Gutenberg profiles
+         * Retrieve the active and inactive blocks for users regard to PublishPress Blocks profiles
          *
          * @return array
          */

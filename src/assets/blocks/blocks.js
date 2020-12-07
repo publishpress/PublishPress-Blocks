@@ -16905,7 +16905,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
     var sidebarName = "advgb-editor-sidebar";
-    var sidebarTitle = __('Adv. Gutenberg Settings', 'advanced-gutenberg');
+    var sidebarTitle = __('PublishPress Blocks Settings', 'advanced-gutenberg');
     var sidebarIcon = "layout";
     var VISUAL_GUIDE_SETTINGS = [{ label: __('Inherit from global settings', 'advanced-gutenberg'), value: '' }, { label: __('Enable', 'advanced-gutenberg'), value: 'enable' }, { label: __('Disable', 'advanced-gutenberg'), value: 'disable' }];
     var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings', 'advanced-gutenberg'), value: '' }, { label: __('Original', 'advanced-gutenberg'), value: 'default' }, { label: __('Large', 'advanced-gutenberg'), value: 'large' }, { label: __('Full width', 'advanced-gutenberg'), value: 'full' }];
@@ -16968,7 +16968,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'div',
                         { className: 'advgb-editor-sidebar-note' },
-                        __('These settings will override the Adv. Gutenberg global settings.', 'advanced-gutenberg')
+                        __('These settings will override the PublishPress Blocks global settings.', 'advanced-gutenberg')
                     ),
                     React.createElement(
                         PanelBody,
@@ -17003,7 +17003,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'div',
                             { className: 'advgb-editor-sidebar-note' },
-                            __('Border to materialize Adv. Gutenberg Column block', 'advanced-gutenberg')
+                            __('Border to materialize PublishPress Blocks Column block', 'advanced-gutenberg')
                         ),
                         React.createElement(
                             ButtonGroup,
@@ -27951,7 +27951,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 
                 if (missing_block) {
                     if (console !== undefined && console.error !== undefined) {
-                        console.error('Reloading editor by Advanced Gutenberg plugin');
+                        console.error('Reloading editor by PublishPress Blocks plugin');
                     }
                     // Replace original allowed block settings by our modified list
                     var new_settings = advgb_blocks_vars.original_settings;
