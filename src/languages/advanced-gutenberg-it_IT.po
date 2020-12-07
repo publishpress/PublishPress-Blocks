@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - PublishPress Blocks &#8211; Blocks, "
 "Permissions, Layouts, Forms and CSS Styles - Stable (latest release)\n"
-"POT-Creation-Date: 2020-12-04 13:07-0600\n"
-"PO-Revision-Date: 2020-12-04 13:14-0600\n"
+"POT-Creation-Date: 2020-12-07 17:20-0600\n"
+"PO-Revision-Date: 2020-12-07 17:24-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -269,12 +269,6 @@ msgstr ""
 msgid "Enter header…"
 msgstr "Inserisci intestazione…"
 
-#: assets/blocks/blocks.js:5683 assets/blocks/blocks.js:6199
-#: assets/blocks/blocks.js:6344 assets/blocks/blocks.js:16668
-#: assets/blocks/blocks.js:16672 assets/blocks/blocks.js:16676
-msgid "Header text"
-msgstr "Testo intestazione"
-
 #: assets/blocks/blocks.js:5737
 msgid "Accordion"
 msgstr "Fisarmonica"
@@ -487,10 +481,6 @@ msgstr "Sfocatura ombra"
 #: assets/blocks/blocks.js:24217
 msgid "Shadow spread"
 msgstr "Diffusione ombra"
-
-#: assets/blocks/blocks.js:7500
-msgid "PUSH THE BUTTON"
-msgstr "PREMERE IL PULSANTE"
 
 #: assets/blocks/blocks.js:7609
 msgid "New button with more styles."
@@ -759,14 +749,6 @@ msgstr "Inserisci titolo…"
 #: assets/blocks/blocks.js:8976
 msgid "Enter subtitle…"
 msgstr "Inserisci sottotitolo…"
-
-#: assets/blocks/blocks.js:9021
-msgid "Image title"
-msgstr "Titolo immagine"
-
-#: assets/blocks/blocks.js:9029
-msgid "Your subtitle here"
-msgstr "Il sottotitolo qui"
 
 #: assets/blocks/blocks.js:9082
 msgid "Advanced image/photo block with more options and styles."
@@ -1124,10 +1106,6 @@ msgstr "Orizzontale"
 msgid "Vertical"
 msgstr "Verticale"
 
-#: assets/blocks/blocks.js:11995
-msgid "Tab header"
-msgstr "Intestazione scheda"
-
 #: assets/blocks/blocks.js:12059 assets/blocks/blocks.js:12425
 msgid "Advanced Tabs"
 msgstr "Schede avanzate"
@@ -1286,11 +1264,6 @@ msgstr "Dimensione pulsante play"
 #: assets/blocks/blocks.js:13416
 msgid "Select image preview"
 msgstr "Seleziona l'anteprima dell'immagine"
-
-#: assets/blocks/blocks.js:13454 assets/blocks/blocks.js:13715
-#: assets/blocks/blocks.js:13787
-msgid "Your browser does not support HTML5 video."
-msgstr "Il tuo browser non supporta i video in HTML5."
 
 #: assets/blocks/blocks.js:13466
 msgid "Youtube/Vimeo video URL/ID…"
@@ -1706,29 +1679,6 @@ msgstr "Raggio bordo pulsante"
 msgid "Button position"
 msgstr "Posizione pulsante"
 
-#: assets/blocks/blocks.js:15727 assets/blocks/blocks.js:15896
-#: incl/advanced-gutenberg-main.php:1150
-#: incl/view/advanced-gutenberg-profile.php:171
-msgid "Name"
-msgstr "Nome"
-
-#: assets/blocks/blocks.js:15742 assets/blocks/blocks.js:15912
-#: assets/blocks/blocks.js:22780 assets/blocks/blocks.js:22845
-#: assets/blocks/blocks.js:22988 assets/blocks/blocks.js:23055
-msgid "Email address"
-msgstr "Indirizzo email"
-
-#: assets/blocks/blocks.js:15757 assets/blocks/blocks.js:15927
-#: incl/advanced-gutenberg-main.php:1153
-msgid "Message"
-msgstr "Messaggio"
-
-#: assets/blocks/blocks.js:15782 assets/blocks/blocks.js:15957
-#: assets/blocks/blocks.js:22803 assets/blocks/blocks.js:22869
-#: assets/blocks/blocks.js:23013 assets/blocks/blocks.js:23081
-msgid "Submit"
-msgstr "Invia"
-
 #: assets/blocks/blocks.js:15852
 msgid "Fastest way to create a contact form for your page."
 msgstr "Il modo più rapido per creare un modulo di contatto nella tua pagina."
@@ -1835,11 +1785,6 @@ msgstr "conteggio"
 msgid "increase"
 msgstr "aumenta"
 
-#: assets/blocks/blocks.js:16723 assets/blocks/blocks.js:16727
-#: assets/blocks/blocks.js:16731
-msgid "and description"
-msgstr "e descrizione"
-
 #: assets/blocks/blocks.js:16803
 msgid "Paragraph"
 msgstr "Paragrafo"
@@ -1944,12 +1889,6 @@ msgstr "Abilita RTL"
 #: assets/blocks/blocks.js:17425 incl/advanced-gutenberg-main.php:3607
 msgid "Hover Color"
 msgstr "Colore passaggio del mouse"
-
-#: assets/blocks/blocks.js:17477 assets/blocks/blocks.js:17776
-#: assets/blocks/blocks.js:17851 assets/blocks/blocks.js:17925
-#: assets/blocks/blocks.js:17999
-msgid "Slider image"
-msgstr "Immagine del visore"
 
 #: assets/blocks/blocks.js:17536 incl/view/advanced-gutenberg-profiles.php:63
 #: incl/view/advanced-gutenberg-profiles.php:121
@@ -2062,11 +2001,6 @@ msgstr "info"
 msgid "Click to change logo"
 msgstr "Fai clic per modificare il logo"
 
-#: assets/blocks/blocks.js:19644 assets/blocks/blocks.js:19681
-#: assets/blocks/blocks.js:20742 assets/blocks/blocks.js:20759
-msgid "Site logo"
-msgstr "Logo del sito"
-
 #: assets/blocks/blocks.js:19715 assets/blocks/blocks.js:26903
 #: assets/blocks/blocks.js:26917 assets/blocks/blocks.js:26931
 msgid "Text…"
@@ -2084,11 +2018,6 @@ msgstr "Testo benvenuto…"
 #: assets/blocks/blocks.js:19774 assets/blocks/blocks.js:20016
 msgid "Username label…"
 msgstr "Etichetta nome utente…"
-
-#: assets/blocks/blocks.js:19799 assets/blocks/blocks.js:20089
-#: assets/blocks/blocks.js:20851 assets/blocks/blocks.js:21083
-msgid "user@email.com"
-msgstr "utente@email.com"
 
 #: assets/blocks/blocks.js:19822
 msgid "Password label…"
@@ -2109,10 +2038,6 @@ msgstr "Password dimenticata…"
 #: assets/blocks/blocks.js:19973
 msgid "Back…"
 msgstr "Indietro…"
-
-#: assets/blocks/blocks.js:20041 assets/blocks/blocks.js:21042
-msgid "username"
-msgstr "nome utente"
 
 #: assets/blocks/blocks.js:20064
 msgid "Email label…"
@@ -2138,7 +2063,7 @@ msgstr "Modulo iniziale"
 msgid "Form that show on load."
 msgstr "Modulo da mostrare al caricamento."
 
-#: assets/blocks/blocks.js:20158 assets/blocks/blocks.js:20589
+#: assets/blocks/blocks.js:20158
 msgid "Login"
 msgstr "Accedi"
 
@@ -2247,57 +2172,6 @@ msgstr ""
 "La registrazione per il tuo sito web è attualmente disabilitata, abilitala "
 "nelle impostazioni generali di WordPress per utilizzare il modulo di "
 "registrazione"
-
-#: assets/blocks/blocks.js:20536
-msgid "Welcome back"
-msgstr "Bentornato"
-
-#: assets/blocks/blocks.js:20543
-msgid "Username or Email"
-msgstr "Nome utente o email"
-
-#: assets/blocks/blocks.js:20547
-msgid "Password"
-msgstr "Password"
-
-#: assets/blocks/blocks.js:20554 incl/view/advanced-gutenberg-profile.php:174
-msgid "Username"
-msgstr "Nome utente"
-
-#: assets/blocks/blocks.js:20561 incl/advanced-gutenberg-main.php:1151
-#: incl/advanced-gutenberg-main.php:2938 incl/advanced-gutenberg-main.php:2976
-#: incl/advanced-gutenberg-main.php:3014
-#: incl/view/advanced-gutenberg-profile.php:177
-msgid "Email"
-msgstr "Email"
-
-#: assets/blocks/blocks.js:20565
-msgid "Remember me"
-msgstr "Ricordami"
-
-#: assets/blocks/blocks.js:20569
-msgid "LOGIN"
-msgstr "ACCESSO"
-
-#: assets/blocks/blocks.js:20573
-msgid "REGISTER"
-msgstr "REGISTRATI"
-
-#: assets/blocks/blocks.js:20577
-msgid "Don't have an account?"
-msgstr "Non hai un account?"
-
-#: assets/blocks/blocks.js:20581
-msgid "Register now"
-msgstr "Registrati ora"
-
-#: assets/blocks/blocks.js:20585
-msgid "Register new account"
-msgstr "Registra un nuovo account"
-
-#: assets/blocks/blocks.js:20593
-msgid "Lost your password?"
-msgstr "Password dimenticata?"
 
 #: assets/blocks/blocks.js:20677
 msgid "Create a login form for your post/page."
@@ -2446,10 +2320,6 @@ msgstr ""
 #: assets/blocks/blocks.js:22285
 msgid "Add Google API Key"
 msgstr "Aggiungi chiave Google API"
-
-#: assets/blocks/blocks.js:22334
-msgid "Eiffel Tower"
-msgstr "Torre Eiffel"
 
 #: assets/blocks/blocks.js:22352
 msgid "Block for inserting location map."
@@ -2658,10 +2528,6 @@ msgstr "Autore"
 msgid "Number of items"
 msgstr "Numero di elementi"
 
-#: assets/blocks/blocks.js:24002 incl/view/advanced-gutenberg-profile.php:159
-msgid "Search"
-msgstr "Cerca"
-
 #: assets/blocks/blocks.js:24008 assets/blocks/blocks.js:24361
 msgid "Search Bar"
 msgstr "Barra di ricerca"
@@ -2709,14 +2575,6 @@ msgstr "Influenza sia l'input che il pulsante."
 #: assets/blocks/blocks.js:24170
 msgid "Hover Shadow"
 msgstr "Ombra passaggio del mouse"
-
-#: assets/blocks/blocks.js:24248 assets/blocks/blocks.js:24451
-msgid "Type to search…"
-msgstr "Digita per cercare…"
-
-#: assets/blocks/blocks.js:24298
-msgid "SEARCH"
-msgstr "CERCA"
 
 #: assets/blocks/blocks.js:24362
 msgid "Easy to create a search bar for your site."
@@ -3010,18 +2868,6 @@ msgstr "Fai clic per modificare l'avatar"
 msgid "Remove avatar"
 msgstr "Rimuovi avatar"
 
-#: assets/blocks/blocks.js:26987
-msgid "Person Name"
-msgstr "Nome della persona"
-
-#: assets/blocks/blocks.js:26988
-msgid "Job Position"
-msgstr "Posizione di lavoro"
-
-#: assets/blocks/blocks.js:26989
-msgid "A little description about this person will show up here."
-msgstr "Una piccola descrizione di questa persona verrà mostrata qui."
-
 #: assets/blocks/blocks.js:27102
 msgid "Block for creating personal or team/group information."
 msgstr "Blocco per creare informazioni personali, di squadra o gruppo."
@@ -3222,11 +3068,26 @@ msgstr "Contatto del sito"
 msgid "You have received a contact from your website."
 msgstr "Hai ricevuto un contatto dal tuo sito."
 
+#: incl/advanced-gutenberg-main.php:1150
+#: incl/view/advanced-gutenberg-profile.php:171
+msgid "Name"
+msgstr "Nome"
+
+#: incl/advanced-gutenberg-main.php:1151 incl/advanced-gutenberg-main.php:2938
+#: incl/advanced-gutenberg-main.php:2976 incl/advanced-gutenberg-main.php:3014
+#: incl/view/advanced-gutenberg-profile.php:177
+msgid "Email"
+msgstr "Email"
+
 #: incl/advanced-gutenberg-main.php:1152
 #: incl/view/advanced-gutenberg-profiles.php:75
 #: incl/view/advanced-gutenberg-profiles.php:133
 msgid "Date"
 msgstr "Data"
+
+#: incl/advanced-gutenberg-main.php:1153
+msgid "Message"
+msgstr "Messaggio"
 
 #: incl/advanced-gutenberg-main.php:1160
 msgid "Error while sending form. Try again!"
@@ -4129,6 +3990,14 @@ msgstr "Usa filtro ruoli"
 msgid "Search users"
 msgstr "Cerca utenti"
 
+#: incl/view/advanced-gutenberg-profile.php:159
+msgid "Search"
+msgstr "Cerca"
+
+#: incl/view/advanced-gutenberg-profile.php:174
+msgid "Username"
+msgstr "Nome utente"
+
 #: incl/view/advanced-gutenberg-profile.php:180
 msgid "Role"
 msgstr "Ruolo"
@@ -4435,6 +4304,93 @@ msgstr "PublishPress"
 #. Author URI of the plugin/theme
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
+
+#~ msgid "Header text"
+#~ msgstr "Testo intestazione"
+
+#~ msgid "PUSH THE BUTTON"
+#~ msgstr "PREMERE IL PULSANTE"
+
+#~ msgid "Image title"
+#~ msgstr "Titolo immagine"
+
+#~ msgid "Your subtitle here"
+#~ msgstr "Il sottotitolo qui"
+
+#~ msgid "Tab header"
+#~ msgstr "Intestazione scheda"
+
+#~ msgid "Your browser does not support HTML5 video."
+#~ msgstr "Il tuo browser non supporta i video in HTML5."
+
+#~ msgid "Email address"
+#~ msgstr "Indirizzo email"
+
+#~ msgid "Submit"
+#~ msgstr "Invia"
+
+#~ msgid "and description"
+#~ msgstr "e descrizione"
+
+#~ msgid "Slider image"
+#~ msgstr "Immagine del visore"
+
+#~ msgid "Site logo"
+#~ msgstr "Logo del sito"
+
+#~ msgid "user@email.com"
+#~ msgstr "utente@email.com"
+
+#~ msgid "username"
+#~ msgstr "nome utente"
+
+#~ msgid "Welcome back"
+#~ msgstr "Bentornato"
+
+#~ msgid "Username or Email"
+#~ msgstr "Nome utente o email"
+
+#~ msgid "Password"
+#~ msgstr "Password"
+
+#~ msgid "Remember me"
+#~ msgstr "Ricordami"
+
+#~ msgid "LOGIN"
+#~ msgstr "ACCESSO"
+
+#~ msgid "REGISTER"
+#~ msgstr "REGISTRATI"
+
+#~ msgid "Don't have an account?"
+#~ msgstr "Non hai un account?"
+
+#~ msgid "Register now"
+#~ msgstr "Registrati ora"
+
+#~ msgid "Register new account"
+#~ msgstr "Registra un nuovo account"
+
+#~ msgid "Lost your password?"
+#~ msgstr "Password dimenticata?"
+
+#~ msgid "Eiffel Tower"
+#~ msgstr "Torre Eiffel"
+
+#~ msgid "Type to search…"
+#~ msgstr "Digita per cercare…"
+
+#~ msgid "SEARCH"
+#~ msgstr "CERCA"
+
+#~ msgid "Person Name"
+#~ msgstr "Nome della persona"
+
+#~ msgid "Job Position"
+#~ msgstr "Posizione di lavoro"
+
+#~ msgid "A little description about this person will show up here."
+#~ msgstr "Una piccola descrizione di questa persona verrà mostrata qui."
 
 #~ msgid "advanced-gutenberg"
 #~ msgstr "gutenberg avanzato"
