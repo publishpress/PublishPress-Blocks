@@ -124,11 +124,11 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 == Changelog ==
 
 = 2.5.0 =
- * Rename plugin to "PublishPress Blocks"
+ * Add: "PublishPress Blocks" as new plugin's name
+ * Add: New admin design
  * Add: Support for javascript translations
  * Add: More translation strings for Italian
  * Add: More translation strings for Spanish (Spain)
- * Add: New admin design
  * Fix: strings that are saved as static content
  
 = 2.4.7 =
