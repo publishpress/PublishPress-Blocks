@@ -7497,7 +7497,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         text: {
             source: 'children',
             selector: 'a',
-            default: __('PUSH THE BUTTON', 'advanced-gutenberg')
+            default: 'PUSH THE BUTTON'
         },
         bgColor: {
             type: 'string'
