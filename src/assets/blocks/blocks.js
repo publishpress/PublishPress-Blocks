@@ -22777,7 +22777,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-form-field" },
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-form-input",
-                                    value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                                    value: emailLabel ? emailLabel : 'Email address',
                                     style: {
                                         backgroundColor: bgColor,
                                         color: textColor,
@@ -22800,7 +22800,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderRadius: submitRadius
                                             }
                                         },
-                                        submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                        submitLabel ? submitLabel : 'Submit'
                                     )
                                 )
                             ),
@@ -22842,7 +22842,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-form-field advgb-form-field-full" },
                                     React.createElement("input", { type: "text", disabled: true,
                                         className: "advgb-form-input",
-                                        value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                                        value: emailLabel ? emailLabel : 'Email address',
                                         style: {
                                             backgroundColor: bgColor,
                                             color: textColor,
@@ -22866,7 +22866,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderRadius: submitRadius
                                             }
                                         },
-                                        submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                        submitLabel ? submitLabel : 'Submit'
                                     )
                                 )
                             )
@@ -22985,7 +22985,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                            placeholder: emailLabel ? emailLabel : 'Email address',
                             style: {
                                 backgroundColor: bgColor,
                                 color: textColor,
@@ -23010,7 +23010,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                submitLabel ? submitLabel : 'Submit'
                             )
                         )
                     ),
@@ -23052,7 +23052,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("input", { type: "email",
                                 className: "advgb-form-input advgb-form-input-email",
-                                placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                                placeholder: emailLabel ? emailLabel : 'Email address',
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -23078,7 +23078,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                submitLabel ? submitLabel : 'Submit'
                             )
                         )
                     ),
