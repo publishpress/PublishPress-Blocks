@@ -3,7 +3,7 @@ Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.6
-Stable tag: 2.5.0b2
+Stable tag: 2.5.0b3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -126,9 +126,10 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 = 2.5.0 =
  * Rename plugin to "PublishPress Blocks"
  * Add: Support for javascript translations
- * Add: Complete Italian translation
- * Add: More translation strings for Spanish (es_ES)
+ * Add: More translation strings for Italian
+ * Add: More translation strings for Spanish (Spain)
  * Add: New admin design
+ * Fix: strings that are saved as static content
  
 = 2.4.7 =
  * Fix: Global columns visual guide

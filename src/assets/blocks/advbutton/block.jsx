@@ -371,7 +371,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         text: {
             source: 'children',
             selector: 'a',
-            default: __( 'PUSH THE BUTTON', 'advanced-gutenberg' ),
+            default: 'PUSH THE BUTTON',
         },
         bgColor: {
             type: 'string',
