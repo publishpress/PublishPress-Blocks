@@ -22331,7 +22331,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         markerTitle: {
             type: 'string',
-            default: __('Eiffel Tower', 'advanced-gutenberg')
+            default: 'Eiffel Tower'
         },
         markerDesc: {
             type: 'string',
