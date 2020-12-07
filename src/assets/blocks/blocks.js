@@ -9018,7 +9018,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         title: {
             type: 'string',
-            default: __('Image title', 'advanced-gutenberg')
+            default: 'Image title'
         },
         titleColor: {
             type: 'string',
@@ -9026,7 +9026,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         subtitle: {
             type: 'string',
-            default: __('Your subtitle here', 'advanced-gutenberg')
+            default: 'Your subtitle here'
         },
         subtitleColor: {
             type: 'string',
