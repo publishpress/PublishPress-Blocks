@@ -16665,15 +16665,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             headerText: {
                 type: 'string',
-                default: __('Header text', 'advanced-gutenberg')
+                default: 'Header text'
             },
             headerText2: {
                 type: 'string',
-                default: __('Header text', 'advanced-gutenberg')
+                default: 'Header text'
             },
             headerText3: {
                 type: 'string',
-                default: __('Header text', 'advanced-gutenberg')
+                default: 'Header text'
             },
             headerTextColor: {
                 type: 'string'
@@ -16720,15 +16720,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             descText: {
                 type: 'string',
-                default: __('and description', 'advanced-gutenberg')
+                default: 'and description'
             },
             descText2: {
                 type: 'string',
-                default: __('and description', 'advanced-gutenberg')
+                default: 'and description'
             },
             descText3: {
                 type: 'string',
-                default: __('and description', 'advanced-gutenberg')
+                default: 'and description'
             },
             descTextColor: {
                 type: 'string'
