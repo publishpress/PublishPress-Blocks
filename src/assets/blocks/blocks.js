@@ -5680,7 +5680,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var accordionAttrs = {
         header: {
             type: 'string',
-            default: __('Header text', 'advanced-gutenberg')
+            default: 'Header text'
         },
         headerBgColor: {
             type: 'string',
@@ -6196,7 +6196,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             header: {
                 type: 'string',
-                default: __('Header text', 'advanced-gutenberg')
+                default: 'Header text'
             },
             headerBgColor: {
                 type: 'string',
@@ -6341,7 +6341,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: {
                 header: {
                     type: 'string',
-                    default: __('Header text', 'advanced-gutenberg')
+                    default: 'Header text'
                 },
                 headerBgColor: {
                     type: 'string',
