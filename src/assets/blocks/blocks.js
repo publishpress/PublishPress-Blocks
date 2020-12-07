@@ -23999,7 +23999,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onSplit: function onSplit() {
                                 return null;
                             },
-                            placeholder: __('Search', 'advanced-gutenberg'),
+                            placeholder: 'Search',
                             keepPlaceholderOnFocus: true
                         })
                     )
@@ -24245,7 +24245,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 !searchIconOnRight && searchBarIcon,
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-search-bar-input",
-                                    value: searchPlaceholder ? searchPlaceholder : __('Type to search…', 'advanced-gutenberg')
+                                    value: searchPlaceholder ? searchPlaceholder : 'Type to search…'
                                 }),
                                 searchIconOnRight && searchBarIcon
                             ),
@@ -24295,7 +24295,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         searchButtonText: {
             type: 'string',
-            default: __('SEARCH', 'advanced-gutenberg')
+            default: 'SEARCH'
         },
         searchButtonTextColor: {
             type: 'string'
@@ -24448,7 +24448,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement("input", { type: "text",
                                 className: "advgb-search-bar-input",
                                 name: "s",
-                                placeholder: searchPlaceholder ? searchPlaceholder : __('Type to search…', 'advanced-gutenberg')
+                                placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
                             }),
                             searchIconOnRight && searchBarIcon
                         ),
