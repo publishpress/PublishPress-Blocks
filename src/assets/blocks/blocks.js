@@ -13451,7 +13451,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         muted: muted
                                     },
                                     React.createElement("source", { src: videoURL }),
-                                    __('Your browser does not support HTML5 video.', 'advanced-gutenberg')
+                                    'Your browser does not support HTML5 video.'
                                 )
                             ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
                         ),
@@ -13712,7 +13712,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             playsInline: playsinline
                         },
                         React.createElement("source", { src: videoURL }),
-                        __('Your browser does not support HTML5 video.', 'advanced-gutenberg')
+                        'Your browser does not support HTML5 video.'
                     ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
                 ),
                 !!openInLightbox && React.createElement(
@@ -13784,7 +13784,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 controls: true
                             },
                             React.createElement("source", { src: videoURL }),
-                            __('Your browser does not support HTML5 video.', 'advanced-gutenberg')
+                            'Your browser does not support HTML5 video.'
                         ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
                     ),
                     !!openInLightbox && React.createElement(
