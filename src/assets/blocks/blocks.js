@@ -15724,7 +15724,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: nameLabel ? nameLabel : __('Name', 'advanced-gutenberg'),
+                                value: nameLabel ? nameLabel : 'Name',
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -15739,7 +15739,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                                value: emailLabel ? emailLabel : 'Email address',
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -15754,7 +15754,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("textarea", { className: "advgb-form-input",
                                 disabled: true,
-                                value: msgLabel ? msgLabel : __('Message', 'advanced-gutenberg'),
+                                value: msgLabel ? msgLabel : 'Message',
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -15779,7 +15779,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                submitLabel ? submitLabel : 'Submit'
                             )
                         )
                     )
@@ -15893,7 +15893,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "text",
                             className: "advgb-form-input advgb-form-input-name",
-                            placeholder: nameLabel ? nameLabel : __('Name', 'advanced-gutenberg'),
+                            placeholder: nameLabel ? nameLabel : 'Name',
                             name: "contact_name",
                             style: {
                                 backgroundColor: bgColor,
@@ -15909,7 +15909,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                            placeholder: emailLabel ? emailLabel : 'Email address',
                             name: "contact_email",
                             style: {
                                 backgroundColor: bgColor,
@@ -15924,7 +15924,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-form-field advgb-form-field-full" },
                         React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                            placeholder: msgLabel ? msgLabel : __('Message', 'advanced-gutenberg'),
+                            placeholder: msgLabel ? msgLabel : 'Message',
                             name: "contact_message",
                             style: {
                                 backgroundColor: bgColor,
@@ -15954,7 +15954,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderRadius: submitRadius
                                 }
                             },
-                            submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                            submitLabel ? submitLabel : 'Submit'
                         )
                     )
                 )
