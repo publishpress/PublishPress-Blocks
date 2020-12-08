@@ -442,16 +442,9 @@ input.ju-radiobox:focus {
     box-shadow: 10px 20px 20px 0 rgba(186, 192, 213, 0.1);
 }
 
-.ju-main-wrapper .ju-left-panel .ju-logo a {
-    display: block;
-    width: 250px;
-    height: 30px;
-    margin: 0 auto 25px;
-}
-
 .ju-main-wrapper .ju-left-panel .ju-menu-search {
-    margin: 20px 10px;
-    padding: 10px 5px;
+    margin: 0 10px 20px;
+    padding: 0 5px 10px;
     border: none;
     border-bottom: 1px solid rgba(255,255,255,0.3);
 }
@@ -588,6 +581,84 @@ input.ju-radiobox:focus {
     font-size: 14px;
     margin-left: 300px;
     background-color: #f3f6fa;
+    
+    // PublishPress Footer
+    footer {
+        text-align: center;
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+        padding-top: 30px;
+        
+        .ppma-rating {
+            font-size: 12px;
+            margin-bottom: 10px;
+            margin-top: 30px;
+            
+            a, 
+            a:visited, 
+            a:active,
+            a:hover {
+                text-decoration: none;
+            }
+        }
+        
+        * {
+            color: #777;
+        }
+        
+        hr {
+            border: 0;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #fafafa;
+        }
+        
+        > nav ul {
+            list-style: none;
+            
+            > li {
+                display: inline-block;
+                
+                &:not(:first-child) {
+                    margin-left: 15px;
+                }
+                
+                > a {
+                    font-weight: bold;
+                    text-decoration: none;
+                    
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        color: $purple;
+                    }
+                    
+                    span.dashicons {
+                    
+                        &:hover,
+                        &:focus,
+                        &:active {
+                            color: $purple;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .dashicons.dashicons-star-filled {
+            line-height: 18px;
+            font-size: 12px;
+            width: 12px;
+            height: 12px;
+            color: #FFB300 !important;
+            -webkit-transition: color 200ms ease-in-out;
+            -moz-transition: color 200ms ease-in-out;
+            -o-transition: color 200ms ease-in-out;
+            transition: color 200ms ease-in-out;
+        }
+        
+        .ppma-pressshack-logo img {
+            width: 170px;
+        }
+    }
 }
 
 .ju-main-wrapper .ju-right-panel:before {

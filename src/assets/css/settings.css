@@ -263,7 +263,7 @@ li.block-config-item .block-config-button {
   font-weight: bold;
 }
 
-.ju-right-panel a:not(.button),
+.ju-right-panel a:not(.button):not(.ag-footer-link),
 span.advgb-field-required {
   color: #655997;
 }
