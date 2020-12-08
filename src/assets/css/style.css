@@ -661,6 +661,11 @@ input.ju-radiobox:focus {
   border-bottom: 1px solid #fafafa;
 }
 
+.ju-main-wrapper .ju-right-panel footer > nav {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 .ju-main-wrapper .ju-right-panel footer > nav ul {
   list-style: none;
 }

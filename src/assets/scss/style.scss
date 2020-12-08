@@ -611,32 +611,37 @@ input.ju-radiobox:focus {
             border-bottom: 1px solid #fafafa;
         }
         
-        > nav ul {
-            list-style: none;
+        > nav {
+            margin-top: 1em;
+            margin-bottom: 1em;
             
-            > li {
-                display: inline-block;
-                
-                &:not(:first-child) {
-                    margin-left: 15px;
-                }
-                
-                > a {
-                    font-weight: bold;
-                    text-decoration: none;
-                    
-                    &:hover,
-                    &:focus,
-                    &:active {
-                        color: $purple;
+            ul {
+                list-style: none;
+
+                > li {
+                    display: inline-block;
+
+                    &:not(:first-child) {
+                        margin-left: 15px;
                     }
-                    
-                    span.dashicons {
-                    
+
+                    > a {
+                        font-weight: bold;
+                        text-decoration: none;
+
                         &:hover,
                         &:focus,
                         &:active {
                             color: $purple;
+                        }
+
+                        span.dashicons {
+
+                            &:hover,
+                            &:focus,
+                            &:active {
+                                color: $purple;
+                            }
                         }
                     }
                 }
