@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Advanced Gutenberg
- * Plugin URI: https://publishpress.com/advanced-gutenberg/
+ * Plugin Name: PublishPress Blocks
+ * Plugin URI: https://publishpress.com/blocks/
  * Description: Enhanced tools for Gutenberg editor
- * Version: 2.4.7
- * Tested up to: 5.5.1
+ * Version: 2.5.0
+ * Tested up to: 5.6
  * Author: PublishPress
  * Author URI: https://publishpress.com/
  * License: GPL2
@@ -63,7 +63,7 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
          */
         function advgb_show_error()
         {
-            echo '<div class="error"><p><strong>Advanced Gutenberg</strong> needs at least PHP 5.6.20 version, please update php before installing the plugin.</p></div>';
+            echo '<div class="error"><p><strong>PublishPress Blocks</strong> needs at least PHP 5.6.20 version, please update php before installing the plugin.</p></div>';
         }
     }
 
@@ -76,7 +76,7 @@ if (version_compare(PHP_VERSION, '5.6.20', '<')) {
 }
 
 if (! defined('ADVANCED_GUTENBERG_VERSION')) {
-    define('ADVANCED_GUTENBERG_VERSION', '2.4.7');
+    define('ADVANCED_GUTENBERG_VERSION', '2.5.0');
 }
 
 if (! defined('ADVANCED_GUTENBERG_PLUGIN')) {
@@ -117,6 +117,12 @@ if (! function_exists('advg_language_domain_init')) {
                 plugin_dir_path(__FILE__) . 'languages/' . 'advanced-gutenberg' . '-' . get_locale() . '.mo'
             );
         }
+        
+        wp_set_script_translations(
+            'editor', 
+            'advanced-gutenberg', 
+            plugin_dir_path( __FILE__ ) . 'languages'
+        );
     }
 }
 add_action( 'init', 'advg_language_domain_init' );
@@ -128,6 +134,6 @@ call_user_func(
     __FILE__,
     'advgb',
     'advanced-gutenberg',
-    'Advanced Gutenberg',
+    'PublishPress Blocks',
     'advanced-gutenberg'
 );

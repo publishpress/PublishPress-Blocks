@@ -5680,7 +5680,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var accordionAttrs = {
         header: {
             type: 'string',
-            default: __('Header text', 'advanced-gutenberg')
+            default: 'Header text'
         },
         headerBgColor: {
             type: 'string',
@@ -6196,7 +6196,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             header: {
                 type: 'string',
-                default: __('Header text', 'advanced-gutenberg')
+                default: 'Header text'
             },
             headerBgColor: {
                 type: 'string',
@@ -6341,7 +6341,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: {
                 header: {
                     type: 'string',
-                    default: __('Header text', 'advanced-gutenberg')
+                    default: 'Header text'
                 },
                 headerBgColor: {
                     type: 'string',
@@ -7497,7 +7497,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         text: {
             source: 'children',
             selector: 'a',
-            default: __('PUSH THE BUTTON', 'advanced-gutenberg')
+            default: 'PUSH THE BUTTON'
         },
         bgColor: {
             type: 'string'
@@ -9018,7 +9018,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         title: {
             type: 'string',
-            default: __('Image title', 'advanced-gutenberg')
+            default: 'Image title'
         },
         titleColor: {
             type: 'string',
@@ -9026,7 +9026,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         subtitle: {
             type: 'string',
-            default: __('Your subtitle here', 'advanced-gutenberg')
+            default: 'Your subtitle here'
         },
         subtitleColor: {
             type: 'string',
@@ -11992,7 +11992,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 insertBlock(tabItemBlock, attributes.tabHeaders.length, clientId);
                 setAttributes({
-                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), [__('Tab header', 'advanced-gutenberg')])
+                    tabHeaders: [].concat(_toConsumableArray(attributes.tabHeaders), ['Tab header'])
                 });
                 this.props.resetOrder();
             }
@@ -13451,7 +13451,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         muted: muted
                                     },
                                     React.createElement("source", { src: videoURL }),
-                                    __('Your browser does not support HTML5 video.', 'advanced-gutenberg')
+                                    'Your browser does not support HTML5 video.'
                                 )
                             ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
                         ),
@@ -13712,7 +13712,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             playsInline: playsinline
                         },
                         React.createElement("source", { src: videoURL }),
-                        __('Your browser does not support HTML5 video.', 'advanced-gutenberg')
+                        'Your browser does not support HTML5 video.'
                     ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
                 ),
                 !!openInLightbox && React.createElement(
@@ -13784,7 +13784,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 controls: true
                             },
                             React.createElement("source", { src: videoURL }),
-                            __('Your browser does not support HTML5 video.', 'advanced-gutenberg')
+                            'Your browser does not support HTML5 video.'
                         ) || !videoSourceType && React.createElement("div", { style: { width: videoWidth, height: videoHeight } })
                     ),
                     !!openInLightbox && React.createElement(
@@ -15724,7 +15724,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: nameLabel ? nameLabel : __('Name', 'advanced-gutenberg'),
+                                value: nameLabel ? nameLabel : 'Name',
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -15739,7 +15739,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-half" },
                             React.createElement("input", { type: "text", disabled: true,
                                 className: "advgb-form-input",
-                                value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                                value: emailLabel ? emailLabel : 'Email address',
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -15754,7 +15754,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("textarea", { className: "advgb-form-input",
                                 disabled: true,
-                                value: msgLabel ? msgLabel : __('Message', 'advanced-gutenberg'),
+                                value: msgLabel ? msgLabel : 'Message',
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -15779,7 +15779,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                submitLabel ? submitLabel : 'Submit'
                             )
                         )
                     )
@@ -15893,7 +15893,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "text",
                             className: "advgb-form-input advgb-form-input-name",
-                            placeholder: nameLabel ? nameLabel : __('Name', 'advanced-gutenberg'),
+                            placeholder: nameLabel ? nameLabel : 'Name',
                             name: "contact_name",
                             style: {
                                 backgroundColor: bgColor,
@@ -15909,7 +15909,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field advgb-form-field-half" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                            placeholder: emailLabel ? emailLabel : 'Email address',
                             name: "contact_email",
                             style: {
                                 backgroundColor: bgColor,
@@ -15924,7 +15924,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         "div",
                         { className: "advgb-form-field advgb-form-field-full" },
                         React.createElement("textarea", { className: "advgb-form-input advgb-form-input-msg",
-                            placeholder: msgLabel ? msgLabel : __('Message', 'advanced-gutenberg'),
+                            placeholder: msgLabel ? msgLabel : 'Message',
                             name: "contact_message",
                             style: {
                                 backgroundColor: bgColor,
@@ -15954,7 +15954,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     borderRadius: submitRadius
                                 }
                             },
-                            submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                            submitLabel ? submitLabel : 'Submit'
                         )
                     )
                 )
@@ -16665,15 +16665,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         attributes: {
             headerText: {
                 type: 'string',
-                default: __('Header text', 'advanced-gutenberg')
+                default: 'Header text'
             },
             headerText2: {
                 type: 'string',
-                default: __('Header text', 'advanced-gutenberg')
+                default: 'Header text'
             },
             headerText3: {
                 type: 'string',
-                default: __('Header text', 'advanced-gutenberg')
+                default: 'Header text'
             },
             headerTextColor: {
                 type: 'string'
@@ -16720,15 +16720,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             descText: {
                 type: 'string',
-                default: __('and description', 'advanced-gutenberg')
+                default: 'and description'
             },
             descText2: {
                 type: 'string',
-                default: __('and description', 'advanced-gutenberg')
+                default: 'and description'
             },
             descText3: {
                 type: 'string',
-                default: __('and description', 'advanced-gutenberg')
+                default: 'and description'
             },
             descTextColor: {
                 type: 'string'
@@ -16905,7 +16905,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
     var sidebarName = "advgb-editor-sidebar";
-    var sidebarTitle = __('Adv. Gutenberg Settings', 'advanced-gutenberg');
+    var sidebarTitle = __('PublishPress Blocks Settings', 'advanced-gutenberg');
     var sidebarIcon = "layout";
     var VISUAL_GUIDE_SETTINGS = [{ label: __('Inherit from global settings', 'advanced-gutenberg'), value: '' }, { label: __('Enable', 'advanced-gutenberg'), value: 'enable' }, { label: __('Disable', 'advanced-gutenberg'), value: 'disable' }];
     var EDITOR_WIDTH_SETTINGS = [{ label: __('Inherit from global settings', 'advanced-gutenberg'), value: '' }, { label: __('Original', 'advanced-gutenberg'), value: 'default' }, { label: __('Large', 'advanced-gutenberg'), value: 'large' }, { label: __('Full width', 'advanced-gutenberg'), value: 'full' }];
@@ -16968,7 +16968,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'div',
                         { className: 'advgb-editor-sidebar-note' },
-                        __('These settings will override the Adv. Gutenberg global settings.', 'advanced-gutenberg')
+                        __('These settings will override the PublishPress Blocks global settings.', 'advanced-gutenberg')
                     ),
                     React.createElement(
                         PanelBody,
@@ -17003,7 +17003,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             'div',
                             { className: 'advgb-editor-sidebar-note' },
-                            __('Border to materialize Adv. Gutenberg Column block', 'advanced-gutenberg')
+                            __('Border to materialize PublishPress Blocks Column block', 'advanced-gutenberg')
                         ),
                         React.createElement(
                             ButtonGroup,
@@ -17474,7 +17474,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-image-slider-item", key: index },
                                     React.createElement("img", { src: image.url,
                                         className: "advgb-image-slider-img",
-                                        alt: __('Slider image', 'advanced-gutenberg'),
+                                        alt: 'Slider image',
                                         style: {
                                             width: fullWidth ? '100%' : width,
                                             height: autoHeight ? 'auto' : height
@@ -17773,7 +17773,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-image-slider-item", key: index },
                             React.createElement("img", { src: image.url,
                                 className: "advgb-image-slider-img",
-                                alt: __('Slider image', 'advanced-gutenberg'),
+                                alt: 'Slider image',
                                 style: {
                                     width: fullWidth ? '100%' : width,
                                     height: autoHeight ? 'auto' : height
@@ -17848,7 +17848,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-image-slider-item", key: index },
                                 React.createElement("img", { src: image.url,
                                     className: "advgb-image-slider-img",
-                                    alt: __('Slider image', 'advanced-gutenberg'),
+                                    alt: 'Slider image',
                                     style: {
                                         width: fullWidth ? '100%' : width,
                                         height: autoHeight ? 'auto' : height
@@ -17922,7 +17922,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-image-slider-item", key: index },
                                 React.createElement("img", { src: image.url,
                                     className: "advgb-image-slider-img",
-                                    alt: __('Slider image', 'advanced-gutenberg'),
+                                    alt: 'Slider image',
                                     style: {
                                         width: fullWidth ? '100%' : width,
                                         height: autoHeight ? 'auto' : height
@@ -17996,7 +17996,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-image-slider-item", key: index },
                                 React.createElement("img", { src: image.url,
                                     className: "advgb-image-slider-img",
-                                    alt: __('Slider image', 'advanced-gutenberg'),
+                                    alt: 'Slider image',
                                     style: {
                                         width: fullWidth ? '100%' : width,
                                         height: autoHeight ? 'auto' : height
@@ -19641,7 +19641,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement("img", { className: "advgb-lores-form-logo",
                                         onClick: open,
                                         src: logoImg,
-                                        alt: __('Site logo', 'advanced-gutenberg'),
+                                        alt: 'Site logo',
                                         style: {
                                             width: logoWidth ? logoWidth + 'px' : undefined,
                                             cursor: 'pointer'
@@ -19678,7 +19678,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     React.createElement("img", { className: "advgb-lores-form-logo",
                                         onClick: open,
                                         src: registerLogoImg,
-                                        alt: __('Site logo', 'advanced-gutenberg'),
+                                        alt: 'Site logo',
                                         style: {
                                             width: logoWidth ? logoWidth + 'px' : undefined,
                                             cursor: 'pointer'
@@ -19796,7 +19796,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-lores-input",
                                     style: { color: inputColor },
-                                    value: loginLabel ? loginLabel : __('user@email.com', 'advanced-gutenberg')
+                                    value: loginLabel ? loginLabel : 'user@email.com'
                                 })
                             )
                         ),
@@ -20038,7 +20038,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-lores-input",
                                     style: { color: inputColor },
-                                    value: usernameLabel ? usernameLabel : __('username', 'advanced-gutenberg')
+                                    value: usernameLabel ? usernameLabel : 'username'
                                 })
                             )
                         ),
@@ -20086,7 +20086,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-lores-input",
                                     style: { color: inputColor },
-                                    value: emailLabel ? emailLabel : __('user@email.com', 'advanced-gutenberg')
+                                    value: emailLabel ? emailLabel : 'user@email.com'
                                 })
                             )
                         ),
@@ -20533,64 +20533,64 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         welcomeText: {
             type: 'string',
-            default: __('Welcome back', 'advanced-gutenberg')
+            default: 'Welcome back'
         },
         loginLabel: {
             type: 'string'
         },
         loginText: {
             type: 'string',
-            default: __('Username or Email', 'advanced-gutenberg')
+            default: 'Username or Email'
         },
         passwordText: {
             type: 'string',
-            default: __('Password', 'advanced-gutenberg')
+            default: 'Password'
         },
         usernameLabel: {
             type: 'string'
         },
         userText: {
             type: 'string',
-            default: __('Username', 'advanced-gutenberg')
+            default: 'Username'
         },
         emailLabel: {
             type: 'string'
         },
         emailText: {
             type: 'string',
-            default: __('Email', 'advanced-gutenberg')
+            default: 'Email'
         },
         rememberMeText: {
             type: 'string',
-            default: __('Remember me', 'advanced-gutenberg')
+            default: 'Remember me'
         },
         loginSubmitLabel: {
             type: 'string',
-            default: __('LOGIN', 'advanced-gutenberg')
+            default: 'LOGIN'
         },
         registerSubmitLabel: {
             type: 'string',
-            default: __('REGISTER', 'advanced-gutenberg')
+            default: 'REGISTER'
         },
         registerText: {
             type: 'string',
-            default: __("Don't have an account?", 'advanced-gutenberg')
+            default: "Don't have an account?"
         },
         registerLinkText: {
             type: 'string',
-            default: __('Register now', 'advanced-gutenberg')
+            default: 'Register now'
         },
         registerWelcome: {
             type: 'string',
-            default: __('Register new account', 'advanced-gutenberg')
+            default: 'Register new account'
         },
         backToLoginText: {
             type: 'string',
-            default: __('Login', 'advanced-gutenberg')
+            default: 'Login'
         },
         lostPasswordText: {
             type: 'string',
-            default: __('Lost your password?', 'advanced-gutenberg')
+            default: 'Lost your password?'
         },
         headerBgColor: {
             type: 'string'
@@ -20739,7 +20739,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { style: { display: 'block' } },
                     React.createElement("img", { className: "advgb-lores-form-logo",
                         src: logoImg,
-                        alt: __('Site logo', 'advanced-gutenberg'),
+                        alt: 'Site logo',
                         style: {
                             width: logoWidth ? logoWidth + 'px' : undefined,
                             cursor: 'pointer'
@@ -20756,7 +20756,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { style: { display: 'block' } },
                     React.createElement("img", { className: "advgb-lores-form-logo",
                         src: registerLogoImg,
-                        alt: __('Site logo', 'advanced-gutenberg'),
+                        alt: 'Site logo',
                         style: {
                             width: logoWidth ? logoWidth + 'px' : undefined,
                             cursor: 'pointer'
@@ -20848,7 +20848,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     className: "advgb-lores-input",
                                     name: "log",
                                     style: { color: inputColor },
-                                    placeholder: loginLabel ? loginLabel : __('user@email.com', 'advanced-gutenberg')
+                                    placeholder: loginLabel ? loginLabel : 'user@email.com'
                                 })
                             )
                         ),
@@ -21039,7 +21039,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     className: "advgb-lores-input",
                                     name: "user_login",
                                     style: { color: inputColor },
-                                    placeholder: usernameLabel ? usernameLabel : __('username', 'advanced-gutenberg')
+                                    placeholder: usernameLabel ? usernameLabel : 'username'
                                 })
                             )
                         ),
@@ -21080,7 +21080,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     className: "advgb-lores-input",
                                     name: "user_email",
                                     style: { color: inputColor },
-                                    placeholder: emailLabel ? emailLabel : __('user@email.com', 'advanced-gutenberg')
+                                    placeholder: emailLabel ? emailLabel : 'user@email.com'
                                 })
                             )
                         ),
@@ -22331,7 +22331,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         markerTitle: {
             type: 'string',
-            default: __('Eiffel Tower', 'advanced-gutenberg')
+            default: 'Eiffel Tower'
         },
         markerDesc: {
             type: 'string',
@@ -22777,7 +22777,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { className: "advgb-form-field" },
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-form-input",
-                                    value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                                    value: emailLabel ? emailLabel : 'Email address',
                                     style: {
                                         backgroundColor: bgColor,
                                         color: textColor,
@@ -22800,7 +22800,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderRadius: submitRadius
                                             }
                                         },
-                                        submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                        submitLabel ? submitLabel : 'Submit'
                                     )
                                 )
                             ),
@@ -22842,7 +22842,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-form-field advgb-form-field-full" },
                                     React.createElement("input", { type: "text", disabled: true,
                                         className: "advgb-form-input",
-                                        value: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                                        value: emailLabel ? emailLabel : 'Email address',
                                         style: {
                                             backgroundColor: bgColor,
                                             color: textColor,
@@ -22866,7 +22866,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 borderRadius: submitRadius
                                             }
                                         },
-                                        submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                        submitLabel ? submitLabel : 'Submit'
                                     )
                                 )
                             )
@@ -22985,7 +22985,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-form-field" },
                         React.createElement("input", { type: "email",
                             className: "advgb-form-input advgb-form-input-email",
-                            placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                            placeholder: emailLabel ? emailLabel : 'Email address',
                             style: {
                                 backgroundColor: bgColor,
                                 color: textColor,
@@ -23010,7 +23010,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                submitLabel ? submitLabel : 'Submit'
                             )
                         )
                     ),
@@ -23052,7 +23052,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-form-field advgb-form-field-full" },
                             React.createElement("input", { type: "email",
                                 className: "advgb-form-input advgb-form-input-email",
-                                placeholder: emailLabel ? emailLabel : __('Email address', 'advanced-gutenberg'),
+                                placeholder: emailLabel ? emailLabel : 'Email address',
                                 style: {
                                     backgroundColor: bgColor,
                                     color: textColor,
@@ -23078,7 +23078,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         borderRadius: submitRadius
                                     }
                                 },
-                                submitLabel ? submitLabel : __('Submit', 'advanced-gutenberg')
+                                submitLabel ? submitLabel : 'Submit'
                             )
                         )
                     ),
@@ -23999,7 +23999,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onSplit: function onSplit() {
                                 return null;
                             },
-                            placeholder: __('Search', 'advanced-gutenberg'),
+                            placeholder: 'Search',
                             keepPlaceholderOnFocus: true
                         })
                     )
@@ -24245,7 +24245,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 !searchIconOnRight && searchBarIcon,
                                 React.createElement("input", { type: "text", disabled: true,
                                     className: "advgb-search-bar-input",
-                                    value: searchPlaceholder ? searchPlaceholder : __('Type to search…', 'advanced-gutenberg')
+                                    value: searchPlaceholder ? searchPlaceholder : 'Type to search…'
                                 }),
                                 searchIconOnRight && searchBarIcon
                             ),
@@ -24295,7 +24295,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         searchButtonText: {
             type: 'string',
-            default: __('SEARCH', 'advanced-gutenberg')
+            default: 'SEARCH'
         },
         searchButtonTextColor: {
             type: 'string'
@@ -24448,7 +24448,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement("input", { type: "text",
                                 className: "advgb-search-bar-input",
                                 name: "s",
-                                placeholder: searchPlaceholder ? searchPlaceholder : __('Type to search…', 'advanced-gutenberg')
+                                placeholder: searchPlaceholder ? searchPlaceholder : 'Type to search…'
                             }),
                             searchIconOnRight && searchBarIcon
                         ),
@@ -26984,9 +26984,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return {
                     avatarUrl: advgbBlocks.avatarHolder,
                     avatarID: undefined,
-                    name: __('Person Name', 'advanced-gutenberg'),
-                    position: __('Job Position', 'advanced-gutenberg'),
-                    desc: __('A little description about this person will show up here.', 'advanced-gutenberg')
+                    name: 'Person Name',
+                    position: 'Job Position',
+                    desc: 'A little description about this person will show up here.'
                 };
             })
         },
@@ -27951,7 +27951,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 
                 if (missing_block) {
                     if (console !== undefined && console.error !== undefined) {
-                        console.error('Reloading editor by Advanced Gutenberg plugin');
+                        console.error('Reloading editor by PublishPress Blocks plugin');
                     }
                     // Replace original allowed block settings by our modified list
                     var new_settings = advgb_blocks_vars.original_settings;
