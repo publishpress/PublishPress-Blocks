@@ -1740,9 +1740,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 echo '<style type="text/css">' . $content . '</style>';
 
-            } else {
-                // @TODO remove in later versions
-                echo '<script>console.log(\'advgb-tracking-issue-141\');</script>';
             }
         }
 
@@ -1765,9 +1762,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
                 echo '<style type="text/css">' . $content . '</style>';
 
-            } else {
-                // @TODO remove in later versions
-                echo '<script>console.log(\'advgb-tracking-issue-141\');</script>';
             }
         }
 
