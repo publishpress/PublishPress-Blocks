@@ -1,4 +1,4 @@
-=== PublishPress Blocks - Blocks, Permissions, Layouts, Forms and CSS Styles ===
+=== PublishPress Blocks – Advanced Gutenberg Blocks, Permissions, Layouts, Forms ===
 Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
@@ -15,6 +15,8 @@ Supercharge WordPress Gutenberg editor plugin with 27+ new blocks. Create custom
 == Description ==
 
 PublishPress Blocks adds the missing blocks and configuration you need to build professional websites. Take the control of the new Gutenberg editor with user edition profile configuration and 20+ new blocks and options.
+
+This plugin was previously called "Advanced Gutenberg".
 
 ## GUTENBERG ADVANCED BLOCK CONTROL
 
