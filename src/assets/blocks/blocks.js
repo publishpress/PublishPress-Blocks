@@ -17765,6 +17765,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvImageSlider,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
