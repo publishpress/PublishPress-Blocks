@@ -12447,6 +12447,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: compose(withDispatch(function (dispatch, _ref10, _ref11) {
             var clientId = _ref10.clientId;
             var select = _ref11.select;
