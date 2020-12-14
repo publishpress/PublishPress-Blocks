@@ -22402,6 +22402,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvMap,
         save: function save(_ref2) {
             var attributes = _ref2.attributes;
