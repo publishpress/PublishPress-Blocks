@@ -25571,7 +25571,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         },
         supports: {
-            multiple: false
+            multiple: false,
+            anchor: true
         },
         edit: SummaryBlock,
         save: function save(_ref) {

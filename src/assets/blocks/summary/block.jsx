@@ -337,6 +337,7 @@ import latinize from "latinize";
         },
         supports: {
             multiple: false,
+            anchor: true
         },
         edit: SummaryBlock,
         save: ( { attributes } ) => {
