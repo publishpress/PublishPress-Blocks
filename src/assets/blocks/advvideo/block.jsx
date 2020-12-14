@@ -616,6 +616,9 @@
                 isPreview: true
             },
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvVideo,
         save: function ( { attributes } ) {
             const {
