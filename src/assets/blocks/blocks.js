@@ -15879,6 +15879,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvContactForm,
         save: function save(_ref) {
             var attributes = _ref.attributes;
