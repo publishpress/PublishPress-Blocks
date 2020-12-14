@@ -6252,6 +6252,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: ''
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: compose([withDispatch(function (dispatch, _ref2, _ref3) {
             var clientId = _ref2.clientId;
             var select = _ref3.select;
@@ -9692,6 +9695,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             });
         },
 
+        supports: {
+            anchor: true
+        },
         edit: AdvList,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
