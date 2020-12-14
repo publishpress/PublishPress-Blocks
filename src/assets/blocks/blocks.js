@@ -7643,6 +7643,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }]
         },
         styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'outlined', label: __('Outlined', 'advanced-gutenberg') }, { name: 'squared', label: __('Squared', 'advanced-gutenberg') }, { name: 'squared-outline', label: __('Squared Outline', 'advanced-gutenberg') }],
+        supports: {
+            anchor: true
+        },
         edit: AdvButton,
         save: function save(_ref) {
             var attributes = _ref.attributes;

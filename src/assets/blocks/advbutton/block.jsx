@@ -525,6 +525,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             { name: 'squared', label: __( 'Squared', 'advanced-gutenberg' ) },
             { name: 'squared-outline', label: __( 'Squared Outline', 'advanced-gutenberg' ) },
         ],
+        supports: {
+            anchor: true,
+        },
         edit: AdvButton,
         save: function ( { attributes } ) {
             const {
