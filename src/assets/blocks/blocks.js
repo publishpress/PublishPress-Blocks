@@ -9099,7 +9099,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         },
         supports: {
-            align: true
+            align: true,
+            anchor: true
         },
         edit: AdvImage,
         save: function save(_ref3) {

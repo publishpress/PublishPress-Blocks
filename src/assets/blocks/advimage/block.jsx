@@ -376,6 +376,7 @@
         },
         supports: {
             align: true,
+            anchor: true
         },
         edit: AdvImage,
         save: ( { attributes } ) => {
