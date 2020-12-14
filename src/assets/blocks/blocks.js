@@ -16771,6 +16771,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvCountUp,
         save: AdvCountUpSave
     });
