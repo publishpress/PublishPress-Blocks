@@ -24408,7 +24408,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         },
         supports: {
-            align: true
+            align: true,
+            anchor: true
         },
         styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'classic', label: __('Classic', 'advanced-gutenberg') }],
         edit: SearchBarEdit,
