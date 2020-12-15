@@ -364,6 +364,9 @@
                 ],
             };
         },
+        supports: {
+            anchor: true,
+        },
         edit: AdvList,
         save: function ({attributes}) {
             const {

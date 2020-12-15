@@ -398,6 +398,9 @@
                 isPreview: true
             },
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvSocialBlock,
         save: function ( { attributes } ) {
             const { items, align, iconSize, iconSpace } = attributes;
