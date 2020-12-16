@@ -18,7 +18,7 @@ jQuery(document).ready(function ($) {
             rel: 'gallery' + galGroup,
             photo: true,
             href: function () {
-                return $(this).find('img').attr('src');
+                return $(this).find('figure > a').attr('href');
             },
             onComplete: function () {
                 $('.cboxPhoto')
