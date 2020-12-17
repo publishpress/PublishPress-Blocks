@@ -127,7 +127,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 = 2.5.1 =
  * Add: Anchor support for all the blocks, except: Adv. Icons, Columns Manager, Info Box, Recent Posts and Testimonial
- * Fix: Fix gallery lightbox target to open a bigger version of the image
+ * Fix: Fix gallery lightbox target to open a bigger version of the image (hughworm)
  
 = 2.5.0 =
  * Add: "PublishPress Blocks" as new plugin's name
