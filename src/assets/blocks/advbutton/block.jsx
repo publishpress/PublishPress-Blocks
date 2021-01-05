@@ -119,7 +119,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             placeholder={ __( 'Add text…', 'advanced-gutenberg' ) }
                             value={ text }
                             onChange={ ( value ) => setAttributes( { text: value } ) }
-                            formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+                            allowedFormats={ [ 'bold', 'italic', 'strikethrough' ] }
                             isSelected={ isSelected }
                             className={ `wp-block-advgb-button_link ${id}` }
                             keepPlaceholderOnFocus
