@@ -2137,7 +2137,6 @@ form .advgb-grecaptcha > div {
 /* Columns Manager */
 .wp-block-advgb-columns.advgb-columns-wrapper .advgb-columns-container .advgb-columns .advgb-column {
   flex-basis: 0;
-  flex-grow: 1;
 }
 
 .advgb-columns.gutter-10 > .advgb-column:not(:first-child) {
@@ -2166,6 +2165,42 @@ form .advgb-grecaptcha > div {
 
 .advgb-columns.gutter-90 > .advgb-column:not(:first-child) {
   margin-left: 90px;
+}
+
+.advgb-columns.advgb-columns-1 > div, .advgb-columns.advgb-columns-2 > div, .advgb-columns.advgb-columns-3 > div, .advgb-columns.advgb-columns-4 > div, .advgb-columns.advgb-columns-5 > div, .advgb-columns.advgb-columns-6 > div {
+  flex-grow: 1;
+}
+
+.advgb-columns.layout-12-14-14 > div:nth-of-type(1) {
+  flex-grow: 2;
+}
+
+.advgb-columns.layout-14-14-12 > div:nth-of-type(3) {
+  flex-grow: 2;
+}
+
+.advgb-columns.layout-12-14-12 > div:nth-of-type(2) {
+  flex-grow: 2;
+}
+
+.advgb-columns.layout-14-12-14 > div:nth-of-type(2) {
+  flex-grow: 2;
+}
+
+.advgb-columns.layout-15-35-15 > div:nth-of-type(2) {
+  flex-grow: 3;
+}
+
+.advgb-columns.layout-35-15-15 > div:nth-of-type(1) {
+  flex-grow: 3;
+}
+
+.advgb-columns.layout-15-15-35 > div:nth-of-type(3) {
+  flex-grow: 3;
+}
+
+.advgb-columns.layout-16-46-16 > div:nth-of-type(2) {
+  flex-grow: 4;
 }
 
 .advgb-columns-wrapper .advgb-columns {
