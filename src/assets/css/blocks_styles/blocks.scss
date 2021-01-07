@@ -2259,6 +2259,22 @@ form .advgb-grecaptcha > div {
         flex-grow: 4;
     }
     
+    // 4 Columns layout variants
+    &.layout-36-16-16-16 > div:nth-of-type(1) {
+        flex-grow: 3;
+    }
+    
+    &.layout-16-16-16-36 > div:nth-of-type(4) {
+        flex-grow: 3;
+    }
+    
+    &.layout-15-15-15-25 > div:nth-of-type(4) {
+        flex-grow: 2;
+    }
+    
+    &.layout-25-15-15-15 > div:nth-of-type(1) {
+        flex-grow: 2;
+    }
     
     @media (min-width: 1024px) {
 

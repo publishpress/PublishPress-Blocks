@@ -2223,6 +2223,22 @@ form .advgb-grecaptcha > div {
   flex-grow: 4;
 }
 
+.advgb-columns.layout-36-16-16-16 > div:nth-of-type(1) {
+  flex-grow: 3;
+}
+
+.advgb-columns.layout-16-16-16-36 > div:nth-of-type(4) {
+  flex-grow: 3;
+}
+
+.advgb-columns.layout-15-15-15-25 > div:nth-of-type(4) {
+  flex-grow: 2;
+}
+
+.advgb-columns.layout-25-15-15-15 > div:nth-of-type(1) {
+  flex-grow: 2;
+}
+
 .advgb-columns-wrapper .advgb-columns {
   margin: 0 auto;
 }
