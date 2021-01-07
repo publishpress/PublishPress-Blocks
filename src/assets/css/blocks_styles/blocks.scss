@@ -2225,6 +2225,7 @@ form .advgb-grecaptcha > div {
     @media (max-width: 767px) {
         
         @include colums-width-variants('mbl-');
+        @include colums-width-variants-by-device(mobile);
     }
 }
 
