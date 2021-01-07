@@ -2202,24 +2202,28 @@ form .advgb-grecaptcha > div {
     &.advgb-columns-5,
     &.advgb-columns-6 {
         
-        > div {
+        > .advgb-column {
             flex-grow: 1;
         }
     }
     
     @include colums-width-variants();
     
+    // Desktop
     @media (min-width: 1024px) {
 
     }
     
     // Tablet
-    @media (max-width: 1023px) {
+    @media (min-width: 768px) and (max-width: 1023px) {
+        
         @include colums-width-variants('tbl-');
+        @include colums-width-variants-by-device(tablet);
     }
     
     // Mobile
     @media (max-width: 767px) {
+        
         @include colums-width-variants('mbl-');
     }
 }
