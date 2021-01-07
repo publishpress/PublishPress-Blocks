@@ -5102,7 +5102,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html .= isset($blockAttrs['paddingLeft']) ? 'padding-left:'.$blockAttrs['paddingLeft'].$paddingUnit.';' : '';
             $style_html .= '}';
 
-            $style_html .= '#'. $colID . ' > .advgb-columns-container > .advgb-columns-row {';
+            /*$style_html .= '#'. $colID . ' > .advgb-columns-container > .advgb-columns-row {';
             $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'margin-left: -'.$blockAttrs['gutter'] / 2 .'px;' : '';
             $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'margin-right: -'.$blockAttrs['gutter'] / 2 .'px;' : '';
             $style_html .= '}';
@@ -5110,7 +5110,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html .= '#'. $colID . ' > .advgb-columns-container > .advgb-columns-row > .advgb-column {';
             $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'padding-left: '.$blockAttrs['gutter'] / 2 .'px;' : '';
             $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'padding-right: '.$blockAttrs['gutter'] / 2 .'px;' : '';
-            $style_html .= '}';
+            $style_html .= '}';*/
 
             if ($blockName === 'advgb/column') {
                 $childColID = $blockAttrs['colId'];
