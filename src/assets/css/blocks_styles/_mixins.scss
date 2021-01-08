@@ -118,6 +118,20 @@
             }
         }
     }
+
+    /*/ 4 Columns extra layout variants
+    &.#{$prefix}layout-12x4 {
+        flex-wrap: wrap;
+
+        > .advgb-column {
+            flex: 0 50%;
+            flex-basis: unset !important;
+
+            &:nth-of-type(3) {
+                margin-left: 0;
+            }
+        }
+    }*/
     
     // Stacked columns
     &.#{$prefix}layout-stacked {
