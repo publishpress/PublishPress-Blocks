@@ -73,121 +73,69 @@
     }
 }
 
-@mixin colums-width-variants-by-device($device) {
+@mixin colums-width-variants-by-device($prefix: '') {
     
-    // CSS for table only
-    @if $device == tablet {
-        
-        // 3 Columns extra layout variants
-        &.tbl-layout-1-12-12 {
-            flex-wrap: wrap;
+    // 3 Columns extra layout variants
+    &.#{$prefix}layout-1-12-12 {
+        flex-wrap: wrap;
 
-            > .advgb-column {
+        > .advgb-column {
 
-                &:nth-of-type(1) {
-                    width: 100%;
-                    flex-basis: unset !important;
-                }
-
-                &:nth-of-type(2) {
-                    flex-grow: 1;
-                    margin-left: 0;
-                }
-                
-                &:nth-of-type(3) {
-                    flex-grow: 1;
-                }
-            }
-        }
-
-        &.tbl-layout-12-12-1 {
-            flex-wrap: wrap;
-
-            > .advgb-column {
-
-                &:nth-of-type(1) {
-                    margin-left: 0;
-                    flex-grow: 1;
-                }
-                
-                &:nth-of-type(2) {
-                    flex-grow: 1;
-                }
-
-                &:nth-of-type(3) {
-                    width: 100%;
-                    flex-basis: unset !important;
-                    margin-left: 0;
-                }
-            }
-        }
-        
-        &.tbl-layout-stacked {
-            
-            > .advgb-column {
+            &:nth-of-type(1) {
                 width: 100%;
                 flex-basis: unset !important;
-                margin-left: 0 !important;
+            }
+
+            &:nth-of-type(2) {
+                flex-grow: 1;
+                margin-left: 0;
+            }
+
+            &:nth-of-type(3) {
+                flex-grow: 1;
             }
         }
+    }
+
+    &.#{$prefix}layout-12-12-1 {
+        flex-wrap: wrap;
+
+        > .advgb-column {
+
+            &:nth-of-type(1) {
+                margin-left: 0;
+                flex-grow: 1;
+            }
+
+            &:nth-of-type(2) {
+                flex-grow: 1;
+            }
+
+            &:nth-of-type(3) {
+                width: 100%;
+                flex-basis: unset !important;
+                margin-left: 0;
+            }
+        }
+    }
+    
+    // Stacked columns
+    &.#{$prefix}layout-stacked {
+
+        > .advgb-column {
+            width: 100%;
+            flex-basis: unset !important;
+            margin-left: 0 !important;
+        }
+    }
+    
+    // CSS for tablet only
+    @if $prefix == 'tbl-' {
+        
     }
     
     // CSS for mobile only
-    @if $device == mobile {
+    @if $prefix == 'mbl-' {
         
-        // 3 Columns extra layout variants
-        &.mbl-layout-1-12-12 {
-            flex-wrap: wrap;
-
-            > .advgb-column {
-
-                &:nth-of-type(1) {
-                    width: 100%;
-                    flex-basis: unset !important;
-                }
-
-                &:nth-of-type(2) {
-                    flex-grow: 1;
-                    margin-left: 0;
-                }
-                
-                &:nth-of-type(3) {
-                    flex-grow: 1;
-                }
-            }
-        }
-
-        &.mbl-layout-12-12-1 {
-            flex-wrap: wrap;
-
-            > .advgb-column {
-
-                &:nth-of-type(1) {
-                    margin-left: 0;
-                    flex-grow: 1;
-                }
-                
-                &:nth-of-type(2) {
-                    flex-grow: 1;
-                }
-
-                &:nth-of-type(3) {
-                    width: 100%;
-                    flex-basis: unset !important;
-                    margin-left: 0;
-                }
-            }
-        }
-        
-        &.mbl-layout-stacked {
-            
-            > .advgb-column {
-                width: 100%;
-                flex-basis: unset !important;
-                margin-left: 0 !important;
-            }
-        }
     }
-    
-    
 }
