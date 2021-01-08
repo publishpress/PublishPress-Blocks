@@ -216,19 +216,4 @@
             margin-left: 0 !important;
         }
     }
-    
-    // CSS for desktop only
-    @if $prefix == '' {
-        
-    }
-    
-    // CSS for tablet only
-    @if $prefix == 'tbl-' {
-        
-    }
-    
-    // CSS for mobile only
-    @if $prefix == 'mbl-' {
-        
-    }
 }
