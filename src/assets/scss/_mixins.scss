@@ -182,8 +182,9 @@
         flex-grow: 2;
     }
     
-    // 4 Columns extra layout variants
-    &.#{$prefix}layout-12x4 {
+    // 4 and 6 Columns extra layout variants
+    &.#{$prefix}layout-12x4,
+    &.#{$prefix}layout-12x6 {
         flex: 1;
         flex-direction: row;
         flex-wrap: wrap;
