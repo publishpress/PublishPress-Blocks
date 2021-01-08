@@ -25,6 +25,7 @@
     "concurrently": "^5.3.0",
     "counterup2": "^1.0.4",
     "html-react-parser": "^0.10.5",
+    "ini": "^2.0.0",
     "jquery": "^3.5.1",
     "latinize": "^0.4.1",
     "node-sass": "^4.14.1",
