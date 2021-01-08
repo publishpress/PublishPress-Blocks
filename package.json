@@ -6,6 +6,7 @@
     "build_react_dev": "webpack --mode development --watch",
     "compile_css": "concurrently --kill-others \"node-sass --output-style compressed src/assets/css/blocks_styles/blocks.scss > src/assets/css/blocks_styles/blocks.min.css\" \"node-sass --output-style expanded src/assets/css/blocks_styles/blocks.scss > src/assets/css/blocks_styles/blocks.css\"",
     "compile_css_style": "concurrently --kill-others \"node-sass --output-style expanded src/assets/scss/style.scss > src/assets/css/style.css\" \"node-sass --output-style compressed src/assets/scss/style.scss > src/assets/css/style.min.css\"",
+    "compile_css_columns": "node-sass --output-style compressed src/assets/scss/columns.scss > src/assets/css/columns.min.css",
     "compile_css_main": "node-sass --output-style expanded src/assets/scss/main.scss > src/assets/css/main.css",
     "compile_css_settings": "node-sass --output-style expanded src/assets/scss/settings.scss > src/assets/css/settings.css",
     "compile_css_profiles": "node-sass --output-style expanded src/assets/scss/profiles.scss > src/assets/css/profiles.css"
