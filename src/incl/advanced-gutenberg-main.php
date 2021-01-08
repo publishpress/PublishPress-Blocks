@@ -1482,8 +1482,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))
             );
             wp_register_style(
-                'advgb_bulma_styles',
-                plugins_url('assets/css/bulma.min.css', dirname(__FILE__))
+                'advgb_columns_styles',
+                plugins_url('assets/css/columns.min.css', dirname(__FILE__))
             );
 
             wp_register_script(
@@ -4563,7 +4563,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if (strpos($content, 'advgb-columns') !== false) {
-                wp_enqueue_style('advgb_bulma_styles');
+                wp_enqueue_style('advgb_columns_styles');
             }
 
             if (strpos($content, 'advgb-lores-form-wrapper') !== false) {
@@ -5100,16 +5100,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $style_html .= isset($blockAttrs['paddingRight']) ? 'padding-right:'.$blockAttrs['paddingRight'].$paddingUnit.';' : '';
             $style_html .= isset($blockAttrs['paddingBottom']) ? 'padding-bottom:'.$blockAttrs['paddingBottom'].$paddingUnit.';' : '';
             $style_html .= isset($blockAttrs['paddingLeft']) ? 'padding-left:'.$blockAttrs['paddingLeft'].$paddingUnit.';' : '';
-            $style_html .= '}';
-
-            $style_html .= '#'. $colID . ' > .advgb-columns-container > .advgb-columns-row {';
-            $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'margin-left: -'.$blockAttrs['gutter'] / 2 .'px;' : '';
-            $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'margin-right: -'.$blockAttrs['gutter'] / 2 .'px;' : '';
-            $style_html .= '}';
-
-            $style_html .= '#'. $colID . ' > .advgb-columns-container > .advgb-columns-row > .advgb-column {';
-            $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'padding-left: '.$blockAttrs['gutter'] / 2 .'px;' : '';
-            $style_html .= isset($blockAttrs['gutter']) && $blockAttrs['gutter'] !== '0' ? 'padding-right: '.$blockAttrs['gutter'] / 2 .'px;' : '';
             $style_html .= '}';
 
             if ($blockName === 'advgb/column') {
