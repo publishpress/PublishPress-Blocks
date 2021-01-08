@@ -2218,14 +2218,14 @@ form .advgb-grecaptcha > div {
     @media (min-width: 768px) and (max-width: 1023px) {
         
         @include colums-width-variants('tbl-');
-        @include colums-width-variants-by-device('tbl-');
+        @include colums-width-variants-extra('tbl-');
     }
     
     // Mobile
     @media (max-width: 767px) {
         
         @include colums-width-variants('mbl-');
-        @include colums-width-variants-by-device('mbl-');
+        @include colums-width-variants-extra('mbl-');
     }
 }
 

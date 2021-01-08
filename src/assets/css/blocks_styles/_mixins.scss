@@ -73,7 +73,7 @@
     }
 }
 
-@mixin colums-width-variants-by-device($prefix: '') {
+@mixin colums-width-variants-extra($prefix: '') {
     
     // 3 Columns extra layout variants
     &.#{$prefix}layout-1-12-12 {
