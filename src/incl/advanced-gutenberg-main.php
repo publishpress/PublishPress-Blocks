@@ -1482,10 +1482,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 plugins_url('assets/css/fonts/material-icons-custom.min.css', dirname(__FILE__))
             );
             wp_register_style(
-                'advgb_bulma_styles',
-                plugins_url('assets/css/bulma.min.css', dirname(__FILE__))
-            );
-            wp_register_style(
                 'advgb_columns_styles',
                 plugins_url('assets/css/columns.min.css', dirname(__FILE__))
             );
@@ -4567,7 +4563,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
             }
 
             if (strpos($content, 'advgb-columns') !== false) {
-                wp_enqueue_style('advgb_bulma_styles');
                 wp_enqueue_style('advgb_columns_styles');
             }
 
