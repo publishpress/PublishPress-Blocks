@@ -131,6 +131,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add: Better CSS selector for Advanced List block
  * Fix: Space between columns pushing content off in Columns Manager blocks
  * Remove: Old CSS approach for Columns Manager columns and layouts
+ * Fix: Advanced Button center alignment in editor
  
 = 2.5.0 =
  * Add: "PublishPress Blocks" as new plugin's name

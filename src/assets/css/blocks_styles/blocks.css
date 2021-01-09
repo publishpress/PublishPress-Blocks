@@ -195,6 +195,7 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
   margin-top: -3px;
 }
 
+[data-type="advgb/button"][data-align="center"],
 .wp-block-advgb-button.aligncenter {
   text-align: center;
 }
