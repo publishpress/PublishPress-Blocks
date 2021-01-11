@@ -40,31 +40,54 @@
 }
 
 /*Editor sidebar controls*/
-.advgb-editor-width-default #editor .block-editor-writing-flow {
-    max-width: 750px;
-    margin: 0 auto;
+
+#editor {
+    
+    .wb-block:not([data-type="advgb/images-slider"]) {
+        max-width: inherit;
+    }
+    
+    .edit-post-visual-editor__post-title-wrapper {
+        
+        .editor-post-title {
+            max-width: inherit;
+        }
+        
+        ~ div {
+            position: relative;
+            margin: 0 auto;
+        }
+    }
 }
 
-.advgb-editor-width-large #editor .wp-block {
-    max-width: inherit
+.advgb-editor-width-default,
+.advgb-editor-width-large, 
+.advgb-editor-width-full {
+    
+    #editor div.block-editor-writing-flow {
+        margin: 0 auto;
+    }
 }
 
-.advgb-editor-width-large #editor .block-editor-writing-flow {
-    max-width: 75%;
-    margin: 0 auto;
+.advgb-editor-width-default #editor {
+    
+    div.block-editor-writing-flow {
+        max-width: 750px;
+    }
 }
 
-.advgb-editor-width-large #editor .wp-block {
-    max-width: inherit
+.advgb-editor-width-large #editor {
+    
+    div.block-editor-writing-flow {
+        max-width: 75%;
+    }
 }
 
-.advgb-editor-width-full #editor .block-editor-writing-flow {
-    max-width: 95%;
-    margin: 0 auto;
-}
-
-.advgb-editor-width-full #editor .wp-block {
-    max-width: inherit
+.advgb-editor-width-full #editor {
+    
+    div.block-editor-writing-flow {
+        max-width: 95%;
+    }
 }
 
 .advgb-editor-col-guide-disable .advgb-columns > .block-editor-inner-blocks > .block-editor-block-list__layout>.wp-block:not(.is-selected) >.advgb-column {
@@ -204,6 +227,8 @@
 span.wp-block-advgb-button[data-is-placeholder-visible=true] {
     margin-top: -3px;
 }
+
+[data-type="advgb/button"][data-align="center"],
 .wp-block-advgb-button.aligncenter {
     text-align: center;
 }
@@ -2119,15 +2144,6 @@ form .advgb-grecaptcha > div {
     text-decoration: underline;
 }
 
-.wp-block-advgb-columns.advgb-columns-wrapper {
-    max-width: unset;
-    width: 100%;
-}
-
-.advgb-columns-wrapper .advgb-columns {
-    margin: 0 auto;
-}
-
 body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     max-width: 100%;
 }
@@ -2192,38 +2208,31 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     margin-bottom: 0 !important;
 }
 
-.advgb-columns.gutter-10 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-10 > .advgb-column {
+.advgb-columns.gutter-10 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 10px;
 }
 
-.advgb-columns.gutter-20 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-20 > .advgb-column {
+.advgb-columns.gutter-20 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 20px;
 }
 
-.advgb-columns.gutter-30 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-30 > .advgb-column {
+.advgb-columns.gutter-30 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 30px;
 }
 
-.advgb-columns.gutter-40 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-40 > .advgb-column {
+.advgb-columns.gutter-40 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 40px;
 }
 
-.advgb-columns.gutter-50 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-50 > .advgb-column {
+.advgb-columns.gutter-50 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 50px;
 }
 
-.advgb-columns.gutter-70 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-70 > .advgb-column {
+.advgb-columns.gutter-70 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 70px;
 }
 
-.advgb-columns.gutter-90 > .editor-inner-blocks > .editor-block-list__layout > .wp-block,
-.advgb-columns.gutter-90 > .advgb-column {
+.advgb-columns.gutter-90 > .editor-inner-blocks > .editor-block-list__layout > .wp-block {
     margin-right: 90px;
 }
 

@@ -974,6 +974,9 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 isPreview: true
             },
         },
+        supports: {
+            anchor: true
+        },
         edit: LoginFormEdit,
         save: function ( { attributes } ) {
             const {

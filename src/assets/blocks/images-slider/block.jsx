@@ -536,6 +536,9 @@
                 isPreview: true
             },
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvImageSlider,
         save: function ({attributes}) {
             const {

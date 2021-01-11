@@ -408,6 +408,9 @@
                 isPreview: true
             },
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvProductsEdit,
         save: function ( { attributes } ) {
             const {

@@ -6252,6 +6252,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 default: ''
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: compose([withDispatch(function (dispatch, _ref2, _ref3) {
             var clientId = _ref2.clientId;
             var select = _ref3.select;
@@ -7640,6 +7643,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }]
         },
         styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'outlined', label: __('Outlined', 'advanced-gutenberg') }, { name: 'squared', label: __('Squared', 'advanced-gutenberg') }, { name: 'squared-outline', label: __('Squared Outline', 'advanced-gutenberg') }],
+        supports: {
+            anchor: true
+        },
         edit: AdvButton,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -9093,7 +9099,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         },
         supports: {
-            align: true
+            align: true,
+            anchor: true
         },
         edit: AdvImage,
         save: function save(_ref3) {
@@ -9692,6 +9699,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             });
         },
 
+        supports: {
+            anchor: true
+        },
         edit: AdvList,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -11466,7 +11476,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         },
         supports: {
-            align: true
+            align: true,
+            anchor: true
         },
         styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'stripes', label: __('Stripes', 'advanced-gutenberg') }],
         edit: AdvTable,
@@ -12435,6 +12446,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: {
                 isPreview: true
             }
+        },
+        supports: {
+            anchor: true
         },
         edit: compose(withDispatch(function (dispatch, _ref10, _ref11) {
             var clientId = _ref10.clientId;
@@ -13647,6 +13661,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: {
                 isPreview: true
             }
+        },
+        supports: {
+            anchor: true
         },
         edit: AdvVideo,
         save: function save(_ref4) {
@@ -15862,6 +15879,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvContactForm,
         save: function save(_ref) {
             var attributes = _ref.attributes;
@@ -16750,6 +16770,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: {
                 isPreview: true
             }
+        },
+        supports: {
+            anchor: true
         },
         edit: AdvCountUp,
         save: AdvCountUpSave
@@ -17741,6 +17764,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: {
                 isPreview: true
             }
+        },
+        supports: {
+            anchor: true
         },
         edit: AdvImageSlider,
         save: function save(_ref3) {
@@ -20687,6 +20713,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: LoginFormEdit,
         save: function save(_ref3) {
             var attributes = _ref3.attributes;
@@ -22373,6 +22402,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvMap,
         save: function save(_ref2) {
             var attributes = _ref2.attributes;
@@ -22952,6 +22984,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: {
                 isPreview: true
             }
+        },
+        supports: {
+            anchor: true
         },
         edit: AdvNewsletter,
         save: function save(_ref) {
@@ -24373,7 +24408,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         },
         supports: {
-            align: true
+            align: true,
+            anchor: true
         },
         styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'classic', label: __('Classic', 'advanced-gutenberg') }],
         edit: SearchBarEdit,
@@ -25005,6 +25041,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 isPreview: true
             }
         },
+        supports: {
+            anchor: true
+        },
         edit: AdvSocialBlock,
         save: function save(_ref2) {
             var attributes = _ref2.attributes;
@@ -25532,7 +25571,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }
         },
         supports: {
-            multiple: false
+            multiple: false,
+            anchor: true
         },
         edit: SummaryBlock,
         save: function save(_ref) {
@@ -27832,6 +27872,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             attributes: {
                 isPreview: true
             }
+        },
+        supports: {
+            anchor: true
         },
         edit: AdvProductsEdit,
         save: function save(_ref) {

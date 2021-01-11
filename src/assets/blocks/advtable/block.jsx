@@ -1501,6 +1501,7 @@
         },
         supports: {
             align: true,
+            anchor: true
         },
         styles: [
             {name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true},

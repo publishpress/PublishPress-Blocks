@@ -1,9 +1,9 @@
-=== PublishPress Blocks - Blocks, Permissions, Layouts, Forms and CSS Styles ===
+=== PublishPress Blocks – Advanced Gutenberg Blocks, Permissions, Layouts, Forms ===
 Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.6
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -15,6 +15,8 @@ Supercharge WordPress Gutenberg editor plugin with 27+ new blocks. Create custom
 == Description ==
 
 PublishPress Blocks adds the missing blocks and configuration you need to build professional websites. Take the control of the new Gutenberg editor with user edition profile configuration and 20+ new blocks and options.
+
+This plugin was previously called "Advanced Gutenberg".
 
 ## GUTENBERG ADVANCED BLOCK CONTROL
 
@@ -123,6 +125,14 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.5.1 =
+ * Add: Anchor support for all the blocks, except: Adv. Icons, Columns Manager, Info Box, Recent Posts and Testimonial
+ * Fix: Fix gallery lightbox target to open a bigger version of the image (hughworm)
+ * Add: Better CSS selector for Advanced List block
+ * Fix: Space between columns pushing content off in Columns Manager blocks
+ * Remove: Old CSS approach for Columns Manager columns and layouts
+ * Fix: Advanced Button center alignment in editor
+ 
 = 2.5.0 =
  * Add: "PublishPress Blocks" as new plugin's name
  * Add: New admin design
