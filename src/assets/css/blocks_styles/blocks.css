@@ -715,9 +715,34 @@ ul.advgb-toc {
   padding: 0;
 }
 
+#editor ul.advgb-toc li.toc-level-1,
+ul.advgb-toc li.toc-level-1 {
+  margin-left: 20px;
+}
+
 #editor ul.advgb-toc li.toc-level-2,
 ul.advgb-toc li.toc-level-2 {
-  margin-left: calc(2 * 20px);
+  margin-left: 40px;
+}
+
+#editor ul.advgb-toc li.toc-level-3,
+ul.advgb-toc li.toc-level-3 {
+  margin-left: 60px;
+}
+
+#editor ul.advgb-toc li.toc-level-4,
+ul.advgb-toc li.toc-level-4 {
+  margin-left: 80px;
+}
+
+#editor ul.advgb-toc li.toc-level-5,
+ul.advgb-toc li.toc-level-5 {
+  margin-left: 100px;
+}
+
+#editor ul.advgb-toc li.toc-level-6,
+ul.advgb-toc li.toc-level-6 {
+  margin-left: 120px;
 }
 
 .wp-block-advgb-summary {

@@ -731,8 +731,28 @@ ul.advgb-toc {
     
     li {
         
+        &.toc-level-1 {
+            margin-left: 20px;
+        }
+        
         &.toc-level-2 {
-            margin-left: calc(2 * 20px);
+            margin-left: 40px;
+        }
+        
+        &.toc-level-3 {
+            margin-left: 60px;
+        }
+        
+        &.toc-level-4 {
+            margin-left: 80px;
+        }
+        
+        &.toc-level-5 {
+            margin-left: 100px;
+        }
+        
+        &.toc-level-6 {
+            margin-left: 120px;
         }
     }
 }
