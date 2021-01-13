@@ -709,9 +709,15 @@ span.advgb-social-icon.selected:before {
   text-align: initial;
 }
 
-#editor ul.advgb-toc, ul.advgb-toc {
-  list-style: none !important;
+#editor ul.advgb-toc,
+ul.advgb-toc {
+  list-style: circle;
   padding: 0;
+}
+
+#editor ul.advgb-toc li.toc-level-2,
+ul.advgb-toc li.toc-level-2 {
+  margin-left: calc(2 * 20px);
 }
 
 .wp-block-advgb-summary {
