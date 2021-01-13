@@ -3,7 +3,7 @@ Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.6
-Stable tag: 2.5.1
+Stable tag: 2.5.2b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -125,6 +125,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.5.2 =
+ * Fix: Summary block style and better CSS handling for margin-left
+ 
 = 2.5.1 =
  * Add: Anchor support for all the blocks, except: Adv. Icons, Columns Manager, Info Box, Recent Posts and Testimonial
  * Fix: Fix gallery lightbox target to open a bigger version of the image (hughworm)

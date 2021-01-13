@@ -356,7 +356,6 @@ import latinize from "latinize";
                         return (
                             <li className={'toc-level-' + heading.level}
                                 key={`summary-save-${index}`}
-                                style={{ marginLeft: heading.level * 20 }}
                             >
                                 <a href={'#' + heading.anchor}
                                    style={ { color: anchorColor } }
@@ -437,6 +436,30 @@ import latinize from "latinize";
                     return summary;
                 },
             },
+            {
+                attributes: blockAttrs,
+                save: ( { attributes } ) => {
+                    
+                    const summary = (
+                        <ul className={`advgb-toc align${align}`} style={ blockStyle }>
+                            {headings.map( ( heading, index ) => {
+                                return (
+                                    <li className={'toc-level-' + heading.level}
+                                        key={`summary-save-${index}`}
+                                        style={{ marginLeft: heading.level * 20 }}
+                                    >
+                                        <a href={'#' + heading.anchor}
+                                           style={ { color: anchorColor } }
+                                        >
+                                            {heading.content}
+                                        </a>
+                                    </li>
+                                )
+                            } ) }
+                        </ul>
+                    );
+                },
+            }
         ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, wp.hooks );
