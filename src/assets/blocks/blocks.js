@@ -25226,7 +25226,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var summaryBlock = createBlock('advgb/summary');
 
             $('#editor').find('.table-of-contents').click(function () {
-                var allBlocks = select('core/editor').getBlocks();
+                var allBlocks = select('core/block-editor').getBlocks();
                 var summaryBlockExist = !!allBlocks.filter(function (block) {
                     return block.name === 'advgb/summary';
                 }).length;
@@ -25329,7 +25329,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function updateSummary() {
                 var headingDatas = [];
                 var headingBlocks = [];
-                var allBlocks = select('core/editor').getBlocks();
+                var allBlocks = select('core/block-editor').getBlocks();
                 var filteredBlocks = allBlocks.filter(function (block) {
                     return block.name === 'core/heading' || block.name === 'core/columns';
                 });
