@@ -28018,8 +28018,11 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     }
                 }
 
+                console.log('missing_block: ' + missing_block);
+
                 if (missing_block) {
                     if (console !== undefined && console.error !== undefined) {
+                        console.log('console: ' + console);
                         console.error('Reloading editor by PublishPress Blocks plugin');
                     }
                     // Replace original allowed block settings by our modified list
@@ -28034,7 +28037,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 
                     try {
                         // Use this ajax query to update the block list in db
-                        $.ajax({
+                        jQuery.ajax({
                             url: advgb_blocks_vars.ajaxurl,
                             method: 'POST',
                             data: {
@@ -28044,11 +28047,11 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                                 nonce: advgb_blocks_vars.nonce
                             },
                             success: function success(data) {
-                                //console.log(data);
+                                console.log(data);
                             }
                         });
                     } catch (e) {
-                        // console.log(e);
+                        console.log(e);
                     }
                 }
             });
