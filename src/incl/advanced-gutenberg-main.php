@@ -177,6 +177,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
                 add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
+                //add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
 
                 // Ajax
                 add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
@@ -1581,6 +1582,43 @@ if(!class_exists('AdvancedGutenbergMain')) {
             );
         }
 
+        /**
+         * Set body classes for Editor width and Columns visual guide
+         *
+         * @param string $classes CSS class from body
+         */
+        function setAdvgEditorBodyClassses( $classes ) {
+            
+            $saved_settings = get_option('advgb_settings');
+
+            // Editor width
+            if (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
+                
+                switch($saved_settings['editor_width']) {
+                    default:
+                        $classes .= ' advgb-editor-width-default ';
+                        break;
+                    case '75':
+                        $classes .= ' advgb-editor-width-large ';
+                        break;
+                        
+                    case '95':
+                        $classes .= ' advgb-editor-width-full ';
+                        break;
+                }
+            }
+
+            // Columns visual guide
+            if (!isset($saved_settings['enable_columns_visual_guide'])
+                    || (isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide'])) {
+                $classes .= ' advgb-editor-col-guide-enable ';
+            } else {
+                $classes .= ' advgb-editor-col-guide-disable ';
+            }
+            
+            return $classes;
+        }
+        
         /**
          * Register profiles custom post type
          *
