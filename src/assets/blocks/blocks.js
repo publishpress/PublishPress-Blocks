@@ -25600,8 +25600,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return React.createElement(
                         "li",
                         { className: 'toc-level-' + heading.level,
-                            key: "summary-save-" + index,
-                            style: { marginLeft: heading.level * 20 }
+                            key: "summary-save-" + index
                         },
                         React.createElement(
                             "a",
@@ -25699,6 +25698,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 return summary;
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
+
+
+                var summary = React.createElement(
+                    "ul",
+                    { className: "advgb-toc align" + align, style: blockStyle },
+                    headings.map(function (heading, index) {
+                        return React.createElement(
+                            "li",
+                            { className: 'toc-level-' + heading.level,
+                                key: "summary-save-" + index,
+                                style: { marginLeft: heading.level * 20 }
+                            },
+                            React.createElement(
+                                "a",
+                                { href: '#' + heading.anchor,
+                                    style: { color: anchorColor }
+                                },
+                                heading.content
+                            )
+                        );
+                    })
+                );
             }
         }]
     });
