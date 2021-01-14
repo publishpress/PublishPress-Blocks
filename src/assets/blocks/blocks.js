@@ -25226,7 +25226,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             var summaryBlock = createBlock('advgb/summary');
 
             $('#editor').find('.table-of-contents').click(function () {
-                var allBlocks = select('core/editor').getBlocks();
+                var allBlocks = select('core/block-editor').getBlocks();
                 var summaryBlockExist = !!allBlocks.filter(function (block) {
                     return block.name === 'advgb/summary';
                 }).length;
@@ -25329,7 +25329,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function updateSummary() {
                 var headingDatas = [];
                 var headingBlocks = [];
-                var allBlocks = select('core/editor').getBlocks();
+                var allBlocks = select('core/block-editor').getBlocks();
                 var filteredBlocks = allBlocks.filter(function (block) {
                     return block.name === 'core/heading' || block.name === 'core/columns';
                 });
@@ -25600,8 +25600,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return React.createElement(
                         "li",
                         { className: 'toc-level-' + heading.level,
-                            key: "summary-save-" + index,
-                            style: { marginLeft: heading.level * 20 }
+                            key: "summary-save-" + index
                         },
                         React.createElement(
                             "a",
@@ -25699,6 +25698,33 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 return summary;
+            }
+        }, {
+            attributes: blockAttrs,
+            save: function save(_ref3) {
+                var attributes = _ref3.attributes;
+
+
+                var summary = React.createElement(
+                    "ul",
+                    { className: "advgb-toc align" + align, style: blockStyle },
+                    headings.map(function (heading, index) {
+                        return React.createElement(
+                            "li",
+                            { className: 'toc-level-' + heading.level,
+                                key: "summary-save-" + index,
+                                style: { marginLeft: heading.level * 20 }
+                            },
+                            React.createElement(
+                                "a",
+                                { href: '#' + heading.anchor,
+                                    style: { color: anchorColor }
+                                },
+                                heading.content
+                            )
+                        );
+                    })
+                );
             }
         }]
     });
@@ -27992,8 +28018,11 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                     }
                 }
 
+                //console.log('missing_block: ' + missing_block);
+
                 if (missing_block) {
                     if (console !== undefined && console.error !== undefined) {
+                        //console.log('console: ' + console);
                         console.error('Reloading editor by PublishPress Blocks plugin');
                     }
                     // Replace original allowed block settings by our modified list
@@ -28008,7 +28037,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
 
                     try {
                         // Use this ajax query to update the block list in db
-                        $.ajax({
+                        jQuery.ajax({
                             url: advgb_blocks_vars.ajaxurl,
                             method: 'POST',
                             data: {
@@ -28022,7 +28051,7 @@ if (typeof wp !== 'undefined' && typeof wp.domReady !== 'undefined') {
                             }
                         });
                     } catch (e) {
-                        // console.log(e);
+                        //console.log(e);
                     }
                 }
             });

@@ -33,7 +33,7 @@ import latinize from "latinize";
             const summaryBlock = createBlock( 'advgb/summary' );
 
             $( '#editor' ).find( '.table-of-contents' ).click( function () {
-                const allBlocks = select( 'core/editor' ).getBlocks();
+                const allBlocks = select( 'core/block-editor' ).getBlocks();
                 const summaryBlockExist = !!allBlocks.filter( ( block ) => ( block.name === 'advgb/summary' ) ).length;
                 setTimeout( function () {
                     const summaryButton = $(
@@ -146,7 +146,7 @@ import latinize from "latinize";
         updateSummary() {
             let headingDatas = [];
             let headingBlocks = [];
-            const allBlocks = select( 'core/editor' ).getBlocks();
+            const allBlocks = select( 'core/block-editor' ).getBlocks();
             const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'core/columns' ) );
             filteredBlocks.map(function ( block ) {
                 if (block.name === 'core/columns') {
@@ -356,7 +356,6 @@ import latinize from "latinize";
                         return (
                             <li className={'toc-level-' + heading.level}
                                 key={`summary-save-${index}`}
-                                style={{ marginLeft: heading.level * 20 }}
                             >
                                 <a href={'#' + heading.anchor}
                                    style={ { color: anchorColor } }
@@ -437,6 +436,30 @@ import latinize from "latinize";
                     return summary;
                 },
             },
+            {
+                attributes: blockAttrs,
+                save: ( { attributes } ) => {
+                    
+                    const summary = (
+                        <ul className={`advgb-toc align${align}`} style={ blockStyle }>
+                            {headings.map( ( heading, index ) => {
+                                return (
+                                    <li className={'toc-level-' + heading.level}
+                                        key={`summary-save-${index}`}
+                                        style={{ marginLeft: heading.level * 20 }}
+                                    >
+                                        <a href={'#' + heading.anchor}
+                                           style={ { color: anchorColor } }
+                                        >
+                                            {heading.content}
+                                        </a>
+                                    </li>
+                                )
+                            } ) }
+                        </ul>
+                    );
+                },
+            }
         ]
     } );
 })( wp.i18n, wp.blocks, wp.element, wp.blockEditor, wp.components, wp.data, wp.hooks );
