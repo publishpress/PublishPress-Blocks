@@ -128,7 +128,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 = 2.5.2 =
  * Fix: Summary block style and better CSS handling for margin-left
  * Fix: Ajax call to update the block list in db
- * Fix: Deprecated core/editor to core/block-editor Namesapce
+ * Fix: Deprecated core/editor to core/block-editor Namespace
+ * Fix: Introduced bug in 2.5.1 for gallery lightbox target
+ * Add: Better gallery lightbox target support
  
 = 2.5.1 =
  * Add: Anchor support for all the blocks, except: Adv. Icons, Columns Manager, Info Box, Recent Posts and Testimonial
