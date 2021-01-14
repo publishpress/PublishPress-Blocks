@@ -21,8 +21,6 @@ jQuery(document).ready(function ($) {
             href: function () {
                 if($(this).find('figure a').length) {
                     // Link to: Media File or Attachment
-                    console.log('a tag exists');
-                    console.log($(this).find('figure a').length);
                     galImage = $(this).find('figure a');
                     if(galImage.attr('href').indexOf('.jpg') > 0 || galImage.attr('href').indexOf('.png') > 0 || galImage.attr('href').indexOf('.gif') > 0) {
                         // Link to: Media File
@@ -33,8 +31,6 @@ jQuery(document).ready(function ($) {
                     }
                 } else {
                     // Link to: None
-                    console.log('a tag does NOT exists');
-                    console.log($(this).find('figure a').length);
                     return $(this).find('img').attr('src');
                 }
             },
