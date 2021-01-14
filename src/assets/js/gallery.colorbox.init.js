@@ -18,7 +18,15 @@ jQuery(document).ready(function ($) {
             rel: 'gallery' + galGroup,
             photo: true,
             href: function () {
-                return $(this).find('figure > a').attr('href');
+                if($(this).find('figure a').length) {
+                    console.log('a tag exists');
+                    console.log($(this).find('figure a').length);
+                    return $(this).find('figure > a').attr('href'); 
+                } else {
+                    console.log('a tag does NOT exists');
+                    console.log($(this).find('figure a').length);
+                    return $(this).find('img').attr('src');
+                }
             },
             onComplete: function () {
                 $('.cboxPhoto')
