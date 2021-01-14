@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
     var galGroup = 1;
+    var galImage = null;
     $('.wp-block-gallery').each(function () {
         // Add lightbox for images
         $(this).find('.blocks-gallery-item').colorbox({
@@ -19,10 +20,19 @@ jQuery(document).ready(function ($) {
             photo: true,
             href: function () {
                 if($(this).find('figure a').length) {
+                    // Link to: Media File or Attachment
                     console.log('a tag exists');
                     console.log($(this).find('figure a').length);
-                    return $(this).find('figure > a').attr('href'); 
+                    galImage = $(this).find('figure a');
+                    if(galImage.attr('href').indexOf('.jpg') > 0 || galImage.attr('href').indexOf('.png') > 0 || galImage.attr('href').indexOf('.gif') > 0) {
+                        // Link to: Media File
+                        return $(this).find('figure > a').attr('href');
+                    } else {
+                        // Link to: Attachment
+                        return $(this).find('img').attr('src');
+                    }
                 } else {
+                    // Link to: None
                     console.log('a tag does NOT exists');
                     console.log($(this).find('figure a').length);
                     return $(this).find('img').attr('src');
