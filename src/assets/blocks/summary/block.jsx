@@ -33,7 +33,7 @@ import latinize from "latinize";
             const summaryBlock = createBlock( 'advgb/summary' );
 
             $( '#editor' ).find( '.table-of-contents' ).click( function () {
-                const allBlocks = select( 'core/editor' ).getBlocks();
+                const allBlocks = select( 'core/block-editor' ).getBlocks();
                 const summaryBlockExist = !!allBlocks.filter( ( block ) => ( block.name === 'advgb/summary' ) ).length;
                 setTimeout( function () {
                     const summaryButton = $(
@@ -146,7 +146,7 @@ import latinize from "latinize";
         updateSummary() {
             let headingDatas = [];
             let headingBlocks = [];
-            const allBlocks = select( 'core/editor' ).getBlocks();
+            const allBlocks = select( 'core/block-editor' ).getBlocks();
             const filteredBlocks = allBlocks.filter( ( block ) => ( block.name === 'core/heading' || block.name === 'core/columns' ) );
             filteredBlocks.map(function ( block ) {
                 if (block.name === 'core/columns') {
