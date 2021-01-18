@@ -126,7 +126,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 == Changelog ==
 
 = 2.5.3 =
- * Fix: Advanced Button duplication id
+ * Fix: Advanced Button and Advanced Icon duplication id
  
 = 2.5.2 =
  * Fix: Summary block style and better CSS handling for margin-left
