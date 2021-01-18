@@ -7096,10 +7096,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes = _props2.setAttributes,
                     clientId = _props2.clientId;
 
-
-                if (!attributes.id) {
-                    setAttributes({ id: 'advgbbtn-' + clientId });
-                }
+                setAttributes({ id: 'advgbbtn-' + clientId });
             }
         }, {
             key: 'render',
