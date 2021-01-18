@@ -724,9 +724,37 @@ span.advgb-social-icon.selected:before {
     text-align: initial;
 }
 
-#editor ul.advgb-toc, ul.advgb-toc {
-    list-style: none !important;
+#editor ul.advgb-toc, 
+ul.advgb-toc {
+    list-style: circle;
     padding: 0;
+    
+    li {
+        
+        &.toc-level-1 {
+            margin-left: 20px;
+        }
+        
+        &.toc-level-2 {
+            margin-left: 40px;
+        }
+        
+        &.toc-level-3 {
+            margin-left: 60px;
+        }
+        
+        &.toc-level-4 {
+            margin-left: 80px;
+        }
+        
+        &.toc-level-5 {
+            margin-left: 100px;
+        }
+        
+        &.toc-level-6 {
+            margin-left: 120px;
+        }
+    }
 }
 
 .wp-block-advgb-summary {
