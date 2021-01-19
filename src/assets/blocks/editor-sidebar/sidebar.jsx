@@ -45,7 +45,15 @@
         }
     };
 
-    window.document.addEventListener("DOMContentLoaded", updateBodyClass);
+    // https://github.com/WordPress/gutenberg/issues/28032#issuecomment-759723289
+    window.document.addEventListener(
+        'DOMContentLoaded',
+        () => {
+            setTimeout(() => {
+                updateBodyClass();
+            }, 0);
+        }
+    );
 
     class AdvSidebar extends Component {
         constructor() {
