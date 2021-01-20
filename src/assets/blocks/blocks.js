@@ -16936,14 +16936,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         var bodyClass = window.document.body.classList;
 
+        bodyClass.remove('advgb-editor-width-default', 'advgb-editor-width-large', 'advgb-editor-width-full', 'advgb-editor-col-guide-enable', 'advgb-editor-col-guide-disable');
+
+        // Editor width
         if (!!advgb_blocks_editor_width) {
-            bodyClass.remove('advgb-editor-width-default', 'advgb-editor-width-large', 'advgb-editor-width-full');
             bodyClass.add('advgb-editor-width-' + advgb_blocks_editor_width);
         }
 
+        // Editor width - Global
+        if (advgb_blocks_editor_width === '') {
+            bodyClass.add('advgb-editor-width-' + advg_settings.editor_width_global);
+        }
+
+        // Columns visual guide
         if (!!advgb_blocks_columns_visual_guide) {
-            bodyClass.remove('advgb-editor-col-guide-enable', 'advgb-editor-col-guide-disable');
             bodyClass.add('advgb-editor-col-guide-' + advgb_blocks_columns_visual_guide);
+        }
+
+        // Columns visual guide - Global
+        if (advgb_blocks_columns_visual_guide === '') {
+            bodyClass.add('advgb-editor-col-guide-' + advg_settings.enable_columns_visual_guide_global);
         }
     };
 
