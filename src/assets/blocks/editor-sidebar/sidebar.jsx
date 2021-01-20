@@ -28,32 +28,26 @@
         const { advgb_blocks_editor_width, advgb_blocks_columns_visual_guide } = postMetaData;
         const bodyClass = window.document.body.classList;
 
-        bodyClass.remove(
-            'advgb-editor-width-default',
-            'advgb-editor-width-large',
-            'advgb-editor-width-full',
-            'advgb-editor-col-guide-enable',
-            'advgb-editor-col-guide-disable',
-        );
-
         if (!!advgb_blocks_editor_width) {
+            bodyClass.remove(
+                'advgb-editor-width-default',
+                'advgb-editor-width-large',
+                'advgb-editor-width-full',
+            );
             bodyClass.add( 'advgb-editor-width-' + advgb_blocks_editor_width );
         }
 
         if (!!advgb_blocks_columns_visual_guide) {
+            bodyClass.remove(
+                'advgb-editor-col-guide-enable',
+                'advgb-editor-col-guide-disable',
+            );
             bodyClass.add( 'advgb-editor-col-guide-' + advgb_blocks_columns_visual_guide );
         }
     };
 
-    // https://github.com/WordPress/gutenberg/issues/28032#issuecomment-759723289
-    window.document.addEventListener(
-        'DOMContentLoaded',
-        () => {
-            setTimeout(() => {
-                updateBodyClass();
-            }, 0);
-        }
-    );
+    // Line below stopped working - https://github.com/WordPress/gutenberg/issues/28032#issuecomment-759723289
+    // window.document.addEventListener("DOMContentLoaded", updateBodyClass);
 
     class AdvSidebar extends Component {
         constructor() {
