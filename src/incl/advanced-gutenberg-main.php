@@ -1585,7 +1585,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Convert Editor Width value into a string
          *
-         * @param string $value Editor width number 
+         * @param int $value Editor width number 
+         *
+         * @return string
          */
         public function getAdvgbEditorWidth( $value ) {
             
@@ -1609,7 +1611,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
         /**
          * Convert Columns Visual Guide value into a string
          *
-         * @param string $value Columns Visual Guide number
+         * @param int $value Columns Visual Guide number
+         *
+         * @return string
          */
         public function getAdvgbColumnsVisualGuide( $value ) {
             
