@@ -177,7 +177,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 add_filter('mce_external_plugins', array($this, 'addTinyMceExternal'));
                 add_filter('mce_buttons_2', array($this, 'addTinyMceButtons'));
                 add_filter('block_categories', array($this, 'addAdvBlocksCategory'));
-
+                add_filter('admin_body_class', array($this, 'setAdvgEditorBodyClassses'));
+           
                 // Ajax
                 add_action('wp_ajax_advgb_update_blocks_list', array($this, 'updateBlocksList'));
                 add_action('wp_ajax_advgb_get_users', array($this, 'getUsers'));
@@ -1580,7 +1581,109 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 )
             );
         }
+        
+        /**
+         * Convert Editor Width value into a string
+         *
+         * @param int $value Editor width number 
+         *
+         * @return string
+         */
+        public function getAdvgbEditorWidth( $value ) {
+            
+            $result = '';
+            
+            switch($value) {
+                default:
+                    $result = 'default';
+                    break;
+                case '75':
+                    $result = 'large';
+                    break;
+                case '95':
+                    $result = 'full';
+                    break;
+            }
+            
+            return $result;
+        }
+        
+        /**
+         * Convert Columns Visual Guide value into a string
+         *
+         * @param int $value Columns Visual Guide number
+         *
+         * @return string
+         */
+        public function getAdvgbColumnsVisualGuide( $value ) {
+            
+            $result = '';
+            
+            if($value === '1') {
+                $result = 'enable';
+            } else {
+                $result = 'disable';
+            }
+            
+            return $result;
+        }
+        
+        /**
+         * Set body classes for Editor width and Columns visual guide
+         *
+         * @param string $classes CSS class from body
+         */
+        public function setAdvgEditorBodyClassses( $classes ) {
+            
+            if ('post' == get_current_screen()->base) {
+                $saved_settings = get_option('advgb_settings');
+                global $post;
+                $editorWidth    = get_post_meta($post->ID, 'advgb_blocks_editor_width', true);
+                $editorColsVG   = get_post_meta($post->ID, 'advgb_blocks_columns_visual_guide', true);
+                
+                // Editor width
+                if(isset($editorWidth) && !empty($editorWidth)) {
+                    // Editor width - Post meta
+                    $classes .= ' advgb-editor-width-' . esc_attr($editorWidth) . ' ';
+                } elseif (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
+                    // Editor width - Global configuration
+                    $classes .= ' advgb-editor-width-' . $this->getAdvgbEditorWidth( esc_attr($saved_settings['editor_width']) ) . ' ';
+                } else {
+                    // Nothing to do here
+                }
 
+                // Columns visual guide
+                if(isset($editorColsVG) && !empty($editorColsVG)) {
+                    // Columns visual guide - Post meta
+                    $classes .= ' advgb-editor-col-guide-' . esc_attr($editorColsVG) . ' ';
+                } elseif (!isset($saved_settings['enable_columns_visual_guide'])
+                        || (isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide'])) {
+                    // Columns visual guide - Global configuration
+                    $classes .= ' advgb-editor-col-guide-enable ';
+                } else {
+                    // Columns visual guide - Global configuration
+                    $classes .= ' advgb-editor-col-guide-disable ';
+                } 
+                
+                // Global settings as javascript variables
+                wp_localize_script(
+                    'advgb_blocks',
+                    'advg_settings',
+                    [
+                        'editor_width_global' => $this->getAdvgbEditorWidth( 
+                            esc_attr($saved_settings['editor_width']) 
+                        ),
+                        'enable_columns_visual_guide_global' => $this->getAdvgbColumnsVisualGuide( 
+                            esc_attr($saved_settings['enable_columns_visual_guide']) 
+                        ),
+                    ]
+                );
+
+                return $classes;
+            }
+            return $classes;
+        }
+                           
         /**
          * Register profiles custom post type
          *
