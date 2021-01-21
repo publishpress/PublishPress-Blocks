@@ -7096,10 +7096,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes = _props2.setAttributes,
                     clientId = _props2.clientId;
 
-
-                if (!attributes.id) {
-                    setAttributes({ id: 'advgbbtn-' + clientId });
-                }
+                setAttributes({ id: 'advgbbtn-' + clientId });
             }
         }, {
             key: 'render',
@@ -7204,7 +7201,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange(value) {
                                 return setAttributes({ text: value });
                             },
-                            formattingControls: ['bold', 'italic', 'strikethrough'],
+                            allowedFormats: ['bold', 'italic', 'strikethrough'],
                             isSelected: isSelected,
                             className: 'wp-block-advgb-button_link ' + id,
                             keepPlaceholderOnFocus: true
@@ -7883,9 +7880,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var blockIDX = attributes.blockIDX;
 
 
-                if (!blockIDX) {
-                    setAttributes({ blockIDX: "advgb-icon-" + clientId });
-                }
+                setAttributes({ blockIDX: "advgb-icon-" + clientId });
             }
         }, {
             key: "componentDidUpdate",
@@ -16943,16 +16938,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
         bodyClass.remove('advgb-editor-width-default', 'advgb-editor-width-large', 'advgb-editor-width-full', 'advgb-editor-col-guide-enable', 'advgb-editor-col-guide-disable');
 
+        // Editor width
         if (!!advgb_blocks_editor_width) {
             bodyClass.add('advgb-editor-width-' + advgb_blocks_editor_width);
+        } else {
+            // Global
+            bodyClass.add('advgb-editor-width-' + advg_settings.editor_width_global);
         }
 
+        // Columns visual guide
         if (!!advgb_blocks_columns_visual_guide) {
             bodyClass.add('advgb-editor-col-guide-' + advgb_blocks_columns_visual_guide);
+        } else {
+            // Global
+            bodyClass.add('advgb-editor-col-guide-' + advg_settings.enable_columns_visual_guide_global);
         }
     };
 
-    window.document.addEventListener("DOMContentLoaded", updateBodyClass);
+    // Line below stopped working - https://github.com/WordPress/gutenberg/issues/28032#issuecomment-759723289
+    // window.document.addEventListener("DOMContentLoaded", updateBodyClass);
 
     var AdvSidebar = function (_Component) {
         _inherits(AdvSidebar, _Component);

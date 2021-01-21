@@ -3,7 +3,7 @@ Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.6
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -125,6 +125,12 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.5.3 =
+ * Fix: Advanced Button and Advanced Icon duplication id
+ * Fix: Deprecated prop for Advanced Button block
+ * Fix: Editor width and Columns visual guide settings in WordPress 5.6
+ * Add: Darker border color for Columns visual guide 
+ 
 = 2.5.2 =
  * Fix: Summary block style and better CSS handling for margin-left
  * Fix: Ajax call to update the block list in db
