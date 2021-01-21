@@ -1639,7 +1639,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 $saved_settings = get_option('advgb_settings');
                 global $post;
                 $editorWidth    = get_post_meta($post->ID, 'advgb_blocks_editor_width', true);
-                $editorColsVG   = get_post_meta($post->ID, 'enable_columns_visual_guide', true);
+                $editorColsVG   = get_post_meta($post->ID, 'advgb_blocks_columns_visual_guide', true);
                 
                 // Editor width
                 if(isset($editorWidth) && !empty($editorWidth)) {
