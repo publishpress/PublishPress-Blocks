@@ -127,6 +127,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 = 2.5.3 =
  * Fix: Advanced Button and Advanced Icon duplication id
+ * Fix: Deprecated prop for Advanced Button block
  * Fix: Editor width and Columns visual guide settings in WordPress 5.6
  * Add: Darker border color for Columns visual guide 
  
