@@ -8745,7 +8745,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             Toolbar,
-                            null,
+                            { label: __('Options', 'advanced-gutenberg') },
                             React.createElement(MediaUpload, {
                                 allowedTypes: ['image'],
                                 value: imageID,

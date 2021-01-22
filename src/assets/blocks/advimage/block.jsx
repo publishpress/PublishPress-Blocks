@@ -67,7 +67,7 @@
                 <Fragment>
                     {imageID && (
                         <BlockControls>
-                            <Toolbar>
+                            <Toolbar label={ __( 'Options', 'advanced-gutenberg' ) }>
                                 <MediaUpload
                                     allowedTypes={ ['image'] }
                                     value={ imageID }
