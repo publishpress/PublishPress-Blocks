@@ -203,7 +203,6 @@
                             tagName="ul"
                             onChange={(value) => setAttributes({values: value})}
                             value={values}
-                            wrapperClassName="advgb-list-item"
                             className={listClassName}
                             placeholder={__('Write advanced list…', 'advanced-gutenberg')}
                             onMerge={mergeBlocks}

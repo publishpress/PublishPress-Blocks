@@ -9534,7 +9534,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             return setAttributes({ values: value });
                         },
                         value: values,
-                        wrapperClassName: 'advgb-list-item',
                         className: listClassName,
                         placeholder: __('Write advanced list…', 'advanced-gutenberg'),
                         onMerge: mergeBlocks,
