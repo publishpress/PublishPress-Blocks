@@ -4,7 +4,7 @@
     const {Component, Fragment} = wpElement;
     const {registerBlockType, createBlock} = wpBlocks;
     const {InspectorControls, RichText, ColorPalette, BlockControls} = wpBlockEditor;
-    const {BaseControl, RangeControl, PanelBody, IconButton, Dashicon, Toolbar} = wpComponents;
+    const {BaseControl, RangeControl, PanelBody, Button, Dashicon, Toolbar, ToolbarButton} = wpComponents;
 
     var parse = require('html-react-parser');
 
@@ -108,8 +108,8 @@
                     :
                     <Fragment>
                         <BlockControls>
-                            <Toolbar>
-                                <IconButton
+                            <Toolbar label={__('Options', 'advanced-gutenberg')}>
+                                <ToolbarButton
                                     label={__('Refresh this list when it conflict with other lists styles', 'advanced-gutenberg')}
                                     icon="update"
                                     className="components-toolbar__control"
