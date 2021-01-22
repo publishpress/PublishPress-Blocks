@@ -4,7 +4,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, PanelColorSettings, InnerBlocks } = wpBlockEditor;
-    const { PanelBody, RangeControl, SelectControl, ToggleControl, Tooltip, Toolbar } = wpComponents;
+    const { PanelBody, RangeControl, SelectControl, ToggleControl, Tooltip, ToolbarGroup } = wpComponents;
     const { times } = lodash;
     const { dispatch, select } = wp.data;
 
@@ -419,7 +419,7 @@
                     :
                 <Fragment>
                     <BlockControls>
-                        <Toolbar controls={ VERT_ALIGNMENT_CONTROLS } />
+                        <ToolbarGroup controls={ VERT_ALIGNMENT_CONTROLS } />
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Columns Settings', 'advanced-gutenberg' ) }>

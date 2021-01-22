@@ -13866,7 +13866,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         ToggleControl = wpComponents.ToggleControl,
         Tooltip = wpComponents.Tooltip,
-        Toolbar = wpComponents.Toolbar;
+        ToolbarGroup = wpComponents.ToolbarGroup;
     var _lodash = lodash,
         times = _lodash.times;
     var _wp$data = wp.data,
@@ -14136,7 +14136,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(Toolbar, { controls: VERT_ALIGNMENT_CONTROLS })
+                        React.createElement(ToolbarGroup, { controls: VERT_ALIGNMENT_CONTROLS })
                     ),
                     React.createElement(
                         InspectorControls,
