@@ -4,7 +4,7 @@
     const {Component, Fragment} = wpElement;
     const {registerBlockType, createBlock} = wpBlocks;
     const {InspectorControls, BlockControls, RichText, PanelColorSettings} = wpBlockEditor;
-    const {PanelBody, BaseControl, RangeControl, SelectControl, ToggleControl, TextControl, IconButton, Button, Toolbar, DropdownMenu, Tooltip} = wpComponents;
+    const {PanelBody, BaseControl, RangeControl, SelectControl, ToggleControl, TextControl, Button, Toolbar, ToolbarButton, DropdownMenu, Tooltip} = wpComponents;
     const {times} = lodash;
 
     const tableBlockIcon = (
@@ -1176,14 +1176,14 @@
                     :
                     <Fragment>
                         <BlockControls>
-                            <Toolbar>
+                            <Toolbar label={__('Options', 'advanced-gutenberg')}>
                                 <DropdownMenu
                                     hasArrowIndicator
                                     icon="editor-table"
                                     label={__('Edit Table', 'advanced-gutenberg')}
                                     controls={TABLE_CONTROLS}
                                 />
-                                <IconButton
+                                <ToolbarButton
                                     icon="update"
                                     label={__('Refresh table (Use this after using undo or redo)', 'advanced-gutenberg')}
                                     onClick={() => this.calculateRealColIndex()}

@@ -9763,9 +9763,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
-        IconButton = wpComponents.IconButton,
         Button = wpComponents.Button,
         Toolbar = wpComponents.Toolbar,
+        ToolbarButton = wpComponents.ToolbarButton,
         DropdownMenu = wpComponents.DropdownMenu,
         Tooltip = wpComponents.Tooltip;
     var _lodash = lodash,
@@ -11068,14 +11068,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             Toolbar,
-                            null,
+                            { label: __('Options', 'advanced-gutenberg') },
                             React.createElement(DropdownMenu, {
                                 hasArrowIndicator: true,
                                 icon: "editor-table",
                                 label: __('Edit Table', 'advanced-gutenberg'),
                                 controls: TABLE_CONTROLS
                             }),
-                            React.createElement(IconButton, {
+                            React.createElement(ToolbarButton, {
                                 icon: "update",
                                 label: __('Refresh table (Use this after using undo or redo)', 'advanced-gutenberg'),
                                 onClick: function onClick() {
