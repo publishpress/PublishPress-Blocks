@@ -27449,7 +27449,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         CheckboxControl = wpComponents.CheckboxControl,
         SelectControl = wpComponents.SelectControl,
         Spinner = wpComponents.Spinner,
-        Toolbar = wpComponents.Toolbar,
+        ToolbarGroup = wpComponents.ToolbarGroup,
         Placeholder = wpComponents.Placeholder,
         Button = wpComponents.Button;
     var addQueryArgs = wp.url.addQueryArgs;
@@ -27691,7 +27691,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(Toolbar, { controls: viewControls })
+                        React.createElement(ToolbarGroup, { controls: viewControls })
                     ),
                     React.createElement(
                         InspectorControls,
