@@ -8643,9 +8643,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToggleControl = wpComponents.ToggleControl,
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
-        IconButton = wpComponents.IconButton,
         Button = wpComponents.Button,
         Toolbar = wpComponents.Toolbar,
+        ToolbarButton = wpComponents.ToolbarButton,
         FocalPointPicker = wpComponents.FocalPointPicker;
 
 
@@ -8754,16 +8754,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 render: function render(_ref) {
                                     var open = _ref.open;
-                                    return React.createElement(IconButton, {
-                                        className: 'components-toolbar__control',
+                                    return React.createElement(ToolbarButton, {
                                         label: __('Change image', 'advanced-gutenberg'),
                                         icon: 'edit',
                                         onClick: open
                                     });
                                 }
                             }),
-                            React.createElement(IconButton, {
-                                className: 'components-toolbar__control',
+                            React.createElement(ToolbarButton, {
                                 label: __('Remove image', 'advanced-gutenberg'),
                                 icon: 'no',
                                 onClick: function onClick() {
