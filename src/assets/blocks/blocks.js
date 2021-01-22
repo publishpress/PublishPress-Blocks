@@ -6702,7 +6702,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             Toolbar,
-                            null,
+                            { label: __('Options', 'advanced-gutenberg') },
                             React.createElement(IconButton, {
                                 icon: "update",
                                 onClick: function onClick() {
