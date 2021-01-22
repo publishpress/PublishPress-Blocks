@@ -12989,10 +12989,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         TextControl = wpComponents.TextControl,
         SelectControl = wpComponents.SelectControl,
         Button = wpComponents.Button,
-        IconButton = wpComponents.IconButton,
         Dashicon = wpComponents.Dashicon,
         Spinner = wpComponents.Spinner,
         Toolbar = wpComponents.Toolbar,
+        ToolbarGroup = wpComponents.ToolbarGroup,
+        ToolbarButton = wpComponents.ToolbarButton,
         Disabled = wpComponents.Disabled;
 
 
@@ -13220,7 +13221,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         BlockControls,
                         null,
                         React.createElement(
-                            Toolbar,
+                            ToolbarGroup,
                             null,
                             React.createElement(MediaUpload, {
                                 allowedTypes: ["image"],
@@ -13230,7 +13231,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 render: function render(_ref) {
                                     var open = _ref.open;
-                                    return React.createElement(IconButton, {
+                                    return React.createElement(ToolbarButton, {
                                         className: "components-toolbar__control",
                                         label: __('Change image preview', 'advanced-gutenberg'),
                                         icon: "edit",
@@ -13238,7 +13239,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     });
                                 }
                             }),
-                            React.createElement(IconButton, {
+                            React.createElement(ToolbarButton, {
                                 className: "components-toolbar__control",
                                 label: __('Remove image preview', 'advanced-gutenberg'),
                                 icon: "no",
