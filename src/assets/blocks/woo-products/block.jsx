@@ -4,7 +4,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls } = wpBlockEditor;
-    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner, Toolbar, Placeholder, Button } = wpComponents;
+    const { RangeControl, PanelBody, CheckboxControl, SelectControl, Spinner, ToolbarGroup, Placeholder, Button } = wpComponents;
     const { addQueryArgs } = wp.url;
 
     let fetchingQueue = null;
@@ -226,7 +226,7 @@
                     :
                 <Fragment>
                     <BlockControls>
-                        <Toolbar controls={ viewControls } />
+                        <ToolbarGroup controls={ viewControls } />
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Products Settings', 'advanced-gutenberg' ) }>

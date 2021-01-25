@@ -6,7 +6,7 @@ import latinize from "latinize";
     const { Component, Fragment } = wpElement;
     const { registerBlockType, getBlockContent, createBlock } = wpBlocks;
     const { BlockControls, InspectorControls, InspectorAdvancedControls, PanelColorSettings, BlockAlignmentToolbar } = wpBlockEditor;
-    const { IconButton, Placeholder, Button, Toolbar, ToggleControl, TextControl, PanelBody } = wpComponents;
+    const { ToolbarButton, Placeholder, Button, ToolbarGroup, ToggleControl, TextControl, PanelBody } = wpComponents;
     const { select, dispatch } = wpData;
     const { addFilter } = wpHooks;
 
@@ -245,13 +245,13 @@ import latinize from "latinize";
                     {!!headings.length && (
                         <BlockControls>
                             <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
-                            <Toolbar>
-                                <IconButton className={'components-icon-button components-toolbar__control'}
+                            <ToolbarGroup>
+                                <ToolbarButton className={'components-icon-button components-toolbar__control'}
                                             icon={'update'}
                                             label={__( 'Update Summary', 'advanced-gutenberg' )}
                                             onClick={this.updateSummary}
                                 />
-                            </Toolbar>
+                            </ToolbarGroup>
                         </BlockControls>
                     ) }
                     <InspectorControls>
