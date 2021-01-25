@@ -9310,9 +9310,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var BaseControl = wpComponents.BaseControl,
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
-        Button = wpComponents.Button,
         Dashicon = wpComponents.Dashicon,
-        Toolbar = wpComponents.Toolbar,
+        ToolbarGroup = wpComponents.ToolbarGroup,
         ToolbarButton = wpComponents.ToolbarButton;
 
 
@@ -9411,12 +9410,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         BlockControls,
                         null,
                         React.createElement(
-                            Toolbar,
-                            { label: __('Options', 'advanced-gutenberg') },
+                            ToolbarGroup,
+                            null,
                             React.createElement(ToolbarButton, {
                                 label: __('Refresh this list when it conflict with other lists styles', 'advanced-gutenberg'),
                                 icon: 'update',
-                                className: 'components-toolbar__control',
                                 onClick: function onClick() {
                                     return setAttributes({ id: 'advgblist-' + blockID });
                                 }
