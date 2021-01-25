@@ -19496,7 +19496,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToggleControl = wpComponents.ToggleControl,
         Tooltip = wpComponents.Tooltip,
         Toolbar = wpComponents.Toolbar,
-        IconButton = wpComponents.IconButton,
+        Button = wpComponents.Button,
         Placeholder = wpComponents.Placeholder;
 
 
@@ -20164,7 +20164,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(
                             Toolbar,
                             { label: __('Options', 'advanced-gutenberg') },
-                            React.createElement(IconButton, {
+                            React.createElement(Button, {
                                 icon: "image-flip-horizontal",
                                 label: __('Switch View', 'advanced-gutenberg'),
                                 onClick: function onClick() {

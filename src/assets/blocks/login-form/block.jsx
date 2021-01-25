@@ -6,7 +6,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, RichText, PanelColorSettings, MediaUpload } = wpBlockEditor;
-    const { RangeControl, PanelBody, TextControl , SelectControl, ToggleControl, Tooltip, Toolbar, IconButton, Placeholder } = wpComponents;
+    const { RangeControl, PanelBody, TextControl , SelectControl, ToggleControl, Tooltip, Toolbar, Button, Placeholder } = wpComponents;
 
     const userIcon = (
         <svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -469,7 +469,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                 <Fragment>
                     <BlockControls>
                         <Toolbar label={ __( 'Options', 'advanced-gutenberg' ) }>
-                            <IconButton
+                            <Button
                                 icon="image-flip-horizontal"
                                 label={ __( 'Switch View', 'advanced-gutenberg' ) }
                                 onClick={ () => this.setState( { registerView: !registerView } ) }
