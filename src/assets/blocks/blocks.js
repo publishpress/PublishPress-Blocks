@@ -20163,7 +20163,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             Toolbar,
-                            null,
+                            { label: __('Options', 'advanced-gutenberg') },
                             React.createElement(IconButton, {
                                 icon: "image-flip-horizontal",
                                 label: __('Switch View', 'advanced-gutenberg'),

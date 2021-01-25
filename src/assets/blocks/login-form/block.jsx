@@ -468,7 +468,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     :
                 <Fragment>
                     <BlockControls>
-                        <Toolbar>
+                        <Toolbar label={ __( 'Options', 'advanced-gutenberg' ) }>
                             <IconButton
                                 icon="image-flip-horizontal"
                                 label={ __( 'Switch View', 'advanced-gutenberg' ) }
