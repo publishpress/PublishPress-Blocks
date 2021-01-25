@@ -125,6 +125,21 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.5.4 =
+ * Fix: Deprecated code for Advanced Button block
+ * Fix: Deprecated code for Advanced Accordion block
+ * Fix: Deprecated code for Advanced Image block
+ * Fix: Deprecated code for Advanced List block
+ * Fix: Deprecated code for Advanced Table block
+ * Fix: Deprecated code for Advanced Video block
+ * Fix: Deprecated code for Columns Manager block
+ * Fix: Deprecated code for Imags Slider block
+ * Fix: Deprecated code for Login / Register block
+ * Fix: Deprecated code for Recent Posts block
+ * Fix: Deprecated code for Social Links block
+ * Fix: Deprecated code for Summary block
+ * Fix: Deprecated code for Woo Products block
+
 = 2.5.3 =
  * Fix: Advanced Button and Advanced Icon duplication id
  * Fix: Deprecated prop for Advanced Button block
