@@ -25190,10 +25190,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         InspectorAdvancedControls = _wpBlockEditor.InspectorAdvancedControls,
         PanelColorSettings = _wpBlockEditor.PanelColorSettings,
         BlockAlignmentToolbar = _wpBlockEditor.BlockAlignmentToolbar;
-    var IconButton = wpComponents.IconButton,
+    var ToolbarButton = wpComponents.ToolbarButton,
         Placeholder = wpComponents.Placeholder,
         Button = wpComponents.Button,
-        Toolbar = wpComponents.Toolbar,
+        ToolbarGroup = wpComponents.ToolbarGroup,
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
         PanelBody = wpComponents.PanelBody;
@@ -25450,9 +25450,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ align: align });
                             } }),
                         React.createElement(
-                            Toolbar,
+                            ToolbarGroup,
                             null,
-                            React.createElement(IconButton, { className: 'components-icon-button components-toolbar__control',
+                            React.createElement(ToolbarButton, { className: 'components-icon-button components-toolbar__control',
                                 icon: 'update',
                                 label: __('Update Summary', 'advanced-gutenberg'),
                                 onClick: this.updateSummary
