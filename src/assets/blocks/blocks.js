@@ -23171,9 +23171,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         TextControl = wpComponents.TextControl,
         QueryControls = wpComponents.QueryControls,
         Spinner = wpComponents.Spinner,
-        Toolbar = wpComponents.Toolbar,
-        Placeholder = wpComponents.Placeholder,
-        IconButton = wpComponents.IconButton;
+        ToolbarGroup = wpComponents.ToolbarGroup,
+        ToolbarButton = wpComponents.ToolbarButton,
+        Placeholder = wpComponents.Placeholder;
     var withSelect = wpData.withSelect;
     var pickBy = lodash.pickBy,
         isUndefined = lodash.isUndefined;
@@ -23475,13 +23475,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(Toolbar, { controls: postViewControls }),
+                        React.createElement(ToolbarGroup, { controls: postViewControls }),
                         React.createElement(
-                            Toolbar,
+                            ToolbarGroup,
                             null,
-                            React.createElement(IconButton, {
-                                label: __('Refresh', 'advanced-gutenberg'),
+                            React.createElement(ToolbarButton, {
                                 icon: "update",
+                                label: __('Refresh', 'advanced-gutenberg'),
                                 onClick: function onClick() {
                                     return setAttributes({ myToken: Math.floor(Math.random() * Math.floor(999)) });
                                 }
