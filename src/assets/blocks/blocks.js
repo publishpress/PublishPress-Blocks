@@ -17146,7 +17146,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
         TextareaControl = wpComponents.TextareaControl,
-        IconButton = wpComponents.IconButton,
         Button = wpComponents.Button,
         Placeholder = wpComponents.Placeholder,
         Tooltip = wpComponents.Tooltip;
@@ -17646,7 +17645,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         React.createElement(
                                             Tooltip,
                                             { text: __('Remove image', 'advanced-gutenberg') },
-                                            React.createElement(IconButton, {
+                                            React.createElement(Button, {
                                                 className: "advgb-image-slider-image-list-item-remove",
                                                 icon: "no",
                                                 onClick: function onClick() {
@@ -17675,7 +17674,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         },
                                         render: function render(_ref2) {
                                             var open = _ref2.open;
-                                            return React.createElement(IconButton, {
+                                            return React.createElement(Button, {
                                                 label: __('Add image', 'advanced-gutenberg'),
                                                 icon: "plus",
                                                 onClick: open
