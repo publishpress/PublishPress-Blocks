@@ -8644,7 +8644,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         SelectControl = wpComponents.SelectControl,
         TextControl = wpComponents.TextControl,
         Button = wpComponents.Button,
-        Toolbar = wpComponents.Toolbar,
+        ToolbarGroup = wpComponents.ToolbarGroup,
         ToolbarButton = wpComponents.ToolbarButton,
         FocalPointPicker = wpComponents.FocalPointPicker;
 
@@ -8744,8 +8744,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         BlockControls,
                         null,
                         React.createElement(
-                            Toolbar,
-                            { label: __('Options', 'advanced-gutenberg') },
+                            ToolbarGroup,
+                            null,
                             React.createElement(MediaUpload, {
                                 allowedTypes: ['image'],
                                 value: imageID,
