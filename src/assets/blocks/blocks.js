@@ -9762,7 +9762,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
         Button = wpComponents.Button,
-        Toolbar = wpComponents.Toolbar,
+        ToolbarGroup = wpComponents.ToolbarGroup,
         ToolbarButton = wpComponents.ToolbarButton,
         DropdownMenu = wpComponents.DropdownMenu,
         Tooltip = wpComponents.Tooltip;
@@ -11065,8 +11065,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         BlockControls,
                         null,
                         React.createElement(
-                            Toolbar,
-                            { label: __('Options', 'advanced-gutenberg') },
+                            ToolbarGroup,
+                            null,
                             React.createElement(DropdownMenu, {
                                 hasArrowIndicator: true,
                                 icon: "editor-table",
@@ -11242,7 +11242,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     BaseControl,
                                     { label: __('Horizontal Align', 'advanced-gutenberg') },
-                                    React.createElement(Toolbar, {
+                                    React.createElement(ToolbarGroup, {
                                         controls: HORZ_ALIGNMENT_CONTROLS.map(function (control) {
                                             var isActive = _this4.getCellStyles('textAlign') === control.align;
 
@@ -11258,7 +11258,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     BaseControl,
                                     { label: __('Vertical Align', 'advanced-gutenberg') },
-                                    React.createElement(Toolbar, {
+                                    React.createElement(ToolbarGroup, {
                                         controls: VERT_ALIGNMENT_CONTROLS.map(function (control) {
                                             var isActive = _this4.getCellStyles('verticalAlign') === control.align;
 

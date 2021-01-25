@@ -4,7 +4,7 @@
     const {Component, Fragment} = wpElement;
     const {registerBlockType, createBlock} = wpBlocks;
     const {InspectorControls, BlockControls, RichText, PanelColorSettings} = wpBlockEditor;
-    const {PanelBody, BaseControl, RangeControl, SelectControl, ToggleControl, TextControl, Button, Toolbar, ToolbarButton, DropdownMenu, Tooltip} = wpComponents;
+    const {PanelBody, BaseControl, RangeControl, SelectControl, ToggleControl, TextControl, Button, ToolbarGroup, ToolbarButton, DropdownMenu, Tooltip} = wpComponents;
     const {times} = lodash;
 
     const tableBlockIcon = (
@@ -1176,7 +1176,7 @@
                     :
                     <Fragment>
                         <BlockControls>
-                            <Toolbar label={__('Options', 'advanced-gutenberg')}>
+                            <ToolbarGroup>
                                 <DropdownMenu
                                     hasArrowIndicator
                                     icon="editor-table"
@@ -1188,7 +1188,7 @@
                                     label={__('Refresh table (Use this after using undo or redo)', 'advanced-gutenberg')}
                                     onClick={() => this.calculateRealColIndex()}
                                 />
-                            </Toolbar>
+                            </ToolbarGroup>
                         </BlockControls>
                         <InspectorControls>
                             <PanelBody title={__('Table Settings', 'advanced-gutenberg')}>
@@ -1308,7 +1308,7 @@
                                 </PanelBody>
                                 <PanelBody title={__('Text Alignment', 'advanced-gutenberg')} initialOpen={false}>
                                     <BaseControl label={__('Horizontal Align', 'advanced-gutenberg')}>
-                                        <Toolbar
+                                        <ToolbarGroup
                                             controls={HORZ_ALIGNMENT_CONTROLS.map((control) => {
                                                 const isActive = (this.getCellStyles('textAlign') === control.align);
 
@@ -1321,7 +1321,7 @@
                                         />
                                     </BaseControl>
                                     <BaseControl label={__('Vertical Align', 'advanced-gutenberg')}>
-                                        <Toolbar
+                                        <ToolbarGroup
                                             controls={VERT_ALIGNMENT_CONTROLS.map((control) => {
                                                 const isActive = (this.getCellStyles('verticalAlign') === control.align);
 
