@@ -24540,9 +24540,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BaseControl = wpComponents.BaseControl,
         PanelBody = wpComponents.PanelBody,
         TextControl = wpComponents.TextControl,
-        IconButton = wpComponents.IconButton,
+        ToolbarButton = wpComponents.ToolbarButton,
         Button = wpComponents.Button,
-        Toolbar = wpComponents.Toolbar,
+        ToolbarGroup = wpComponents.ToolbarGroup,
         Tooltip = wpComponents.Tooltip;
 
 
@@ -24777,9 +24777,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         BlockControls,
                         null,
                         React.createElement(
-                            Toolbar,
+                            ToolbarGroup,
                             null,
-                            React.createElement(IconButton, {
+                            React.createElement(ToolbarButton, {
                                 className: "components-toolbar__control",
                                 icon: "plus",
                                 label: __('Add item', 'advanced-gutenberg'),
@@ -24787,7 +24787,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return setAttributes({ items: [].concat(_toConsumableArray(items), [{ icon: '', iconID: '', link: '#' }]) });
                                 }
                             }),
-                            React.createElement(IconButton, {
+                            React.createElement(ToolbarButton, {
                                 className: "components-toolbar__control",
                                 icon: "no",
                                 label: __('Remove selected item', 'advanced-gutenberg'),
