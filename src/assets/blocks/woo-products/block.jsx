@@ -158,7 +158,7 @@
                     } )
                 } ).then( () => {
                     if (viewType === 'slider') {
-                        $(`#block-${self.props.clientId} .advgb-products-block.slider-view .advgb-products-wrapper:not(.slick-initialized)`).slick( {
+                        jQuery(`#block-${self.props.clientId} .advgb-products-block.slider-view .advgb-products-wrapper:not(.slick-initialized)`).slick( {
                             dots: true,
                             adaptiveHeight: true,
                         } );
