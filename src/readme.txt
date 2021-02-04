@@ -97,7 +97,7 @@ We reply to every question about the editor on the forum here, just ask :) We al
 The plugin has almost NO impact on page load for your visitors, it's only loaded during the edition process.
 
 = What is the Gutenberg version required to run PublishPress Blocks plugin properly? =
-The latest one, always! We're testing it with previous versions but the latest version of Gutenberg brings new features for developer and allow better content edition. 
+The latest one, always! We're testing it with previous versions but the latest version of Gutenberg brings new features for developer and allow better content edition.
 
 = Is PublishPress Blocks free? =
 Yes, totally free of charge.
@@ -109,7 +109,7 @@ In different places: in Gutenberg itself by adding some options to existing bloc
 Yes, this is possible, from the Gutenberg profile management, select some blocks, then you can give the profile to a single user or a user role
 
 = Does the PublishPress Blocks custom styles works with the Gutenberg CSS block class? =
-Both are loaded from a separated stylesheet file and offer 2 ways to style your blocks. The Gutenberg default CSS class apply a CSS class on a single block then you can create your CSS on an external file. 
+Both are loaded from a separated stylesheet file and offer 2 ways to style your blocks. The Gutenberg default CSS class apply a CSS class on a single block then you can create your CSS on an external file.
 The PublishPress Blocks Custom CSS can be created from the plugin configuration and applied from a dropdown list to any block.
 
 == Screenshots ==
@@ -124,6 +124,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Latest posts and WooCommerce products blocks
 
 == Changelog ==
+
+= 2.5.5 =
+ * Fix: Center alignment for Advanced Table block
 
 = 2.5.4 =
  * Fix: Deprecated code for Advanced Button block
@@ -144,15 +147,15 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Advanced Button and Advanced Icon duplication id
  * Fix: Deprecated prop for Advanced Button block
  * Fix: Editor width and Columns visual guide settings in WordPress 5.6
- * Add: Darker border color for Columns visual guide 
- 
+ * Add: Darker border color for Columns visual guide
+
 = 2.5.2 =
  * Fix: Summary block style and better CSS handling for margin-left
  * Fix: Ajax call to update the block list in db
  * Fix: Deprecated core/editor to core/block-editor Namespace
  * Fix: Introduced bug in 2.5.1 for gallery lightbox target
  * Add: Better gallery lightbox target support
- 
+
 = 2.5.1 =
  * Add: Anchor support for all the blocks, except: Adv. Icons, Columns Manager, Info Box, Recent Posts and Testimonial
  * Fix: Fix gallery lightbox target to open a bigger version of the image (hughworm)
@@ -160,7 +163,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Space between columns pushing content off in Columns Manager blocks
  * Remove: Old CSS approach for Columns Manager columns and layouts
  * Fix: Advanced Button center alignment in editor
- 
+
 = 2.5.0 =
  * Add: "PublishPress Blocks" as new plugin's name
  * Add: New admin design
@@ -168,7 +171,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Add: More translation strings for Italian
  * Add: More translation strings for Spanish (Spain)
  * Fix: Strings that are saved as static content
- 
+
 = 2.4.7 =
  * Fix: Global columns visual guide
  * Fix: Deprecated isDefault replaced with isSecondary
