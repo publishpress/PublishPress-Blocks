@@ -2,8 +2,8 @@
 Contributors: publishpress, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
-Tested up to: 5.6
-Stable tag: 2.5.3
+Tested up to: 5.6.1
+Stable tag: 2.5.4
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -124,6 +124,21 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Latest posts and WooCommerce products blocks
 
 == Changelog ==
+
+= 2.5.4 =
+ * Fix: Deprecated code for Advanced Button block
+ * Fix: Deprecated code for Advanced Accordion block
+ * Fix: Deprecated code for Advanced Image block
+ * Fix: Deprecated code for Advanced List block
+ * Fix: Deprecated code for Advanced Table block
+ * Fix: Deprecated code for Advanced Video block
+ * Fix: Deprecated code for Columns Manager block
+ * Fix: Deprecated code for Images Slider block
+ * Fix: Deprecated code for Login / Register block
+ * Fix: Deprecated code for Recent Posts block
+ * Fix: Deprecated code for Social Links block
+ * Fix: Deprecated code for Summary block
+ * Fix: Deprecated code for Woo Products block
 
 = 2.5.3 =
  * Fix: Advanced Button and Advanced Icon duplication id

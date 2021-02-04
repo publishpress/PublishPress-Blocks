@@ -148,7 +148,7 @@
                     :
                 <Fragment>
                     <BlockControls>
-                        <Toolbar>
+                        <Toolbar label={ __( 'Options', 'advanced-gutenberg' ) }>
                             <IconButton
                                 icon="update"
                                 onClick={ () => this.resyncAccordions() }
