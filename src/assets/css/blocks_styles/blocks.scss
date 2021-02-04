@@ -412,6 +412,11 @@ div.advgb-image-block .advgb-browse-image-btn {
 }
 
 /*Advanced Table block styles*/
+.editor-styles-wrapper .wp-block[data-align=center] > .wp-block-advgb-table td,
+.editor-styles-wrapper .wp-block[data-align=center] > .wp-block-advgb-table td {
+  text-align: left;
+}
+
 .wp-block-advgb-table {
     width: 100%;
     border-collapse: separate;
@@ -457,6 +462,11 @@ table.advgb-table-frontend {
     margin: 0 auto 1em;
     width: 100%;
     max-width: 100%;
+
+    &.aligncenter {
+      display: table;
+      text-align: left;
+    }
 }
 
 table.advgb-table-frontend td, table.advgb-table-frontend tr {
