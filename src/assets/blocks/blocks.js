@@ -25410,7 +25410,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 // Having heading blocks
                 if (headings.length > 0) {
-                    var _dispatch2 = dispatch('core/editor'),
+                    var _dispatch2 = dispatch('core/block-editor'),
                         selectBlock = _dispatch2.selectBlock;
 
                     summaryContent = React.createElement(

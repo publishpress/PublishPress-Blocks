@@ -218,7 +218,7 @@ import latinize from "latinize";
 
             // Having heading blocks
             if (headings.length > 0) {
-                const { selectBlock } = dispatch( 'core/editor' );
+                const { selectBlock } = dispatch( 'core/block-editor' );
                 summaryContent = (
                     <ul className="advgb-toc">
                         {headings.map( ( heading ) => {
