@@ -402,7 +402,7 @@ div.advgb-image-block .advgb-browse-image-btn {
 }
 
 .wp-block-advgb-table td, .wp-block-advgb-table tr {
-  border-color: #dddddd;
+  border-color: #ccc;
   border-style: solid;
   border-width: 1px;
   padding: 0;
