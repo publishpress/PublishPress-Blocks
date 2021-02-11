@@ -130,6 +130,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Testimonial block breaking editor
  * Fix: Preview images styles for Advanced Button block
  * Add: Newest version of Material Icons
+ * Fix: Advanced Image duplication id
 
 = 2.5.4 =
  * Fix: Deprecated code for Advanced Button block
