@@ -314,7 +314,7 @@
         },
         borderWidth: {
             type: 'number',
-            default: 0,
+            default: 1,
         },
         borderColor: {
             type: 'string',
