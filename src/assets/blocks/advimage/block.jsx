@@ -40,9 +40,7 @@
             const { attributes, setAttributes, clientId } = this.props;
             const { blockIDX } = attributes;
 
-            if (!blockIDX) {
-                setAttributes({blockIDX: `advgb-img-${clientId}`});
-            }
+            setAttributes({blockIDX: `advgb-img-${clientId}`});
         }
 
         render() {

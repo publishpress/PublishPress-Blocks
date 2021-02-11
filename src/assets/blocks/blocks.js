@@ -8714,9 +8714,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var blockIDX = attributes.blockIDX;
 
 
-                if (!blockIDX) {
-                    setAttributes({ blockIDX: 'advgb-img-' + clientId });
-                }
+                setAttributes({ blockIDX: 'advgb-img-' + clientId });
             }
         }, {
             key: 'render',
