@@ -5710,7 +5710,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         borderWidth: {
             type: 'number',
-            default: 1
+            default: 0
         },
         borderColor: {
             type: 'string'
@@ -6374,7 +6374,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 },
                 borderWidth: {
                     type: 'number',
-                    default: 1
+                    default: 0
                 },
                 borderColor: {
                     type: 'string'
@@ -6901,7 +6901,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         borderWidth: {
             type: 'number',
-            default: 1
+            default: 0
         },
         borderColor: {
             type: 'string'
