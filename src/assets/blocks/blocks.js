@@ -6506,8 +6506,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
         ToggleControl = wpComponents.ToggleControl,
-        Toolbar = wpComponents.Toolbar,
-        IconButton = wpComponents.IconButton;
+        ToolbarGroup = wpComponents.ToolbarGroup,
+        ToolbarButton = wpComponents.ToolbarButton;
     var _wp$data = wp.data,
         withDispatch = _wp$data.withDispatch,
         select = _wp$data.select,
@@ -6701,13 +6701,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         BlockControls,
                         null,
                         React.createElement(
-                            Toolbar,
-                            { label: __('Options', 'advanced-gutenberg') },
-                            React.createElement(IconButton, {
+                            ToolbarGroup,
+                            null,
+                            React.createElement(ToolbarButton, {
                                 icon: "update",
                                 onClick: function onClick() {
                                     return _this2.resyncAccordions();
-                                }
+                                },
+                                label: __('Refresh', 'advanced-gutenberg')
                             })
                         )
                     ),

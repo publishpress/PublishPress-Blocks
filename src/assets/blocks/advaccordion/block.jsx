@@ -4,7 +4,7 @@
     const { Component, Fragment } = wpElement;
     const { registerBlockType } = wpBlocks;
     const { InspectorControls, BlockControls, PanelColorSettings, InnerBlocks } = wpBlockEditor;
-    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl, Toolbar, IconButton } = wpComponents;
+    const { RangeControl, PanelBody, BaseControl , SelectControl, ToggleControl, ToolbarGroup, ToolbarButton } = wpComponents;
     const { withDispatch, select, dispatch } = wp.data;
     const { compose } = wpCompose;
     const { times } = lodash;
@@ -148,12 +148,13 @@
                     :
                 <Fragment>
                     <BlockControls>
-                        <Toolbar label={ __( 'Options', 'advanced-gutenberg' ) }>
-                            <IconButton
+                        <ToolbarGroup>
+                            <ToolbarButton
                                 icon="update"
                                 onClick={ () => this.resyncAccordions() }
+                                label={__('Refresh', 'advanced-gutenberg')}
                             />
-                        </Toolbar>
+                        </ToolbarGroup>
                     </BlockControls>
                     <InspectorControls>
                         <PanelBody title={ __( 'Accordion Settings', 'advanced-gutenberg' ) }>
