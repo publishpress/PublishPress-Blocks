@@ -134,6 +134,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Display symbol inline with number in Count Up block in editor
  * Fix: Deprecated code for Advanced Accordion block
  * Fix: Border width 0px for Advanced Accordion block
+ * Fix: Remove unnecessary allowed formats for Advanced Accordion header
 
 = 2.5.4 =
  * Fix: Deprecated code for Advanced Button block
