@@ -93,7 +93,9 @@
 .advgb-accordion-header,
 .advgb-accordion-header.ui-accordion-header.ui-state-default {
   padding: 5px 40px 5px 10px;
-  border: 1px solid #ccc;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
   margin-top: 10px;
   position: relative;
   background: none;

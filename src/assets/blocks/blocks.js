@@ -5710,7 +5710,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         borderWidth: {
             type: 'number',
-            default: 0
+            default: 1
         },
         borderColor: {
             type: 'string'
@@ -5810,6 +5810,65 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 )
             );
         },
+        deprecated: [{
+            attributes: _extends({}, accordionAttrs, {
+                borderWidth: {
+                    type: 'number',
+                    default: 0
+                }
+            }),
+            save: function save(_ref2) {
+                var attributes = _ref2.attributes;
+                var borderWidth = attributes.borderWidth;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-accordion-block", style: { marginBottom: marginBottom }, "data-collapsed": collapsedAll ? collapsedAll : undefined },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-header",
+                            style: {
+                                backgroundColor: headerBgColor,
+                                color: headerTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        React.createElement(
+                            "span",
+                            { className: "advgb-accordion-header-icon" },
+                            React.createElement(
+                                "svg",
+                                { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                HEADER_ICONS[headerIcon]
+                            )
+                        ),
+                        React.createElement(
+                            "h4",
+                            { className: "advgb-accordion-header-title" },
+                            header
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-body",
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: borderWidth + 'px',
+                                borderColor: borderColor,
+                                borderRadius: borderRadius + 'px'
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }],
         transforms: {
             to: [{
                 type: 'block',
@@ -6226,7 +6285,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             },
             borderWidth: {
                 type: 'number',
-                default: 0
+                default: 1
             },
             borderColor: {
                 type: 'string'
@@ -6303,7 +6362,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             backgroundColor: headerBgColor,
                             color: headerTextColor,
                             borderStyle: borderStyle,
-                            borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
+                            borderWidth: borderWidth + 'px',
                             borderColor: borderColor,
                             borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
                         }
@@ -6330,7 +6389,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             backgroundColor: bodyBgColor,
                             color: bodyTextColor,
                             borderStyle: borderStyle + ' !important',
-                            borderWidth: !!borderWidth ? borderWidth + 'px !important' : undefined,
+                            borderWidth: borderWidth + 'px !important',
                             borderColor: borderColor + ' !important',
                             borderTop: 'none !important',
                             borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined
@@ -6452,6 +6511,65 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             style: {
                                 backgroundColor: bodyBgColor,
                                 color: bodyTextColor,
+                                borderStyle: borderStyle + ' !important',
+                                borderWidth: !!borderWidth ? borderWidth + 'px !important' : undefined,
+                                borderColor: borderColor + ' !important',
+                                borderTop: 'none !important',
+                                borderRadius: !!borderRadius ? borderRadius + 'px !important' : undefined
+                            }
+                        },
+                        React.createElement(InnerBlocks.Content, null)
+                    )
+                );
+            }
+        }, {
+            attributes: {
+                borderWidth: {
+                    type: 'number',
+                    default: 0
+                }
+            },
+            save: function save(_ref6) {
+                var attributes = _ref6.attributes;
+                var borderWidth = attributes.borderWidth;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-accordion-item", style: { marginBottom: marginBottom } },
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-header",
+                            style: {
+                                backgroundColor: headerBgColor,
+                                color: headerTextColor,
+                                borderStyle: borderStyle,
+                                borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
+                                borderColor: borderColor,
+                                borderRadius: !!borderRadius ? borderRadius + 'px' : undefined
+                            }
+                        },
+                        React.createElement(
+                            "span",
+                            { className: "advgb-accordion-header-icon" },
+                            React.createElement(
+                                "svg",
+                                { fill: headerIconColor, xmlns: "http://www.w3.org/2000/svg", width: "24", height: "24", viewBox: "0 0 24 24" },
+                                HEADER_ICONS[headerIcon]
+                            )
+                        ),
+                        React.createElement(
+                            "h4",
+                            { className: "advgb-accordion-header-title", style: { color: 'inherit' } },
+                            header
+                        )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "advgb-accordion-body",
+                            style: {
+                                backgroundColor: bodyBgColor,
+                                color: bodyTextColor,
                                 borderStyle: borderStyle,
                                 borderWidth: !!borderWidth ? borderWidth + 'px' : undefined,
                                 borderColor: borderColor,
@@ -6506,8 +6624,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         BaseControl = wpComponents.BaseControl,
         SelectControl = wpComponents.SelectControl,
         ToggleControl = wpComponents.ToggleControl,
-        Toolbar = wpComponents.Toolbar,
-        IconButton = wpComponents.IconButton;
+        ToolbarGroup = wpComponents.ToolbarGroup,
+        ToolbarButton = wpComponents.ToolbarButton;
     var _wp$data = wp.data,
         withDispatch = _wp$data.withDispatch,
         select = _wp$data.select,
@@ -6701,13 +6819,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         BlockControls,
                         null,
                         React.createElement(
-                            Toolbar,
-                            { label: __('Options', 'advanced-gutenberg') },
-                            React.createElement(IconButton, {
+                            ToolbarGroup,
+                            null,
+                            React.createElement(ToolbarButton, {
                                 icon: "update",
                                 onClick: function onClick() {
                                     return _this2.resyncAccordions();
-                                }
+                                },
+                                label: __('Refresh', 'advanced-gutenberg')
                             })
                         )
                     ),
@@ -6901,7 +7020,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         borderWidth: {
             type: 'number',
-            default: 0
+            default: 1
         },
         borderColor: {
             type: 'string'
@@ -6983,13 +7102,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         deprecated: [{
             attributes: _extends({}, blockAttrs, {
+                borderWidth: {
+                    type: 'number',
+                    default: 0
+                }
+            }),
+            save: function save(_ref10) {
+                var attributes = _ref10.attributes;
+                var collapsedAll = attributes.collapsedAll;
+
+
+                return React.createElement(
+                    "div",
+                    { className: "advgb-accordion-wrapper", "data-collapsed": collapsedAll ? collapsedAll : undefined },
+                    React.createElement(InnerBlocks.Content, null)
+                );
+            }
+        }, {
+            attributes: _extends({}, blockAttrs, {
                 rootBlockId: {
                     type: 'string',
                     default: ''
                 }
             }),
-            save: function save(_ref10) {
-                var attributes = _ref10.attributes;
+            save: function save(_ref11) {
+                var attributes = _ref11.attributes;
                 var collapsedAll = attributes.collapsedAll;
 
 
