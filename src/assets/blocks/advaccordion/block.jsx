@@ -315,7 +315,7 @@
         },
         borderWidth: {
             type: 'number',
-            default: 0,
+            default: 1,
         },
         borderColor: {
             type: 'string',
@@ -393,6 +393,24 @@
             );
         },
         deprecated: [
+            {
+                attributes: {
+                    ...blockAttrs,
+                    borderWidth: {
+                        type: 'number',
+                        default: 0,
+                    }
+                },
+                save: function ( { attributes } ) {
+                    const { collapsedAll } = attributes;
+
+                    return (
+                        <div className="advgb-accordion-wrapper" data-collapsed={ collapsedAll ? collapsedAll : undefined }>
+                            <InnerBlocks.Content />
+                        </div>
+                    );
+                },
+            },
             {
                 attributes: {
                     ...blockAttrs,
