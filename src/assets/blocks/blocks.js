@@ -9105,7 +9105,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             unstableOnSplit: function unstableOnSplit() {
                                 return null;
                             },
-                            placeholder: __('Enter title…', 'advanced-gutenberg')
+                            placeholder: __('Enter title…', 'advanced-gutenberg'),
+                            allowedFormats: []
                         }),
                         React.createElement(RichText, {
                             tagName: 'p',
@@ -9122,7 +9123,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             unstableOnSplit: function unstableOnSplit() {
                                 return null;
                             },
-                            placeholder: __('Enter subtitle…', 'advanced-gutenberg')
+                            placeholder: __('Enter subtitle…', 'advanced-gutenberg'),
+                            allowedFormats: []
                         }),
                         React.createElement(
                             'style',
