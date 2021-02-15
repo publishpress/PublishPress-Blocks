@@ -126,6 +126,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 == Changelog ==
 
 = 2.5.5 =
+ * Add: Bigger font-size for custom styles in new plugin installations
  * Fix: Center alignment for Advanced Table block
  * Fix: Testimonial block breaking editor
  * Fix: Preview images styles for Advanced Button block
