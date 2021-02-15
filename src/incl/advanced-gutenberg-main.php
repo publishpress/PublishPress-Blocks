@@ -1633,8 +1633,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     ? 'disable'
                     : 'enable';
 
-                //echo 'test: ' . gettype($saved_settings['enable_columns_visual_guide']); exit;
-
                 // Editor width
                 if(isset($editorWidth) && !empty($editorWidth)) {
                     // Editor width - Post meta
