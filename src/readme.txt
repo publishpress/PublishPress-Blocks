@@ -135,6 +135,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Deprecated code for Advanced Accordion block
  * Fix: Border width 0px for Advanced Accordion block
  * Fix: A language string for Columns Manager block
+ * Fix: Columns Visual Guide and Editor Width notices while editing a post/page
  * Remove: Unnecessary allowed formats for Advanced Accordion header
  * Remove: Format options for Advanced Image block
 

@@ -1609,26 +1609,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Convert Columns Visual Guide value into a string
-         *
-         * @param int $value Columns Visual Guide number
-         *
-         * @return string
-         */
-        public function getAdvgbColumnsVisualGuide( $value ) {
-
-            $result = '';
-
-            if($value === '1') {
-                $result = 'enable';
-            } else {
-                $result = 'disable';
-            }
-
-            return $result;
-        }
-
-        /**
          * Set body classes for Editor width and Columns visual guide
          *
          * @param string $classes CSS class from body
@@ -1636,33 +1616,39 @@ if(!class_exists('AdvancedGutenbergMain')) {
         public function setAdvgEditorBodyClassses( $classes ) {
 
             if ('post' == get_current_screen()->base) {
-                $saved_settings = get_option('advgb_settings');
+                $saved_settings     = get_option('advgb_settings');
                 global $post;
-                $editorWidth    = get_post_meta($post->ID, 'advgb_blocks_editor_width', true);
-                $editorColsVG   = get_post_meta($post->ID, 'advgb_blocks_columns_visual_guide', true);
+                $editorWidth        = get_post_meta($post->ID, 'advgb_blocks_editor_width', true);
+                $editorColsVG       = get_post_meta($post->ID, 'advgb_blocks_columns_visual_guide', true);
+                $editorWidthGlobal  = (
+                        isset($saved_settings['editor_width'])
+                        && !empty($saved_settings['editor_width'])
+                    )
+                    ? $this->getAdvgbEditorWidth( $saved_settings['editor_width'] )
+                    : 'default';
+                $editorColsVGGlobal = (
+                        isset($saved_settings['enable_columns_visual_guide'])
+                        && ($saved_settings['enable_columns_visual_guide'] == 0)
+                    )
+                    ? 'disable'
+                    : 'enable';
 
                 // Editor width
                 if(isset($editorWidth) && !empty($editorWidth)) {
                     // Editor width - Post meta
-                    $classes .= ' advgb-editor-width-' . esc_attr($editorWidth) . ' ';
-                } elseif (isset($saved_settings['editor_width']) && $saved_settings['editor_width']) {
-                    // Editor width - Global configuration
-                    $classes .= ' advgb-editor-width-' . $this->getAdvgbEditorWidth( esc_attr($saved_settings['editor_width']) ) . ' ';
+                    $classes .= ' advgb-editor-width-' . $editorWidth . ' ';
                 } else {
-                    // Nothing to do here
+                    // Editor width - Global configuration
+                    $classes .= ' advgb-editor-width-' . $editorWidthGlobal . ' ';
                 }
 
                 // Columns visual guide
                 if(isset($editorColsVG) && !empty($editorColsVG)) {
                     // Columns visual guide - Post meta
-                    $classes .= ' advgb-editor-col-guide-' . esc_attr($editorColsVG) . ' ';
-                } elseif (!isset($saved_settings['enable_columns_visual_guide'])
-                        || (isset($saved_settings['enable_columns_visual_guide']) && $saved_settings['enable_columns_visual_guide'])) {
+                    $classes .= ' advgb-editor-col-guide-' . $editorColsVG . ' ';
+                }  else {
                     // Columns visual guide - Global configuration
-                    $classes .= ' advgb-editor-col-guide-enable ';
-                } else {
-                    // Columns visual guide - Global configuration
-                    $classes .= ' advgb-editor-col-guide-disable ';
+                    $classes .= ' advgb-editor-col-guide-' . $editorColsVGGlobal . ' ';
                 }
 
                 // Global settings as javascript variables
@@ -1670,12 +1656,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     'advgb_blocks',
                     'advg_settings',
                     [
-                        'editor_width_global' => $this->getAdvgbEditorWidth(
-                            esc_attr($saved_settings['editor_width'])
-                        ),
-                        'enable_columns_visual_guide_global' => $this->getAdvgbColumnsVisualGuide(
-                            esc_attr($saved_settings['enable_columns_visual_guide'])
-                        ),
+                        'editor_width_global'                   => $editorWidthGlobal,
+                        'enable_columns_visual_guide_global'    => $editorColsVGGlobal,
                     ]
                 );
 
