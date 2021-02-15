@@ -36,7 +36,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'css' => 'background: none repeat scroll 0 0 #3399ff;
     color: #ffffff;
     text-shadow: none;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 24px;
     padding: 10px;'
             ),
@@ -48,7 +48,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'css' => 'background: none repeat scroll 0 0 #8cc14c;
     color: #ffffff;
     text-shadow: none;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 24px;
     padding: 10px;'
             ),
@@ -60,7 +60,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'css' => 'background: none repeat scroll 0 0 #faa732;
     color: #ffffff;
     text-shadow: none;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 24px;
     padding: 10px;'
             ),
@@ -72,7 +72,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'css' => 'background: none repeat scroll 0 0 #da4d31;
     color: #ffffff;
     text-shadow: none;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 24px;
     padding: 10px;'
             ),
@@ -84,7 +84,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'css' => 'background: none repeat scroll 0 0 #53555c;
     color: #ffffff;
     text-shadow: none;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 24px;
     padding: 10px;'
             ),
@@ -118,7 +118,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 'css' => 'background: none;
     border-left: 5px solid #f1f1f1;
     color: #8B8E97;
-    font-size: 14px;
+    font-size: 16px;
     font-style: italic;
     line-height: 22px;
     padding-left: 15px;
