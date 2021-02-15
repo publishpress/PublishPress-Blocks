@@ -1609,28 +1609,6 @@ if(!class_exists('AdvancedGutenbergMain')) {
         }
 
         /**
-         * Convert Columns Visual Guide value into a string
-         *
-         * @param int $value Columns Visual Guide number
-         *
-         * @return string
-         */
-        public function getAdvgbColumnsVisualGuide( $value ) {
-
-            $result = '';
-
-            if($value === '1') {
-                $result = 'enable';
-            } elseif($value === '0') {
-                $result = 'disable';
-            } else {
-                $result = 'enable';
-            }
-
-            return $result;
-        }
-
-        /**
          * Set body classes for Editor width and Columns visual guide
          *
          * @param string $classes CSS class from body
@@ -1650,10 +1628,12 @@ if(!class_exists('AdvancedGutenbergMain')) {
                     : 'default';
                 $editorColsVGGlobal = (
                         isset($saved_settings['enable_columns_visual_guide'])
-                        && !empty($saved_settings['enable_columns_visual_guide'])
+                        && ($saved_settings['enable_columns_visual_guide'] == 0)
                     )
-                    ? $this->getAdvgbColumnsVisualGuide( $saved_settings['enable_columns_visual_guide'] )
+                    ? 'disable'
                     : 'enable';
+
+                //echo 'test: ' . gettype($saved_settings['enable_columns_visual_guide']); exit;
 
                 // Editor width
                 if(isset($editorWidth) && !empty($editorWidth)) {
