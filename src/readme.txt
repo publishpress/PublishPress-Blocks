@@ -138,6 +138,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: A language string for Columns Manager block
  * Fix: Columns Visual Guide and Editor Width notices while editing a post/page
  * Fix: Editor width change for individual pages/posts when "original" is set in Global configuration
+ * Fix: Dashicons display in Profile edit
  * Remove: Unnecessary allowed formats for Advanced Accordion header
  * Remove: Format options for Advanced Image block
 
