@@ -1405,7 +1405,7 @@ msgid "Columns Manager"
 msgstr ""
 
 #: assets/blocks/blocks.js:14040
-msgid "Pickup a columns layout"
+msgid "Choose a columns layout"
 msgstr "コラムを選択してください。"
 
 #: assets/blocks/blocks.js:14083

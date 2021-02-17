@@ -40,9 +40,7 @@
             const { attributes, setAttributes, clientId } = this.props;
             const { blockIDX } = attributes;
 
-            if (!blockIDX) {
-                setAttributes({blockIDX: `advgb-img-${clientId}`});
-            }
+            setAttributes({blockIDX: `advgb-img-${clientId}`});
         }
 
         render() {
@@ -247,6 +245,7 @@
                             unstableOnFocus={ () => this.setState( { currentEdit: 'title' } ) }
                             unstableOnSplit={ () => null }
                             placeholder={ __( 'Enter title…', 'advanced-gutenberg' ) }
+                            allowedFormats={ [] }
                         />
                         <RichText
                             tagName="p"
@@ -258,6 +257,7 @@
                             unstableOnFocus={ () => this.setState( { currentEdit: 'subtitle' } ) }
                             unstableOnSplit={ () => null }
                             placeholder={ __( 'Enter subtitle…', 'advanced-gutenberg' ) }
+                            allowedFormats={ [] }
                         />
                         <style>
                             {`.${blockIDX}.advgb-image-block:hover .advgb-image-overlay {opacity: ${overlayOpacity/100} !important;}`}
