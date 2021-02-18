@@ -1,5 +1,5 @@
 === PublishPress Blocks – Advanced Gutenberg Blocks, Permissions, Layouts, Forms ===
-Contributors: publishpress, advancedgutenberg, JoomUnited
+Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnited
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.6.1
