@@ -4,8 +4,8 @@ var path = require("path");
 module.exports = [
     {
         entry: glob.sync(
-            path.join(__dirname, "src/assets/**/*.jsx"),
-            {ignore: [path.join(__dirname, "src/assets/blocks/**/*.frontend.jsx")]}
+            "./src/assets/**/*.jsx",
+            {ignore: ["./src/assets/blocks/**/*.frontend.jsx"]}
             ),
         devtool: 'source-map',
         output: {
