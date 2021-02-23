@@ -5819,7 +5819,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             }),
             save: function save(_ref2) {
                 var attributes = _ref2.attributes;
-                var borderWidth = attributes.borderWidth;
+                var header = attributes.header,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    headerIcon = attributes.headerIcon,
+                    headerIconColor = attributes.headerIconColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    marginBottom = attributes.marginBottom,
+                    collapsedAll = attributes.collapsedAll;
 
 
                 return React.createElement(
@@ -5867,6 +5879,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(InnerBlocks.Content, null)
                     )
                 );
+            },
+            supports: {
+                inserter: false
             }
         }],
         transforms: {
@@ -6522,17 +6537,84 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         React.createElement(InnerBlocks.Content, null)
                     )
                 );
+            },
+            supports: {
+                anchor: true
             }
         }, {
             attributes: {
+                header: {
+                    type: 'string',
+                    default: 'Header text'
+                },
+                headerBgColor: {
+                    type: 'string',
+                    default: '#000'
+                },
+                headerTextColor: {
+                    type: 'string',
+                    default: '#eee'
+                },
+                headerIcon: {
+                    type: 'string',
+                    default: 'unfold'
+                },
+                headerIconColor: {
+                    type: 'string',
+                    default: '#fff'
+                },
+                bodyBgColor: {
+                    type: 'string'
+                },
+                bodyTextColor: {
+                    type: 'string'
+                },
+                borderStyle: {
+                    type: 'string',
+                    default: 'solid'
+                },
                 borderWidth: {
                     type: 'number',
                     default: 0
+                },
+                borderColor: {
+                    type: 'string'
+                },
+                borderRadius: {
+                    type: 'number',
+                    default: 2
+                },
+                marginBottom: {
+                    type: 'number',
+                    default: 15
+                },
+                collapsedAll: {
+                    type: 'boolean',
+                    default: false
+                },
+                changed: {
+                    type: 'boolean',
+                    default: false
+                },
+                rootBlockId: {
+                    type: 'string',
+                    default: ''
                 }
             },
             save: function save(_ref6) {
                 var attributes = _ref6.attributes;
-                var borderWidth = attributes.borderWidth;
+                var header = attributes.header,
+                    headerBgColor = attributes.headerBgColor,
+                    headerTextColor = attributes.headerTextColor,
+                    headerIcon = attributes.headerIcon,
+                    headerIconColor = attributes.headerIconColor,
+                    bodyBgColor = attributes.bodyBgColor,
+                    bodyTextColor = attributes.bodyTextColor,
+                    borderStyle = attributes.borderStyle,
+                    borderWidth = attributes.borderWidth,
+                    borderColor = attributes.borderColor,
+                    borderRadius = attributes.borderRadius,
+                    marginBottom = attributes.marginBottom;
 
 
                 return React.createElement(

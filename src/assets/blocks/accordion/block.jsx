@@ -404,7 +404,19 @@
                 },
                 save: function ( { attributes } ) {
                     const {
+                        header,
+                        headerBgColor,
+                        headerTextColor,
+                        headerIcon,
+                        headerIconColor,
+                        bodyBgColor,
+                        bodyTextColor,
+                        borderStyle,
                         borderWidth,
+                        borderColor,
+                        borderRadius,
+                        marginBottom,
+                        collapsedAll,
                     } = attributes;
 
                     return (
@@ -440,7 +452,10 @@
                             </div>
                         </div>
                     );
-                }
+                },
+                supports: {
+                    inserter: false,
+                },
             }
         ],
         transforms: {
