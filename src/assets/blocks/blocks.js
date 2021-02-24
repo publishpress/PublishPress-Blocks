@@ -17731,7 +17731,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     { className: "advgb-image-slider-item", key: index },
                                     React.createElement("img", { src: image.url,
                                         className: "advgb-image-slider-img",
-                                        alt: 'Slider image',
+                                        alt: image.title,
                                         style: {
                                             width: fullWidth ? '100%' : width,
                                             height: autoHeight ? 'auto' : height
@@ -18033,7 +18033,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             { className: "advgb-image-slider-item", key: index },
                             React.createElement("img", { src: image.url,
                                 className: "advgb-image-slider-img",
-                                alt: 'Slider image',
+                                alt: image.title,
                                 style: {
                                     width: fullWidth ? '100%' : width,
                                     height: autoHeight ? 'auto' : height
