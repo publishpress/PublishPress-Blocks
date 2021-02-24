@@ -1,5 +1,3 @@
-import AdvQueryControls from './query-controls.jsx';
-
 (function ( wpI18n, wpBlocks, wpElement, wpBlockEditor, wpComponents, wpData, lodash, wpHtmlEntities, wpDate ) {
     wpBlockEditor = wp.blockEditor || wp.editor;
     const { __ } = wpI18n;
@@ -171,7 +169,7 @@ import AdvQueryControls from './query-controls.jsx';
             const inspectorControls = (
                 <InspectorControls>
                     <PanelBody title={ __( 'Block Settings', 'advanced-gutenberg' ) }>
-                        <AdvQueryControls
+                        <QueryControls
                             { ...{ order, orderBy } }
                             categoriesList={ categoriesList }
                             selectedCategoryId={ category }
