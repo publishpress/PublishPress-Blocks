@@ -125,6 +125,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 == Changelog ==
 
+= 2.5.7 =
+ * Add: Separate pages for Settings and Default block settings
+
 = 2.5.6 =
  * Fix: Bug in deprecation for Advanced Accordion block from v2.5.5
  * Remove: Full path in compiled JavaScript
