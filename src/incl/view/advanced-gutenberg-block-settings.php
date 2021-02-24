@@ -1,22 +1,6 @@
 <?php
 defined('ABSPATH') || die;
 
-wp_enqueue_style('minicolors_css');
-wp_enqueue_style('advgb_qtip_style');
-wp_enqueue_style('codemirror_css');
-wp_enqueue_style('codemirror_hint_style');
-wp_enqueue_style('advgb_settings_style');
-
-wp_enqueue_media();
-wp_enqueue_script('qtip_js');
-wp_enqueue_script('less_js');
-wp_enqueue_script('minicolors_js');
-wp_enqueue_script('advgb_codemirror_js');
-wp_enqueue_script('codemirror_hint');
-wp_enqueue_script('codemirror_mode_css');
-wp_enqueue_script('codemirror_hint_css');
-wp_enqueue_script('advgb_settings_js');
-
 // ThickBox JS and CSS
 add_thickbox();
 
