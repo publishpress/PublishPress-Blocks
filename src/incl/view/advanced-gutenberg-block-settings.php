@@ -58,11 +58,11 @@ $excluded_blocks_config = array(
 );
 ?>
 
-<div id="advgb-settings-container">
-
-    <h1 class="advgb-settings-header"><?php esc_html_e('Default Block Settings', 'advanced-gutenberg') ?></h1>
-
-    <div id="block-config-tab" class="tab-content clearfix">
+<div id="advgb-block-settings-container">
+    <div class="advgb-header" style="padding-top: 40px">
+        <h1 class="header-title"><?php esc_html_e('Default Block Settings', 'advanced-gutenberg') ?></h1>
+    </div>
+    <div class="clearfix">
         <div class="advgb-search-wrapper">
             <input type="text"
                    class="advgb-search-input blocks-config-search"

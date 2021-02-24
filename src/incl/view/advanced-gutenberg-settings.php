@@ -44,9 +44,10 @@ if (!isset($saved_settings['enable_columns_visual_guide'])) {
         </div>
     <?php endif; ?>
 
-    <h1 class="advgb-settings-header"><?php esc_html_e('Settings', 'advanced-gutenberg') ?></h1>
-
-    <div id="config-tab" class="tab-content clearfix">
+    <div class="advgb-header" style="padding-top: 40px">
+        <h1 class="header-title"><?php esc_html_e('Settings', 'advanced-gutenberg') ?></h1>
+    </div>
+    <div class="clearfix">
         <form method="post">
             <?php wp_nonce_field('advgb_settings_nonce', 'advgb_settings_nonce_field') ?>
             <ul class="settings-list clearfix">
