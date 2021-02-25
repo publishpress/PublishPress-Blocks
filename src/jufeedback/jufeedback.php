@@ -600,7 +600,9 @@ class Jufeedback
     {
         wp_enqueue_script(
             'ju-review',
-            plugin_dir_url(self::$main_plugin_file) . 'jufeedback/assets/js/jureview.min.js'
+            plugin_dir_url(self::$main_plugin_file) . 'jufeedback/assets/js/jureview.min.js',
+            array(),
+            ADVANCED_GUTENBERG_VERSION
         );
         wp_localize_script('ju-review', 'ju_review', array(
             'token' => wp_create_nonce('ju-review'),
