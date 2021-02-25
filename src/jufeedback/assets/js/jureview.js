@@ -27,6 +27,10 @@ jQuery(document).ready(function($){
                 ajaxnonce: ju_review.token
             }
         });
+        /* While the ajax method works according
+         * to database checkup and console > network,
+         * the error callback get triggered.
+         * That's why the line below was moved outside ajax() */
         $('.jureview-notice').hide('fade');
     }
 });
