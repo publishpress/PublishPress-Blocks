@@ -614,7 +614,7 @@ class Jufeedback
         ) . '</p>
 	          <p class="submit">
 	             <a href="' . esc_html('https://wordpress.org/support/plugin/' . self::$plugin_slug . '/reviews/?filter=5#new-post') . '" target="_blank" class="button-primary jureview-already-review">' . esc_html__('Sure I’d love to', self::$text_domain) . '</a>
-	             <button class="button-secondary jureview-hide-review">' . esc_html__('No hide notification', self::$text_domain) . '</button>
+	             <button class="button-secondary jureview-hide-review">' . esc_html__('No, hide notification', self::$text_domain) . '</button>
 	          </p>
 	          </div>';
         //phpcs:enable
