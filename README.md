@@ -65,7 +65,7 @@ Please note there are other commands related to CSS compilation that involves sp
 
 First you need to have `gulp-cli` installed globally and `gulp` in local. [Click here](https://gulpjs.com/docs/en/getting-started/quick-start/) for more details.
 
-Through command line run `gulp bundle`. A zip ready to install as plugin should be generated inside bundled/ folder. This zip will exclude non required files in WordPress, including JSX and SCSS.
+Through command line run `gulp bundle`. A zip ready to install as plugin should be generated inside bundled/ folder. This zip will exclude non required files in WordPress, like JSX and SCSS.
 
 ## License
 
