@@ -16,7 +16,9 @@ function bundle() {
         "!package-lock.json",
         "!package.json",
         "!README.md",
-        "!webpack.config.js"
+        "!webpack.config.js",
+        "!src/assets/**/*.jsx",
+        "!src/assets/scss/**",
     ])
     .pipe(zip('advanced-gutenberg.zip'))
     .pipe(gulp.dest("bundled"));
