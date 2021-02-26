@@ -47,9 +47,9 @@ We will review and contact you as soon as possible.
 We use [React](https://facebook.github.io/react/) to build part of the user interface.
 The sources files are named with the extension JSX. Which is optional on React, but provides a way to write modern code and compile to be compatible with legacy browsers. We use [babeljs.io](https://babeljs.io/) with the presets: react and es2015 to compile to JS files.
 
-Please check the requirements at [our documentation page](https://publishpress.github.io/docs/development/react-jsx). 
+Please check the requirements at [our documentation page](https://publishpress.github.io/docs/development/react-jsx).
 
-**Important:** use the npm modules from [package.json](https://github.com/publishpress/Advanced-Gutenberg/blob/master/package.json), and these two files as is that already comes within the repository: webpack.config.js and .babelrc. 
+**Important:** use the npm modules from [package.json](https://github.com/publishpress/Advanced-Gutenberg/blob/master/package.json), and these two files as is that already comes within the repository: webpack.config.js and .babelrc.
 
 #### Compiling JSX files to JS
 
@@ -58,6 +58,14 @@ Run the command `npm run build_react_dev` just once.
 #### Compiling SCSS files to CSS
 
 Run the command `npm run compile_css` every time after you make changes to any SCSS file in order to compile to CSS.
+
+Please note there are other commands related to CSS compilation that involves specific files from admin. For more details check all the scripts in package.json.
+
+#### Creating a zip installer
+
+First you need to have `gulp-cli` installed globally and `gulp` in local. [Click here](https://gulpjs.com/docs/en/getting-started/quick-start/) for more details.
+
+Through command line run `gulp bundle`. A zip ready to install as plugin should be generated inside bundled/ folder. This zip will exclude non required files in WordPress, including JSX and SCSS.
 
 ## License
 
