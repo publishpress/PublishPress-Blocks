@@ -71,6 +71,7 @@ function CategorySelect({
     const termsTree = buildTermsTree(categoriesList);
     return (
         <TreeSelect
+            multiple
             {...{label, noOptionLabel, onChange}}
             tree={termsTree}
             selectedId={selectedCategoryId}
@@ -142,9 +143,10 @@ function AdvQueryControls({
         categoriesList && onCategoryChange && (
             <CategorySelect
                 key="query-controls-category-select"
+                className="query-controls-category-select"
                 categoriesList={categoriesList}
                 label={__('Category')}
-                noOptionLabel={__('All')}
+                help={__('If nothing is selected, all categories will be assumed to be selected')}
                 selectedCategoryId={selectedCategoryId}
                 onChange={onCategoryChange}
             />

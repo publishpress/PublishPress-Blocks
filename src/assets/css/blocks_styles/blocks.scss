@@ -2605,6 +2605,16 @@ body.block-editor-page .advgb-columns-wrapper .advgb-columns .wp-block {
     margin: 0;
 }
 
+/* Remove the extraneous down arrow from the multiselect list */
+.query-controls-category-select .components-input-control__suffix {
+	display: none;
+}
+
+.query-controls-category-select select {
+    height: 100px !important;
+}
+
+
 /*Responsive for Columns*/
 @media screen and (min-width: 1088px) {
     .advgb-column.advgb-is-default-desktop {

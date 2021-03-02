@@ -23972,7 +23972,9 @@ function CategorySelect(_ref2) {
         props = _objectWithoutProperties(_ref2, ['label', 'noOptionLabel', 'categoriesList', 'selectedCategoryId', 'onChange']);
 
     var termsTree = buildTermsTree(categoriesList);
-    return React.createElement(TreeSelect, _extends({ label: label, noOptionLabel: noOptionLabel, onChange: onChange }, {
+    return React.createElement(TreeSelect, _extends({
+        multiple: true
+    }, { label: label, noOptionLabel: noOptionLabel, onChange: onChange }, {
         tree: termsTree,
         selectedId: selectedCategoryId
     }, props));
@@ -24036,9 +24038,10 @@ function AdvQueryControls(_ref3) {
         }
     }), categoriesList && onCategoryChange && React.createElement(CategorySelect, {
         key: 'query-controls-category-select',
+        className: 'query-controls-category-select',
         categoriesList: categoriesList,
         label: __('Category'),
-        noOptionLabel: __('All'),
+        help: __('If nothing is selected, all categories will be assumed to be selected'),
         selectedCategoryId: selectedCategoryId,
         onChange: onCategoryChange
     }), categorySuggestions && onCategoryChange && React.createElement(FormTokenField, {
