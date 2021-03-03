@@ -106,17 +106,20 @@
 }
 
 /*Accordion block styles*/
-#editor .advgb-accordion-block .advgb-accordion-header p.mce-content-body,
-#editor .advgb-accordion-block .advgb-accordion-body p.mce-content-body {
-    color: inherit;
-}
+#editor {
 
-#editor .advgb-accordion-block {
-    padding: 15px 0;
-}
+  .advgb-accordion-block .advgb-accordion-header p.mce-content-body,
+  .advgb-accordion-block .advgb-accordion-body p.mce-content-body {
+      color: inherit;
+  }
 
-#editor .advgb-accordion-body {
-  border-top: none !important;
+  .advgb-accordion-block {
+      padding: 15px 0;
+  }
+
+  .advgb-accordion-body {
+    border-top: none !important;
+  }
 }
 
 .advgb-accordion-header,
