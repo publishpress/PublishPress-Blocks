@@ -131,6 +131,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Hide notification when asking for a review
  * Fix: Double border-top in editor for body in Advanced Accordion block
  * Fix: Notice when no featured image exists while editing/creating posts
+ * Fix: Collapsed Order RTL in mobile for Columns Manager block
  * Remove: Obsolete Translations page
  * Remove: AdvQueryControls component
 
