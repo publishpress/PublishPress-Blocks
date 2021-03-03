@@ -115,6 +115,10 @@
     padding: 15px 0;
 }
 
+#editor .advgb-accordion-body {
+  border-top: none !important;
+}
+
 .advgb-accordion-header,
 .advgb-accordion-header.ui-accordion-header.ui-state-default {
     padding: 5px 40px 5px 10px;
