@@ -28,10 +28,14 @@
     class RecentPostsEdit extends Component {
         constructor() {
             super( ...arguments );
+
             this.state = {
                 categoriesList: [],
                 updating: false,
             }
+
+            this.selectCategories = this.selectCategories.bind(this);
+
         }
 
         componentWillMount() {
@@ -61,7 +65,13 @@
 
             wp.apiFetch( {
                 path: wp.url.addQueryArgs( 'wp/v2/categories', categoriesListQuery ),
-            } ).then( ( categoriesList ) => this.setState( { categoriesList: categoriesList } ) )
+            } ).then( ( list ) => {
+                let suggestions = [];
+                list.forEach(cat => {
+                    suggestions[ cat.slug ] = cat;
+                });
+                this.setState( { categoriesList: suggestions } );
+            } )
         }
 
         componentWillUpdate( nextProps ) {
@@ -145,6 +155,27 @@
             return text;
         };
 
+          selectCategories(tokens) {
+            const { categoriesList } = this.state;
+
+            var hasNoSuggestion = tokens.some(function (token) {
+                return typeof token === 'string' && !categoriesList[token];
+            });
+
+            if (hasNoSuggestion) {
+                return;
+            }
+
+            var categories = tokens.map(function (token) {
+              return typeof token === 'string' ? categoriesList[token] : token;
+            })
+
+            this.props.setAttributes({
+              categories: categories,
+            });
+          }
+
+
         render() {
             const { categoriesList } = this.state;
             const { attributes, setAttributes, recentPosts } = this.props;
@@ -152,7 +183,7 @@
                 postView,
                 order,
                 orderBy,
-                category,
+                categories,
                 numberOfPosts,
                 columns,
                 displayFeaturedImage,
@@ -171,12 +202,15 @@
                     <PanelBody title={ __( 'Block Settings', 'advanced-gutenberg' ) }>
                         <QueryControls
                             { ...{ order, orderBy } }
-                            categoriesList={ categoriesList }
-                            selectedCategoryId={ category }
+                            categorySuggestions={ categoriesList }
+                            selectedCategories={ categories }
                             numberOfItems={ numberOfPosts }
                             onOrderChange={ ( value ) => setAttributes( { order: value } ) }
                             onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
-                            onCategoryChange={ ( value ) => setAttributes( { category: value !== '' ? value : undefined } ) }
+                            onCategoryChange={ ( value ) => {
+                                                this.selectCategories(value);
+                                            }
+                            }
                             onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
                         />
                         {postView === 'grid' &&
@@ -385,10 +419,12 @@
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { category, order, orderBy, numberOfPosts, myToken } = props.attributes;
+            const { categories, order, orderBy, numberOfPosts, myToken } = props.attributes;
+
+            const ids = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
             const recentPostsQuery = pickBy( {
-                categories: category,
+                categories: ids,
                 order,
                 orderby: orderBy,
                 per_page: numberOfPosts,

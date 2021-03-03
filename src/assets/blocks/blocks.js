@@ -23435,6 +23435,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 categoriesList: [],
                 updating: false
             };
+
+            _this.selectCategories = _this.selectCategories.bind(_this);
+
             return _this;
         }
 
@@ -23472,8 +23475,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 wp.apiFetch({
                     path: wp.url.addQueryArgs('wp/v2/categories', categoriesListQuery)
-                }).then(function (categoriesList) {
-                    return _this2.setState({ categoriesList: categoriesList });
+                }).then(function (list) {
+                    var suggestions = [];
+                    list.forEach(function (cat) {
+                        suggestions[cat.slug] = cat;
+                    });
+                    _this2.setState({ categoriesList: suggestions });
                 });
             }
         }, {
@@ -23530,8 +23537,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
             }
         }, {
+            key: "selectCategories",
+            value: function selectCategories(tokens) {
+                var categoriesList = this.state.categoriesList;
+
+
+                var hasNoSuggestion = tokens.some(function (token) {
+                    return typeof token === 'string' && !categoriesList[token];
+                });
+
+                if (hasNoSuggestion) {
+                    return;
+                }
+
+                var categories = tokens.map(function (token) {
+                    return typeof token === 'string' ? categoriesList[token] : token;
+                });
+
+                this.props.setAttributes({
+                    categories: categories
+                });
+            }
+        }, {
             key: "render",
             value: function render() {
+                var _this3 = this;
+
                 var categoriesList = this.state.categoriesList;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
@@ -23540,7 +23571,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,
-                    category = attributes.category,
+                    categories = attributes.categories,
                     numberOfPosts = attributes.numberOfPosts,
                     columns = attributes.columns,
                     displayFeaturedImage = attributes.displayFeaturedImage,
@@ -23561,8 +23592,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         PanelBody,
                         { title: __('Block Settings', 'advanced-gutenberg') },
                         React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
-                            categoriesList: categoriesList,
-                            selectedCategoryId: category,
+                            categorySuggestions: categoriesList,
+                            selectedCategories: categories,
                             numberOfItems: numberOfPosts,
                             onOrderChange: function onOrderChange(value) {
                                 return setAttributes({ order: value });
@@ -23571,7 +23602,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ orderBy: value });
                             },
                             onCategoryChange: function onCategoryChange(value) {
-                                return setAttributes({ category: value !== '' ? value : undefined });
+                                _this3.selectCategories(value);
                             },
                             onNumberOfItemsChange: function onNumberOfItemsChange(value) {
                                 return setAttributes({ numberOfPosts: value });
@@ -23846,15 +23877,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 getEntityRecords = _select.getEntityRecords;
 
             var _props$attributes = props.attributes,
-                category = _props$attributes.category,
+                categories = _props$attributes.categories,
                 order = _props$attributes.order,
                 orderBy = _props$attributes.orderBy,
                 numberOfPosts = _props$attributes.numberOfPosts,
                 myToken = _props$attributes.myToken;
 
 
+            var ids = categories && categories.length > 0 ? categories.map(function (cat) {
+                return cat.id;
+            }) : [];
+
             var recentPostsQuery = pickBy({
-                categories: category,
+                categories: ids,
                 order: order,
                 orderby: orderBy,
                 per_page: numberOfPosts,
