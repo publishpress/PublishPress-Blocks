@@ -134,6 +134,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Collapsed Order RTL in mobile for Columns Manager block
  * Remove: Obsolete Translations page
  * Remove: AdvQueryControls component
+ * Remove: Wide width alignment option for Advanced Button block
 
 = 2.5.6 =
  * Fix: Bug in deprecation for Advanced Accordion block from v2.5.5
