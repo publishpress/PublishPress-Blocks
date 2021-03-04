@@ -11453,7 +11453,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 { title: __('Text Alignment', 'advanced-gutenberg'), initialOpen: false },
                                 React.createElement(
                                     BaseControl,
-                                    { label: __('Horizontal Align', 'advanced-gutenberg') },
+                                    { help: __('Horizontal Align', 'advanced-gutenberg') },
                                     React.createElement(ToolbarGroup, {
                                         controls: HORZ_ALIGNMENT_CONTROLS.map(function (control) {
                                             var isActive = _this4.getCellStyles('textAlign') === control.align;
@@ -11469,7 +11469,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 ),
                                 React.createElement(
                                     BaseControl,
-                                    { label: __('Vertical Align', 'advanced-gutenberg') },
+                                    { help: __('Vertical Align', 'advanced-gutenberg') },
                                     React.createElement(ToolbarGroup, {
                                         controls: VERT_ALIGNMENT_CONTROLS.map(function (control) {
                                             var isActive = _this4.getCellStyles('verticalAlign') === control.align;
