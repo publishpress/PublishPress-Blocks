@@ -7258,7 +7258,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         createBlock = wpBlocks.createBlock;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
-        BlockControls = _wpBlockEditor.BlockControls,
         RichText = _wpBlockEditor.RichText,
         PanelColorSettings = _wpBlockEditor.PanelColorSettings,
         URLInput = _wpBlockEditor.URLInput;
@@ -7266,9 +7265,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         ToggleControl = wpComponents.ToggleControl,
-        SelectControl = wpComponents.SelectControl,
-        ToolbarButton = wpComponents.ToolbarButton,
-        ToolbarGroup = wpComponents.ToolbarGroup;
+        SelectControl = wpComponents.SelectControl;
 
     // Preview style images
 
@@ -7403,22 +7400,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return isPreview ? React.createElement('img', { alt: __('Advanced Button', 'advanced-gutenberg'), width: '100%', src: previewImageData }) : React.createElement(
                     Fragment,
                     null,
-                    React.createElement(
-                        BlockControls,
-                        null,
-                        React.createElement(
-                            ToolbarGroup,
-                            null,
-                            React.createElement(ToolbarButton, {
-                                label: __('Refresh this button when it conflict with other buttons styles', 'advanced-gutenberg'),
-                                icon: 'update',
-                                className: 'components-toolbar__control',
-                                onClick: function onClick() {
-                                    return setAttributes({ id: 'advgbbutton-' + blockID });
-                                }
-                            })
-                        )
-                    ),
                     React.createElement(
                         'span',
                         { className: className + ' align' + align,

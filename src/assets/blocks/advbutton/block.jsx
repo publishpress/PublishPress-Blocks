@@ -5,8 +5,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
-    const { InspectorControls, BlockControls, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
-    const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl, ToolbarButton, ToolbarGroup } = wpComponents;
+    const { InspectorControls, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
+    const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl } = wpComponents;
 
     // Preview style images
     let previewImageData = '';
@@ -112,16 +112,6 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     <img alt={__('Advanced Button', 'advanced-gutenberg')} width='100%' src={previewImageData}/>
                     :
                     <Fragment>
-                    <BlockControls>
-                        <ToolbarGroup>
-                            <ToolbarButton
-                                label={ __( 'Refresh this button when it conflict with other buttons styles', 'advanced-gutenberg' ) }
-                                icon="update"
-                                className="components-toolbar__control"
-                                onClick={ () => setAttributes( { id: 'advgbbutton-' + blockID } ) }
-                            />
-                        </ToolbarGroup>
-                    </BlockControls>
                     <span className={`${className} align${align}`}
                           style={ { display: 'inline-block' } }
                     >
