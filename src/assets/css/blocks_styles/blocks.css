@@ -197,6 +197,23 @@ span.wp-block-advgb-button[data-is-placeholder-visible=true] {
   text-align: center;
 }
 
+#editor [data-type="advgb/button"][data-align="full"],
+.wp-block-advgb-button.alignfull {
+  text-align: center;
+}
+
+#editor [data-type="advgb/button"][data-align="full"] span {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.wp-block-advgb-button.alignfull a {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
 .wp-block-advgb-button .wp-block-advgb-button_link {
   display: inline-block;
   text-decoration: none !important;

@@ -7258,8 +7258,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         createBlock = wpBlocks.createBlock;
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
-        BlockControls = _wpBlockEditor.BlockControls,
-        BlockAlignmentToolbar = _wpBlockEditor.BlockAlignmentToolbar,
         RichText = _wpBlockEditor.RichText,
         PanelColorSettings = _wpBlockEditor.PanelColorSettings,
         URLInput = _wpBlockEditor.URLInput;
@@ -7267,9 +7265,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         RangeControl = wpComponents.RangeControl,
         PanelBody = wpComponents.PanelBody,
         ToggleControl = wpComponents.ToggleControl,
-        SelectControl = wpComponents.SelectControl,
-        ToolbarButton = wpComponents.ToolbarButton,
-        ToolbarGroup = wpComponents.ToolbarGroup;
+        SelectControl = wpComponents.SelectControl;
 
     // Preview style images
 
@@ -7405,25 +7401,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     Fragment,
                     null,
                     React.createElement(
-                        BlockControls,
-                        null,
-                        React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
-                                return setAttributes({ align: align });
-                            } }),
-                        React.createElement(
-                            ToolbarGroup,
-                            null,
-                            React.createElement(ToolbarButton, {
-                                label: __('Refresh this button when it conflict with other buttons styles', 'advanced-gutenberg'),
-                                icon: 'update',
-                                className: 'components-toolbar__control',
-                                onClick: function onClick() {
-                                    return setAttributes({ id: 'advgbbutton-' + blockID });
-                                }
-                            })
-                        )
-                    ),
-                    React.createElement(
                         'span',
                         { className: className + ' align' + align,
                             style: { display: 'inline-block' }
@@ -7435,7 +7412,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange(value) {
                                 return setAttributes({ text: value });
                             },
-                            allowedFormats: ['bold', 'italic', 'strikethrough'],
+                            allowedFormats: ['core/bold', 'core/italic', 'core/strikethrough'],
                             isSelected: isSelected,
                             className: 'wp-block-advgb-button_link ' + id,
                             keepPlaceholderOnFocus: true
@@ -7875,7 +7852,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'outlined', label: __('Outlined', 'advanced-gutenberg') }, { name: 'squared', label: __('Squared', 'advanced-gutenberg') }, { name: 'squared-outline', label: __('Squared Outline', 'advanced-gutenberg') }],
         supports: {
-            anchor: true
+            anchor: true,
+            align: ['right', 'left', 'center', 'full']
         },
         edit: AdvButton,
         save: function save(_ref) {
