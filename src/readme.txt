@@ -132,6 +132,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Double border-top in editor for body in Advanced Accordion block
  * Fix: Notice when no featured image exists while editing/creating posts
  * Fix: Collapsed Order RTL in mobile for Columns Manager block
+ * Fix: Full width alignment for Advanced Button block
  * Remove: Obsolete Translations page
  * Remove: AdvQueryControls component
  * Remove: Wide width alignment option for Advanced Button block
