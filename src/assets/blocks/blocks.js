@@ -7259,7 +7259,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var _wpBlockEditor = wpBlockEditor,
         InspectorControls = _wpBlockEditor.InspectorControls,
         BlockControls = _wpBlockEditor.BlockControls,
-        BlockAlignmentToolbar = _wpBlockEditor.BlockAlignmentToolbar,
         RichText = _wpBlockEditor.RichText,
         PanelColorSettings = _wpBlockEditor.PanelColorSettings,
         URLInput = _wpBlockEditor.URLInput;
@@ -7407,9 +7406,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         BlockControls,
                         null,
-                        React.createElement(BlockAlignmentToolbar, { value: align, onChange: function onChange(align) {
-                                return setAttributes({ align: align });
-                            } }),
                         React.createElement(
                             ToolbarGroup,
                             null,
@@ -7875,7 +7871,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         styles: [{ name: 'default', label: __('Default', 'advanced-gutenberg'), isDefault: true }, { name: 'outlined', label: __('Outlined', 'advanced-gutenberg') }, { name: 'squared', label: __('Squared', 'advanced-gutenberg') }, { name: 'squared-outline', label: __('Squared Outline', 'advanced-gutenberg') }],
         supports: {
-            anchor: true
+            anchor: true,
+            align: ['right', 'left', 'center', 'full']
         },
         edit: AdvButton,
         save: function save(_ref) {

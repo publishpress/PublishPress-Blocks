@@ -5,7 +5,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
     const { __ } = wpI18n;
     const { Component, Fragment } = wpElement;
     const { registerBlockType, createBlock } = wpBlocks;
-    const { InspectorControls, BlockControls, BlockAlignmentToolbar, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
+    const { InspectorControls, BlockControls, RichText, PanelColorSettings, URLInput } = wpBlockEditor;
     const { BaseControl, RangeControl, PanelBody, ToggleControl, SelectControl, ToolbarButton, ToolbarGroup } = wpComponents;
 
     // Preview style images
@@ -113,7 +113,6 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                     :
                     <Fragment>
                     <BlockControls>
-                        <BlockAlignmentToolbar value={ align } onChange={ ( align ) => setAttributes( { align: align } ) } />
                         <ToolbarGroup>
                             <ToolbarButton
                                 label={ __( 'Refresh this button when it conflict with other buttons styles', 'advanced-gutenberg' ) }
@@ -539,6 +538,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
         ],
         supports: {
             anchor: true,
+            align: ['right', 'left', 'center', 'full'],
         },
         edit: AdvButton,
         save: function ( { attributes } ) {
