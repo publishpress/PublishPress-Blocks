@@ -7412,7 +7412,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             onChange: function onChange(value) {
                                 return setAttributes({ text: value });
                             },
-                            allowedFormats: ['bold', 'italic', 'strikethrough'],
+                            allowedFormats: ['core/bold', 'core/italic', 'core/strikethrough'],
                             isSelected: isSelected,
                             className: 'wp-block-advgb-button_link ' + id,
                             keepPlaceholderOnFocus: true
