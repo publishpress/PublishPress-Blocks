@@ -68,7 +68,7 @@
             } ).then( ( list ) => {
                 let suggestions = [];
                 list.forEach(cat => {
-                    suggestions[ cat.slug ] = cat;
+                    suggestions[ cat.name ] = cat;
                 });
                 this.setState( { categoriesList: suggestions } );
             } )
@@ -171,7 +171,7 @@
             })
 
             this.props.setAttributes({
-              categories: categories,
+              category: categories,
             });
           }
 
@@ -183,7 +183,7 @@
                 postView,
                 order,
                 orderBy,
-                categories,
+                category,
                 numberOfPosts,
                 columns,
                 displayFeaturedImage,
@@ -203,7 +203,7 @@
                         <QueryControls
                             { ...{ order, orderBy } }
                             categorySuggestions={ categoriesList }
-                            selectedCategories={ categories }
+                            selectedCategories={ category }
                             numberOfItems={ numberOfPosts }
                             onOrderChange={ ( value ) => setAttributes( { order: value } ) }
                             onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
@@ -419,9 +419,9 @@
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { categories, order, orderBy, numberOfPosts, myToken } = props.attributes;
+            const { category, order, orderBy, numberOfPosts, myToken } = props.attributes;
 
-            const ids = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
+            const ids = category && category.length > 0 ? category.map( ( cat ) => cat.id ) : [];
 
             const recentPostsQuery = pickBy( {
                 categories: ids,

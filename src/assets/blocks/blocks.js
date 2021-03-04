@@ -23478,7 +23478,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }).then(function (list) {
                     var suggestions = [];
                     list.forEach(function (cat) {
-                        suggestions[cat.slug] = cat;
+                        suggestions[cat.name] = cat;
                     });
                     _this2.setState({ categoriesList: suggestions });
                 });
@@ -23555,7 +23555,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
 
                 this.props.setAttributes({
-                    categories: categories
+                    category: categories
                 });
             }
         }, {
@@ -23571,7 +23571,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var postView = attributes.postView,
                     order = attributes.order,
                     orderBy = attributes.orderBy,
-                    categories = attributes.categories,
+                    category = attributes.category,
                     numberOfPosts = attributes.numberOfPosts,
                     columns = attributes.columns,
                     displayFeaturedImage = attributes.displayFeaturedImage,
@@ -23593,7 +23593,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { title: __('Block Settings', 'advanced-gutenberg') },
                         React.createElement(QueryControls, _extends({ order: order, orderBy: orderBy }, {
                             categorySuggestions: categoriesList,
-                            selectedCategories: categories,
+                            selectedCategories: category,
                             numberOfItems: numberOfPosts,
                             onOrderChange: function onOrderChange(value) {
                                 return setAttributes({ order: value });
@@ -23877,14 +23877,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 getEntityRecords = _select.getEntityRecords;
 
             var _props$attributes = props.attributes,
-                categories = _props$attributes.categories,
+                category = _props$attributes.category,
                 order = _props$attributes.order,
                 orderBy = _props$attributes.orderBy,
                 numberOfPosts = _props$attributes.numberOfPosts,
                 myToken = _props$attributes.myToken;
 
 
-            var ids = categories && categories.length > 0 ? categories.map(function (cat) {
+            var ids = category && category.length > 0 ? category.map(function (cat) {
                 return cat.id;
             }) : [];
 
