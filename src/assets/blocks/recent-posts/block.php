@@ -63,9 +63,13 @@ HTML;
 function advgbRenderBlockRecentPosts($attributes)
 {
 	$categories = empty($attributes['categories'])?0:$attributes['categories'];
+	if ( ! empty( $categories ) ) {
+		$categories = array_column( $categories, 'id' );
+	}
 	if(isset($attributes['category']) && !empty($attributes['category'])){
 		$categories = $attributes['category'];
 	}
+
 
     $recent_posts = wp_get_recent_posts(
         array(
