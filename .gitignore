@@ -1,4 +1,5 @@
 .idea/
+bundled/
 vendor/
 node_modules/
 blocks.js.map*
