@@ -127,6 +127,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 
 = 2.5.7 =
  * Add: Separate pages for Settings and Default block settings
+ * Add: Multiple category support to Recent Posts block
  * Fix: Alt attribute for img tag in Images Slider block
  * Fix: Hide notification when asking for a review
  * Fix: Double border-top in editor for body in Advanced Accordion block
