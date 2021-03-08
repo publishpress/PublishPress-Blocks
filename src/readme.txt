@@ -134,11 +134,13 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Notice when no featured image exists while editing/creating posts
  * Fix: Collapsed Order RTL in mobile for Columns Manager block
  * Fix: Full width alignment for Advanced Button block
+ * Fix: Allowed formats support for Advanced Button block
  * Fix: UI text alignment in cell settings for Advanced Table block
  * Fix: Slick Theme CSS for WordPress 5.7
  * Remove: Obsolete Translations page
  * Remove: AdvQueryControls component
  * Remove: Wide width alignment option for Advanced Button block
+ * Remove: Refresh option for Advanced Button block
 
 = 2.5.6 =
  * Fix: Bug in deprecation for Advanced Accordion block from v2.5.5
