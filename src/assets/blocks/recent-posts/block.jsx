@@ -28,10 +28,16 @@
     class RecentPostsEdit extends Component {
         constructor() {
             super( ...arguments );
+
             this.state = {
                 categoriesList: [],
+                catIdVsName: [],
                 updating: false,
             }
+
+            this.selectCategories = this.selectCategories.bind(this);
+            this.getCategoryForBkwrdCompat = this.getCategoryForBkwrdCompat.bind(this);
+
         }
 
         componentWillMount() {
@@ -61,7 +67,23 @@
 
             wp.apiFetch( {
                 path: wp.url.addQueryArgs( 'wp/v2/categories', categoriesListQuery ),
-            } ).then( ( categoriesList ) => this.setState( { categoriesList: categoriesList } ) )
+            } ).then( ( list ) => {
+                let suggestions = [];
+                let catIdVsName = [];
+                list.forEach(cat => {
+                    suggestions[ cat.name ] = cat;
+                    catIdVsName[ cat.id ] = cat.name;
+                });
+                this.setState( { categoriesList: suggestions, catIdVsName: catIdVsName } );
+
+                // for backward compatibility, extract the (single select) category and set it as the (mutli select) categories
+                // and make the (single select) category empty
+                const categories = attributes.category && attributes.category !== undefined && attributes.category.length > 0 ? [ this.getCategoryForBkwrdCompat( attributes.category ) ] : attributes.categories;
+                setAttributes({
+                      categories: categories,
+                      category: ''
+                });
+            } )
         }
 
         componentWillUpdate( nextProps ) {
@@ -111,40 +133,6 @@
             }
         }
 
-        static extractContent(html, length) {
-            const span= document.createElement('span');
-            span.innerHTML= html;
-
-            // Remove script tag
-            const scripts = span.getElementsByTagName('script');
-            let j = scripts.length;
-            while (j--) {
-                scripts[j].parentNode.removeChild(scripts[j]);
-            }
-
-            // Remove style tag
-            const styles = span.getElementsByTagName('style');
-            let k = styles.length;
-            while (k--) {
-                styles[k].parentNode.removeChild(styles[k]);
-            }
-
-            const children= span.querySelectorAll('*');
-            for(let i = 0 ; i < children.length ; i++) {
-                if(children[i].textContent)
-                    children[i].textContent += ' ';
-                else
-                    children[i].innerText += ' ';
-            }
-
-            let text = [span.textContent || span.innerText].toString().replace(/\s\s+/g,' ');
-            text = text.slice(0, length).trim();
-
-            if (text.length) text += '…' ;
-
-            return text;
-        };
-
         render() {
             const { categoriesList } = this.state;
             const { attributes, setAttributes, recentPosts } = this.props;
@@ -152,7 +140,6 @@
                 postView,
                 order,
                 orderBy,
-                category,
                 numberOfPosts,
                 columns,
                 displayFeaturedImage,
@@ -164,6 +151,7 @@
                 displayReadMore,
                 readMoreLbl,
                 isPreview,
+                categories,
             } = attributes;
 
             const inspectorControls = (
@@ -171,12 +159,15 @@
                     <PanelBody title={ __( 'Block Settings', 'advanced-gutenberg' ) }>
                         <QueryControls
                             { ...{ order, orderBy } }
-                            categoriesList={ categoriesList }
-                            selectedCategoryId={ category }
+                            categorySuggestions={ categoriesList }
+                            selectedCategories={ categories }
                             numberOfItems={ numberOfPosts }
                             onOrderChange={ ( value ) => setAttributes( { order: value } ) }
                             onOrderByChange={ ( value ) => setAttributes( { orderBy: value } ) }
-                            onCategoryChange={ ( value ) => setAttributes( { category: value !== '' ? value : undefined } ) }
+                            onCategoryChange={ ( value ) => {
+                                                this.selectCategories(value);
+                                            }
+                            }
                             onNumberOfItemsChange={ (value) => setAttributes( { numberOfPosts: value } ) }
                         />
                         {postView === 'grid' &&
@@ -364,6 +355,68 @@
                 </Fragment>
             )
         }
+
+        static extractContent(html, length) {
+            const span= document.createElement('span');
+            span.innerHTML= html;
+
+            // Remove script tag
+            const scripts = span.getElementsByTagName('script');
+            let j = scripts.length;
+            while (j--) {
+                scripts[j].parentNode.removeChild(scripts[j]);
+            }
+
+            // Remove style tag
+            const styles = span.getElementsByTagName('style');
+            let k = styles.length;
+            while (k--) {
+                styles[k].parentNode.removeChild(styles[k]);
+            }
+
+            const children= span.querySelectorAll('*');
+            for(let i = 0 ; i < children.length ; i++) {
+                if(children[i].textContent)
+                    children[i].textContent += ' ';
+                else
+                    children[i].innerText += ' ';
+            }
+
+            let text = [span.textContent || span.innerText].toString().replace(/\s\s+/g,' ');
+            text = text.slice(0, length).trim();
+
+            if (text.length) text += '…' ;
+
+            return text;
+        };
+
+        selectCategories(tokens) {
+            const { categoriesList } = this.state;
+
+            var hasNoSuggestion = tokens.some(function (token) {
+                return typeof token === 'string' && !categoriesList[token];
+            });
+
+            if (hasNoSuggestion) {
+                return;
+            }
+
+            var categories = tokens.map(function (token) {
+                return typeof token === 'string' ? categoriesList[token] : token;
+            })
+
+            this.props.setAttributes({
+                categories: categories,
+            });
+        }
+
+        getCategoryForBkwrdCompat(id) {
+            const { catIdVsName } = this.state;
+            return {
+                id: id,
+                name: catIdVsName[id]
+            };
+        }
     }
 
     registerBlockType( 'advgb/recent-posts', {
@@ -385,10 +438,12 @@
         },
         edit: withSelect( ( select, props ) => {
             const { getEntityRecords } = select( 'core' );
-            const { category, order, orderBy, numberOfPosts, myToken } = props.attributes;
+            const { categories, category, order, orderBy, numberOfPosts, myToken } = props.attributes;
+
+            const ids = categories && categories.length > 0 ? categories.map( ( cat ) => cat.id ) : [];
 
             const recentPostsQuery = pickBy( {
-                categories: category,
+                categories: ids,
                 order,
                 orderby: orderBy,
                 per_page: numberOfPosts,
