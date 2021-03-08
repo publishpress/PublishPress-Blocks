@@ -229,13 +229,13 @@ function advgbRegisterBlockRecentPosts()
                 'default' => 'date',
             ),
             'category' => array(
-            	'type' => 'string',
+                'type' => 'string',
             ),
             'categories' => array(
-            	'type' => 'array',
-            	'items' => array(
-            		'type' => 'object'
-            	)
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'object'
+                )
             ),
             'numberOfPosts' => array(
                 'type' => 'number',
