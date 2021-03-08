@@ -135,6 +135,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
  * Fix: Collapsed Order RTL in mobile for Columns Manager block
  * Fix: Full width alignment for Advanced Button block
  * Fix: UI text alignment in cell settings for Advanced Table block
+ * Fix: Slick Theme CSS for WordPress 5.7
  * Remove: Obsolete Translations page
  * Remove: AdvQueryControls component
  * Remove: Wide width alignment option for Advanced Button block
