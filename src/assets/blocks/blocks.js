@@ -24037,9 +24037,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var searchBtnId = attributes.searchBtnId;
 
 
-                if (!searchBtnId) {
-                    setAttributes({ searchBtnId: "advgb-search-btn-" + clientId });
-                }
+                setAttributes({ searchBtnId: "advgb-search-btn-" + clientId });
             }
         }, {
             key: "render",

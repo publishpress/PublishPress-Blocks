@@ -3,7 +3,7 @@ Contributors: publishpress, stevejburge, htmgarcia, advancedgutenberg, JoomUnite
 Tags: gutenberg, gutenberg blocks, advanced gutenberg, editor, blocks
 Requires at least: 5.0
 Tested up to: 5.7
-Stable tag: 2.5.7
+Stable tag: 2.5.8b1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -124,6 +124,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 1. Latest posts and WooCommerce products blocks
 
 == Changelog ==
+
+= 2.5.8 =
+  * Fix: Duplicated ID when duplicating Search Bar block
 
 = 2.5.7 =
  * Add: Separate pages for Settings and Default block settings
