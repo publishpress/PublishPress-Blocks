@@ -428,17 +428,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_style('dashicons');
 
             if (is_admin()) {
-                if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
-                    wp_enqueue_style(
-                        'advgb_blocks_styles',
-                        plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
-                    );
-                } else {
-                    wp_enqueue_style(
-                        'advgb_blocks_styles_min',
-                        plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
-                    );
-                }
+                wp_enqueue_style(
+                    'advgb_blocks_styles_min',
+                    plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
+                );
             }
 
             if (!function_exists('advgbAddScriptAttributes')) {
@@ -4984,17 +4977,10 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             // Load common CSS
             if (in_array($blockName, $availableBlocks)) {
-                if (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
-                    wp_enqueue_style(
-                        'advgb_blocks_styles',
-                        plugins_url('assets/css/blocks_styles/blocks.css', dirname(__FILE__))
-                    );
-                } else {
-                    wp_enqueue_style(
-                        'advgb_blocks_styles_min',
-                        plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
-                    );
-                }
+                wp_enqueue_style(
+                    'advgb_blocks_styles_min',
+                    plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
+                );
             }
 
             $html_style = '';
