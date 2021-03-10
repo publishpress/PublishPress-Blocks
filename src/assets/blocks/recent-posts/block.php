@@ -62,7 +62,7 @@ HTML;
  */
 function advgbRenderBlockRecentPosts($attributes)
 {
-	$categories = empty($attributes['categories'])?0:$attributes['categories'];
+	$categories = empty($attributes['categories'])? array() :$attributes['categories'];
 	if ( ! empty( $categories ) ) {
 		$categories = array_column( $categories, 'id' );
 	}
@@ -70,18 +70,29 @@ function advgbRenderBlockRecentPosts($attributes)
 		$categories = $attributes['category'];
 	}
 
+	$tax_query = null;
+	if ( !empty($attributes['tags'] ) ){
+		$tax_query = array(
+				array(
+					'taxonomy' => 'post_tag',
+					'field' => 'name',
+					'terms' => $attributes['tags'],
+					'operator' => 'IN',
+				),
+			);
+	}
 
-    $recent_posts = wp_get_recent_posts(
-        array(
+	$args = array(
             'numberposts' => empty($attributes['numberOfPosts'])?8:$attributes['numberOfPosts'],
             'post_status' => 'publish',
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
-            'category' => $categories,
+            'category__in' => array_map( 'intval', $categories ),
+            'tax_query' => $tax_query,
             'suppress_filters' => false,
-        ),
-        OBJECT
-    );
+        );
+
+    $recent_posts = wp_get_recent_posts( $args, OBJECT );
 
     $saved_settings    = get_option('advgb_settings');
     $default_thumb     = plugins_url('assets/blocks/recent-posts/recent-post-default.png', ADVANCED_GUTENBERG_PLUGIN);
@@ -235,6 +246,12 @@ function advgbRegisterBlockRecentPosts()
                 'type' => 'array',
                 'items' => array(
                     'type' => 'object'
+                )
+            ),
+            'tags' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'string'
                 )
             ),
             'numberOfPosts' => array(

@@ -23374,6 +23374,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         ToggleControl = wpComponents.ToggleControl,
         TextControl = wpComponents.TextControl,
         QueryControls = wpComponents.QueryControls,
+        FormTokenField = wpComponents.FormTokenField,
         Spinner = wpComponents.Spinner,
         ToolbarGroup = wpComponents.ToolbarGroup,
         ToolbarButton = wpComponents.ToolbarButton,
@@ -23411,11 +23412,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             _this.state = {
                 categoriesList: [],
+                tagsList: [],
                 catIdVsName: [],
+                tagNameVsId: [],
                 updating: false
             };
 
             _this.selectCategories = _this.selectCategories.bind(_this);
+            _this.selectTags = _this.selectTags.bind(_this);
+            _this.getTagIdsForTags = _this.getTagIdsForTags.bind(_this);
             _this.getCategoryForBkwrdCompat = _this.getCategoryForBkwrdCompat.bind(_this);
 
             return _this;
@@ -23432,7 +23437,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var currentBlockConfig = advgbDefaultConfig['advgb-recent-posts'];
 
-                var categoriesListQuery = {
+                var tagsAndcategoriesListQuery = {
                     per_page: -1,
                     hide_empty: true
                 };
@@ -23454,7 +23459,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 }
 
                 wp.apiFetch({
-                    path: wp.url.addQueryArgs('wp/v2/categories', categoriesListQuery)
+                    path: wp.url.addQueryArgs('wp/v2/categories', tagsAndcategoriesListQuery)
                 }).then(function (list) {
                     var suggestions = [];
                     var catIdVsName = [];
@@ -23470,6 +23475,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     setAttributes({
                         categories: categories,
                         category: ''
+                    });
+                });
+
+                wp.apiFetch({
+                    path: wp.url.addQueryArgs('wp/v2/tags', tagsAndcategoriesListQuery)
+                }).then(function (list) {
+                    var suggestions = [];
+                    var tagNameVsId = [];
+                    list.forEach(function (tag) {
+                        suggestions.push(tag.name);
+                        tagNameVsId[tag.name] = tag.id;
+                    });
+
+                    _this2.setState({ tagsList: suggestions, tagNameVsId: tagNameVsId });
+
+                    var tagIds = attributes.tags && attributes.tags.length > 0 ? _this2.getTagIdsForTags(attributes.tags) : [];
+                    setAttributes({
+                        tagIds: tagIds
                     });
                 });
             }
@@ -23531,7 +23554,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 var _this3 = this;
 
-                var categoriesList = this.state.categoriesList;
+                var _state = this.state,
+                    categoriesList = _state.categoriesList,
+                    tagsList = _state.tagsList;
                 var _props4 = this.props,
                     attributes = _props4.attributes,
                     setAttributes = _props4.setAttributes,
@@ -23550,7 +23575,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     displayReadMore = attributes.displayReadMore,
                     readMoreLbl = attributes.readMoreLbl,
                     isPreview = attributes.isPreview,
-                    categories = attributes.categories;
+                    categories = attributes.categories,
+                    tags = attributes.tags;
 
 
                 var inspectorControls = React.createElement(
@@ -23576,6 +23602,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return setAttributes({ numberOfPosts: value });
                             }
                         })),
+                        React.createElement(FormTokenField, {
+                            multiple: true,
+                            suggestions: tagsList,
+                            value: tags,
+                            label: __('Tags', 'advanced-gutenberg'),
+                            placeholder: __('Type a tag', 'advanced-gutenberg'),
+                            onChange: function onChange(value) {
+                                _this3.selectTags(value);
+                            }
+                        }),
                         postView === 'grid' && React.createElement(RangeControl, {
                             label: __('Columns', 'advanced-gutenberg'),
                             value: columns,
@@ -23809,6 +23845,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 });
             }
         }, {
+            key: "selectTags",
+            value: function selectTags(tokens) {
+                var _state2 = this.state,
+                    tagsList = _state2.tagsList,
+                    tagNameVsId = _state2.tagNameVsId;
+
+
+                var hasNoSuggestion = tokens.some(function (token) {
+                    return typeof token === 'string' && !tagNameVsId[token];
+                });
+
+                if (hasNoSuggestion) {
+                    return;
+                }
+
+                var tags = tokens.map(function (token) {
+                    return typeof token === 'string' && tagNameVsId[token] ? token : token;
+                });
+
+                var tagIds = tokens.map(function (token) {
+                    return typeof token === 'string' ? tagNameVsId[token] : token.id;
+                });
+
+                this.props.setAttributes({
+                    tags: tags,
+                    tagIds: tagIds
+                });
+            }
+        }, {
+            key: "getTagIdsForTags",
+            value: function getTagIdsForTags(tags) {
+                var tagNameVsId = this.state.tagNameVsId;
+
+                return tags.map(function (tag) {
+                    return tagNameVsId[tag];
+                });
+            }
+        }, {
             key: "getCategoryForBkwrdCompat",
             value: function getCategoryForBkwrdCompat(id) {
                 var catIdVsName = this.state.catIdVsName;
@@ -23878,6 +23952,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
             var _props$attributes = props.attributes,
                 categories = _props$attributes.categories,
+                tagIds = _props$attributes.tagIds,
+                tags = _props$attributes.tags,
                 category = _props$attributes.category,
                 order = _props$attributes.order,
                 orderBy = _props$attributes.orderBy,
@@ -23885,12 +23961,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 myToken = _props$attributes.myToken;
 
 
-            var ids = categories && categories.length > 0 ? categories.map(function (cat) {
+            var catIds = categories && categories.length > 0 ? categories.map(function (cat) {
                 return cat.id;
             }) : [];
 
             var recentPostsQuery = pickBy({
-                categories: ids,
+                categories: catIds,
+                tags: tagIds,
                 order: order,
                 orderby: orderBy,
                 per_page: numberOfPosts,
