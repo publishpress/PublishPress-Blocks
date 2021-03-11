@@ -20,6 +20,7 @@
     "braces": "^3.0.2",
     "compile-sass": "^1.1.1",
     "counterup2": "^1.0.4",
+    "elliptic": "^6.5.4",
     "gulp": "^4.0.2",
     "gulp-zip": "^5.0.2",
     "html-react-parser": "^0.10.5",
