@@ -21042,13 +21042,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "div",
                             { className: "advgb-lores-form-header" },
                             !!showLogo && logoElmSave,
-                            React.createElement(
-                                "h3",
-                                { className: "advgb-lores-form-welcome",
-                                    style: { color: textColor }
-                                },
-                                welcomeText
-                            )
+                            React.createElement(RichText.Content, {
+                                tagName: "h3",
+                                className: "advgb-lores-form-welcome",
+                                value: welcomeText,
+                                style: { color: textColor }
+                            })
                         ),
                         React.createElement(
                             "div",
@@ -21058,11 +21057,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-field-label" },
-                                React.createElement(
-                                    "label",
-                                    { htmlFor: "advgb-login-user", style: { color: textColor } },
-                                    loginText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "label",
+                                    htmlFor: "advgb-login-user",
+                                    value: loginText,
+                                    style: { color: textColor }
+                                })
                             ),
                             React.createElement(
                                 "div",
@@ -21099,11 +21099,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-field-label" },
-                                React.createElement(
-                                    "label",
-                                    { htmlFor: "advgb-login-password", style: { color: textColor } },
-                                    passwordText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "label",
+                                    htmlFor: "advgb-login-password",
+                                    value: passwordText,
+                                    style: { color: textColor }
+                                })
                             ),
                             React.createElement(
                                 "div",
@@ -21148,30 +21149,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 React.createElement(
                                     "div",
                                     { style: { color: submitBgColor }, className: "remember-me-switch" },
-                                    React.createElement(
-                                        "span",
-                                        { style: { color: textColor } },
-                                        rememberMeText
-                                    )
+                                    React.createElement(RichText.Content, {
+                                        tagName: "span",
+                                        style: { color: textColor },
+                                        value: rememberMeText
+                                    })
                                 )
                             ),
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-submit advgb-login-submit" },
-                                React.createElement(
-                                    "button",
-                                    { className: "advgb-lores-submit-button " + submitButtonId,
-                                        type: "submit",
-                                        name: "wp-submit",
-                                        style: {
-                                            borderColor: submitColor,
-                                            color: submitColor,
-                                            backgroundColor: submitBgColor,
-                                            borderRadius: submitRadius
-                                        }
-                                    },
-                                    loginSubmitLabel
-                                ),
+                                React.createElement(RichText.Content, {
+                                    tagName: "button",
+                                    value: loginSubmitLabel,
+                                    className: "advgb-lores-submit-button " + submitButtonId,
+                                    type: "submit",
+                                    name: "wp-submit",
+                                    style: {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: submitRadius
+                                    }
+                                }),
                                 React.createElement("input", { type: "hidden", name: "redirect_to", "data-redirect": redirect, className: "redirect_to", value: redirectLink }),
                                 React.createElement("input", { type: "hidden", name: "testcookie", value: "1" }),
                                 React.createElement("input", { type: "hidden", name: "advgb_login_form", value: "1" })
@@ -21183,14 +21183,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lost-password" },
-                                React.createElement(
-                                    "a",
-                                    { href: "#",
-                                        className: "advgb-lost-password-link",
-                                        style: { color: submitBgColor }
-                                    },
-                                    lostPasswordText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "a",
+                                    href: "#",
+                                    className: "advgb-lost-password",
+                                    style: { color: submitBgColor },
+                                    value: lostPasswordText
+                                })
                             )
                         )
                     )
@@ -21214,13 +21213,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         { className: "advgb-back-to-login-link",
                             style: { color: submitBgColor }
                         },
-                        React.createElement(
-                            "span",
-                            { className: "advgb-register-text",
-                                style: { color: submitBgColor }
-                            },
-                            backToLoginText
-                        )
+                        React.createElement(RichText.Content, {
+                            tagName: "span",
+                            className: "advgb-register-text",
+                            style: { color: submitBgColor },
+                            value: backToLoginText
+                        })
                     )
                 ),
                 React.createElement(
@@ -21233,13 +21231,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             "div",
                             { className: "advgb-lores-form-header" },
                             !!showLogo && regLogoElmSave,
-                            React.createElement(
-                                "h3",
-                                { className: "advgb-lores-form-welcome",
-                                    style: { color: textColor }
-                                },
-                                registerWelcome
-                            )
+                            React.createElement(RichText.Content, {
+                                tagName: "h3",
+                                className: "advgb-lores-form-welcome",
+                                style: { color: textColor },
+                                value: registerWelcome
+                            })
                         ),
                         React.createElement(
                             "div",
@@ -21249,11 +21246,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-field-label" },
-                                React.createElement(
-                                    "label",
-                                    { htmlFor: "advgb-register-username", style: { color: textColor } },
-                                    userText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "label",
+                                    htmlFor: "advgb-register-username",
+                                    style: { color: textColor },
+                                    value: userText
+                                })
                             ),
                             React.createElement(
                                 "div",
@@ -21290,11 +21288,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-field-label" },
-                                React.createElement(
-                                    "label",
-                                    { htmlFor: "advgb-register-email", style: { color: textColor } },
-                                    emailText
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "label",
+                                    htmlFor: "advgb-register-email",
+                                    style: { color: textColor },
+                                    value: emailText
+                                })
                             ),
                             React.createElement(
                                 "div",
@@ -21330,20 +21329,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(
                                 "div",
                                 { className: "advgb-lores-submit advgb-register-submit" },
-                                React.createElement(
-                                    "button",
-                                    { className: "advgb-lores-submit-button " + submitButtonId,
-                                        type: "submit",
-                                        name: "wp-submit",
-                                        style: {
-                                            borderColor: submitColor,
-                                            color: submitColor,
-                                            backgroundColor: submitBgColor,
-                                            borderRadius: submitRadius
-                                        }
-                                    },
-                                    registerSubmitLabel
-                                )
+                                React.createElement(RichText.Content, {
+                                    tagName: "button",
+                                    value: registerSubmitLabel,
+                                    className: "advgb-lores-submit-button " + submitButtonId,
+                                    type: "submit",
+                                    name: "wp-submit",
+                                    style: {
+                                        borderColor: submitColor,
+                                        color: submitColor,
+                                        backgroundColor: submitBgColor,
+                                        borderRadius: submitRadius
+                                    }
+                                })
                             )
                         )
                     )

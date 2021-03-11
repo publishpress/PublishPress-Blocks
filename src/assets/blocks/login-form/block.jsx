@@ -1048,19 +1048,23 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         <div className="advgb-login-form advgb-form-inner">
                             <div className="advgb-lores-form-header">
                                 {!!showLogo && logoElmSave}
-                                <h3 className="advgb-lores-form-welcome"
+                                <RichText.Content
+                                    tagName="h3"
+                                    className="advgb-lores-form-welcome"
+                                    value={ welcomeText }
                                     style={ { color: textColor } }
-                                >
-                                    { welcomeText }
-                                </h3>
+                                />
                             </div>
                             <div className="advgb-lores-field advgb-login-user"
                                  style={ { borderColor: textColor } }
                             >
                                 <div className="advgb-lores-field-label">
-                                    <label htmlFor="advgb-login-user" style={ { color: textColor } }>
-                                        { loginText }
-                                    </label>
+                                    <RichText.Content
+                                        tagName="label"
+                                        htmlFor="advgb-login-user"
+                                        value={ loginText }
+                                        style={ { color: textColor } }
+                                    />
                                 </div>
                                 <div className="advgb-lores-field-input"
                                      style={ {
@@ -1091,9 +1095,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                  style={ { borderColor: textColor } }
                             >
                                 <div className="advgb-lores-field-label">
-                                    <label htmlFor="advgb-login-password" style={ { color: textColor } }>
-                                        { passwordText }
-                                    </label>
+                                    <RichText.Content
+                                        tagName="label"
+                                        htmlFor="advgb-login-password"
+                                        value={ passwordText }
+                                        style={ { color: textColor } }
+                                    />
                                 </div>
                                 <div className="advgb-lores-field-input"
                                      style={ {
@@ -1130,22 +1137,27 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                            className="advgb-lores-checkbox"
                                     />
                                     <div style={ { color: submitBgColor } } className="remember-me-switch">
-                                        <span style={ { color: textColor } }>{ rememberMeText }</span>
+                                        <RichText.Content
+                                            tagName="span"
+                                            style={ { color: textColor } }
+                                            value={ rememberMeText }
+                                        />
                                     </div>
                                 </label>
                                 <div className="advgb-lores-submit advgb-login-submit">
-                                    <button className={`advgb-lores-submit-button ${submitButtonId}`}
-                                            type="submit"
-                                            name="wp-submit"
-                                            style={ {
-                                                borderColor: submitColor,
-                                                color: submitColor,
-                                                backgroundColor: submitBgColor,
-                                                borderRadius: submitRadius,
-                                            } }
-                                    >
-                                        { loginSubmitLabel }
-                                    </button>
+                                    <RichText.Content
+                                        tagName="button"
+                                        value={ loginSubmitLabel }
+                                        className={`advgb-lores-submit-button ${submitButtonId}`}
+                                        type="submit"
+                                        name="wp-submit"
+                                        style={ {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius,
+                                        } }
+                                    />
                                     <input type="hidden" name="redirect_to" data-redirect={redirect} className="redirect_to" value={redirectLink} />
                                     <input type="hidden" name="testcookie" value="1" />
                                     <input type="hidden" name="advgb_login_form" value="1" />
@@ -1154,12 +1166,13 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             {!!showLostPasswordLink && (
                                 <div className="advgb-lores-field advgb-lost-password-field">
                                     <div className="advgb-lost-password">
-                                        <a href="#"
-                                           className="advgb-lost-password-link"
-                                           style={ { color: submitBgColor } }
-                                        >
-                                            { lostPasswordText }
-                                        </a>
+                                        <RichText.Content
+                                            tagName="a"
+                                            href="#"
+                                            className="advgb-lost-password"
+                                            style={ { color: submitBgColor } }
+                                            value={ lostPasswordText }
+                                        />
                                     </div>
                                 </div>
                             ) }
@@ -1181,11 +1194,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             <div className="advgb-back-to-login-link"
                                  style={ { color: submitBgColor } }
                             >
-                                <span className="advgb-register-text"
-                                      style={ { color: submitBgColor } }
-                                >
-                                    { backToLoginText }
-                                </span>
+                                <RichText.Content
+                                    tagName="span"
+                                    className="advgb-register-text"
+                                    style={ { color: submitBgColor } }
+                                    value={ backToLoginText }
+                                />
                             </div>
                         </div>
                     ) }
@@ -1193,19 +1207,23 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         <div className="advgb-register-form advgb-form-inner">
                             <div className="advgb-lores-form-header">
                                 {!!showLogo && regLogoElmSave}
-                                <h3 className="advgb-lores-form-welcome"
+                                <RichText.Content
+                                    tagName="h3"
+                                    className="advgb-lores-form-welcome"
                                     style={ { color: textColor } }
-                                >
-                                    { registerWelcome }
-                                </h3>
+                                    value={ registerWelcome }
+                                />
                             </div>
                             <div className="advgb-lores-field advgb-register-username"
                                  style={ { borderColor: textColor } }
                             >
                                 <div className="advgb-lores-field-label">
-                                    <label htmlFor="advgb-register-username" style={ { color: textColor } }>
-                                        { userText }
-                                    </label>
+                                    <RichText.Content
+                                        tagName="label"
+                                        htmlFor="advgb-register-username"
+                                        style={ { color: textColor } }
+                                        value={ userText }
+                                    />
                                 </div>
                                 <div className="advgb-lores-field-input"
                                      style={ {
@@ -1236,9 +1254,12 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                  style={ { borderColor: textColor } }
                             >
                                 <div className="advgb-lores-field-label">
-                                    <label htmlFor="advgb-register-email" style={ { color: textColor } }>
-                                        { emailText }
-                                    </label>
+                                    <RichText.Content
+                                        tagName="label"
+                                        htmlFor="advgb-register-email"
+                                        style={ { color: textColor } }
+                                        value={ emailText }
+                                    />
                                 </div>
                                 <div className="advgb-lores-field-input"
                                      style={ {
@@ -1268,18 +1289,19 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                             <div className={`advgb-grecaptcha clearfix position-${submitPosition}`}/>
                             <div className={`advgb-lores-field advgb-lores-submit-wrapper advgb-submit-align-${submitPosition}`}>
                                 <div className="advgb-lores-submit advgb-register-submit">
-                                    <button className={`advgb-lores-submit-button ${submitButtonId}`}
-                                            type="submit"
-                                            name="wp-submit"
-                                            style={ {
-                                                borderColor: submitColor,
-                                                color: submitColor,
-                                                backgroundColor: submitBgColor,
-                                                borderRadius: submitRadius,
-                                            } }
-                                    >
-                                        { registerSubmitLabel }
-                                    </button>
+                                    <RichText.Content
+                                        tagName="button"
+                                        value={ registerSubmitLabel }
+                                        className={`advgb-lores-submit-button ${submitButtonId}`}
+                                        type="submit"
+                                        name="wp-submit"
+                                        style={ {
+                                            borderColor: submitColor,
+                                            color: submitColor,
+                                            backgroundColor: submitBgColor,
+                                            borderRadius: submitRadius,
+                                        } }
+                                    />
                                 </div>
                             </div>
                         </div>
