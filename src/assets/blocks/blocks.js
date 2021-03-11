@@ -19951,7 +19951,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return null;
                             },
                             placeholder: __('Text…', 'advanced-gutenberg'),
-                            keepPlaceholderOnFocus: true
+                            keepPlaceholderOnFocus: true,
+                            allowedFormats: ['core/bold', 'core/italic']
                         }),
                         React.createElement(RichText, {
                             tagName: "a",
@@ -19968,7 +19969,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 return null;
                             },
                             placeholder: __('Register…', 'advanced-gutenberg'),
-                            keepPlaceholderOnFocus: true
+                            keepPlaceholderOnFocus: true,
+                            allowedFormats: ['core/bold', 'core/italic']
                         })
                     ),
                     React.createElement(
@@ -19987,7 +19989,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 style: { color: textColor },
                                 placeholder: __('Welcome text…', 'advanced-gutenberg'),
-                                keepPlaceholderOnFocus: true
+                                keepPlaceholderOnFocus: true,
+                                allowedFormats: ['core/bold', 'core/italic']
                             })
                         ),
                         React.createElement(
@@ -20010,7 +20013,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Username label…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             ),
                             React.createElement(
@@ -20058,7 +20062,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Password label…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             ),
                             React.createElement(
@@ -20117,7 +20122,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                 return null;
                                             },
                                             placeholder: __('Remember me…', 'advanced-gutenberg'),
-                                            keepPlaceholderOnFocus: true
+                                            keepPlaceholderOnFocus: true,
+                                            allowedFormats: ['core/bold', 'core/italic']
                                         })
                                     )
                                 )
@@ -20148,7 +20154,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return null;
                                         },
                                         placeholder: __('Login…', 'advanced-gutenberg'),
-                                        keepPlaceholderOnFocus: true
+                                        keepPlaceholderOnFocus: true,
+                                        allowedFormats: ['core/bold', 'core/italic']
                                     })
                                 )
                             )
@@ -20174,7 +20181,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Lost password…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             )
                         )
@@ -20209,7 +20217,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                     return null;
                                 },
                                 placeholder: __('Back…', 'advanced-gutenberg'),
-                                keepPlaceholderOnFocus: true
+                                keepPlaceholderOnFocus: true,
+                                allowedFormats: ['core/bold', 'core/italic']
                             })
                         )
                     ),
@@ -20229,7 +20238,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 },
                                 style: { color: textColor },
                                 placeholder: __('Register…', 'advanced-gutenberg'),
-                                keepPlaceholderOnFocus: true
+                                keepPlaceholderOnFocus: true,
+                                allowedFormats: ['core/bold', 'core/italic']
                             })
                         ),
                         React.createElement(
@@ -20252,7 +20262,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Username label…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             ),
                             React.createElement(
@@ -20300,7 +20311,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                         return null;
                                     },
                                     placeholder: __('Email label…', 'advanced-gutenberg'),
-                                    keepPlaceholderOnFocus: true
+                                    keepPlaceholderOnFocus: true,
+                                    allowedFormats: ['core/bold', 'core/italic']
                                 })
                             ),
                             React.createElement(
@@ -20357,7 +20369,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                             return null;
                                         },
                                         placeholder: __('Register…', 'advanced-gutenberg'),
-                                        keepPlaceholderOnFocus: true
+                                        keepPlaceholderOnFocus: true,
+                                        allowedFormats: ['core/bold', 'core/italic']
                                     })
                                 )
                             )
@@ -20927,6 +20940,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         },
         supports: {
             anchor: true
+
         },
         edit: LoginFormEdit,
         save: function save(_ref3) {

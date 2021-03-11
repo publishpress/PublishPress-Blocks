@@ -165,6 +165,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 onSplit={ () => null }
                                 placeholder={ __( 'Text…', 'advanced-gutenberg' ) }
                                 keepPlaceholderOnFocus
+                                allowedFormats={ [ 'core/bold', 'core/italic' ] }
                             />
                             <RichText
                                 tagName="a"
@@ -176,6 +177,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 onSplit={ () => null }
                                 placeholder={ __( 'Register…', 'advanced-gutenberg' ) }
                                 keepPlaceholderOnFocus
+                                allowedFormats={ [ 'core/bold', 'core/italic' ] }
                             />
                         </div>
                     ) }
@@ -190,6 +192,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 style={ { color: textColor } }
                                 placeholder={ __( 'Welcome text…', 'advanced-gutenberg' ) }
                                 keepPlaceholderOnFocus
+                                allowedFormats={ [ 'core/bold', 'core/italic' ] }
                             />
                         </div>
                         <div className="advgb-lores-field advgb-login-user">
@@ -203,6 +206,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     onSplit={ () => null }
                                     placeholder={ __( 'Username label…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
+                                    allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                 />
                             </div>
                             <div className="advgb-lores-field-input"
@@ -239,6 +243,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     onSplit={ () => null }
                                     placeholder={ __( 'Password label…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
+                                    allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                 />
                             </div>
                             <div className="advgb-lores-field-input"
@@ -282,6 +287,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                             onSplit={ () => null }
                                             placeholder={ __( 'Remember me…', 'advanced-gutenberg' ) }
                                             keepPlaceholderOnFocus
+                                            allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                         />
                                     </span>
                                 </div>
@@ -303,6 +309,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         onSplit={ () => null }
                                         placeholder={ __( 'Login…', 'advanced-gutenberg' ) }
                                         keepPlaceholderOnFocus
+                                        allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                     />
                                 </span>
                             </div>
@@ -320,6 +327,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         onSplit={ () => null }
                                         placeholder={ __( 'Lost password…', 'advanced-gutenberg' ) }
                                         keepPlaceholderOnFocus
+                                        allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                     />
                                 </div>
                             </div>
@@ -347,6 +355,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     onSplit={ () => null }
                                     placeholder={ __( 'Back…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
+                                    allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                 />
                             </div>
                         </div>
@@ -362,6 +371,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                 style={ { color: textColor } }
                                 placeholder={ __( 'Register…', 'advanced-gutenberg' ) }
                                 keepPlaceholderOnFocus
+                                allowedFormats={ [ 'core/bold', 'core/italic' ] }
                             />
                         </div>
                         <div className="advgb-lores-field advgb-register-username">
@@ -375,6 +385,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     onSplit={ () => null }
                                     placeholder={ __( 'Username label…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
+                                    allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                 />
                             </div>
                             <div className="advgb-lores-field-input"
@@ -411,6 +422,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                     onSplit={ () => null }
                                     placeholder={ __( 'Email label…', 'advanced-gutenberg' ) }
                                     keepPlaceholderOnFocus
+                                    allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                 />
                             </div>
                             <div className="advgb-lores-field-input"
@@ -454,6 +466,7 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                                         onSplit={ () => null }
                                         placeholder={ __( 'Register…', 'advanced-gutenberg' ) }
                                         keepPlaceholderOnFocus
+                                        allowedFormats={ [ 'core/bold', 'core/italic' ] }
                                     />
                                 </span>
                             </div>
@@ -975,7 +988,8 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
             },
         },
         supports: {
-            anchor: true
+            anchor: true,
+
         },
         edit: LoginFormEdit,
         save: function ( { attributes } ) {
