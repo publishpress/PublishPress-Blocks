@@ -126,7 +126,9 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
 == Changelog ==
 
 = 2.5.8 =
+  * Add: Compressed CSS files only
   * Fix: Duplicated ID when duplicating Search Bar block
+  * Remove: Non production files such as SCSS, JSX, etc.
 
 = 2.5.7 =
  * Add: Separate pages for Settings and Default block settings

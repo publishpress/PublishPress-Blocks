@@ -19,6 +19,7 @@ function bundle() {
         "!webpack.config.js",
         "!src/assets/**/*.jsx",
         "!src/assets/scss/**",
+        "!src/assets/blocks/*.js.map",
     ])
     .pipe(zip('advanced-gutenberg.zip'))
     .pipe(gulp.dest("bundled"));
