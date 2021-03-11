@@ -430,7 +430,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if (is_admin()) {
                 wp_enqueue_style(
                     'advgb_blocks_styles',
-                    plugins_url('assets/css/blocks.css', dirname(__FILE__))
+                    plugins_url('assets/css/blocks.css', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
                 );
             }
 
@@ -4971,7 +4973,9 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if (in_array($blockName, $availableBlocks)) {
                 wp_enqueue_style(
                     'advgb_blocks_styles',
-                    plugins_url('assets/css/blocks.css', dirname(__FILE__))
+                    plugins_url('assets/css/blocks.css', dirname(__FILE__)),
+                    array(),
+                    ADVANCED_GUTENBERG_VERSION
                 );
             }
 
