@@ -21018,21 +21018,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     { className: "advgb-register-link-wrapper advgb-header-navigation",
                         style: { backgroundColor: headerBgColor }
                     },
-                    React.createElement(
-                        "span",
-                        { className: "advgb-register-text",
-                            style: { color: textColor }
-                        },
-                        registerText
-                    ),
-                    React.createElement(
-                        "a",
-                        { href: "#",
-                            className: "advgb-register-link",
-                            style: { color: submitBgColor }
-                        },
-                        registerLinkText
-                    )
+                    React.createElement(RichText.Content, {
+                        tagName: "span",
+                        className: "advgb-register-text",
+                        value: registerText,
+                        style: { color: textColor }
+                    }),
+                    React.createElement(RichText.Content, {
+                        tagName: "a",
+                        href: "#",
+                        className: "advgb-register-link",
+                        value: registerLinkText,
+                        style: { color: submitBgColor }
+                    })
                 ),
                 React.createElement(
                     "form",

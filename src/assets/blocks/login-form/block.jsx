@@ -1029,17 +1029,19 @@ import {AdvColorControl} from "../0-adv-components/components.jsx";
                         <div className="advgb-register-link-wrapper advgb-header-navigation"
                              style={ { backgroundColor: headerBgColor } }
                         >
-                            <span className="advgb-register-text"
-                                  style={ { color: textColor } }
-                            >
-                                { registerText }
-                            </span>
-                            <a href="#"
-                               className="advgb-register-link"
-                               style={ { color: submitBgColor } }
-                            >
-                                { registerLinkText }
-                            </a>
+                            <RichText.Content
+                                tagName="span"
+                                className="advgb-register-text"
+                                value={ registerText }
+                                style={ { color: textColor } }
+                            />
+                            <RichText.Content
+                                tagName="a"
+                                href="#"
+                                className="advgb-register-link"
+                                value={ registerLinkText }
+                                style={ { color: submitBgColor } }
+                            />
                         </div>
                     ) }
                     <form action="" className="advgb-form-login" method="post">
