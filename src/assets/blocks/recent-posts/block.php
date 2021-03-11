@@ -87,7 +87,7 @@ function advgbRenderBlockRecentPosts($attributes)
             'post_status' => 'publish',
             'order' => empty($attributes['order'])?'desc':$attributes['order'],
             'orderby' => empty($attributes['orderBy'])?'date':$attributes['orderBy'],
-            'category__in' => array_map( 'intval', $categories ),
+            'category__in' => is_array( $categories ) ? array_map( 'intval', $categories ) : $categories,
             'tax_query' => $tax_query,
             'suppress_filters' => false,
         );
