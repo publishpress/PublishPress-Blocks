@@ -4,12 +4,7 @@
   "private": true,
   "scripts": {
     "build_react_dev": "webpack --mode development --watch",
-    "compile_css": "node-sass --output-style compressed src/assets/scss/blocks.scss > src/assets/css/blocks.min.css",
-    "compile_css_style": "node-sass --output-style compressed src/assets/scss/style.scss > src/assets/css/style.min.css",
-    "compile_css_columns": "node-sass --output-style compressed src/assets/scss/columns.scss > src/assets/css/columns.min.css",
-    "compile_css_main": "node-sass --output-style expanded src/assets/scss/main.scss > src/assets/css/main.css",
-    "compile_css_settings": "node-sass --output-style expanded src/assets/scss/settings.scss > src/assets/css/settings.css",
-    "compile_css_profiles": "node-sass --output-style expanded src/assets/scss/profiles.scss > src/assets/css/profiles.css",
+    "compile_css": "node-sass --output-style compressed src/assets/scss/ --output=src/assets/css/ --watch",
     "minify_js_jureview": "uglifyjs src/jufeedback/assets/js/jureview.js --output src/jufeedback/assets/js/jureview.min.js"
   },
   "devDependencies": {
