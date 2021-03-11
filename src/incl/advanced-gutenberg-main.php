@@ -429,8 +429,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
 
             if (is_admin()) {
                 wp_enqueue_style(
-                    'advgb_blocks_styles_min',
-                    plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
+                    'advgb_blocks_styles',
+                    plugins_url('assets/css/blocks.css', dirname(__FILE__))
                 );
             }
 
@@ -1273,8 +1273,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             if (!wp_doing_ajax()) {
                 // Register CSS
                 wp_register_style(
-                    'ju_framework_styles_min',
-                    plugins_url('assets/css/style.min.css', dirname(__FILE__))
+                    'ju_framework_styles',
+                    plugins_url('assets/css/style.css', dirname(__FILE__))
                 );
                 wp_register_style(
                     'advgb_main_style',
@@ -1469,7 +1469,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             );
             wp_register_style(
                 'advgb_columns_styles',
-                plugins_url('assets/css/columns.min.css', dirname(__FILE__))
+                plugins_url('assets/css/columns.css', dirname(__FILE__))
             );
 
             wp_register_script(
@@ -1524,7 +1524,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             wp_enqueue_style('material_icon_font_custom');
             wp_enqueue_style('advgb_quirk');
             wp_enqueue_style('waves_styles');
-            wp_enqueue_style('ju_framework_styles_min');
+            wp_enqueue_style('ju_framework_styles');
             wp_enqueue_style('advgb_main_style');
 
             wp_enqueue_script('waves_js');
@@ -2182,8 +2182,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
                 plugins_url('assets/css/jquery.minicolors.css', ADVANCED_GUTENBERG_PLUGIN)
             );
             wp_enqueue_style(
-                'ju_framework_styles_min',
-                plugins_url('assets/css/style.min.css', ADVANCED_GUTENBERG_PLUGIN)
+                'ju_framework_styles',
+                plugins_url('assets/css/style.css', ADVANCED_GUTENBERG_PLUGIN)
             );
             wp_enqueue_style(
                 'block_config_css',
@@ -4970,8 +4970,8 @@ if(!class_exists('AdvancedGutenbergMain')) {
             // Load common CSS
             if (in_array($blockName, $availableBlocks)) {
                 wp_enqueue_style(
-                    'advgb_blocks_styles_min',
-                    plugins_url('assets/css/blocks_styles/blocks.min.css', dirname(__FILE__))
+                    'advgb_blocks_styles',
+                    plugins_url('assets/css/blocks.css', dirname(__FILE__))
                 );
             }
 
