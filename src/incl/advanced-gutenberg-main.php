@@ -4339,7 +4339,7 @@ if(!class_exists('AdvancedGutenbergMain')) {
             $current_block = $block;
 
             if (!isset($blocks_settings_list[$current_block])) {
-                wp_die(esc_html(__('Config for this block is currently unsupported. It will coming in the future release.', 'advanced-gutenberg')));
+                wp_die(esc_html(__('Default configuration for this block is not available.', 'advanced-gutenberg')));
                 return;
             }
 
