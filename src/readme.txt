@@ -129,6 +129,7 @@ The PublishPress Blocks Custom CSS can be created from the plugin configuration 
   * Add: Compressed CSS files only
   * Fix: Duplicated ID when duplicating Search Bar block
   * Fix: Formatting output for editable elements in frontend for Login/Register block
+  * Fix: "Horizontal Alignment" label for Advanced Image default configuration
   * Remove: Non production files such as SCSS, JSX, etc.
   * Remove: Not required formatting for editable elements for Login/Register block
 
